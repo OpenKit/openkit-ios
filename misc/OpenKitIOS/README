@@ -1,0 +1,5 @@
+Builds the SDK as a static library. 
+
+After building, right click on the product in Project Navigator (libOpenKitIOS.a)
+and select "Show in Finder".  Back out one directory and you will find a folder
+called Release-universal.  That's where the goods are!

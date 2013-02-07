@@ -1,0 +1,11 @@
+//
+// Prefix header for all source files of the 'OpenKitIOS' target in the 'OpenKitIOS' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "OKMacros.h"
+#import "OKDefines.h"
+
+#endif
