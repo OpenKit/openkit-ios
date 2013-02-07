@@ -8,6 +8,8 @@
 
 #import "OKScore.h"
 #import "OKUserUtilities.h"
+#import "OKUser.h"
+#import "OpenKit.h"
 
 @implementation OKScore
 

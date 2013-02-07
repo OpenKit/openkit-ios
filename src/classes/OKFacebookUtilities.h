@@ -7,15 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <FacebookSDK/FacebookSDK.h>
-#import "OpenKit.h"
 
+@class OKUser;
 @interface OKFacebookUtilities : NSObject
 
 +(BOOL)handleOpenURL:(NSURL *)url;
 +(void)handleDidBecomeActive;
 +(void)handleWillTerminate;
-
 
 +(void)AuthorizeUserWithFacebookWithCompletionHandler:(void(^)(OKUser *user, NSError *error))completionHandler;
 +(BOOL)OpenCachedFBSessionWithoutLoginUI;

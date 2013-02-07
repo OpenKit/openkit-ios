@@ -6,8 +6,11 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
+#import <FacebookSDK/FacebookSDK.h>
+#import "OpenKit.h"
 #import "OKFacebookUtilities.h"
 #import "OKUserUtilities.h"
+
 
 @implementation OKFacebookUtilities
 
@@ -54,7 +57,6 @@
             compHandler(nil, error);
         }
     }];
-
 }
 
 

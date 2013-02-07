@@ -17,7 +17,7 @@ typedef enum {
     OKLeaderboardTimeRangeOneDay,
     OKLeaderboardTimeRangeOneWeek,
     OKLeaderboardTimeRangeAllTime
-}OKLeaderboardTimeRange;
+} OKLeaderboardTimeRange;
 
 
 @interface OKLeaderboard : NSObject
@@ -33,6 +33,6 @@ typedef enum {
 + (void)getLeaderboardsWithCompletionHandler:(void (^)(NSArray* leaderboards, NSError* error))completionHandler;
 - (NSString *)playerCountString;
 - (id)initFromJSON:(NSDictionary*)jsonDict;
--(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler;
+- (void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler;
 
 @end

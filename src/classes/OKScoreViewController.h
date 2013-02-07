@@ -9,6 +9,8 @@
 
 #import "OKScore.h"
 
+@class OKLeaderboard;
+@class OKScore;
 @interface OKScoreViewController : UIViewController
 
 @property (nonatomic, weak) OKScore *currentScore;

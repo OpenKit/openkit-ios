@@ -6,8 +6,11 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
+#import <Twitter/Twitter.h>
 #import "OKTwitterUtilities.h"
 #import "OKUserUtilities.h"
+#import "OpenKit.h"
+#import "AFHTTPClient.h"
 
 @implementation OKTwitterUtilities
 
