@@ -89,9 +89,9 @@
 		3221C78016C39480008C194B /* OKUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3221C76216C39480008C194B /* OKUser.m */; };
 		3221C78116C39480008C194B /* OKUserProfileImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3221C76416C39480008C194B /* OKUserProfileImageView.m */; };
 		3221C78216C39480008C194B /* OKUserUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3221C76616C39480008C194B /* OKUserUtilities.m */; };
-		3221C78316C39480008C194B /* OpenKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3221C76816C39480008C194B /* OpenKit.m */; };
 		3221C78416C39480008C194B /* SimpleKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 3221C76A16C39480008C194B /* SimpleKeychain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3251E87816C2C9630000553D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3251E87716C2C9630000553D /* Foundation.framework */; };
+		A9DDFB2716C41A1E009D26DE /* OpenKit.m in Sources */ = {isa = PBXBuildFile; fileRef = A9DDFB2616C41A1E009D26DE /* OpenKit.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -275,11 +275,11 @@
 		3221C76516C39480008C194B /* OKUserUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUserUtilities.h; sourceTree = "<group>"; };
 		3221C76616C39480008C194B /* OKUserUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUserUtilities.m; sourceTree = "<group>"; };
 		3221C76716C39480008C194B /* OpenKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenKit.h; sourceTree = "<group>"; };
-		3221C76816C39480008C194B /* OpenKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenKit.m; sourceTree = "<group>"; };
 		3221C76916C39480008C194B /* SimpleKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleKeychain.h; sourceTree = "<group>"; };
 		3221C76A16C39480008C194B /* SimpleKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleKeychain.m; sourceTree = "<group>"; };
 		3251E87416C2C9630000553D /* libOpenKitIOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOpenKitIOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3251E87716C2C9630000553D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A9DDFB2616C41A1E009D26DE /* OpenKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenKit.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -378,14 +378,7 @@
 		3221C73416C39480008C194B /* classes */ = {
 			isa = PBXGroup;
 			children = (
-				3221C73516C39480008C194B /* AbstractActionSheetPicker.h */,
-				3221C73616C39480008C194B /* AbstractActionSheetPicker.m */,
-				3221C73716C39480008C194B /* ActionSheetStringPicker.h */,
-				3221C73816C39480008C194B /* ActionSheetStringPicker.m */,
-				3221C73916C39480008C194B /* KGModal.h */,
-				3221C73A16C39480008C194B /* KGModal.m */,
-				3221C73B16C39480008C194B /* OKBaseLoginViewController.h */,
-				3221C73C16C39480008C194B /* OKBaseLoginViewController.m */,
+				A9DDFB2216C41766009D26DE /* GUI */,
 				3221C73D16C39480008C194B /* OKCloud.h */,
 				3221C73E16C39480008C194B /* OKCloud.m */,
 				3221C73F16C39480008C194B /* OKCloudAsyncRequest.h */,
@@ -397,39 +390,17 @@
 				3221C74516C39480008C194B /* OKHelper.m */,
 				3221C74616C39480008C194B /* OKLeaderboard.h */,
 				3221C74716C39480008C194B /* OKLeaderboard.m */,
-				3221C74816C39480008C194B /* OKLeaderboardListCell.h */,
-				3221C74916C39480008C194B /* OKLeaderboardListCell.m */,
-				3221C74A16C39480008C194B /* OKLeaderboardsListViewController.h */,
-				3221C74B16C39480008C194B /* OKLeaderboardsListViewController.m */,
-				3221C74C16C39480008C194B /* OKLeaderboardsViewController.h */,
-				3221C74D16C39480008C194B /* OKLeaderboardsViewController.m */,
-				3221C74E16C39480008C194B /* OKLeaderboardViewController.h */,
-				3221C74F16C39480008C194B /* OKLeaderboardViewController.m */,
-				3221C75016C39480008C194B /* OKLoginView.h */,
-				3221C75116C39480008C194B /* OKLoginView.m */,
 				3221C75216C39480008C194B /* OKMacros.h */,
-				3221C75316C39480008C194B /* OKNickViewController.h */,
-				3221C75416C39480008C194B /* OKNickViewController.m */,
-				3221C75516C39480008C194B /* OKProfileViewController.h */,
-				3221C75616C39480008C194B /* OKProfileViewController.m */,
 				3221C75716C39480008C194B /* OKScore.h */,
 				3221C75816C39480008C194B /* OKScore.m */,
-				3221C75916C39480008C194B /* OKScoreCell.h */,
-				3221C75A16C39480008C194B /* OKScoreCell.m */,
-				3221C75B16C39480008C194B /* OKScoreViewCell.h */,
-				3221C75C16C39480008C194B /* OKScoreViewCell.m */,
-				3221C75D16C39480008C194B /* OKScoreViewController.h */,
-				3221C75E16C39480008C194B /* OKScoreViewController.m */,
 				3221C75F16C39480008C194B /* OKTwitterUtilities.h */,
 				3221C76016C39480008C194B /* OKTwitterUtilities.m */,
 				3221C76116C39480008C194B /* OKUser.h */,
 				3221C76216C39480008C194B /* OKUser.m */,
-				3221C76316C39480008C194B /* OKUserProfileImageView.h */,
-				3221C76416C39480008C194B /* OKUserProfileImageView.m */,
 				3221C76516C39480008C194B /* OKUserUtilities.h */,
 				3221C76616C39480008C194B /* OKUserUtilities.m */,
 				3221C76716C39480008C194B /* OpenKit.h */,
-				3221C76816C39480008C194B /* OpenKit.m */,
+				A9DDFB2616C41A1E009D26DE /* OpenKit.m */,
 				3221C76916C39480008C194B /* SimpleKeychain.h */,
 				3221C76A16C39480008C194B /* SimpleKeychain.m */,
 			);
@@ -465,6 +436,43 @@
 				3251E87716C2C9630000553D /* Foundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A9DDFB2216C41766009D26DE /* GUI */ = {
+			isa = PBXGroup;
+			children = (
+				3221C73516C39480008C194B /* AbstractActionSheetPicker.h */,
+				3221C73616C39480008C194B /* AbstractActionSheetPicker.m */,
+				3221C73716C39480008C194B /* ActionSheetStringPicker.h */,
+				3221C73816C39480008C194B /* ActionSheetStringPicker.m */,
+				3221C73916C39480008C194B /* KGModal.h */,
+				3221C73A16C39480008C194B /* KGModal.m */,
+				3221C73B16C39480008C194B /* OKBaseLoginViewController.h */,
+				3221C73C16C39480008C194B /* OKBaseLoginViewController.m */,
+				3221C74816C39480008C194B /* OKLeaderboardListCell.h */,
+				3221C74916C39480008C194B /* OKLeaderboardListCell.m */,
+				3221C74A16C39480008C194B /* OKLeaderboardsListViewController.h */,
+				3221C74B16C39480008C194B /* OKLeaderboardsListViewController.m */,
+				3221C74C16C39480008C194B /* OKLeaderboardsViewController.h */,
+				3221C74D16C39480008C194B /* OKLeaderboardsViewController.m */,
+				3221C74E16C39480008C194B /* OKLeaderboardViewController.h */,
+				3221C74F16C39480008C194B /* OKLeaderboardViewController.m */,
+				3221C75016C39480008C194B /* OKLoginView.h */,
+				3221C75116C39480008C194B /* OKLoginView.m */,
+				3221C75316C39480008C194B /* OKNickViewController.h */,
+				3221C75416C39480008C194B /* OKNickViewController.m */,
+				3221C75516C39480008C194B /* OKProfileViewController.h */,
+				3221C75616C39480008C194B /* OKProfileViewController.m */,
+				3221C75916C39480008C194B /* OKScoreCell.h */,
+				3221C75A16C39480008C194B /* OKScoreCell.m */,
+				3221C75B16C39480008C194B /* OKScoreViewCell.h */,
+				3221C75C16C39480008C194B /* OKScoreViewCell.m */,
+				3221C75D16C39480008C194B /* OKScoreViewController.h */,
+				3221C75E16C39480008C194B /* OKScoreViewController.m */,
+				3221C76316C39480008C194B /* OKUserProfileImageView.h */,
+				3221C76416C39480008C194B /* OKUserProfileImageView.m */,
+			);
+			name = GUI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -562,8 +570,8 @@
 				3221C78016C39480008C194B /* OKUser.m in Sources */,
 				3221C78116C39480008C194B /* OKUserProfileImageView.m in Sources */,
 				3221C78216C39480008C194B /* OKUserUtilities.m in Sources */,
-				3221C78316C39480008C194B /* OpenKit.m in Sources */,
 				3221C78416C39480008C194B /* SimpleKeychain.m in Sources */,
+				A9DDFB2716C41A1E009D26DE /* OpenKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
