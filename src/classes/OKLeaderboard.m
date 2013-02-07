@@ -7,8 +7,11 @@
 //
 
 #import "OKLeaderboard.h"
-#import "OpenKit.h"
+#import "OKDirector.h"
+#import "OKUser.h"
+#import "OKScore.h"
 #import "OKHelper.h"
+#import "AFNetworking.h"
 
 @implementation OKLeaderboard
 

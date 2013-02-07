@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
-#import "OKUser.h"
 #import <FacebookSDK/FacebookSDK.h>
-#import "OpenKit.h"
+#import "OKUser.h"
+#import "OKDirector.h"
 
 @implementation OKUser
 

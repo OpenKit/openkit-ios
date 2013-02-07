@@ -9,8 +9,8 @@
 #import <Twitter/Twitter.h>
 #import "OKTwitterUtilities.h"
 #import "OKUserUtilities.h"
-#import "OpenKit.h"
-#import "AFHTTPClient.h"
+#import "OKDirector.h"
+#import "AFNetworking.h"
 
 @implementation OKTwitterUtilities
 

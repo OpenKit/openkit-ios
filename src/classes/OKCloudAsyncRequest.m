@@ -7,8 +7,8 @@
 //
 
 #import "OKCloudAsyncRequest.h"
+#import "OKDirector.h"
 #import "AFNetworking.h"
-#import "OpenKit.h"
 
 
 @implementation OKCloudAsyncRequest

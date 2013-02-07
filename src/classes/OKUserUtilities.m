@@ -7,8 +7,9 @@
 //
 
 #import "OKUserUtilities.h"
-#import "AFHTTPClient.h"
-#import "OpenKit.h"
+#import "OKDirector.h"
+#import "OKUser.h"
+#import "AFNetworking.h"
 
 @implementation OKUserUtilities
 

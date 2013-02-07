@@ -9,7 +9,8 @@
 #import "OKScore.h"
 #import "OKUserUtilities.h"
 #import "OKUser.h"
-#import "OpenKit.h"
+#import "OKDirector.h"
+#import "AFNetworking.h"
 
 @implementation OKScore
 

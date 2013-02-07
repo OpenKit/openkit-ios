@@ -91,7 +91,7 @@
 		3221C78216C39480008C194B /* OKUserUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3221C76616C39480008C194B /* OKUserUtilities.m */; };
 		3221C78416C39480008C194B /* SimpleKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 3221C76A16C39480008C194B /* SimpleKeychain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3251E87816C2C9630000553D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3251E87716C2C9630000553D /* Foundation.framework */; };
-		A9DDFB2716C41A1E009D26DE /* OpenKit.m in Sources */ = {isa = PBXBuildFile; fileRef = A9DDFB2616C41A1E009D26DE /* OpenKit.m */; };
+		A9DDFB2C16C42186009D26DE /* OKDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = A9DDFB2B16C42186009D26DE /* OKDirector.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -279,7 +279,9 @@
 		3221C76A16C39480008C194B /* SimpleKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleKeychain.m; sourceTree = "<group>"; };
 		3251E87416C2C9630000553D /* libOpenKitIOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOpenKitIOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3251E87716C2C9630000553D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		A9DDFB2616C41A1E009D26DE /* OpenKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenKit.m; sourceTree = "<group>"; };
+		A9DDFB2816C4214F009D26DE /* OKDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDirector.h; sourceTree = "<group>"; };
+		A9DDFB2B16C42186009D26DE /* OKDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKDirector.m; sourceTree = "<group>"; };
+		A9DDFB2D16C421D2009D26DE /* OKGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGUI.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -378,6 +380,8 @@
 		3221C73416C39480008C194B /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				A9DDFB2B16C42186009D26DE /* OKDirector.m */,
+				A9DDFB2816C4214F009D26DE /* OKDirector.h */,
 				A9DDFB2216C41766009D26DE /* GUI */,
 				3221C73D16C39480008C194B /* OKCloud.h */,
 				3221C73E16C39480008C194B /* OKCloud.m */,
@@ -400,7 +404,6 @@
 				3221C76516C39480008C194B /* OKUserUtilities.h */,
 				3221C76616C39480008C194B /* OKUserUtilities.m */,
 				3221C76716C39480008C194B /* OpenKit.h */,
-				A9DDFB2616C41A1E009D26DE /* OpenKit.m */,
 				3221C76916C39480008C194B /* SimpleKeychain.h */,
 				3221C76A16C39480008C194B /* SimpleKeychain.m */,
 			);
@@ -441,6 +444,7 @@
 		A9DDFB2216C41766009D26DE /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				A9DDFB2D16C421D2009D26DE /* OKGUI.h */,
 				3221C73516C39480008C194B /* AbstractActionSheetPicker.h */,
 				3221C73616C39480008C194B /* AbstractActionSheetPicker.m */,
 				3221C73716C39480008C194B /* ActionSheetStringPicker.h */,
@@ -571,7 +575,7 @@
 				3221C78116C39480008C194B /* OKUserProfileImageView.m in Sources */,
 				3221C78216C39480008C194B /* OKUserUtilities.m in Sources */,
 				3221C78416C39480008C194B /* SimpleKeychain.m in Sources */,
-				A9DDFB2716C41A1E009D26DE /* OpenKit.m in Sources */,
+				A9DDFB2C16C42186009D26DE /* OKDirector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
