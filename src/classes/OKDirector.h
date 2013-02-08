@@ -8,11 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@class AFHTTPClient;
 @class OKUser;
 @interface OpenKit : NSObject
-
-@property (nonatomic, strong) AFHTTPClient *httpClient;
 
 + (id)sharedInstance;
 - (void)saveCurrentUser:(OKUser *)aCurrentUser;

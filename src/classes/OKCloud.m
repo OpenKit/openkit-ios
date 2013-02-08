@@ -20,7 +20,7 @@
 
 #import "OKCloud.h"
 #import "OKUser.h"
-#import "OKCloudAsyncRequest.h"
+#import "OKNetworker.h"
 #import "JSONKit.h"
 
 
@@ -77,13 +77,12 @@ decodeObj(NSData *dataIn, NSError **errOut)
                             objRep,         @"field_value",
                             nil];
 
-    OKCloudAsyncRequest *req = [[OKCloudAsyncRequest alloc] initWithPath:@"/developer_data"
-                                                 requestMethod:@"POST"
-                                                    parameters:params];
-
-    [req performWithCompletionHandler:^(id responseObj, NSError *err) {
-        completion(obj, err);
-    }];
+    [OKNetworker postToPath:@"/developer_data"
+                 parameters:params
+                    handler:^(id responseObject, NSError *error)
+     {
+         completion(responseObject, error);
+     }];
 }
 
 + (void)get:(NSString *)key completion:(void (^)(id obj, NSError *err))completion
@@ -95,26 +94,26 @@ decodeObj(NSData *dataIn, NSError **errOut)
                             nil];
 
     NSString *path = [NSString stringWithFormat:@"/developer_data/%@", key];
-    OKCloudAsyncRequest *req = [[OKCloudAsyncRequest alloc] initWithPath:path
-                                                 requestMethod:@"GET"
-                                                    parameters:params];
-
-    [req performWithCompletionHandler:^(id responseObj, NSError *err) {
+    
+    [OKNetworker getFromPath:path
+                  parameters:params
+                     handler:^(id responseObject, NSError *error)
+    {
 #ifdef DEBUG
-        OKLog(@"OKCloud Response: %@", [[NSString alloc] initWithData:responseObj encoding:NSUTF8StringEncoding]);
+         OKLog(@"OKCloud Response: %@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
 #endif
-        id o = nil;
-        if (!err) {
-            NSDictionary *dict = decodeObj(responseObj, &err);
-            if (!err) {
-                o = [dict objectForKey:key];
-                if ([o isKindOfClass:[NSNull class]]) {
-                    o = nil;
-                }
-            }
-        }
-        completion(o, err);
-    }];
+         id o = nil;
+         if (!error) {
+             NSDictionary *dict = decodeObj(responseObject, &error);
+             if (!error) {
+                 o = [dict objectForKey:key];
+                 if ([o isKindOfClass:[NSNull class]]) {
+                     o = nil;
+                 }
+             }
+         }
+         completion(o, error);
+     }];
 }
 
 @end

@@ -10,7 +10,7 @@
 #import "OKFacebookUtilities.h"
 #import "OKUserUtilities.h"
 #import "OKDirector.h"
-#import "AFNetworking.h"
+#import "OKNetworker.h"
 
 
 @implementation OKFacebookUtilities
@@ -105,35 +105,28 @@
 }
 
 +(void)CreateOKUserWithFacebookID:(NSString *)facebookID withUserNick:(NSString *)userNick withCompletionHandler:(void(^)(OKUser *user, NSError *error))completionhandler
-{
-    AFHTTPClient *OK_HTTPClient = [[OpenKit sharedInstance] httpClient];
-    
+{    
     //Create a request and send it to OpenKit
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:facebookID forKey:@"fb_id"];
-    [parameters setValue:[OpenKit getApplicationID] forKey:@"app_key"];
-    [parameters setValue:userNick forKey:@"nick"];
-    
-    NSMutableURLRequest *request =  [OK_HTTPClient requestWithMethod:@"POST" path:@"/users" parameters:parameters];
-    
-    AFHTTPRequestOperation *operation = [OK_HTTPClient HTTPRequestOperationWithRequest:request
-                                                                               success:^(AFHTTPRequestOperation *operation, id responseObject)
-                                         {
-                                             //Success
-                                             NSLog(@"Successfully created/found user ID: %@", [responseObject valueForKeyPath:@"id"]);
-                                             OKUser *newUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
-                                             
-                                             //TODO save current user
-                                             [[OpenKit sharedInstance] saveCurrentUser:newUser];
-                                             completionhandler(newUser, nil);
-                                         }
-                                                                               failure:^(AFHTTPRequestOperation *operation, NSError *error)
-                                         {
-                                             NSLog(@"Failed to create user with error: %@", error);
-                                             completionhandler(nil,error);
-                                         }];
-    
-    [operation start];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            facebookID, @"fb_id",
+                            userNick, @"nick", nil];
+
+    [OKNetworker postToPath:@"/users" parameters:params
+                    handler:^(id responseObject, NSError *error)
+     {
+         OKUser *newUser = nil;
+         if(!error) {
+             //Success
+             NSLog(@"Successfully created/found user ID: %@", [responseObject valueForKeyPath:@"id"]);
+             newUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
+             
+             //TODO save current user
+             [[OpenKit sharedInstance] saveCurrentUser:newUser];
+         }else{
+             NSLog(@"Failed to create user with error: %@", error);
+         }
+         completionhandler(newUser, error);
+     }];
 }
 
 

@@ -9,7 +9,7 @@
 #import "OKUserUtilities.h"
 #import "OKDirector.h"
 #import "OKUser.h"
-#import "AFNetworking.h"
+#import "OKNetworker.h"
 
 @implementation OKUserUtilities
 
@@ -52,44 +52,36 @@
     return dict;
 }
 
+
 + (void)updateUserNickForOKUser:(OKUser *)user withNewNick:(NSString *)newNick withCompletionHandler:(void(^)(NSError *error))completionHandler
-{
-    AFHTTPClient *OK_HTTPClient = [[OpenKit sharedInstance] httpClient];
-    
+{    
     //Setup the parameters
     NSDictionary *userDict = [NSDictionary dictionaryWithObject:newNick forKey:@"nick"];
-    NSMutableDictionary *requestParams = [[NSMutableDictionary alloc] initWithCapacity:3];
-    [requestParams setValue:userDict forKey:@"user"];
-    [requestParams setValue:[OpenKit getApplicationID] forKey:@"app_key"];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            userDict, @"user", nil];
     
     NSString *requestPath = [NSString stringWithFormat:@"/users/%@", [user.OKUserID stringValue]];
     
-    NSMutableURLRequest *request = [OK_HTTPClient requestWithMethod:@"PUT" path:requestPath parameters:requestParams];
-    
-    AFHTTPRequestOperation *operation = [OK_HTTPClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject)
-    {
-        //Check to make sure the user was returned, that way we know the response was successful
-        OKUser *responseUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
-        
-        if([responseUser OKUserID] == [user OKUserID])
-        {
-            [[OpenKit sharedInstance] saveCurrentUser:responseUser];
-            completionHandler(nil);
-        }
-        else
-        {
-            NSDictionary *errorInfo = [NSDictionary dictionaryWithObject:@"Unknown error from OpenKit when trying to update user nick" forKey:NSLocalizedDescriptionKey];
-            NSError *error = [[NSError alloc] initWithDomain:OKErrorDomain code:0 userInfo:errorInfo];
-            completionHandler(error);
-        }
-        
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-    {
-        NSLog(@"Error updating username: %@", error);
-        completionHandler(error);
-    }];
-    
-    [operation start];
+    [OKNetworker putToPath:requestPath parameters:params
+                   handler:^(id responseObject, NSError *error)
+     {
+         if(!error){
+             //Check to make sure the user was returned, that way we know the response was successful
+             OKUser *responseUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
+             
+             if([responseUser OKUserID] == [user OKUserID])
+             {
+                 [[OpenKit sharedInstance] saveCurrentUser:responseUser];
+             }
+             else
+             {
+                 NSDictionary *errorInfo = [NSDictionary dictionaryWithObject:@"Unknown error from OpenKit when trying to update user nick" forKey:NSLocalizedDescriptionKey];
+                 error = [[NSError alloc] initWithDomain:OKErrorDomain code:0 userInfo:errorInfo];
+             }
+         }else{
+             NSLog(@"Error updating username: %@", error);
+         }
+         completionHandler(error);
+     }];
 }
 @end
