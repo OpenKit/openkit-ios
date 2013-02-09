@@ -1,8 +1,8 @@
 //
-//  OKScore.h
-//  OKClient
+//  OKNetworker.h
+//  OKNetworker
 //
-//  Created by Suneet Shah on 1/3/13.
+//  Created by Manuel Martinez-Almeida on 9/2/13.
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
