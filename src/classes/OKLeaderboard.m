@@ -7,8 +7,11 @@
 //
 
 #import "OKLeaderboard.h"
-#import "OpenKit.h"
+#import "OKDirector.h"
+#import "OKUser.h"
+#import "OKScore.h"
 #import "OKHelper.h"
+#import "OKNetworker.h"
 
 @implementation OKLeaderboard
 
@@ -40,48 +43,41 @@
 
 + (void)getLeaderboardsWithCompletionHandler:(void (^)(NSArray* leaderboards, NSError* error))completionHandler
 {
-    AFHTTPClient *OK_HTTPClient = [[OpenKit sharedInstance] httpClient];
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [params setValue:[OpenKit getApplicationID] forKey:@"app_key"];
-    
-    NSMutableURLRequest *request = [OK_HTTPClient requestWithMethod:@"GET" path:@"/leaderboards" parameters:params];
-    AFHTTPRequestOperation *operation = [OK_HTTPClient HTTPRequestOperationWithRequest:request
-                                                                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-         NSArray *leaderBoardsJSON = (NSArray*)responseObject;
-         int numLeaderboards = [leaderBoardsJSON count];
-         NSLog(@"Successfully got list of leaderboards");
-         NSLog(@"Leaderboard response is: %@", responseObject);
-         
-         if (numLeaderboards > 0) {
-             NSMutableArray *leaderBoardsList = [[NSMutableArray alloc] init];
-             for (int x = 0; x < numLeaderboards; x++) {
-                 OKLeaderboard *leaderBoard = [[OKLeaderboard alloc] initFromJSON:[leaderBoardsJSON objectAtIndex:x]];
-                 [leaderBoardsList addObject:leaderBoard];
+    // OK NETWORK REQUEST
+    [OKNetworker getFromPath:@"/leaderboards" parameters:nil
+                     handler:^(id responseObject, NSError *error)
+     {
+         NSMutableArray *leaderboards = nil;
+         if(!error) {
+             NSLog(@"Successfully got list of leaderboards");
+             NSLog(@"Leaderboard response is: %@", responseObject);
+             NSArray *leaderBoardsJSON = (NSArray*)responseObject;
+             leaderboards = [NSMutableArray arrayWithCapacity:[leaderBoardsJSON count]];
+             
+             for(id obj in leaderBoardsJSON) {
+                 OKLeaderboard *leaderBoard = [[OKLeaderboard alloc] initFromJSON:obj];
+                 [leaderboards addObject:leaderBoard];
              }
-            completionHandler(leaderBoardsList, nil);
+         }else{
+             NSLog(@"Failed to get list of leaderboards: %@", error);
          }
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         NSLog(@"Failed to get list of leaderboards: %@", error);
-         completionHandler(nil, error);
+         completionHandler(leaderboards, error);
      }];
-    
-    [operation start];
 }
 
--(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler
+
+-(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange
+       WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler
 {
-    AFHTTPClient *OK_HTTPClient = [[OpenKit sharedInstance] httpClient];
-    
     //Create a request and send it to OpenKit
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [params setValue:[OpenKit getApplicationID] forKey:@"app_key"];
     [params setValue:[NSNumber numberWithInt:[self OKLeaderboard_id]] forKey:@"leaderboard_id"];
 
     OKUser *u = [OKUser currentUser];
     if (u) {
         [params setValue:u.OKUserID forKey:@"user_id"];
     }
-
+    
     if (timeRange != OKLeaderboardTimeRangeAllTime) {
         int days;
         switch (timeRange) {
@@ -93,35 +89,31 @@
         NSDate *since = [OKHelper dateNDaysFromToday:days];
         [params setValue:since forKey:@"since"];
     }
-
-
-    NSMutableURLRequest *request = [OK_HTTPClient requestWithMethod:@"GET" path:@"/scores" parameters:params];
     
-    AFHTTPRequestOperation *operation =
-    [OK_HTTPClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Successfully got scores: %@", responseObject);
-        
-        NSArray *scoresJSON = (NSArray*)responseObject;
-        int numScores = [scoresJSON count];
-        
-        NSMutableArray *scores = [[NSMutableArray alloc] initWithCapacity:numScores];
-        
-        for (int x = 0; x < numScores; x++) {
-            OKScore *score = [[OKScore alloc] initFromJSON:[scoresJSON objectAtIndex:x]];
-            [scores addObject:score];
-            if (u && score.user.OKUserID == u.OKUserID) {
-                NSLog(@"Current user's score is: %d", score.scoreValue);
+    
+    // OK NETWORK REQUEST
+    [OKNetworker getFromPath:@"/scores" parameters:params
+                     handler:^(id responseObject, NSError *error)
+    {
+        NSMutableArray *scores = nil;
+        if(!error) {
+            NSLog(@"Successfully got scores: %@", responseObject);
+
+            NSArray *scoresJSON = (NSArray*)responseObject;
+            scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
+            
+            for(id obj in scoresJSON) {
+                OKScore *score = [[OKScore alloc] initFromJSON:obj];
+                [scores addObject:score];
+                if (u && score.user.OKUserID == u.OKUserID) {
+                    NSLog(@"Current user's score is: %d", score.scoreValue);
+                }
             }
+        }else{
+            NSLog(@"Failed to get scores");
         }
-        
-        completionHandler(scores, nil);
-    }
-    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Failed to get scores");
-        completionHandler(nil, error);
+        completionHandler(scores, error);
     }];
-    
-    [operation start];
 }
 
 

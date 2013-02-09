@@ -6,8 +6,11 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
+#import <Twitter/Twitter.h>
 #import "OKTwitterUtilities.h"
 #import "OKUserUtilities.h"
+#import "OKDirector.h"
+#import "OKNetworker.h"
 
 @implementation OKTwitterUtilities
 
@@ -42,8 +45,6 @@
     NSDictionary *params = [NSDictionary dictionaryWithObject:twitterID forKey:@"user_id"];
     
     TWRequest *request = [[TWRequest alloc] initWithURL:reqURL parameters:params requestMethod:TWRequestMethodGET];
-
-    
     [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
         if([urlResponse statusCode] == 200)
         {
@@ -91,36 +92,26 @@
 }
 
 +(void)CreateOKUserWithTwitterID:(NSNumber *)twitterID withUserNick:(NSString *)userNick withCompletionHandler:(void(^)(OKUser *user, NSError *error))completionhandler
-{
-    AFHTTPClient *OK_HTTPClient = [[OpenKit sharedInstance] httpClient];
-    
+{    
     //Create a request and send it to OpenKit
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setValue:twitterID forKey:@"twitter_id"];
-    [parameters setValue:[OpenKit getApplicationID] forKey:@"app_key"];
-    [parameters setValue:userNick forKey:@"nick"];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            twitterID, @"twitter_id",
+                            userNick, @"nick", nil];
     
-    NSMutableURLRequest *request =  [OK_HTTPClient requestWithMethod:@"POST" path:@"/users" parameters:parameters];
-    
-    NSLog(@"Request is : %@ params: %@", request, parameters);
-    
-    AFHTTPRequestOperation *operation = [OK_HTTPClient HTTPRequestOperationWithRequest:request
-                                                                               success:^(AFHTTPRequestOperation *operation, id responseObject)
-                                         {
-                                             //Success
-                                             NSLog(@"Successfully created/found user ID: %@", [responseObject valueForKeyPath:@"id"]);
-                                             OKUser *newUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
-                                             
-                                             [[OpenKit sharedInstance] saveCurrentUser:newUser];
-                                             completionhandler(newUser, nil);
-                                         }
-                                                                               failure:^(AFHTTPRequestOperation *operation, NSError *error)
-                                         {
-                                             NSLog(@"Failed to create user ");
-                                             completionhandler(nil,error);
-                                         }];
-    
-    [operation start];
+    [OKNetworker postToPath:@"/users" parameters:params
+                    handler:^(id responseObject, NSError *error)
+     {
+         OKUser *newUser = nil;
+         if(error == nil) {
+             //Success
+             NSLog(@"Successfully created/found user ID: %@", [responseObject valueForKeyPath:@"id"]);
+             newUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
+             [[OpenKit sharedInstance] saveCurrentUser:newUser];
+         }else{
+             NSLog(@"Failed to create user");
+         }
+         completionhandler(newUser, error);
+     }];
 }
 
 //ithCompletionHandler:(void(^)(OKUser *user, NSError *error))completionhandler

@@ -7,10 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OKUser.h"
-#import "OpenKit.h"
 
-
+@class OKUser;
 @interface OKScore : NSObject
 
 @property (nonatomic) NSInteger OKScoreID;

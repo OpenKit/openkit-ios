@@ -8,6 +8,9 @@
 
 #import "OKScore.h"
 #import "OKUserUtilities.h"
+#import "OKUser.h"
+#import "OKDirector.h"
+#import "OKNetworker.h"
 
 @implementation OKScore
 
@@ -42,7 +45,7 @@
     return paramDict;
 }
 
--(void)submitScoreWithCompletionHandler:(void (^)(NSError *error))completionHandler;
+-(void)submitScoreWithCompletionHandler:(void (^)(NSError *error))completionHandler
 {
     //Can only submit scores for the currently logged in user
     [self setUser:[OKUser currentUser]];
@@ -53,29 +56,21 @@
     }
     
     //Create a request and send it to OpenKit
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [params setValue:[OpenKit getApplicationID] forKey:@"app_key"];
-    [params setValue:[self getScoreParamDict] forKey:@"score"];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [self getScoreParamDict], @"score", nil];
     
-    AFHTTPClient *OK_HTTPClient = [[OpenKit sharedInstance] httpClient];
-
-    NSMutableURLRequest *request = [OK_HTTPClient requestWithMethod:@"POST" path:@"/scores" parameters:params];
-    
-    NSLog(@"Request is: %@", request);
-    
-    AFHTTPRequestOperation *operation =
-    [OK_HTTPClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Successfully posted score");
-        NSLog(@"Response: %@", responseObject);
-        completionHandler(nil);
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Failed to post score");
-        NSLog(@"Error: %@", error);
-        completionHandler(error);
-    }];
-    
-    [operation start];
+    [OKNetworker postToPath:@"/scores" parameters:params
+                    handler:^(id responseObject, NSError *error)
+     {
+         if(!error) {
+             NSLog(@"Successfully posted score");
+             NSLog(@"Response: %@", responseObject);
+         }else{
+             NSLog(@"Failed to post score");
+             NSLog(@"Error: %@", error);
+         }
+         completionHandler(error);
+     }];
 }
 
 

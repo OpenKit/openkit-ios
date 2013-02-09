@@ -7,9 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OKUser.h"
 
-
+@class OKUser;
 @interface OKUserUtilities : NSObject
 
 + (OKUser *)createOKUserWithJSONData:(NSDictionary *)jsonData;
