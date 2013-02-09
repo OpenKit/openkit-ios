@@ -7,7 +7,6 @@
 //
 
 #import "OKHelper.h"
-#import "OKUser.h"
 
 @implementation OKHelper
 
@@ -19,6 +18,5 @@
     components.day = n;
     return [calendar dateByAddingComponents:components toDate:now options:0];
 }
-
 
 @end

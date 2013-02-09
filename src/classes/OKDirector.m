@@ -1,14 +1,16 @@
 //
-//  OpenKit.m
-//  OKClient
+//  OKDirector.m
+//  OKDirector
 //
 //  Created by Suneet Shah on 12/27/12.
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
-#import "OpenKit.h"
-#import "OKUserUtilities.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "OKDirector.h"
+#import "AFNetworking.h"
+#import "OKUser.h"
+#import "OKUserUtilities.h"
 #import "OKFacebookUtilities.h"
 #import "OKTwitterUtilities.h"
 #import "SimpleKeychain.h"
@@ -50,14 +52,6 @@
 {
     self = [super init];
     if (self) {
-        _httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:OKBaseURL]];
-        [_httpClient setParameterEncoding:AFJSONParameterEncoding];
-        [_httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
-
-        // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
-        [_httpClient setDefaultHeader:@"Accept" value:@"application/json"];
-        [_httpClient setDefaultHeader:@"Content-Type" value:@"application/json"];
-
         [self getSavedUserFromKeychain];
     }
     return self;

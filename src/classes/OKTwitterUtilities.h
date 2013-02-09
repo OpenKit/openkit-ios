@@ -6,12 +6,10 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "OpenKit.h"
 #import <Accounts/Accounts.h>
-#import <Twitter/Twitter.h>
+#import <Foundation/Foundation.h>
 
-
+@class OKUser;
 @interface OKTwitterUtilities : NSObject
 
 +(void)AuthorizeTwitterAccount:(ACAccount *)twitterAccount withCompletionHandler:(void(^)(OKUser *newUser, NSError *error))completionHandler;

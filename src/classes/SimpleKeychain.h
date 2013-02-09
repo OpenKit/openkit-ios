@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-
 @interface SimpleKeychain : NSObject
 
 + (void)store:(NSData *)str;
