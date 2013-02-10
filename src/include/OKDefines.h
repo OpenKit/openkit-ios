@@ -9,7 +9,8 @@
 #ifndef OKClient_OKDefines_h
 #define OKClient_OKDefines_h
 
-#define OKBaseURL @"http://stage.openkit.io/"
+#define OKBaseURL @"http://localhost:3000/"
+//#define OKBaseURL @"http://stage.openkit.io/"
 #define OKErrorDomain @"OKError"
 
 #endif  // end if OKClient_OKDefines_h
