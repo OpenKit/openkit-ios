@@ -9,7 +9,7 @@
 #ifndef OKClient_OKDefines_h
 #define OKClient_OKDefines_h
 
-#ifdef DEBUG
+#ifdef LOCAL_SERVER
     #define OKBaseURL @"http://localhost:3000/"
 #else
     #define OKBaseURL @"http://stage.openkit.io/"
