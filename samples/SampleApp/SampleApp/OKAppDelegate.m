@@ -21,8 +21,14 @@ NSString *const OK_FBSessionStateChangedNotification = @"OK_FBSessionStateChange
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Always enter your app key in didFinishLaunchingWithOptions
+#ifdef LOCAL_SERVER
+    [OpenKit initializeWithAppID:@"ZGa5rreNauqPLHsLY6Yz"];
+    [OpenKit setEndpoint:@"http://localhost:3000"];
+#else
     [OpenKit initializeWithAppID:@"VwfMRAl5Gc4tirjw"];
-    
+    [OpenKit setEndpoint:@"http://stage.openkit.io"];
+#endif
+
 
     // Set root view controller.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

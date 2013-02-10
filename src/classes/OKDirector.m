@@ -16,6 +16,8 @@
 #import "SimpleKeychain.h"
 #import "OKDefines.h"
 
+#define DEFAULT_ENDPOINT    @"stage.openkit.io"
+
 
 @interface OpenKit ()
 {
@@ -23,6 +25,7 @@
 }
 
 @property (nonatomic, strong) NSString *OKAppID;
+@property (nonatomic, strong) NSString *endpoint;
 
 @end
 
@@ -53,6 +56,7 @@
     self = [super init];
     if (self) {
         [self getSavedUserFromKeychain];
+        _endpoint = DEFAULT_ENDPOINT;
     }
     return self;
 }
@@ -62,15 +66,26 @@
     return _currentUser;
 }
 
-+(void)setApplicationID:(NSString *)appID;
++ (void)setApplicationID:(NSString *)appID;
 {
     [[OpenKit sharedInstance] setOKAppID:appID];
 }
 
-+(NSString*)getApplicationID
++ (NSString*)getApplicationID
 {
     return [[OpenKit sharedInstance] OKAppID];
 }
+
++ (void)setEndpoint:(NSString *)endpoint;
+{
+    [[OpenKit sharedInstance] setEndpoint:endpoint];
+}
+
++ (NSString*)getEndpoint
+{
+    return [[OpenKit sharedInstance] endpoint];
+}
+
 
 - (void)logoutCurrentUser
 {

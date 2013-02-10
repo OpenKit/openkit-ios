@@ -18,6 +18,8 @@
 
 +(void)setApplicationID:(NSString *)appID;
 +(NSString*)getApplicationID;
++(void)setEndpoint:(NSString *)endpoint;
++(NSString *)getEndpoint;
 +(void)initializeWithAppID:(NSString *)appID;
 
 +(BOOL)handleOpenURL:(NSURL*)url;
