@@ -183,7 +183,7 @@
 
 /* Begin PBXFileReference section */
 		3221C6D016C393A4008C194B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK.framework; sourceTree = "<group>"; };
-		3221C6D216C393B4008C194B /* OpenKitIOS-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenKitIOS-Prefix.pch"; sourceTree = "<group>"; };
+		3221C6D216C393B4008C194B /* BuildOpenKitSDK-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BuildOpenKitSDK-Prefix.pch"; sourceTree = "<group>"; };
 		3221C6D416C393E6008C194B /* cell_border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cell_border.png; sourceTree = "<group>"; };
 		3221C6D516C393E6008C194B /* cell_border@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_border@2x.png"; sourceTree = "<group>"; };
 		3221C6D616C393E6008C194B /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
@@ -275,7 +275,7 @@
 		3221C76716C39480008C194B /* OpenKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenKit.h; sourceTree = "<group>"; };
 		3221C76916C39480008C194B /* SimpleKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleKeychain.h; sourceTree = "<group>"; };
 		3221C76A16C39480008C194B /* SimpleKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleKeychain.m; sourceTree = "<group>"; };
-		3251E87416C2C9630000553D /* libOpenKitIOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOpenKitIOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3251E87416C2C9630000553D /* libBuildOpenKitSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBuildOpenKitSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3251E87716C2C9630000553D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A992884016C5637000F0F1EA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A992884316C5637000F0F1EA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -420,7 +420,7 @@
 				3221C71216C39455008C194B /* vendor */,
 				3221C6EC16C393EE008C194B /* xib */,
 				3221C6D316C393E6008C194B /* images */,
-				3221C6D216C393B4008C194B /* OpenKitIOS-Prefix.pch */,
+				3221C6D216C393B4008C194B /* BuildOpenKitSDK-Prefix.pch */,
 				3221C6D016C393A4008C194B /* FacebookSDK.framework */,
 				3251E87616C2C9630000553D /* Frameworks */,
 				3251E87516C2C9630000553D /* Products */,
@@ -430,7 +430,7 @@
 		3251E87516C2C9630000553D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3251E87416C2C9630000553D /* libOpenKitIOS.a */,
+				3251E87416C2C9630000553D /* libBuildOpenKitSDK.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -486,9 +486,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3251E87316C2C9630000553D /* OpenKitIOS */ = {
+		3251E87316C2C9630000553D /* BuildOpenKitSDK */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3251E88216C2C9630000553D /* Build configuration list for PBXNativeTarget "OpenKitIOS" */;
+			buildConfigurationList = 3251E88216C2C9630000553D /* Build configuration list for PBXNativeTarget "BuildOpenKitSDK" */;
 			buildPhases = (
 				3251E87016C2C9630000553D /* Sources */,
 				3251E87116C2C9630000553D /* Frameworks */,
@@ -501,9 +501,9 @@
 			);
 			dependencies = (
 			);
-			name = OpenKitIOS;
-			productName = OpenKitIOS;
-			productReference = 3251E87416C2C9630000553D /* libOpenKitIOS.a */;
+			name = BuildOpenKitSDK;
+			productName = BuildOpenKitSDK;
+			productReference = 3251E87416C2C9630000553D /* libBuildOpenKitSDK.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -515,7 +515,7 @@
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = OpenKit;
 			};
-			buildConfigurationList = 3251E86F16C2C9630000553D /* Build configuration list for PBXProject "OpenKitIOS" */;
+			buildConfigurationList = 3251E86F16C2C9630000553D /* Build configuration list for PBXProject "BuildOpenKitSDK" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -527,7 +527,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3251E87316C2C9630000553D /* OpenKitIOS */,
+				3251E87316C2C9630000553D /* BuildOpenKitSDK */,
 			);
 		};
 /* End PBXProject section */
@@ -642,14 +642,14 @@
 		3251E88316C2C9630000553D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = /tmp/OpenKitIOS.dst;
+				DSTROOT = /tmp/BuildOpenKitSDK.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/..\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "OpenKitIOS-Prefix.pch";
+				GCC_PREFIX_HEADER = "BuildOpenKitSDK-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -659,14 +659,14 @@
 		3251E88416C2C9630000553D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = /tmp/OpenKitIOS.dst;
+				DSTROOT = /tmp/BuildOpenKitSDK.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 					"\"$(SRCROOT)/..\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "OpenKitIOS-Prefix.pch";
+				GCC_PREFIX_HEADER = "BuildOpenKitSDK-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -676,7 +676,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3251E86F16C2C9630000553D /* Build configuration list for PBXProject "OpenKitIOS" */ = {
+		3251E86F16C2C9630000553D /* Build configuration list for PBXProject "BuildOpenKitSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3251E88016C2C9630000553D /* Debug */,
@@ -685,7 +685,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3251E88216C2C9630000553D /* Build configuration list for PBXNativeTarget "OpenKitIOS" */ = {
+		3251E88216C2C9630000553D /* Build configuration list for PBXNativeTarget "BuildOpenKitSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3251E88316C2C9630000553D /* Debug */,
