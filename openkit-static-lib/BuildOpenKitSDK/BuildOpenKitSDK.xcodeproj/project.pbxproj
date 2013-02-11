@@ -69,11 +69,6 @@
 		32BCC0B116C8AA8B00D4851D /* twitterBtn@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC05516C8A81100D4851D /* twitterBtn@2x.png */; };
 		32BCC0B216C8AA8B00D4851D /* user_icon.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC05616C8A81100D4851D /* user_icon.png */; };
 		32BCC0B316C8AA8B00D4851D /* user_icon@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC05716C8A81100D4851D /* user_icon@2x.png */; };
-		32BCC0B416C8AA8B00D4851D /* OKLeaderboardsListViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC07216C8A81100D4851D /* OKLeaderboardsListViewController.xib */; };
-		32BCC0B516C8AA8B00D4851D /* OKLeaderboardViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC07316C8A81100D4851D /* OKLeaderboardViewController.xib */; };
-		32BCC0B616C8AA8B00D4851D /* OKNickViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC07416C8A81100D4851D /* OKNickViewController.xib */; };
-		32BCC0B716C8AA8B00D4851D /* OKProfileViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC07516C8A81100D4851D /* OKProfileViewController.xib */; };
-		32BCC0B816C8AA8B00D4851D /* OKScoreViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC07616C8A81100D4851D /* OKScoreViewController.xib */; };
 		32BCC0B916C8AAE400D4851D /* AbstractActionSheetPicker.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC00716C8A81100D4851D /* AbstractActionSheetPicker.h */; };
 		32BCC0BA16C8AAE400D4851D /* ActionSheetStringPicker.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC00916C8A81100D4851D /* ActionSheetStringPicker.h */; };
 		32BCC0BB16C8AAE400D4851D /* KGModal.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC00B16C8A81100D4851D /* KGModal.h */; };
@@ -104,6 +99,11 @@
 		32BCC0D416C8AAE400D4851D /* OKUserUtilities.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC03A16C8A81100D4851D /* OKUserUtilities.h */; };
 		32BCC0D516C8AAE400D4851D /* OpenKit.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC03C16C8A81100D4851D /* OpenKit.h */; };
 		32BCC0D616C8AAE400D4851D /* SimpleKeychain.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC03D16C8A81100D4851D /* SimpleKeychain.h */; };
+		32BCC0D716C8AC9100D4851D /* OKLeaderboardsListViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC07216C8A81100D4851D /* OKLeaderboardsListViewController.xib */; };
+		32BCC0D816C8AC9100D4851D /* OKLeaderboardViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC07316C8A81100D4851D /* OKLeaderboardViewController.xib */; };
+		32BCC0D916C8AC9100D4851D /* OKNickViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC07416C8A81100D4851D /* OKNickViewController.xib */; };
+		32BCC0DA16C8AC9100D4851D /* OKProfileViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC07516C8A81100D4851D /* OKProfileViewController.xib */; };
+		32BCC0DB16C8AC9100D4851D /* OKScoreViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32BCC07616C8A81100D4851D /* OKScoreViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -113,6 +113,11 @@
 			dstPath = Resources/Xib;
 			dstSubfolderSpec = 7;
 			files = (
+				32BCC0D716C8AC9100D4851D /* OKLeaderboardsListViewController.xib in CopyFiles */,
+				32BCC0D816C8AC9100D4851D /* OKLeaderboardViewController.xib in CopyFiles */,
+				32BCC0D916C8AC9100D4851D /* OKNickViewController.xib in CopyFiles */,
+				32BCC0DA16C8AC9100D4851D /* OKProfileViewController.xib in CopyFiles */,
+				32BCC0DB16C8AC9100D4851D /* OKScoreViewController.xib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,11 +151,6 @@
 				32BCC0B116C8AA8B00D4851D /* twitterBtn@2x.png in CopyFiles */,
 				32BCC0B216C8AA8B00D4851D /* user_icon.png in CopyFiles */,
 				32BCC0B316C8AA8B00D4851D /* user_icon@2x.png in CopyFiles */,
-				32BCC0B416C8AA8B00D4851D /* OKLeaderboardsListViewController.xib in CopyFiles */,
-				32BCC0B516C8AA8B00D4851D /* OKLeaderboardViewController.xib in CopyFiles */,
-				32BCC0B616C8AA8B00D4851D /* OKNickViewController.xib in CopyFiles */,
-				32BCC0B716C8AA8B00D4851D /* OKProfileViewController.xib in CopyFiles */,
-				32BCC0B816C8AA8B00D4851D /* OKScoreViewController.xib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,8 +524,8 @@
 				3251E87016C2C9630000553D /* Sources */,
 				3251E87116C2C9630000553D /* Frameworks */,
 				3251E87216C2C9630000553D /* CopyFiles */,
-				3251E88916C2CA0F0000553D /* CopyFiles */,
 				3229E91416C3146F001340A8 /* CopyFiles */,
+				3251E88916C2CA0F0000553D /* CopyFiles */,
 				3229E81A16C30F4C001340A8 /* ShellScript */,
 			);
 			buildRules = (
