@@ -18,7 +18,7 @@ static AFHTTPClient* _httpClient = nil;
 + (AFHTTPClient*) httpClient
 {
     if(!_httpClient) {
-        _httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:OKBaseURL]];
+        _httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[OpenKit getEndpoint]]];
         [_httpClient setParameterEncoding:AFJSONParameterEncoding];
         [_httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
         
