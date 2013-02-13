@@ -22,6 +22,7 @@
 #import "OKUser.h"
 #import "OKNetworker.h"
 #import "JSONKit.h"
+#import "OKMacros.h"
 
 
 static void
