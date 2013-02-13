@@ -22,7 +22,7 @@ NSString *const OK_FBSessionStateChangedNotification = @"OK_FBSessionStateChange
 {
     // Always enter your app key in didFinishLaunchingWithOptions
 #ifdef LOCAL_SERVER
-    [OpenKit initializeWithAppID:@"ZGa5rreNauqPLHsLY6Yz"];
+    [OpenKit initializeWithAppID:@"FaTB4WDEvVMe3nRHlC"];
     [OpenKit setEndpoint:@"http://localhost:3000"];
 #else
     [OpenKit initializeWithAppID:@"VwfMRAl5Gc4tirjw"];

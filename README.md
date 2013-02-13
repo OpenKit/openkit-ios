@@ -25,7 +25,10 @@ Getting started instructions for OpenKit's iOS client:
 
   - Drag the Vendor folder into your project
 
-  - Add the following frameworks to your project (sorry, working on a better way):
+  - Drag the Vendor/FacebookSDK.framework/Resources/FacebookSDKResources.bundle into your project.
+  Note: this step is required even though you just dragged the whole Vendor folder in!
+
+  - Add the following frameworks to your project:
     
     ```
       libsqlite3.dylib
@@ -41,8 +44,10 @@ Getting started instructions for OpenKit's iOS client:
 
   - Add the following lines to your prefix file: 
 
+    ```
      #import <SystemConfiguration/SystemConfiguration.h>
      #import <MobileCoreServices/MobileCoreServices.h>
+    ```
 
   - Browse the sample app found in OpenKit.xcodeproj for the API calls to make. Or keep reading...
 
