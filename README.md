@@ -275,19 +275,3 @@ Class of property4: JKArray
 ```
 
 
-Builds the SDK as a static library. 
-
-After building, right click on the product in Project Navigator (libOpenKit.a)
-and select "Show in Finder".  Back out one directory and you will find a folder
-called Release-universal.  That's where the goods are!
-
-
-Building the Framework (Is this still necessary??)
---------
-Install this https://github.com/kstenerud/iOS-Universal-Framework
-  $ git clone https://github.com/kstenerud/iOS-Universal-Framework.git
-  $ cd "iOS-Universal-Framework/Real Framework"
-  $ ./install.sh
-
-Paste in the Contents/Developer directory of your Xcode install (e.g. /Applications/Xcode46-DP2.app/Contents/Developer)
-
