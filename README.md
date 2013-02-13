@@ -11,17 +11,38 @@ Getting started instructions for OpenKit's iOS client:
   Briefly, this is what you just got: 
 
   <pre>openkit-ios 
-                /OpenKitSDK         &lt;-- The OpenKit (OK) client sdk in static lib form
-                /samples            &lt;-- As of now, a single sample project to get you started
-                /src                &lt;-- source code
-                /misc/OpenKitIOS    &lt;-- Builds the static lib
+                /OpenKit            &lt;-- The OpenKit source
+                /Vendor             &lt;-- Libraries that OpenKit depends on
+                /Resources          &lt;-- Images and xib files
+                /OpenKit.xcodeproj  &lt;-- A project to build the SDK and/or run a sample app
   </pre>
 
-1. Open up samples/SampleApp in Xcode.
+  When you build the OpenKit target, a new directory will be created at openkit-ios/OpenKitSDK.  
+  This will contain the static lib, headers, and resources to use in your own project.  To add
+  OpenKit to your own project: 
+  
+  - Drag the OpenKitSDK folder into your project (build first!)
 
-1. Build and go.
+  - Drag the Vendor folder into your project
 
-Instructions for integrating in your own app coming... tomorrow!
+  - Add the following frameworks to your project (sorry, working on a better way):
+
+      libsqlite3.dylib
+      Twitter.framework
+      Security.framework
+      QuartzCore.framework
+      AdSupport.framework
+      Accounts.framework
+      Social.framework
+      MobileCoreServices.framework
+      SystemConfiguration.framework
+
+  - Add the following lines to your prefix file: 
+
+     #import <SystemConfiguration/SystemConfiguration.h>
+     #import <MobileCoreServices/MobileCoreServices.h>
+
+  - Browse the sample app found in OpenKit.xcodeproj for the API calls to make. Or keep reading...
 
 
 Introduction
