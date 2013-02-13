@@ -1,3 +1,6 @@
+# OpenKit specific
+# Leaving the final build dir of the static lib out:
+OpenKitSDK/
 # Xcode
 .DS_Store
 build/
@@ -16,3 +19,4 @@ profile
 *.moved-aside
 DerivedData
 .idea/
+
