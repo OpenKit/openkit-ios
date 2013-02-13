@@ -26,7 +26,8 @@ Getting started instructions for OpenKit's iOS client:
   - Drag the Vendor folder into your project
 
   - Add the following frameworks to your project (sorry, working on a better way):
-
+    
+    ```
       libsqlite3.dylib
       Twitter.framework
       Security.framework
@@ -36,6 +37,7 @@ Getting started instructions for OpenKit's iOS client:
       Social.framework
       MobileCoreServices.framework
       SystemConfiguration.framework
+    ```
 
   - Add the following lines to your prefix file: 
 
