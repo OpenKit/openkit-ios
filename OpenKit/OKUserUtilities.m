@@ -10,6 +10,7 @@
 #import "OKDirector.h"
 #import "OKUser.h"
 #import "OKNetworker.h"
+#import "OKDefines.h"
 
 @implementation OKUserUtilities
 

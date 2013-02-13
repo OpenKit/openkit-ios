@@ -11,6 +11,7 @@
 #import "OKUser.h"
 #import "OKDirector.h"
 #import "OKNetworker.h"
+#import "OKDefines.h"
 
 @implementation OKScore
 
