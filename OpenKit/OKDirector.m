@@ -43,7 +43,7 @@
 }
 
 
-+(void)initializeWithAppID:(NSString *)appID
++ (void)initializeWithAppID:(NSString *)appID
 {
     [OpenKit sharedInstance];
     [FBProfilePictureView class];
@@ -129,16 +129,17 @@
     [SimpleKeychain clear];
 }
 
-+(BOOL)handleOpenURL:(NSURL*)url
++ (BOOL)handleOpenURL:(NSURL*)url
 {
     return [OKFacebookUtilities handleOpenURL:url];
 }
 
-+(void)handleDidBecomeActive
++ (void)handleDidBecomeActive
 {
     [OKFacebookUtilities handleDidBecomeActive];
 }
-+(void)handleWillTerminate
+
++ (void)handleWillTerminate
 {
     [OKFacebookUtilities handleWillTerminate];
 }

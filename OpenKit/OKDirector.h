@@ -16,14 +16,14 @@
 - (void)logoutCurrentUser;
 
 
-+(void)setApplicationID:(NSString *)appID;
-+(NSString*)getApplicationID;
-+(void)setEndpoint:(NSString *)endpoint;
-+(NSString *)getEndpoint;
-+(void)initializeWithAppID:(NSString *)appID;
++ (void)setApplicationID:(NSString *)appID;
++ (NSString*)getApplicationID;
++ (void)setEndpoint:(NSString *)endpoint;
++ (NSString *)getEndpoint;
++ (void)initializeWithAppID:(NSString *)appID;
 
-+(BOOL)handleOpenURL:(NSURL*)url;
-+(void)handleDidBecomeActive;
-+(void)handleWillTerminate;
++ (BOOL)handleOpenURL:(NSURL*)url;
++ (void)handleDidBecomeActive;
++ (void)handleWillTerminate;
 
 @end
