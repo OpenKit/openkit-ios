@@ -19,6 +19,7 @@ Types
 
 ### Struct
 
+```
 iOS:
     typedef struct
     {
@@ -32,10 +33,11 @@ Unity:
         public float x;
         public float y;
     }
-
+```
 
 ### Enum
 
+```
 iOS:
     typedef enum
     {
@@ -49,20 +51,24 @@ Unity:
         kOKSomeEnum1,
         kOKSomeEnum2
     }
+```
     
 ### Array of strings
 
+```
 iOS:
     const char *images[]
     
 Unity:
     string[] images
+```
     
     
     
 Hitting native functions from Unity
 -----------------------------------
 
+```
 iOS:
     extern void OKBridgeInit(bool isEditor, const char *escapedCodeBase);
     
@@ -73,14 +79,14 @@ Unity:
 Mac:
     [DllImport ("NameOfMacBundle")]
     public static extern void OKBridgeInit(bool isEditor, string escapedCodeBase);
-    
-
+```
 
 Hitting Unity methods from native code
 -----------------------------------
 
 ### Method that takes a string:
 
+```
 Unity:
     // In the OKBridge class:
     public static void OKBridgeLog(string message);
@@ -99,17 +105,19 @@ iOS:
      // Then, to call:
     void *args[1] = { mono_string_new(mono_domain_get(), [[NSString stringWithFormat:@"OpenKit: %@",str] UTF8String]) };
     mono_runtime_invoke(mono_okbridgeLog, NULL, args, NULL);
+```
 
 
 ### Method that takes multiple arguments:
 
 Same as above, except call with:
 
+```
     // In this example playerNumber is an int and accel
     // is a struct containing acceleration data:
     void *args[2] = {&playerNumber, &accel};
     mono_runtime_invoke(mono_deviceDidAccelerate, NULL, args, NULL);
-
+```
 
 
 References:
