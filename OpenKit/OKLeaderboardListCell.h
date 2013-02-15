@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OpenKit.h"
+#import "OKLeaderboard.h"
 
 
 #define kOKLeaderboardListCellIdentifier @"OKLeaderboardListCell"

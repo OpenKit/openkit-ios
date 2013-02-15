@@ -19,7 +19,7 @@
 #define DEFAULT_ENDPOINT    @"stage.openkit.io"
 
 
-@interface OpenKit ()
+@interface OKDirector ()
 {
     OKUser *_currentUser;
 }
@@ -30,14 +30,14 @@
 @end
 
 
-@implementation OpenKit
+@implementation OKDirector
 
 + (id)sharedInstance
 {
     static dispatch_once_t pred;
-    static OpenKit *sharedInstance = nil;
+    static OKDirector *sharedInstance = nil;
     dispatch_once(&pred, ^{
-        sharedInstance = [[OpenKit alloc] init];
+        sharedInstance = [[OKDirector alloc] init];
     });
     return sharedInstance;
 }
@@ -45,9 +45,9 @@
 
 + (void)initializeWithAppID:(NSString *)appID
 {
-    [OpenKit sharedInstance];
+    [OKDirector sharedInstance];
     [FBProfilePictureView class];
-    [[OpenKit sharedInstance] setOKAppID:appID];
+    [[OKDirector sharedInstance] setOKAppID:appID];
     [OKFacebookUtilities OpenCachedFBSessionWithoutLoginUI];
 }
 
@@ -68,22 +68,22 @@
 
 + (void)setApplicationID:(NSString *)appID;
 {
-    [[OpenKit sharedInstance] setOKAppID:appID];
+    [[OKDirector sharedInstance] setOKAppID:appID];
 }
 
 + (NSString*)getApplicationID
 {
-    return [[OpenKit sharedInstance] OKAppID];
+    return [[OKDirector sharedInstance] OKAppID];
 }
 
 + (void)setEndpoint:(NSString *)endpoint;
 {
-    [[OpenKit sharedInstance] setEndpoint:endpoint];
+    [[OKDirector sharedInstance] setEndpoint:endpoint];
 }
 
 + (NSString*)getEndpoint
 {
-    return [[OpenKit sharedInstance] endpoint];
+    return [[OKDirector sharedInstance] endpoint];
 }
 
 

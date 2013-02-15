@@ -72,7 +72,7 @@
              
              if([responseUser OKUserID] == [user OKUserID])
              {
-                 [[OpenKit sharedInstance] saveCurrentUser:responseUser];
+                 [[OKDirector sharedInstance] saveCurrentUser:responseUser];
              }
              else
              {

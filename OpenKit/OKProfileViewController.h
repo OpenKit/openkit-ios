@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Todd Hamilton. All rights reserved.
 //
 
-#import "OpenKit.h"
+@class OKUserProfileImageView;
 
 @interface OKProfileViewController : UIViewController
 

@@ -8,6 +8,8 @@
 
 #import "OKScoreCell.h"
 
+@class OKLeaderboard;
+
 @interface OKScoreViewCell : OKScoreCell
 
 - (void)setScore:(OKScore *)aScore withLeaderboard:(OKLeaderboard *)aLeaderboard;

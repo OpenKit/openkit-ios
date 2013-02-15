@@ -9,10 +9,10 @@
 #import "OKLeaderboardsListViewController.h"
 #import "OKLeaderboardViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "OpenKit.h"
 #import "OKHelper.h"
 #import "OKLeaderboardListCell.h"
 #import "OKProfileViewController.h"
+#import "OKLoginView.h"
 
 
 @interface OKLeaderboardsListViewController ()

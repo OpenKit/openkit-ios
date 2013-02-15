@@ -7,6 +7,7 @@
 //
 
 #import "OKScoreViewCell.h"
+#import "OKLeaderboard.h"
 
 @implementation OKScoreViewCell
 

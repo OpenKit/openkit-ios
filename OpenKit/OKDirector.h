@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class OKUser;
-@interface OpenKit : NSObject
+@interface OKDirector : NSObject
 
 + (id)sharedInstance;
 - (void)saveCurrentUser:(OKUser *)aCurrentUser;

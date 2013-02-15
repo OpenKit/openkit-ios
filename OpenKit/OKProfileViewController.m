@@ -7,6 +7,7 @@
 //
 
 #import "OKProfileViewController.h"
+#import "OKUserProfileImageView.h"
 #import <QuartzCore/QuartzCore.h>
 
 

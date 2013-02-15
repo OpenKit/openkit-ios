@@ -18,7 +18,7 @@ static AFHTTPClient* _httpClient = nil;
 + (AFHTTPClient*) httpClient
 {
     if(!_httpClient) {
-        _httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[OpenKit getEndpoint]]];
+        _httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[OKDirector getEndpoint]]];
         [_httpClient setParameterEncoding:AFJSONParameterEncoding];
         [_httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
         
@@ -34,7 +34,7 @@ static AFHTTPClient* _httpClient = nil;
 {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:d];
     if(![dict objectForKey:@"app_key"])
-        [dict setValue:[OpenKit getApplicationID] forKey:@"app_key"];
+        [dict setValue:[OKDirector getApplicationID] forKey:@"app_key"];
     
     return dict;
 }

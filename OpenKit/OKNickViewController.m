@@ -8,9 +8,9 @@
 
 #import "OKNickViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "OpenKit.h"
 #import "OKUserUtilities.h"
 #import "OKHelper.h"
+#import "OKUserProfileImageView.h"
 
 
 @interface OKNickViewController ()

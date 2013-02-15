@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OpenKit.h"
 #import "OKScoreCell.h"
+#import "OKLeaderboard.h"
 
 @interface OKLeaderboardViewController : UIViewController
 {

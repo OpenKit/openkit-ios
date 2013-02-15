@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OpenKit.h"
 
 @interface OKLeaderboardsViewController : UINavigationController
 

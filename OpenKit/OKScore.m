@@ -35,7 +35,7 @@
 
 -(NSDictionary*)getScoreParamDict
 {
-    OKUser *currentUser = [[OpenKit sharedInstance] currentUser];
+    OKUser *currentUser = [[OKDirector sharedInstance] currentUser];
     
     NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] initWithCapacity:3];
     

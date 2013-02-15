@@ -106,7 +106,7 @@
              //Success
              NSLog(@"Successfully created/found user ID: %@", [responseObject valueForKeyPath:@"id"]);
              newUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
-             [[OpenKit sharedInstance] saveCurrentUser:newUser];
+             [[OKDirector sharedInstance] saveCurrentUser:newUser];
          }else{
              NSLog(@"Failed to create user");
          }
