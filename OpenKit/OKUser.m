@@ -8,7 +8,7 @@
 
 #import <FacebookSDK/FacebookSDK.h>
 #import "OKUser.h"
-#import "OKDirector.h"
+#import "OKManager.h"
 
 @implementation OKUser
 
@@ -35,12 +35,12 @@
 
 + (OKUser*)currentUser
 {
-    return [[OKDirector sharedInstance] currentUser];
+    return [[OKManager sharedInstance] currentUser];
 }
 
 + (void)logoutCurrentUserFromOpenKit
 {
-    [[OKDirector sharedInstance] logoutCurrentUser];
+    [[OKManager sharedInstance] logoutCurrentUser];
 }
 
 @end

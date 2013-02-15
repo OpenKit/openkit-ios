@@ -8,7 +8,7 @@
 
 #import "OKCloudAsyncRequest.h"
 #import "AFNetworking.h"
-#import "OKDirector.h"
+#import "OKManager.h"
 #import "OKMacros.h"
 
 
@@ -25,7 +25,7 @@
 
 - (AFHTTPClient *)httpClient
 {
-    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[OKDirector getEndpoint]]];
+    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[OKManager getEndpoint]]];
     [client setParameterEncoding:AFJSONParameterEncoding];
     return client;
 }
@@ -75,7 +75,7 @@
 - (NSMutableDictionary *)mergedParams
 {
     if (!_mergedParams) {
-        _mergedParams = [NSMutableDictionary dictionaryWithObject:[OKDirector getApplicationID] forKey:@"app_key"];
+        _mergedParams = [NSMutableDictionary dictionaryWithObject:[OKManager getApplicationID] forKey:@"app_key"];
         [_mergedParams addEntriesFromDictionary:_params];
     }
     return _mergedParams;

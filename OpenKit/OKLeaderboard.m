@@ -7,7 +7,7 @@
 //
 
 #import "OKLeaderboard.h"
-#import "OKDirector.h"
+#import "OKManager.h"
 #import "OKUser.h"
 #import "OKScore.h"
 #import "OKHelper.h"

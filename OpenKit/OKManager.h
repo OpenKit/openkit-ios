@@ -1,6 +1,6 @@
 //
-//  OKDirector.h
-//  OKDirector
+//  OKManager.h
+//  OKManager
 //
 //  Created by Suneet Shah on 12/27/12.
 //  Copyright (c) 2013 OpenKit. All rights reserved.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class OKUser;
-@interface OKDirector : NSObject
+@interface OKManager : NSObject
 
 + (id)sharedInstance;
 - (void)saveCurrentUser:(OKUser *)aCurrentUser;

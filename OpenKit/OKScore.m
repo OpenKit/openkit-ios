@@ -9,7 +9,7 @@
 #import "OKScore.h"
 #import "OKUserUtilities.h"
 #import "OKUser.h"
-#import "OKDirector.h"
+#import "OKManager.h"
 #import "OKNetworker.h"
 #import "OKDefines.h"
 
@@ -35,7 +35,7 @@
 
 -(NSDictionary*)getScoreParamDict
 {
-    OKUser *currentUser = [[OKDirector sharedInstance] currentUser];
+    OKUser *currentUser = [[OKManager sharedInstance] currentUser];
     
     NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] initWithCapacity:3];
     

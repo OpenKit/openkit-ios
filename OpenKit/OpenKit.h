@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "AFJSONRequestOperation.h"
-#import "OKDirector.h"
+#import "OKManager.h"
 #import "OKScore.h"
 #import "OKUser.h"
 #import "OKLeaderboard.h"

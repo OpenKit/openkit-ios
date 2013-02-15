@@ -9,7 +9,7 @@
 #import "OKBaseLoginViewController.h"
 
 #import <FacebookSDK/FacebookSDK.h>
-#import "OKDirector.h"
+#import "OKManager.h"
 #import "OKFacebookUtilities.h"
 #import "OKTwitterUtilities.h"
 #import "ActionSheetStringPicker.h"
@@ -245,7 +245,7 @@
             //TODO
             NSLog(@"Error logging into twitter");
         } else {
-            [[OKDirector sharedInstance] saveCurrentUser:newUser];
+            [[OKManager sharedInstance] saveCurrentUser:newUser];
             NSLog(@"Logged in with Twitter");
             [self showUIToEnterNickname];
             //[self dismissModalViewControllerAnimated:YES];

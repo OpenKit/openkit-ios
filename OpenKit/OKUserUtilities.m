@@ -7,7 +7,7 @@
 //
 
 #import "OKUserUtilities.h"
-#import "OKDirector.h"
+#import "OKManager.h"
 #import "OKUser.h"
 #import "OKNetworker.h"
 #import "OKDefines.h"
@@ -72,7 +72,7 @@
              
              if([responseUser OKUserID] == [user OKUserID])
              {
-                 [[OKDirector sharedInstance] saveCurrentUser:responseUser];
+                 [[OKManager sharedInstance] saveCurrentUser:responseUser];
              }
              else
              {

@@ -9,7 +9,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "OKFacebookUtilities.h"
 #import "OKUserUtilities.h"
-#import "OKDirector.h"
+#import "OKManager.h"
 #import "OKNetworker.h"
 
 
@@ -121,7 +121,7 @@
              newUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
              
              //TODO save current user
-             [[OKDirector sharedInstance] saveCurrentUser:newUser];
+             [[OKManager sharedInstance] saveCurrentUser:newUser];
          }else{
              NSLog(@"Failed to create user with error: %@", error);
          }

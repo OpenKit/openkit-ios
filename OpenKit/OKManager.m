@@ -1,13 +1,13 @@
 //
-//  OKDirector.m
-//  OKDirector
+//  OKManager.m
+//  OKManager
 //
 //  Created by Suneet Shah on 12/27/12.
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
 #import <FacebookSDK/FacebookSDK.h>
-#import "OKDirector.h"
+#import "OKManager.h"
 #import "AFNetworking.h"
 #import "OKUser.h"
 #import "OKUserUtilities.h"
@@ -19,7 +19,7 @@
 #define DEFAULT_ENDPOINT    @"stage.openkit.io"
 
 
-@interface OKDirector ()
+@interface OKManager ()
 {
     OKUser *_currentUser;
 }
@@ -30,14 +30,14 @@
 @end
 
 
-@implementation OKDirector
+@implementation OKManager
 
 + (id)sharedInstance
 {
     static dispatch_once_t pred;
-    static OKDirector *sharedInstance = nil;
+    static OKManager *sharedInstance = nil;
     dispatch_once(&pred, ^{
-        sharedInstance = [[OKDirector alloc] init];
+        sharedInstance = [[OKManager alloc] init];
     });
     return sharedInstance;
 }
@@ -45,9 +45,9 @@
 
 + (void)initializeWithAppID:(NSString *)appID
 {
-    [OKDirector sharedInstance];
+    [OKManager sharedInstance];
     [FBProfilePictureView class];
-    [[OKDirector sharedInstance] setOKAppID:appID];
+    [[OKManager sharedInstance] setOKAppID:appID];
     [OKFacebookUtilities OpenCachedFBSessionWithoutLoginUI];
 }
 
@@ -68,22 +68,22 @@
 
 + (void)setApplicationID:(NSString *)appID;
 {
-    [[OKDirector sharedInstance] setOKAppID:appID];
+    [[OKManager sharedInstance] setOKAppID:appID];
 }
 
 + (NSString*)getApplicationID
 {
-    return [[OKDirector sharedInstance] OKAppID];
+    return [[OKManager sharedInstance] OKAppID];
 }
 
 + (void)setEndpoint:(NSString *)endpoint;
 {
-    [[OKDirector sharedInstance] setEndpoint:endpoint];
+    [[OKManager sharedInstance] setEndpoint:endpoint];
 }
 
 + (NSString*)getEndpoint
 {
-    return [[OKDirector sharedInstance] endpoint];
+    return [[OKManager sharedInstance] endpoint];
 }
 
 

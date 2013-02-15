@@ -9,7 +9,7 @@
 #import <Twitter/Twitter.h>
 #import "OKTwitterUtilities.h"
 #import "OKUserUtilities.h"
-#import "OKDirector.h"
+#import "OKManager.h"
 #import "OKNetworker.h"
 
 @implementation OKTwitterUtilities
@@ -106,7 +106,7 @@
              //Success
              NSLog(@"Successfully created/found user ID: %@", [responseObject valueForKeyPath:@"id"]);
              newUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
-             [[OKDirector sharedInstance] saveCurrentUser:newUser];
+             [[OKManager sharedInstance] saveCurrentUser:newUser];
          }else{
              NSLog(@"Failed to create user");
          }

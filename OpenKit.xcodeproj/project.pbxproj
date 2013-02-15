@@ -43,7 +43,7 @@
 		32CACFD716CB637C00E8F185 /* KGModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA216CB637C00E8F185 /* KGModal.m */; };
 		32CACFD816CB637C00E8F185 /* OKBaseLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA416CB637C00E8F185 /* OKBaseLoginViewController.m */; };
 		32CACFD916CB637C00E8F185 /* OKCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA616CB637C00E8F185 /* OKCloud.m */; };
-		32CACFDA16CB637C00E8F185 /* OKDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA916CB637C00E8F185 /* OKDirector.m */; };
+		32CACFDA16CB637C00E8F185 /* OKManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA916CB637C00E8F185 /* OKManager.m */; };
 		32CACFDB16CB637C00E8F185 /* OKFacebookUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFAB16CB637C00E8F185 /* OKFacebookUtilities.m */; };
 		32CACFDC16CB637C00E8F185 /* OKHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFAE16CB637C00E8F185 /* OKHelper.m */; };
 		32CACFDD16CB637C00E8F185 /* OKLeaderboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFB016CB637C00E8F185 /* OKLeaderboard.m */; };
@@ -70,7 +70,7 @@
 		32CACFF216CB65B900E8F185 /* OKBaseLoginViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFA316CB637C00E8F185 /* OKBaseLoginViewController.h */; };
 		32CACFF316CB65B900E8F185 /* OKCloud.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFA516CB637C00E8F185 /* OKCloud.h */; };
 		32CACFF416CB65B900E8F185 /* OKDefines.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFA716CB637C00E8F185 /* OKDefines.h */; };
-		32CACFF516CB65B900E8F185 /* OKDirector.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFA816CB637C00E8F185 /* OKDirector.h */; };
+		32CACFF516CB65B900E8F185 /* OKManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFA816CB637C00E8F185 /* OKManager.h */; };
 		32CACFF616CB65B900E8F185 /* OKFacebookUtilities.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFAA16CB637C00E8F185 /* OKFacebookUtilities.h */; };
 		32CACFF716CB65B900E8F185 /* OKGUI.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFAC16CB637C00E8F185 /* OKGUI.h */; };
 		32CACFF816CB65B900E8F185 /* OKHelper.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFAD16CB637C00E8F185 /* OKHelper.h */; };
@@ -176,7 +176,7 @@
 				32CACFF216CB65B900E8F185 /* OKBaseLoginViewController.h in CopyFiles */,
 				32CACFF316CB65B900E8F185 /* OKCloud.h in CopyFiles */,
 				32CACFF416CB65B900E8F185 /* OKDefines.h in CopyFiles */,
-				32CACFF516CB65B900E8F185 /* OKDirector.h in CopyFiles */,
+				32CACFF516CB65B900E8F185 /* OKManager.h in CopyFiles */,
 				32CACFF616CB65B900E8F185 /* OKFacebookUtilities.h in CopyFiles */,
 				32CACFF716CB65B900E8F185 /* OKGUI.h in CopyFiles */,
 				32CACFF816CB65B900E8F185 /* OKHelper.h in CopyFiles */,
@@ -259,8 +259,8 @@
 		32CACFA516CB637C00E8F185 /* OKCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKCloud.h; sourceTree = "<group>"; };
 		32CACFA616CB637C00E8F185 /* OKCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKCloud.m; sourceTree = "<group>"; };
 		32CACFA716CB637C00E8F185 /* OKDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDefines.h; sourceTree = "<group>"; };
-		32CACFA816CB637C00E8F185 /* OKDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDirector.h; sourceTree = "<group>"; };
-		32CACFA916CB637C00E8F185 /* OKDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKDirector.m; sourceTree = "<group>"; };
+		32CACFA816CB637C00E8F185 /* OKManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKManager.h; sourceTree = "<group>"; };
+		32CACFA916CB637C00E8F185 /* OKManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKManager.m; sourceTree = "<group>"; };
 		32CACFAA16CB637C00E8F185 /* OKFacebookUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFacebookUtilities.h; sourceTree = "<group>"; };
 		32CACFAB16CB637C00E8F185 /* OKFacebookUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFacebookUtilities.m; sourceTree = "<group>"; };
 		32CACFAC16CB637C00E8F185 /* OKGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGUI.h; sourceTree = "<group>"; };
@@ -482,8 +482,8 @@
 				32CAD14916CBABBB00E8F185 /* OKCloudAsyncRequest.h */,
 				32CAD14A16CBABBB00E8F185 /* OKCloudAsyncRequest.m */,
 				32CACFA716CB637C00E8F185 /* OKDefines.h */,
-				32CACFA816CB637C00E8F185 /* OKDirector.h */,
-				32CACFA916CB637C00E8F185 /* OKDirector.m */,
+				32CACFA816CB637C00E8F185 /* OKManager.h */,
+				32CACFA916CB637C00E8F185 /* OKManager.m */,
 				32CACFAA16CB637C00E8F185 /* OKFacebookUtilities.h */,
 				32CACFAB16CB637C00E8F185 /* OKFacebookUtilities.m */,
 				32CACFAC16CB637C00E8F185 /* OKGUI.h */,
@@ -800,7 +800,7 @@
 				32CACFD716CB637C00E8F185 /* KGModal.m in Sources */,
 				32CACFD816CB637C00E8F185 /* OKBaseLoginViewController.m in Sources */,
 				32CACFD916CB637C00E8F185 /* OKCloud.m in Sources */,
-				32CACFDA16CB637C00E8F185 /* OKDirector.m in Sources */,
+				32CACFDA16CB637C00E8F185 /* OKManager.m in Sources */,
 				32CACFDB16CB637C00E8F185 /* OKFacebookUtilities.m in Sources */,
 				32CACFDC16CB637C00E8F185 /* OKHelper.m in Sources */,
 				32CACFDD16CB637C00E8F185 /* OKLeaderboard.m in Sources */,

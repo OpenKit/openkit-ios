@@ -22,11 +22,11 @@ NSString *const OK_FBSessionStateChangedNotification = @"OK_FBSessionStateChange
 {
     // Always enter your app key in didFinishLaunchingWithOptions
 #ifdef LOCAL_SERVER
-    [OpenKit initializeWithAppID:@"FaTB4WDEvVMe3nRHlC"];
-    [OpenKit setEndpoint:@"http://localhost:3000"];
+    [OKManager initializeWithAppID:@"FaTB4WDEvVMe3nRHlC"];
+    [OKManager setEndpoint:@"http://localhost:3000"];
 #else
-    [OpenKit initializeWithAppID:@"VwfMRAl5Gc4tirjw"];
-    [OpenKit setEndpoint:@"http://stage.openkit.io"];
+    [OKManager initializeWithAppID:@"VwfMRAl5Gc4tirjw"];
+    [OKManager setEndpoint:@"http://stage.openkit.io"];
 #endif
 
 
@@ -42,7 +42,7 @@ NSString *const OK_FBSessionStateChangedNotification = @"OK_FBSessionStateChange
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    return [OpenKit handleOpenURL:url];
+    return [OKManager handleOpenURL:url];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -65,13 +65,13 @@ NSString *const OK_FBSessionStateChangedNotification = @"OK_FBSessionStateChange
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [OpenKit handleDidBecomeActive];
+    [OKManager handleDidBecomeActive];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    [OpenKit handleWillTerminate];
+    [OKManager handleWillTerminate];
 }
 
 @end
