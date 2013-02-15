@@ -65,23 +65,24 @@ Unity:
     
     
     
-Hitting native functions from Unity
+Calling native functions from Unity
 -----------------------------------
 
 ```
-iOS:
+In native code, declare:
     extern void OKBridgeInit(bool isEditor, const char *escapedCodeBase);
     
-Unity:
+In Unity, declare:
+    // For iOS:
     [DllImport ("__Internal")]
-	public static extern void OKBridgeInit(bool isEditor, string escapedCodeBase);
+	  public static extern void OKBridgeInit(bool isEditor, string escapedCodeBase);
     
-Mac:
+    // For Mac:
     [DllImport ("NameOfMacBundle")]
     public static extern void OKBridgeInit(bool isEditor, string escapedCodeBase);
 ```
 
-Hitting Unity methods from native code
+Calling Unity methods from native code
 -----------------------------------
 
 ### Method that takes a string:
