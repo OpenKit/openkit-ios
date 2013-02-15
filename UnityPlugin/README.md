@@ -137,8 +137,8 @@ Forwarding messages from OKBridge to game objects:
 
 References:
 -----------
-http://www.reigndesign.com/blog/unity-native-plugins-os-x/
-http://www.tinytimgames.com/2010/01/10/the-unityobjective-c-divide/
-http://forum.unity3d.com/threads/84380-possible-to-call-C-Javascript-back-from-plugin-bundle-on-mac
+http://www.reigndesign.com/blog/unity-native-plugins-os-x/  
+http://www.tinytimgames.com/2010/01/10/the-unityobjective-c-divide/  
+http://forum.unity3d.com/threads/84380-possible-to-call-C-Javascript-back-from-plugin-bundle-on-mac  
 
 Inspired from ~/dev/JoypadSDKBuild/UnityPlugin (see the 0.2-maintenance branch).
