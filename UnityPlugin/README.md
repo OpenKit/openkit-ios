@@ -3,6 +3,7 @@ Usage
 Build this project and copy libOpenKitUnity.a into the Plugins folder within
 Unity's project tree.
 
+
 Developer notes
 ===============
 
@@ -10,6 +11,7 @@ This project is not ARC.
 
 libmono.0.dylib was copied from: 
 /Applications/Unity/Unity.app/Contents/Frameworks/MonoEmbedRuntime/osx/libmono.0.dylib
+
 
 Bridging the Divide
 ===================
@@ -118,6 +120,18 @@ Same as above, except call with:
     // is a struct containing acceleration data:
     void *args[2] = {&playerNumber, &accel};
     mono_runtime_invoke(mono_deviceDidAccelerate, NULL, args, NULL);
+```
+
+
+Forwarding messages from OKBridge to game objects:
+-------------------------------------------------
+
+```
+  obj = GameObject.Find("listeningObjName");
+  listener = obj.GetComponent<OKCallbackListener>();
+  if (listener != null) {
+    listener.DidDoSomething();
+  }
 ```
 
 
