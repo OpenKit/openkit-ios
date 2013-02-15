@@ -11,7 +11,7 @@
 @class OKUser;
 @interface OKManager : NSObject
 
-+ (id)sharedInstance;
++ (id)sharedManager;
 - (void)saveCurrentUser:(OKUser *)aCurrentUser;
 - (void)logoutCurrentUser;
 

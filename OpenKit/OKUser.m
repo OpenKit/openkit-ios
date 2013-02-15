@@ -35,12 +35,12 @@
 
 + (OKUser*)currentUser
 {
-    return [[OKManager sharedInstance] currentUser];
+    return [[OKManager sharedManager] currentUser];
 }
 
 + (void)logoutCurrentUserFromOpenKit
 {
-    [[OKManager sharedInstance] logoutCurrentUser];
+    [[OKManager sharedManager] logoutCurrentUser];
 }
 
 @end

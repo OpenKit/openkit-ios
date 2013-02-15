@@ -245,7 +245,7 @@
             //TODO
             NSLog(@"Error logging into twitter");
         } else {
-            [[OKManager sharedInstance] saveCurrentUser:newUser];
+            [[OKManager sharedManager] saveCurrentUser:newUser];
             NSLog(@"Logged in with Twitter");
             [self showUIToEnterNickname];
             //[self dismissModalViewControllerAnimated:YES];

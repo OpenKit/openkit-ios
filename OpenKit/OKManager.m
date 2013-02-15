@@ -8,7 +8,6 @@
 
 #import <FacebookSDK/FacebookSDK.h>
 #import "OKManager.h"
-#import "AFNetworking.h"
 #import "OKUser.h"
 #import "OKUserUtilities.h"
 #import "OKFacebookUtilities.h"
@@ -32,7 +31,7 @@
 
 @implementation OKManager
 
-+ (id)sharedInstance
++ (id)sharedManager
 {
     static dispatch_once_t pred;
     static OKManager *sharedInstance = nil;
@@ -45,9 +44,9 @@
 
 + (void)initializeWithAppID:(NSString *)appID
 {
-    [OKManager sharedInstance];
+    [OKManager sharedManager];
     [FBProfilePictureView class];
-    [[OKManager sharedInstance] setOKAppID:appID];
+    [[OKManager sharedManager] setOKAppID:appID];
     [OKFacebookUtilities OpenCachedFBSessionWithoutLoginUI];
 }
 
@@ -68,22 +67,22 @@
 
 + (void)setApplicationID:(NSString *)appID;
 {
-    [[OKManager sharedInstance] setOKAppID:appID];
+    [[OKManager sharedManager] setOKAppID:appID];
 }
 
 + (NSString*)getApplicationID
 {
-    return [[OKManager sharedInstance] OKAppID];
+    return [[OKManager sharedManager] OKAppID];
 }
 
 + (void)setEndpoint:(NSString *)endpoint;
 {
-    [[OKManager sharedInstance] setEndpoint:endpoint];
+    [[OKManager sharedManager] setEndpoint:endpoint];
 }
 
 + (NSString*)getEndpoint
 {
-    return [[OKManager sharedInstance] endpoint];
+    return [[OKManager sharedManager] endpoint];
 }
 
 

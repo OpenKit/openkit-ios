@@ -72,7 +72,7 @@
              
              if([responseUser OKUserID] == [user OKUserID])
              {
-                 [[OKManager sharedInstance] saveCurrentUser:responseUser];
+                 [[OKManager sharedManager] saveCurrentUser:responseUser];
              }
              else
              {

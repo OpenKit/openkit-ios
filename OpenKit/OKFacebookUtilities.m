@@ -121,7 +121,7 @@
              newUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
              
              //TODO save current user
-             [[OKManager sharedInstance] saveCurrentUser:newUser];
+             [[OKManager sharedManager] saveCurrentUser:newUser];
          }else{
              NSLog(@"Failed to create user with error: %@", error);
          }
