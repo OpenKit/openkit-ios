@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		321E99CB16D2FB6C005F1506 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */; };
+		321E99CF16D2FBA1005F1506 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 321E99CE16D2FBA1005F1506 /* ActionSheetStringPicker.m */; };
 		3222214B16CBB64E006EBD1C /* cell_border.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD01016CB65E800E8F185 /* cell_border.png */; };
 		3222214C16CBB64E006EBD1C /* cell_border@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD01116CB65E800E8F185 /* cell_border@2x.png */; };
 		3222214D16CBB64E006EBD1C /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD01216CB65E800E8F185 /* close.png */; };
@@ -46,8 +48,6 @@
 		3284E16416CE4AFC00624827 /* OKUnityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */; };
 		3284E16516CE4AFE00624827 /* OKBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243AFE16CDE3C80077EDC8 /* OKBridge.m */; };
 		3284E16616CE4B0400624827 /* libmono.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32243B0416CDE3EF0077EDC8 /* libmono.0.dylib */; };
-		32CACFD516CB637C00E8F185 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACF9E16CB637C00E8F185 /* AbstractActionSheetPicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		32CACFD616CB637C00E8F185 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA016CB637C00E8F185 /* ActionSheetStringPicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		32CACFD716CB637C00E8F185 /* KGModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA216CB637C00E8F185 /* KGModal.m */; };
 		32CACFD816CB637C00E8F185 /* OKBaseLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA416CB637C00E8F185 /* OKBaseLoginViewController.m */; };
 		32CACFD916CB637C00E8F185 /* OKCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA616CB637C00E8F185 /* OKCloud.m */; };
@@ -72,8 +72,6 @@
 		32CACFEC16CB637C00E8F185 /* OKUserProfileImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFCF16CB637C00E8F185 /* OKUserProfileImageView.m */; };
 		32CACFED16CB637C00E8F185 /* OKUserUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFD116CB637C00E8F185 /* OKUserUtilities.m */; };
 		32CACFEE16CB637C00E8F185 /* SimpleKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFD416CB637C00E8F185 /* SimpleKeychain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		32CACFEF16CB65B900E8F185 /* AbstractActionSheetPicker.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACF9D16CB637C00E8F185 /* AbstractActionSheetPicker.h */; };
-		32CACFF016CB65B900E8F185 /* ActionSheetStringPicker.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACF9F16CB637C00E8F185 /* ActionSheetStringPicker.h */; };
 		32CACFF116CB65B900E8F185 /* KGModal.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFA116CB637C00E8F185 /* KGModal.h */; };
 		32CACFF216CB65B900E8F185 /* OKBaseLoginViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFA316CB637C00E8F185 /* OKBaseLoginViewController.h */; };
 		32CACFF316CB65B900E8F185 /* OKCloud.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFA516CB637C00E8F185 /* OKCloud.h */; };
@@ -188,8 +186,6 @@
 			dstPath = include;
 			dstSubfolderSpec = 16;
 			files = (
-				32CACFEF16CB65B900E8F185 /* AbstractActionSheetPicker.h in CopyFiles */,
-				32CACFF016CB65B900E8F185 /* ActionSheetStringPicker.h in CopyFiles */,
 				32CACFF116CB65B900E8F185 /* KGModal.h in CopyFiles */,
 				32CACFF216CB65B900E8F185 /* OKBaseLoginViewController.h in CopyFiles */,
 				32CACFF316CB65B900E8F185 /* OKCloud.h in CopyFiles */,
@@ -262,6 +258,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		321E99C716D2FB6C005F1506 /* AbstractActionSheetPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractActionSheetPicker.h; sourceTree = "<group>"; };
+		321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractActionSheetPicker.m; sourceTree = "<group>"; };
+		321E99CD16D2FBA1005F1506 /* ActionSheetStringPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetStringPicker.h; sourceTree = "<group>"; };
+		321E99CE16D2FBA1005F1506 /* ActionSheetStringPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetStringPicker.m; sourceTree = "<group>"; };
 		3222216816CBB77F006EBD1C /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = Vendor/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		32243AF016CDD4460077EDC8 /* libUnityPlugin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libUnityPlugin.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		32243AF416CDD4460077EDC8 /* UnityPlugin-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnityPlugin-Prefix.pch"; sourceTree = "<group>"; };
@@ -278,10 +278,6 @@
 		3284E15B16CE4A6F00624827 /* UnityPluginMac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UnityPluginMac-Prefix.pch"; sourceTree = "<group>"; };
 		3284E16216CE4AC900624827 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		32CACF7716CB62B500E8F185 /* OpenKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenKit-Prefix.pch"; sourceTree = SOURCE_ROOT; };
-		32CACF9D16CB637C00E8F185 /* AbstractActionSheetPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractActionSheetPicker.h; sourceTree = "<group>"; };
-		32CACF9E16CB637C00E8F185 /* AbstractActionSheetPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractActionSheetPicker.m; sourceTree = "<group>"; };
-		32CACF9F16CB637C00E8F185 /* ActionSheetStringPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetStringPicker.h; sourceTree = "<group>"; };
-		32CACFA016CB637C00E8F185 /* ActionSheetStringPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetStringPicker.m; sourceTree = "<group>"; };
 		32CACFA116CB637C00E8F185 /* KGModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGModal.h; sourceTree = "<group>"; };
 		32CACFA216CB637C00E8F185 /* KGModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGModal.m; sourceTree = "<group>"; };
 		32CACFA316CB637C00E8F185 /* OKBaseLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKBaseLoginViewController.h; sourceTree = "<group>"; };
@@ -554,10 +550,10 @@
 		32CACF9C16CB637C00E8F185 /* OpenKit */ = {
 			isa = PBXGroup;
 			children = (
-				32CACF9D16CB637C00E8F185 /* AbstractActionSheetPicker.h */,
-				32CACF9E16CB637C00E8F185 /* AbstractActionSheetPicker.m */,
-				32CACF9F16CB637C00E8F185 /* ActionSheetStringPicker.h */,
-				32CACFA016CB637C00E8F185 /* ActionSheetStringPicker.m */,
+				321E99C716D2FB6C005F1506 /* AbstractActionSheetPicker.h */,
+				321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */,
+				321E99CD16D2FBA1005F1506 /* ActionSheetStringPicker.h */,
+				321E99CE16D2FBA1005F1506 /* ActionSheetStringPicker.m */,
 				32CACFA116CB637C00E8F185 /* KGModal.h */,
 				32CACFA216CB637C00E8F185 /* KGModal.m */,
 				32CACFA316CB637C00E8F185 /* OKBaseLoginViewController.h */,
@@ -932,8 +928,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32CACFD516CB637C00E8F185 /* AbstractActionSheetPicker.m in Sources */,
-				32CACFD616CB637C00E8F185 /* ActionSheetStringPicker.m in Sources */,
 				32CACFD716CB637C00E8F185 /* KGModal.m in Sources */,
 				32CACFD816CB637C00E8F185 /* OKBaseLoginViewController.m in Sources */,
 				32CACFD916CB637C00E8F185 /* OKCloud.m in Sources */,
@@ -959,6 +953,8 @@
 				32CACFED16CB637C00E8F185 /* OKUserUtilities.m in Sources */,
 				32CACFEE16CB637C00E8F185 /* SimpleKeychain.m in Sources */,
 				32CAD14B16CBABBB00E8F185 /* OKCloudAsyncRequest.m in Sources */,
+				321E99CB16D2FB6C005F1506 /* AbstractActionSheetPicker.m in Sources */,
+				321E99CF16D2FBA1005F1506 /* ActionSheetStringPicker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
