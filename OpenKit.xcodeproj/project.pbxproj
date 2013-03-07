@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		321E99CB16D2FB6C005F1506 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */; };
+		321E99CF16D2FBA1005F1506 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 321E99CE16D2FBA1005F1506 /* ActionSheetStringPicker.m */; };
 		3222214B16CBB64E006EBD1C /* cell_border.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD01016CB65E800E8F185 /* cell_border.png */; };
 		3222214C16CBB64E006EBD1C /* cell_border@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD01116CB65E800E8F185 /* cell_border@2x.png */; };
 		3222214D16CBB64E006EBD1C /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD01216CB65E800E8F185 /* close.png */; };
@@ -37,9 +39,16 @@
 		3222216616CBB65D006EBD1C /* OKProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD02C16CB65E800E8F185 /* OKProfileViewController.xib */; };
 		3222216716CBB65D006EBD1C /* OKScoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD02D16CB65E800E8F185 /* OKScoreViewController.xib */; };
 		3222216916CBB77F006EBD1C /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3222216816CBB77F006EBD1C /* FacebookSDKResources.bundle */; };
+		32243AF116CDD4460077EDC8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
+		32243B0216CDE3C80077EDC8 /* OKBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243AFE16CDE3C80077EDC8 /* OKBridge.m */; };
+		32243B0316CDE3C80077EDC8 /* OKUnityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */; };
+		32243B0516CDE3EF0077EDC8 /* libmono.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32243B0416CDE3EF0077EDC8 /* libmono.0.dylib */; };
 		326FD0CF16CB6209004248F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
-		32CACFD516CB637C00E8F185 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACF9E16CB637C00E8F185 /* AbstractActionSheetPicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		32CACFD616CB637C00E8F185 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA016CB637C00E8F185 /* ActionSheetStringPicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3284E16316CE4AC900624827 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3284E16216CE4AC900624827 /* Foundation.framework */; };
+		3284E16416CE4AFC00624827 /* OKUnityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */; };
+		3284E16516CE4AFE00624827 /* OKBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243AFE16CDE3C80077EDC8 /* OKBridge.m */; };
+		3284E16616CE4B0400624827 /* libmono.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32243B0416CDE3EF0077EDC8 /* libmono.0.dylib */; };
+		32C376A916D3F682006CA755 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD10116CB7A9B00E8F185 /* FacebookSDK.framework */; };
 		32CACFD716CB637C00E8F185 /* KGModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA216CB637C00E8F185 /* KGModal.m */; };
 		32CACFD816CB637C00E8F185 /* OKBaseLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA416CB637C00E8F185 /* OKBaseLoginViewController.m */; };
 		32CACFD916CB637C00E8F185 /* OKCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA616CB637C00E8F185 /* OKCloud.m */; };
@@ -64,8 +73,6 @@
 		32CACFEC16CB637C00E8F185 /* OKUserProfileImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFCF16CB637C00E8F185 /* OKUserProfileImageView.m */; };
 		32CACFED16CB637C00E8F185 /* OKUserUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFD116CB637C00E8F185 /* OKUserUtilities.m */; };
 		32CACFEE16CB637C00E8F185 /* SimpleKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFD416CB637C00E8F185 /* SimpleKeychain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		32CACFEF16CB65B900E8F185 /* AbstractActionSheetPicker.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACF9D16CB637C00E8F185 /* AbstractActionSheetPicker.h */; };
-		32CACFF016CB65B900E8F185 /* ActionSheetStringPicker.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACF9F16CB637C00E8F185 /* ActionSheetStringPicker.h */; };
 		32CACFF116CB65B900E8F185 /* KGModal.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFA116CB637C00E8F185 /* KGModal.h */; };
 		32CACFF216CB65B900E8F185 /* OKBaseLoginViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFA316CB637C00E8F185 /* OKBaseLoginViewController.h */; };
 		32CACFF316CB65B900E8F185 /* OKCloud.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFA516CB637C00E8F185 /* OKCloud.h */; };
@@ -161,17 +168,25 @@
 		32CAD10F16CB7A9B00E8F185 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD10416CB7A9B00E8F185 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
 		32CAD11016CB7AAD00E8F185 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD10116CB7A9B00E8F185 /* FacebookSDK.framework */; };
 		32CAD14B16CBABBB00E8F185 /* OKCloudAsyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD14A16CBABBB00E8F185 /* OKCloudAsyncRequest.m */; };
+		32D4309716CE52A500CF44BF /* libOpenKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CB16CB6209004248F9 /* libOpenKit.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		32243AEE16CDD4460077EDC8 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		326FD0C916CB6209004248F9 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = include;
 			dstSubfolderSpec = 16;
 			files = (
-				32CACFEF16CB65B900E8F185 /* AbstractActionSheetPicker.h in CopyFiles */,
-				32CACFF016CB65B900E8F185 /* ActionSheetStringPicker.h in CopyFiles */,
 				32CACFF116CB65B900E8F185 /* KGModal.h in CopyFiles */,
 				32CACFF216CB65B900E8F185 /* OKBaseLoginViewController.h in CopyFiles */,
 				32CACFF316CB65B900E8F185 /* OKCloud.h in CopyFiles */,
@@ -244,14 +259,26 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		321E99C716D2FB6C005F1506 /* AbstractActionSheetPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractActionSheetPicker.h; sourceTree = "<group>"; };
+		321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractActionSheetPicker.m; sourceTree = "<group>"; };
+		321E99CD16D2FBA1005F1506 /* ActionSheetStringPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetStringPicker.h; sourceTree = "<group>"; };
+		321E99CE16D2FBA1005F1506 /* ActionSheetStringPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetStringPicker.m; sourceTree = "<group>"; };
 		3222216816CBB77F006EBD1C /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = Vendor/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		32243AF016CDD4460077EDC8 /* libUnityPlugin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libUnityPlugin.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		32243AF416CDD4460077EDC8 /* UnityPlugin-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnityPlugin-Prefix.pch"; sourceTree = "<group>"; };
+		32243AFC16CDE3C80077EDC8 /* OK_SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OK_SynthesizeSingleton.h; sourceTree = "<group>"; };
+		32243AFD16CDE3C80077EDC8 /* OKBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKBridge.h; sourceTree = "<group>"; };
+		32243AFE16CDE3C80077EDC8 /* OKBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKBridge.m; sourceTree = "<group>"; };
+		32243AFF16CDE3C80077EDC8 /* OKUnityHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUnityHelper.h; sourceTree = "<group>"; };
+		32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUnityHelper.m; sourceTree = "<group>"; };
+		32243B0416CDE3EF0077EDC8 /* libmono.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libmono.0.dylib; sourceTree = "<group>"; };
 		326FD0CB16CB6209004248F9 /* libOpenKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOpenKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		326FD0CE16CB6209004248F9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3284E14916CE49AB00624827 /* UnityPluginMac.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnityPluginMac.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		3284E15A16CE4A6F00624827 /* UnityPluginMac-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "UnityPluginMac-Info.plist"; sourceTree = "<group>"; };
+		3284E15B16CE4A6F00624827 /* UnityPluginMac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UnityPluginMac-Prefix.pch"; sourceTree = "<group>"; };
+		3284E16216CE4AC900624827 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		32CACF7716CB62B500E8F185 /* OpenKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenKit-Prefix.pch"; sourceTree = SOURCE_ROOT; };
-		32CACF9D16CB637C00E8F185 /* AbstractActionSheetPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractActionSheetPicker.h; sourceTree = "<group>"; };
-		32CACF9E16CB637C00E8F185 /* AbstractActionSheetPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractActionSheetPicker.m; sourceTree = "<group>"; };
-		32CACF9F16CB637C00E8F185 /* ActionSheetStringPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetStringPicker.h; sourceTree = "<group>"; };
-		32CACFA016CB637C00E8F185 /* ActionSheetStringPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetStringPicker.m; sourceTree = "<group>"; };
 		32CACFA116CB637C00E8F185 /* KGModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGModal.h; sourceTree = "<group>"; };
 		32CACFA216CB637C00E8F185 /* KGModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGModal.m; sourceTree = "<group>"; };
 		32CACFA316CB637C00E8F185 /* OKBaseLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKBaseLoginViewController.h; sourceTree = "<group>"; };
@@ -391,12 +418,32 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		32243AED16CDD4460077EDC8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32D4309716CE52A500CF44BF /* libOpenKit.a in Frameworks */,
+				32243AF116CDD4460077EDC8 /* Foundation.framework in Frameworks */,
+				32C376A916D3F682006CA755 /* FacebookSDK.framework in Frameworks */,
+				32243B0516CDE3EF0077EDC8 /* libmono.0.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		326FD0C816CB6209004248F9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				326FD0CF16CB6209004248F9 /* Foundation.framework in Frameworks */,
 				32CAD11016CB7AAD00E8F185 /* FacebookSDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3284E14616CE49AB00624827 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3284E16316CE4AC900624827 /* Foundation.framework in Frameworks */,
+				3284E16616CE4B0400624827 /* libmono.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +471,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		32243AF216CDD4460077EDC8 /* UnityPlugin */ = {
+			isa = PBXGroup;
+			children = (
+				32243B0416CDE3EF0077EDC8 /* libmono.0.dylib */,
+				32243AFC16CDE3C80077EDC8 /* OK_SynthesizeSingleton.h */,
+				32243AFD16CDE3C80077EDC8 /* OKBridge.h */,
+				32243AFE16CDE3C80077EDC8 /* OKBridge.m */,
+				32243AFF16CDE3C80077EDC8 /* OKUnityHelper.h */,
+				32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */,
+				32243AF316CDD4460077EDC8 /* Supporting Files */,
+			);
+			path = UnityPlugin;
+			sourceTree = "<group>";
+		};
+		32243AF316CDD4460077EDC8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3284E15A16CE4A6F00624827 /* UnityPluginMac-Info.plist */,
+				3284E15B16CE4A6F00624827 /* UnityPluginMac-Prefix.pch */,
+				32243AF416CDD4460077EDC8 /* UnityPlugin-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		326FD0C216CB6209004248F9 = {
 			isa = PBXGroup;
 			children = (
@@ -434,6 +505,7 @@
 				3222216816CBB77F006EBD1C /* FacebookSDKResources.bundle */,
 				32CAD05516CB698C00E8F185 /* SampleApp */,
 				326FD0CD16CB6209004248F9 /* Frameworks */,
+				32243AF216CDD4460077EDC8 /* UnityPlugin */,
 				326FD0CC16CB6209004248F9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -443,6 +515,8 @@
 			children = (
 				326FD0CB16CB6209004248F9 /* libOpenKit.a */,
 				32CAD04F16CB698C00E8F185 /* SampleApp.app */,
+				32243AF016CDD4460077EDC8 /* libUnityPlugin.a */,
+				3284E14916CE49AB00624827 /* UnityPluginMac.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -450,6 +524,7 @@
 		326FD0CD16CB6209004248F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3284E15F16CE4AA600624827 /* OS X */,
 				32CAD0EA16CB74DF00E8F185 /* libsqlite3.dylib */,
 				32CAD0E816CB74D300E8F185 /* Twitter.framework */,
 				32CAD0E616CB74CB00E8F185 /* Security.framework */,
@@ -466,13 +541,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3284E15F16CE4AA600624827 /* OS X */ = {
+			isa = PBXGroup;
+			children = (
+				3284E16216CE4AC900624827 /* Foundation.framework */,
+			);
+			name = "OS X";
+			sourceTree = "<group>";
+		};
 		32CACF9C16CB637C00E8F185 /* OpenKit */ = {
 			isa = PBXGroup;
 			children = (
-				32CACF9D16CB637C00E8F185 /* AbstractActionSheetPicker.h */,
-				32CACF9E16CB637C00E8F185 /* AbstractActionSheetPicker.m */,
-				32CACF9F16CB637C00E8F185 /* ActionSheetStringPicker.h */,
-				32CACFA016CB637C00E8F185 /* ActionSheetStringPicker.m */,
+				321E99C716D2FB6C005F1506 /* AbstractActionSheetPicker.h */,
+				321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */,
+				321E99CD16D2FBA1005F1506 /* ActionSheetStringPicker.h */,
+				321E99CE16D2FBA1005F1506 /* ActionSheetStringPicker.m */,
 				32CACFA116CB637C00E8F185 /* KGModal.h */,
 				32CACFA216CB637C00E8F185 /* KGModal.m */,
 				32CACFA316CB637C00E8F185 /* OKBaseLoginViewController.h */,
@@ -665,6 +748,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		32243AEF16CDD4460077EDC8 /* UnityPlugin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32243AFB16CDD4460077EDC8 /* Build configuration list for PBXNativeTarget "UnityPlugin" */;
+			buildPhases = (
+				32243AEC16CDD4460077EDC8 /* Sources */,
+				32243AED16CDD4460077EDC8 /* Frameworks */,
+				32243AEE16CDD4460077EDC8 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UnityPlugin;
+			productName = UnityPlugin;
+			productReference = 32243AF016CDD4460077EDC8 /* libUnityPlugin.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		326FD0CA16CB6209004248F9 /* OpenKit */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 326FD0D916CB6209004248F9 /* Build configuration list for PBXNativeTarget "OpenKit" */;
@@ -683,6 +783,23 @@
 			productName = OpenKit;
 			productReference = 326FD0CB16CB6209004248F9 /* libOpenKit.a */;
 			productType = "com.apple.product-type.library.static";
+		};
+		3284E14816CE49AB00624827 /* UnityPluginMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3284E15916CE49AB00624827 /* Build configuration list for PBXNativeTarget "UnityPluginMac" */;
+			buildPhases = (
+				3284E14516CE49AB00624827 /* Sources */,
+				3284E14616CE49AB00624827 /* Frameworks */,
+				3284E14716CE49AB00624827 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UnityPluginMac;
+			productName = UnityPluginMac;
+			productReference = 3284E14916CE49AB00624827 /* UnityPluginMac.bundle */;
+			productType = "com.apple.product-type.bundle";
 		};
 		32CAD04E16CB698C00E8F185 /* SampleApp */ = {
 			isa = PBXNativeTarget;
@@ -724,11 +841,20 @@
 			targets = (
 				326FD0CA16CB6209004248F9 /* OpenKit */,
 				32CAD04E16CB698C00E8F185 /* SampleApp */,
+				32243AEF16CDD4460077EDC8 /* UnityPlugin */,
+				3284E14816CE49AB00624827 /* UnityPluginMac */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3284E14716CE49AB00624827 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		32CAD04D16CB698C00E8F185 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -791,12 +917,19 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		32243AEC16CDD4460077EDC8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32243B0216CDE3C80077EDC8 /* OKBridge.m in Sources */,
+				32243B0316CDE3C80077EDC8 /* OKUnityHelper.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		326FD0C716CB6209004248F9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32CACFD516CB637C00E8F185 /* AbstractActionSheetPicker.m in Sources */,
-				32CACFD616CB637C00E8F185 /* ActionSheetStringPicker.m in Sources */,
 				32CACFD716CB637C00E8F185 /* KGModal.m in Sources */,
 				32CACFD816CB637C00E8F185 /* OKBaseLoginViewController.m in Sources */,
 				32CACFD916CB637C00E8F185 /* OKCloud.m in Sources */,
@@ -822,6 +955,17 @@
 				32CACFED16CB637C00E8F185 /* OKUserUtilities.m in Sources */,
 				32CACFEE16CB637C00E8F185 /* SimpleKeychain.m in Sources */,
 				32CAD14B16CBABBB00E8F185 /* OKCloudAsyncRequest.m in Sources */,
+				321E99CB16D2FB6C005F1506 /* AbstractActionSheetPicker.m in Sources */,
+				321E99CF16D2FBA1005F1506 /* ActionSheetStringPicker.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3284E14516CE49AB00624827 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3284E16416CE4AFC00624827 /* OKUnityHelper.m in Sources */,
+				3284E16516CE4AFE00624827 /* OKBridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -863,6 +1007,48 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		32243AF916CDD4460077EDC8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
+				DSTROOT = /tmp/UnityPlugin.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Vendor\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnityPlugin/UnityPlugin-Prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/UnityPlugin\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		32243AFA16CDD4460077EDC8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
+				DSTROOT = /tmp/UnityPlugin.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Vendor\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnityPlugin/UnityPlugin-Prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/UnityPlugin\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		326FD0D716CB6209004248F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -887,7 +1073,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -910,7 +1096,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -945,6 +1131,63 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		3284E15716CE49AB00624827 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode46-DP2.app/Contents/Developer/Library/Frameworks\"",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnityPlugin/UnityPluginMac-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "UnityPlugin/UnityPluginMac-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/UnityPlugin\"",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				VERSION_INFO_BUILDER = lou;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		3284E15816CE49AB00624827 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode46-DP2.app/Contents/Developer/Library/Frameworks\"",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnityPlugin/UnityPluginMac-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "UnityPlugin/UnityPluginMac-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/UnityPlugin\"",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				VERSION_INFO_BUILDER = lou;
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
@@ -985,6 +1228,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		32243AFB16CDD4460077EDC8 /* Build configuration list for PBXNativeTarget "UnityPlugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32243AF916CDD4460077EDC8 /* Debug */,
+				32243AFA16CDD4460077EDC8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		326FD0C616CB6209004248F9 /* Build configuration list for PBXProject "OpenKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -999,6 +1251,15 @@
 			buildConfigurations = (
 				326FD0DA16CB6209004248F9 /* Debug */,
 				326FD0DB16CB6209004248F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3284E15916CE49AB00624827 /* Build configuration list for PBXNativeTarget "UnityPluginMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3284E15716CE49AB00624827 /* Debug */,
+				3284E15816CE49AB00624827 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
