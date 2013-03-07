@@ -21,3 +21,8 @@
 
 extern void OKBridgeInit(bool isEditor, const char *escapedCodeBase);
 extern void OKBridgeSetAppKey(const char *appKey);
+extern void OKBridgeSetEndpoint(const char *endpoint);
+extern void OKBridgeLogin();
+
+#pragma mark - User
+extern BOOL OKBridgeIsUserLoggedIn();

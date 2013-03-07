@@ -48,6 +48,7 @@
 		3284E16416CE4AFC00624827 /* OKUnityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */; };
 		3284E16516CE4AFE00624827 /* OKBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243AFE16CDE3C80077EDC8 /* OKBridge.m */; };
 		3284E16616CE4B0400624827 /* libmono.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32243B0416CDE3EF0077EDC8 /* libmono.0.dylib */; };
+		32C376A916D3F682006CA755 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD10116CB7A9B00E8F185 /* FacebookSDK.framework */; };
 		32CACFD716CB637C00E8F185 /* KGModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA216CB637C00E8F185 /* KGModal.m */; };
 		32CACFD816CB637C00E8F185 /* OKBaseLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA416CB637C00E8F185 /* OKBaseLoginViewController.m */; };
 		32CACFD916CB637C00E8F185 /* OKCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA616CB637C00E8F185 /* OKCloud.m */; };
@@ -423,6 +424,7 @@
 			files = (
 				32D4309716CE52A500CF44BF /* libOpenKit.a in Frameworks */,
 				32243AF116CDD4460077EDC8 /* Foundation.framework in Frameworks */,
+				32C376A916D3F682006CA755 /* FacebookSDK.framework in Frameworks */,
 				32243B0516CDE3EF0077EDC8 /* libmono.0.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1010,6 +1012,10 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
 				DSTROOT = /tmp/UnityPlugin.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Vendor\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UnityPlugin/UnityPlugin-Prefix.pch";
 				LIBRARY_SEARCH_PATHS = (
@@ -1027,6 +1033,10 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
 				DSTROOT = /tmp/UnityPlugin.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Vendor\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UnityPlugin/UnityPlugin-Prefix.pch";
 				LIBRARY_SEARCH_PATHS = (

@@ -15,6 +15,7 @@
 
 #if TARGET_OS_IPHONE
 #import "OKManager.h"
+#import "OKGUI.h"
 #endif
 
 #if __has_feature(objc_arc)
@@ -160,6 +161,22 @@ void OKBridgeSetAppKey(const char *appKey)
     [OKManager setApplicationID:[NSString stringWithUTF8String:appKey]];
 #endif
 }
+
+void OKBridgeSetEndpoint(const char *endpoint)
+{
+    [OKBridge checkOKBridgeSetup];
+    [OKManager setEndpoint:[NSString stringWithUTF8String:endpoint]];
+}
+
+void OKBridgeLogin()
+{
+    [OKBridge checkOKBridgeSetup];
+
+    OKLoginView *loginView = [[OKLoginView alloc] init];
+    [loginView show];
+}
+
+
 
 
 @end
