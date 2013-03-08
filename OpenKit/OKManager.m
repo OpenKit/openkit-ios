@@ -44,10 +44,7 @@
 
 + (void)initializeWithAppID:(NSString *)appID
 {
-    [OKManager sharedManager];
-    [FBProfilePictureView class];
     [[OKManager sharedManager] setOKAppID:appID];
-    [OKFacebookUtilities OpenCachedFBSessionWithoutLoginUI];
 }
 
 - (id)init
@@ -56,6 +53,10 @@
     if (self) {
         [self getSavedUserFromKeychain];
         _endpoint = DEFAULT_ENDPOINT;
+
+        // This tripped me up for way to long.
+        [FBProfilePictureView class];
+        [OKFacebookUtilities OpenCachedFBSessionWithoutLoginUI];
     }
     return self;
 }
