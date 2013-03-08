@@ -21,5 +21,3 @@
  * -------------------------------------------------------------------------------------- */
 extern char *OK_HS(const char *str);
 
-/* Converts C style string to a retained NSString. */
-extern NSString *OK_NewString(const char *string);

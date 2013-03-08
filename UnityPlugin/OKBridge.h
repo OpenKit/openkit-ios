@@ -11,18 +11,11 @@
 #import <Foundation/Foundation.h>
 
 
-@interface OKBridge : NSObject
-
-+ (OKBridge *)sharedOKBridge;
-+ (void)UnityLog:(NSString *)str;
-+ (void)UnityLogError:(NSString *)str;
-
-@end
-
-extern void OKBridgeInit(bool isEditor, const char *escapedCodeBase);
-extern void OKBridgeSetAppKey(const char *appKey);
-extern void OKBridgeSetEndpoint(const char *endpoint);
-extern void OKBridgeLogin();
-
-#pragma mark - User
-extern BOOL OKBridgeIsUserLoggedIn();
+void OKBridgeInit(const char *appKey, const char *endpoint);
+void OKBridgeShowLeaderboards();
+void OKBridgeShowLoginUI();
+void OKBridgeSubmitScore(int scoreValue, int leaderboardID, const char *gameObjectName);
+int OKBridgeGetCurrentUserOKID();
+const char* OKBridgeGetCurrentUserNick();
+long long OKBridgeGetCurrentUserFBID();
+long long OKBridgeGetCurrentUserTwitterID();

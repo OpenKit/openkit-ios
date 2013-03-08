@@ -8,10 +8,6 @@
 
 #import "OKUnityHelper.h"
 
-#if __has_feature(objc_arc)
-#warning This file must not be compiled with ARC. Use the -fno-objc-arc flag.
-#endif
-
 char *OK_HS(const char *str)
 {
 	if (str == NULL)
@@ -21,12 +17,3 @@ char *OK_HS(const char *str)
 	strcpy(res, str);
 	return res;
 }
-
-NSString *OK_NewString(const char *string)
-{
-	if (string)
-		return [[NSString alloc] initWithUTF8String:string];
-	else
-		return [[NSString alloc] initWithUTF8String: ""];
-}
-
