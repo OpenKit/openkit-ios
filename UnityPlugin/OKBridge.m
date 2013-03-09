@@ -12,12 +12,60 @@
 #import "OKUnityHelper.h"
 #import "OpenKit.h"
 
+#import <UIKit/UIKit.h>
+
 /*
 #if TARGET_OS_IPHONE
 #import "OKManager.h"
 #import "OKGUI.h"
 #endif
 */
+
+@interface BridgeViewController : UIViewController
+{
+    BOOL _didDisplay;
+}
+
+@property (nonatomic, retain) UIWindow *window;
+@property (nonatomic, retain) OKLeaderboardsViewController *leaderboardsVC;
+@end
+
+@implementation BridgeViewController
+
+@synthesize window = _window;
+@synthesize leaderboardsVC = _leaderboardsVC;
+
+- (id)init
+{
+    if ((self = [super init])) {
+        _didDisplay = NO;
+    }
+    return self;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (!_didDisplay) {
+        _didDisplay = YES;
+        self.leaderboardsVC = [[[OKLeaderboardsViewController alloc] init] autorelease];
+        [self presentModalViewController:self.leaderboardsVC animated:YES];
+    } else {
+        [self.window setRootViewController:nil];
+        [self release];
+    }
+}
+
+- (void)dealloc
+{
+    NSLog(@"OpenKit: Deallocing BridgeViewController");
+    [_leaderboardsVC release];
+    [_window release];
+    [super dealloc];
+}
+
+@end
+
 
 void OKBridgeInit(const char *appKey, const char *endpoint)
 {
@@ -29,15 +77,15 @@ void OKBridgeShowLeaderboards()
 {
     UIWindow *win = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     win.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    win.backgroundColor = [UIColor clearColor];
 
-    UIViewController *lvc = [[OKLeaderboardsViewController alloc] init];
-    [win setRootViewController:lvc];
-    [win makeKeyAndVisible];
-
-	// Shit, how do I release win when we are done??  Create an empty view
-	// controller and do present just like we do in sample app.  Then when
-	// empty view controller is displayed again we know it is ok to free
-	// window.
+    BridgeViewController *vc = [[BridgeViewController alloc] init];
+    vc.window = win;
+    [win release];
+    // Bridge VC is now responsible for releasing win.  It holds the only reference
+    // to it.
+    [vc.window setRootViewController:vc];
+    [vc.window makeKeyAndVisible];
 }
 
 void OKBridgeShowLoginUI()
