@@ -8,12 +8,12 @@
 
 #import "OKLeaderboardListCell.h"
 #import <QuartzCore/QuartzCore.h>
-#import "UIImageView+AFNetworking.h"
+#import "AFImageView.h"
 
 
 @interface OKLeaderboardListCell ()
 {
-    UIImageView *leaderboardIcon;
+    AFImageView *leaderboardIcon;
 }
 @end
 
@@ -49,7 +49,7 @@
         [self.contentView addSubview:label2];
         
         // Initialize leaderboard icon
-        leaderboardIcon = [[UIImageView alloc] initWithFrame:CGRectMake(15,10, 39, 39)];
+        leaderboardIcon = [[AFImageView alloc] initWithFrame:CGRectMake(15,10, 39, 39)];
         leaderboardIcon.image = [UIImage imageNamed:@"leaderboard_icon.png"];
         leaderboardIcon.layer.masksToBounds = YES;
         leaderboardIcon.layer.cornerRadius = 19.5;

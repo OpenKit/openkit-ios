@@ -168,7 +168,7 @@
 		32CAD10F16CB7A9B00E8F185 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD10416CB7A9B00E8F185 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
 		32CAD11016CB7AAD00E8F185 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD10116CB7A9B00E8F185 /* FacebookSDK.framework */; };
 		32CAD14B16CBABBB00E8F185 /* OKCloudAsyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD14A16CBABBB00E8F185 /* OKCloudAsyncRequest.m */; };
-		32D4309716CE52A500CF44BF /* libOpenKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CB16CB6209004248F9 /* libOpenKit.a */; };
+		44E3F3C816EAED4500509219 /* AFImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E3F3C716EAED4500509219 /* AFImageView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -415,6 +415,8 @@
 		32CAD10416CB7A9B00E8F185 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		32CAD14916CBABBB00E8F185 /* OKCloudAsyncRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKCloudAsyncRequest.h; sourceTree = "<group>"; };
 		32CAD14A16CBABBB00E8F185 /* OKCloudAsyncRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKCloudAsyncRequest.m; sourceTree = "<group>"; };
+		44E3F3C616EAED4500509219 /* AFImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageView.h; sourceTree = "<group>"; };
+		44E3F3C716EAED4500509219 /* AFImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -422,7 +424,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32D4309716CE52A500CF44BF /* libOpenKit.a in Frameworks */,
 				32243AF116CDD4460077EDC8 /* Foundation.framework in Frameworks */,
 				32C376A916D3F682006CA755 /* FacebookSDK.framework in Frameworks */,
 				32243B0516CDE3EF0077EDC8 /* libmono.0.dylib in Frameworks */,
@@ -605,6 +606,8 @@
 				32CACFCD16CB637C00E8F185 /* OKUser.m */,
 				32CACFCE16CB637C00E8F185 /* OKUserProfileImageView.h */,
 				32CACFCF16CB637C00E8F185 /* OKUserProfileImageView.m */,
+				44E3F3C616EAED4500509219 /* AFImageView.h */,
+				44E3F3C716EAED4500509219 /* AFImageView.m */,
 				32CACFD016CB637C00E8F185 /* OKUserUtilities.h */,
 				32CACFD116CB637C00E8F185 /* OKUserUtilities.m */,
 				32CACFD216CB637C00E8F185 /* OpenKit.h */,
@@ -957,6 +960,7 @@
 				32CAD14B16CBABBB00E8F185 /* OKCloudAsyncRequest.m in Sources */,
 				321E99CB16D2FB6C005F1506 /* AbstractActionSheetPicker.m in Sources */,
 				321E99CF16D2FBA1005F1506 /* ActionSheetStringPicker.m in Sources */,
+				44E3F3C816EAED4500509219 /* AFImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

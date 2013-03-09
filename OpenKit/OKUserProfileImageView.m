@@ -7,14 +7,14 @@
 //
 
 #import "OKUserProfileImageView.h"
-#import "UIImageView+AFNetworking.h"
 #import "OKTwitterUtilities.h"
+#import "AFImageView.h"
 
 
 @interface OKUserProfileImageView ()
 
 @property (nonatomic, strong) FBProfilePictureView *fbProfileImageView;
-@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) AFImageView *imageView;
 
 @end
 
@@ -52,7 +52,7 @@
     if(self.imageView)
         return;
     
-    self.imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+    self.imageView = [[AFImageView alloc] initWithFrame:self.bounds];
     self.autoresizesSubviews = YES;
     self.clipsToBounds = YES;
     self.fbProfileImageView = [[FBProfilePictureView alloc] initWithFrame:self.bounds];
