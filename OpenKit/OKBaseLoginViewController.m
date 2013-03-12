@@ -175,11 +175,10 @@
             [self showUIToEnterNickname];
             //[self dismissModalViewControllerAnimated:YES];
         } else {
-            NSLog(@"Error creating OKUser with FB authentication");
+            NSLog(@"OpenKit Error: Could not create OKUser with FB authentication: %@", error.description);
             
             if(self)
             {
-            
                 UIAlertView *fbLoginErrorAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Sorry, there was an error logging you in through Facebook. Please try again later or try logging in with a Twitter account" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
                 [fbLoginErrorAlert show];
             }
