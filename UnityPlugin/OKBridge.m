@@ -123,7 +123,7 @@ void OKBridgeSubmitScore(int scoreValue, int leaderboardID, const char *gameObje
 int OKBridgeGetCurrentUserOKID()
 {
     OKUser *u = [OKUser currentUser];
-    return (u ? (int)u.OKUserID : 0);
+    return (u ? [u.OKUserID intValue] : 0);
 }
 
 const char* OKBridgeGetCurrentUserNick()
