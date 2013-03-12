@@ -11,7 +11,8 @@
 #import <Foundation/Foundation.h>
 
 
-void OKBridgeInit(const char *appKey, const char *endpoint);
+void OKBridgeSetAppKey(const char *appKey);
+void OKBridgeSetEndpoint(const char *endpoint);
 void OKBridgeShowLeaderboards();
 void OKBridgeShowLoginUI();
 void OKBridgeSubmitScore(int scoreValue, int leaderboardID, const char *gameObjectName);

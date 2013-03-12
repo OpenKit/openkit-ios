@@ -23,7 +23,7 @@
     OKUser *_currentUser;
 }
 
-@property (nonatomic, strong) NSString *OKAppID;
+@property (nonatomic, strong) NSString *appKey;
 @property (nonatomic, strong) NSString *endpoint;
 
 @end
@@ -39,12 +39,6 @@
         sharedInstance = [[OKManager alloc] init];
     });
     return sharedInstance;
-}
-
-
-+ (void)initializeWithAppID:(NSString *)appID
-{
-    [[OKManager sharedManager] setOKAppID:appID];
 }
 
 - (id)init
@@ -66,14 +60,14 @@
     return _currentUser;
 }
 
-+ (void)setApplicationID:(NSString *)appID;
++ (void)setAppKey:(NSString *)appKey
 {
-    [[OKManager sharedManager] setOKAppID:appID];
+    [[OKManager sharedManager] setAppKey:appKey];
 }
 
-+ (NSString*)getApplicationID
++ (NSString *)appKey
 {
-    return [[OKManager sharedManager] OKAppID];
+    return [[OKManager sharedManager] appKey];
 }
 
 + (void)setEndpoint:(NSString *)endpoint;
@@ -81,11 +75,10 @@
     [[OKManager sharedManager] setEndpoint:endpoint];
 }
 
-+ (NSString*)getEndpoint
++ (NSString *)endpoint
 {
     return [[OKManager sharedManager] endpoint];
 }
-
 
 - (void)logoutCurrentUser
 {

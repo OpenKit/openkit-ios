@@ -67,9 +67,13 @@
 @end
 
 
-void OKBridgeInit(const char *appKey, const char *endpoint)
+void OKBridgeSetAppKey(const char *appKey)
 {
-    [OKManager setApplicationID:[NSString stringWithUTF8String:appKey]];
+    [OKManager setAppKey:[NSString stringWithUTF8String:appKey]];
+}
+
+void OKBridgeSetEndpoint(const char *endpoint)
+{
     [OKManager setEndpoint:[NSString stringWithUTF8String:endpoint]];
 }
 

@@ -15,12 +15,10 @@
 - (void)saveCurrentUser:(OKUser *)aCurrentUser;
 - (void)logoutCurrentUser;
 
-
-+ (void)setApplicationID:(NSString *)appID;
-+ (NSString*)getApplicationID;
++ (void)setAppKey:(NSString *)appKey;
++ (NSString *)appKey;
 + (void)setEndpoint:(NSString *)endpoint;
-+ (NSString *)getEndpoint;
-+ (void)initializeWithAppID:(NSString *)appID;
++ (NSString *)endpoint;
 
 + (BOOL)handleOpenURL:(NSURL*)url;
 + (void)handleDidBecomeActive;

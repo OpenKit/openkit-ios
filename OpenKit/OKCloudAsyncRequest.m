@@ -25,7 +25,7 @@
 
 - (AFHTTPClient *)httpClient
 {
-    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[OKManager getEndpoint]]];
+    AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[OKManager endpoint]]];
     [client setParameterEncoding:AFJSONParameterEncoding];
     return client;
 }
@@ -75,7 +75,7 @@
 - (NSMutableDictionary *)mergedParams
 {
     if (!_mergedParams) {
-        _mergedParams = [NSMutableDictionary dictionaryWithObject:[OKManager getApplicationID] forKey:@"app_key"];
+        _mergedParams = [NSMutableDictionary dictionaryWithObject:[OKManager appKey] forKey:@"app_key"];
         [_mergedParams addEntriesFromDictionary:_params];
     }
     return _mergedParams;
