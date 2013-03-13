@@ -106,18 +106,21 @@ void OKBridgeSubmitScore(int scoreValue, int leaderboardID, const char *gameObje
     score.OKLeaderboardID = leaderboardID;
     OKUser *u = [OKUser currentUser];
 
+    __block NSString *objName = [[NSString alloc] initWithCString:gameObjectName encoding:NSUTF8StringEncoding];
+
     if (!u) {
-        // does gameObjectName need to be copied to heap?
-        UnitySendMessage(gameObjectName, "scoreSubmissionFailed", "");
+        UnitySendMessage([objName UTF8String], "scoreSubmissionFailed", "");
     }
 
     [score submitScoreWithCompletionHandler:^(NSError *error) {
         if(!error) {
-            UnitySendMessage(gameObjectName, "scoreSubmissionSucceeded", "");
+            UnitySendMessage([objName UTF8String], "scoreSubmissionSucceeded", "");
         } else {
-            UnitySendMessage(gameObjectName, "scoreSubmissionFailed", error.description);
+            UnitySendMessage([objName UTF8String], "scoreSubmissionFailed", [error.description UTF8String]);
         }
+        [objName release];
     }];
+
 }
 
 int OKBridgeGetCurrentUserOKID()
