@@ -28,6 +28,13 @@
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
 #import <UIKit/UIKit.h>
 
+@interface AFImageCache : NSCache
+- (UIImage *)cachedImageForRequest:(NSURLRequest *)request;
+- (void)cacheImage:(UIImage *)image
+        forRequest:(NSURLRequest *)request;
+@end
+
+
 /**
  This category adds methods to the UIKit framework's `UIImageView` class. The methods in this category provide support for loading remote images asynchronously from a URL.
  */

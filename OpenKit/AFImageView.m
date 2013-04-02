@@ -11,11 +11,7 @@
 #import <objc/runtime.h>
 #import "AFImageView.h"
 
-@interface AFImageCache : NSCache
-- (UIImage *)cachedImageForRequest:(NSURLRequest *)request;
-- (void)cacheImage:(UIImage *)image
-        forRequest:(NSURLRequest *)request;
-@end
+#import "UIImageView+AFNetworking.h"
 
 #pragma mark -
 
@@ -136,7 +132,8 @@ static char kAFImageRequestOperationObjectKey;
 static inline NSString * AFImageCacheKeyFromURLRequest(NSURLRequest *request) {
     return [[request URL] absoluteString];
 }
-
+/* 
+ Pulled from header file of UIImageView category
 @implementation AFImageCache
 
 - (UIImage *)cachedImageForRequest:(NSURLRequest *)request {
@@ -159,4 +156,7 @@ static inline NSString * AFImageCacheKeyFromURLRequest(NSURLRequest *request) {
     }
 }
 
+
 @end
+
+ */
