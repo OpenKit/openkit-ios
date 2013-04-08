@@ -13,8 +13,6 @@
 //#import "OKCloud.h"
 //#import <objc/runtime.h>
 
-NSString *const OK_FBSessionStateChangedNotification = @"OK_FBSessionStateChangedNotification";
-
 
 @implementation OKAppDelegate
 
