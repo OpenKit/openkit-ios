@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-extern NSString *const OK_FBSessionStateChangedNotification;
 @class OKViewController;
 
 
