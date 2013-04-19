@@ -12,10 +12,12 @@
 @interface OKScore : NSObject
 
 @property (nonatomic) NSInteger OKScoreID;
-@property (nonatomic) NSInteger scoreValue;
+@property (nonatomic) int64_t scoreValue;
 @property (nonatomic) NSInteger OKLeaderboardID;
 @property (nonatomic, strong) OKUser *user;
 @property (nonatomic) NSInteger scoreRank;
+@property (nonatomic) int metadata;
+@property (nonatomic, strong) NSString *displayString;
 
 - (id)initFromJSON:(NSDictionary*)jsonDict;
 - (void)submitScoreWithCompletionHandler:(void (^)(NSError *error))completionHandler;

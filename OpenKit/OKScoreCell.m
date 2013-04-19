@@ -89,8 +89,13 @@
 {
     score = aScore;
     label1.text = [[score user] userNick];
-    label2.text = [NSString stringWithFormat:@"%d",[score scoreValue]];
-    label3.text = [NSString stringWithFormat:@"%d",[score scoreRank]];
+    
+    if([score displayString] != nil) {
+        label2.text = [score displayString];
+    } else {
+        label2.text = [NSString stringWithFormat:@"%lld",[score scoreValue]];
+    }
+    
     [cellImage setUser:[score user]];
 }
 

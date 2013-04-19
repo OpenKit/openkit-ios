@@ -25,7 +25,14 @@
     self.score = aScore;
     
     self.label1.text = [aLeaderboard name];
-    self.label2.text = [NSString stringWithFormat:@"%d",[self.score scoreValue]];
+    
+    if([self.score displayString] != nil) {
+        self.label2.text = [self.score displayString];
+    } else {
+        self.label2.text = [NSString stringWithFormat:@"%lld",[self.score scoreValue]];
+    }
+    
+    self.label2.text = [NSString stringWithFormat:@"%lld",[self.score scoreValue]];
     self.label3.text = [NSString stringWithFormat:@"%d",[self.score scoreRank]];
     
     [self.cellImage setImageURL:[aLeaderboard icon_url] withPlaceholderImage:[UIImage imageNamed:@"leaderboard_icon.png"]];
