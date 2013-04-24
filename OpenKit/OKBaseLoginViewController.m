@@ -24,13 +24,14 @@
 
 @implementation OKBaseLoginViewController
 
-@synthesize currentTwitterAccount, twitterAccounts, loginView,spinner, fbLoginButton, twitterLoginButton, delegate;
+@synthesize currentTwitterAccount, twitterAccounts, loginView,spinner, fbLoginButton, twitterLoginButton, delegate, loginString;
 
--(id)init
+-(id)initWithLoginString:(NSString*)aLoginString
 {
     self = [super init];
     if(self)
     {
+        [self setLoginString:aLoginString];
         [self initLoginView];
     }
     return self;
@@ -85,7 +86,7 @@
     welcomeLabelRect.size.height = 60;
     UIFont *welcomeLabelFont = [UIFont boldSystemFontOfSize:15];
     UILabel *welcomeLabel = [[UILabel alloc] initWithFrame:welcomeLabelRect];
-    welcomeLabel.text = @"Create an account to access leaderboards and resume game progress from any device.";
+    welcomeLabel.text = [self loginString];
     welcomeLabel.numberOfLines = 3;
     welcomeLabel.font = welcomeLabelFont;
     welcomeLabel.textColor = [UIColor colorWithRed:51.0f/2550.f green:51.0f/2550.f blue:51.0f/2550.f alpha:1.0];

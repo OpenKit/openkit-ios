@@ -26,7 +26,9 @@
 @property (nonatomic, strong) UIView *loginView;
 @property (nonatomic, strong) id<OKLoginViewDelegate> delegate;
 
+@property (nonatomic, strong) NSString *loginString;
 
+-(id)initWithLoginString:(NSString*)aLoginString;
 -(void)showLoginModalView;
 -(void)dismissLoginView;
 
