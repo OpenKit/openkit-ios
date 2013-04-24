@@ -11,6 +11,7 @@
 #import "OKUserUtilities.h"
 #import "OKManager.h"
 #import "OKNetworker.h"
+#import <FacebookSDK/FBErrorUtility.h>
 
 
 @implementation OKFacebookUtilities
@@ -87,13 +88,19 @@
                     break;
                 case FBSessionStateClosed:
                     NSLog(@"FBSessionStateClosed");
-                    NSLog(@"FB Session is closed but user token is cached, it will try to reopen session, don't throw an error yet. ");
-                    //completionHandler(nil, error);
                     //break;
                 case FBSessionStateClosedLoginFailed:
                     NSLog(@"FBSessionStateClosedLoginFailed");
                     [FBSession.activeSession closeAndClearTokenInformation];
-                    completionHandler(nil, error);
+                    
+                    
+                    if([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled){
+                        NSLog(@"User cancelled FB login");
+                        completionHandler(nil,nil);
+                        break;
+                    } else {
+                        completionHandler(nil, error);
+                    }
                     break;
                 default:
                     completionHandler(nil, error);
@@ -169,20 +176,6 @@
         default:
             break;
     }
-    
-    /*
-    
-    if (error)
-    {
-        UIAlertView *alertView = [[UIAlertView alloc]
-                                  initWithTitle:@"Error"
-                                  message:error.localizedDescription
-                                  delegate:nil
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil];
-        [alertView show];
-    }
-     */
 }
 
 

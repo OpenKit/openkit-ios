@@ -28,6 +28,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>FacebookDisplayName</key>
+	<string>OpenKit Sample App</string>
 	<key>FacebookAppID</key>
 	<string>450333868362300</string>
 	<key>CFBundleURLTypes</key>

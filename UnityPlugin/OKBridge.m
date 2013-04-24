@@ -99,12 +99,17 @@ void OKBridgeShowLoginUI()
     [loginView release];
 }
 
-void OKBridgeSubmitScore(int scoreValue, int leaderboardID, const char *gameObjectName)
+void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, const char *displayString, const char *gameObjectName )
 {
     OKScore *score = [[OKScore alloc] init];
     score.scoreValue = scoreValue;
     score.OKLeaderboardID = leaderboardID;
     OKUser *u = [OKUser currentUser];
+    
+    score.displayString = [[NSString alloc] initWithCString:displayString encoding:NSUTF8StringEncoding];
+    
+    score.metadata = metadata;
+
 
     __block NSString *objName = [[NSString alloc] initWithCString:gameObjectName encoding:NSUTF8StringEncoding];
 
