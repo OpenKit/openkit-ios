@@ -90,11 +90,15 @@
     score = aScore;
     label1.text = [[score user] userNick];
     
+    // Show the display string if not nil, else show the score value
     if([score displayString] != nil) {
         label2.text = [score displayString];
     } else {
         label2.text = [NSString stringWithFormat:@"%lld",[score scoreValue]];
     }
+    
+    //Set the rank
+    label3.text = [NSString stringWithFormat:@"%d",[score scoreRank]];
     
     [cellImage setUser:[score user]];
 }

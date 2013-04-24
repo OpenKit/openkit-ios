@@ -28,6 +28,12 @@
         self.scoreValue = [[jsonDict objectForKey:@"value"] longLongValue];
         self.scoreRank = [[jsonDict objectForKey:@"rank"] integerValue];
         self.user = [OKUserUtilities createOKUserWithJSONData:[jsonDict objectForKey:@"user"]];
+        
+        if([jsonDict objectForKey:@"display_string"] != nil && [jsonDict objectForKey:@"display_string"] != [NSNull null])
+            self.displayString = [jsonDict objectForKey:@"display_string"];
+        
+        if([jsonDict objectForKey:@"metadata"] != nil && [jsonDict objectForKey:@"metadata"] != [NSNull null])
+            self.metadata = [[jsonDict objectForKey:@"metadata"] integerValue];
     }
     
     return self;

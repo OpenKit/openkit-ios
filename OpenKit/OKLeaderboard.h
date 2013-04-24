@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define NUM_SCORES_PER_PAGE 5
+
 typedef enum {
     HighValue,
     LowValue
@@ -19,8 +21,11 @@ typedef enum {
     OKLeaderboardTimeRangeAllTime
 } OKLeaderboardTimeRange;
 
+@class OKScore;
+
 
 @interface OKLeaderboard : NSObject
+
 
 @property (nonatomic) int OKApp_id;
 @property (nonatomic) NSInteger OKLeaderboard_id;
@@ -34,5 +39,8 @@ typedef enum {
 - (NSString *)playerCountString;
 - (id)initFromJSON:(NSDictionary*)jsonDict;
 - (void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler;
+-(void)getUsersTopScoreForLeaderboardForTimeRange:(OKLeaderboardTimeRange)range withCompletionHandler:(void (^)(OKScore *score, NSError *error))completionHandler;
+-(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange forPageNumber:(int)pageNum
+       WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler;
 
 @end

@@ -24,8 +24,10 @@ NSString *const OK_FBSessionStateChangedNotification = @"OK_FBSessionStateChange
 {
     // Always enter your app key in didFinishLaunchingWithOptions
 #ifdef LOCAL_SERVER
-    [OKManager setAppKey:@"Q6yUZ3A1zweIgUYyoRS7"];
+    [OKManager setAppKey:@"VwfMRAl5Gc4tirjw"];
+    //[OKManager setAppKey:@"Q6yUZ3A1zweIgUYyoRS7"];
     [OKManager setEndpoint:@"http://10.0.1.21:3000"];
+    //[OKManager setEndpoint:@"http://localhost:3000"];
 #else
     [OKManager setAppKey:@"VwfMRAl5Gc4tirjw"];
     [OKManager setEndpoint:@"http://stage.openkit.io"];

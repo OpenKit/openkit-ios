@@ -9,11 +9,10 @@
 #import "OKLeaderboard.h"
 #import "OKManager.h"
 #import "OKUser.h"
-#import "OKScore.h"
 #import "OKHelper.h"
 #import "OKNetworker.h"
+#import "OKScore.h"
 
-#define NUM_SCORES_PER_PAGE 25
 
 @implementation OKLeaderboard
 

@@ -13,6 +13,7 @@
 #import "OKLeaderboardListCell.h"
 #import "OKProfileViewController.h"
 #import "OKLoginView.h"
+#import "OKMacros.h"
 
 
 @interface OKLeaderboardsListViewController ()
@@ -81,7 +82,10 @@
         [spinner stopAnimating];
         
         if (error) {
-            //TODO handdle error
+            OKLog(@"Error getting list of leaderboards, error: %@", error);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Sorry, but leaderboards are not available right now. Please try again later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [alert show];
+            
         } else {
             [self setOKLeaderBoardsList:leaderboards];
             [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
