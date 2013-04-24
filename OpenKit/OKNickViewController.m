@@ -63,9 +63,9 @@
 
 - (void)updateForUser:(OKUser *)user
 {
+    [self.nameLabel setText:[user userNick]];
     [self.profilePic setUser:user];
     [self.nickField setText:[user userNick]];
-    [self.nameLabel setText:[user userNick]];
 }
 
 - (void)viewDidLoad

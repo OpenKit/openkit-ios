@@ -128,13 +128,15 @@
     
     int numScores = [scores count];
     int currentPageNumber = numScores / NUM_SCORES_PER_PAGE;
-    if(currentPageNumber*NUM_SCORES_PER_PAGE < numScores) {
+    if(currentPageNumber*NUM_SCORES_PER_PAGE < numScores) { 
         currentPageNumber++;
     }
     
+    int nextPageNumber = currentPageNumber + 1;
+    
     [moreBtn setEnabled:NO];
     
-    [self.leaderboard getScoresForTimeRange:currentDisplayedLeaderboardTimeRange forPageNumber:currentPageNumber WithCompletionhandler:^(NSArray *scores, NSError *error) {
+    [self.leaderboard getScoresForTimeRange:currentDisplayedLeaderboardTimeRange forPageNumber:nextPageNumber WithCompletionhandler:^(NSArray *scores, NSError *error) {
         
         NSMutableArray *mutableScores = [self getCachedScoresForRange:range];
         [mutableScores addObjectsFromArray:scores];
