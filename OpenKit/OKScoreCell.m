@@ -30,7 +30,10 @@
         [self setFrame:CellFrame];
         
         //cell.backgroundColor = [UIColor redColor];
-        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        //Removing accessory view for now because we're not showing the
+        // score view
+        //self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         //Initialize Label with tag 1.
         label1 = [[UILabel alloc] initWithFrame:NameFrame];

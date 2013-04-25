@@ -346,6 +346,9 @@
     return 60;
 }
 
+
+
+/*
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int numSections = [self numberOfSectionsInTableView:tableView];
@@ -367,6 +370,7 @@
     [[self navigationController] pushViewController:detailView animated:YES];
 
 }
+ */
 
 
 @end
