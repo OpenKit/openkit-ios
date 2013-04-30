@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define NUM_SCORES_PER_PAGE 5
+#define NUM_SCORES_PER_PAGE 25
 
 typedef enum {
     HighValue,
