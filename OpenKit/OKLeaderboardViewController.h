@@ -12,7 +12,7 @@
 
 @interface OKLeaderboardViewController : UIViewController
 {
-    NSMutableArray *listOfItems;
+    OKLeaderboardTimeRange currentDisplayedLeaderboardTimeRange;
 }
 
 @property (nonatomic, strong) OKLeaderboard *leaderboard;
@@ -20,7 +20,7 @@
 @property (nonatomic, strong) IBOutlet UIButton *moreBtn;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
 
-@property (nonatomic, strong) NSArray *leaderboardScoresToday, *leaderboardScoresAllTime, *leaderboardScoresThisWeek;
+@property (nonatomic, strong) NSMutableArray *leaderboardScoresToday, *leaderboardScoresAllTime, *leaderboardScoresThisWeek;
 
 @property (nonatomic, strong) IBOutlet UIButton *todayScoresButton, *thisWeekScoresButton, *allTimeScoresButton;
 

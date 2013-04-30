@@ -13,6 +13,7 @@
 #import "OKLeaderboardListCell.h"
 #import "OKProfileViewController.h"
 #import "OKLoginView.h"
+#import "OKMacros.h"
 
 
 @interface OKLeaderboardsListViewController ()
@@ -76,13 +77,17 @@
 {
     [spinner startAnimating];
     
-    [OKLeaderboard getLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, NSError *error) {
+    [OKLeaderboard getLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, int maxPlayerCount, NSError *error) {
         
         [spinner stopAnimating];
         
         if (error) {
-            //TODO handdle error
+            OKLog(@"Error getting list of leaderboards, error: %@", error);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Sorry, but leaderboards are not available right now. Please try again later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [alert show];
+            
         } else {
+            playerCount = maxPlayerCount;
             [self setOKLeaderBoardsList:leaderboards];
             [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
@@ -116,7 +121,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-  return @"34,2934 Players";
+    return [NSString stringWithFormat:@"%d Players",playerCount];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {

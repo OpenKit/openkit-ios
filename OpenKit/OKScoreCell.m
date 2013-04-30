@@ -30,7 +30,10 @@
         [self setFrame:CellFrame];
         
         //cell.backgroundColor = [UIColor redColor];
-        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        //Removing accessory view for now because we're not showing the
+        // score view
+        //self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         //Initialize Label with tag 1.
         label1 = [[UILabel alloc] initWithFrame:NameFrame];
@@ -89,8 +92,17 @@
 {
     score = aScore;
     label1.text = [[score user] userNick];
-    label2.text = [NSString stringWithFormat:@"%d",[score scoreValue]];
+    
+    // Show the display string if not nil, else show the score value
+    if([score displayString] != nil) {
+        label2.text = [score displayString];
+    } else {
+        label2.text = [NSString stringWithFormat:@"%lld",[score scoreValue]];
+    }
+    
+    //Set the rank
     label3.text = [NSString stringWithFormat:@"%d",[score scoreRank]];
+    
     [cellImage setUser:[score user]];
 }
 

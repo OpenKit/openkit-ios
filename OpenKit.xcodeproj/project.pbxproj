@@ -38,7 +38,6 @@
 		3222216516CBB65D006EBD1C /* OKNickViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD02B16CB65E800E8F185 /* OKNickViewController.xib */; };
 		3222216616CBB65D006EBD1C /* OKProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD02C16CB65E800E8F185 /* OKProfileViewController.xib */; };
 		3222216716CBB65D006EBD1C /* OKScoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD02D16CB65E800E8F185 /* OKScoreViewController.xib */; };
-		3222216916CBB77F006EBD1C /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3222216816CBB77F006EBD1C /* FacebookSDKResources.bundle */; };
 		32243AF116CDD4460077EDC8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
 		32243B0216CDE3C80077EDC8 /* OKBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243AFE16CDE3C80077EDC8 /* OKBridge.m */; };
 		32243B0316CDE3C80077EDC8 /* OKUnityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */; };
@@ -48,7 +47,6 @@
 		3284E16416CE4AFC00624827 /* OKUnityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */; };
 		3284E16516CE4AFE00624827 /* OKBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243AFE16CDE3C80077EDC8 /* OKBridge.m */; };
 		3284E16616CE4B0400624827 /* libmono.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32243B0416CDE3EF0077EDC8 /* libmono.0.dylib */; };
-		32C376A916D3F682006CA755 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD10116CB7A9B00E8F185 /* FacebookSDK.framework */; };
 		32CACFD716CB637C00E8F185 /* KGModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA216CB637C00E8F185 /* KGModal.m */; };
 		32CACFD816CB637C00E8F185 /* OKBaseLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA416CB637C00E8F185 /* OKBaseLoginViewController.m */; };
 		32CACFD916CB637C00E8F185 /* OKCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA616CB637C00E8F185 /* OKCloud.m */; };
@@ -73,34 +71,34 @@
 		32CACFEC16CB637C00E8F185 /* OKUserProfileImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFCF16CB637C00E8F185 /* OKUserProfileImageView.m */; };
 		32CACFED16CB637C00E8F185 /* OKUserUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFD116CB637C00E8F185 /* OKUserUtilities.m */; };
 		32CACFEE16CB637C00E8F185 /* SimpleKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFD416CB637C00E8F185 /* SimpleKeychain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		32CACFF116CB65B900E8F185 /* KGModal.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFA116CB637C00E8F185 /* KGModal.h */; };
-		32CACFF216CB65B900E8F185 /* OKBaseLoginViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFA316CB637C00E8F185 /* OKBaseLoginViewController.h */; };
-		32CACFF316CB65B900E8F185 /* OKCloud.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFA516CB637C00E8F185 /* OKCloud.h */; };
-		32CACFF416CB65B900E8F185 /* OKDefines.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFA716CB637C00E8F185 /* OKDefines.h */; };
-		32CACFF516CB65B900E8F185 /* OKManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFA816CB637C00E8F185 /* OKManager.h */; };
-		32CACFF616CB65B900E8F185 /* OKFacebookUtilities.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFAA16CB637C00E8F185 /* OKFacebookUtilities.h */; };
-		32CACFF716CB65B900E8F185 /* OKGUI.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFAC16CB637C00E8F185 /* OKGUI.h */; };
-		32CACFF816CB65B900E8F185 /* OKHelper.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFAD16CB637C00E8F185 /* OKHelper.h */; };
-		32CACFF916CB65B900E8F185 /* OKLeaderboard.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFAF16CB637C00E8F185 /* OKLeaderboard.h */; };
-		32CACFFA16CB65B900E8F185 /* OKLeaderboardListCell.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFB116CB637C00E8F185 /* OKLeaderboardListCell.h */; };
-		32CACFFB16CB65B900E8F185 /* OKLeaderboardsListViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFB316CB637C00E8F185 /* OKLeaderboardsListViewController.h */; };
-		32CACFFC16CB65B900E8F185 /* OKLeaderboardsViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFB516CB637C00E8F185 /* OKLeaderboardsViewController.h */; };
-		32CACFFD16CB65B900E8F185 /* OKLeaderboardViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFB716CB637C00E8F185 /* OKLeaderboardViewController.h */; };
-		32CACFFE16CB65B900E8F185 /* OKLoginView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFB916CB637C00E8F185 /* OKLoginView.h */; };
-		32CACFFF16CB65B900E8F185 /* OKMacros.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFBB16CB637C00E8F185 /* OKMacros.h */; };
-		32CAD00016CB65B900E8F185 /* OKNetworker.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFBC16CB637C00E8F185 /* OKNetworker.h */; };
-		32CAD00116CB65B900E8F185 /* OKNickViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFBE16CB637C00E8F185 /* OKNickViewController.h */; };
-		32CAD00216CB65B900E8F185 /* OKProfileViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFC016CB637C00E8F185 /* OKProfileViewController.h */; };
-		32CAD00316CB65B900E8F185 /* OKScore.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFC216CB637C00E8F185 /* OKScore.h */; };
-		32CAD00416CB65B900E8F185 /* OKScoreCell.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFC416CB637C00E8F185 /* OKScoreCell.h */; };
-		32CAD00516CB65B900E8F185 /* OKScoreViewCell.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFC616CB637C00E8F185 /* OKScoreViewCell.h */; };
-		32CAD00616CB65B900E8F185 /* OKScoreViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFC816CB637C00E8F185 /* OKScoreViewController.h */; };
-		32CAD00716CB65B900E8F185 /* OKTwitterUtilities.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFCA16CB637C00E8F185 /* OKTwitterUtilities.h */; };
-		32CAD00816CB65B900E8F185 /* OKUser.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFCC16CB637C00E8F185 /* OKUser.h */; };
-		32CAD00916CB65B900E8F185 /* OKUserProfileImageView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFCE16CB637C00E8F185 /* OKUserProfileImageView.h */; };
-		32CAD00A16CB65B900E8F185 /* OKUserUtilities.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFD016CB637C00E8F185 /* OKUserUtilities.h */; };
-		32CAD00B16CB65B900E8F185 /* OpenKit.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFD216CB637C00E8F185 /* OpenKit.h */; };
-		32CAD00C16CB65B900E8F185 /* SimpleKeychain.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CACFD316CB637C00E8F185 /* SimpleKeychain.h */; };
+		32CACFF116CB65B900E8F185 /* KGModal.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFA116CB637C00E8F185 /* KGModal.h */; };
+		32CACFF216CB65B900E8F185 /* OKBaseLoginViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFA316CB637C00E8F185 /* OKBaseLoginViewController.h */; };
+		32CACFF316CB65B900E8F185 /* OKCloud.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFA516CB637C00E8F185 /* OKCloud.h */; };
+		32CACFF416CB65B900E8F185 /* OKDefines.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFA716CB637C00E8F185 /* OKDefines.h */; };
+		32CACFF516CB65B900E8F185 /* OKManager.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFA816CB637C00E8F185 /* OKManager.h */; };
+		32CACFF616CB65B900E8F185 /* OKFacebookUtilities.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFAA16CB637C00E8F185 /* OKFacebookUtilities.h */; };
+		32CACFF716CB65B900E8F185 /* OKGUI.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFAC16CB637C00E8F185 /* OKGUI.h */; };
+		32CACFF816CB65B900E8F185 /* OKHelper.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFAD16CB637C00E8F185 /* OKHelper.h */; };
+		32CACFF916CB65B900E8F185 /* OKLeaderboard.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFAF16CB637C00E8F185 /* OKLeaderboard.h */; };
+		32CACFFA16CB65B900E8F185 /* OKLeaderboardListCell.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFB116CB637C00E8F185 /* OKLeaderboardListCell.h */; };
+		32CACFFB16CB65B900E8F185 /* OKLeaderboardsListViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFB316CB637C00E8F185 /* OKLeaderboardsListViewController.h */; };
+		32CACFFC16CB65B900E8F185 /* OKLeaderboardsViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFB516CB637C00E8F185 /* OKLeaderboardsViewController.h */; };
+		32CACFFD16CB65B900E8F185 /* OKLeaderboardViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFB716CB637C00E8F185 /* OKLeaderboardViewController.h */; };
+		32CACFFE16CB65B900E8F185 /* OKLoginView.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFB916CB637C00E8F185 /* OKLoginView.h */; };
+		32CACFFF16CB65B900E8F185 /* OKMacros.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFBB16CB637C00E8F185 /* OKMacros.h */; };
+		32CAD00016CB65B900E8F185 /* OKNetworker.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFBC16CB637C00E8F185 /* OKNetworker.h */; };
+		32CAD00116CB65B900E8F185 /* OKNickViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFBE16CB637C00E8F185 /* OKNickViewController.h */; };
+		32CAD00216CB65B900E8F185 /* OKProfileViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFC016CB637C00E8F185 /* OKProfileViewController.h */; };
+		32CAD00316CB65B900E8F185 /* OKScore.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFC216CB637C00E8F185 /* OKScore.h */; };
+		32CAD00416CB65B900E8F185 /* OKScoreCell.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFC416CB637C00E8F185 /* OKScoreCell.h */; };
+		32CAD00516CB65B900E8F185 /* OKScoreViewCell.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFC616CB637C00E8F185 /* OKScoreViewCell.h */; };
+		32CAD00616CB65B900E8F185 /* OKScoreViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFC816CB637C00E8F185 /* OKScoreViewController.h */; };
+		32CAD00716CB65B900E8F185 /* OKTwitterUtilities.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFCA16CB637C00E8F185 /* OKTwitterUtilities.h */; };
+		32CAD00816CB65B900E8F185 /* OKUser.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFCC16CB637C00E8F185 /* OKUser.h */; };
+		32CAD00916CB65B900E8F185 /* OKUserProfileImageView.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFCE16CB637C00E8F185 /* OKUserProfileImageView.h */; };
+		32CAD00A16CB65B900E8F185 /* OKUserUtilities.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFD016CB637C00E8F185 /* OKUserUtilities.h */; };
+		32CAD00B16CB65B900E8F185 /* OpenKit.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFD216CB637C00E8F185 /* OpenKit.h */; };
+		32CAD00C16CB65B900E8F185 /* SimpleKeychain.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFD316CB637C00E8F185 /* SimpleKeychain.h */; };
 		32CAD02E16CB65F700E8F185 /* cell_border.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CAD01016CB65E800E8F185 /* cell_border.png */; };
 		32CAD02F16CB65F700E8F185 /* cell_border@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CAD01116CB65E800E8F185 /* cell_border@2x.png */; };
 		32CAD03016CB65F700E8F185 /* close.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CAD01216CB65E800E8F185 /* close.png */; };
@@ -164,10 +162,13 @@
 		32CAD10B16CB7A9B00E8F185 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD0FC16CB7A9B00E8F185 /* AFURLConnectionOperation.m */; };
 		32CAD10C16CB7A9B00E8F185 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD0FE16CB7A9B00E8F185 /* AFXMLRequestOperation.m */; };
 		32CAD10D16CB7A9B00E8F185 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD10016CB7A9B00E8F185 /* UIImageView+AFNetworking.m */; };
-		32CAD10E16CB7A9B00E8F185 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD10116CB7A9B00E8F185 /* FacebookSDK.framework */; };
 		32CAD10F16CB7A9B00E8F185 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD10416CB7A9B00E8F185 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
-		32CAD11016CB7AAD00E8F185 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD10116CB7A9B00E8F185 /* FacebookSDK.framework */; };
 		32CAD14B16CBABBB00E8F185 /* OKCloudAsyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD14A16CBABBB00E8F185 /* OKCloudAsyncRequest.m */; };
+		4410186B1728A1C80059BBAE /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4410186A1728A1C80059BBAE /* FacebookSDKResources.bundle */; };
+		4491D49C1728870B0084576B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4491D49B1728870B0084576B /* FacebookSDK.framework */; };
+		4491D49D1728870B0084576B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4491D49B1728870B0084576B /* FacebookSDK.framework */; };
+		4491D49E1728870B0084576B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4491D49B1728870B0084576B /* FacebookSDK.framework */; };
+		44E1182B1728A7CF003C2603 /* OKError.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E1182A1728A7CF003C2603 /* OKError.m */; };
 		44E3F3C816EAED4500509219 /* AFImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E3F3C716EAED4500509219 /* AFImageView.m */; };
 /* End PBXBuildFile section */
 
@@ -181,41 +182,42 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		326FD0C916CB6209004248F9 /* CopyFiles */ = {
+		326FD0C916CB6209004248F9 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = include;
 			dstSubfolderSpec = 16;
 			files = (
-				32CACFF116CB65B900E8F185 /* KGModal.h in CopyFiles */,
-				32CACFF216CB65B900E8F185 /* OKBaseLoginViewController.h in CopyFiles */,
-				32CACFF316CB65B900E8F185 /* OKCloud.h in CopyFiles */,
-				32CACFF416CB65B900E8F185 /* OKDefines.h in CopyFiles */,
-				32CACFF516CB65B900E8F185 /* OKManager.h in CopyFiles */,
-				32CACFF616CB65B900E8F185 /* OKFacebookUtilities.h in CopyFiles */,
-				32CACFF716CB65B900E8F185 /* OKGUI.h in CopyFiles */,
-				32CACFF816CB65B900E8F185 /* OKHelper.h in CopyFiles */,
-				32CACFF916CB65B900E8F185 /* OKLeaderboard.h in CopyFiles */,
-				32CACFFA16CB65B900E8F185 /* OKLeaderboardListCell.h in CopyFiles */,
-				32CACFFB16CB65B900E8F185 /* OKLeaderboardsListViewController.h in CopyFiles */,
-				32CACFFC16CB65B900E8F185 /* OKLeaderboardsViewController.h in CopyFiles */,
-				32CACFFD16CB65B900E8F185 /* OKLeaderboardViewController.h in CopyFiles */,
-				32CACFFE16CB65B900E8F185 /* OKLoginView.h in CopyFiles */,
-				32CACFFF16CB65B900E8F185 /* OKMacros.h in CopyFiles */,
-				32CAD00016CB65B900E8F185 /* OKNetworker.h in CopyFiles */,
-				32CAD00116CB65B900E8F185 /* OKNickViewController.h in CopyFiles */,
-				32CAD00216CB65B900E8F185 /* OKProfileViewController.h in CopyFiles */,
-				32CAD00316CB65B900E8F185 /* OKScore.h in CopyFiles */,
-				32CAD00416CB65B900E8F185 /* OKScoreCell.h in CopyFiles */,
-				32CAD00516CB65B900E8F185 /* OKScoreViewCell.h in CopyFiles */,
-				32CAD00616CB65B900E8F185 /* OKScoreViewController.h in CopyFiles */,
-				32CAD00716CB65B900E8F185 /* OKTwitterUtilities.h in CopyFiles */,
-				32CAD00816CB65B900E8F185 /* OKUser.h in CopyFiles */,
-				32CAD00916CB65B900E8F185 /* OKUserProfileImageView.h in CopyFiles */,
-				32CAD00A16CB65B900E8F185 /* OKUserUtilities.h in CopyFiles */,
-				32CAD00B16CB65B900E8F185 /* OpenKit.h in CopyFiles */,
-				32CAD00C16CB65B900E8F185 /* SimpleKeychain.h in CopyFiles */,
+				32CACFF116CB65B900E8F185 /* KGModal.h in Copy Files */,
+				32CACFF216CB65B900E8F185 /* OKBaseLoginViewController.h in Copy Files */,
+				32CACFF316CB65B900E8F185 /* OKCloud.h in Copy Files */,
+				32CACFF416CB65B900E8F185 /* OKDefines.h in Copy Files */,
+				32CACFF516CB65B900E8F185 /* OKManager.h in Copy Files */,
+				32CACFF616CB65B900E8F185 /* OKFacebookUtilities.h in Copy Files */,
+				32CACFF716CB65B900E8F185 /* OKGUI.h in Copy Files */,
+				32CACFF816CB65B900E8F185 /* OKHelper.h in Copy Files */,
+				32CACFF916CB65B900E8F185 /* OKLeaderboard.h in Copy Files */,
+				32CACFFA16CB65B900E8F185 /* OKLeaderboardListCell.h in Copy Files */,
+				32CACFFB16CB65B900E8F185 /* OKLeaderboardsListViewController.h in Copy Files */,
+				32CACFFC16CB65B900E8F185 /* OKLeaderboardsViewController.h in Copy Files */,
+				32CACFFD16CB65B900E8F185 /* OKLeaderboardViewController.h in Copy Files */,
+				32CACFFE16CB65B900E8F185 /* OKLoginView.h in Copy Files */,
+				32CACFFF16CB65B900E8F185 /* OKMacros.h in Copy Files */,
+				32CAD00016CB65B900E8F185 /* OKNetworker.h in Copy Files */,
+				32CAD00116CB65B900E8F185 /* OKNickViewController.h in Copy Files */,
+				32CAD00216CB65B900E8F185 /* OKProfileViewController.h in Copy Files */,
+				32CAD00316CB65B900E8F185 /* OKScore.h in Copy Files */,
+				32CAD00416CB65B900E8F185 /* OKScoreCell.h in Copy Files */,
+				32CAD00516CB65B900E8F185 /* OKScoreViewCell.h in Copy Files */,
+				32CAD00616CB65B900E8F185 /* OKScoreViewController.h in Copy Files */,
+				32CAD00716CB65B900E8F185 /* OKTwitterUtilities.h in Copy Files */,
+				32CAD00816CB65B900E8F185 /* OKUser.h in Copy Files */,
+				32CAD00916CB65B900E8F185 /* OKUserProfileImageView.h in Copy Files */,
+				32CAD00A16CB65B900E8F185 /* OKUserUtilities.h in Copy Files */,
+				32CAD00B16CB65B900E8F185 /* OpenKit.h in Copy Files */,
+				32CAD00C16CB65B900E8F185 /* SimpleKeychain.h in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		32CAD00D16CB65C200E8F185 /* CopyFiles */ = {
@@ -263,7 +265,6 @@
 		321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractActionSheetPicker.m; sourceTree = "<group>"; };
 		321E99CD16D2FBA1005F1506 /* ActionSheetStringPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetStringPicker.h; sourceTree = "<group>"; };
 		321E99CE16D2FBA1005F1506 /* ActionSheetStringPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetStringPicker.m; sourceTree = "<group>"; };
-		3222216816CBB77F006EBD1C /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = Vendor/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		32243AF016CDD4460077EDC8 /* libUnityPlugin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libUnityPlugin.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		32243AF416CDD4460077EDC8 /* UnityPlugin-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnityPlugin-Prefix.pch"; sourceTree = "<group>"; };
 		32243AFC16CDE3C80077EDC8 /* OK_SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OK_SynthesizeSingleton.h; sourceTree = "<group>"; };
@@ -410,11 +411,14 @@
 		32CAD0FE16CB7A9B00E8F185 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		32CAD0FF16CB7A9B00E8F185 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		32CAD10016CB7A9B00E8F185 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
-		32CAD10116CB7A9B00E8F185 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		32CAD10316CB7A9B00E8F185 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		32CAD10416CB7A9B00E8F185 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		32CAD14916CBABBB00E8F185 /* OKCloudAsyncRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKCloudAsyncRequest.h; sourceTree = "<group>"; };
 		32CAD14A16CBABBB00E8F185 /* OKCloudAsyncRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKCloudAsyncRequest.m; sourceTree = "<group>"; };
+		4410186A1728A1C80059BBAE /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		4491D49B1728870B0084576B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		44E118291728A7CF003C2603 /* OKError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKError.h; sourceTree = "<group>"; };
+		44E1182A1728A7CF003C2603 /* OKError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKError.m; sourceTree = "<group>"; };
 		44E3F3C616EAED4500509219 /* AFImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageView.h; sourceTree = "<group>"; };
 		44E3F3C716EAED4500509219 /* AFImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -425,8 +429,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				32243AF116CDD4460077EDC8 /* Foundation.framework in Frameworks */,
-				32C376A916D3F682006CA755 /* FacebookSDK.framework in Frameworks */,
 				32243B0516CDE3EF0077EDC8 /* libmono.0.dylib in Frameworks */,
+				4491D49E1728870B0084576B /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,7 +439,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				326FD0CF16CB6209004248F9 /* Foundation.framework in Frameworks */,
-				32CAD11016CB7AAD00E8F185 /* FacebookSDK.framework in Frameworks */,
+				4491D49C1728870B0084576B /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,7 +469,7 @@
 				32CAD05116CB698C00E8F185 /* UIKit.framework in Frameworks */,
 				32CAD05216CB698C00E8F185 /* Foundation.framework in Frameworks */,
 				32CAD05416CB698C00E8F185 /* CoreGraphics.framework in Frameworks */,
-				32CAD10E16CB7A9B00E8F185 /* FacebookSDK.framework in Frameworks */,
+				4491D49D1728870B0084576B /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,7 +507,6 @@
 				32CACF9C16CB637C00E8F185 /* OpenKit */,
 				32CAD00E16CB65E800E8F185 /* Resources */,
 				32CAD0EC16CB7A9B00E8F185 /* Vendor */,
-				3222216816CBB77F006EBD1C /* FacebookSDKResources.bundle */,
 				32CAD05516CB698C00E8F185 /* SampleApp */,
 				326FD0CD16CB6209004248F9 /* Frameworks */,
 				32243AF216CDD4460077EDC8 /* UnityPlugin */,
@@ -613,6 +616,8 @@
 				32CACFD216CB637C00E8F185 /* OpenKit.h */,
 				32CACFD316CB637C00E8F185 /* SimpleKeychain.h */,
 				32CACFD416CB637C00E8F185 /* SimpleKeychain.m */,
+				44E118291728A7CF003C2603 /* OKError.h */,
+				44E1182A1728A7CF003C2603 /* OKError.m */,
 			);
 			path = OpenKit;
 			sourceTree = "<group>";
@@ -693,8 +698,9 @@
 		32CAD0EC16CB7A9B00E8F185 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				4410186A1728A1C80059BBAE /* FacebookSDKResources.bundle */,
+				4491D49B1728870B0084576B /* FacebookSDK.framework */,
 				32CAD0ED16CB7A9B00E8F185 /* AFNetworking */,
-				32CAD10116CB7A9B00E8F185 /* FacebookSDK.framework */,
 				32CAD10216CB7A9B00E8F185 /* JSONKit */,
 			);
 			path = Vendor;
@@ -774,7 +780,7 @@
 			buildPhases = (
 				326FD0C716CB6209004248F9 /* Sources */,
 				326FD0C816CB6209004248F9 /* Frameworks */,
-				326FD0C916CB6209004248F9 /* CopyFiles */,
+				326FD0C916CB6209004248F9 /* Copy Files */,
 				32CAD00D16CB65C200E8F185 /* CopyFiles */,
 				326FD0DC16CB6214004248F9 /* ShellScript */,
 			);
@@ -897,7 +903,7 @@
 				32CAD08B16CB703E00E8F185 /* Default@2x.png in Resources */,
 				32CAD08D16CB703E00E8F185 /* OKViewController.xib in Resources */,
 				32CAD09616CB703E00E8F185 /* ScoreSubmitterVC.xib in Resources */,
-				3222216916CBB77F006EBD1C /* FacebookSDKResources.bundle in Resources */,
+				4410186B1728A1C80059BBAE /* FacebookSDKResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -961,6 +967,7 @@
 				321E99CB16D2FB6C005F1506 /* AbstractActionSheetPicker.m in Sources */,
 				321E99CF16D2FBA1005F1506 /* ActionSheetStringPicker.m in Sources */,
 				44E3F3C816EAED4500509219 /* AFImageView.m in Sources */,
+				44E1182B1728A7CF003C2603 /* OKError.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

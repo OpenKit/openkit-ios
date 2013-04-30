@@ -23,6 +23,7 @@
 #import "OKCloudAsyncRequest.h"
 #import "JSONKit.h"
 #import "OKMacros.h"
+#import "OKError.h"
 
 static void
 encodeObj(id obj, NSString **strOut, NSError **errOut)
@@ -65,7 +66,12 @@ decodeObj(NSData *dataIn, NSError **errOut)
 + (void)set:(id)obj key:(NSString *)key completion:(void (^)(id obj, NSError *err))completion
 {
     OKUser *user = [OKUser currentUser];
-    NSAssert(user != nil, @"User must be logged in to use OKCloud");
+    
+    if(user == nil) {
+        completion(nil, [OKError userNotLoggedInError]);
+        return;
+    }
+    
     NSError *err;
     NSString *objRep;
 
@@ -89,7 +95,11 @@ decodeObj(NSData *dataIn, NSError **errOut)
 + (void)get:(NSString *)key completion:(void (^)(id obj, NSError *err))completion
 {
     OKUser *user = [OKUser currentUser];
-    NSAssert(user != nil, @"User must be logged in to use OKCloud");
+    
+    if(user == nil) {
+        completion(nil, [OKError userNotLoggedInError]);
+        return;
+    }
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             user.OKUserID,  @"user_id",
                             nil];

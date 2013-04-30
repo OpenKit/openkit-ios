@@ -24,13 +24,14 @@
 
 @implementation OKBaseLoginViewController
 
-@synthesize currentTwitterAccount, twitterAccounts, loginView,spinner, fbLoginButton, twitterLoginButton, delegate;
+@synthesize currentTwitterAccount, twitterAccounts, loginView,spinner, fbLoginButton, twitterLoginButton, delegate, loginString;
 
--(id)init
+-(id)initWithLoginString:(NSString*)aLoginString
 {
     self = [super init];
     if(self)
     {
+        [self setLoginString:aLoginString];
         [self initLoginView];
     }
     return self;
@@ -85,7 +86,7 @@
     welcomeLabelRect.size.height = 60;
     UIFont *welcomeLabelFont = [UIFont boldSystemFontOfSize:15];
     UILabel *welcomeLabel = [[UILabel alloc] initWithFrame:welcomeLabelRect];
-    welcomeLabel.text = @"Create an account to access leaderboards and resume game progress from any device.";
+    welcomeLabel.text = [self loginString];
     welcomeLabel.numberOfLines = 3;
     welcomeLabel.font = welcomeLabelFont;
     welcomeLabel.textColor = [UIColor colorWithRed:51.0f/2550.f green:51.0f/2550.f blue:51.0f/2550.f alpha:1.0];
@@ -172,16 +173,19 @@
         [self hideLoginDialogSpinner];
         
         if (user) {
+            //Logged into OpenKit Successfully
             [self showUIToEnterNickname];
-            //[self dismissModalViewControllerAnimated:YES];
         } else {
-            NSLog(@"OpenKit Error: Could not create OKUser with FB authentication: %@", error.description);
+            //Did not login to OpenKit, could be a cancelled process
             
-            if(self)
+            if(error)
             {
+                NSLog(@"OpenKit Error: Could not create OKUser with FB authentication: %@", error.description);
+                
                 UIAlertView *fbLoginErrorAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Sorry, there was an error logging you in through Facebook. Please try again later or try logging in with a Twitter account" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
                 [fbLoginErrorAlert show];
             }
+            
         }
     }];
 }
@@ -240,9 +244,8 @@
     [OKTwitterUtilities AuthorizeTwitterAccount:account withCompletionHandler:^(OKUser *newUser, NSError *error) {
         [self hideLoginDialogSpinner];
         
-        if (error) {
-            //TODO
-            NSLog(@"Error logging into twitter");
+        if (error) {            
+            NSLog(@"Error logging into twitter: %@",error);
         } else {
             [[OKManager sharedManager] saveCurrentUser:newUser];
             NSLog(@"Logged in with Twitter");

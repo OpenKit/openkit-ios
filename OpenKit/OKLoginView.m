@@ -35,13 +35,33 @@
         baseWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         baseWindow.opaque = NO;
         
-        baseViewController = [[OKBaseLoginViewController alloc] init];
+        baseViewController = [[OKBaseLoginViewController alloc] initWithLoginString:@"Create an account to access leaderboards and resume game progress from any device."];
         
         [baseWindow setRootViewController:baseViewController];
         //[baseWindow setWindowLevel:UIWindowLevelAlert];
     }
     return self;
 }
+
+-(id)initWithLoginString:(NSString*)loginString
+{
+    self = [super init];
+    if(self)
+    {
+        //Create the base window
+        baseWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        baseWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        baseWindow.opaque = NO;
+        
+        baseViewController = [[OKBaseLoginViewController alloc] initWithLoginString:loginString];
+        
+        [baseWindow setRootViewController:baseViewController];
+        //[baseWindow setWindowLevel:UIWindowLevelAlert];
+    }
+    return self;
+
+}
+
 
 -(void)show
 {

@@ -54,6 +54,8 @@
     [loginView showWithCompletionHandler:^{
         [self updateUIforOKUser];
     }];
+    
+    
 }
 
 

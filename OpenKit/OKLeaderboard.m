@@ -9,9 +9,10 @@
 #import "OKLeaderboard.h"
 #import "OKManager.h"
 #import "OKUser.h"
-#import "OKScore.h"
 #import "OKHelper.h"
 #import "OKNetworker.h"
+#import "OKScore.h"
+
 
 @implementation OKLeaderboard
 
@@ -41,12 +42,14 @@
     return [NSString stringWithFormat:@"%d Players", playerCount];
 }
 
-+ (void)getLeaderboardsWithCompletionHandler:(void (^)(NSArray* leaderboards, NSError* error))completionHandler
++ (void)getLeaderboardsWithCompletionHandler:(void (^)(NSArray* leaderboards, int playerCount, NSError* error))completionHandler
 {
     // OK NETWORK REQUEST
     [OKNetworker getFromPath:@"/leaderboards" parameters:nil
                      handler:^(id responseObject, NSError *error)
      {
+         int maxPlayerCount = 0;
+         
          NSMutableArray *leaderboards = nil;
          if(!error) {
              NSLog(@"Successfully got list of leaderboards");
@@ -54,45 +57,52 @@
              NSArray *leaderBoardsJSON = (NSArray*)responseObject;
              leaderboards = [NSMutableArray arrayWithCapacity:[leaderBoardsJSON count]];
              
+             
+             
              for(id obj in leaderBoardsJSON) {
                  OKLeaderboard *leaderBoard = [[OKLeaderboard alloc] initFromJSON:obj];
                  [leaderboards addObject:leaderBoard];
+                 
+                 if([leaderBoard playerCount] > maxPlayerCount)
+                     maxPlayerCount = [leaderBoard playerCount];
              }
          }else{
              NSLog(@"Failed to get list of leaderboards: %@", error);
          }
-         completionHandler(leaderboards, error);
+         completionHandler(leaderboards, maxPlayerCount, error);
      }];
 }
 
+-(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange WithCompletionhandler:(void (^)(NSArray *, NSError *))completionHandler
+{
+    [self getScoresForTimeRange:timeRange forPageNumber:1 WithCompletionhandler:completionHandler];
+}
 
--(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange
+-(NSString*)getParamForLeaderboardTimeRange:(OKLeaderboardTimeRange)range
+{
+    switch (range) {
+        case OKLeaderboardTimeRangeOneDay:
+            return @"today";
+        case OKLeaderboardTimeRangeOneWeek:
+            return @"this_week";
+        default:
+            return @"all_time";
+    }
+}
+
+-(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange forPageNumber:(int)pageNum 
        WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler
 {
     //Create a request and send it to OpenKit
+    //Create the request parameters
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setValue:[NSNumber numberWithInt:[self OKLeaderboard_id]] forKey:@"leaderboard_id"];
-
-    OKUser *u = [OKUser currentUser];
-    if (u) {
-        [params setValue:u.OKUserID forKey:@"user_id"];
-    }
-    
-    if (timeRange != OKLeaderboardTimeRangeAllTime) {
-        int days;
-        switch (timeRange) {
-            case OKLeaderboardTimeRangeOneDay:  days = -1;      break;
-            case OKLeaderboardTimeRangeOneWeek: days = -7;      break;
-            default:                            days = INT_MIN; break;
-        }
-
-        NSDate *since = [OKHelper dateNDaysFromToday:days];
-        [params setValue:since forKey:@"since"];
-    }
-    
+    [params setValue:[NSNumber numberWithInt:pageNum] forKey:@"page_num"];
+    [params setValue:[NSNumber numberWithInt:NUM_SCORES_PER_PAGE] forKey:@"num_per_page"];
+    [params setValue:[self getParamForLeaderboardTimeRange:timeRange] forKey:@"leaderboard_range"];
     
     // OK NETWORK REQUEST
-    [OKNetworker getFromPath:@"/scores" parameters:params
+    [OKNetworker getFromPath:@"/best_scores" parameters:params
                      handler:^(id responseObject, NSError *error)
     {
         NSMutableArray *scores = nil;
@@ -105,14 +115,29 @@
             for(id obj in scoresJSON) {
                 OKScore *score = [[OKScore alloc] initFromJSON:obj];
                 [scores addObject:score];
-                if (u && score.user.OKUserID == u.OKUserID) {
-                    NSLog(@"Current user's score is: %d", score.scoreValue);
-                }
             }
-        }else{
-            NSLog(@"Failed to get scores");
+        } else {
+            NSLog(@"Failed to get scores, with error: %@", error);
         }
         completionHandler(scores, error);
+    }];
+}
+
+-(void)getUsersTopScoreForLeaderboardForTimeRange:(OKLeaderboardTimeRange)range withCompletionHandler:(void (^)(OKScore *score, NSError *error))completionHandler
+{
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setValue:[NSNumber numberWithInt:[self OKLeaderboard_id]] forKey:@"leaderboard_id"];
+    [params setValue:[self getParamForLeaderboardTimeRange:range] forKey:@"leaderboard_range"];
+    [params setValue:[[OKUser currentUser] OKUserID] forKey:@"user_id"];
+    
+    [OKNetworker getFromPath:@"best_scores/user" parameters:params handler:^(id responseObject, NSError *error) {
+        if(!error) {
+            OKScore *topScore = [[OKScore alloc] initFromJSON:(NSDictionary*)responseObject];
+            completionHandler(topScore, nil);
+        }
+        else {
+            completionHandler(nil, error);
+        }
     }];
 }
 

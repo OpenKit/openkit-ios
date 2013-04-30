@@ -10,10 +10,13 @@
 #import <QuartzCore/QuartzCore.h>
 #import "OKHelper.h"
 #import "OKScoreViewController.h"
+#import "OKMacros.h"
 
 @interface OKLeaderboardViewController ()
 
-@property (nonatomic, strong) OKScore *currentUserScore;
+@property (nonatomic, strong) OKScore *topScoreAllTime;
+@property (nonatomic, strong) OKScore *topScoreThisWeek;
+@property (nonatomic, strong) OKScore *topScoreToday;
 
 @end
 
@@ -23,17 +26,8 @@
     NSArray *currentlyShownLeaderboardsScores;
 }
 
-@synthesize  moreBtn, spinner, leaderboardScoresAllTime, leaderboardScoresThisWeek, leaderboardScoresToday, todayScoresButton, thisWeekScoresButton, allTimeScoresButton, currentUserScore;
+@synthesize  moreBtn, spinner, leaderboardScoresAllTime, leaderboardScoresThisWeek, leaderboardScoresToday, todayScoresButton, thisWeekScoresButton, allTimeScoresButton, topScoreAllTime, topScoreThisWeek, topScoreToday;
 
-/*
-enum OKTableViewSections {
-    kCurrentUserSection = 0,
-    kTitleSection,
-    kAuthorSection,
-    kBodySection,
-    NUM_SECTIONS
-};
- */
 
 - (id)initWithLeaderboard:(OKLeaderboard *)aLeaderboard
 {
@@ -88,19 +82,19 @@ enum OKTableViewSections {
         }
         else {
             
-            [self getCurrentUserScoreFromScores:scores];
+            NSMutableArray *mutableScores = [[NSMutableArray alloc] initWithArray:scores];
             
             switch (range) {
                 case OKLeaderboardTimeRangeOneDay:
-                    [self setLeaderboardScoresToday:scores];
+                    [self setLeaderboardScoresToday:mutableScores];
                     currentlyShownLeaderboardsScores = leaderboardScoresToday;
                     break;
                 case OKLeaderboardTimeRangeOneWeek:
-                    [self setLeaderboardScoresThisWeek:scores];
+                    [self setLeaderboardScoresThisWeek:mutableScores];
                     currentlyShownLeaderboardsScores = leaderboardScoresThisWeek;
                     break;
                 default:
-                    [self setLeaderboardScoresAllTime:scores];
+                    [self setLeaderboardScoresAllTime:mutableScores];
                     currentlyShownLeaderboardsScores = leaderboardScoresAllTime;
                     break;
             }
@@ -108,27 +102,95 @@ enum OKTableViewSections {
             [self.tableView reloadData];
         }
     }];
+    
+    [self.leaderboard getUsersTopScoreForLeaderboardForTimeRange:range
+                                           withCompletionHandler:^(OKScore *score, NSError *error)
+    {
+        if(!error) {
+            
+            [self setTopScore:score forTimeRange:range];
+            [_tableView reloadData];
+        }
+        else {
+            OKLog(@"Error getting user's top score: %@",error);
+        }
+        
+    }];
 }
 
--(void)getCurrentUserScoreFromScores:(NSArray *)scores
+-(void)getMoreScoresForTimeRange:(OKLeaderboardTimeRange)range
 {
-    //If there is no user logged in, then return
-    if(![OKUser currentUser])
+    NSArray *scores = [self getCachedScoresForRange:range];
+    
+    // If there are no scores already for this leaderboard, getting "More" doesn't make sense
+    if(scores == nil)
         return;
     
-    [self setCurrentUserScore:nil];
+    int numScores = [scores count];
+    int currentPageNumber = numScores / NUM_SCORES_PER_PAGE;
+    if(currentPageNumber*NUM_SCORES_PER_PAGE < numScores) { 
+        currentPageNumber++;
+    }
     
-    for(int x = 0; x < [scores count]; x++)
-    {
-        OKScore *score = [scores objectAtIndex:x];
+    int nextPageNumber = currentPageNumber + 1;
+    
+    [moreBtn setEnabled:NO];
+    
+    [self.leaderboard getScoresForTimeRange:currentDisplayedLeaderboardTimeRange forPageNumber:nextPageNumber WithCompletionhandler:^(NSArray *scores, NSError *error) {
         
-        if([[score user] OKUserID] == [[OKUser currentUser] OKUserID])
-        {
-            [self setCurrentUserScore:score];
-            return;
-        }
+        NSMutableArray *mutableScores = [self getCachedScoresForRange:range];
+        [mutableScores addObjectsFromArray:scores];
+        [_tableView reloadData];
+        
+        [moreBtn setEnabled:YES];
+    }];
+    
+}
+
+-(NSMutableArray*)getCachedScoresForRange:(OKLeaderboardTimeRange)range
+{
+    switch (range) {
+        case OKLeaderboardTimeRangeOneDay:
+            return leaderboardScoresToday;
+        case OKLeaderboardTimeRangeOneWeek:
+            return leaderboardScoresThisWeek;
+        default:
+            return leaderboardScoresAllTime;
     }
 }
+
+
+-(OKScore*)getTopScoreForRange:(OKLeaderboardTimeRange)range
+{
+    switch (range) {
+        case OKLeaderboardTimeRangeOneDay:
+            return topScoreToday;
+        case OKLeaderboardTimeRangeOneWeek:
+            return topScoreThisWeek;
+        default:
+            return topScoreAllTime;
+    }
+}
+
+-(void)setTopScore:(OKScore*)score forTimeRange:(OKLeaderboardTimeRange)range
+{
+    switch (range) {
+        case OKLeaderboardTimeRangeOneDay:
+            topScoreToday = score;
+            break;
+        case OKLeaderboardTimeRangeOneWeek:
+            topScoreThisWeek = score;
+            break;
+        default:
+            topScoreAllTime = score;
+            break;
+    }
+}
+
+
+
+
+
 
 -(void)setButtonAsSelected:(UIButton *)button
 {
@@ -147,6 +209,8 @@ enum OKTableViewSections {
     [self setButtonAsNormal:thisWeekScoresButton];
     [self setButtonAsNormal:allTimeScoresButton];
     
+     currentDisplayedLeaderboardTimeRange = OKLeaderboardTimeRangeOneDay;
+    
     if(leaderboardScoresToday == nil) {
         [self getScoresForTimeRange:OKLeaderboardTimeRangeOneDay];
     }
@@ -162,6 +226,8 @@ enum OKTableViewSections {
     [self setButtonAsSelected:thisWeekScoresButton];
     [self setButtonAsNormal:todayScoresButton];
     [self setButtonAsNormal:allTimeScoresButton];
+    
+     currentDisplayedLeaderboardTimeRange = OKLeaderboardTimeRangeOneWeek;
     
     if(leaderboardScoresThisWeek == nil)
     {
@@ -181,6 +247,8 @@ enum OKTableViewSections {
     [self setButtonAsNormal:thisWeekScoresButton];
     [self setButtonAsNormal:todayScoresButton];
     
+    currentDisplayedLeaderboardTimeRange = OKLeaderboardTimeRangeAllTime;
+    
     if(leaderboardScoresAllTime == nil)
     {
         [self getScoresForTimeRange:OKLeaderboardTimeRangeAllTime];
@@ -190,13 +258,16 @@ enum OKTableViewSections {
         currentlyShownLeaderboardsScores = leaderboardScoresAllTime;
         [_tableView reloadData];
     }
+    
+    
 
 }
 
 - (IBAction)more:(id)sender
 {
-    NSLog(@"Just kidding!");
+    [self getMoreScoresForTimeRange:currentDisplayedLeaderboardTimeRange];
 }
+
 
 
 
@@ -215,10 +286,13 @@ enum OKTableViewSections {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
-    if(currentUserScore)
+    
+    if([self getTopScoreForRange:currentDisplayedLeaderboardTimeRange] != nil) {
         return 2;
-    else
+    }
+    else {
         return 1;
+    }
 }
 
 
@@ -238,7 +312,7 @@ enum OKTableViewSections {
     OKScore *selectedScore;
     
     if(numSections == 2 && sectionIndex == 0){
-        selectedScore = currentUserScore;
+        selectedScore = [self getTopScoreForRange:currentDisplayedLeaderboardTimeRange];
     }
     else {
         selectedScore = [currentlyShownLeaderboardsScores objectAtIndex:row];
@@ -272,6 +346,9 @@ enum OKTableViewSections {
     return 60;
 }
 
+
+
+/*
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int numSections = [self numberOfSectionsInTableView:tableView];
@@ -282,7 +359,7 @@ enum OKTableViewSections {
     
     if(numSections == 2 && sectionIndex == 0)
     {
-        selectedScore = currentUserScore;
+        selectedScore = [self getTopScoreForRange:currentDisplayedLeaderboardTimeRange];
     }
     else
     {
@@ -293,6 +370,7 @@ enum OKTableViewSections {
     [[self navigationController] pushViewController:detailView animated:YES];
 
 }
+ */
 
 
 @end

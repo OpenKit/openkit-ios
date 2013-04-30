@@ -15,7 +15,7 @@
 
 @implementation OKScore
 
-@synthesize OKLeaderboardID, OKScoreID, scoreValue, user, scoreRank;
+@synthesize OKLeaderboardID, OKScoreID, scoreValue, user, scoreRank, metadata, displayString;
 
 - (id)initFromJSON:(NSDictionary*)jsonDict
 {
@@ -25,9 +25,15 @@
         
         self.OKLeaderboardID = [[jsonDict objectForKey:@"leaderboard_id"] integerValue];
         self.OKScoreID = [[jsonDict objectForKey:@"id"] integerValue];
-        self.scoreValue = [[jsonDict objectForKey:@"value"] integerValue];
+        self.scoreValue = [[jsonDict objectForKey:@"value"] longLongValue];
         self.scoreRank = [[jsonDict objectForKey:@"rank"] integerValue];
         self.user = [OKUserUtilities createOKUserWithJSONData:[jsonDict objectForKey:@"user"]];
+        
+        if([jsonDict objectForKey:@"display_string"] != nil && [jsonDict objectForKey:@"display_string"] != [NSNull null])
+            self.displayString = [jsonDict objectForKey:@"display_string"];
+        
+        if([jsonDict objectForKey:@"metadata"] != nil && [jsonDict objectForKey:@"metadata"] != [NSNull null])
+            self.metadata = [[jsonDict objectForKey:@"metadata"] integerValue];
     }
     
     return self;
@@ -39,8 +45,10 @@
     
     NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] initWithCapacity:3];
     
-    [paramDict setValue:[NSNumber numberWithInt:scoreValue] forKey:@"value"];
+    [paramDict setValue:[NSNumber numberWithLongLong:scoreValue] forKey:@"value"];
     [paramDict setValue:[NSNumber numberWithInt:OKLeaderboardID] forKey:@"leaderboard_id"];
+    [paramDict setValue:[NSNumber numberWithInt:metadata] forKey:@"metadata"];
+    [paramDict setValue:displayString forKey:@"display_string"];
     [paramDict setValue:[currentUser OKUserID] forKey:@"user_id"];
     
     return paramDict;

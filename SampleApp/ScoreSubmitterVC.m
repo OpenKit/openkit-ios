@@ -47,7 +47,7 @@
     [spinner startAnimating];
     [self enableUI:NO];
     
-    [OKLeaderboard getLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, NSError *error)
+    [OKLeaderboard getLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, int playerCount, NSError *error)
     {
         [spinner stopAnimating];
         if(!error)
