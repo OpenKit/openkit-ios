@@ -77,7 +77,7 @@
 {
     [spinner startAnimating];
     
-    [OKLeaderboard getLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, NSError *error) {
+    [OKLeaderboard getLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, int maxPlayerCount, NSError *error) {
         
         [spinner stopAnimating];
         
@@ -87,6 +87,7 @@
             [alert show];
             
         } else {
+            playerCount = maxPlayerCount;
             [self setOKLeaderBoardsList:leaderboards];
             [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
@@ -120,7 +121,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-  return @"34,2934 Players";
+    return [NSString stringWithFormat:@"%d Players",playerCount];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {

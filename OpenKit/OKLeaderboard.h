@@ -35,7 +35,7 @@ typedef enum {
 @property (nonatomic, strong) NSString *icon_url;
 @property (nonatomic) int playerCount;
 
-+ (void)getLeaderboardsWithCompletionHandler:(void (^)(NSArray* leaderboards, NSError* error))completionHandler;
++ (void)getLeaderboardsWithCompletionHandler:(void (^)(NSArray* leaderboards, int playerCount, NSError* error))completionHandler;
 - (NSString *)playerCountString;
 - (id)initFromJSON:(NSDictionary*)jsonDict;
 - (void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler;

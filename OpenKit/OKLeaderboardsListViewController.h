@@ -10,7 +10,7 @@
 
 @interface OKLeaderboardsListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 {
-  NSMutableArray *listOfItems;
+    int playerCount;
 }
 
 - (IBAction)back;

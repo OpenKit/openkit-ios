@@ -42,12 +42,14 @@
     return [NSString stringWithFormat:@"%d Players", playerCount];
 }
 
-+ (void)getLeaderboardsWithCompletionHandler:(void (^)(NSArray* leaderboards, NSError* error))completionHandler
++ (void)getLeaderboardsWithCompletionHandler:(void (^)(NSArray* leaderboards, int playerCount, NSError* error))completionHandler
 {
     // OK NETWORK REQUEST
     [OKNetworker getFromPath:@"/leaderboards" parameters:nil
                      handler:^(id responseObject, NSError *error)
      {
+         int maxPlayerCount = 0;
+         
          NSMutableArray *leaderboards = nil;
          if(!error) {
              NSLog(@"Successfully got list of leaderboards");
@@ -55,14 +57,19 @@
              NSArray *leaderBoardsJSON = (NSArray*)responseObject;
              leaderboards = [NSMutableArray arrayWithCapacity:[leaderBoardsJSON count]];
              
+             
+             
              for(id obj in leaderBoardsJSON) {
                  OKLeaderboard *leaderBoard = [[OKLeaderboard alloc] initFromJSON:obj];
                  [leaderboards addObject:leaderBoard];
+                 
+                 if([leaderBoard playerCount] > maxPlayerCount)
+                     maxPlayerCount = [leaderBoard playerCount];
              }
          }else{
              NSLog(@"Failed to get list of leaderboards: %@", error);
          }
-         completionHandler(leaderboards, error);
+         completionHandler(leaderboards, maxPlayerCount, error);
      }];
 }
 
