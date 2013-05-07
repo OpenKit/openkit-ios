@@ -15,7 +15,6 @@
     OKLoginViewCompletionHandler loginDialogCompletionHandler;
 }
 
-@property (nonatomic, strong) UIWindow *baseWindow;
 @property (nonatomic, strong) UIView *loginView;
 @property (nonatomic, strong) OKBaseLoginViewController *baseViewController;
 
@@ -23,51 +22,23 @@
 
 @implementation OKLoginView
 
-@synthesize loginView, baseWindow, baseViewController;
+@synthesize loginView, baseViewController;
 
 -(id)init
 {
     self = [super init];
     if(self)
     {
-        //Create the base window
-        baseWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        baseWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        baseWindow.opaque = NO;
-        
-        baseViewController = [[OKBaseLoginViewController alloc] initWithLoginString:@"Create an account to access leaderboards and resume game progress from any device."];
-        
-        [baseWindow setRootViewController:baseViewController];
-        //[baseWindow setWindowLevel:UIWindowLevelAlert];
+        baseViewController = [[OKBaseLoginViewController alloc] init];
     }
     return self;
 }
-
--(id)initWithLoginString:(NSString*)loginString
-{
-    self = [super init];
-    if(self)
-    {
-        //Create the base window
-        baseWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        baseWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        baseWindow.opaque = NO;
-        
-        baseViewController = [[OKBaseLoginViewController alloc] initWithLoginString:loginString];
-        
-        [baseWindow setRootViewController:baseViewController];
-        //[baseWindow setWindowLevel:UIWindowLevelAlert];
-    }
-    return self;
-
-}
-
 
 -(void)show
 {
-    //Show the base window on the main thread
+    //Show the base view controller on the main thread
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.baseWindow makeKeyAndVisible];
+        [[[UIApplication sharedApplication] keyWindow] addSubview:baseViewController.view];
     });
     
     [baseViewController setDelegate:self];
@@ -82,9 +53,9 @@
 
 -(void)dismiss
 {
-    //Show the base window on the main thread
+    //Remove the base view controller on the main thread
     dispatch_async(dispatch_get_main_queue(), ^{
-        [baseWindow removeFromSuperview];
+        [baseViewController.view removeFromSuperview];
     });
     
     [baseViewController setDelegate:nil];
