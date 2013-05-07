@@ -26,11 +26,17 @@
 
 -(id)init
 {
+    return [self initWithLoginString:@"Create an account to access leaderboards and resume game progress from any device."];
+}
+
+-(id)initWithLoginString:(NSString *)loginString
+{
     self = [super init];
-    if(self)
-    {
-        baseViewController = [[OKBaseLoginViewController alloc] init];
+    
+    if(self) {
+        baseViewController = [[OKBaseLoginViewController alloc] initWithLoginString:loginString];
     }
+    
     return self;
 }
 
