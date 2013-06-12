@@ -62,7 +62,11 @@
 
 +(void)GetTwitterUserInfoFromTwitterAccount:(ACAccount *)twitterAccount withCompletionHandler:(void(^)(NSNumber *twitterID, NSString *userNick, NSError *error))completionHandler
 {
-    NSURL *reqURL = [NSURL URLWithString:@"https://api.twitter.com/1/users/show.json?include_entities=true"];
+    //NSURL *reqURL = [NSURL URLWithString:@"https://api.twitter.com/1/users/show.json?include_entities=true"];
+    
+    //Changed request URL to v1.1 of twitter API
+    NSURL *reqURL = [NSURL URLWithString:@"https://api.twitter.com/1.1/account/verify_credentials.json"];
+    
     
     NSDictionary *params = [NSDictionary dictionaryWithObject:[twitterAccount username] forKey:@"screen_name"];
     TWRequest *request = [[TWRequest alloc] initWithURL:reqURL parameters:params requestMethod:TWRequestMethodGET];
@@ -84,6 +88,9 @@
         }
         else
         {
+            if(!error)
+                error = [NSError errorWithDomain:@"TwitterError" code:[urlResponse statusCode] userInfo:nil];
+            
             NSLog(@"Twitter error: %@ status code: %d", error, [urlResponse statusCode]);
             
             completionHandler(nil, nil, error);
@@ -92,29 +99,18 @@
 }
 
 +(void)CreateOKUserWithTwitterID:(NSNumber *)twitterID withUserNick:(NSString *)userNick withCompletionHandler:(void(^)(OKUser *user, NSError *error))completionhandler
-{    
-    //Create a request and send it to OpenKit
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            twitterID, @"twitter_id",
-                            userNick, @"nick", nil];
-    
-    [OKNetworker postToPath:@"/users" parameters:params
-                    handler:^(id responseObject, NSError *error)
-     {
-         OKUser *newUser = nil;
-         if(error == nil) {
-             //Success
-             NSLog(@"Successfully created/found user ID: %@", [responseObject valueForKeyPath:@"id"]);
-             newUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
-             [[OKManager sharedManager] saveCurrentUser:newUser];
-         }else{
-             NSLog(@"Failed to create user");
-         }
-         completionhandler(newUser, error);
-     }];
+{
+    [OKUserUtilities createOKUserWithUserIDType:TwitterIDType withUserID:[twitterID stringValue] withUserNick:userNick withCompletionHandler:^(OKUser *user, NSError *errror) {
+        
+        if(!errror) {
+            //Save the current user if request was successful
+            [[OKManager sharedManager] saveCurrentUser:user];
+        }
+        
+        //Call the passed in completionHandler
+        completionhandler(user, errror);
+    }];
 }
-
-//ithCompletionHandler:(void(^)(OKUser *user, NSError *error))completionhandler
                                                                                                
                                                                                                
 @end

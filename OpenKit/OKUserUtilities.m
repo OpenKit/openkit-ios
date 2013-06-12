@@ -11,6 +11,9 @@
 #import "OKUser.h"
 #import "OKNetworker.h"
 #import "OKDefines.h"
+#import "OKMacros.h"
+
+
 
 @implementation OKUserUtilities
 
@@ -83,6 +86,51 @@
              NSLog(@"Error updating username: %@", error);
          }
          completionHandler(error);
+     }];
+}
+
+
++(void)createOKUserWithUserIDType:(OKUserIDType)userIDtype withUserID:(NSString*)userID withUserNick:(NSString *)userNick withCompletionHandler:(void(^)(OKUser *user, NSError *errror))completionHandler
+{
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                            userNick, @"nick", nil];
+    
+    
+    // Set the correct parameter based on UserID type
+    switch(userIDtype) {
+        case FacebookIDType:
+            [params setObject:userID forKey:@"fb_id"];
+            break;
+        case TwitterIDType:
+            [params setObject:userID forKey:@"twitter_id"];
+            break;
+        case GoogleIDType:
+            [params setObject:userID forKey:@"google_id"];
+            break;
+        case GameCenterIDType:
+            [params setObject:userID forKey:@"custom_id"];
+            break;
+        case CustomIDType:
+            [params setObject:userID forKey:@"custom_id"];
+            break;
+    }
+    
+    [OKNetworker postToPath:@"/users" parameters:params
+                    handler:^(id responseObject, NSError *error)
+     {
+         OKUser *newUser = nil;
+         if(!error) {
+             //Success
+             OKLog(@"Successfully created/found user ID: %@", [responseObject valueForKeyPath:@"id"]);
+             newUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
+             
+             // Save current user
+             //[[OKManager sharedManager] saveCurrentUser:newUser];
+         } else {
+             OKLog(@"Failed to create user with error: %@", error);
+         }
+         
+         completionHandler(newUser, error);
      }];
 }
 @end

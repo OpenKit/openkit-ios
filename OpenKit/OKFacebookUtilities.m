@@ -113,27 +113,16 @@
 
 +(void)CreateOKUserWithFacebookID:(NSString *)facebookID withUserNick:(NSString *)userNick withCompletionHandler:(void(^)(OKUser *user, NSError *error))completionhandler
 {    
-    //Create a request and send it to OpenKit
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            facebookID, @"fb_id",
-                            userNick, @"nick", nil];
-
-    [OKNetworker postToPath:@"/users" parameters:params
-                    handler:^(id responseObject, NSError *error)
-     {
-         OKUser *newUser = nil;
-         if(!error) {
-             //Success
-             NSLog(@"Successfully created/found user ID: %@", [responseObject valueForKeyPath:@"id"]);
-             newUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
-             
-             //TODO save current user
-             [[OKManager sharedManager] saveCurrentUser:newUser];
-         }else{
-             NSLog(@"Failed to create user with error: %@", error);
-         }
-         completionhandler(newUser, error);
-     }];
+    [OKUserUtilities createOKUserWithUserIDType:FacebookIDType withUserID:facebookID withUserNick:userNick withCompletionHandler:^(OKUser *user, NSError *errror) {
+    
+        if(!errror) {
+            // User was created successfully, save as current user
+            [[OKManager sharedManager] saveCurrentUser:user];
+        }
+        
+        // Call the passed in completionHandler
+        completionhandler(user, errror);
+    }];
 }
 
 

@@ -8,11 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    FacebookIDType,
+    TwitterIDType,
+    GoogleIDType,
+    GameCenterIDType,
+    CustomIDType
+} OKUserIDType;
+
 @class OKUser;
 @interface OKUserUtilities : NSObject
 
 + (OKUser *)createOKUserWithJSONData:(NSDictionary *)jsonData;
 + (NSDictionary *)getJSONRepresentationOfUser:(OKUser *)user;
 + (void)updateUserNickForOKUser:(OKUser *)user withNewNick:(NSString *)newNick withCompletionHandler:(void(^)(NSError *error))completionHandler;
++(void)createOKUserWithUserIDType:(OKUserIDType)userIDtype withUserID:(NSString*)userID withUserNick:(NSString *)userNick withCompletionHandler:(void(^)(OKUser *user, NSError *errror))completionHandler;
 
 @end

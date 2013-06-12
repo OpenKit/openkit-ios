@@ -15,6 +15,7 @@
 //#import "OKCloud.h"
 //#import <objc/runtime.h>
 
+#import "OKGameCenterUtilities.h"
 
 @implementation OKAppDelegate
 
@@ -36,6 +37,9 @@
     UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:self.viewController];
     self.window.rootViewController = navi;
     [self.window makeKeyAndVisible];
+    
+    [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES];
+    
 
     return YES;
 }
