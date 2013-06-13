@@ -9,6 +9,7 @@
 #import "OKUserProfileImageView.h"
 #import "OKTwitterUtilities.h"
 #import "AFImageView.h"
+#import "OKGameCenterUtilities.h"
 
 
 @interface OKUserProfileImageView ()
@@ -16,11 +17,15 @@
 @property (nonatomic, strong) FBProfilePictureView *fbProfileImageView;
 @property (nonatomic, strong) AFImageView *imageView;
 
+
 @end
 
 
 @implementation OKUserProfileImageView
 
++(UIImage*)placeHolderImage{
+    return [UIImage imageNamed:@"user_icon.png"];
+}
 
 #pragma mark - Init
 - (id)init
@@ -73,10 +78,30 @@
 - (void)setUser:(OKUser *)aUser
 {
     // Use the built in FB placeholder for nil user.
-    if (!aUser || ([aUser fbUserID] != nil)) {
+    //Clear out the FbProfileImageView
+    [self.fbProfileImageView setProfileID:nil];
+    
+    if(!aUser) {
+        [self.fbProfileImageView setHidden:YES];
+        [self.imageView setHidden:NO];
+        [self.imageView setImage:[OKUserProfileImageView placeHolderImage]];
+    }
+    else if([aUser fbUserID] != nil) {
         [self.fbProfileImageView setHidden:NO];
         [self.imageView setHidden:YES];
         [self.fbProfileImageView setProfileID:[aUser.fbUserID stringValue]];
+    }
+    else if ([aUser gameCenterID]) {
+        [self.fbProfileImageView setHidden:YES];
+        [self.imageView setHidden:NO];
+        [self.imageView setImage:[OKUserProfileImageView placeHolderImage]];
+        
+        [OKGameCenterUtilities loadPlayerPhotoForGameCenterID:[aUser gameCenterID] withPhotoSize:GKPhotoSizeSmall withCompletionHandler:^(UIImage *photo, NSError *error) {
+            
+            if(photo != nil) {
+                [self.imageView setImage:photo];
+            }
+         }];
     }
     else if([aUser twitterUserID]) {
         //TODO Displaying twitter images is not yet implemented
@@ -88,6 +113,9 @@
     }
     _user = aUser;
 }
+
+
+
 
 - (void)setImage:(UIImage *)aImage
 {

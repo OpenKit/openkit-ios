@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSNumber *fbUserID;
 @property (nonatomic, strong) NSNumber *twitterUserID;
 @property (nonatomic, strong) NSString *userNick;
+@property (nonatomic, strong) NSString *gameCenterID;
 
 + (OKUser*)currentUser;
 + (void)logoutCurrentUserFromOpenKit;

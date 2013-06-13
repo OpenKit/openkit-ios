@@ -12,15 +12,15 @@
 
 @implementation OKUser
 
-@synthesize OKUserID, userNick, fbUserID, twitterUserID;
+@synthesize OKUserID, userNick, fbUserID, twitterUserID, gameCenterID;
 
 - (id)init
 {
-    return [self initWithUserID:nil withUserNick:nil withFBID:nil withTwitterId:nil];
+    return [self initWithUserID:nil withUserNick:nil withFBID:nil withTwitterId:nil withGameCenterID:nil];
 }
 
 //Designated initializer
-- (id)initWithUserID:(NSNumber *)_OKUserID withUserNick:(NSString *)_userNick withFBID:(NSNumber *)_fbID withTwitterId:(NSNumber *)_twitterID
+- (id)initWithUserID:(NSNumber *)_OKUserID withUserNick:(NSString *)_userNick withFBID:(NSNumber *)_fbID withTwitterId:(NSNumber *)_twitterID withGameCenterID:(NSString*)_gameCenterID
 {
     self = [super init];
     if (self) {
@@ -28,6 +28,7 @@
         self.userNick = _userNick;
         self.fbUserID = _fbID;
         self.twitterUserID = _twitterID;
+        self.gameCenterID = _gameCenterID;
     }
     
     return self;

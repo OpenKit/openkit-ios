@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <GameKit/GameKit.h>
 
 @interface OKGameCenterUtilities : NSObject
 
 +(void)authorizeUserWithGameCenterAndallowUI:(BOOL)allowUI;
++(void)loadPlayerPhotoForGameCenterID:(NSString*)gameCenterID withPhotoSize:(GKPhotoSize)photoSize withCompletionHandler:(void(^)(UIImage *photo, NSError *error))completionhandler;
 
 @end
