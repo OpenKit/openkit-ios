@@ -72,7 +72,7 @@
             //Save the current user
             [user setGameCenterID:[player playerID]];
             [[OKManager sharedManager] saveCurrentUser:user];
-            OKLog(@"Logged into OpenKit with GameCenter ID: %@, display name: %@",[user userNick]);
+            OKLog(@"Logged into OpenKit with GameCenter ID: %@, display name: %@",[player playerID], [user userNick]);
         } else {
             OKLog(@"Failed to login to OpenKit with gamecenter ID");
         }
@@ -98,6 +98,10 @@
             completionhandler(nil,error);
         }
     }];
+}
+
++(BOOL)gameCenterIsAvailable {
+    return [GKLocalPlayer localPlayer].isAuthenticated;
 }
 
 @end

@@ -11,5 +11,9 @@
 @interface OKError : NSObject
 
 +(NSError*)userNotLoggedInError;
++(NSError*)noOKUserError;
++(NSError*)unknownError;
++(NSError*)noGameCenterIDError;
++(NSError*)unknownGameCenterError;
 
 @end

@@ -34,6 +34,7 @@ typedef enum {
 @property (nonatomic) LeaderBoardSortType sortType;
 @property (nonatomic, strong) NSString *icon_url;
 @property (nonatomic) int playerCount;
+@property (nonatomic, strong) NSString *gamecenter_id;
 
 + (void)getLeaderboardsWithCompletionHandler:(void (^)(NSArray* leaderboards, int playerCount, NSError* error))completionHandler;
 - (NSString *)playerCountString;

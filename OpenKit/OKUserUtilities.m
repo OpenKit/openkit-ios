@@ -12,6 +12,7 @@
 #import "OKNetworker.h"
 #import "OKDefines.h"
 #import "OKMacros.h"
+#import "OKError.h"
 
 
 
@@ -30,18 +31,18 @@
     NSNumber *_OKUserID = [jsonData objectForKey:@"id"];
     NSNumber *_fbID = [jsonData objectForKey:@"fb_id"];
     NSString *_gameCenterID = [jsonData objectForKey:@"gamecenter_id"];
+    NSNumber *_customID = [jsonData objectForKey:@"custom_id"];
+
     
     if(_fbID == (id)[NSNull null])
         _fbID = nil;
-    
-    //NSLog(@"User dict: %@", jsonData);
     
     [user setOKUserID:_OKUserID];
     [user setUserNick:_userNick];
     [user setFbUserID:_fbID];
     [user setTwitterUserID:_twitterID];
     [user setGameCenterID:_gameCenterID];
-    
+    [user setCustomID:_customID];
     
     return user;
 }
@@ -55,8 +56,39 @@
     [dict setValue:[user OKUserID] forKey:@"id"];
     [dict setValue:[user fbUserID] forKey:@"fb_id"];
     [dict setValue:[user gameCenterID] forKey:@"gamecenter_id"];
+    [dict setValue:[user customID] forKey:@"custom_id"];
     
     return dict;
+}
+
++(void)updateOKUser:(OKUser *)user withCompletionHandler:(void(^)(NSError *error))completionHandler
+{
+    if(!user){
+        completionHandler([OKError noOKUserError]);
+    }
+    
+    NSDictionary *userDict = [OKUserUtilities getJSONRepresentationOfUser:user];
+    NSDictionary *params = [NSDictionary dictionaryWithObject:userDict forKey:@"user"];
+    NSString *requestPath = [NSString stringWithFormat:@"/users/%@", [user.OKUserID stringValue]];
+    
+    [OKNetworker putToPath:requestPath parameters:params
+                   handler:^(id responseObject, NSError *error)
+     {
+         if(!error){
+             //Check to make sure the user was returned, that way we know the response was successful
+             OKUser *responseUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
+             
+             if([responseUser OKUserID] == [user OKUserID]) {
+                 [[OKManager sharedManager] saveCurrentUser:responseUser];
+             }
+             else {
+                 error = [OKError unknownError];
+             }
+         } else {
+             NSLog(@"Error updating OKUser: %@", error);
+         }
+         completionHandler(error);
+     }];
 }
 
 
@@ -111,7 +143,7 @@
             [params setObject:userID forKey:@"google_id"];
             break;
         case GameCenterIDType:
-            [params setObject:userID forKey:@"custom_id"];
+            [params setObject:userID forKey:@"gamecenter_id"];
             break;
         case CustomIDType:
             [params setObject:userID forKey:@"custom_id"];

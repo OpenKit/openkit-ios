@@ -12,11 +12,13 @@
 #import "OKHelper.h"
 #import "OKNetworker.h"
 #import "OKScore.h"
-
+#import "OKGameCenterUtilities.h"
+#import "OKError.h"
+#import "OKGKScoreWrapper.h"
 
 @implementation OKLeaderboard
 
-@synthesize OKLeaderboard_id, OKApp_id, name, in_development, sortType, icon_url, playerCount;
+@synthesize OKLeaderboard_id, OKApp_id, name, in_development, sortType, icon_url, playerCount, gamecenter_id;
 
 - (id)initFromJSON:(NSDictionary*)jsonDict
 {
@@ -30,6 +32,7 @@
         self.sortType               = ([sortTypeString isEqualToString:@"HighValue"]) ? HighValue : LowValue;
         self.icon_url               = [jsonDict objectForKey:@"icon_url"];
         self.playerCount            = [[jsonDict objectForKey:@"player_count"] integerValue];
+        self.gamecenter_id          = [jsonDict objectForKey:@"gamecenter_id"];
 
         //_timeRange = OKLeaderboardTimeRangeOneDay;
     }
@@ -90,7 +93,77 @@
     }
 }
 
--(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange forPageNumber:(int)pageNum 
+-(void)getScoresFromGameCenterWithRange:(NSRange)scoreRange withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
+{
+    GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] init];
+    
+    if(![self gamecenter_id]) {
+        completionHandler(nil, [OKError noGameCenterIDError]);
+        return;
+    }
+    
+    if(leaderboardRequest != nil)
+    {
+        leaderboardRequest.playerScope = GKLeaderboardPlayerScopeGlobal;
+        leaderboardRequest.timeScope = GKLeaderboardTimeScopeAllTime;
+        leaderboardRequest.category = [self gamecenter_id];
+        leaderboardRequest.range = scoreRange;
+        
+        [leaderboardRequest loadScoresWithCompletionHandler: ^(NSArray *scores, NSError *error) {
+            if (error != nil)
+            {
+                completionHandler(nil, error);
+            }
+            else if (scores != nil)
+            {
+                // Process the score information.
+                // Get the players for the scores
+                
+                //Create an array to list the player identifiers
+                NSMutableArray *playerIDs = [[NSMutableArray alloc] initWithCapacity:[scores count]];
+                
+                for(int x = 0; x < [scores count]; x++){
+                    GKScore *score = [scores objectAtIndex:x];
+                    [playerIDs addObject:[score playerID]];
+                }
+                
+                // Get the player info for each score
+                [GKPlayer loadPlayersForIdentifiers:playerIDs withCompletionHandler:^(NSArray *players, NSError *error) {
+                    if (error != nil){
+                        // Got scores, but couldn't get player info for scores
+                        completionHandler(nil,error);
+                    }
+                    else if (players != nil){
+                        
+                        NSMutableArray *gkScores = [[NSMutableArray alloc] initWithCapacity:[players count]];
+                        
+                        // Process the array of GKPlayer objects.
+                        for(int x = 0; x< [players count]; x++)
+                        {
+                            //Create a score wrapper that contains the GKSCore and the GKPLayer for that score
+                            OKGKScoreWrapper *score = [[OKGKScoreWrapper alloc] init];
+                            [score setScore:[scores objectAtIndex:x]];
+                            [score setPlayer:[players objectAtIndex:x]];
+                        }
+                        
+                        completionHandler(gkScores, nil);
+                    }
+                    else {
+                        completionHandler(nil, [OKError unknownGameCenterError]);
+                    }
+                }];
+                
+                
+            }
+            else{
+                completionHandler(nil, [OKError unknownGameCenterError]);
+            }
+        }];
+    }
+}
+
+
+-(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange forPageNumber:(int)pageNum
        WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler
 {
     //Create a request and send it to OpenKit

@@ -12,11 +12,11 @@
 #import "OKManager.h"
 #import "OKNetworker.h"
 #import "OKDefines.h"
+#import "OKGameCenterUtilities.h"
 
 @implementation OKScore
 
-@synthesize OKLeaderboardID, OKScoreID, scoreValue, user, scoreRank, metadata, displayString;
-
+@synthesize OKLeaderboardID, OKScoreID, scoreValue, user, scoreRank, metadata, displayString, gamecenterLeaderboardID;
 - (id)initFromJSON:(NSDictionary*)jsonDict
 {
     self = [super init];
@@ -34,6 +34,17 @@
         
         if([jsonDict objectForKey:@"metadata"] != nil && [jsonDict objectForKey:@"metadata"] != [NSNull null])
             self.metadata = [[jsonDict objectForKey:@"metadata"] integerValue];
+    }
+    
+    return self;
+}
+
+-(id)initWithOKLeaderboardID:(int)okLeaderboardID withGameCenterLeaderboardID:(NSString*)gcID
+{
+    self = [super init];
+    if(self) {
+        self.OKLeaderboardID = okLeaderboardID;
+        self.gamecenterLeaderboardID = gcID;
     }
     
     return self;
@@ -80,6 +91,37 @@
          }
          completionHandler(error);
      }];
+}
+
+-(void)submitScoreToGameCenter
+{
+    if(self.gamecenterLeaderboardID && [OKGameCenterUtilities gameCenterIsAvailable]) {
+        
+        GKScore *scoreReporter = [[GKScore alloc] initWithCategory:[self gamecenterLeaderboardID]];
+        scoreReporter.value = [self scoreValue];
+        scoreReporter.context = [self metadata];
+        
+        [scoreReporter reportScoreWithCompletionHandler:^(NSError *error) {
+            // Do something interesting here.
+        }];
+        
+    } else {
+        
+    }
+}
+
+//TODO add completion handlers
+-(void)submitScoreToOpenKitAndGameCenter 
+{
+    if(self.gamecenterLeaderboardID && [OKGameCenterUtilities gameCenterIsAvailable]) {
+        [self submitScoreToGameCenter];
+    }
+    
+    if([OKUser currentUser]) {
+        [self submitScoreWithCompletionHandler:^(NSError *error) {
+            //Do something
+        }];
+    }
 }
 
 

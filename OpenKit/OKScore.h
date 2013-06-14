@@ -18,6 +18,7 @@
 @property (nonatomic) NSInteger scoreRank;
 @property (nonatomic) int metadata;
 @property (nonatomic, strong) NSString *displayString;
+@property (nonatomic, strong) NSString *gamecenterLeaderboardID;
 
 - (id)initFromJSON:(NSDictionary*)jsonDict;
 - (void)submitScoreWithCompletionHandler:(void (^)(NSError *error))completionHandler;
