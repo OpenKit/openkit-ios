@@ -14,6 +14,7 @@
 #import "OKProfileViewController.h"
 #import "OKLoginView.h"
 #import "OKMacros.h"
+#import "OKSocialLeaderboardViewController.h"
 
 
 @interface OKLeaderboardsListViewController ()
@@ -115,7 +116,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     OKLeaderboard *selectedLeaderboard = [OKLeaderBoardsList objectAtIndex:[indexPath row]];
-    OKLeaderboardViewController *vc = [[OKLeaderboardViewController alloc] initWithLeaderboard:selectedLeaderboard];
+    //OKLeaderboardViewController *vc = [[OKLeaderboardViewController alloc] initWithLeaderboard:selectedLeaderboard];
+    
+     OKSocialLeaderboardViewController *vc = [[OKSocialLeaderboardViewController alloc] initWithLeaderboard:selectedLeaderboard];
     [[self navigationController] pushViewController:vc animated:YES];
 }
 

@@ -106,7 +106,7 @@
         }];
         
     } else {
-        
+        //TODO handle the fact that GC is not available
     }
 }
 

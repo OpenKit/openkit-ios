@@ -14,6 +14,8 @@
 
 @implementation OKViewController
 
+@synthesize profileImageView;
+
 
 - (id)init
 {
@@ -29,7 +31,7 @@
         [self.loginButton setHidden:YES];
         [self.logoutButton setHidden:NO];
         
-        [self.profileImageView setUser:[OKUser currentUser]];
+        [profileImageView setUser:[OKUser currentUser]];
         [self.userNickLabel setHidden:NO];
         [self.userNickLabel setText:[NSString stringWithFormat:@"%@", [[OKUser currentUser] userNick] ]];
     } else {
@@ -64,6 +66,7 @@
     [super viewWillAppear:animated];
     [self updateUIforOKUser];
 }
+
 
 
 -(IBAction)viewLeaderboards:(id)sender

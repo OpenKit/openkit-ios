@@ -22,5 +22,6 @@
 
 - (id)initFromJSON:(NSDictionary*)jsonDict;
 - (void)submitScoreWithCompletionHandler:(void (^)(NSError *error))completionHandler;
+-(void)submitScoreToOpenKitAndGameCenter;
 
 @end
