@@ -14,5 +14,7 @@
 - (IBAction)retrieveString:(id)sender;
 - (IBAction)storeDict:(id)sender;
 - (IBAction)retrieveDict:(id)sender;
+- (IBAction)storeArray:(id)sender;
+- (IBAction)retrieveArray:(id)sender;
 
 @end
