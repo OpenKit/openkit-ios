@@ -165,7 +165,6 @@
 		32CAD10C16CB7A9B00E8F185 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD0FE16CB7A9B00E8F185 /* AFXMLRequestOperation.m */; };
 		32CAD10D16CB7A9B00E8F185 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD10016CB7A9B00E8F185 /* UIImageView+AFNetworking.m */; };
 		32CAD10F16CB7A9B00E8F185 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD10416CB7A9B00E8F185 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
-		32CAD14B16CBABBB00E8F185 /* OKCloudAsyncRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD14A16CBABBB00E8F185 /* OKCloudAsyncRequest.m */; };
 		4410186B1728A1C80059BBAE /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4410186A1728A1C80059BBAE /* FacebookSDKResources.bundle */; };
 		445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
 		445B3BFD1767F5DE00952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
@@ -454,8 +453,6 @@
 		32CAD10016CB7A9B00E8F185 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		32CAD10316CB7A9B00E8F185 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		32CAD10416CB7A9B00E8F185 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
-		32CAD14916CBABBB00E8F185 /* OKCloudAsyncRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKCloudAsyncRequest.h; sourceTree = "<group>"; };
-		32CAD14A16CBABBB00E8F185 /* OKCloudAsyncRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKCloudAsyncRequest.m; sourceTree = "<group>"; };
 		4410186A1728A1C80059BBAE /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
 		445B3BFB1767F5D300952456 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		445B3BFE1769258C00952456 /* OKGameCenterUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGameCenterUtilities.h; sourceTree = "<group>"; };
@@ -641,8 +638,6 @@
 				32CACFA416CB637C00E8F185 /* OKBaseLoginViewController.m */,
 				32CACFA516CB637C00E8F185 /* OKCloud.h */,
 				32CACFA616CB637C00E8F185 /* OKCloud.m */,
-				32CAD14916CBABBB00E8F185 /* OKCloudAsyncRequest.h */,
-				32CAD14A16CBABBB00E8F185 /* OKCloudAsyncRequest.m */,
 				32CACFA716CB637C00E8F185 /* OKDefines.h */,
 				44E118291728A7CF003C2603 /* OKError.h */,
 				44E1182A1728A7CF003C2603 /* OKError.m */,
@@ -1060,7 +1055,6 @@
 				32CACFEC16CB637C00E8F185 /* OKUserProfileImageView.m in Sources */,
 				32CACFED16CB637C00E8F185 /* OKUserUtilities.m in Sources */,
 				32CACFEE16CB637C00E8F185 /* SimpleKeychain.m in Sources */,
-				32CAD14B16CBABBB00E8F185 /* OKCloudAsyncRequest.m in Sources */,
 				321E99CB16D2FB6C005F1506 /* AbstractActionSheetPicker.m in Sources */,
 				321E99CF16D2FBA1005F1506 /* ActionSheetStringPicker.m in Sources */,
 				44E3F3C816EAED4500509219 /* AFImageView.m in Sources */,
