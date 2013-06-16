@@ -233,7 +233,13 @@ static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *co
 {
     static NSString * const kAFOAuth1AuthorizationFormatString = @"OAuth %@";
 
-    NSMutableDictionary *mutableParameters = parameters ? [parameters mutableCopy] : [NSMutableDictionary dictionary];
+    NSMutableDictionary *mutableParameters;
+    if (parameters == nil || ((self.parameterEncoding != AFFormURLParameterEncoding) && ([method isEqualToString:@"POST"] || [method isEqualToString:@"PUT"]))) {
+        mutableParameters = [NSMutableDictionary dictionary];
+    } else {
+        mutableParameters = [parameters mutableCopy];
+    }
+
     NSMutableDictionary *mutableAuthorizationParameters = [NSMutableDictionary dictionary];
 
     if (self.key && self.secret) {
