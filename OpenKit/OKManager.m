@@ -25,6 +25,7 @@
 }
 
 @property (nonatomic, strong) NSString *appKey;
+@property (nonatomic, strong) NSString *secretKey;
 @property (nonatomic, strong) NSString *endpoint;
 
 @end
@@ -82,6 +83,16 @@
 + (NSString *)endpoint
 {
     return [[OKManager sharedManager] endpoint];
+}
+
++ (void)setSecretKey:(NSString *)secretKey
+{
+    [[OKManager sharedManager] setSecretKey:secretKey];
+}
+
++ (NSString *)secretKey
+{
+    return [[OKManager sharedManager] secretKey];
 }
 
 - (void)logoutCurrentUser
