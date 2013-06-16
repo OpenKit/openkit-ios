@@ -1,72 +1,62 @@
-//
-//  OKNetworker.m
-//  OKNetworker
-//
-//  Created by Manuel Martinez-Almeida on 9/2/13.
+//  Created by Manuel Martinez-Almeida and Lou Zell
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
+
+#define USE_JSONKIT  1
+
 
 #import "OKNetworker.h"
 #import "OKManager.h"
 #import "AFNetworking.h"
+#import "AFOAuth1Client.h"
+#import "OKUtils.h"
 
-
-static AFHTTPClient* _httpClient = nil;
+static AFOAuth1Client *_httpClient = nil;
 
 @implementation OKNetworker
 
-+ (AFHTTPClient*) httpClient
+
++ (AFOAuth1Client *)httpClient
 {
     if(!_httpClient) {
-        _httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[OKManager endpoint]]];
+        _httpClient = [[AFOAuth1Client alloc] initWithBaseURL:[NSURL URLWithString:[OKManager endpoint]]
+                                                          key:[OKManager appKey]
+                                                       secret:[OKManager secretKey]];
         [_httpClient setParameterEncoding:AFJSONParameterEncoding];
-        [_httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
-        
-        // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
         [_httpClient setDefaultHeader:@"Accept" value:@"application/json"];
-        [_httpClient setDefaultHeader:@"Content-Type" value:@"application/json"];
     }
     return _httpClient;
 }
 
-
-+ (NSMutableDictionary*) mergeParams:(NSDictionary*)d
++ (void)requestWithMethod:(NSString *)method
+                     path:(NSString *)path
+               parameters:(NSDictionary *)params
+                  handler:(void (^)(id responseObject, NSError * error))handler
 {
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:d];
-    if(![dict objectForKey:@"app_key"])
-        [dict setValue:[OKManager appKey] forKey:@"app_key"];
-    
-    return dict;
+    AFOAuth1Client *httpclient = [self httpClient];
+    NSMutableURLRequest *request = [httpclient requestWithMethod:method
+                                                            path:path
+                                                      parameters:params];
+
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id response) {
+        NSError *err;
+        id decodedObj = OKDecodeObj(response, &err);
+        handler(decodedObj, err);
+    };
+
+    void (^failureBlock)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *err) {
+        handler(nil, err);
+    };
+
+    AFHTTPRequestOperation *op = [httpclient HTTPRequestOperationWithRequest:request
+                                                                     success:successBlock
+                                                                     failure:failureBlock];
+    [op start];
 }
 
-
-+ (void) requestWithMethod:(NSString*)method
-                      path:(NSString*)path
-                parameters:(NSDictionary*)params
-                   handler:(void (^)(id responseObject, NSError* error))handler
-{
-    AFHTTPClient *httpclient = [self httpClient];
-    params = [self mergeParams:params];
-    
-    NSMutableURLRequest *request = [httpclient requestWithMethod:method path:path parameters:params];
-    AFHTTPRequestOperation *operation = [httpclient HTTPRequestOperationWithRequest:request success:
-     ^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         handler(responseObject, nil);
-         
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         
-         handler(nil, error);
-         
-     }];
-    
-    [operation start];
-}
-
-
-+ (void) getFromPath:(NSString*)path
-          parameters:(NSDictionary*)params
-             handler:(void (^)(id responseObject, NSError* error))handler
++ (void)getFromPath:(NSString *)path
+         parameters:(NSDictionary *)params
+            handler:(void (^)(id responseObject, NSError *error))handler
 {
     [self requestWithMethod:@"GET"
                        path:path
@@ -74,10 +64,9 @@ static AFHTTPClient* _httpClient = nil;
                     handler:handler];
 }
 
-
-+ (void) postToPath:(NSString*)path
-         parameters:(NSDictionary*)params
-            handler:(void (^)(id responseObject, NSError* error))handler
++ (void)postToPath:(NSString *)path
+        parameters:(NSDictionary *)params
+           handler:(void (^)(id responseObject, NSError *error))handler
 {
     [self requestWithMethod:@"POST"
                        path:path
@@ -85,10 +74,9 @@ static AFHTTPClient* _httpClient = nil;
                     handler:handler];
 }
 
-
-+ (void) putToPath:(NSString*)path
-        parameters:(NSDictionary*)params
-           handler:(void (^)(id responseObject, NSError* error))handler
++ (void)putToPath:(NSString *)path
+       parameters:(NSDictionary *)params
+          handler:(void (^)(id responseObject, NSError *error))handler
 {
     [self requestWithMethod:@"PUT"
                        path:path
