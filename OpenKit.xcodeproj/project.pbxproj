@@ -47,6 +47,7 @@
 		3284E16416CE4AFC00624827 /* OKUnityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */; };
 		3284E16516CE4AFE00624827 /* OKBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243AFE16CDE3C80077EDC8 /* OKBridge.m */; };
 		3284E16616CE4B0400624827 /* libmono.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32243B0416CDE3EF0077EDC8 /* libmono.0.dylib */; };
+		32880CE6176D2991005F8D30 /* AFOAuth1Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 32880CE5176D2991005F8D30 /* AFOAuth1Client.m */; };
 		32CACFD716CB637C00E8F185 /* KGModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA216CB637C00E8F185 /* KGModal.m */; };
 		32CACFD816CB637C00E8F185 /* OKBaseLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA416CB637C00E8F185 /* OKBaseLoginViewController.m */; };
 		32CACFD916CB637C00E8F185 /* OKCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA616CB637C00E8F185 /* OKCloud.m */; };
@@ -314,6 +315,8 @@
 		3284E15A16CE4A6F00624827 /* UnityPluginMac-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "UnityPluginMac-Info.plist"; sourceTree = "<group>"; };
 		3284E15B16CE4A6F00624827 /* UnityPluginMac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UnityPluginMac-Prefix.pch"; sourceTree = "<group>"; };
 		3284E16216CE4AC900624827 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		32880CE4176D2991005F8D30 /* AFOAuth1Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOAuth1Client.h; sourceTree = "<group>"; };
+		32880CE5176D2991005F8D30 /* AFOAuth1Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOAuth1Client.m; sourceTree = "<group>"; };
 		32CACF7716CB62B500E8F185 /* OpenKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenKit-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		32CACFA116CB637C00E8F185 /* KGModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGModal.h; sourceTree = "<group>"; };
 		32CACFA216CB637C00E8F185 /* KGModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGModal.m; sourceTree = "<group>"; };
@@ -605,6 +608,15 @@
 			name = "OS X";
 			sourceTree = "<group>";
 		};
+		32880CE3176D2991005F8D30 /* AFOAuth1Client */ = {
+			isa = PBXGroup;
+			children = (
+				32880CE4176D2991005F8D30 /* AFOAuth1Client.h */,
+				32880CE5176D2991005F8D30 /* AFOAuth1Client.m */,
+			);
+			path = AFOAuth1Client;
+			sourceTree = "<group>";
+		};
 		32CACF9C16CB637C00E8F185 /* OpenKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -756,6 +768,7 @@
 		32CAD0EC16CB7A9B00E8F185 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				32880CE3176D2991005F8D30 /* AFOAuth1Client */,
 				4410186A1728A1C80059BBAE /* FacebookSDKResources.bundle */,
 				4491D49B1728870B0084576B /* FacebookSDK.framework */,
 				32CAD0ED16CB7A9B00E8F185 /* AFNetworking */,
@@ -1043,6 +1056,7 @@
 				321E99CF16D2FBA1005F1506 /* ActionSheetStringPicker.m in Sources */,
 				44E3F3C816EAED4500509219 /* AFImageView.m in Sources */,
 				44E1182B1728A7CF003C2603 /* OKError.m in Sources */,
+				32880CE6176D2991005F8D30 /* AFOAuth1Client.m in Sources */,
 				445B3C001769258C00952456 /* OKGameCenterUtilities.m in Sources */,
 				44BC5338176A96810038043A /* OKGKScoreWrapper.m in Sources */,
 				44B50D0B176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m in Sources */,
