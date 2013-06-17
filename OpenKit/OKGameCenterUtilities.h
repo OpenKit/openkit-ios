@@ -11,8 +11,8 @@
 
 @interface OKGameCenterUtilities : NSObject
 
-+(void)authorizeUserWithGameCenterAndallowUI:(BOOL)allowUI;
 +(void)loadPlayerPhotoForGameCenterID:(NSString*)gameCenterID withPhotoSize:(GKPhotoSize)photoSize withCompletionHandler:(void(^)(UIImage *photo, NSError *error))completionhandler;
 +(BOOL)gameCenterIsAvailable;
++(void)authorizeUserWithGameCenterAndallowUI:(BOOL)allowUI withPresentingViewController:(UIViewController*)presenter;
 
 @end

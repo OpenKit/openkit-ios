@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "OKUser.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import <GameKit/GameKit.h>
 
 
 @interface OKUserProfileImageView : UIView
@@ -18,5 +19,6 @@
 
 - (void)setImageURL:(NSString *)url;
 - (void)setImageURL:(NSString *)url withPlaceholderImage:(UIImage *)placeholder;
+- (void)setGKPlayer:(GKPlayer*)player;
 
 @end

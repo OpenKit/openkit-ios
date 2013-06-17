@@ -13,6 +13,7 @@
 #import "OKNetworker.h"
 #import "OKDefines.h"
 #import "OKGameCenterUtilities.h"
+#import "OKMacros.h"
 
 @implementation OKScore
 
@@ -83,11 +84,11 @@
                     handler:^(id responseObject, NSError *error)
      {
          if(!error) {
-             NSLog(@"Successfully posted score");
-             NSLog(@"Response: %@", responseObject);
+             OKLog(@"Successfully posted score to OpenKit");
+             //OKLog(@"Response: %@", responseObject);
          }else{
-             NSLog(@"Failed to post score");
-             NSLog(@"Error: %@", error);
+             OKLog(@"Failed to post score to OpenKit");
+             OKLog(@"Error: %@", error);
          }
          completionHandler(error);
      }];
@@ -102,7 +103,8 @@
         scoreReporter.context = [self metadata];
         
         [scoreReporter reportScoreWithCompletionHandler:^(NSError *error) {
-            // Do something interesting here.
+            if(error)
+                OKLog(@"Error submitting score to GameCenter: %@",error);
         }];
         
     } else {

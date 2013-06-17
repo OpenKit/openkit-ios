@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OpenKit.h"
+#import "OKLeaderboard.h"
 
-@interface OKSocialLeaderboardViewController : UIViewController
+@interface OKSocialLeaderboardViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) OKLeaderboard *leaderboard;
-@property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) IBOutlet UITableView *_tableView;
 @property (nonatomic, strong) IBOutlet UIButton *moreBtn;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
 

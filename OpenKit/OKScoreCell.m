@@ -12,7 +12,7 @@
 
 @implementation OKScoreCell
 
-@synthesize label1, label2, label3, label4, score, cellImage;
+@synthesize label1, label2, label3, label4, score, cellImage, gkScoreWrapper;
 
 - (id)init
 {
@@ -104,6 +104,16 @@
     label3.text = [NSString stringWithFormat:@"%d",[score scoreRank]];
     
     [cellImage setUser:[score user]];
+}
+
+-(void)setGkScoreWrapper:(OKGKScoreWrapper*)aScore {
+    gkScoreWrapper = aScore;
+    
+    label1.text = [[gkScoreWrapper player] displayName];
+    label2.text = [[gkScoreWrapper score] formattedValue];
+    label3.text = [NSString stringWithFormat:@"%d",[[gkScoreWrapper score] rank]];
+    
+    [cellImage setGKPlayer:[gkScoreWrapper player]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

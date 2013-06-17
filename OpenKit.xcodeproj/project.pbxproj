@@ -172,6 +172,8 @@
 		4491D49D1728870B0084576B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4491D49B1728870B0084576B /* FacebookSDK.framework */; };
 		4491D49E1728870B0084576B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4491D49B1728870B0084576B /* FacebookSDK.framework */; };
 		44B50D0B176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B50D09176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m */; };
+		44B50D14176ED5C200B5D8AD /* OKSocialLeaderboardVC.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44B50D13176ED4B100B5D8AD /* OKSocialLeaderboardVC.xib */; };
+		44B50D15176ED63100B5D8AD /* OKSocialLeaderboardVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44B50D13176ED4B100B5D8AD /* OKSocialLeaderboardVC.xib */; };
 		44BC5338176A96810038043A /* OKGKScoreWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BC5337176A96800038043A /* OKGKScoreWrapper.m */; };
 		44E1182B1728A7CF003C2603 /* OKError.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E1182A1728A7CF003C2603 /* OKError.m */; };
 		44E3F3C816EAED4500509219 /* AFImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E3F3C716EAED4500509219 /* AFImageView.m */; };
@@ -231,6 +233,7 @@
 			dstPath = Resources;
 			dstSubfolderSpec = 7;
 			files = (
+				44B50D14176ED5C200B5D8AD /* OKSocialLeaderboardVC.xib in CopyFiles */,
 				32CAD02E16CB65F700E8F185 /* cell_border.png in CopyFiles */,
 				32CAD02F16CB65F700E8F185 /* cell_border@2x.png in CopyFiles */,
 				32CAD03016CB65F700E8F185 /* close.png in CopyFiles */,
@@ -427,6 +430,7 @@
 		4491D49B1728870B0084576B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		44B50D09176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSocialLeaderboardViewController.m; sourceTree = "<group>"; };
 		44B50D0A176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSocialLeaderboardViewController.h; sourceTree = "<group>"; };
+		44B50D13176ED4B100B5D8AD /* OKSocialLeaderboardVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OKSocialLeaderboardVC.xib; sourceTree = "<group>"; };
 		44BC5336176A96800038043A /* OKGKScoreWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGKScoreWrapper.h; sourceTree = "<group>"; };
 		44BC5337176A96800038043A /* OKGKScoreWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKGKScoreWrapper.m; sourceTree = "<group>"; };
 		44E118291728A7CF003C2603 /* OKError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKError.h; sourceTree = "<group>"; };
@@ -571,8 +575,8 @@
 		32CACF9C16CB637C00E8F185 /* OpenKit */ = {
 			isa = PBXGroup;
 			children = (
-				44B50D09176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m */,
 				44B50D0A176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.h */,
+				44B50D09176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m */,
 				44BC533217692DE20038043A /* Utilities */,
 				321E99C716D2FB6C005F1506 /* AbstractActionSheetPicker.h */,
 				321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */,
@@ -684,6 +688,7 @@
 				32CAD02B16CB65E800E8F185 /* OKNickViewController.xib */,
 				32CAD02C16CB65E800E8F185 /* OKProfileViewController.xib */,
 				32CAD02D16CB65E800E8F185 /* OKScoreViewController.xib */,
+				44B50D13176ED4B100B5D8AD /* OKSocialLeaderboardVC.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -897,6 +902,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44B50D15176ED63100B5D8AD /* OKSocialLeaderboardVC.xib in Resources */,
 				3222216316CBB65D006EBD1C /* OKLeaderboardsListViewController.xib in Resources */,
 				3222216416CBB65D006EBD1C /* OKLeaderboardViewController.xib in Resources */,
 				3222216516CBB65D006EBD1C /* OKNickViewController.xib in Resources */,

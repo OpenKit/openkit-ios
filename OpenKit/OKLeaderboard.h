@@ -43,5 +43,6 @@ typedef enum {
 -(void)getUsersTopScoreForLeaderboardForTimeRange:(OKLeaderboardTimeRange)range withCompletionHandler:(void (^)(OKScore *score, NSError *error))completionHandler;
 -(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange forPageNumber:(int)pageNum
        WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler;
+-(void)getGlobalScoresWithPageNum:(int)pageNum withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler;
 
 @end

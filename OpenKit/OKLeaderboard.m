@@ -76,10 +76,6 @@
      }];
 }
 
--(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange WithCompletionhandler:(void (^)(NSArray *, NSError *))completionHandler
-{
-    [self getScoresForTimeRange:timeRange forPageNumber:1 WithCompletionhandler:completionHandler];
-}
 
 -(NSString*)getParamForLeaderboardTimeRange:(OKLeaderboardTimeRange)range
 {
@@ -93,6 +89,23 @@
     }
 }
 
+// Get global scores from either GameCenter or OpenKit depending on GameCenter availability
+// Takes a page number of scores and converts to range for GameCenter
+-(void)getGlobalScoresWithPageNum:(int)pageNum withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
+{
+    // If gamecenter is available and this leaderboard has a gamecenter ID, get global scores from gamecenter
+    if(self.gamecenter_id && [OKGameCenterUtilities gameCenterIsAvailable]) {
+        
+        NSRange scoreRange = NSMakeRange(pageNum*NUM_SCORES_PER_PAGE, NUM_SCORES_PER_PAGE);
+        
+        [self getScoresFromGameCenterWithRange:scoreRange withCompletionHandler:completionHandler];
+    }
+    else {
+        [self getScoresForTimeRange:OKLeaderboardTimeRangeAllTime forPageNumber:pageNum WithCompletionhandler:completionHandler];
+    }
+}
+
+// Get global scores from gamecenter. Range must start from 1-25
 -(void)getScoresFromGameCenterWithRange:(NSRange)scoreRange withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
 {
     GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] init];
@@ -106,12 +119,14 @@
     {
         leaderboardRequest.playerScope = GKLeaderboardPlayerScopeGlobal;
         leaderboardRequest.timeScope = GKLeaderboardTimeScopeAllTime;
+        //leaderboardRequest.timeScope = GKLeaderboardTimeScopeAllTime;
         leaderboardRequest.category = [self gamecenter_id];
         leaderboardRequest.range = scoreRange;
         
         [leaderboardRequest loadScoresWithCompletionHandler: ^(NSArray *scores, NSError *error) {
             if (error != nil)
             {
+                NSLog(@"Error getting gamecenter scores: %@", error);
                 completionHandler(nil, error);
             }
             else if (scores != nil)
@@ -131,6 +146,7 @@
                 [GKPlayer loadPlayersForIdentifiers:playerIDs withCompletionHandler:^(NSArray *players, NSError *error) {
                     if (error != nil){
                         // Got scores, but couldn't get player info for scores
+                        OKLog(@"Error getting player info from GameCenter scores");
                         completionHandler(nil,error);
                     }
                     else if (players != nil){
@@ -156,12 +172,17 @@
                 
             }
             else{
+                // This could also be 0 scores returned
                 completionHandler(nil, [OKError unknownGameCenterError]);
             }
         }];
     }
 }
 
+-(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange WithCompletionhandler:(void (^)(NSArray *, NSError *))completionHandler
+{
+    [self getScoresForTimeRange:timeRange forPageNumber:1 WithCompletionhandler:completionHandler];
+}
 
 -(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange forPageNumber:(int)pageNum
        WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler

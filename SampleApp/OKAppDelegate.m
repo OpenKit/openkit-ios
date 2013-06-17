@@ -23,7 +23,10 @@
 {
     // Always enter your app key in didFinishLaunchingWithOptions
 #ifdef LOCAL_SERVER
-    [OKManager setAppKey:@"VwfMRAl5Gc4tirjw"];
+    //[OKManager setAppKey:@"VwfMRAl5Gc4tirjw"];
+    //[OKManager setEndpoint:@"http://localhost:3000"];
+    //This app key is for testing GC wrapper
+    [OKManager setAppKey:@"7jHqH0QcamsuvgMrlVZd"];
     [OKManager setEndpoint:@"http://10.0.1.21:3000"];
 #else
     [OKManager setAppKey:@"VwfMRAl5Gc4tirjw"];
@@ -38,7 +41,7 @@
     self.window.rootViewController = navi;
     [self.window makeKeyAndVisible];
     
-    [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES];
+    [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES withPresentingViewController:self.viewController];
     
 
     return YES;

@@ -14,13 +14,18 @@
 
 @implementation OKGameCenterUtilities
 
-+(void)authorizeUserWithGameCenterAndallowUI:(BOOL)allowUI
++(void)authorizeUserWithGameCenterAndallowUI:(BOOL)allowUI withPresentingViewController:(UIViewController*)presenter
 {
     [GKLocalPlayer localPlayer].authenticateHandler = ^(UIViewController *viewController, NSError *error) {
         
         if(viewController != nil) {
             // show the auth dialog
             OKLog(@"Need to show GameCenter dialog");
+            
+            if(presenter) {
+                [presenter presentModalViewController:viewController animated:YES];
+            }
+                
         } else if ([GKLocalPlayer localPlayer].isAuthenticated) {
             // local player is authenticated
             OKLog(@"Authenticated with GameCenter");
@@ -66,7 +71,7 @@
  **/
 +(void)getOKUserWithGamecenterUser:(GKPlayer*)player
 {
-    [OKUserUtilities createOKUserWithUserIDType:GameCenterIDType withUserID:[player playerID] withUserNick:[player displayName] withCompletionHandler:^(OKUser *user, NSError *error) {
+    [OKUserUtilities createOKUserWithUserIDType:GameCenterIDType withUserID:[player playerID] withUserNick:[player alias] withCompletionHandler:^(OKUser *user, NSError *error) {
         
         if(!error) {
             //Save the current user

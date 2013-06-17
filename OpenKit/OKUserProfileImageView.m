@@ -92,16 +92,7 @@
         [self.fbProfileImageView setProfileID:[aUser.fbUserID stringValue]];
     }
     else if ([aUser gameCenterID]) {
-        [self.fbProfileImageView setHidden:YES];
-        [self.imageView setHidden:NO];
-        [self.imageView setImage:[OKUserProfileImageView placeHolderImage]];
-        
-        [OKGameCenterUtilities loadPlayerPhotoForGameCenterID:[aUser gameCenterID] withPhotoSize:GKPhotoSizeSmall withCompletionHandler:^(UIImage *photo, NSError *error) {
-            
-            if(photo != nil) {
-                [self.imageView setImage:photo];
-            }
-         }];
+        [self loadGameCenterImageForGameCenterID:[aUser gameCenterID]];
     }
     else if([aUser twitterUserID]) {
         //TODO Displaying twitter images is not yet implemented
@@ -112,6 +103,24 @@
         //[OKTwitterUtilities GetProfileImageURLFromTwitterUserID:[aUser.twitterUserID stringValue]];
     }
     _user = aUser;
+}
+
+-(void)setGKPlayer:(GKPlayer*)player {
+    [self loadGameCenterImageForGameCenterID:[player playerID]];
+}
+
+-(void)loadGameCenterImageForGameCenterID:(NSString *)gameCenterID {
+    [self.fbProfileImageView setHidden:YES];
+    [self.imageView setHidden:NO];
+    [self.imageView setImage:[OKUserProfileImageView placeHolderImage]];
+
+    
+    [OKGameCenterUtilities loadPlayerPhotoForGameCenterID:gameCenterID withPhotoSize:GKPhotoSizeSmall withCompletionHandler:^(UIImage *photo, NSError *error) {
+        
+        if(photo != nil) {
+            [self.imageView setImage:photo];
+        }
+    }];
 }
 
 
