@@ -14,6 +14,7 @@
 #import "OKTwitterUtilities.h"
 #import "SimpleKeychain.h"
 #import "OKDefines.h"
+#import "OKUserProfileImageView.h"
 
 #define DEFAULT_ENDPOINT    @"stage.openkit.io"
 
@@ -48,8 +49,11 @@
         [self getSavedUserFromKeychain];
         _endpoint = DEFAULT_ENDPOINT;
 
+        // These two lines below are required for the linker to work properly such that these classes are available in XIB files
         // This tripped me up for way to long.
         [FBProfilePictureView class];
+        [OKUserProfileImageView class];
+        
         [OKFacebookUtilities OpenCachedFBSessionWithoutLoginUI];
     }
     return self;
