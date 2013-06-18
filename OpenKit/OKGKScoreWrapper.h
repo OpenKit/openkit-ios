@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <GameKit/GameKit.h>
+#import "OKScoreProtocol.h"
 
-@interface OKGKScoreWrapper : NSObject
+@interface OKGKScoreWrapper : NSObject<OKScoreProtocol>
 
 @property (nonatomic, strong) GKScore *score;
 @property (nonatomic, strong) GKPlayer *player;

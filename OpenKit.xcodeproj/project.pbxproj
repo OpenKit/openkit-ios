@@ -174,6 +174,7 @@
 		44B50D0B176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B50D09176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m */; };
 		44B50D14176ED5C200B5D8AD /* OKSocialLeaderboardVC.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44B50D13176ED4B100B5D8AD /* OKSocialLeaderboardVC.xib */; };
 		44B50D15176ED63100B5D8AD /* OKSocialLeaderboardVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44B50D13176ED4B100B5D8AD /* OKSocialLeaderboardVC.xib */; };
+		44B50D1D1771227D00B5D8AD /* OKFBLoginCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B50D1C1771227D00B5D8AD /* OKFBLoginCell.m */; };
 		44BC5338176A96810038043A /* OKGKScoreWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BC5337176A96800038043A /* OKGKScoreWrapper.m */; };
 		44E1182B1728A7CF003C2603 /* OKError.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E1182A1728A7CF003C2603 /* OKError.m */; };
 		44E3F3C816EAED4500509219 /* AFImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E3F3C716EAED4500509219 /* AFImageView.m */; };
@@ -431,6 +432,10 @@
 		44B50D09176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSocialLeaderboardViewController.m; sourceTree = "<group>"; };
 		44B50D0A176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSocialLeaderboardViewController.h; sourceTree = "<group>"; };
 		44B50D13176ED4B100B5D8AD /* OKSocialLeaderboardVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OKSocialLeaderboardVC.xib; sourceTree = "<group>"; };
+		44B50D16176FDADF00B5D8AD /* OKScoreProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScoreProtocol.h; sourceTree = "<group>"; };
+		44B50D1B1771227C00B5D8AD /* OKFBLoginCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFBLoginCell.h; sourceTree = "<group>"; };
+		44B50D1C1771227D00B5D8AD /* OKFBLoginCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFBLoginCell.m; sourceTree = "<group>"; };
+		44B50D1E1771228F00B5D8AD /* OKFBLoginCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OKFBLoginCell.xib; sourceTree = "<group>"; };
 		44BC5336176A96800038043A /* OKGKScoreWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGKScoreWrapper.h; sourceTree = "<group>"; };
 		44BC5337176A96800038043A /* OKGKScoreWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKGKScoreWrapper.m; sourceTree = "<group>"; };
 		44E118291728A7CF003C2603 /* OKError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKError.h; sourceTree = "<group>"; };
@@ -577,6 +582,7 @@
 			children = (
 				44B50D0A176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.h */,
 				44B50D09176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m */,
+				44B50D16176FDADF00B5D8AD /* OKScoreProtocol.h */,
 				44BC533217692DE20038043A /* Utilities */,
 				321E99C716D2FB6C005F1506 /* AbstractActionSheetPicker.h */,
 				321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */,
@@ -620,9 +626,9 @@
 				32CACFC016CB637C00E8F185 /* OKProfileViewController.h */,
 				32CACFC116CB637C00E8F185 /* OKProfileViewController.m */,
 				32CACFC216CB637C00E8F185 /* OKScore.h */,
+				32CACFC316CB637C00E8F185 /* OKScore.m */,
 				44BC5336176A96800038043A /* OKGKScoreWrapper.h */,
 				44BC5337176A96800038043A /* OKGKScoreWrapper.m */,
-				32CACFC316CB637C00E8F185 /* OKScore.m */,
 				32CACFC416CB637C00E8F185 /* OKScoreCell.h */,
 				32CACFC516CB637C00E8F185 /* OKScoreCell.m */,
 				32CACFC616CB637C00E8F185 /* OKScoreViewCell.h */,
@@ -636,6 +642,9 @@
 				32CACFD216CB637C00E8F185 /* OpenKit.h */,
 				32CACFD316CB637C00E8F185 /* SimpleKeychain.h */,
 				32CACFD416CB637C00E8F185 /* SimpleKeychain.m */,
+				44B50D1B1771227C00B5D8AD /* OKFBLoginCell.h */,
+				44B50D1C1771227D00B5D8AD /* OKFBLoginCell.m */,
+				44B50D1E1771228F00B5D8AD /* OKFBLoginCell.xib */,
 			);
 			path = OpenKit;
 			sourceTree = "<group>";
@@ -683,12 +692,12 @@
 		32CAD02816CB65E800E8F185 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
-				32CAD02916CB65E800E8F185 /* OKLeaderboardsListViewController.xib */,
+				44B50D13176ED4B100B5D8AD /* OKSocialLeaderboardVC.xib */,
 				32CAD02A16CB65E800E8F185 /* OKLeaderboardViewController.xib */,
+				32CAD02916CB65E800E8F185 /* OKLeaderboardsListViewController.xib */,
 				32CAD02B16CB65E800E8F185 /* OKNickViewController.xib */,
 				32CAD02C16CB65E800E8F185 /* OKProfileViewController.xib */,
 				32CAD02D16CB65E800E8F185 /* OKScoreViewController.xib */,
-				44B50D13176ED4B100B5D8AD /* OKSocialLeaderboardVC.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -1006,6 +1015,7 @@
 				445B3C001769258C00952456 /* OKGameCenterUtilities.m in Sources */,
 				44BC5338176A96810038043A /* OKGKScoreWrapper.m in Sources */,
 				44B50D0B176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m in Sources */,
+				44B50D1D1771227D00B5D8AD /* OKFBLoginCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

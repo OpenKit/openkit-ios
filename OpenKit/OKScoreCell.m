@@ -76,8 +76,8 @@
         cellImage = [[OKUserProfileImageView alloc]initWithFrame:CGRectMake(60,10, 39, 39)];
         cellImage.image = [UIImage imageNamed:@"user_icon.png"];
         
-        cellImage.layer.masksToBounds = YES;
-        cellImage.layer.cornerRadius = 19.5;
+        //cellImage.layer.masksToBounds = YES;
+        //cellImage.layer.cornerRadius = 19.5;
         [self.contentView addSubview:cellImage];
         
         // Initialize user icon
@@ -86,6 +86,10 @@
         [self.contentView addSubview:cellBorder];
     }
     return self;
+}
+
+-(void)setIScore:(id<OKScoreProtocol>)score {
+    
 }
 
 -(void)setScore:(OKScore *)aScore

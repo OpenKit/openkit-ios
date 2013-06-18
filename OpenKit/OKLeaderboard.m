@@ -15,6 +15,7 @@
 #import "OKGameCenterUtilities.h"
 #import "OKError.h"
 #import "OKGKScoreWrapper.h"
+#import "OKMacros.h"
 
 @implementation OKLeaderboard
 
@@ -93,20 +94,33 @@
 // Takes a page number of scores and converts to range for GameCenter
 -(void)getGlobalScoresWithPageNum:(int)pageNum withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
 {
+    //TODO remove this temporary workaround
+    //[self getScoresForTimeRange:OKLeaderboardTimeRangeAllTime forPageNumber:pageNum WithCompletionhandler:completionHandler];
+    //return;
+    
     // If gamecenter is available and this leaderboard has a gamecenter ID, get global scores from gamecenter
     if(self.gamecenter_id && [OKGameCenterUtilities gameCenterIsAvailable]) {
         
-        NSRange scoreRange = NSMakeRange(pageNum*NUM_SCORES_PER_PAGE, NUM_SCORES_PER_PAGE);
+        NSRange scoreRange = NSMakeRange((pageNum-1)*NUM_SCORES_PER_PAGE+1, NUM_SCORES_PER_PAGE);
         
-        [self getScoresFromGameCenterWithRange:scoreRange withCompletionHandler:completionHandler];
+        [self getScoresFromGameCenterWithRange:scoreRange withPlayerScope:GKLeaderboardPlayerScopeGlobal withCompletionHandler:completionHandler];
     }
     else {
         [self getScoresForTimeRange:OKLeaderboardTimeRangeAllTime forPageNumber:pageNum WithCompletionhandler:completionHandler];
     }
 }
 
+//Get friends scores from gamecenter, retrieves up to 100 scores (hardcoded)
+-(void)getGameCenterFriendsScoreswithCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
+{
+    [self getScoresFromGameCenterWithRange:NSMakeRange(1, 100) withPlayerScope:GKLeaderboardPlayerScopeFriendsOnly withCompletionHandler:^(NSArray *scores, NSError *error) {
+        completionHandler(scores, error);
+    }];
+}
+
+
 // Get global scores from gamecenter. Range must start from 1-25
--(void)getScoresFromGameCenterWithRange:(NSRange)scoreRange withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
+-(void)getScoresFromGameCenterWithRange:(NSRange)scoreRange withPlayerScope:(GKLeaderboardPlayerScope)playerScope withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
 {
     GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] init];
     
@@ -117,9 +131,8 @@
     
     if(leaderboardRequest != nil)
     {
-        leaderboardRequest.playerScope = GKLeaderboardPlayerScopeGlobal;
+        leaderboardRequest.playerScope = playerScope;
         leaderboardRequest.timeScope = GKLeaderboardTimeScopeAllTime;
-        //leaderboardRequest.timeScope = GKLeaderboardTimeScopeAllTime;
         leaderboardRequest.category = [self gamecenter_id];
         leaderboardRequest.range = scoreRange;
         
@@ -131,7 +144,12 @@
             }
             else if (scores != nil)
             {
-                // Process the score information.
+                OKLog(@"Received %d scores from GameCenter", [scores count]);
+                
+                //Get the player's local score for this leaderboard if available
+                [self setLocalPlayerScore:leaderboardRequest.localPlayerScore];
+                //OKLog(@"Local player score: %@", leaderboardRequest.localPlayerScore);
+                
                 // Get the players for the scores
                 
                 //Create an array to list the player identifiers
@@ -151,15 +169,18 @@
                     }
                     else if (players != nil){
                         
+                        OKLog(@"Received player info from GameCenter for %d players", [players count]);
+                        
                         NSMutableArray *gkScores = [[NSMutableArray alloc] initWithCapacity:[players count]];
                         
                         // Process the array of GKPlayer objects.
                         for(int x = 0; x< [players count]; x++)
                         {
                             //Create a score wrapper that contains the GKSCore and the GKPLayer for that score
-                            OKGKScoreWrapper *score = [[OKGKScoreWrapper alloc] init];
-                            [score setScore:[scores objectAtIndex:x]];
-                            [score setPlayer:[players objectAtIndex:x]];
+                            OKGKScoreWrapper *gkScoreWrapper = [[OKGKScoreWrapper alloc] init];
+                            [gkScoreWrapper setScore:[scores objectAtIndex:x]];
+                            [gkScoreWrapper setPlayer:[players objectAtIndex:x]];
+                            [gkScores addObject:gkScoreWrapper];
                         }
                         
                         completionHandler(gkScores, nil);
@@ -216,6 +237,9 @@
         completionHandler(scores, error);
     }];
 }
+
+
+
 
 -(void)getUsersTopScoreForLeaderboardForTimeRange:(OKLeaderboardTimeRange)range withCompletionHandler:(void (^)(OKScore *score, NSError *error))completionHandler
 {

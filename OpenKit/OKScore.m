@@ -105,10 +105,13 @@
         [scoreReporter reportScoreWithCompletionHandler:^(NSError *error) {
             if(error)
                 OKLog(@"Error submitting score to GameCenter: %@",error);
+            else
+                OKLog(@"Gamecenter score submitted successfully");
         }];
         
     } else {
         //TODO handle the fact that GC is not available
+        OKLog(@"Not submitting score to GameCenter, GC not available");
     }
 }
 
@@ -126,5 +129,19 @@
     }
 }
 
+/** OKScoreProtocol Implementation **/
+-(NSString*)scoreDisplayString {
+    if([self displayString])
+        return displayString;
+    else
+        return [NSString stringWithFormat:@"%lld",[self scoreValue]];
+}
+-(NSString*)userDisplayString {
+    return [[self user] userNick];
+}
+
+-(NSString*)rankDisplayString {
+    return [NSString stringWithFormat:@"%d", [self scoreRank]];
+}
 
 @end
