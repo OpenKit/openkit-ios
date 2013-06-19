@@ -12,6 +12,7 @@
 #import "OKManager.h"
 #import "OKNetworker.h"
 #import <FacebookSDK/FBErrorUtility.h>
+#import "OKMacros.h"
 
 
 @implementation OKFacebookUtilities
@@ -140,10 +141,64 @@
     }
 }
 
++(void)getListOfFriendsForCurrentUserWithCompletionHandler:(void(^)(NSArray *friends, NSError*error))completionHandler
+{
+    FBRequest *getFriendsRequest = [FBRequest requestForMyFriends];
+
+    OKLog(@"Getting list of Facebook friends");
+    
+    [getFriendsRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        
+        if(error) {
+            completionHandler(nil, error);
+        }
+        else {
+            NSArray *friends = [result objectForKey:@"data"];
+            completionHandler(friends, error);
+        }
+    }];
+}
+
++(void)handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:(NSError *)error
+{
+    NSString *alertMessage, *alertTitle;
+    if (error.fberrorShouldNotifyUser) {
+        // If the SDK has a message for the user, surface it. This conveniently
+        // handles cases like password change or iOS6 app slider state.
+        alertTitle = @"Facebook Error";
+        alertMessage = error.fberrorUserMessage;
+    } else if (error.fberrorCategory == FBErrorCategoryAuthenticationReopenSession) {
+        // It is important to handle session closures since they can happen
+        // outside of the app. You can inspect the error for more context
+        // but this sample generically notifies the user.
+        alertTitle = @"Session Error";
+        alertMessage = @"Your current session is no longer valid. Please log in again.";
+    } else if (error.fberrorCategory == FBErrorCategoryUserCancelled) {
+        // The user has cancelled a login. You can inspect the error
+        // for more context. For this sample, we will simply ignore it.
+        NSLog(@"user cancelled login");
+    } else {
+        // For simplicity, this sample treats other errors blindly.
+        alertTitle  = @"Unknown Error";
+        alertMessage = @"Error. Please try again later.";
+        NSLog(@"Unexpected error:%@", error);
+    }
+    
+    if (alertMessage) {
+        [[[UIAlertView alloc] initWithTitle:alertTitle
+                                    message:alertMessage
+                                   delegate:nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
+    }
+}
 
 
 
-/* OLD VERSION WITHOUT ABSTRACTION
+
+
+
+/* OLD VERSION WITHOUT ABSTRACTION OF FACEBOOK OPEN SESSION METHOD
 
 +(void)AuthorizeUserWithFacebookWithCompletionHandler:(void(^)(OKUser *user, NSError *error))completionHandler
 {

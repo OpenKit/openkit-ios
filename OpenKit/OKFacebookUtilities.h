@@ -15,7 +15,16 @@
 +(void)handleDidBecomeActive;
 +(void)handleWillTerminate;
 
+
+// Method to Login to OpenKit with Facebook Login
 +(void)AuthorizeUserWithFacebookWithCompletionHandler:(void(^)(OKUser *user, NSError *error))completionHandler;
+
+// Methods to open Facebook session
++(void)OpenFBSessionWithCompletionHandler:(void(^)(NSError *error))completionHandler;
 +(BOOL)OpenCachedFBSessionWithoutLoginUI;
+
+// Other FB helper methods
++(void)handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:(NSError *)error;
++(void)getListOfFriendsForCurrentUserWithCompletionHandler:(void(^)(NSArray *friends, NSError*error))completionHandler;
 
 @end

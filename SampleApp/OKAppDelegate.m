@@ -10,10 +10,6 @@
 #import "OpenKit.h"
 #import "OKViewController.h"
 
-//#define LOCAL_SERVER 0
-
-//#import "OKCloud.h"
-//#import <objc/runtime.h>
 
 #import "OKGameCenterUtilities.h"
 
@@ -41,7 +37,7 @@
     self.window.rootViewController = navi;
     [self.window makeKeyAndVisible];
     
-    [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES withPresentingViewController:self.viewController];
+    //[OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES withPresentingViewController:self.viewController];
     
 
     return YES;

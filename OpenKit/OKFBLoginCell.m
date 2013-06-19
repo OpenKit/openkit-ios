@@ -7,6 +7,8 @@
 //
 
 #import "OKFBLoginCell.h"
+#import "OKFacebookUtilities.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @implementation OKFBLoginCell
 
@@ -28,12 +30,40 @@
     // Configure the view for the selected state
 }
 
+-(void)startSpinner
+{
+    [spinner startAnimating];
+    [connectFBButton setHidden:YES];
+}
+
+-(void)stopSpinner
+{
+    [spinner stopAnimating];
+    [connectFBButton setHidden:NO];
+}
+
 -(IBAction)connectButtonPressed:(id)sender
 {
-    // Start facebook login process
+    [self startSpinner];
     
-    // Start spinner
-    
+    if([FBSession activeSession].state == FBSessionStateOpen) {
+        //TODO
+        [connectFBButton setHidden:YES];
+        [textLabel setText:@"FB Session is already open"];
+    } else {
+        [OKFacebookUtilities OpenFBSessionWithCompletionHandler:^(NSError *error) {
+            if(error) {
+                [OKFacebookUtilities handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:error];
+            } else if ([FBSession activeSession].state == FBSessionStateOpen) {
+                
+            }
+                
+        }];
+    }
 }
+
+
+
+
 
 @end
