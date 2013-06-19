@@ -52,6 +52,9 @@
         [textLabel setText:@"FB Session is already open"];
     } else {
         [OKFacebookUtilities OpenFBSessionWithCompletionHandler:^(NSError *error) {
+            
+            [self stopSpinner];
+            
             if(error) {
                 [OKFacebookUtilities handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:error];
             } else if ([FBSession activeSession].state == FBSessionStateOpen) {

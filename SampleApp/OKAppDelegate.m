@@ -37,7 +37,7 @@
     self.window.rootViewController = navi;
     [self.window makeKeyAndVisible];
     
-    //[OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES withPresentingViewController:self.viewController];
+    [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES withPresentingViewController:self.viewController];
     
 
     return YES;

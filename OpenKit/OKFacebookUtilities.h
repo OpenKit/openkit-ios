@@ -24,6 +24,7 @@
 +(BOOL)OpenCachedFBSessionWithoutLoginUI;
 
 // Other FB helper methods
++(BOOL)isFBSessionOpen;
 +(void)handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:(NSError *)error;
 +(void)getListOfFriendsForCurrentUserWithCompletionHandler:(void(^)(NSArray *friends, NSError*error))completionHandler;
 

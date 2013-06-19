@@ -159,6 +159,7 @@
     }];
 }
 
+
 +(void)handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:(NSError *)error
 {
     NSString *alertMessage, *alertTitle;
@@ -253,7 +254,9 @@
 
 
 
-
++(BOOL)isFBSessionOpen {
+    return ([FBSession activeSession].state == FBSessionStateOpen);
+}
 
 // Returns YES if a cached session was found and opened, NO if not
 +(BOOL)OpenCachedFBSessionWithoutLoginUI
