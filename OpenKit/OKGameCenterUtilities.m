@@ -53,12 +53,12 @@
 /** Given an OKUser and a GKPlayer, decides whether the cached OKUser should be updated to reflect the GameCenter ID, or should be logged out and a new OKUser should be created **/
 +(void)updateOKUserForGamecenterUser:(GKPlayer*)player withOKUser:(OKUser*)user
 {
-    if([user gameCenterID] == nil) {
+    if([user gameCenterID] == nil || [[user gameCenterID] isKindOfClass:[NSNull class]]) {
         //Current user doesn't have a game center ID, but it should have some other type of ID
         // TODO, add GameCenter ID to current user, e.g. UPDATE the user
         OKLog(@"TODO update existing user with GameCenter ID");
     }
-    else if (![[user gameCenterID] isEqualToString:[player playerID]]) {
+    else if ([user gameCenterID] && ![[user gameCenterID] isEqualToString:[player playerID]]) {
         OKLog(@"New GameCenter user found from previous cached gamecenter user");
         // If the cached/current OKUser's GC ID != localPlayer GC ID, then logout and re-login
         [[OKManager sharedManager] logoutCurrentUser];
