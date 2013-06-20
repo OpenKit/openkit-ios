@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "OKLeaderboard.h"
+#import "OKFBLoginCell.h"
 
-@interface OKSocialLeaderboardViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface OKSocialLeaderboardViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, OKFBLoginCellDelegate>
 
 @property (nonatomic, strong) OKLeaderboard *leaderboard;
 @property (nonatomic, strong) IBOutlet UITableView *_tableView;

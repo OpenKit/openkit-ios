@@ -12,7 +12,7 @@
 
 @implementation OKFBLoginCell
 
-@synthesize connectFBButton, textLabel, spinner;
+@synthesize connectFBButton, textLabel, spinner, delegate;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -46,6 +46,12 @@
 {
     [self startSpinner];
     
+    if(delegate) {
+        [delegate fbLoginButtonPressed];
+    }
+    
+    /*
+    
     if([FBSession activeSession].state == FBSessionStateOpen) {
         //TODO
         [connectFBButton setHidden:YES];
@@ -63,6 +69,7 @@
                 
         }];
     }
+     */
 }
 
 
