@@ -12,6 +12,8 @@
 #import "OKManager.h"
 #import "OKNetworker.h"
 #import <FacebookSDK/FBErrorUtility.h>
+#import "OKMacros.h"
+#import "OKError.h"
 
 
 @implementation OKFacebookUtilities
@@ -31,6 +33,7 @@
     [FBSession.activeSession close];
 }
 
+// Assuming already logged into Facebook, get's the user's ID and creates an OKUser Account with it
 +(void)GetCurrentFacebookUsersIDAndCreateOKUserWithCompletionhandler:(void(^)(OKUser *user, NSError *error))compHandler
 {
     [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
@@ -61,7 +64,165 @@
     }];
 }
 
++(void)CreateOKUserWithFacebookID:(NSString *)facebookID withUserNick:(NSString *)userNick withCompletionHandler:(void(^)(OKUser *user, NSError *error))completionhandler
+{
+    [OKUserUtilities createOKUserWithUserIDType:FacebookIDType withUserID:facebookID withUserNick:userNick withCompletionHandler:^(OKUser *user, NSError *errror) {
+        
+        if(!errror) {
+            // User was created successfully, save as current user
+            [[OKManager sharedManager] saveCurrentUser:user];
+        }
+        
+        // Call the passed in completionHandler
+        completionhandler(user, errror);
+    }];
+}
 
+// Opens a Facebook session and shows UI if necessary. Completion handler is called when session is opened, fails to open, or request is cancelled by user
+
++(void)OpenFBSessionWithCompletionHandler:(void(^)(NSError *error))completionHandler
+{
+    [FBSession openActiveSessionWithReadPermissions:nil allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+        
+        switch(status)
+        {
+            case FBSessionStateOpen:
+                NSLog(@"FBSessionStateOpen");
+                if(!error)
+                {
+                    //We have a valid session
+                    NSLog(@"Facebook user session found/opened successfully");
+                    completionHandler(nil);
+                }
+                break;
+            case FBSessionStateClosed:
+                NSLog(@"FBSessionStateClosed");
+                //break;
+            case FBSessionStateClosedLoginFailed:
+                NSLog(@"FBSessionStateClosedLoginFailed");
+                [FBSession.activeSession closeAndClearTokenInformation];
+                
+                if([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled){
+                    NSLog(@"User cancelled FB login");
+                    completionHandler(nil);
+                } else {
+                    completionHandler(error);
+                }
+                break;
+            default:
+                completionHandler(error);
+                break;
+        }
+        
+    }];
+}
+
+
++(void)AuthorizeUserWithFacebookWithCompletionHandler:(void(^)(OKUser *user, NSError *error))completionHandler
+{
+    if([[FBSession activeSession] state] == FBSessionStateOpen)
+    {
+        NSLog(@"FBSessionStateOpen, just making request to get user ID");
+        [self GetCurrentFacebookUsersIDAndCreateOKUserWithCompletionhandler:completionHandler];
+    }
+    else
+    {
+       [self OpenFBSessionWithCompletionHandler:^(NSError *error) {
+           if(error){
+               // There was an error when logging in with Facebook, so let's display the error
+               completionHandler(nil, error);
+           } else if ([[FBSession activeSession] state] == FBSessionStateOpen) {
+               // The facebook session is open so let's get the Facebook ID and create an OpenKit user
+               [self GetCurrentFacebookUsersIDAndCreateOKUserWithCompletionhandler:completionHandler];
+           } else {
+               // No error, and also no open FB session, so user most likely cancelled
+               completionHandler(nil,nil);
+           }
+       }];
+    }
+}
+
++(void)getListOfFriendsForCurrentUserWithCompletionHandler:(void(^)(NSArray *friends, NSError*error))completionHandler
+{
+    FBRequest *getFriendsRequest = [FBRequest requestForMyFriends];
+
+    OKLog(@"Getting list of Facebook friends");
+    
+    [getFriendsRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        
+        if(error) {
+            completionHandler(nil, error);
+        }
+        else {
+            NSArray *friends = [result objectForKey:@"data"];
+            
+            if(friends) {
+                OKLog(@"Received %d friends", [friends count]);
+                //Munge the list of friends into one single array of friend IDs
+                NSArray *friendsList = [OKFacebookUtilities makeListOfFacebookFriends:friends];
+                completionHandler(friendsList, error);
+            } else {
+                completionHandler(nil, [OKError unknownFacebookRequestError]);
+            }
+        }
+    }];
+}
+
++(NSArray*)makeListOfFacebookFriends:(NSArray*) friendsJSON
+{
+    NSMutableArray *list = [[NSMutableArray alloc] initWithCapacity:[friendsJSON count]];
+    
+    for(int x = 0; x < [friendsJSON count]; x++)
+    {
+        NSDictionary *friendDict = [friendsJSON objectAtIndex:x];
+        NSString *friendID = [friendDict objectForKey:@"id"];
+        [list addObject:friendID];
+    }
+    
+    return list;
+}
+
+
++(void)handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:(NSError *)error
+{
+    NSString *alertMessage, *alertTitle;
+    if (error.fberrorShouldNotifyUser) {
+        // If the SDK has a message for the user, surface it. This conveniently
+        // handles cases like password change or iOS6 app slider state.
+        alertTitle = @"Facebook Error";
+        alertMessage = error.fberrorUserMessage;
+    } else if (error.fberrorCategory == FBErrorCategoryAuthenticationReopenSession) {
+        // It is important to handle session closures since they can happen
+        // outside of the app. You can inspect the error for more context
+        // but this sample generically notifies the user.
+        alertTitle = @"Session Error";
+        alertMessage = @"Your current session is no longer valid. Please log in again.";
+    } else if (error.fberrorCategory == FBErrorCategoryUserCancelled) {
+        // The user has cancelled a login. You can inspect the error
+        // for more context. For this sample, we will simply ignore it.
+        NSLog(@"user cancelled login");
+    } else {
+        // For simplicity, this sample treats other errors blindly.
+        alertTitle  = @"Unknown Error";
+        alertMessage = @"Error. Please try again later.";
+        NSLog(@"Unexpected error:%@", error);
+    }
+    
+    if (alertMessage) {
+        [[[UIAlertView alloc] initWithTitle:alertTitle
+                                    message:alertMessage
+                                   delegate:nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
+    }
+}
+
+
+
+
+
+
+/* OLD VERSION WITHOUT ABSTRACTION OF FACEBOOK OPEN SESSION METHOD
 
 +(void)AuthorizeUserWithFacebookWithCompletionHandler:(void(^)(OKUser *user, NSError *error))completionHandler
 {
@@ -111,20 +272,14 @@
     }
 }
 
-+(void)CreateOKUserWithFacebookID:(NSString *)facebookID withUserNick:(NSString *)userNick withCompletionHandler:(void(^)(OKUser *user, NSError *error))completionhandler
-{    
-    [OKUserUtilities createOKUserWithUserIDType:FacebookIDType withUserID:facebookID withUserNick:userNick withCompletionHandler:^(OKUser *user, NSError *errror) {
-    
-        if(!errror) {
-            // User was created successfully, save as current user
-            [[OKManager sharedManager] saveCurrentUser:user];
-        }
-        
-        // Call the passed in completionHandler
-        completionhandler(user, errror);
-    }];
-}
+ 
+ */
 
+
+
++(BOOL)isFBSessionOpen {
+    return ([FBSession activeSession].state == FBSessionStateOpen);
+}
 
 // Returns YES if a cached session was found and opened, NO if not
 +(BOOL)OpenCachedFBSessionWithoutLoginUI

@@ -10,10 +10,7 @@
 #import "OpenKit.h"
 #import "OKViewController.h"
 
-//#define LOCAL_SERVER 0
-
-//#import "OKCloud.h"
-//#import <objc/runtime.h>
+#define LOCAL_SERVER 1
 
 #import "OKGameCenterUtilities.h"
 
@@ -23,8 +20,11 @@
 {
     // Always enter your app key in didFinishLaunchingWithOptions
 #ifdef LOCAL_SERVER
-    [OKManager setAppKey:@"VwfMRAl5Gc4tirjw"];
-    [OKManager setEndpoint:@"http://10.0.1.21:3000"];
+    //[OKManager setAppKey:@"VwfMRAl5Gc4tirjw"];
+    //[OKManager setEndpoint:@"http://localhost:3000"];
+    //This app key is for testing GC wrapper
+    [OKManager setAppKey:@"7jHqH0QcamsuvgMrlVZd"];
+    [OKManager setEndpoint:@"http://10.0.1.18:3000"];
 #else
     [OKManager setAppKey:@"VwfMRAl5Gc4tirjw"];
     [OKManager setEndpoint:@"http://stage.openkit.io"];
@@ -38,7 +38,7 @@
     self.window.rootViewController = navi;
     [self.window makeKeyAndVisible];
     
-    [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES];
+    [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES withPresentingViewController:self.viewController];
     
 
     return YES;

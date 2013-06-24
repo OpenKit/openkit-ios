@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OKScoreProtocol.h"
 
 @class OKUser;
-@interface OKScore : NSObject
+@interface OKScore : NSObject<OKScoreProtocol>
 
 @property (nonatomic) NSInteger OKScoreID;
 @property (nonatomic) int64_t scoreValue;
@@ -22,5 +23,7 @@
 
 - (id)initFromJSON:(NSDictionary*)jsonDict;
 - (void)submitScoreWithCompletionHandler:(void (^)(NSError *error))completionHandler;
+-(void)submitScoreToOpenKitAndGameCenter;
+-(void)submitScoreToOpenKitAndGameCenterWithCompletionHandler:(void (^)(NSError *error))completionHandler;
 
 @end

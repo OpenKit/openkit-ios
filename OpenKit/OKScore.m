@@ -13,6 +13,7 @@
 #import "OKNetworker.h"
 #import "OKDefines.h"
 #import "OKGameCenterUtilities.h"
+#import "OKMacros.h"
 
 @implementation OKScore
 
@@ -83,11 +84,11 @@
                     handler:^(id responseObject, NSError *error)
      {
          if(!error) {
-             NSLog(@"Successfully posted score");
-             NSLog(@"Response: %@", responseObject);
+             OKLog(@"Successfully posted score to OpenKit");
+             //OKLog(@"Response: %@", responseObject);
          }else{
-             NSLog(@"Failed to post score");
-             NSLog(@"Error: %@", error);
+             OKLog(@"Failed to post score to OpenKit");
+             OKLog(@"Error: %@", error);
          }
          completionHandler(error);
      }];
@@ -102,27 +103,54 @@
         scoreReporter.context = [self metadata];
         
         [scoreReporter reportScoreWithCompletionHandler:^(NSError *error) {
-            // Do something interesting here.
+            if(error) {
+                OKLog(@"Error submitting score to GameCenter: %@",error);
+            }
+            else {
+                OKLog(@"Gamecenter score submitted successfully");
+            }
         }];
         
     } else {
-        
+        //TODO handle the fact that GC is not available
+        OKLog(@"Not submitting score to GameCenter, GC not available");
     }
 }
 
-//TODO add completion handlers
--(void)submitScoreToOpenKitAndGameCenter 
+//TODO add completion handlers for both
+-(void)submitScoreToOpenKitAndGameCenter
 {
     if(self.gamecenterLeaderboardID && [OKGameCenterUtilities gameCenterIsAvailable]) {
         [self submitScoreToGameCenter];
     }
     
-    if([OKUser currentUser]) {
-        [self submitScoreWithCompletionHandler:^(NSError *error) {
-            //Do something
-        }];
-    }
+    [self submitScoreWithCompletionHandler:^(NSError *error) {
+        //do something
+    }];
 }
 
+-(void)submitScoreToOpenKitAndGameCenterWithCompletionHandler:(void (^)(NSError *error))completionHandler
+{
+    if(self.gamecenterLeaderboardID && [OKGameCenterUtilities gameCenterIsAvailable]) {
+        [self submitScoreToGameCenter];
+    }
+    
+   [self submitScoreWithCompletionHandler:completionHandler];
+}
+
+/** OKScoreProtocol Implementation **/
+-(NSString*)scoreDisplayString {
+    if([self displayString])
+        return displayString;
+    else
+        return [NSString stringWithFormat:@"%lld",[self scoreValue]];
+}
+-(NSString*)userDisplayString {
+    return [[self user] userNick];
+}
+
+-(NSString*)rankDisplayString {
+    return [NSString stringWithFormat:@"%d", [self scoreRank]];
+}
 
 @end

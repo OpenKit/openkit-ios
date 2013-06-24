@@ -15,6 +15,8 @@
 #import "OKGameCenterUtilities.h"
 #import "OKError.h"
 #import "OKGKScoreWrapper.h"
+#import "OKMacros.h"
+#import "OKFacebookUtilities.h"
 
 @implementation OKLeaderboard
 
@@ -56,7 +58,7 @@
          NSMutableArray *leaderboards = nil;
          if(!error) {
              NSLog(@"Successfully got list of leaderboards");
-             NSLog(@"Leaderboard response is: %@", responseObject);
+             //NSLog(@"Leaderboard response is: %@", responseObject);
              NSArray *leaderBoardsJSON = (NSArray*)responseObject;
              leaderboards = [NSMutableArray arrayWithCapacity:[leaderBoardsJSON count]];
              
@@ -76,10 +78,6 @@
      }];
 }
 
--(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange WithCompletionhandler:(void (^)(NSArray *, NSError *))completionHandler
-{
-    [self getScoresForTimeRange:timeRange forPageNumber:1 WithCompletionhandler:completionHandler];
-}
 
 -(NSString*)getParamForLeaderboardTimeRange:(OKLeaderboardTimeRange)range
 {
@@ -93,7 +91,37 @@
     }
 }
 
--(void)getScoresFromGameCenterWithRange:(NSRange)scoreRange withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
+// Get global scores from either GameCenter or OpenKit depending on GameCenter availability
+// Takes a page number of scores and converts to range for GameCenter
+-(void)getGlobalScoresWithPageNum:(int)pageNum withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
+{
+    //TODO remove this temporary workaround
+    //[self getScoresForTimeRange:OKLeaderboardTimeRangeAllTime forPageNumber:pageNum WithCompletionhandler:completionHandler];
+    //return;
+    
+    // If gamecenter is available and this leaderboard has a gamecenter ID, get global scores from gamecenter
+    if(self.gamecenter_id && [OKGameCenterUtilities gameCenterIsAvailable]) {
+        
+        NSRange scoreRange = NSMakeRange((pageNum-1)*NUM_SCORES_PER_PAGE+1, NUM_SCORES_PER_PAGE);
+        
+        [self getScoresFromGameCenterWithRange:scoreRange withPlayerScope:GKLeaderboardPlayerScopeGlobal withCompletionHandler:completionHandler];
+    }
+    else {
+        [self getScoresForTimeRange:OKLeaderboardTimeRangeAllTime forPageNumber:pageNum WithCompletionhandler:completionHandler];
+    }
+}
+
+//Get friends scores from gamecenter, retrieves up to 100 scores (hardcoded)
+-(void)getGameCenterFriendsScoreswithCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
+{
+    [self getScoresFromGameCenterWithRange:NSMakeRange(1, 100) withPlayerScope:GKLeaderboardPlayerScopeFriendsOnly withCompletionHandler:^(NSArray *scores, NSError *error) {
+        completionHandler(scores, error);
+    }];
+}
+
+
+// Get global scores from gamecenter. Range must start from 1-25
+-(void)getScoresFromGameCenterWithRange:(NSRange)scoreRange withPlayerScope:(GKLeaderboardPlayerScope)playerScope withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
 {
     GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] init];
     
@@ -104,7 +132,7 @@
     
     if(leaderboardRequest != nil)
     {
-        leaderboardRequest.playerScope = GKLeaderboardPlayerScopeGlobal;
+        leaderboardRequest.playerScope = playerScope;
         leaderboardRequest.timeScope = GKLeaderboardTimeScopeAllTime;
         leaderboardRequest.category = [self gamecenter_id];
         leaderboardRequest.range = scoreRange;
@@ -112,11 +140,17 @@
         [leaderboardRequest loadScoresWithCompletionHandler: ^(NSArray *scores, NSError *error) {
             if (error != nil)
             {
+                NSLog(@"Error getting gamecenter scores: %@", error);
                 completionHandler(nil, error);
             }
             else if (scores != nil)
             {
-                // Process the score information.
+                OKLog(@"Received %d scores from GameCenter", [scores count]);
+                
+                //Get the player's local score for this leaderboard if available
+                [self setLocalPlayerScore:leaderboardRequest.localPlayerScore];
+                //OKLog(@"Local player score: %@", leaderboardRequest.localPlayerScore);
+                
                 // Get the players for the scores
                 
                 //Create an array to list the player identifiers
@@ -131,9 +165,12 @@
                 [GKPlayer loadPlayersForIdentifiers:playerIDs withCompletionHandler:^(NSArray *players, NSError *error) {
                     if (error != nil){
                         // Got scores, but couldn't get player info for scores
+                        OKLog(@"Error getting player info from GameCenter scores");
                         completionHandler(nil,error);
                     }
                     else if (players != nil){
+                        
+                        OKLog(@"Received player info from GameCenter for %d players", [players count]);
                         
                         NSMutableArray *gkScores = [[NSMutableArray alloc] initWithCapacity:[players count]];
                         
@@ -141,27 +178,33 @@
                         for(int x = 0; x< [players count]; x++)
                         {
                             //Create a score wrapper that contains the GKSCore and the GKPLayer for that score
-                            OKGKScoreWrapper *score = [[OKGKScoreWrapper alloc] init];
-                            [score setScore:[scores objectAtIndex:x]];
-                            [score setPlayer:[players objectAtIndex:x]];
+                            OKGKScoreWrapper *gkScoreWrapper = [[OKGKScoreWrapper alloc] init];
+                            [gkScoreWrapper setScore:[scores objectAtIndex:x]];
+                            [gkScoreWrapper setPlayer:[players objectAtIndex:x]];
+                            [gkScores addObject:gkScoreWrapper];
                         }
                         
                         completionHandler(gkScores, nil);
                     }
                     else {
-                        completionHandler(nil, [OKError unknownGameCenterError]);
+                        completionHandler(nil, nil);
                     }
                 }];
                 
                 
             }
             else{
-                completionHandler(nil, [OKError unknownGameCenterError]);
+                // This could also be 0 scores returned
+                completionHandler(nil, nil);
             }
         }];
     }
 }
 
+-(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange WithCompletionhandler:(void (^)(NSArray *, NSError *))completionHandler
+{
+    [self getScoresForTimeRange:timeRange forPageNumber:1 WithCompletionhandler:completionHandler];
+}
 
 -(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange forPageNumber:(int)pageNum
        WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler
@@ -177,24 +220,78 @@
     // OK NETWORK REQUEST
     [OKNetworker getFromPath:@"/best_scores" parameters:params
                      handler:^(id responseObject, NSError *error)
-    {
-        NSMutableArray *scores = nil;
-        if(!error) {
-            NSLog(@"Successfully got scores: %@", responseObject);
+     {
+         NSMutableArray *scores = nil;
+         if(!error) {
+             NSLog(@"Successfully got scores");
+             
+             NSArray *scoresJSON = (NSArray*)responseObject;
+             scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
+             
+             for(id obj in scoresJSON) {
+                 OKScore *score = [[OKScore alloc] initFromJSON:obj];
+                 [scores addObject:score];
+             }
+         } else {
+             NSLog(@"Failed to get scores, with error: %@", error);
+         }
+         completionHandler(scores, error);
+     }];
+}
 
-            NSArray *scoresJSON = (NSArray*)responseObject;
-            scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
-            
-            for(id obj in scoresJSON) {
-                OKScore *score = [[OKScore alloc] initFromJSON:obj];
-                [scores addObject:score];
-            }
-        } else {
-            NSLog(@"Failed to get scores, with error: %@", error);
+
+-(void)getFacebookFriendsScoresWithFacebookFriends:(NSArray*)friends withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
+{
+    
+    //Create a request and send it to OpenKit
+    //Create the request parameters
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setValue:[NSNumber numberWithInt:[self OKLeaderboard_id]] forKey:@"leaderboard_id"];
+    [params setValue:friends forKey:@"fb_friends"];
+    
+    // OK NETWORK REQUEST
+    [OKNetworker postToPath:@"/test_controller" parameters:params
+                    handler:^(id responseObject, NSError *error)
+     {
+         NSMutableArray *scores = nil;
+         if(!error) {
+             NSLog(@"Successfully got FB friends scores");
+             
+             NSArray *scoresJSON = (NSArray*)responseObject;
+             scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
+             
+             for(id obj in scoresJSON) {
+                 OKScore *score = [[OKScore alloc] initFromJSON:obj];
+                 [scores addObject:score];
+             }
+         } else {
+             NSLog(@"Failed to get scores, with error: %@", error);
+         }
+         completionHandler(scores, error);
+     }];
+
+    
+}
+
+
+-(void)getFacebookFriendsScoresWithCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
+{
+    // Get the facebook friends list, then get scores from OpenKit with fb friends filter
+
+    [OKFacebookUtilities getListOfFriendsForCurrentUserWithCompletionHandler:^(NSArray *friends, NSError *error) {
+        if(error) {
+            completionHandler(nil, error);
+        } else if(friends){
+            [self getFacebookFriendsScoresWithFacebookFriends:friends withCompletionHandler:completionHandler];
         }
-        completionHandler(scores, error);
+        else {
+            completionHandler(nil, [OKError unknownFacebookRequestError]);
+        }
     }];
 }
+
+
+
 
 -(void)getUsersTopScoreForLeaderboardForTimeRange:(OKLeaderboardTimeRange)range withCompletionHandler:(void (^)(OKScore *score, NSError *error))completionHandler
 {

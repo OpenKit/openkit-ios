@@ -12,4 +12,21 @@
 
 @synthesize score, player;
 
+/** OKScoreProtocol Implementation **/
+-(NSString*)scoreDisplayString {
+    return [[self score] formattedValue];
+}
+-(NSString*)userDisplayString {
+    return [[self player] displayName];
+}
+
+-(NSString*)rankDisplayString {
+    return [NSString stringWithFormat:@"%d",[[self score] rank]];
+}
+
+-(int64_t)scoreValue {
+    return [[self score] value];
+}
+
+
 @end

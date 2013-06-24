@@ -88,10 +88,17 @@
     
     [ActionSheetStringPicker showPickerWithTitle:@"Choose Leaderboard" rows:rows initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue)
     {
+        
+        OKLeaderboard *leaderboard = (OKLeaderboard*)[leaderBoards objectAtIndex:selectedIndex];
+        
         OKScore *score = [[OKScore alloc] init];
         [score setScoreValue:[[textField text] integerValue]];
         [score setOKLeaderboardID:[(OKLeaderboard*)[leaderBoards objectAtIndex:selectedIndex] OKLeaderboard_id]];
         
+        
+        [score setGamecenterLeaderboardID:[leaderboard gamecenter_id]];
+        
+        [score submitScoreToOpenKitAndGameCenter];
         
         [score submitScoreWithCompletionHandler:^(NSError *error) {
             

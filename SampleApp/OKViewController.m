@@ -9,10 +9,14 @@
 #import "OKViewController.h"
 #import "ScoreSubmitterVC.h"
 #import "CloudDataTestVC.h"
+#import "OKFacebookUtilities.h"
+#import "OKFacebookUtilities.h"
 
 
 
 @implementation OKViewController
+
+@synthesize profileImageView;
 
 
 - (id)init
@@ -29,7 +33,7 @@
         [self.loginButton setHidden:YES];
         [self.logoutButton setHidden:NO];
         
-        [self.profileImageView setUser:[OKUser currentUser]];
+        [profileImageView setUser:[OKUser currentUser]];
         [self.userNickLabel setHidden:NO];
         [self.userNickLabel setText:[NSString stringWithFormat:@"%@", [[OKUser currentUser] userNick] ]];
     } else {
@@ -39,6 +43,23 @@
         [self.userNickLabel setHidden:YES];
         
     }
+}
+
+-(IBAction)launchGameCenter:(id)sender
+{
+    
+    GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
+    if (gameCenterController != nil)
+    {
+        gameCenterController.gameCenterDelegate = self;
+        [self presentViewController: gameCenterController animated: YES completion:nil];
+    }
+
+}
+
+- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -64,6 +85,7 @@
     [super viewWillAppear:animated];
     [self updateUIforOKUser];
 }
+
 
 
 -(IBAction)viewLeaderboards:(id)sender

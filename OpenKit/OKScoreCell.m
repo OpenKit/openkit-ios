@@ -12,7 +12,7 @@
 
 @implementation OKScoreCell
 
-@synthesize label1, label2, label3, label4, score, cellImage;
+@synthesize label1, label2, label3, label4, score, cellImage, gkScoreWrapper;
 
 - (id)init
 {
@@ -76,8 +76,8 @@
         cellImage = [[OKUserProfileImageView alloc]initWithFrame:CGRectMake(60,10, 39, 39)];
         cellImage.image = [UIImage imageNamed:@"user_icon.png"];
         
-        cellImage.layer.masksToBounds = YES;
-        cellImage.layer.cornerRadius = 19.5;
+        //cellImage.layer.masksToBounds = YES;
+        //cellImage.layer.cornerRadius = 19.5;
         [self.contentView addSubview:cellImage];
         
         // Initialize user icon
@@ -86,6 +86,10 @@
         [self.contentView addSubview:cellBorder];
     }
     return self;
+}
+
+-(void)setIScore:(id<OKScoreProtocol>)score {
+    
 }
 
 -(void)setScore:(OKScore *)aScore
@@ -104,6 +108,16 @@
     label3.text = [NSString stringWithFormat:@"%d",[score scoreRank]];
     
     [cellImage setUser:[score user]];
+}
+
+-(void)setGkScoreWrapper:(OKGKScoreWrapper*)aScore {
+    gkScoreWrapper = aScore;
+    
+    label1.text = [[gkScoreWrapper player] displayName];
+    label2.text = [[gkScoreWrapper score] formattedValue];
+    label3.text = [NSString stringWithFormat:@"%d",[[gkScoreWrapper score] rank]];
+    
+    [cellImage setGKPlayer:[gkScoreWrapper player]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
