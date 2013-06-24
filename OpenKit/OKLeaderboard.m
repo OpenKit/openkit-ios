@@ -257,7 +257,7 @@
     [params setValue:friends forKey:@"fb_friends"];
     
     // OK NETWORK REQUEST
-    [OKNetworker postToPath:@"/test_controller" parameters:params
+    [OKNetworker postToPath:@"/best_scores/social" parameters:params
                     handler:^(id responseObject, NSError *error)
      {
          NSMutableArray *scores = nil;
