@@ -103,15 +103,11 @@
         int min = total_min % 60;
         int sec = total_sec % 60;
         [score setDisplayString:[NSString stringWithFormat:@"%01d:%02d:%02d.%02d", hour, min, sec, hun]];
-
-
         [score setOKLeaderboardID:[(OKLeaderboard*)[leaderBoards objectAtIndex:selectedIndex] OKLeaderboard_id]];
-        
-        
         [score setGamecenterLeaderboardID:[leaderboard gamecenter_id]];
-        
+
+        // Submitting twice? ... 
         [score submitScoreToOpenKitAndGameCenter];
-        
         [score submitScoreWithCompletionHandler:^(NSError *error) {
             
             [spinner stopAnimating];

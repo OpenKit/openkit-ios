@@ -9,27 +9,17 @@
 #import "OKAppDelegate.h"
 #import "OpenKit.h"
 #import "OKViewController.h"
-
-#define LOCAL_SERVER 1
-
 #import "OKGameCenterUtilities.h"
+
+
 
 @implementation OKAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Always enter your app key in didFinishLaunchingWithOptions
-#ifdef LOCAL_SERVER
-    //[OKManager setAppKey:@"VwfMRAl5Gc4tirjw"];
-    //[OKManager setEndpoint:@"http://localhost:3000"];
-    //This app key is for testing GC wrapper
-    [OKManager setAppKey:@"7jHqH0QcamsuvgMrlVZd"];
-    [OKManager setEndpoint:@"http://10.0.1.18:3000"];
-#else
     [OKManager setAppKey:@"VwfMRAl5Gc4tirjw"];
+    // [OKManager setSecretKey:@"<secret-goes-here>"];
     [OKManager setEndpoint:@"http://stage.openkit.io"];
-#endif
-
 
     // Set root view controller.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
