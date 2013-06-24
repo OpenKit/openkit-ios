@@ -37,6 +37,11 @@
     };
 }
 
++(void)authenticateLocalPlayer
+{
+    [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:NO withPresentingViewController:nil];
+}
+
 /** Manages the logic for logging into OpenKit with GameCenter **/
 +(void)loginToOpenKitWithGameCenterUser:(GKPlayer*)player
 {

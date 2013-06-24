@@ -17,6 +17,7 @@ void OKBridgeShowLeaderboards();
 void OKBridgeShowLoginUI();
 void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, const char *displayString, const char *gameObjectName);
 int OKBridgeGetCurrentUserOKID();
+void OKBridgeAuthenticateLocalPlayerWithGameCenter();
 const char* OKBridgeGetCurrentUserNick();
 long long OKBridgeGetCurrentUserFBID();
 long long OKBridgeGetCurrentUserTwitterID();

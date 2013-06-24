@@ -11,6 +11,7 @@
 #import "OKBridge.h"
 #import "OKUnityHelper.h"
 #import "OpenKit.h"
+#import "OKGameCenterUtilities.h"
 
 #import <UIKit/UIKit.h>
 
@@ -92,6 +93,11 @@ void OKBridgeShowLeaderboards()
     [vc.window makeKeyAndVisible];
 }
 
+void OKBridgeAuthenticateLocalPlayerWithGameCenter()
+{
+    [OKGameCenterUtilities authenticateLocalPlayer];
+}
+
 void OKBridgeShowLoginUI()
 {
     OKLoginView *loginView = [[OKLoginView alloc] init];
@@ -109,6 +115,8 @@ void OKBridgeSubmitScoreBase(OKScore *score, const char *gameObjectName)
     if (!u) {
         UnitySendMessage([objName UTF8String], "scoreSubmissionFailed", "");
     }
+    
+    NSLog(@"Submit score base");
     
     [score submitScoreToOpenKitAndGameCenterWithCompletionHandler:^(NSError *error) {
         if(!error) {
@@ -129,6 +137,8 @@ void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, co
     score.displayString = [[NSString alloc] initWithCString:displayString encoding:NSUTF8StringEncoding];
     score.metadata = metadata;
 
+     NSLog(@"Submitting score without GC");
+    
     OKBridgeSubmitScoreBase(score, gameObjectName);
 }
 
@@ -142,6 +152,8 @@ void OKBridgeSubmitScoreWithGameCenter(int64_t scoreValue, int leaderboardID, in
     score.metadata = metadata;
     score.gamecenterLeaderboardID = [[NSString alloc] initWithCString:gamecenterLeaderboardID encoding:NSUTF8StringEncoding];
     
+    NSLog(@"Gamecenter leaderboard ID is: %@", score.gamecenterLeaderboardID);
+    NSLog(@"Submitting score with gamecenter");
     OKBridgeSubmitScoreBase(score, gameObjectName);
 }
 
