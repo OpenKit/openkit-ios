@@ -21,9 +21,7 @@
         //CGRect labelFrame = CGRectMake(100, 20, 20, 20);
         
         CGRect spinnerFrame = CGRectMake(150, 20, 20, 20);
-        
-        NSLog(@"SPinner cell alloced");
-        
+    
         [self setFrame:cellFrame];
         
         spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];

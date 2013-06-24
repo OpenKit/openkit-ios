@@ -13,6 +13,7 @@
 #import "OKNetworker.h"
 #import <FacebookSDK/FBErrorUtility.h>
 #import "OKMacros.h"
+#import "OKError.h"
 
 
 @implementation OKFacebookUtilities
@@ -154,9 +155,31 @@
         }
         else {
             NSArray *friends = [result objectForKey:@"data"];
-            completionHandler(friends, error);
+            
+            if(friends) {
+                OKLog(@"Received %d friends", [friends count]);
+                //Munge the list of friends into one single array of friend IDs
+                NSArray *friendsList = [OKFacebookUtilities makeListOfFacebookFriends:friends];
+                completionHandler(friendsList, error);
+            } else {
+                completionHandler(nil, [OKError unknownFacebookRequestError]);
+            }
         }
     }];
+}
+
++(NSArray*)makeListOfFacebookFriends:(NSArray*) friendsJSON
+{
+    NSMutableArray *list = [[NSMutableArray alloc] initWithCapacity:[friendsJSON count]];
+    
+    for(int x = 0; x < [friendsJSON count]; x++)
+    {
+        NSDictionary *friendDict = [friendsJSON objectAtIndex:x];
+        NSString *friendID = [friendDict objectForKey:@"id"];
+        [list addObject:friendID];
+    }
+    
+    return list;
 }
 
 

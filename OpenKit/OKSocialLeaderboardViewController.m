@@ -315,7 +315,8 @@ typedef enum {
     // else if OKUser
     //   get top score from OpenKit
     // else
-    //   get local top score
+    //   get local top score (not implemented yet)
+    
     //
     // if FB
     //   get FB scores from OpenKit
@@ -355,17 +356,12 @@ typedef enum {
         }];
     }
     
-    
     if([OKFacebookUtilities isFBSessionOpen]) {
         //Get facebook social scores
-        
-        //TODO for now faking it by getting scores from OpenKit
-        
-        
         [self startedSocialScoreRequest];
         
-        [leaderboard getScoresForTimeRange:OKLeaderboardTimeRangeAllTime WithCompletionhandler:^(NSArray *scores, NSError *error) {
-            [self addSocialScores:[scores subarrayWithRange:NSMakeRange(0, 5)]];
+        [leaderboard getFacebookFriendsScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
+            [self addSocialScores:scores];
             [self finishedSocialScoreRequest];
         }];
     }

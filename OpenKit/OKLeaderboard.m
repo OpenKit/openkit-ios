@@ -16,6 +16,7 @@
 #import "OKError.h"
 #import "OKGKScoreWrapper.h"
 #import "OKMacros.h"
+#import "OKFacebookUtilities.h"
 
 @implementation OKLeaderboard
 
@@ -57,7 +58,7 @@
          NSMutableArray *leaderboards = nil;
          if(!error) {
              NSLog(@"Successfully got list of leaderboards");
-             NSLog(@"Leaderboard response is: %@", responseObject);
+             //NSLog(@"Leaderboard response is: %@", responseObject);
              NSArray *leaderBoardsJSON = (NSArray*)responseObject;
              leaderboards = [NSMutableArray arrayWithCapacity:[leaderBoardsJSON count]];
              
@@ -186,7 +187,7 @@
                         completionHandler(gkScores, nil);
                     }
                     else {
-                        completionHandler(nil, [OKError unknownGameCenterError]);
+                        completionHandler(nil, nil);
                     }
                 }];
                 
@@ -194,7 +195,7 @@
             }
             else{
                 // This could also be 0 scores returned
-                completionHandler(nil, [OKError unknownGameCenterError]);
+                completionHandler(nil, nil);
             }
         }];
     }
@@ -219,22 +220,77 @@
     // OK NETWORK REQUEST
     [OKNetworker getFromPath:@"/best_scores" parameters:params
                      handler:^(id responseObject, NSError *error)
-    {
-        NSMutableArray *scores = nil;
-        if(!error) {
-            NSLog(@"Successfully got scores: %@", responseObject);
+     {
+         NSMutableArray *scores = nil;
+         if(!error) {
+             NSLog(@"Successfully got scores");
+             
+             NSArray *scoresJSON = (NSArray*)responseObject;
+             scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
+             
+             for(id obj in scoresJSON) {
+                 OKScore *score = [[OKScore alloc] initFromJSON:obj];
+                 [scores addObject:score];
+             }
+         } else {
+             NSLog(@"Failed to get scores, with error: %@", error);
+         }
+         completionHandler(scores, error);
+     }];
+}
 
-            NSArray *scoresJSON = (NSArray*)responseObject;
-            scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
-            
-            for(id obj in scoresJSON) {
-                OKScore *score = [[OKScore alloc] initFromJSON:obj];
-                [scores addObject:score];
-            }
-        } else {
-            NSLog(@"Failed to get scores, with error: %@", error);
+
+-(void)getFacebookFriendsScoresWithFacebookFriends:(NSArray*)friends withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
+{
+    
+    //Create a request and send it to OpenKit
+    //Create the request parameters
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setValue:[NSNumber numberWithInt:[self OKLeaderboard_id]] forKey:@"leaderboard_id"];
+    [params setValue:friends forKey:@"fb_friends"];
+    
+    // OK NETWORK REQUEST
+    [OKNetworker postToPath:@"/test_controller" parameters:params
+                    handler:^(id responseObject, NSError *error)
+     {
+         NSMutableArray *scores = nil;
+         if(!error) {
+             NSLog(@"Successfully got FB friends scores");
+             
+             NSArray *scoresJSON = (NSArray*)responseObject;
+             scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
+             
+             for(id obj in scoresJSON) {
+                 OKScore *score = [[OKScore alloc] initFromJSON:obj];
+                 [scores addObject:score];
+             }
+         } else {
+             NSLog(@"Failed to get scores, with error: %@", error);
+         }
+         completionHandler(scores, error);
+     }];
+
+    
+}
+
+
+-(void)getFacebookFriendsScoresWithCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
+{
+    
+    
+    
+    
+    // Get the facebook friends list, then get scores from OpenKit with fb friends filter
+
+    [OKFacebookUtilities getListOfFriendsForCurrentUserWithCompletionHandler:^(NSArray *friends, NSError *error) {
+        if(error) {
+            completionHandler(nil, error);
+        } else if(friends){
+            [self getFacebookFriendsScoresWithFacebookFriends:friends withCompletionHandler:completionHandler];
         }
-        completionHandler(scores, error);
+        else {
+            completionHandler(nil, [OKError unknownFacebookRequestError]);
+        }
     }];
 }
 

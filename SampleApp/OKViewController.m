@@ -10,6 +10,7 @@
 #import "ScoreSubmitterVC.h"
 #import "CloudDataTestVC.h"
 #import "OKFacebookUtilities.h"
+#import "OKFacebookUtilities.h"
 
 
 
@@ -46,12 +47,14 @@
 
 -(IBAction)launchGameCenter:(id)sender
 {
+    
     GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
     if (gameCenterController != nil)
     {
         gameCenterController.gameCenterDelegate = self;
         [self presentViewController: gameCenterController animated: YES completion:nil];
     }
+
 }
 
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController

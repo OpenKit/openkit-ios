@@ -34,6 +34,10 @@
     return [NSError errorWithDomain:OKERROR_DOMAIN code:5 userInfo:[NSDictionary dictionaryWithObject:@"Unknown error from GameCenter" forKey:NSLocalizedDescriptionKey]];
 }
 
++(NSError*)unknownFacebookRequestError {
+    return [NSError errorWithDomain:OKERROR_DOMAIN code:6 userInfo:[NSDictionary dictionaryWithObject:@"Unknown error from Facebook" forKey:NSLocalizedDescriptionKey]];
+}
+
 
 
 
