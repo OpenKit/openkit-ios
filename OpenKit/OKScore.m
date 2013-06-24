@@ -103,10 +103,12 @@
         scoreReporter.context = [self metadata];
         
         [scoreReporter reportScoreWithCompletionHandler:^(NSError *error) {
-            if(error)
+            if(error) {
                 OKLog(@"Error submitting score to GameCenter: %@",error);
-            else
+            }
+            else {
                 OKLog(@"Gamecenter score submitted successfully");
+            }
         }];
         
     } else {
