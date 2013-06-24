@@ -19,6 +19,8 @@
 + (NSString *)appKey;
 + (void)setEndpoint:(NSString *)endpoint;
 + (NSString *)endpoint;
++ (void)setSecretKey:(NSString *)secretKey;
++ (NSString *)secretKey;
 
 + (BOOL)handleOpenURL:(NSURL*)url;
 + (void)handleDidBecomeActive;

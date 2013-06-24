@@ -47,6 +47,32 @@
     }];
 }
 
+- (IBAction)storeArray:(id)sender
+{
+    NSArray *arr = [NSArray arrayWithObjects:@"one", [NSNumber numberWithInt:2], nil];
+    [OKCloud set:arr key:@"secondKey" completion:^(id obj, NSError *err) {
+        if (!err) {
+            NSLog(@"Successfully set array: %@", obj);
+        } else {
+            NSLog(@"Error setting array! %@", err);
+        }
+    }];
+}
+
+- (IBAction)retrieveArray:(id)sender
+{
+    [OKCloud get:@"secondKey" completion:^(id obj, NSError *err) {
+        if (!err) {
+            NSLog(@"Successfully got: %@", obj);
+            NSLog(@"Class of element 0: %@", [[obj objectAtIndex:0] class]);
+            NSLog(@"Class of element 1: %@", [[obj objectAtIndex:1] class]);
+        } else {
+            NSLog(@"Error getting array! %@", err);
+        }
+    }];
+}
+
+
 - (IBAction)storeDict:(id)sender
 {
     NSArray *arr = [NSArray arrayWithObjects:@"one", @"two", nil];
@@ -57,7 +83,7 @@
                           arr,                              @"property4",
                           nil];
 
-    [OKCloud set:dict key:@"secondKey" completion:^(id obj, NSError *err) {
+    [OKCloud set:dict key:@"thirdKey" completion:^(id obj, NSError *err) {
         if (!err) {
             NSLog(@"Successfully set dictionary: %@", obj);
         } else {
@@ -68,7 +94,7 @@
 
 - (IBAction)retrieveDict:(id)sender
 {
-    [OKCloud get:@"secondKey" completion:^(id obj, NSError *err) {
+    [OKCloud get:@"thirdKey" completion:^(id obj, NSError *err) {
         if (!err) {
             NSLog(@"Successfully got: %@", obj);
             NSLog(@"Class of property1: %@", [[obj objectForKey:@"property1"] class]);
@@ -80,6 +106,7 @@
         }
     }];
 }
+
 
 
 
