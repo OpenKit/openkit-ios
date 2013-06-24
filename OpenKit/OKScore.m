@@ -115,18 +115,25 @@
     }
 }
 
-//TODO add completion handlers
--(void)submitScoreToOpenKitAndGameCenter 
+//TODO add completion handlers for both
+-(void)submitScoreToOpenKitAndGameCenter
 {
     if(self.gamecenterLeaderboardID && [OKGameCenterUtilities gameCenterIsAvailable]) {
         [self submitScoreToGameCenter];
     }
     
-    if([OKUser currentUser]) {
-        [self submitScoreWithCompletionHandler:^(NSError *error) {
-            //Do something
-        }];
+    [self submitScoreWithCompletionHandler:^(NSError *error) {
+        //do something
+    }];
+}
+
+-(void)submitScoreToOpenKitAndGameCenterWithCompletionHandler:(void (^)(NSError *error))completionHandler
+{
+    if(self.gamecenterLeaderboardID && [OKGameCenterUtilities gameCenterIsAvailable]) {
+        [self submitScoreToGameCenter];
     }
+    
+   [self submitScoreWithCompletionHandler:completionHandler];
 }
 
 /** OKScoreProtocol Implementation **/

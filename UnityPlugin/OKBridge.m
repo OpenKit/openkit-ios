@@ -99,25 +99,18 @@ void OKBridgeShowLoginUI()
     [loginView release];
 }
 
-void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, const char *displayString, const char *gameObjectName )
+// Base method for submitting a score
+void OKBridgeSubmitScoreBase(OKScore *score, const char *gameObjectName)
 {
-    OKScore *score = [[OKScore alloc] init];
-    score.scoreValue = scoreValue;
-    score.OKLeaderboardID = leaderboardID;
     OKUser *u = [OKUser currentUser];
     
-    score.displayString = [[NSString alloc] initWithCString:displayString encoding:NSUTF8StringEncoding];
-    
-    score.metadata = metadata;
-
-
     __block NSString *objName = [[NSString alloc] initWithCString:gameObjectName encoding:NSUTF8StringEncoding];
-
+    
     if (!u) {
         UnitySendMessage([objName UTF8String], "scoreSubmissionFailed", "");
     }
-
-    [score submitScoreWithCompletionHandler:^(NSError *error) {
+    
+    [score submitScoreToOpenKitAndGameCenterWithCompletionHandler:^(NSError *error) {
         if(!error) {
             UnitySendMessage([objName UTF8String], "scoreSubmissionSucceeded", "");
         } else {
@@ -125,8 +118,33 @@ void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, co
         }
         [objName release];
     }];
-
 }
+
+
+void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, const char *displayString, const char *gameObjectName )
+{
+    OKScore *score = [[OKScore alloc] init];
+    score.scoreValue = scoreValue;
+    score.OKLeaderboardID = leaderboardID;
+    score.displayString = [[NSString alloc] initWithCString:displayString encoding:NSUTF8StringEncoding];
+    score.metadata = metadata;
+
+    OKBridgeSubmitScoreBase(score, gameObjectName);
+}
+
+
+void OKBridgeSubmitScoreWithGameCenter(int64_t scoreValue, int leaderboardID, int metadata, const char *displayString, const char *gameObjectName, const char *gamecenterLeaderboardID)
+{
+    OKScore *score = [[OKScore alloc] init];
+    score.scoreValue = scoreValue;
+    score.OKLeaderboardID = leaderboardID;
+    score.displayString = [[NSString alloc] initWithCString:displayString encoding:NSUTF8StringEncoding];
+    score.metadata = metadata;
+    score.gamecenterLeaderboardID = [[NSString alloc] initWithCString:gamecenterLeaderboardID encoding:NSUTF8StringEncoding];
+    
+    OKBridgeSubmitScoreBase(score, gameObjectName);
+}
+
 
 int OKBridgeGetCurrentUserOKID()
 {

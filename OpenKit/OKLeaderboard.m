@@ -276,10 +276,6 @@
 
 -(void)getFacebookFriendsScoresWithCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
 {
-    
-    
-    
-    
     // Get the facebook friends list, then get scores from OpenKit with fb friends filter
 
     [OKFacebookUtilities getListOfFriendsForCurrentUserWithCompletionHandler:^(NSArray *friends, NSError *error) {

@@ -10,6 +10,7 @@
 #import "OpenKit.h"
 #import "OKViewController.h"
 
+#define LOCAL_SERVER 1
 
 #import "OKGameCenterUtilities.h"
 
