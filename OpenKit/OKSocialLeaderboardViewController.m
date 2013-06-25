@@ -43,6 +43,9 @@ static NSString *spinnerCellIdentifier = @"OKSpinnerCell";
         numberOfSocialRequestsRunning = 0;
         indexPathOfFBLoginCell = nil;
         isShowingFBLoginCell = NO;
+        
+        
+        [_tableView setSeparatorColor:UIColorFromRGB(0xb7b9bd)];
     }
     return self;
 }
@@ -65,6 +68,8 @@ typedef enum {
     return (numberOfSocialRequestsRunning > 0);
 }
 
+// This method captures a lot of the logic for what type of cell is drawn at what index path so it can be reused in
+// both cellForRowAtIndexPath and heightForRow
 -(SocialSectionRow)getTypeOfRow:(NSIndexPath*)indexPath {
     
     int section = [indexPath section];
@@ -91,10 +96,37 @@ typedef enum {
         case kSocialLeaderboardSection:
             return @"Friends";
         case kGlobalSection:
-            return @"All Scores";
+            return @"All Players";
         default:
             return @"Unknown Section";
     }
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.frame = CGRectMake(10, 0, 320, 30);
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = UIColorFromRGB(0x333333);
+    label.font = [UIFont boldSystemFontOfSize:13];
+    label.text = sectionTitle;
+    
+    UIView *view = [[UIView alloc] init];
+    [view addSubview:label];
+    
+    return view;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 30;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 20;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -250,6 +282,8 @@ typedef enum {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    [self setTitle:[leaderboard name]];
+    
     //Get global scores
     [self getScores];
     
@@ -291,7 +325,7 @@ typedef enum {
     } else {
         
         isShowingFBLoginCell = NO;
-        [_tableView reloadData];
+        [self reloadSocialScores];
         
         [OKFacebookUtilities OpenFBSessionWithCompletionHandler:^(NSError *error) {
             if ([FBSession activeSession].state == FBSessionStateOpen) {
@@ -300,9 +334,14 @@ typedef enum {
                 [OKFacebookUtilities handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:error];
                 isShowingFBLoginCell = YES;
             }
-            [_tableView reloadData];
+            [self reloadSocialScores];
         }];
     }
+}
+
+-(void)reloadSocialScores
+{
+    [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 
@@ -344,10 +383,12 @@ typedef enum {
         }];
     } else if ([OKUser currentUser])
     {
+        // Increment the counter that keeps track of requests running for social leaderboards
         [self startedSocialScoreRequest];
         
         [leaderboard getUsersTopScoreForLeaderboardForTimeRange:OKLeaderboardTimeRangeAllTime withCompletionHandler:^(OKScore *score, NSError *error) {
             
+             // Decrement the counter that keeps track of requests running for social leaderboards
             [self finishedSocialScoreRequest];
             
             if(!error && score) {
@@ -370,7 +411,7 @@ typedef enum {
 -(void)startedSocialScoreRequest
 {
     numberOfSocialRequestsRunning++;
-    [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationBottom];
+    [self reloadSocialScores];
     
 }
 -(void)finishedSocialScoreRequest
@@ -380,7 +421,7 @@ typedef enum {
     if(numberOfSocialRequestsRunning <0)
         numberOfSocialRequestsRunning = 0;
     
-    [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationBottom];
+    [self reloadSocialScores];
 }
 
 -(void)addSocialScores:(NSArray *)scores

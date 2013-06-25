@@ -23,7 +23,7 @@
     
     self = [super initWithRootViewController:list];
     if (self) {
-        [[self navigationBar] setBarStyle:UIBarStyleBlack];
+        [[self navigationBar] setBarStyle:UIBarStyleDefault];
     }
     
     return self;

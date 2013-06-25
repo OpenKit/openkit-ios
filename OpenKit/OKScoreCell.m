@@ -8,6 +8,7 @@
 
 #import "OKScoreCell.h"
 #import <QuartzCore/QuartzCore.h>
+#import "OKMacros.h"
 
 
 @implementation OKScoreCell
@@ -22,14 +23,14 @@
     if (self)
     {
         CGRect CellFrame = CGRectMake(0, 0, 300, 57);
-        CGRect NameFrame = CGRectMake(113, 11, 150, 20);
-        CGRect ScoreFrame = CGRectMake(113, 28, 150, 20);
+        CGRect NameFrame = CGRectMake(100, 11, 150, 20);
+        CGRect ScoreFrame = CGRectMake(100, 28, 150, 20);
         CGRect RankFrame = CGRectMake(0, 0, 44, 60);
-        CGRect DateFrame = CGRectMake(240, 0, 50, 60);
-        
+        CGRect DateFrame = CGRectMake(227, 0, 50, 60);
+        CGRect userProfileImageFrame = CGRectMake(47,10, 39, 39);
         [self setFrame:CellFrame];
         
-        //cell.backgroundColor = [UIColor redColor];
+        [self setBackgroundColor:[UIColor whiteColor]];
         
         //Removing accessory view for now because we're not showing the
         // score view
@@ -46,8 +47,8 @@
         //Initialize Label with tag 2.
         label2 = [[UILabel alloc] initWithFrame:ScoreFrame];
         label2.tag = 2;
-        label2.font = [UIFont boldSystemFontOfSize:12];
-        label2.textColor = [UIColor lightGrayColor];
+        label2.font = [UIFont systemFontOfSize:12];
+        label2.textColor = UIColorFromRGB(0x828282);
         label2.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:label2];
         
@@ -73,17 +74,17 @@
 
         
         // Initialize user icon
-        cellImage = [[OKUserProfileImageView alloc]initWithFrame:CGRectMake(60,10, 39, 39)];
+        cellImage = [[OKUserProfileImageView alloc]initWithFrame:userProfileImageFrame];
         cellImage.image = [UIImage imageNamed:@"user_icon.png"];
         
-        //cellImage.layer.masksToBounds = YES;
-        //cellImage.layer.cornerRadius = 19.5;
+        cellImage.layer.masksToBounds = YES;
+        cellImage.layer.cornerRadius = 3;
         [self.contentView addSubview:cellImage];
         
         // Initialize user icon
-        UIImageView *cellBorder = [[UIImageView alloc]initWithFrame:CGRectMake(45,0, 2, 59)];
-        cellBorder.image=[UIImage imageNamed:@"cell_border.png"];
-        [self.contentView addSubview:cellBorder];
+        //UIImageView *cellBorder = [[UIImageView alloc]initWithFrame:CGRectMake(45,0, 2, 59)];
+        //cellBorder.image=[UIImage imageNamed:@"cell_border.png"];
+        //[self.contentView addSubview:cellBorder];
     }
     return self;
 }

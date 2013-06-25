@@ -9,6 +9,8 @@
 #import "OKFBLoginCell.h"
 #import "OKFacebookUtilities.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import <QuartzCore/QuartzCore.h>
+#import "OKMacros.h"
 
 @implementation OKFBLoginCell
 
@@ -21,6 +23,16 @@
         // Initialization code
     }
     return self;
+}
+
+-(void)layoutSubviews {
+    [connectFBButton setBackgroundColor:UIColorFromRGB(0x1c5c97)];
+    [connectFBButton.layer setCornerRadius:3.0f];
+    [connectFBButton setClipsToBounds:YES];
+    [connectFBButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [connectFBButton setTintColor:UIColorFromRGB(0x277ac6)];
+    //[connectFBButton setBackgroundImage:[UIImage imagewith] forState:<#(UIControlState)#>]
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -44,32 +56,9 @@
 
 -(IBAction)connectButtonPressed:(id)sender
 {
-    [self startSpinner];
-    
     if(delegate) {
         [delegate fbLoginButtonPressed];
     }
-    
-    /*
-    
-    if([FBSession activeSession].state == FBSessionStateOpen) {
-        //TODO
-        [connectFBButton setHidden:YES];
-        [textLabel setText:@"FB Session is already open"];
-    } else {
-        [OKFacebookUtilities OpenFBSessionWithCompletionHandler:^(NSError *error) {
-            
-            [self stopSpinner];
-            
-            if(error) {
-                [OKFacebookUtilities handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:error];
-            } else if ([FBSession activeSession].state == FBSessionStateOpen) {
-                
-            }
-                
-        }];
-    }
-     */
 }
 
 
