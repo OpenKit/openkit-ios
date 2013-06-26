@@ -10,7 +10,7 @@
 
 @implementation OKGKScoreWrapper
 
-@synthesize score, player;
+@synthesize score, player, explicitlySetRank;
 
 /** OKScoreProtocol Implementation **/
 -(NSString*)scoreDisplayString {
@@ -21,11 +21,19 @@
 }
 
 -(NSString*)rankDisplayString {
+    
+    if([self explicitlySetRank])
+        return explicitlySetRank;
+    
     return [NSString stringWithFormat:@"%d",[[self score] rank]];
 }
 
 -(int64_t)scoreValue {
     return [[self score] value];
+}
+
+-(void)setRank:(NSInteger)rank {
+    [self setExplicitlySetRank:[NSString stringWithFormat:@"%d",rank]];
 }
 
 

@@ -26,4 +26,6 @@
 -(void)submitScoreToOpenKitAndGameCenter;
 -(void)submitScoreToOpenKitAndGameCenterWithCompletionHandler:(void (^)(NSError *error))completionHandler;
 
+-(void)setRank:(NSInteger)rank;
+
 @end

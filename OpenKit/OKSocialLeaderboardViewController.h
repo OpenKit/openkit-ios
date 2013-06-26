@@ -14,8 +14,10 @@
 
 @property (nonatomic, strong) OKLeaderboard *leaderboard;
 @property (nonatomic, strong) IBOutlet UITableView *_tableView;
-@property (nonatomic, strong) IBOutlet UIButton *moreBtn;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
+
+@property (nonatomic, strong) IBOutlet UIView *containerViewForLoadMoreButton;
+@property (nonatomic, strong) IBOutlet UIButton *loadMoreScoresButton;
 
 @property (nonatomic, strong) NSMutableArray *globalScores, *socialScores;
 

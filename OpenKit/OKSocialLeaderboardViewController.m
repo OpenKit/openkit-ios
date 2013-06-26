@@ -28,7 +28,7 @@
     BOOL isShowingFBLoginCell;
 }
 
-@synthesize leaderboard, _tableView, moreBtn, spinner, socialScores, globalScores;
+@synthesize leaderboard, _tableView, spinner, socialScores, globalScores, containerViewForLoadMoreButton, loadMoreScoresButton;
 
 static NSString *scoreCellIdentifier = kOKScoreCellIdentifier;
 static NSString *fbCellIdentifier = @"OKFBLoginCell";
@@ -248,24 +248,14 @@ typedef enum {
     return cell;
 }
 
--(UITableViewCell*)getScoreCellForScore:(NSObject*)score withTableView:(UITableView*)tableView
+-(UITableViewCell*)getScoreCellForScore:(id<OKScoreProtocol>)score withTableView:(UITableView*)tableView
 {
     OKScoreCell *cell = [tableView dequeueReusableCellWithIdentifier:scoreCellIdentifier];
     if(!cell) {
         cell = [[OKScoreCell alloc] init];
     }
     
-    if([score isKindOfClass:[OKScore class]])
-    {
-        OKScore *okscore = (OKScore*)score;
-        [cell setScore:okscore];
-    } else if ([score isKindOfClass:[OKGKScoreWrapper class]]) {
-        OKGKScoreWrapper *gkScoreWrapper = (OKGKScoreWrapper*)score;
-        [cell setGkScoreWrapper:gkScoreWrapper];
-    } else {
-        //Not a GKScoreWrapper and not an OKScore
-        OKLog(@"Unknown score type in social leaderboard");
-    }
+    [cell setOKScoreProtocolScore:score];
     
     return cell;
 }
@@ -329,7 +319,7 @@ typedef enum {
         
         [OKFacebookUtilities OpenFBSessionWithCompletionHandler:^(NSError *error) {
             if ([FBSession activeSession].state == FBSessionStateOpen) {
-                [self getSocialScores];
+                [self getFacebookSocialScores];
             } else {
                 [OKFacebookUtilities handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:error];
                 isShowingFBLoginCell = YES;
@@ -362,50 +352,66 @@ typedef enum {
     
     if([leaderboard gamecenter_id] && [OKGameCenterUtilities gameCenterIsAvailable])
     {
-        // Increment the counter that keeps track of requests running for social leaderboards
-        [self startedSocialScoreRequest];
-        
-        [leaderboard getGameCenterFriendsScoreswithCompletionHandler:^(NSArray *scores, NSError *error) {
-            
-            // Decrement the counter that keeps track of requests running for social leaderboards
-            [self finishedSocialScoreRequest];
-            if(error) {
-                OKLog(@"error getting gamecenter friends scores, %@", error);
-            }
-            else if(!error && scores) {
-                OKLog(@"Got gamecenter friends scores");
-                [self addSocialScores:scores];
-            } else if ([scores count] == 0) {
-                OKLog(@"Zero gamecenter friends scores returned");
-            } else {
-                OKLog(@"Unknown gamecenter friends scores error");
-            }
-        }];
-    } else if ([OKUser currentUser])
-    {
-        // Increment the counter that keeps track of requests running for social leaderboards
-        [self startedSocialScoreRequest];
-        
-        [leaderboard getUsersTopScoreForLeaderboardForTimeRange:OKLeaderboardTimeRangeAllTime withCompletionHandler:^(OKScore *score, NSError *error) {
-            
-             // Decrement the counter that keeps track of requests running for social leaderboards
-            [self finishedSocialScoreRequest];
-            
-            if(!error && score) {
-                [self addSocialScores:[NSArray arrayWithObject:score]];
-            }
-        }];
+        [self getGameCenterSocialScores];
+    } else if ([OKUser currentUser]) {
+        [self getUsersTopScoreFromOpenKit];
+    } else {
+        //TODO get local top score (not yet implemeneted)
     }
     
     if([OKFacebookUtilities isFBSessionOpen]) {
-        //Get facebook social scores
-        [self startedSocialScoreRequest];
-        
-        [leaderboard getFacebookFriendsScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
-            [self addSocialScores:scores];
-            [self finishedSocialScoreRequest];
-        }];
+        [self getFacebookSocialScores];
     }
+}
+
+-(void)getGameCenterSocialScores {
+    // Increment the counter that keeps track of requests running for social leaderboards
+    [self startedSocialScoreRequest];
+    
+    [leaderboard getGameCenterFriendsScoreswithCompletionHandler:^(NSArray *scores, NSError *error) {
+        
+        // Decrement the counter that keeps track of requests running for social leaderboards
+        [self finishedSocialScoreRequest];
+        if(error) {
+            OKLog(@"error getting gamecenter friends scores, %@", error);
+        }
+        else if(!error && scores) {
+            OKLog(@"Got gamecenter friends scores");
+            [self addSocialScores:scores];
+        } else if ([scores count] == 0) {
+            OKLog(@"Zero gamecenter friends scores returned");
+        } else {
+            OKLog(@"Unknown gamecenter friends scores error");
+        }
+    }];
+}
+
+-(void)getUsersTopScoreFromOpenKit
+{
+    // Increment the counter that keeps track of requests running for social leaderboards
+    [self startedSocialScoreRequest];
+    
+    [leaderboard getUsersTopScoreForLeaderboardForTimeRange:OKLeaderboardTimeRangeAllTime withCompletionHandler:^(OKScore *score, NSError *error) {
+        
+        // Decrement the counter that keeps track of requests running for social leaderboards
+        [self finishedSocialScoreRequest];
+        
+        if(!error && score) {
+            [self addSocialScores:[NSArray arrayWithObject:score]];
+        }
+    }];
+    
+}
+
+-(void)getFacebookSocialScores
+{
+    //Get facebook social scores
+    [self startedSocialScoreRequest];
+    
+    [leaderboard getFacebookFriendsScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
+        [self addSocialScores:scores];
+        [self finishedSocialScoreRequest];
+    }];
 }
 
 -(void)startedSocialScoreRequest
@@ -424,10 +430,44 @@ typedef enum {
     [self reloadSocialScores];
 }
 
+-(NSMutableArray*)sortSocialScores:(NSArray*)scores
+{
+    // Sort the scores
+    
+    NSSortDescriptor *sortDescriptor;
+    
+    if([leaderboard sortType] == OKLeaderboardSortTypeHighValue){
+        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"scoreValue" ascending:NO];
+    } else {
+        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"scoreValue" ascending:YES];
+    }
+    
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    NSArray *sortedArray = [scores sortedArrayUsingDescriptors:sortDescriptors];
+    
+    NSMutableArray *mutableScores = [[NSMutableArray alloc] initWithArray:sortedArray];
+    
+    // Set the relative ranks
+    for(int x = 0; x< [mutableScores count]; x++)
+    {
+        id<OKScoreProtocol> score = [mutableScores objectAtIndex:x];
+        [score setRank:(x+1)];
+        //[mutableScores replaceObjectAtIndex:x withObject:score];
+    }
+    
+    return mutableScores;
+}
+
+
 -(void)addSocialScores:(NSArray *)scores
 {
     if(scores) {
         [[self socialScores] addObjectsFromArray:scores];
+        
+        NSMutableArray *sortedScores = [self sortSocialScores:socialScores];
+        
+        [self setSocialScores:sortedScores];
+    
         [_tableView reloadData];
     }
 }

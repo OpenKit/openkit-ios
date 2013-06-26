@@ -38,6 +38,10 @@
     return [NSError errorWithDomain:OKERROR_DOMAIN code:6 userInfo:[NSDictionary dictionaryWithObject:@"Unknown error from Facebook" forKey:NSLocalizedDescriptionKey]];
 }
 
++(NSError*)gameCenterNotAvailableError {
+        return [NSError errorWithDomain:OKERROR_DOMAIN code:7 userInfo:[NSDictionary dictionaryWithObject:@"GameCenter is not available (player may not be authenticated in)" forKey:NSLocalizedDescriptionKey]];
+}
+
 
 
 

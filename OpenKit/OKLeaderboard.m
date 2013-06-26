@@ -31,7 +31,7 @@
         self.OKLeaderboard_id       = [[jsonDict objectForKey:@"id"] integerValue];
         self.OKApp_id               = [[jsonDict objectForKey:@"app_id"] integerValue];
         self.in_development         = [[jsonDict objectForKey:@"in_development"] boolValue];
-        self.sortType               = ([sortTypeString isEqualToString:@"HighValue"]) ? HighValue : LowValue;
+        self.sortType               = ([sortTypeString isEqualToString:@"HighValue"]) ? OKLeaderboardSortTypeHighValue : OKLeaderboardSortTypeLowValue;
         self.icon_url               = [jsonDict objectForKey:@"icon_url"];
         self.playerCount            = [[jsonDict objectForKey:@"player_count"] integerValue];
         self.gamecenter_id          = [jsonDict objectForKey:@"gamecenter_id"];
@@ -316,6 +316,50 @@
             completionHandler(nil, error);
         }
     }];
+}
+
+-(void)getUsersTopScoreFromGameCenterWithCompletionHandler:(void (^)(OKGKScoreWrapper *score, NSError *error))completionHandler
+{
+    if(![OKGameCenterUtilities gameCenterIsAvailable]) {
+        completionHandler(nil, [OKError gameCenterNotAvailableError]);
+        return;
+    }
+    
+    if(![self gamecenter_id]) {
+        completionHandler(nil, [OKError noGameCenterIDError]);
+        return;
+    }
+    
+    NSString *localPlayerID = [[GKLocalPlayer localPlayer] playerID];
+    
+    GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:localPlayerID]];
+    
+    leaderboardRequest.timeScope = GKLeaderboardTimeScopeAllTime;
+    leaderboardRequest.category = [self gamecenter_id];
+    
+    if(leaderboardRequest !=  nil){
+        
+        [leaderboardRequest loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
+            if(error != nil) {
+                completionHandler(nil, error);
+            } else if (scores != nil)
+            {
+                GKScore *score = [scores objectAtIndex:0];
+                
+                OKGKScoreWrapper *wrapper = [[OKGKScoreWrapper alloc] init];
+                [wrapper setScore:score];
+                [wrapper setPlayer:[GKLocalPlayer localPlayer]];
+                
+                completionHandler(wrapper, nil);
+            } else
+            {
+                completionHandler(nil, [OKError unknownGameCenterError]);
+            }
+        }];
+    }
+    else {
+        completionHandler(nil, [OKError unknownGameCenterError]);
+    }
 }
 
 

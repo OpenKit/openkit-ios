@@ -153,4 +153,8 @@
     return [NSString stringWithFormat:@"%d", [self scoreRank]];
 }
 
+-(void)setRank:(NSInteger)rank {
+    [self setScoreRank:rank];
+}
+
 @end

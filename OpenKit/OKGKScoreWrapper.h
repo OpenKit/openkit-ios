@@ -14,5 +14,9 @@
 
 @property (nonatomic, strong) GKScore *score;
 @property (nonatomic, strong) GKPlayer *player;
+// Rank is a read only property of GKScore, and since we are showing social scores ranked against each other, we need a way to store a local rank
+@property (nonatomic, strong) NSString *explicitlySetRank;
+
+-(void)setRank:(NSInteger)rank;
 
 @end

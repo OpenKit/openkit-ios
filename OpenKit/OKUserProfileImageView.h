@@ -10,7 +10,7 @@
 #import "OKUser.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <GameKit/GameKit.h>
-
+#import "OKScoreProtocol.h"
 
 @interface OKUserProfileImageView : UIView
 
@@ -20,5 +20,6 @@
 - (void)setImageURL:(NSString *)url;
 - (void)setImageURL:(NSString *)url withPlaceholderImage:(UIImage *)placeholder;
 - (void)setGKPlayer:(GKPlayer*)player;
+-(void)setOKScoreProtocolScore:(id<OKScoreProtocol>)aScore;
 
 @end

@@ -55,12 +55,6 @@
     [[self navigationItem] setTitle:@"Leaderboards"];
   
     [self getListOfLeaderboards];
-    
-    if(![OKUser currentUser])
-    {
-        OKLoginView *loginView = [[OKLoginView alloc] init];
-        [loginView show];
-    }
 }
 
 - (IBAction)back

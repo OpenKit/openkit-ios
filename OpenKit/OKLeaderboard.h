@@ -8,13 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <GameKit/GameKit.h>
+#import "OKGKScoreWrapper.h"
 
 #define NUM_SCORES_PER_PAGE 25
 
 typedef enum {
-    HighValue,
-    LowValue
-} LeaderBoardSortType;
+    OKLeaderboardSortTypeHighValue,
+    OKLeaderboardSortTypeLowValue
+} OKLeaderBoardSortType;
 
 typedef enum {
     OKLeaderboardTimeRangeOneDay,
@@ -32,7 +33,7 @@ typedef enum {
 @property (nonatomic) NSInteger OKLeaderboard_id;
 @property (nonatomic) BOOL in_development;
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic) LeaderBoardSortType sortType;
+@property (nonatomic) OKLeaderBoardSortType sortType;
 @property (nonatomic, strong) NSString *icon_url;
 @property (nonatomic) int playerCount;
 @property (nonatomic, strong) NSString *gamecenter_id;
@@ -55,6 +56,6 @@ typedef enum {
 
 //GameCenter methods
 -(void)getGameCenterFriendsScoreswithCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler;
-
+-(void)getUsersTopScoreFromGameCenterWithCompletionHandler:(void (^)(OKGKScoreWrapper *score, NSError *error))completionHandler;
 
 @end

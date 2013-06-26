@@ -16,5 +16,6 @@
 +(NSError*)noGameCenterIDError;
 +(NSError*)unknownGameCenterError;
 +(NSError*)unknownFacebookRequestError;
++(NSError*)gameCenterNotAvailableError;
 
 @end

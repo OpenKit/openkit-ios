@@ -13,7 +13,7 @@
 
 @implementation OKScoreCell
 
-@synthesize label1, label2, label3, label4, score, cellImage, gkScoreWrapper;
+@synthesize label1, label2, label3, label4, score, cellImage, OKScoreProtocolScore;
 
 - (id)init
 {
@@ -89,10 +89,21 @@
     return self;
 }
 
--(void)setIScore:(id<OKScoreProtocol>)score {
+
+-(void)setOKScoreProtocolScore:(id<OKScoreProtocol>)aScore
+{
+    OKScoreProtocolScore = aScore;
     
+    // Update the text fields
+    label1.text = [OKScoreProtocolScore userDisplayString];
+    label2.text = [OKScoreProtocolScore scoreDisplayString];
+    label3.text = [OKScoreProtocolScore rankDisplayString];
+    
+    // Show the player image
+    [cellImage setOKScoreProtocolScore:OKScoreProtocolScore];
 }
 
+// Older implementation --> use setIScore now
 -(void)setScore:(OKScore *)aScore
 {
     score = aScore;
@@ -111,6 +122,7 @@
     [cellImage setUser:[score user]];
 }
 
+/*
 -(void)setGkScoreWrapper:(OKGKScoreWrapper*)aScore {
     gkScoreWrapper = aScore;
     
@@ -120,6 +132,7 @@
     
     [cellImage setGKPlayer:[gkScoreWrapper player]];
 }
+ */
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

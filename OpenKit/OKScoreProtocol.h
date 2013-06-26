@@ -14,4 +14,5 @@
 -(NSString*)userDisplayString;
 -(NSString*)rankDisplayString;
 -(int64_t)scoreValue;
+-(void)setRank:(NSInteger)rank;
 @end
