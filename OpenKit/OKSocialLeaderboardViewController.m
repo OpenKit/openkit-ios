@@ -308,6 +308,39 @@ typedef enum {
     // Get social scores / top score
 }
 
+-(void)getMoreGlobalScores
+{
+     // If there are no scores already for this leaderboard, getting "More" doesn't make sense
+    if(globalScores == nil)
+        return;
+    
+    int numScores = [globalScores count];
+    int currentPageNumber = numScores / NUM_SCORES_PER_PAGE;
+    
+    if(currentPageNumber*NUM_SCORES_PER_PAGE < numScores) {
+        currentPageNumber++;
+    }
+    
+    int nextPageNumber = currentPageNumber + 1;
+    
+    [loadMoreScoresButton setEnabled:NO];
+    
+    [leaderboard getGlobalScoresWithPageNum:nextPageNumber withCompletionHandler:^(NSArray *scores, NSError *error) {
+        
+        if(scores != nil) {
+            [globalScores addObjectsFromArray:scores];
+            [_tableView reloadSections:[NSIndexSet indexSetWithIndex:kGlobalSection] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+        
+        [loadMoreScoresButton setEnabled:YES];
+    }];
+}
+
+-(IBAction)loadMoreScoresPressed:(id)sender
+{
+    [self getMoreGlobalScores];
+}
+
 -(void)fbLoginButtonPressed {
     if([FBSession activeSession].state == FBSessionStateOpen) {
         //TODO

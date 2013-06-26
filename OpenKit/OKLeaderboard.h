@@ -10,7 +10,7 @@
 #import <GameKit/GameKit.h>
 #import "OKGKScoreWrapper.h"
 
-#define NUM_SCORES_PER_PAGE 25
+#define NUM_SCORES_PER_PAGE 2
 
 typedef enum {
     OKLeaderboardSortTypeHighValue,

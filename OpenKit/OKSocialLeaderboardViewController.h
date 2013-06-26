@@ -23,4 +23,6 @@
 
 - (id)initWithLeaderboard:(OKLeaderboard *)aLeaderboard;
 
+-(IBAction)loadMoreScoresPressed:(id)sender;
+
 @end

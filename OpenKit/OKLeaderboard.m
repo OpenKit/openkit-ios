@@ -113,27 +113,16 @@
 // Takes a page number of scores and converts to range for GameCenter
 -(void)getGlobalScoresWithPageNum:(int)pageNum withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
 {
-    //TODO remove this temporary workaround
-    //[self getScoresForTimeRange:OKLeaderboardTimeRangeAllTime forPageNumber:pageNum WithCompletionhandler:completionHandler];
-    //return;
-    
-    // If gamecenter is available and this leaderboard has a gamecenter ID, get global scores from gamecenter
-
-    // For the time being, with Game Center only returning a single score (!) we're going to default
-    // to OpenKit for global scores.
-#if 0
-    if(self.gamecenter_id && [OKGameCenterUtilities gameCenterIsAvailable]) {
+    if([self showGlobalScoresFromGameCenter]) {
         
         NSRange scoreRange = NSMakeRange((pageNum-1)*NUM_SCORES_PER_PAGE+1, NUM_SCORES_PER_PAGE);
         
         [self getScoresFromGameCenterWithRange:scoreRange withPlayerScope:GKLeaderboardPlayerScopeGlobal withCompletionHandler:completionHandler];
     }
     else {
-#endif
+
         [self getScoresForTimeRange:OKLeaderboardTimeRangeAllTime forPageNumber:pageNum WithCompletionhandler:completionHandler];
-#if 0
     }
-#endif
 }
 
 //Get friends scores from gamecenter, retrieves up to 100 scores (hardcoded)
