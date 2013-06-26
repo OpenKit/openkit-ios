@@ -12,6 +12,7 @@
 
 
 void OKBridgeSetAppKey(const char *appKey);
+void OKBridgeSetSecretKey(const char *secretKey);
 void OKBridgeSetEndpoint(const char *endpoint);
 void OKBridgeShowLeaderboards();
 void OKBridgeShowLoginUI();

@@ -73,6 +73,11 @@ void OKBridgeSetAppKey(const char *appKey)
     [OKManager setAppKey:[NSString stringWithUTF8String:appKey]];
 }
 
+void OKBridgeSetSecretKey(const char *secretKey)
+{
+    [OKManager setSecretKey:[NSString stringWithUTF8String:secretKey]];
+}
+
 void OKBridgeSetEndpoint(const char *endpoint)
 {
     [OKManager setEndpoint:[NSString stringWithUTF8String:endpoint]];
