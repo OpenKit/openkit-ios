@@ -280,7 +280,7 @@ typedef enum {
     //Register the nib file for OKFBLoginCell
     [self._tableView registerNib:[UINib nibWithNibName:@"OKFBLoginCell"
                                                bundle:[NSBundle mainBundle]]
-         forCellReuseIdentifier:fbCellIdentifier];
+         forCellReuseIdentifier:fbCellIdentifier]; 
     
 }
 
@@ -452,7 +452,6 @@ typedef enum {
     {
         id<OKScoreProtocol> score = [mutableScores objectAtIndex:x];
         [score setRank:(x+1)];
-        //[mutableScores replaceObjectAtIndex:x withObject:score];
     }
     
     return mutableScores;

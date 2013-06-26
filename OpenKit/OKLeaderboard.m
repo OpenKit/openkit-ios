@@ -91,6 +91,24 @@
     }
 }
 
+-(BOOL)showGlobalScoresFromGameCenter
+{
+    //TODO remove this temporary workaround
+    
+    // If gamecenter is available and this leaderboard has a gamecenter ID, get global scores from gamecenter
+    
+    // For the time being, with Game Center only returning a single score (!) we're going to default
+    // to OpenKit for global scores.
+#if 0
+    if(self.gamecenter_id && [OKGameCenterUtilities gameCenterIsAvailable]) {
+        
+        return YES;
+    }
+    else {
+#endif
+        return NO;
+}
+
 // Get global scores from either GameCenter or OpenKit depending on GameCenter availability
 // Takes a page number of scores and converts to range for GameCenter
 -(void)getGlobalScoresWithPageNum:(int)pageNum withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
