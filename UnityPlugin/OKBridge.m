@@ -100,6 +100,7 @@ void OKBridgeShowLeaderboards()
 
 void OKBridgeAuthenticateLocalPlayerWithGameCenter()
 {
+    NSLog(@"OKBridge: authenticating local player with GC");
     [OKGameCenterUtilities authenticateLocalPlayer];
 }
 
@@ -113,15 +114,17 @@ void OKBridgeShowLoginUI()
 // Base method for submitting a score
 void OKBridgeSubmitScoreBase(OKScore *score, const char *gameObjectName)
 {
+    NSLog(@"Submit score base");
+    
     OKUser *u = [OKUser currentUser];
     
     __block NSString *objName = [[NSString alloc] initWithCString:gameObjectName encoding:NSUTF8StringEncoding];
     
     if (!u) {
-        UnitySendMessage([objName UTF8String], "scoreSubmissionFailed", "");
+        UnitySendMessage([objName UTF8String], "scoreSubmissionFailed", "No current OKUser so score submission failed");
+        return;
     }
     
-    NSLog(@"Submit score base");
     
     [score submitScoreToOpenKitAndGameCenterWithCompletionHandler:^(NSError *error) {
         if(!error) {

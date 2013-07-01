@@ -131,6 +131,8 @@
 
 -(void)submitScoreToOpenKitAndGameCenterWithCompletionHandler:(void (^)(NSError *error))completionHandler
 {
+    OKLog(@"Submitting score to OpenKit and GC");
+    
     if(self.gamecenterLeaderboardID && [OKGameCenterUtilities gameCenterIsAvailable]) {
         [self submitScoreToGameCenter];
     }

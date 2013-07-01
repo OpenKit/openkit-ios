@@ -39,6 +39,7 @@
 
 +(void)authenticateLocalPlayer
 {
+    OKLog(@"Authenticating local GC player and logging into OpenKit")
     [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:NO withPresentingViewController:nil];
 }
 
