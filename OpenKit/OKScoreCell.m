@@ -9,6 +9,7 @@
 #import "OKScoreCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import "OKMacros.h"
+#import "OKColors.h"
 
 
 @implementation OKScoreCell

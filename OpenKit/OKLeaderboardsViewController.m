@@ -10,6 +10,7 @@
 #import "OKLeaderboardViewController.h"
 #import "OKLeaderboardsListViewController.h"
 #import "OKHelper.h"
+#import "OKColors.h"
 
 @interface OKLeaderboardsViewController ()
 
@@ -23,8 +24,16 @@
     
     self = [super initWithRootViewController:list];
     if (self) {
-        [[self navigationBar] setBarStyle:UIBarStyleDefault];
-    }
+        [[self navigationBar] setBarStyle:UIBarStyleBlack];
+        [[self navigationBar] setTintColor:[OKColors navbarTintColor]];
+        [[self navigationBar] setTitleTextAttributes:
+         [NSDictionary dictionaryWithObjectsAndKeys:
+          [OKColors navbarTextColor], UITextAttributeTextColor,
+          [UIColor whiteColor], UITextAttributeTextShadowColor,
+          [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
+          nil]];
+        
+}
     
     return self;
 }

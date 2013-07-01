@@ -15,6 +15,7 @@
 #import "OKLoginView.h"
 #import "OKMacros.h"
 #import "OKSocialLeaderboardViewController.h"
+#import "OKColors.h"
 
 
 @interface OKLeaderboardsListViewController ()
@@ -35,11 +36,19 @@
     if (self) {
         UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
         
+        [closeButton setTintColor:[UIColor blackColor]];
+
+        
         UIBarButtonItem *profileButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"profile.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showProfileView)];
       
-        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
         
-        [[self navigationItem] setLeftBarButtonItem:closeButton];
+        [backButton setTitleTextAttributes:[OKColors titleTextAttributesForNavBarButton] forState:UIControlStateNormal];
+        
+        [profileButton setTintColor:[UIColor blueColor]];
+        
+        
+        [[self navigationItem] setLeftBarButtonItem:backButton];
         [[self navigationItem] setRightBarButtonItem:profileButton];
         [[self navigationItem] setBackBarButtonItem:backButton];
 

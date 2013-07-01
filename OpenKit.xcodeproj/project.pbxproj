@@ -169,6 +169,8 @@
 		445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
 		445B3BFD1767F5DE00952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
 		445B3C001769258C00952456 /* OKGameCenterUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 445B3BFF1769258C00952456 /* OKGameCenterUtilities.m */; };
+		4474BCD417815C46000AEAD1 /* OKColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4474BCD317815C46000AEAD1 /* OKColors.m */; };
+		4474BCD517815CAB000AEAD1 /* OKColors.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 446BAB4D177A8F880092BD58 /* OKColors.h */; };
 		4491D49C1728870B0084576B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4491D49B1728870B0084576B /* FacebookSDK.framework */; };
 		4491D49D1728870B0084576B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4491D49B1728870B0084576B /* FacebookSDK.framework */; };
 		4491D49E1728870B0084576B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4491D49B1728870B0084576B /* FacebookSDK.framework */; };
@@ -211,7 +213,8 @@
 			dstPath = include;
 			dstSubfolderSpec = 16;
 			files = (
-				44BB68CF1777E3D100839D0D /* OKCloudAsyncRequest.h in Copy Files */,
+				4474BCD517815CAB000AEAD1 /* OKColors.h in Copy Files */,
+				44BB68CF1777E3D100839D0D /* (null) in Copy Files */,
 				44BB68C61777E3BB00839D0D /* OKSocialLeaderboardViewController.h in Copy Files */,
 				44BB68C71777E3BB00839D0D /* OKFBLoginCell.h in Copy Files */,
 				44BB68C81777E3BB00839D0D /* OKGameCenterUtilities.h in Copy Files */,
@@ -457,6 +460,8 @@
 		445B3BFB1767F5D300952456 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		445B3BFE1769258C00952456 /* OKGameCenterUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGameCenterUtilities.h; sourceTree = "<group>"; };
 		445B3BFF1769258C00952456 /* OKGameCenterUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKGameCenterUtilities.m; sourceTree = "<group>"; };
+		446BAB4D177A8F880092BD58 /* OKColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKColors.h; sourceTree = "<group>"; };
+		4474BCD317815C46000AEAD1 /* OKColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKColors.m; sourceTree = "<group>"; };
 		4491D49B1728870B0084576B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		44B50D09176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSocialLeaderboardViewController.m; sourceTree = "<group>"; };
 		44B50D0A176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSocialLeaderboardViewController.h; sourceTree = "<group>"; };
@@ -631,10 +636,12 @@
 				32CACFAC16CB637C00E8F185 /* OKGUI.h */,
 				32CACFC216CB637C00E8F185 /* OKScore.h */,
 				32CACFC316CB637C00E8F185 /* OKScore.m */,
-				32CACFB316CB637C00E8F185 /* OKLeaderboardsListViewController.h */,
-				32CACFB416CB637C00E8F185 /* OKLeaderboardsListViewController.m */,
+				446BAB4D177A8F880092BD58 /* OKColors.h */,
+				4474BCD317815C46000AEAD1 /* OKColors.m */,
 				32CACFB516CB637C00E8F185 /* OKLeaderboardsViewController.h */,
 				32CACFB616CB637C00E8F185 /* OKLeaderboardsViewController.m */,
+				32CACFB316CB637C00E8F185 /* OKLeaderboardsListViewController.h */,
+				32CACFB416CB637C00E8F185 /* OKLeaderboardsListViewController.m */,
 				32CACFB716CB637C00E8F185 /* OKLeaderboardViewController.h */,
 				32CACFB816CB637C00E8F185 /* OKLeaderboardViewController.m */,
 				32CACFC816CB637C00E8F185 /* OKScoreViewController.h */,
@@ -1098,6 +1105,7 @@
 				44B50D0B176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m in Sources */,
 				44B50D1D1771227D00B5D8AD /* OKFBLoginCell.m in Sources */,
 				44B50D2417728E0300B5D8AD /* OKSpinnerCell.m in Sources */,
+				4474BCD417815C46000AEAD1 /* OKColors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

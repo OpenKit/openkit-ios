@@ -120,8 +120,7 @@
         [self getScoresFromGameCenterWithRange:scoreRange withPlayerScope:GKLeaderboardPlayerScopeGlobal withCompletionHandler:completionHandler];
     }
     else {
-
-        [self getScoresForTimeRange:OKLeaderboardTimeRangeAllTime forPageNumber:pageNum WithCompletionhandler:completionHandler];
+       [self getScoresForTimeRange:OKLeaderboardTimeRangeAllTime forPageNumber:pageNum WithCompletionhandler:completionHandler];
     }
 }
 

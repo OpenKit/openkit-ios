@@ -14,6 +14,7 @@
 #import "OKFacebookUtilities.h"
 #import "OKFBLoginCell.h"
 #import "OKSpinnerCell.h"
+#import "OKColors.h"
 
 #define kOKScoreCellIdentifier @"OKScoreCell"
 
