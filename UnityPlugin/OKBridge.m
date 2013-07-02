@@ -98,6 +98,11 @@ void OKBridgeShowLeaderboards()
     [vc.window makeKeyAndVisible];
 }
 
+void OKBridgeLogoutCurrentUserFromOpenKit()
+{
+    [OKUser logoutCurrentUserFromOpenKit];
+}
+
 void OKBridgeAuthenticateLocalPlayerWithGameCenter()
 {
     NSLog(@"OKBridge: authenticating local player with GC");
