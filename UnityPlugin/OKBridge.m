@@ -59,7 +59,7 @@
 
 - (void)dealloc
 {
-    NSLog(@"OpenKit: Deallocing BridgeViewController");
+    NSLog(@"OKBridge: Deallocing BridgeViewController");
     [_leaderboardsVC release];
     [_window release];
     [super dealloc];
@@ -100,6 +100,7 @@ void OKBridgeShowLeaderboards()
 
 void OKBridgeLogoutCurrentUserFromOpenKit()
 {
+    NSLog(@"OKBridge: logout of OpenKit");
     [OKUser logoutCurrentUserFromOpenKit];
 }
 
@@ -119,7 +120,7 @@ void OKBridgeShowLoginUI()
 // Base method for submitting a score
 void OKBridgeSubmitScoreBase(OKScore *score, const char *gameObjectName)
 {
-    NSLog(@"Submit score base");
+    NSLog(@"OKBridge: Submit score base");
     
     OKUser *u = [OKUser currentUser];
     
@@ -150,7 +151,7 @@ void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, co
     score.displayString = [[NSString alloc] initWithCString:displayString encoding:NSUTF8StringEncoding];
     score.metadata = metadata;
 
-     NSLog(@"Submitting score without GC");
+     NSLog(@"OKBridge: Submitting score without GC");
     
     OKBridgeSubmitScoreBase(score, gameObjectName);
 }
@@ -165,8 +166,8 @@ void OKBridgeSubmitScoreWithGameCenter(int64_t scoreValue, int leaderboardID, in
     score.metadata = metadata;
     score.gamecenterLeaderboardID = [[NSString alloc] initWithCString:gamecenterLeaderboardID encoding:NSUTF8StringEncoding];
     
-    NSLog(@"Gamecenter leaderboard ID is: %@", score.gamecenterLeaderboardID);
-    NSLog(@"Submitting score with gamecenter");
+    NSLog(@"OKBridge: Gamecenter leaderboard ID is: %@", score.gamecenterLeaderboardID);
+    NSLog(@"OKBridge: Submitting score with gamecenter");
     OKBridgeSubmitScoreBase(score, gameObjectName);
 }
 
