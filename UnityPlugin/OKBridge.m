@@ -124,7 +124,8 @@ void OKBridgeSubmitScoreBase(OKScore *score, const char *gameObjectName)
     
     OKUser *u = [OKUser currentUser];
     
-    __block NSString *objName = [[NSString alloc] initWithCString:gameObjectName encoding:NSUTF8StringEncoding];
+    //__block NSString *objName = [[NSString alloc] initWithCString:gameObjectName encoding:NSUTF8StringEncoding];
+    __block NSString *objName = [[NSString alloc] initWithUTF8String:gameObjectName];
     
     if (!u) {
         UnitySendMessage([objName UTF8String], "scoreSubmissionFailed", "No current OKUser so score submission failed");
@@ -148,7 +149,13 @@ void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, co
     OKScore *score = [[OKScore alloc] init];
     score.scoreValue = scoreValue;
     score.OKLeaderboardID = leaderboardID;
-    score.displayString = [[NSString alloc] initWithCString:displayString encoding:NSUTF8StringEncoding];
+    //score.displayString = [[NSString alloc] initWithCString:displayString encoding:NSUTF8StringEncoding];
+    //score.displayString = [NSString stringWithFormat:@"%s", displayString];
+    
+    if(displayString != NULL) {
+        score.displayString = [[NSString alloc] initWithUTF8String:displayString];
+    }
+    
     score.metadata = metadata;
 
      NSLog(@"OKBridge: Submitting score without GC");
@@ -162,9 +169,15 @@ void OKBridgeSubmitScoreWithGameCenter(int64_t scoreValue, int leaderboardID, in
     OKScore *score = [[OKScore alloc] init];
     score.scoreValue = scoreValue;
     score.OKLeaderboardID = leaderboardID;
-    score.displayString = [[NSString alloc] initWithCString:displayString encoding:NSUTF8StringEncoding];
+    //score.displayString = [[NSString alloc] initWithCString:displayString encoding:NSUTF8StringEncoding];
+    if(displayString != NULL) {
+        score.displayString = [[NSString alloc] initWithUTF8String:displayString];
+    }
     score.metadata = metadata;
-    score.gamecenterLeaderboardID = [[NSString alloc] initWithCString:gamecenterLeaderboardID encoding:NSUTF8StringEncoding];
+    
+    if(gamecenterLeaderboardID != NULL) {
+        score.gamecenterLeaderboardID = [[NSString alloc] initWithUTF8String:gamecenterLeaderboardID];
+    }
     
     NSLog(@"OKBridge: Gamecenter leaderboard ID is: %@", score.gamecenterLeaderboardID);
     NSLog(@"OKBridge: Submitting score with gamecenter");

@@ -236,7 +236,7 @@
      {
          NSMutableArray *scores = nil;
          if(!error) {
-             NSLog(@"Successfully got scores");
+             OKLog(@"Successfully got scores");
              
              NSArray *scoresJSON = (NSArray*)responseObject;
              scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
@@ -246,7 +246,7 @@
                  [scores addObject:score];
              }
          } else {
-             NSLog(@"Failed to get scores, with error: %@", error);
+             OKLog(@"Failed to get scores, with error: %@", error);
          }
          completionHandler(scores, error);
      }];
@@ -268,7 +268,8 @@
      {
          NSMutableArray *scores = nil;
          if(!error) {
-             NSLog(@"Successfully got FB friends scores");
+             OKLogel
+             (@"Successfully got FB friends scores");
              
              NSArray *scoresJSON = (NSArray*)responseObject;
              scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
