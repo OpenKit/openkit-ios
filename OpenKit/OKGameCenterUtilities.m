@@ -33,6 +33,12 @@
 +(void)authorizeUserWithGameCenterAndallowUI:(BOOL)allowUI withPresentingViewController:(UIViewController*)presenter
 {
     
+    if([self shouldUseLegacyGameCenterAuth]) {
+        [self authorizeUserWithGameCenterLegacy];
+        return;
+    }
+    
+    
     [GKLocalPlayer localPlayer].authenticateHandler = ^(UIViewController *viewController, NSError *error) {
         
         if(viewController != nil) {
@@ -64,13 +70,13 @@
         if (localPlayer.isAuthenticated)
         {
             // local player is authenticated
-            OKLog(@"Authenticated with GameCenter");
+            OKLog(@"Authenticated with GameCenter iOS5 style");
             [self loginToOpenKitWithGameCenterUser:[GKLocalPlayer localPlayer]];
         }
         else
         {
             // local player is not authenticated
-            OKLog(@"Did not auth with GameCenter, error: %@", error);
+            OKLog(@"Did not auth with GameCenter (iOS5 style), error: %@", error);
         }
     }];
 }
