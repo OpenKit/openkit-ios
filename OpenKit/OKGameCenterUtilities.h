@@ -13,6 +13,7 @@
 
 +(void)loadPlayerPhotoForGameCenterID:(NSString*)gameCenterID withPhotoSize:(GKPhotoSize)photoSize withCompletionHandler:(void(^)(UIImage *photo, NSError *error))completionhandler;
 +(BOOL)isPlayerAuthenticatedWithGameCenter;
++(BOOL)isGameCenterAvailable;
 +(void)authenticateLocalPlayer;
 +(void)authorizeUserWithGameCenterAndallowUI:(BOOL)allowUI withPresentingViewController:(UIViewController*)presenter;
 

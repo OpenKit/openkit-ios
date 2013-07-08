@@ -14,8 +14,25 @@
 
 @implementation OKGameCenterUtilities
 
+// Check to see if the device supports GameCenter
+// This method is slightly redundant because OpenKit only supports iOS 5+
++(BOOL)isGameCenterAvailable
+{
+    // Check for presence of GKLocalPlayer API.
+    Class gcClass = (NSClassFromString(@"GKLocalPlayer"));
+    
+    // The device must be running running iOS 4.1 or later.
+    NSString *reqSysVer = @"4.1";
+    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+    BOOL osVersionSupported = ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending);
+    
+    return (gcClass && osVersionSupported);
+}
+
+// This method only works with iOS 6+
 +(void)authorizeUserWithGameCenterAndallowUI:(BOOL)allowUI withPresentingViewController:(UIViewController*)presenter
 {
+    
     [GKLocalPlayer localPlayer].authenticateHandler = ^(UIViewController *viewController, NSError *error) {
         
         if(viewController != nil) {
@@ -37,10 +54,49 @@
     };
 }
 
+// Authenticate with GameCenter on iOS5
++(void)authorizeUserWithGameCenterLegacy {
+    
+    // This gamecenter method is deprecated in iOS6 but is required for iOS 5 support
+    
+    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+    [localPlayer authenticateWithCompletionHandler:^(NSError *error) {
+        if (localPlayer.isAuthenticated)
+        {
+            // local player is authenticated
+            OKLog(@"Authenticated with GameCenter");
+            [self loginToOpenKitWithGameCenterUser:[GKLocalPlayer localPlayer]];
+        }
+        else
+        {
+            // local player is not authenticated
+            OKLog(@"Did not auth with GameCenter, error: %@", error);
+        }
+    }];
+}
+
+// Check to see if we should use iOS5 version of GameCenter authentication or not
++(BOOL)shouldUseLegacyGameCenterAuth
+{
+    // IF GKLocalPlayer responds to setAuthenticationHandler, then this is iOS 6+ so return NO, otherwise
+    // use legacy version (return YES)
+    
+    if([[GKLocalPlayer class] respondsToSelector:@selector(setAuthenticateHandler:)])
+        return NO;
+    else
+        return YES;
+}
+
+
+
 +(void)authenticateLocalPlayer
 {
     OKLog(@"Authenticating local GC player and logging into OpenKit");
-    [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:NO withPresentingViewController:nil];
+    
+    if([self shouldUseLegacyGameCenterAuth])
+        [OKGameCenterUtilities authorizeUserWithGameCenterLegacy];
+    else
+        [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:NO withPresentingViewController:nil];
 }
 
 /** Manages the logic for logging into OpenKit with GameCenter **/
