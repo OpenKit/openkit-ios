@@ -96,7 +96,7 @@
 
 -(void)submitScoreToGameCenter
 {
-    if(self.gamecenterLeaderboardID && [OKGameCenterUtilities gameCenterIsAvailable]) {
+    if(self.gamecenterLeaderboardID && [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
         
         GKScore *scoreReporter = [[GKScore alloc] initWithCategory:[self gamecenterLeaderboardID]];
         scoreReporter.value = [self scoreValue];
@@ -120,7 +120,7 @@
 //TODO add completion handlers for both
 -(void)submitScoreToOpenKitAndGameCenter
 {
-    if(self.gamecenterLeaderboardID && [OKGameCenterUtilities gameCenterIsAvailable]) {
+    if(self.gamecenterLeaderboardID && [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
         [self submitScoreToGameCenter];
     }
     
@@ -133,7 +133,7 @@
 {
     OKLog(@"Submitting score to OpenKit and GC");
     
-    if(self.gamecenterLeaderboardID && [OKGameCenterUtilities gameCenterIsAvailable]) {
+    if(self.gamecenterLeaderboardID && [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
         [self submitScoreToGameCenter];
     }
     

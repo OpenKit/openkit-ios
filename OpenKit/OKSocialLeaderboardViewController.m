@@ -384,7 +384,7 @@ typedef enum {
     // if FB
     //   get FB scores from OpenKit
     
-    if([leaderboard gamecenter_id] && [OKGameCenterUtilities gameCenterIsAvailable])
+    if([leaderboard gamecenter_id] && [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter])
     {
         [self getGameCenterSocialScores];
     } else if ([OKUser currentUser]) {

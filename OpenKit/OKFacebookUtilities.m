@@ -46,12 +46,10 @@
             [OKFacebookUtilities CreateOKUserWithFacebookID:fbUserID withUserNick:userNick withCompletionHandler:^(OKUser *user, NSError *error) {
                 if(user && !error)
                 {
-                    //TODO user found
                     compHandler(user, nil);
                 }
                 else
                 {
-                    //TODO user not found
                     compHandler(nil,error);
                 }
             }];

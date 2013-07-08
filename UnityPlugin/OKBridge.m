@@ -110,6 +110,11 @@ void OKBridgeAuthenticateLocalPlayerWithGameCenter()
     [OKGameCenterUtilities authenticateLocalPlayer];
 }
 
+bool OKBridgeIsPlayerAuthenticatedWithGameCenter()
+{
+    return [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter];
+}
+
 void OKBridgeShowLoginUI()
 {
     OKLoginView *loginView = [[OKLoginView alloc] init];

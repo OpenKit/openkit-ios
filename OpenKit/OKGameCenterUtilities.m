@@ -111,7 +111,7 @@
     }];
 }
 
-+(BOOL)gameCenterIsAvailable {
++(BOOL)isPlayerAuthenticatedWithGameCenter {
     return [GKLocalPlayer localPlayer].isAuthenticated;
 }
 

@@ -101,7 +101,7 @@
     // For the time being, with Game Center only returning a single score (!) we're going to default
     // to OpenKit for global scores.
 
-    if(self.gamecenter_id && [OKGameCenterUtilities gameCenterIsAvailable]) {
+    if(self.gamecenter_id && [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
         return YES;
     }
     else {
@@ -268,8 +268,7 @@
      {
          NSMutableArray *scores = nil;
          if(!error) {
-             OKLogel
-             (@"Successfully got FB friends scores");
+             OKLog(@"Successfully got FB friends scores");
              
              NSArray *scoresJSON = (NSArray*)responseObject;
              scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
@@ -327,7 +326,7 @@
 
 -(void)getUsersTopScoreFromGameCenterWithCompletionHandler:(void (^)(OKGKScoreWrapper *score, NSError *error))completionHandler
 {
-    if(![OKGameCenterUtilities gameCenterIsAvailable]) {
+    if(![OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
         completionHandler(nil, [OKError gameCenterNotAvailableError]);
         return;
     }
