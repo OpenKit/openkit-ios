@@ -87,7 +87,7 @@
     // IF GKLocalPlayer responds to setAuthenticationHandler, then this is iOS 6+ so return NO, otherwise
     // use legacy version (return YES)
     
-    if([[GKLocalPlayer class] respondsToSelector:@selector(setAuthenticateHandler:)])
+    if([[GKLocalPlayer localPlayer] respondsToSelector:@selector(setAuthenticateHandler:)])
         return NO;
     else
         return YES;
