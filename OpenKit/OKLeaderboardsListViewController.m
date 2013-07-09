@@ -128,12 +128,12 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     return [NSString stringWithFormat:@"%d Players",playerCount];
+    //return [NSString stringWithFormat:@"%d Leaderboards",[OKLeaderBoardsList count]];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
   
   return @"Powered by OpenKit";
-  
 }
 
 //RootViewController.m
