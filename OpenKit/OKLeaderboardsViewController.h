@@ -10,4 +10,8 @@
 
 @interface OKLeaderboardsViewController : UINavigationController
 
+// Set this property to true to force Leaderboards view to Landscape only (both left and right)
+// Set to false to support portrait & landscape
+@property (nonatomic) BOOL showLandscapeOnly;
+
 @end

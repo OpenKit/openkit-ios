@@ -29,12 +29,14 @@
 
 @property (nonatomic, retain) UIWindow *window;
 @property (nonatomic, retain) OKLeaderboardsViewController *leaderboardsVC;
+@property (nonatomic) BOOL shouldShowLandscapeOnly;
 @end
 
 @implementation BridgeViewController
 
 @synthesize window = _window;
 @synthesize leaderboardsVC = _leaderboardsVC;
+@synthesize shouldShowLandscapeOnly = _shouldShowLandscapeOnly;
 
 - (id)init
 {
@@ -50,6 +52,8 @@
     if (!_didDisplay) {
         _didDisplay = YES;
         self.leaderboardsVC = [[[OKLeaderboardsViewController alloc] init] autorelease];
+        // Pass on the shoudlShowLandscape only parameter
+        [self.leaderboardsVC setShowLandscapeOnly:_shouldShowLandscapeOnly];
         [self presentModalViewController:self.leaderboardsVC animated:YES];
     } else {
         [self.window setRootViewController:nil];
@@ -64,6 +68,7 @@
     [_window release];
     [super dealloc];
 }
+
 
 @end
 
@@ -83,19 +88,32 @@ void OKBridgeSetEndpoint(const char *endpoint)
     [OKManager setEndpoint:[NSString stringWithUTF8String:endpoint]];
 }
 
-void OKBridgeShowLeaderboards()
+void OKBridgeShowLeaderboardsBase(BOOL showLandscapeOnly)
 {
     UIWindow *win = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     win.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     win.backgroundColor = [UIColor clearColor];
 
     BridgeViewController *vc = [[BridgeViewController alloc] init];
+    // Set shouldShowLandscapeOnly
+    [vc setShouldShowLandscapeOnly:showLandscapeOnly];
+    
     vc.window = win;
     [win release];
     // Bridge VC is now responsible for releasing win.  It holds the only reference
     // to it.
     [vc.window setRootViewController:vc];
     [vc.window makeKeyAndVisible];
+}
+
+void OKBridgeShowLeaderboards()
+{
+    OKBridgeShowLeaderboardsBase(NO);
+}
+
+void OKBridgeShowLeaderboardsLandscapeOnly()
+{
+    OKBridgeShowLeaderboardsBase(YES);
 }
 
 void OKBridgeLogoutCurrentUserFromOpenKit()

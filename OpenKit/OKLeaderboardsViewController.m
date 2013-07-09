@@ -18,6 +18,8 @@
 
 @implementation OKLeaderboardsViewController
 
+@synthesize showLandscapeOnly;
+
 - (id)init
 {
     OKLeaderboardsListViewController *list = [[OKLeaderboardsListViewController alloc] init];
@@ -50,5 +52,21 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+-(NSUInteger)supportedInterfaceOrientations
+{
+    if(showLandscapeOnly)
+        return UIInterfaceOrientationMaskLandscape;
+    else
+        return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
+ 
+
 
 @end

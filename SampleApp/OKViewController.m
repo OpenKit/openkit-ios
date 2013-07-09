@@ -91,6 +91,7 @@
 -(IBAction)viewLeaderboards:(id)sender
 {
     OKLeaderboardsViewController *leaderBoards = [[OKLeaderboardsViewController alloc] init];
+    [leaderBoards setShowLandscapeOnly:YES];
     [self presentModalViewController:leaderBoards animated:YES];
 }
 
