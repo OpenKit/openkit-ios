@@ -32,25 +32,38 @@
   
     // Apply 4 pixel border and rounded corners to profile pic
     self.profilePic.layer.masksToBounds = YES;
-    self.profilePic.layer.cornerRadius = 30.0;
-    //[self.profilePic.layer setBorderColor: [[UIColor whiteColor] CGColor]];
-    //[self.profilePic.layer setBorderWidth: 4.0];
+    self.profilePic.layer.cornerRadius = 3.0;
     
-    [profilePic setUser:[OKUser currentUser]];
-  
     // Custom More Button
     UIImage *moreBG = [[UIImage imageNamed:@"grayBtn.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0];
     [self.unlinkBtn setBackgroundImage:moreBG forState:UIControlStateNormal];
     [self.unlinkBtn setTitleColor:[UIColor colorWithRed:60.0f / 255.0f green:60.0f / 255.0f blue:60.0f / 255.0f alpha:1.0f] forState:UIControlStateNormal];
     [self.unlinkBtn setTitleShadowColor:[UIColor colorWithRed:255.0f / 255.0f green:255.0f / 255.0f blue:255.0f / 255.0f alpha:1.0f] forState:UIControlStateNormal];
     
-    [nameLabel setText:[[OKUser currentUser] userNick]];
+    [self updateUI];
+}
+
+-(void)updateUI
+{
+    [profilePic setUser:[OKUser currentUser]];
+    
+    // If there is an OKUser and an Active Facebook Session, show the logout button
+    if([[FBSession activeSession] isOpen] && [OKUser currentUser]){
+        [self.unlinkBtn setHidden:NO];
+    } else {
+        [self.unlinkBtn setHidden:YES];
+    }
+    
+     [nameLabel setText:[[OKUser currentUser] userNick]];
+
 }
 
 
 -(IBAction)logoutButtonPressed:(id)sender
 {
-    [OKUser logoutCurrentUserFromOpenKit];
+    //[OKUser logoutCurrentUserFromOpenKit];
+    [FBSession.activeSession closeAndClearTokenInformation];
+    [self updateUI];
 }
 
 - (void)didReceiveMemoryWarning
