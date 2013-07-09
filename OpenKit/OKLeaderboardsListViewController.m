@@ -39,13 +39,11 @@
         [closeButton setTintColor:[UIColor blackColor]];
 
         
-        UIBarButtonItem *profileButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"profile.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showProfileView)];
+        UIBarButtonItem *profileButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"gear.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showProfileView)];
       
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
         
         [backButton setTitleTextAttributes:[OKColors titleTextAttributesForNavBarButton] forState:UIControlStateNormal];
-        
-        [profileButton setTintColor:[UIColor blueColor]];
         
         
         [[self navigationItem] setLeftBarButtonItem:backButton];

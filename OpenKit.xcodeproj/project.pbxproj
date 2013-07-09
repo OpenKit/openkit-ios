@@ -202,6 +202,14 @@
 		44E3057C178CCCF000611E0C /* facebook_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44E30574178CCC6D00611E0C /* facebook_icon@2x.png */; };
 		44E3057D178CCCF000611E0C /* gamecenter_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 44E30575178CCC6D00611E0C /* gamecenter_icon.png */; };
 		44E3057E178CCCF000611E0C /* gamecenter_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44E30576178CCC6D00611E0C /* gamecenter_icon@2x.png */; };
+		44E30583178CCFA000611E0C /* gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 44E3057F178CCFA000611E0C /* gear.png */; };
+		44E30584178CCFA000611E0C /* gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44E30580178CCFA000611E0C /* gear@2x.png */; };
+		44E30585178CCFA000611E0C /* invite.png in Resources */ = {isa = PBXBuildFile; fileRef = 44E30581178CCFA000611E0C /* invite.png */; };
+		44E30586178CCFA000611E0C /* invite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44E30582178CCFA000611E0C /* invite@2x.png */; };
+		44E30587178CD02900611E0C /* gear.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44E3057F178CCFA000611E0C /* gear.png */; };
+		44E30588178CD02900611E0C /* gear@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44E30580178CCFA000611E0C /* gear@2x.png */; };
+		44E30589178CD02900611E0C /* invite.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44E30581178CCFA000611E0C /* invite.png */; };
+		44E3058A178CD02900611E0C /* invite@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44E30582178CCFA000611E0C /* invite@2x.png */; };
 		44E3F3C816EAED4500509219 /* AFImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E3F3C716EAED4500509219 /* AFImageView.m */; };
 /* End PBXBuildFile section */
 
@@ -271,6 +279,10 @@
 			dstPath = Resources;
 			dstSubfolderSpec = 7;
 			files = (
+				44E30587178CD02900611E0C /* gear.png in CopyFiles */,
+				44E30588178CD02900611E0C /* gear@2x.png in CopyFiles */,
+				44E30589178CD02900611E0C /* invite.png in CopyFiles */,
+				44E3058A178CD02900611E0C /* invite@2x.png in CopyFiles */,
 				44E30577178CCCCB00611E0C /* facebook_icon.png in CopyFiles */,
 				44E30578178CCCCB00611E0C /* facebook_icon@2x.png in CopyFiles */,
 				44E30579178CCCCB00611E0C /* gamecenter_icon.png in CopyFiles */,
@@ -492,6 +504,10 @@
 		44E30574178CCC6D00611E0C /* facebook_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook_icon@2x.png"; sourceTree = "<group>"; };
 		44E30575178CCC6D00611E0C /* gamecenter_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gamecenter_icon.png; sourceTree = "<group>"; };
 		44E30576178CCC6D00611E0C /* gamecenter_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gamecenter_icon@2x.png"; sourceTree = "<group>"; };
+		44E3057F178CCFA000611E0C /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear.png; sourceTree = "<group>"; };
+		44E30580178CCFA000611E0C /* gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear@2x.png"; sourceTree = "<group>"; };
+		44E30581178CCFA000611E0C /* invite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = invite.png; sourceTree = "<group>"; };
+		44E30582178CCFA000611E0C /* invite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invite@2x.png"; sourceTree = "<group>"; };
 		44E3F3C616EAED4500509219 /* AFImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageView.h; sourceTree = "<group>"; };
 		44E3F3C716EAED4500509219 /* AFImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -678,6 +694,10 @@
 		32CAD00F16CB65E800E8F185 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				44E3057F178CCFA000611E0C /* gear.png */,
+				44E30580178CCFA000611E0C /* gear@2x.png */,
+				44E30581178CCFA000611E0C /* invite.png */,
+				44E30582178CCFA000611E0C /* invite@2x.png */,
 				44E30573178CCC6D00611E0C /* facebook_icon.png */,
 				44E30574178CCC6D00611E0C /* facebook_icon@2x.png */,
 				44E30575178CCC6D00611E0C /* gamecenter_icon.png */,
@@ -1059,6 +1079,10 @@
 				32CAD08D16CB703E00E8F185 /* OKViewController.xib in Resources */,
 				32CAD09616CB703E00E8F185 /* ScoreSubmitterVC.xib in Resources */,
 				4410186B1728A1C80059BBAE /* FacebookSDKResources.bundle in Resources */,
+				44E30583178CCFA000611E0C /* gear.png in Resources */,
+				44E30584178CCFA000611E0C /* gear@2x.png in Resources */,
+				44E30585178CCFA000611E0C /* invite.png in Resources */,
+				44E30586178CCFA000611E0C /* invite@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

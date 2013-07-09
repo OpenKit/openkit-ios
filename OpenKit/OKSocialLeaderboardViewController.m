@@ -47,8 +47,20 @@ static NSString *spinnerCellIdentifier = @"OKSpinnerCell";
         
         
         [_tableView setSeparatorColor:UIColorFromRGB(0xb7b9bd)];
+        
+        
+        //Initialize the invite button
+        UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showSmartInviteUI)];
+        [inviteButton setTintColor:[UIColor blueColor]];
+        [[self navigationItem] setRightBarButtonItem:inviteButton];
+
     }
     return self;
+}
+
+-(void)showSmartInviteUI
+{
+    
 }
 
 // Used to keep track of tableView sections
