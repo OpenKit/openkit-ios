@@ -91,7 +91,9 @@
 -(IBAction)viewLeaderboards:(id)sender
 {
     OKLeaderboardsViewController *leaderBoards = [[OKLeaderboardsViewController alloc] init];
-    [leaderBoards setShowLandscapeOnly:YES];
+    
+    // Set the showLandscapeOnly property on OKLeaderboardsViewController to force landscape orientation
+    //[leaderBoards setShowLandscapeOnly:YES];
     [self presentModalViewController:leaderBoards animated:YES];
 }
 

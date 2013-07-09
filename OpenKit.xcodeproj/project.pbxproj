@@ -194,6 +194,14 @@
 		44BB68CE1777E3BB00839D0D /* OKSpinnerCell.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B50D2217728E0200B5D8AD /* OKSpinnerCell.h */; };
 		44BC5338176A96810038043A /* OKGKScoreWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BC5337176A96800038043A /* OKGKScoreWrapper.m */; };
 		44E1182B1728A7CF003C2603 /* OKError.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E1182A1728A7CF003C2603 /* OKError.m */; };
+		44E30577178CCCCB00611E0C /* facebook_icon.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44E30573178CCC6D00611E0C /* facebook_icon.png */; };
+		44E30578178CCCCB00611E0C /* facebook_icon@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44E30574178CCC6D00611E0C /* facebook_icon@2x.png */; };
+		44E30579178CCCCB00611E0C /* gamecenter_icon.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44E30575178CCC6D00611E0C /* gamecenter_icon.png */; };
+		44E3057A178CCCCB00611E0C /* gamecenter_icon@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44E30576178CCC6D00611E0C /* gamecenter_icon@2x.png */; };
+		44E3057B178CCCF000611E0C /* facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 44E30573178CCC6D00611E0C /* facebook_icon.png */; };
+		44E3057C178CCCF000611E0C /* facebook_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44E30574178CCC6D00611E0C /* facebook_icon@2x.png */; };
+		44E3057D178CCCF000611E0C /* gamecenter_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 44E30575178CCC6D00611E0C /* gamecenter_icon.png */; };
+		44E3057E178CCCF000611E0C /* gamecenter_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44E30576178CCC6D00611E0C /* gamecenter_icon@2x.png */; };
 		44E3F3C816EAED4500509219 /* AFImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E3F3C716EAED4500509219 /* AFImageView.m */; };
 /* End PBXBuildFile section */
 
@@ -263,6 +271,10 @@
 			dstPath = Resources;
 			dstSubfolderSpec = 7;
 			files = (
+				44E30577178CCCCB00611E0C /* facebook_icon.png in CopyFiles */,
+				44E30578178CCCCB00611E0C /* facebook_icon@2x.png in CopyFiles */,
+				44E30579178CCCCB00611E0C /* gamecenter_icon.png in CopyFiles */,
+				44E3057A178CCCCB00611E0C /* gamecenter_icon@2x.png in CopyFiles */,
 				44B50D1F17713FFF00B5D8AD /* OKFBLoginCell.xib in CopyFiles */,
 				44B50D14176ED5C200B5D8AD /* OKSocialLeaderboardVC.xib in CopyFiles */,
 				32CAD02E16CB65F700E8F185 /* cell_border.png in CopyFiles */,
@@ -476,6 +488,10 @@
 		44BC5337176A96800038043A /* OKGKScoreWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKGKScoreWrapper.m; sourceTree = "<group>"; };
 		44E118291728A7CF003C2603 /* OKError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKError.h; sourceTree = "<group>"; };
 		44E1182A1728A7CF003C2603 /* OKError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKError.m; sourceTree = "<group>"; };
+		44E30573178CCC6D00611E0C /* facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_icon.png; sourceTree = "<group>"; };
+		44E30574178CCC6D00611E0C /* facebook_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook_icon@2x.png"; sourceTree = "<group>"; };
+		44E30575178CCC6D00611E0C /* gamecenter_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gamecenter_icon.png; sourceTree = "<group>"; };
+		44E30576178CCC6D00611E0C /* gamecenter_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gamecenter_icon@2x.png"; sourceTree = "<group>"; };
 		44E3F3C616EAED4500509219 /* AFImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageView.h; sourceTree = "<group>"; };
 		44E3F3C716EAED4500509219 /* AFImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -662,6 +678,10 @@
 		32CAD00F16CB65E800E8F185 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				44E30573178CCC6D00611E0C /* facebook_icon.png */,
+				44E30574178CCC6D00611E0C /* facebook_icon@2x.png */,
+				44E30575178CCC6D00611E0C /* gamecenter_icon.png */,
+				44E30576178CCC6D00611E0C /* gamecenter_icon@2x.png */,
 				32CAD01016CB65E800E8F185 /* cell_border.png */,
 				32CAD01116CB65E800E8F185 /* cell_border@2x.png */,
 				32CAD01216CB65E800E8F185 /* close.png */,
@@ -997,6 +1017,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44E3057B178CCCF000611E0C /* facebook_icon.png in Resources */,
+				44E3057C178CCCF000611E0C /* facebook_icon@2x.png in Resources */,
+				44E3057D178CCCF000611E0C /* gamecenter_icon.png in Resources */,
+				44E3057E178CCCF000611E0C /* gamecenter_icon@2x.png in Resources */,
 				44B50D201771401600B5D8AD /* OKFBLoginCell.xib in Resources */,
 				44B50D15176ED63100B5D8AD /* OKSocialLeaderboardVC.xib in Resources */,
 				3222216316CBB65D006EBD1C /* OKLeaderboardsListViewController.xib in Resources */,

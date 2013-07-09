@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    OKScoreSocialNetworkGameCenter,
+    OKScoreSocialNetworkFacebook,
+    OKScoreSocialNetworkUnknown
+} OKScoreSocialNetwork;
+
 @protocol OKScoreProtocol <NSObject>
 
 -(NSString*)scoreDisplayString;
@@ -15,4 +21,5 @@
 -(NSString*)rankDisplayString;
 -(int64_t)scoreValue;
 -(void)setRank:(NSInteger)rank;
+-(OKScoreSocialNetwork)socialNetwork;
 @end

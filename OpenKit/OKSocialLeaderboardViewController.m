@@ -197,7 +197,7 @@ typedef enum {
     int row = [indexPath row];
     
     if(section == kGlobalSection) {
-        return [self getScoreCellForScore:[globalScores objectAtIndex:row] withTableView:tableView];
+        return [self getScoreCellForScore:[globalScores objectAtIndex:row] withTableView:tableView andShowSocialNetworkIcon:NO];
     }
     else if(section == kSocialLeaderboardSection) {
         
@@ -211,17 +211,17 @@ typedef enum {
                 return [self getProgressBarCell];
                 break;
             case SocialSectionRowSocialScoreRow:
-                return [self getScoreCellForScore:[socialScores objectAtIndex:row] withTableView:tableView];
+                return [self getScoreCellForScore:[socialScores objectAtIndex:row] withTableView:tableView andShowSocialNetworkIcon:YES];
                 break;
             case SocialSectionRowUnknownRow:
                 OKLog(@"Unknown row type returned in social scores!");
                 // Return empty cell to avoid crash
-                return [self getScoreCellForScore:nil withTableView:tableView];
+                return [self getScoreCellForScore:nil withTableView:tableView andShowSocialNetworkIcon:NO];
         }
     } else {
         OKLog(@"Uknown section type in leaderboard");
         // Return empty cell to avoid crash
-        return [self getScoreCellForScore:nil withTableView:tableView];;
+        return [self getScoreCellForScore:nil withTableView:tableView andShowSocialNetworkIcon:NO];;
     }
 }
 
@@ -249,13 +249,14 @@ typedef enum {
     return cell;
 }
 
--(UITableViewCell*)getScoreCellForScore:(id<OKScoreProtocol>)score withTableView:(UITableView*)tableView
+-(UITableViewCell*)getScoreCellForScore:(id<OKScoreProtocol>)score withTableView:(UITableView*)tableView andShowSocialNetworkIcon:(BOOL)showSocialNetworkIcon
 {
     OKScoreCell *cell = [tableView dequeueReusableCellWithIdentifier:scoreCellIdentifier];
     if(!cell) {
         cell = [[OKScoreCell alloc] init];
     }
     
+    [cell setShowSocialNetworkIcon:showSocialNetworkIcon];
     [cell setOKScoreProtocolScore:score];
     
     return cell;

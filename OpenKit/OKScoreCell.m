@@ -14,7 +14,7 @@
 
 @implementation OKScoreCell
 
-@synthesize label1, label2, label3, label4, score, cellImage, OKScoreProtocolScore;
+@synthesize label1, label2, label3, label4, score, cellImage, OKScoreProtocolScore, socialNetworkIconImageView, showSocialNetworkIcon;
 
 - (id)init
 {
@@ -29,6 +29,12 @@
         CGRect RankFrame = CGRectMake(0, 0, 44, 60);
         CGRect DateFrame = CGRectMake(227, 0, 50, 60);
         CGRect userProfileImageFrame = CGRectMake(47,10, 39, 39);
+        
+        float socialNetworkIconSize = 16.0;
+        
+        CGRect socialNetworkIconFrame = CGRectMake(userProfileImageFrame.origin.x+userProfileImageFrame.size.width - socialNetworkIconSize/2 - 3, userProfileImageFrame.origin.y + userProfileImageFrame.size.height - socialNetworkIconSize/2 - 3, socialNetworkIconSize, socialNetworkIconSize);
+        
+        
         [self setFrame:CellFrame];
         
         [self setBackgroundColor:[UIColor whiteColor]];
@@ -82,12 +88,44 @@
         cellImage.layer.cornerRadius = 3;
         [self.contentView addSubview:cellImage];
         
+        //Initialize social network icon
+        socialNetworkIconImageView = [[UIImageView alloc] initWithFrame:socialNetworkIconFrame];
+        [socialNetworkIconImageView setHidden:YES];
+        [self.contentView addSubview:socialNetworkIconImageView];
+        
         // Initialize user icon
         //UIImageView *cellBorder = [[UIImageView alloc]initWithFrame:CGRectMake(45,0, 2, 59)];
         //cellBorder.image=[UIImage imageNamed:@"cell_border.png"];
         //[self.contentView addSubview:cellBorder];
     }
     return self;
+}
+
+-(void)setShowSocialNetworkIcon:(BOOL)aShowSocialNetworkIcon
+{
+    showSocialNetworkIcon = aShowSocialNetworkIcon;
+    
+    if(showSocialNetworkIcon) {
+        [socialNetworkIconImageView setHidden:NO];
+    } else {
+        [socialNetworkIconImageView setHidden:YES];
+    }
+    
+}
+
+-(void)setSocialNetworkIconForNetwork:(OKScoreSocialNetwork)socialNetwork
+{
+    switch (socialNetwork) {
+        case OKScoreSocialNetworkFacebook:
+            [socialNetworkIconImageView setImage:[UIImage imageNamed:@"facebook_icon.png"]];
+            break;
+        case OKScoreSocialNetworkGameCenter:
+            [socialNetworkIconImageView setImage:[UIImage imageNamed:@"gamecenter_icon.png"]];
+            break;
+        default:
+            [socialNetworkIconImageView setImage:nil];
+            break;
+    }
 }
 
 
@@ -102,6 +140,9 @@
     
     // Show the player image
     [cellImage setOKScoreProtocolScore:OKScoreProtocolScore];
+    
+    // Set the social network icon
+    [self setSocialNetworkIconForNetwork:[aScore socialNetwork]];
 }
 
 // Older implementation --> use setIScore now
@@ -121,19 +162,12 @@
     label3.text = [NSString stringWithFormat:@"%d",[score scoreRank]];
     
     [cellImage setUser:[score user]];
+    
+    // Set the social network icon
+    [self setSocialNetworkIconForNetwork:[aScore socialNetwork]];
+    
 }
 
-/*
--(void)setGkScoreWrapper:(OKGKScoreWrapper*)aScore {
-    gkScoreWrapper = aScore;
-    
-    label1.text = [[gkScoreWrapper player] displayName];
-    label2.text = [[gkScoreWrapper score] formattedValue];
-    label3.text = [NSString stringWithFormat:@"%d",[[gkScoreWrapper score] rank]];
-    
-    [cellImage setGKPlayer:[gkScoreWrapper player]];
-}
- */
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

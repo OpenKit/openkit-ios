@@ -159,4 +159,13 @@
     [self setScoreRank:rank];
 }
 
+-(OKScoreSocialNetwork)socialNetwork {
+    if([[self user] fbUserID])
+        return OKScoreSocialNetworkFacebook;
+    else if ([[self user] gameCenterID])
+        return OKScoreSocialNetworkGameCenter;
+    else
+        return OKScoreSocialNetworkUnknown;
+}
+
 @end

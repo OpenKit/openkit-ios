@@ -36,5 +36,9 @@
     [self setExplicitlySetRank:[NSString stringWithFormat:@"%d",rank]];
 }
 
+-(OKScoreSocialNetwork)socialNetwork {
+    return OKScoreSocialNetworkGameCenter;
+}
+
 
 @end
