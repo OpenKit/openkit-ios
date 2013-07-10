@@ -67,22 +67,22 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 
 - (void)openkitManagerWillShowDashboard:(OKManager *)manager
 {
-    UnitySendMessage("OpenKitPrefab", "OpenKitViewWillAppear", "");
+    UnitySendMessage("OpenKitPrefab", "NativeViewWillAppear", "");
 }
 
 - (void)openkitManagerDidShowDashboard:(OKManager *)manager
 {
-    UnitySendMessage("OpenKitPrefab", "OpenKitViewDidAppear", "");
+    UnitySendMessage("OpenKitPrefab", "NativeViewDidAppear", "");
 }
 
 - (void)openkitManagerWillHideDashboard:(OKManager *)manager
 {
-    UnitySendMessage("OpenKitPrefab", "OpenKitViewWillDisappear", "");
+    UnitySendMessage("OpenKitPrefab", "NativeViewWillDisappear", "");
 }
 
 - (void)openkitManagerDidHideDashboard:(OKManager *)manager
 {
-    UnitySendMessage("OpenKitPrefab", "OpenKitViewDidDisappear", "");
+    UnitySendMessage("OpenKitPrefab", "NativeViewDidDisappear", "");
 }
 
 - (void)dealloc
