@@ -29,3 +29,4 @@ const char* OKBridgeGetCurrentUserNick();
 long long OKBridgeGetCurrentUserFBID();
 long long OKBridgeGetCurrentUserTwitterID();
 void OKBridgeLogoutCurrentUserFromOpenKit();
+

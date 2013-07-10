@@ -15,6 +15,7 @@
 #import "SimpleKeychain.h"
 #import "OKDefines.h"
 #import "OKUserProfileImageView.h"
+#import "OKLeaderboardsViewController.h"
 
 #define DEFAULT_ENDPOINT    @"stage.openkit.io"
 
@@ -23,10 +24,6 @@
 {
     OKUser *_currentUser;
 }
-
-@property (nonatomic, strong) NSString *appKey;
-@property (nonatomic, strong) NSString *secretKey;
-@property (nonatomic, strong) NSString *endpoint;
 
 @end
 
@@ -56,8 +53,20 @@
         [OKUserProfileImageView class];
         
         [OKFacebookUtilities OpenCachedFBSessionWithoutLoginUI];
+
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self selector:@selector(willShowDashboard:) name:OKLeaderboardsViewWillAppear object:nil];
+        [nc addObserver:self selector:@selector(didShowDashboard:)  name:OKLeaderboardsViewDidAppear object:nil];
+        [nc addObserver:self selector:@selector(willHideDashboard:) name:OKLeaderboardsViewWillDisappear object:nil];
+        [nc addObserver:self selector:@selector(didHideDashboard:)  name:OKLeaderboardsViewDidDisappear object:nil];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    // Do not call super here.  Using arc.
 }
 
 - (OKUser*)currentUser
@@ -152,5 +161,33 @@
     [OKFacebookUtilities handleWillTerminate];
 }
 
+#pragma mark - Dashboard Display State Callbacks
+- (void)willShowDashboard:(NSNotification *)note
+{
+    if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerWillShowDashboard:)]) {
+        [_delegate openkitManagerWillShowDashboard:self];
+    }
+}
+
+- (void)didShowDashboard:(NSNotification *)note
+{
+    if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerDidShowDashboard:)]) {
+        [_delegate openkitManagerDidShowDashboard:self];
+    }
+}
+
+- (void)willHideDashboard:(NSNotification *)note
+{
+    if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerWillHideDashboard:)]) {
+        [_delegate openkitManagerWillHideDashboard:self];
+    }
+}
+
+- (void)didHideDashboard:(NSNotification *)note
+{
+    if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerDidHideDashboard:)]) {
+        [_delegate openkitManagerDidHideDashboard:self];
+    }
+}
 
 @end

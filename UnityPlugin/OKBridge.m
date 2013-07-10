@@ -9,11 +9,14 @@
 //
 
 #import "OKBridge.h"
+#import "OKManager.h"
 #import "OKUnityHelper.h"
 #import "OpenKit.h"
 #import "OKGameCenterUtilities.h"
 
 #import <UIKit/UIKit.h>
+
+extern void UnitySendMessage(const char *, const char *, const char *);
 
 /*
 #if TARGET_OS_IPHONE
@@ -22,7 +25,7 @@
 #endif
 */
 
-@interface BridgeViewController : UIViewController
+@interface BridgeViewController : UIViewController <OKManagerDelegate>
 {
     BOOL _didDisplay;
 }
@@ -42,6 +45,7 @@
 {
     if ((self = [super init])) {
         _didDisplay = NO;
+        [[OKManager sharedManager] setDelegate:self];
     }
     return self;
 }
@@ -61,9 +65,30 @@
     }
 }
 
+- (void)openkitManagerWillShowDashboard:(OKManager *)manager
+{
+    UnitySendMessage("OpenKitPrefab", "OpenKitViewWillAppear", "");
+}
+
+- (void)openkitManagerDidShowDashboard:(OKManager *)manager
+{
+    UnitySendMessage("OpenKitPrefab", "OpenKitViewDidAppear", "");
+}
+
+- (void)openkitManagerWillHideDashboard:(OKManager *)manager
+{
+    UnitySendMessage("OpenKitPrefab", "OpenKitViewWillDisappear", "");
+}
+
+- (void)openkitManagerDidHideDashboard:(OKManager *)manager
+{
+    UnitySendMessage("OpenKitPrefab", "OpenKitViewDidDisappear", "");
+}
+
 - (void)dealloc
 {
     NSLog(@"OKBridge: Deallocing BridgeViewController");
+    [[OKManager sharedManager] setDelegate:nil];
     [_leaderboardsVC release];
     [_window release];
     [super dealloc];
@@ -231,6 +256,3 @@ long long OKBridgeGetCurrentUserTwitterID()
     OKUser *u = [OKUser currentUser];
     return (u ? [u.twitterUserID longLongValue] : 0);
 }
-
-
-
