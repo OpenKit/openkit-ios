@@ -29,4 +29,7 @@
 +(void)handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:(NSError *)error;
 +(void)getListOfFriendsForCurrentUserWithCompletionHandler:(void(^)(NSArray *friends, NSError*error))completionHandler;
 
+// FB Invites
++(void)sendFacebookRequest;
+
 @end

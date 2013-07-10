@@ -60,7 +60,7 @@ static NSString *spinnerCellIdentifier = @"OKSpinnerCell";
 
 -(void)showSmartInviteUI
 {
-    
+    [OKFacebookUtilities sendFacebookRequest];
 }
 
 // Used to keep track of tableView sections
