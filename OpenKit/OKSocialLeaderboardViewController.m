@@ -27,6 +27,7 @@
     int numberOfSocialRequestsRunning;
     NSIndexPath *indexPathOfFBLoginCell;
     BOOL isShowingFBLoginCell;
+    BOOL isShowingInviteFriendsCell;
 }
 
 @synthesize leaderboard, _tableView, spinner, socialScores, globalScores, containerViewForLoadMoreButton, loadMoreScoresButton;
@@ -74,6 +75,7 @@ typedef enum {
     SocialSectionRowSocialScoreRow = 0,
     SocialSectionRowProgressBarRow,
     SocialSectionRowFBLoginRow,
+    SocialSectionRowInviteFriends,
     SocialSectionRowUnknownRow
 } SocialSectionRow;
 
@@ -81,27 +83,7 @@ typedef enum {
     return (numberOfSocialRequestsRunning > 0);
 }
 
-// This method captures a lot of the logic for what type of cell is drawn at what index path so it can be reused in
-// both cellForRowAtIndexPath and heightForRow
--(SocialSectionRow)getTypeOfRow:(NSIndexPath*)indexPath {
-    
-    int section = [indexPath section];
-    int row = [indexPath row];
-    
-    if(section != (int)kSocialLeaderboardSection)
-        return SocialSectionRowUnknownRow;
-    
-    if(row < [socialScores count])
-        return SocialSectionRowSocialScoreRow;
-    
-    if(row == [socialScores count] && [self isShowingSocialScoresProgressBar])
-        return SocialSectionRowProgressBarRow;
-    
-    if(row >= [socialScores count] && isShowingFBLoginCell)
-        return SocialSectionRowFBLoginRow;
-    
-    return SocialSectionRowUnknownRow;
-}
+
 
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
@@ -158,6 +140,9 @@ typedef enum {
         case SocialSectionRowProgressBarRow:
             return 60;
             break;
+        case SocialSectionRowInviteFriends:
+            return 60;
+            break;
         case SocialSectionRowSocialScoreRow:
             return 60;
             break;
@@ -166,6 +151,31 @@ typedef enum {
             return 60;
     }
     
+}
+
+// This method captures a lot of the logic for what type of cell is drawn at what index path so it can be reused in
+// both cellForRowAtIndexPath and heightForRow
+-(SocialSectionRow)getTypeOfRow:(NSIndexPath*)indexPath {
+    
+    int section = [indexPath section];
+    int row = [indexPath row];
+    
+    if(section != (int)kSocialLeaderboardSection)
+        return SocialSectionRowUnknownRow;
+    
+    if(row < [socialScores count])
+        return SocialSectionRowSocialScoreRow;
+    
+    if(row == [socialScores count] && [self isShowingSocialScoresProgressBar])
+        return SocialSectionRowProgressBarRow;
+    
+    if(row >= [socialScores count] && isShowingFBLoginCell)
+        return SocialSectionRowFBLoginRow;
+    
+    if([socialScores count] == 0 && isShowingInviteFriendsCell && !isShowingFBLoginCell)
+        return SocialSectionRowInviteFriends;
+    
+    return SocialSectionRowUnknownRow;
 }
 
 -(int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -179,12 +189,14 @@ typedef enum {
                 numRowsInSocial++;
                 isShowingFBLoginCell = YES;
             } else {
-                
             }
             
             if([self isShowingSocialScoresProgressBar]) {
                 numRowsInSocial++;
             }
+            
+            if(isShowingInviteFriendsCell && !isShowingFBLoginCell && [socialScores count] == 0)
+                numRowsInSocial++;
             
             numRowsInSocial += [socialScores count];
             return numRowsInSocial;
@@ -225,6 +237,9 @@ typedef enum {
             case SocialSectionRowSocialScoreRow:
                 return [self getScoreCellForScore:[socialScores objectAtIndex:row] withTableView:tableView andShowSocialNetworkIcon:YES];
                 break;
+            case SocialSectionRowInviteFriends:
+                return [self getInviteFriendsCell];
+                break;
             case SocialSectionRowUnknownRow:
                 OKLog(@"Unknown row type returned in social scores!");
                 // Return empty cell to avoid crash
@@ -245,6 +260,12 @@ typedef enum {
     
     [cell setDelegate:self];
     
+    return cell;
+}
+
+-(UITableViewCell*)getInviteFriendsCell {
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cool"];
+    [[cell textLabel] setText:@"Invite some friends!"];
     return cell;
 }
 
@@ -311,7 +332,7 @@ typedef enum {
         if(!error && scores) {
             globalScores = [NSMutableArray arrayWithArray:scores];
             [_tableView reloadData];
-        } else {
+        } else if(error) {
             OKLog(@"Error getting scores: %@", error);
             [self errorLoadingGlobalScores];
         }
@@ -475,6 +496,15 @@ typedef enum {
     
     if(numberOfSocialRequestsRunning <0)
         numberOfSocialRequestsRunning = 0;
+    
+    
+    // If there are no social scores, and all social score requests are finished, then show
+    // an invite friends
+    if(numberOfSocialRequestsRunning == 0 && [socialScores count] == 0) {
+        isShowingInviteFriendsCell = YES;
+    } else {
+        isShowingInviteFriendsCell = NO;
+    }
     
     [self reloadSocialScores];
 }
