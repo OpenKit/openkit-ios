@@ -75,14 +75,15 @@
                    handler:^(id responseObject, NSError *error)
      {
          if(!error){
+             
              //Check to make sure the user was returned, that way we know the response was successful
              OKUser *responseUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
              
-             if([responseUser OKUserID] == [user OKUserID]) {
+             if([[responseUser OKUserID] longValue] == [[user OKUserID] longValue]) {
                  [[OKManager sharedManager] saveCurrentUser:responseUser];
              }
              else {
-                 error = [OKError unknownError];
+                 error = [OKError OKServerRespondedWithDifferentUserIDError];
              }
          } else {
              NSLog(@"Error updating OKUser: %@", error);

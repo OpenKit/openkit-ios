@@ -42,6 +42,11 @@
         return [NSError errorWithDomain:OKERROR_DOMAIN code:7 userInfo:[NSDictionary dictionaryWithObject:@"GameCenter is not available (player may not be authenticated in)" forKey:NSLocalizedDescriptionKey]];
 }
 
++(NSError*)OKServerRespondedWithDifferentUserIDError {
+    return [NSError errorWithDomain:OKERROR_DOMAIN code:8 userInfo:[NSDictionary dictionaryWithObject:@"The OpenKit server responded with a different OKUser id than expected" forKey:NSLocalizedDescriptionKey]];
+
+}
+
 
 
 

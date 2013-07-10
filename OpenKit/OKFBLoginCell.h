@@ -22,5 +22,6 @@
 @property (nonatomic, weak) id<OKFBLoginCellDelegate> delegate;
 
 -(IBAction)connectButtonPressed:(id)sender;
+-(void)makeCellInviteFriends;
 
 @end

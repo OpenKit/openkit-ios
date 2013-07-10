@@ -105,7 +105,7 @@
             
             [OKUserUtilities updateOKUser:user withCompletionHandler:^(NSError *error) {
                 if(error) {
-                    OKLog(@"Error updating OKUser with Facebook login info");
+                    OKLog(@"Error updating OKUser with Facebook login info, error: %@",error);
                 } else
                 {
                     OKLog(@"Updated OKUser on server with FB id");

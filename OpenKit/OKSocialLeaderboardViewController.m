@@ -35,6 +35,7 @@
 static NSString *scoreCellIdentifier = kOKScoreCellIdentifier;
 static NSString *fbCellIdentifier = @"OKFBLoginCell";
 static NSString *spinnerCellIdentifier = @"OKSpinnerCell";
+static NSString *inviteCellIdentifier = @"OKInviteCell";
 
 - (id)initWithLeaderboard:(OKLeaderboard *)aLeaderboard
 {
@@ -141,7 +142,7 @@ typedef enum {
             return 60;
             break;
         case SocialSectionRowInviteFriends:
-            return 60;
+            return 124;
             break;
         case SocialSectionRowSocialScoreRow:
             return 60;
@@ -264,8 +265,13 @@ typedef enum {
 }
 
 -(UITableViewCell*)getInviteFriendsCell {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cool"];
-    [[cell textLabel] setText:@"Invite some friends!"];
+    OKFBLoginCell *cell =  [_tableView dequeueReusableCellWithIdentifier:inviteCellIdentifier];
+    if(!cell) {
+        cell = [[OKFBLoginCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:inviteCellIdentifier];
+    }
+    [cell setDelegate:self];
+    OKLog(@"Creating invite friends cell");
+    [cell makeCellInviteFriends];
     return cell;
 }
 
@@ -315,7 +321,12 @@ typedef enum {
     //Register the nib file for OKFBLoginCell
     [self._tableView registerNib:[UINib nibWithNibName:@"OKFBLoginCell"
                                                bundle:[NSBundle mainBundle]]
-         forCellReuseIdentifier:fbCellIdentifier]; 
+         forCellReuseIdentifier:fbCellIdentifier];
+    
+    //Register the nib file for InviteCEll
+    [self._tableView registerNib:[UINib nibWithNibName:@"OKFBLoginCell"
+                                                bundle:[NSBundle mainBundle]]
+          forCellReuseIdentifier:inviteCellIdentifier];
     
 }
 
@@ -333,7 +344,7 @@ typedef enum {
             globalScores = [NSMutableArray arrayWithArray:scores];
             [_tableView reloadData];
         } else if(error) {
-            OKLog(@"Error getting scores: %@", error);
+            OKLog(@"Error getting global scores: %@", error);
             [self errorLoadingGlobalScores];
         }
     }];
@@ -377,9 +388,22 @@ typedef enum {
 }
 
 -(void)fbLoginButtonPressed {
+    
+    if(!isShowingFBLoginCell && isShowingInviteFriendsCell)
+    {
+        [self showSmartInviteUI];
+        return;
+    }
+    
+    
     if([FBSession activeSession].state == FBSessionStateOpen) {
         //TODO
-        OKLog(@"TODO fb session already open");
+        OKLog(@"Fb session already open");
+        [self getFacebookSocialScores];
+        [OKFacebookUtilities createOrUpdateCurrentOKUserWithFB];
+        isShowingFBLoginCell = NO;
+        [self reloadSocialScores];
+        
     } else {
         
         isShowingFBLoginCell = NO;
@@ -480,6 +504,7 @@ typedef enum {
     
     [leaderboard getFacebookFriendsScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
         [self addSocialScores:scores];
+        isShowingFBLoginCell = NO;
         [self finishedSocialScoreRequest];
     }];
 }

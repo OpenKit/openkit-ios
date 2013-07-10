@@ -46,6 +46,18 @@
     
 }
 
+-(void)makeCellInviteFriends
+{
+    [textLabel setText:@"You don't have any friends playing yet"];
+    [connectFBButton setTitle:@"Invite Friends" forState:UIControlStateNormal];
+    
+    // Move the text label up a few pixels
+    CGRect textFrame = [textLabel frame];
+    textFrame.origin.y = textFrame.origin.y - 5;
+    [textLabel setFrame:textFrame];
+    
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
