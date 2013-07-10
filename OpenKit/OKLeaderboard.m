@@ -93,14 +93,8 @@
 
 -(BOOL)showGlobalScoresFromGameCenter
 {
-    //TODO remove this temporary workaround
-    // return NO;
-    
     // If gamecenter is available and this leaderboard has a gamecenter ID, get global scores from gamecenter
     
-    // For the time being, with Game Center only returning a single score (!) we're going to default
-    // to OpenKit for global scores.
-
     if(self.gamecenter_id && [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
         return YES;
     }

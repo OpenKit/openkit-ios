@@ -367,6 +367,7 @@ typedef enum {
         [OKFacebookUtilities OpenFBSessionWithCompletionHandler:^(NSError *error) {
             if ([FBSession activeSession].state == FBSessionStateOpen) {
                 [self getFacebookSocialScores];
+                [OKFacebookUtilities createOrUpdateCurrentOKUserWithFB];
             } else {
                 [OKFacebookUtilities handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:error];
                 isShowingFBLoginCell = YES;
@@ -375,6 +376,7 @@ typedef enum {
         }];
     }
 }
+
 
 -(void)reloadSocialScores
 {

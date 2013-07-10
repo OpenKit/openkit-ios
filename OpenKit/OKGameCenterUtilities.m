@@ -123,8 +123,18 @@
 {
     if([user gameCenterID] == nil || [[user gameCenterID] isKindOfClass:[NSNull class]]) {
         //Current user doesn't have a game center ID, but it should have some other type of ID
-        // TODO, add GameCenter ID to current user, e.g. UPDATE the user
-        OKLog(@"TODO update existing user with GameCenter ID");
+        OKLog(@"Update existing user with GameCenter ID");
+        
+        // Set the gamecenter ID and store it locally
+        [user setGameCenterID:[player playerID]];
+        [[OKManager sharedManager] saveCurrentUser:user];
+        
+        //Update the user's gamecenter ID on the server
+        [OKUserUtilities updateOKUser:user withCompletionHandler:^(NSError *error) {
+            if(error) {
+                OKLog(@"Error updating OKUser on OpenKit backend with new GameCenter ID");
+            }
+        }];
     }
     else if ([user gameCenterID] && ![[user gameCenterID] isEqualToString:[player playerID]]) {
         OKLog(@"New GameCenter user found from previous cached gamecenter user");

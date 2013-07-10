@@ -18,6 +18,7 @@
 
 // Method to Login to OpenKit with Facebook Login
 +(void)AuthorizeUserWithFacebookWithCompletionHandler:(void(^)(OKUser *user, NSError *error))completionHandler;
++(void)createOrUpdateCurrentOKUserWithFB;
 
 // Methods to open Facebook session
 +(void)OpenFBSessionWithCompletionHandler:(void(^)(NSError *error))completionHandler;

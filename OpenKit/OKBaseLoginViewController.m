@@ -305,32 +305,6 @@
 
 -(void)showAlertForZeroTwitterAccounts
 {
-    //TODO
-    //Show an alert that there are no twitter accounts
-    // Makes a call to SLComposeViewController or TWTweetComposeViewController(iOS5) and
-    // removes subviews so the actual controller is not shown, but the alert pops up saying
-    // that there are no twitter accounts and allows direct access to the "settings" page to
-    // add an account.
-    
-    /*
-    UIViewController *tweetComposer;
-    
-    if ([SLComposeViewController class] != nil) {
-        tweetComposer = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-        [(SLComposeViewController *)tweetComposer setCompletionHandler:^(SLComposeViewControllerResult result) {
-            // do whatever you want
-        }];
-    } else {
-        tweetComposer = [[TWTweetComposeViewController alloc] init];
-        [(TWTweetComposeViewController *)tweetComposer setCompletionHandler:^(TWTweetComposeViewControllerResult result) {
-            // do whatever you want
-        }];
-    }
-    
-    for (UIView *view in [[tweetComposer view] subviews])
-        [view removeFromSuperview];
-    [self presentViewController:tweetComposer animated:NO completion:nil];
-     */
     
     UIAlertView *noTwitterAccountsAlert = [[UIAlertView alloc] initWithTitle:@"No Twitter Accounts" message:@"You don't have any Twitter accounts stored on your device. To add a Twitter account, go to Settings --> Twitter --> Add Account, then try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [noTwitterAccountsAlert show];

@@ -24,4 +24,6 @@ typedef enum {
 + (void)updateUserNickForOKUser:(OKUser *)user withNewNick:(NSString *)newNick withCompletionHandler:(void(^)(NSError *error))completionHandler;
 +(void)createOKUserWithUserIDType:(OKUserIDType)userIDtype withUserID:(NSString*)userID withUserNick:(NSString *)userNick withCompletionHandler:(void(^)(OKUser *user, NSError *errror))completionHandler;
 
++(void)updateOKUser:(OKUser *)user withCompletionHandler:(void(^)(NSError *error))completionHandler;
+
 @end

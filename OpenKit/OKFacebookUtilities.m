@@ -14,7 +14,7 @@
 #import <FacebookSDK/FBErrorUtility.h>
 #import "OKMacros.h"
 #import "OKError.h"
-
+#import "OKUser.h"
 
 @implementation OKFacebookUtilities
 
@@ -58,6 +58,60 @@
         {
             //Error performing the FB request
             compHandler(nil, error);
+        }
+    }];
+}
+
+// This method creates or updates the current OKUser with Facebook ID
+// IF there is an OKUser, update it. If not, create it.
++(void)createOrUpdateCurrentOKUserWithFB
+{
+    if([OKUser currentUser]) {
+        OKLog(@"Updating current OKUser with new Facebook ID");
+        [OKFacebookUtilities updateOKUserWithFacebookID:[OKUser currentUser]];
+    }
+    else {
+        [OKFacebookUtilities GetCurrentFacebookUsersIDAndCreateOKUserWithCompletionhandler:^(OKUser *user, NSError *error) {
+            if(user) {
+                OKLog(@"Logged into OpenKit with Facebook ID successfully");
+            } else {
+                // Did not login to OpenKit
+                if(error)
+                    OKLog(@"Did not create OKUser with FBID, error %@", error);
+            }
+
+        }];
+    }
+    
+}
+
+
++(void)updateOKUserWithFacebookID:(OKUser*)user 
+{
+    [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        // Did everything come back okay with no errors?
+        if (!error && result)
+        {
+            NSString *fbUserID = [result id];
+            NSString *userNick = [result name];
+            NSNumber *fbIDNum = [NSNumber numberWithLongLong:[fbUserID longLongValue]];
+            
+            [user setFbUserID:fbIDNum];
+            [user setUserNick:userNick];
+            
+            //Save the current user locally
+            OKLog(@"Updated OKUser locally with FB id");
+            [[OKManager sharedManager] saveCurrentUser:user];
+            
+            [OKUserUtilities updateOKUser:user withCompletionHandler:^(NSError *error) {
+                if(error) {
+                    OKLog(@"Error updating OKUser with Facebook login info");
+                } else
+                {
+                    OKLog(@"Updated OKUser on server with FB id");
+                }
+            }];
+            
         }
     }];
 }
@@ -116,6 +170,8 @@
 }
 
 
+
+
 +(void)AuthorizeUserWithFacebookWithCompletionHandler:(void(^)(OKUser *user, NSError *error))completionHandler
 {
     if([[FBSession activeSession] state] == FBSessionStateOpen)
@@ -140,10 +196,50 @@
     }
 }
 
+
++(void)handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:(NSError *)error
+{
+    NSString *alertMessage, *alertTitle;
+    if (!error) {
+        alertMessage = nil;
+    }
+    else if (error.fberrorShouldNotifyUser) {
+        // If the SDK has a message for the user, surface it. This conveniently
+        // handles cases like password change or iOS6 app slider state.
+        alertTitle = @"Facebook Error";
+        alertMessage = error.fberrorUserMessage;
+    } else if (error.fberrorCategory == FBErrorCategoryAuthenticationReopenSession) {
+        // It is important to handle session closures since they can happen
+        // outside of the app. You can inspect the error for more context
+        // but this sample generically notifies the user.
+        alertTitle = @"Session Error";
+        alertMessage = @"Your current session is no longer valid. Please log in again.";
+    } else if (error.fberrorCategory == FBErrorCategoryUserCancelled) {
+        // The user has cancelled a login. You can inspect the error
+        // for more context. For this sample, we will simply ignore it.
+        NSLog(@"user cancelled login");
+    } else {
+        // For simplicity, this sample treats other errors blindly.
+        alertTitle  = @"Unknown Error";
+        alertMessage = @"Error. Please try again later.";
+        NSLog(@"Unexpected FB login error:%@", error);
+    }
+    
+    if (alertMessage) {
+        [[[UIAlertView alloc] initWithTitle:alertTitle
+                                    message:alertMessage
+                                   delegate:nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
+    }
+}
+
+
+
 +(void)getListOfFriendsForCurrentUserWithCompletionHandler:(void(^)(NSArray *friends, NSError*error))completionHandler
 {
     FBRequest *getFriendsRequest = [FBRequest requestForMyFriends];
-
+    
     OKLog(@"Getting list of Facebook friends");
     
     [getFriendsRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
@@ -179,45 +275,6 @@
     
     return list;
 }
-
-
-+(void)handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:(NSError *)error
-{
-    NSString *alertMessage, *alertTitle;
-    if (error.fberrorShouldNotifyUser) {
-        // If the SDK has a message for the user, surface it. This conveniently
-        // handles cases like password change or iOS6 app slider state.
-        alertTitle = @"Facebook Error";
-        alertMessage = error.fberrorUserMessage;
-    } else if (error.fberrorCategory == FBErrorCategoryAuthenticationReopenSession) {
-        // It is important to handle session closures since they can happen
-        // outside of the app. You can inspect the error for more context
-        // but this sample generically notifies the user.
-        alertTitle = @"Session Error";
-        alertMessage = @"Your current session is no longer valid. Please log in again.";
-    } else if (error.fberrorCategory == FBErrorCategoryUserCancelled) {
-        // The user has cancelled a login. You can inspect the error
-        // for more context. For this sample, we will simply ignore it.
-        NSLog(@"user cancelled login");
-    } else {
-        // For simplicity, this sample treats other errors blindly.
-        alertTitle  = @"Unknown Error";
-        alertMessage = @"Error. Please try again later.";
-        NSLog(@"Unexpected error:%@", error);
-    }
-    
-    if (alertMessage) {
-        [[[UIAlertView alloc] initWithTitle:alertTitle
-                                    message:alertMessage
-                                   delegate:nil
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil] show];
-    }
-}
-
-
-
-
 
 
 /* OLD VERSION WITHOUT ABSTRACTION OF FACEBOOK OPEN SESSION METHOD
