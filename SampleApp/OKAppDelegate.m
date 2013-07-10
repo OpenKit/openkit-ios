@@ -17,9 +17,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    /*
     [OKManager setAppKey:@"VwfMRAl5Gc4tirjw"];
     // [OKManager setSecretKey:@"<secret-goes-here>"];
     [OKManager setEndpoint:@"http://stage.openkit.io"];
+    */
+    
+    // Development branch settings
+    [OKManager setAppKey:@"zRn4FrBcWi6ntUmWnEwm"];
+    [OKManager setSecretKey:@"rjqQmuDZaO6JtLuW25XPB2D6P0jplBfmuuANCKuu"];
+    [OKManager setEndpoint:@"http://development.openkit.io"];
 
     // Set root view controller.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
