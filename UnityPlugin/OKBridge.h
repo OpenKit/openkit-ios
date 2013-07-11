@@ -24,6 +24,7 @@ int OKBridgeGetCurrentUserOKID();
 
 void OKBridgeAuthenticateLocalPlayerWithGameCenter();
 bool OKBridgeIsPlayerAuthenticatedWithGameCenter();
+void OKBridgeAuthenticateLocalPlayerWithGameCenterAndShowUIIfNecessary();
 
 const char* OKBridgeGetCurrentUserNick();
 long long OKBridgeGetCurrentUserFBID();

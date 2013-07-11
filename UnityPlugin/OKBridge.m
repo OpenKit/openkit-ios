@@ -25,29 +25,30 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 #endif
 */
 
-@interface BridgeViewController : UIViewController <OKManagerDelegate>
+@interface BaseBridgeViewController : UIViewController
 {
     BOOL _didDisplay;
 }
 
 @property (nonatomic, retain) UIWindow *window;
-@property (nonatomic, retain) OKLeaderboardsViewController *leaderboardsVC;
-@property (nonatomic) BOOL shouldShowLandscapeOnly;
 @end
 
-@implementation BridgeViewController
+
+@implementation BaseBridgeViewController
 
 @synthesize window = _window;
-@synthesize leaderboardsVC = _leaderboardsVC;
-@synthesize shouldShowLandscapeOnly = _shouldShowLandscapeOnly;
 
 - (id)init
 {
-    if ((self = [super init])) {
+    if(self = [super init]) {
         _didDisplay = NO;
-        [[OKManager sharedManager] setDelegate:self];
     }
     return self;
+}
+
+- (void)customLaunch
+{
+    // Override me.
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -55,14 +56,45 @@ extern void UnitySendMessage(const char *, const char *, const char *);
     [super viewDidAppear:animated];
     if (!_didDisplay) {
         _didDisplay = YES;
-        self.leaderboardsVC = [[[OKLeaderboardsViewController alloc] init] autorelease];
-        // Pass on the shoudlShowLandscape only parameter
-        [self.leaderboardsVC setShowLandscapeOnly:_shouldShowLandscapeOnly];
-        [self presentModalViewController:self.leaderboardsVC animated:YES];
+        [self customLaunch];
     } else {
         [self.window setRootViewController:nil];
         [self release];
     }
+}
+
+- (void)dealloc
+{
+    [_window release];
+    [super dealloc];
+}
+
+
+@end
+
+@interface OKDashBridgeViewController : BaseBridgeViewController <OKManagerDelegate>
+@property (nonatomic, retain) OKLeaderboardsViewController *leaderboardsVC;
+@property (nonatomic) BOOL shouldShowLandscapeOnly;
+@end
+
+
+@implementation OKDashBridgeViewController
+@synthesize leaderboardsVC = _leaderboardsVC;
+@synthesize shouldShowLandscapeOnly = _shouldShowLandscapeOnly;
+
+- (id)init
+{
+    if ((self = [super init])) {
+        [[OKManager sharedManager] setDelegate:self];
+    }
+    return self;
+}
+
+- (void)customLaunch
+{
+    self.leaderboardsVC = [[[OKLeaderboardsViewController alloc] init] autorelease];
+    [self.leaderboardsVC setShowLandscapeOnly:_shouldShowLandscapeOnly];
+    [self presentModalViewController:self.leaderboardsVC animated:YES];
 }
 
 - (void)openkitManagerWillShowDashboard:(OKManager *)manager
@@ -87,13 +119,40 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 
 - (void)dealloc
 {
-    NSLog(@"OKBridge: Deallocing BridgeViewController");
+    NSLog(@"OKBridge: Deallocing OKDashboardViewController");
     [[OKManager sharedManager] setDelegate:nil];
     [_leaderboardsVC release];
-    [_window release];
     [super dealloc];
 }
 
+@end
+
+
+@interface OKGameCenterBridgeViewController : BaseBridgeViewController
+@property (nonatomic, retain) UIViewController* gcViewControllerToLaunch;
+@end
+
+@implementation OKGameCenterBridgeViewController
+#import "OKGameCenterUtilities.h"
+
+@synthesize gcViewControllerToLaunch = _gcViewControllerToLaunch;
+
+
+- (void)customLaunch
+{
+    if(_gcViewControllerToLaunch)
+        [self presentModalViewController:_gcViewControllerToLaunch animated:YES];
+    else
+        NSLog(@"OKGameCenterBridgeViewController VC to launch was null");
+}
+
+- (void)dealloc
+{
+    NSLog(@"OKBridge: Deallocing OKGameCenterBridgeViewController");
+    [_gcViewControllerToLaunch release];
+    // Release gc stuff if there is any.
+    [super dealloc];
+}
 
 @end
 
@@ -119,7 +178,7 @@ void OKBridgeShowLeaderboardsBase(BOOL showLandscapeOnly)
     win.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     win.backgroundColor = [UIColor clearColor];
 
-    BridgeViewController *vc = [[BridgeViewController alloc] init];
+    OKDashBridgeViewController *vc = [[OKDashBridgeViewController alloc] init];
     // Set shouldShowLandscapeOnly
     [vc setShouldShowLandscapeOnly:showLandscapeOnly];
     
@@ -130,6 +189,7 @@ void OKBridgeShowLeaderboardsBase(BOOL showLandscapeOnly)
     [vc.window setRootViewController:vc];
     [vc.window makeKeyAndVisible];
 }
+
 
 void OKBridgeShowLeaderboards()
 {
@@ -151,6 +211,31 @@ void OKBridgeAuthenticateLocalPlayerWithGameCenter()
 {
     NSLog(@"OKBridge: authenticating local player with GC");
     [OKGameCenterUtilities authenticateLocalPlayer];
+}
+
+void OKBridgeAuthenticateLocalPlayerWithGameCenterAndShowUIIfNecessary()
+{
+    NSLog(@"OKBridge: authenticating local player with GC and showing UI if necessary");
+    
+    //If we need to show UI from GameCenter, then create the OKGameCenterBridgeViewController and display it
+    [OKGameCenterUtilities authorizeUserWithGameCenterWithBlockToHandleShowingGameCenterUI:^(UIViewController *viewControllerFromGC) {
+        // Need to show gamecenter UI
+        UIWindow *win = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        win.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        win.backgroundColor = [UIColor clearColor];
+        
+        OKGameCenterBridgeViewController *vc = [[OKGameCenterBridgeViewController alloc] init];
+        
+        [vc setGcViewControllerToLaunch:viewControllerFromGC];
+        
+        vc.window = win;
+        [win release];
+        // Bridge VC is now responsible for releasing win.  It holds the only reference
+        // to it.
+        [vc.window setRootViewController:vc];
+        [vc.window makeKeyAndVisible];
+    }];
+ 
 }
 
 bool OKBridgeIsPlayerAuthenticatedWithGameCenter()

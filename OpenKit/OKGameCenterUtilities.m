@@ -29,15 +29,13 @@
     return (gcClass && osVersionSupported);
 }
 
-// This method only works with iOS 6+
-+(void)authorizeUserWithGameCenterAndallowUI:(BOOL)allowUI withPresentingViewController:(UIViewController*)presenter
+
++(void)authorizeUserWithGameCenterWithBlockToHandleShowingGameCenterUI:(void(^)(UIViewController* viewControllerFromGC))showUIHandler
 {
-    
     if([self shouldUseLegacyGameCenterAuth]) {
         [self authorizeUserWithGameCenterLegacy];
         return;
     }
-    
     
     [GKLocalPlayer localPlayer].authenticateHandler = ^(UIViewController *viewController, NSError *error) {
         
@@ -45,10 +43,8 @@
             // show the auth dialog
             OKLog(@"Need to show GameCenter dialog");
             
-            if(presenter) {
-                [presenter presentModalViewController:viewController animated:YES];
-            }
-                
+            showUIHandler(viewController);
+            
         } else if ([GKLocalPlayer localPlayer].isAuthenticated) {
             // local player is authenticated
             OKLog(@"Authenticated with GameCenter");
@@ -58,6 +54,18 @@
             OKLog(@"Did not auth with GameCenter, error: %@", error);
         }
     };
+}
+
+
+// This method only works with iOS 6+
++(void)authorizeUserWithGameCenterAndallowUI:(BOOL)allowUI withPresentingViewController:(UIViewController*)presenter
+{
+    [self authorizeUserWithGameCenterWithBlockToHandleShowingGameCenterUI:^(UIViewController *viewControllerFromGC) {
+        if(presenter) {
+            [presenter presentModalViewController:viewControllerFromGC animated:YES];
+        }
+    }];
+    
 }
 
 // Authenticate with GameCenter on iOS5

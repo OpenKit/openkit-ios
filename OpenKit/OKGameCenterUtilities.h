@@ -16,5 +16,6 @@
 +(BOOL)isGameCenterAvailable;
 +(void)authenticateLocalPlayer;
 +(void)authorizeUserWithGameCenterAndallowUI:(BOOL)allowUI withPresentingViewController:(UIViewController*)presenter;
++(void)authorizeUserWithGameCenterWithBlockToHandleShowingGameCenterUI:(void(^)(UIViewController* viewControllerFromGC))showUIHandler;
 
 @end
