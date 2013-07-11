@@ -92,6 +92,9 @@
 // Check to see if we should use iOS5 version of GameCenter authentication or not
 +(BOOL)shouldUseLegacyGameCenterAuth
 {
+    //TODO remove this workaround-- using legacy auth right now always because of Unity
+    return YES;
+    
     // IF GKLocalPlayer responds to setAuthenticationHandler, then this is iOS 6+ so return NO, otherwise
     // use legacy version (return YES)
     
