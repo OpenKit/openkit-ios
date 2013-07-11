@@ -98,6 +98,7 @@ typedef enum {
     }
 }
 
+/*
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
@@ -119,11 +120,12 @@ typedef enum {
 {
     return 30;
 }
-
+*/
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 20;
 }
+
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -136,7 +138,7 @@ typedef enum {
     switch(rowType) {
             
         case SocialSectionRowFBLoginRow:
-            return 124;
+            return 115;
             break;
         case SocialSectionRowProgressBarRow:
             return 60;
@@ -259,6 +261,8 @@ typedef enum {
         cell = [[OKFBLoginCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:fbCellIdentifier];
     }
     
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    
     [cell setDelegate:self];
     
     return cell;
@@ -272,6 +276,9 @@ typedef enum {
     [cell setDelegate:self];
     OKLog(@"Creating invite friends cell");
     [cell makeCellInviteFriends];
+    
+    
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
 }
 
@@ -285,6 +292,9 @@ typedef enum {
     
     [cell startAnimating];
     
+    
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    
     return cell;
 }
 
@@ -297,6 +307,9 @@ typedef enum {
     
     [cell setShowSocialNetworkIcon:showSocialNetworkIcon];
     [cell setOKScoreProtocolScore:score];
+    
+    
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     return cell;
 }

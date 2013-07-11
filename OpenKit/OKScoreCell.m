@@ -97,6 +97,9 @@
         //UIImageView *cellBorder = [[UIImageView alloc]initWithFrame:CGRectMake(45,0, 2, 59)];
         //cellBorder.image=[UIImage imageNamed:@"cell_border.png"];
         //[self.contentView addSubview:cellBorder];
+        
+        //Score cell is not selectable
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
 }

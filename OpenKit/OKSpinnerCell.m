@@ -29,6 +29,9 @@
         [spinner setColor:[UIColor blackColor]];
         
         [self addSubview:spinner];
+        
+        //Spinner cell is not selectable
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
 
     }
     return self;

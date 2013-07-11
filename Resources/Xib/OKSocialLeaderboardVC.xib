@@ -47,8 +47,8 @@
 								<array class="NSMutableArray" key="NSSubviews">
 									<object class="IBUIButton" id="48501594">
 										<reference key="NSNextResponder" ref="63258148"/>
-										<int key="NSvFlags">294</int>
-										<string key="NSFrame">{{8, 0}, {303, 44}}</string>
+										<int key="NSvFlags">295</int>
+										<string key="NSFrame">{{22, 0}, {525, 44}}</string>
 										<reference key="NSSuperview" ref="63258148"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="665532885"/>
@@ -82,7 +82,7 @@
 										</object>
 									</object>
 								</array>
-								<string key="NSFrame">{{0, 494}, {320, 90}}</string>
+								<string key="NSFrame">{{0, 222}, {568, 90}}</string>
 								<reference key="NSSuperview" ref="971876347"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="48501594"/>
@@ -94,7 +94,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 548}</string>
+						<string key="NSFrameSize">{568, 300}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="63258148"/>
@@ -118,7 +118,7 @@
 					<object class="IBUIActivityIndicatorView" id="665532885">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">-2147483347</int>
-						<string key="NSFrame">{{142, 258}, {37, 37}}</string>
+						<string key="NSFrame">{{266, 132}, {37, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -131,7 +131,7 @@
 						</object>
 					</object>
 				</array>
-				<string key="NSFrame">{{0, 20}, {320, 548}}</string>
+				<string key="NSFrame">{{0, 20}, {568, 300}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="971876347"/>
@@ -143,6 +143,10 @@
 					</object>
 				</object>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
+				<object class="IBUISimulatedOrientationMetrics" key="IBUISimulatedOrientationMetrics">
+					<int key="IBUIInterfaceOrientation">3</int>
+					<int key="interfaceOrientation">3</int>
+				</object>
 				<object class="IBUIScreenMetrics" key="IBUISimulatedDestinationMetrics">
 					<string key="IBUISimulatedSizeMetricsClass">IBUIScreenMetrics</string>
 					<object class="NSMutableDictionary" key="IBUINormalizedOrientationToSizeMap">
