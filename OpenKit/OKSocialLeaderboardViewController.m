@@ -144,7 +144,7 @@ typedef enum {
             return 60;
             break;
         case SocialSectionRowInviteFriends:
-            return 124;
+            return 115;
             break;
         case SocialSectionRowSocialScoreRow:
             return 60;
