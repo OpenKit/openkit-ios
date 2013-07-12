@@ -65,7 +65,9 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
     if([[FBSession activeSession] isOpen]) {
         [OKFacebookUtilities sendFacebookRequest];
     } else {
-        [self fbLoginButtonPressed];
+        [self fbLoginWithCompletionHandler:^{
+            [OKFacebookUtilities sendFacebookRequest];
+        }];
     }
 }
 
@@ -406,6 +408,13 @@ typedef enum {
 
 -(void)fbLoginButtonPressed {
     
+    [self fbLoginWithCompletionHandler:nil];
+}
+
+
+-(void)fbLoginWithCompletionHandler:(void(^)())completionHandler
+{
+    
     if(!isShowingFBLoginCell && isShowingInviteFriendsCell)
     {
         [self showSmartInviteUI];
@@ -414,13 +423,14 @@ typedef enum {
     
     
     if([FBSession activeSession].state == FBSessionStateOpen) {
-        //TODO
         OKLog(@"Fb session already open");
         [self getFacebookSocialScores];
         [OKFacebookUtilities createOrUpdateCurrentOKUserWithFB];
         isShowingFBLoginCell = NO;
         [self reloadSocialScores];
         
+        if(completionHandler)
+            completionHandler();
     } else {
         
         isShowingFBLoginCell = NO;
@@ -430,6 +440,8 @@ typedef enum {
             if ([FBSession activeSession].state == FBSessionStateOpen) {
                 [self getFacebookSocialScores];
                 [OKFacebookUtilities createOrUpdateCurrentOKUserWithFB];
+                if(completionHandler)
+                    completionHandler();
             } else {
                 [OKFacebookUtilities handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:error];
                 isShowingFBLoginCell = YES;
@@ -438,6 +450,9 @@ typedef enum {
         }];
     }
 }
+
+
+
 
 
 -(void)reloadSocialScores
