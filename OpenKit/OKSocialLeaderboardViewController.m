@@ -62,7 +62,11 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
 
 -(void)showSmartInviteUI
 {
-    [OKFacebookUtilities sendFacebookRequest];
+    if([[FBSession activeSession] isOpen]) {
+        [OKFacebookUtilities sendFacebookRequest];
+    } else {
+        [self fbLoginButtonPressed];
+    }
 }
 
 // Used to keep track of tableView sections
