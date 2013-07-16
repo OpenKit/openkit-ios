@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "32243AEF16CDD4460077EDC8"
-               BuildableName = "libUnityPlugin.a"
-               BlueprintName = "UnityPlugin"
+               BuildableName = "libOpenKitUnity.a"
+               BlueprintName = "OpenKitUnity"
                ReferencedContainer = "container:OpenKit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

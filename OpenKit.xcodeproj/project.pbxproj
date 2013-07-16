@@ -326,7 +326,7 @@
 		321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractActionSheetPicker.m; sourceTree = "<group>"; };
 		321E99CD16D2FBA1005F1506 /* ActionSheetStringPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetStringPicker.h; sourceTree = "<group>"; };
 		321E99CE16D2FBA1005F1506 /* ActionSheetStringPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetStringPicker.m; sourceTree = "<group>"; };
-		32243AF016CDD4460077EDC8 /* libUnityPlugin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libUnityPlugin.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		32243AF016CDD4460077EDC8 /* libOpenKitUnity.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOpenKitUnity.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		32243AF416CDD4460077EDC8 /* UnityPlugin-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnityPlugin-Prefix.pch"; sourceTree = "<group>"; };
 		32243AFC16CDE3C80077EDC8 /* OK_SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OK_SynthesizeSingleton.h; sourceTree = "<group>"; };
 		32243AFD16CDE3C80077EDC8 /* OKBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKBridge.h; sourceTree = "<group>"; };
@@ -608,7 +608,7 @@
 			children = (
 				326FD0CB16CB6209004248F9 /* libOpenKit.a */,
 				32CAD04F16CB698C00E8F185 /* SampleApp.app */,
-				32243AF016CDD4460077EDC8 /* libUnityPlugin.a */,
+				32243AF016CDD4460077EDC8 /* libOpenKitUnity.a */,
 				3284E14916CE49AB00624827 /* UnityPluginMac.bundle */,
 			);
 			name = Products;
@@ -922,9 +922,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		32243AEF16CDD4460077EDC8 /* UnityPlugin */ = {
+		32243AEF16CDD4460077EDC8 /* OpenKitUnity */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 32243AFB16CDD4460077EDC8 /* Build configuration list for PBXNativeTarget "UnityPlugin" */;
+			buildConfigurationList = 32243AFB16CDD4460077EDC8 /* Build configuration list for PBXNativeTarget "OpenKitUnity" */;
 			buildPhases = (
 				32243AEC16CDD4460077EDC8 /* Sources */,
 				32243AED16CDD4460077EDC8 /* Frameworks */,
@@ -934,9 +934,9 @@
 			);
 			dependencies = (
 			);
-			name = UnityPlugin;
+			name = OpenKitUnity;
 			productName = UnityPlugin;
-			productReference = 32243AF016CDD4460077EDC8 /* libUnityPlugin.a */;
+			productReference = 32243AF016CDD4460077EDC8 /* libOpenKitUnity.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		326FD0CA16CB6209004248F9 /* OpenKit */ = {
@@ -1015,7 +1015,7 @@
 			targets = (
 				326FD0CA16CB6209004248F9 /* OpenKit */,
 				32CAD04E16CB698C00E8F185 /* SampleApp */,
-				32243AEF16CDD4460077EDC8 /* UnityPlugin */,
+				32243AEF16CDD4460077EDC8 /* OpenKitUnity */,
 				3284E14816CE49AB00624827 /* UnityPluginMac */,
 			);
 		};
@@ -1423,7 +1423,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		32243AFB16CDD4460077EDC8 /* Build configuration list for PBXNativeTarget "UnityPlugin" */ = {
+		32243AFB16CDD4460077EDC8 /* Build configuration list for PBXNativeTarget "OpenKitUnity" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				32243AF916CDD4460077EDC8 /* Debug */,
