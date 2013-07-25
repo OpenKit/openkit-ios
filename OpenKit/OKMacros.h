@@ -23,6 +23,12 @@
     [NSException raise:name format:str]; \
 }
 
+#ifdef  DEBUG
+#define OKBridgeLog( s, ... ) NSLog(@"OKBridgeIOS: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
+#else
+#define OKBridgeLog( s, ...) {} while (0)
+#endif
+
 
 // System Versioning
 #define OK_SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
