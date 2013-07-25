@@ -31,3 +31,5 @@ long long OKBridgeGetCurrentUserFBID();
 long long OKBridgeGetCurrentUserTwitterID();
 void OKBridgeLogoutCurrentUserFromOpenKit();
 
+void OKBridgeGetFacebookFriends(const char *gameObjectName);
+

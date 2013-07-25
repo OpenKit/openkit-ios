@@ -13,6 +13,8 @@
 #import "OKUnityHelper.h"
 #import "OpenKit.h"
 #import "OKGameCenterUtilities.h"
+#import "OKFacebookUtilities.h"
+#import "OKMacros.h"
 
 #import <UIKit/UIKit.h>
 
@@ -24,6 +26,9 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 #import "OKGUI.h"
 #endif
 */
+
+
+
 
 @interface BaseBridgeViewController : UIViewController
 {
@@ -119,7 +124,7 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 
 - (void)dealloc
 {
-    NSLog(@"OKBridge: Deallocing OKDashboardViewController");
+    OKBridgeLog(@"Deallocing OKDashboardViewController");
     [[OKManager sharedManager] setDelegate:nil];
     [_leaderboardsVC release];
     [super dealloc];
@@ -143,12 +148,13 @@ extern void UnitySendMessage(const char *, const char *, const char *);
     if(_gcViewControllerToLaunch)
         [self presentModalViewController:_gcViewControllerToLaunch animated:YES];
     else
-        NSLog(@"OKGameCenterBridgeViewController VC to launch was null");
+        OKBridgeLog(@"OKGameCenterBridgeViewController VC to launch was null");
 }
 
 - (void)dealloc
 {
-    NSLog(@"OKBridge: Deallocing OKGameCenterBridgeViewController");
+    
+    OKBridgeLog(@"Deallocing OKGameCenterBridgeViewController");
     [_gcViewControllerToLaunch release];
     // Release gc stuff if there is any.
     [super dealloc];
@@ -203,19 +209,19 @@ void OKBridgeShowLeaderboardsLandscapeOnly()
 
 void OKBridgeLogoutCurrentUserFromOpenKit()
 {
-    NSLog(@"OKBridge: logout of OpenKit");
+    OKBridgeLog(@"logout of OpenKit");
     [OKUser logoutCurrentUserFromOpenKit];
 }
 
 void OKBridgeAuthenticateLocalPlayerWithGameCenter()
 {
-    NSLog(@"OKBridge: authenticating local player with GC");
+    OKBridgeLog(@"authenticating local player with GC");
     [OKGameCenterUtilities authenticateLocalPlayer];
 }
 
 void OKBridgeAuthenticateLocalPlayerWithGameCenterAndShowUIIfNecessary()
 {
-    NSLog(@"OKBridge: authenticating local player with GC and showing UI if necessary");
+    OKBridgeLog(@"authenticating local player with GC and showing UI if necessary");
     
     //If we need to show UI from GameCenter, then create the OKGameCenterBridgeViewController and display it
     [OKGameCenterUtilities authorizeUserWithGameCenterWithBlockToHandleShowingGameCenterUI:^(UIViewController *viewControllerFromGC) {
@@ -243,6 +249,27 @@ bool OKBridgeIsPlayerAuthenticatedWithGameCenter()
     return [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter];
 }
 
+void OKBridgeGetFacebookFriends(const char *gameObjectName)
+{
+    OKBridgeLog(@"Get fb friends list");
+    __block NSString *objName = [[NSString alloc] initWithUTF8String:gameObjectName];
+    
+    [OKFacebookUtilities getListOfFriendsForCurrentUserWithCompletionHandler:^(NSArray *friends, NSError *error) {
+        
+        if(friends && !error){
+            NSString *serializedFriends = [OKFacebookUtilities serializeListOfFacebookFriends:friends];
+            
+            UnitySendMessage([objName UTF8String], "asyncCallSucceeded",[serializedFriends UTF8String]);
+        } else{
+            if(error) {
+                UnitySendMessage([objName UTF8String], "asyncCallFailed", [[error localizedDescription] UTF8String]);
+            } else {
+                UnitySendMessage([objName UTF8String], "asyncCallFailed", "Unknown error from native IOS when trying to get Facebook friends");
+            }
+        }
+    }];
+}
+
 void OKBridgeShowLoginUI()
 {
     OKLoginView *loginView = [[OKLoginView alloc] init];
@@ -253,7 +280,7 @@ void OKBridgeShowLoginUI()
 // Base method for submitting a score
 void OKBridgeSubmitScoreBase(OKScore *score, const char *gameObjectName)
 {
-    NSLog(@"OKBridge: Submit score base");
+    OKBridgeLog(@"Submit score base");
     
     OKUser *u = [OKUser currentUser];
     
@@ -291,7 +318,7 @@ void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, co
     
     score.metadata = metadata;
 
-     NSLog(@"OKBridge: Submitting score without GC");
+     OKBridgeLog(@"Submitting score without GC");
     
     OKBridgeSubmitScoreBase(score, gameObjectName);
 }
@@ -312,8 +339,8 @@ void OKBridgeSubmitScoreWithGameCenter(int64_t scoreValue, int leaderboardID, in
         score.gamecenterLeaderboardID = [[NSString alloc] initWithUTF8String:gamecenterLeaderboardID];
     }
     
-    NSLog(@"OKBridge: Gamecenter leaderboard ID is: %@", score.gamecenterLeaderboardID);
-    NSLog(@"OKBridge: Submitting score with gamecenter");
+    OKBridgeLog(@"Gamecenter leaderboard ID is: %@", score.gamecenterLeaderboardID);
+    OKBridgeLog(@"Submitting score with gamecenter");
     OKBridgeSubmitScoreBase(score, gameObjectName);
 }
 

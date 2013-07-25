@@ -248,18 +248,44 @@
             completionHandler(nil, error);
         }
         else {
-            NSArray *friends = [result objectForKey:@"data"];
+            NSArray *graphFriends = [result objectForKey:@"data"];
             
-            if(friends) {
-                OKLog(@"Received %d friends", [friends count]);
+            if(graphFriends) {
+                OKLog(@"Received %d friends", [graphFriends count]);
                 //Munge the list of friends into one single array of friend IDs
-                NSArray *friendsList = [OKFacebookUtilities makeListOfFacebookFriends:friends];
+                NSArray *friendsList = [OKFacebookUtilities makeListOfFacebookFriends:graphFriends];
                 completionHandler(friendsList, error);
             } else {
                 completionHandler(nil, [OKError unknownFacebookRequestError]);
             }
         }
     }];
+}
+
++(NSString*)serializeListOfFacebookFriends:(NSArray *)friendsArray
+{
+    NSMutableString *serializedString = [[NSMutableString alloc] init];
+    
+    int x;
+    for(x = 0; x < [friendsArray count]; x++)
+    {
+        NSString *userID = [friendsArray objectAtIndex:x];
+        
+        [serializedString appendString:userID];
+        [serializedString appendString:@","];
+    }
+    
+    //Delete the last comma added if it was added
+    if(x > 0)
+        [self deleteLastCharacterOfMutableString:serializedString];
+    
+    return serializedString;
+}
+
++(void)deleteLastCharacterOfMutableString:(NSMutableString*)mutableString
+{
+    int size = [mutableString length];
+    [mutableString deleteCharactersInRange:NSMakeRange(size-1, 1)];
 }
 
 +(NSArray*)makeListOfFacebookFriends:(NSArray*) friendsJSON

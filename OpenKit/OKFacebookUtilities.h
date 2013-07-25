@@ -28,6 +28,7 @@
 +(BOOL)isFBSessionOpen;
 +(void)handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:(NSError *)error;
 +(void)getListOfFriendsForCurrentUserWithCompletionHandler:(void(^)(NSArray *friends, NSError*error))completionHandler;
++(NSString*)serializeListOfFacebookFriends:(NSArray *)friendsJSON;
 
 // FB Invites
 +(void)sendFacebookRequest;
