@@ -15,7 +15,7 @@
 
 +(NSError*)userNotLoggedInError
 {
-    return [NSError errorWithDomain:OKERROR_DOMAIN code:USER_NOT_LOGGED_IN_CODE userInfo:[NSDictionary dictionaryWithObject:@"User is not logged in" forKey:@"description"]];
+    return [NSError errorWithDomain:OKERROR_DOMAIN code:USER_NOT_LOGGED_IN_CODE userInfo:[NSDictionary dictionaryWithObject:@"OpenKit User is not logged in" forKey:@"description"]];
 }
 
 +(NSError*)noOKUserError {

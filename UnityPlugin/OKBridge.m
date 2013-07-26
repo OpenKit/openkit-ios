@@ -280,19 +280,16 @@ void OKBridgeShowLoginUI()
 // Base method for submitting a score
 void OKBridgeSubmitScoreBase(OKScore *score, const char *gameObjectName)
 {
-    OKBridgeLog(@"Submit score base");
-    
-    OKUser *currentUser = [OKUser currentUser];
-    
-    //__block NSString *objName = [[NSString alloc] initWithCString:gameObjectName encoding:NSUTF8StringEncoding];
     __block NSString *objName = [[NSString alloc] initWithUTF8String:gameObjectName];
     
+    OKBridgeLog(@"Submit score base, game object name is: %s", [objName UTF8String]);
     
     [score submitScoreToOpenKitAndGameCenterWithCompletionHandler:^(NSError *error) {
+        
         if(!error) {
             UnitySendMessage([objName UTF8String], "scoreSubmissionSucceeded", "");
         } else {
-            UnitySendMessage([objName UTF8String], "scoreSubmissionFailed", [error.description UTF8String]);
+            UnitySendMessage([objName UTF8String], "scoreSubmissionFailed", [[error localizedDescription] UTF8String]);
         }
         [objName release];
     }];
@@ -313,7 +310,7 @@ void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, co
     
     score.metadata = metadata;
 
-     OKBridgeLog(@"Submitting score without GC");
+    OKBridgeLog(@"Submitting score without GC");
     
     OKBridgeSubmitScoreBase(score, gameObjectName);
 }

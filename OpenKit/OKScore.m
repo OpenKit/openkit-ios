@@ -14,6 +14,7 @@
 #import "OKDefines.h"
 #import "OKGameCenterUtilities.h"
 #import "OKMacros.h"
+#import "OKError.h"
 
 @implementation OKScore
 
@@ -71,9 +72,9 @@
     //Can only submit scores for the currently logged in user
     [self setUser:[OKUser currentUser]];
     
-    if (!user) {
-        NSError *noUserError = [[NSError alloc] initWithDomain:OKErrorDomain code:0 userInfo:[NSDictionary dictionaryWithObject:@"No user is logged into openkit. To submit a score, there must be a currently logged in user" forKey:NSLocalizedDescriptionKey]];
-        completionHandler(noUserError);
+    if (!self.user) {
+        completionHandler([OKError noOKUserError]);
+        return;
     }
     
     //Create a request and send it to OpenKit
