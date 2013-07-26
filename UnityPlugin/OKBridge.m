@@ -282,15 +282,10 @@ void OKBridgeSubmitScoreBase(OKScore *score, const char *gameObjectName)
 {
     OKBridgeLog(@"Submit score base");
     
-    OKUser *u = [OKUser currentUser];
+    OKUser *currentUser = [OKUser currentUser];
     
     //__block NSString *objName = [[NSString alloc] initWithCString:gameObjectName encoding:NSUTF8StringEncoding];
     __block NSString *objName = [[NSString alloc] initWithUTF8String:gameObjectName];
-    
-    if (!u) {
-        UnitySendMessage([objName UTF8String], "scoreSubmissionFailed", "No current OKUser so score submission failed");
-        return;
-    }
     
     
     [score submitScoreToOpenKitAndGameCenterWithCompletionHandler:^(NSError *error) {
