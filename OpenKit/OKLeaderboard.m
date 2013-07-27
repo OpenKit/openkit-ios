@@ -319,6 +319,7 @@
     }];
 }
 
+
 -(void)getUsersTopScoreFromGameCenterWithCompletionHandler:(void (^)(OKGKScoreWrapper *score, NSError *error))completionHandler
 {
     if(![OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
@@ -362,6 +363,32 @@
         completionHandler(nil, [OKError unknownGameCenterError]);
     }
 }
+
+-(NSSortDescriptor*)getSortDescriptor
+{
+    NSSortDescriptor *sortDescriptor;
+    
+    if([self sortType] == OKLeaderboardSortTypeHighValue){
+        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"scoreValue" ascending:NO];
+    } else {
+        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"scoreValue" ascending:YES];
+    }
+    
+    return sortDescriptor;
+}
+
+-(NSArray*)sortScoresBasedOnLeaderboardType:(NSArray*)scores
+{
+    // Sort the scores
+    NSSortDescriptor *sortDescriptor = [self getSortDescriptor];
+    
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    NSArray *sortedArray = [scores sortedArrayUsingDescriptors:sortDescriptors];
+    
+    return sortedArray;
+}
+
+
 
 
 @end

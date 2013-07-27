@@ -574,20 +574,9 @@ typedef enum {
 
 -(NSMutableArray*)sortSocialScores:(NSArray*)scores
 {
-    // Sort the scores
+    NSArray *sortedScores = [leaderboard sortScoresBasedOnLeaderboardType:scores];
     
-    NSSortDescriptor *sortDescriptor;
-    
-    if([leaderboard sortType] == OKLeaderboardSortTypeHighValue){
-        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"scoreValue" ascending:NO];
-    } else {
-        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"scoreValue" ascending:YES];
-    }
-    
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    NSArray *sortedArray = [scores sortedArrayUsingDescriptors:sortDescriptors];
-    
-    NSMutableArray *mutableScores = [[NSMutableArray alloc] initWithArray:sortedArray];
+    NSMutableArray *mutableScores = [[NSMutableArray alloc] initWithArray:sortedScores];
     
     // Set the relative ranks
     for(int x = 0; x< [mutableScores count]; x++)

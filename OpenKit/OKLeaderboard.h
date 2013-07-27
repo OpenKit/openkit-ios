@@ -58,4 +58,7 @@ typedef enum {
 -(void)getGameCenterFriendsScoreswithCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler;
 -(void)getUsersTopScoreFromGameCenterWithCompletionHandler:(void (^)(OKGKScoreWrapper *score, NSError *error))completionHandler;
 
+-(NSSortDescriptor*)getSortDescriptor;
+-(NSArray*)sortScoresBasedOnLeaderboardType:(NSArray*)scores;
+
 @end
