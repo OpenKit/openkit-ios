@@ -48,7 +48,7 @@
         } else if ([GKLocalPlayer localPlayer].isAuthenticated) {
             // local player is authenticated
             OKLog(@"Authenticated with GameCenter");
-            [self loginToOpenKitWithGameCenterUser:[GKLocalPlayer localPlayer]];
+            //[self loginToOpenKitWithGameCenterUser:[GKLocalPlayer localPlayer]];
         } else {
             // local player is not authenticated
             OKLog(@"Did not auth with GameCenter, error: %@", error);
@@ -79,7 +79,7 @@
         {
             // local player is authenticated
             OKLog(@"Authenticated with GameCenter iOS5 style");
-            [self loginToOpenKitWithGameCenterUser:[GKLocalPlayer localPlayer]];
+            //[self loginToOpenKitWithGameCenterUser:[GKLocalPlayer localPlayer]];
         }
         else
         {
@@ -116,63 +116,6 @@
         [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:NO withPresentingViewController:nil];
 }
 
-/** Manages the logic for logging into OpenKit with GameCenter **/
-+(void)loginToOpenKitWithGameCenterUser:(GKPlayer*)player
-{
-    OKLog(@"Logging into OpenKit with GameCenter");
-     // If there is already a cached OKUser, then update the user for GameCenter
-    if([OKUser currentUser] != nil) {
-        [self updateOKUserForGamecenterUser:player withOKUser:[OKUser currentUser]];
-    }
-    else {
-        [self getOKUserWithGamecenterUser:[GKLocalPlayer localPlayer]];
-    }
-}
-
-/** Given an OKUser and a GKPlayer, decides whether the cached OKUser should be updated to reflect the GameCenter ID, or should be logged out and a new OKUser should be created **/
-+(void)updateOKUserForGamecenterUser:(GKPlayer*)player withOKUser:(OKUser*)user
-{
-    if([user gameCenterID] == nil || [[user gameCenterID] isKindOfClass:[NSNull class]]) {
-        //Current user doesn't have a game center ID, but it should have some other type of ID
-        OKLog(@"Update existing user with GameCenter ID");
-        
-        // Set the gamecenter ID and store it locally
-        [user setGameCenterID:[player playerID]];
-        [[OKManager sharedManager] saveCurrentUser:user];
-        
-        //Update the user's gamecenter ID on the server
-        [OKUserUtilities updateOKUser:user withCompletionHandler:^(NSError *error) {
-            if(error) {
-                OKLog(@"Error updating OKUser on OpenKit backend with new GameCenter ID");
-            }
-        }];
-    }
-    else if ([user gameCenterID] && ![[user gameCenterID] isEqualToString:[player playerID]]) {
-        OKLog(@"New GameCenter user found from previous cached gamecenter user");
-        // If the cached/current OKUser's GC ID != localPlayer GC ID, then logout and re-login
-        [[OKManager sharedManager] logoutCurrentUser];
-        [self getOKUserWithGamecenterUser:player];
-    }
-}
-
-/** Given a GKPlayer, sends a POST to OKUSer with that gamecenter ID--> "create or get"
-    If the login is successful, OKUser is cached as the currentUser
- **/
-+(void)getOKUserWithGamecenterUser:(GKPlayer*)player
-{
-    [OKUserUtilities createOKUserWithUserIDType:GameCenterIDType withUserID:[player playerID] withUserNick:[player alias] withCompletionHandler:^(OKUser *user, NSError *error) {
-        
-        if(!error) {
-            //Save the current user
-            [user setGameCenterID:[player playerID]];
-            [[OKManager sharedManager] saveCurrentUser:user];
-            OKLog(@"Logged into OpenKit with GameCenter ID: %@, display name: %@",[player playerID], [user userNick]);
-        } else {
-            OKLog(@"Failed to login to OpenKit with gamecenter ID");
-        }
-    }];
-}
-
 +(void)loadPlayerPhotoForGameCenterID:(NSString*)gameCenterID withPhotoSize:(GKPhotoSize)photoSize withCompletionHandler:(void(^)(UIImage *photo, NSError *error))completionhandler
 {
     [GKPlayer loadPlayersForIdentifiers:[NSArray arrayWithObject:gameCenterID] withCompletionHandler:^(NSArray *players, NSError *error) {
@@ -197,5 +140,73 @@
 +(BOOL)isPlayerAuthenticatedWithGameCenter {
     return [GKLocalPlayer localPlayer].isAuthenticated;
 }
+
+/** Manages the logic for logging into OpenKit with GameCenter **/
+/*
++(void)loginToOpenKitWithGameCenterUser:(GKPlayer*)player
+{
+    OKLog(@"Logging into OpenKit with GameCenter");
+     // If there is already a cached OKUser, then update the user for GameCenter
+    if([OKUser currentUser] != nil) {
+        [self updateOKUserForGamecenterUser:player withOKUser:[OKUser currentUser]];
+    }
+    else {
+        [self getOKUserWithGamecenterUser:[GKLocalPlayer localPlayer]];
+    }
+}
+ */
+
+
+/** Given an OKUser and a GKPlayer, decides whether the cached OKUser should be updated to reflect the GameCenter ID, or should be logged out and a new OKUser should be created **/
+/*
+
++(void)updateOKUserForGamecenterUser:(GKPlayer*)player withOKUser:(OKUser*)user
+{
+    if([user gameCenterID] == nil || [[user gameCenterID] isKindOfClass:[NSNull class]]) {
+        //Current user doesn't have a game center ID, but it should have some other type of ID
+        OKLog(@"Update existing user with GameCenter ID");
+        
+        // Set the gamecenter ID and store it locally
+        [user setGameCenterID:[player playerID]];
+        [[OKManager sharedManager] saveCurrentUser:user];
+        
+        //Update the user's gamecenter ID on the server
+        [OKUserUtilities updateOKUser:user withCompletionHandler:^(NSError *error) {
+            if(error) {
+                OKLog(@"Error updating OKUser on OpenKit backend with new GameCenter ID");
+            }
+        }];
+    }
+    else if ([user gameCenterID] && ![[user gameCenterID] isEqualToString:[player playerID]]) {
+        OKLog(@"New GameCenter user found from previous cached gamecenter user");
+        // If the cached/current OKUser's GC ID != localPlayer GC ID, then logout and re-login
+        [[OKManager sharedManager] logoutCurrentUser];
+        [self getOKUserWithGamecenterUser:player];
+    }
+}
+*/
+
+/** Given a GKPlayer, sends a POST to OKUSer with that gamecenter ID--> "create or get"
+    If the login is successful, OKUser is cached as the currentUser
+ **/
+
+/* UpdateGCWrapper*
++(void)getOKUserWithGamecenterUser:(GKPlayer*)player
+{
+    [OKUserUtilities createOKUserWithUserIDType:GameCenterIDType withUserID:[player playerID] withUserNick:[player alias] withCompletionHandler:^(OKUser *user, NSError *error) {
+        
+        if(!error) {
+            //Save the current user
+            [user setGameCenterID:[player playerID]];
+            [[OKManager sharedManager] saveCurrentUser:user];
+            OKLog(@"Logged into OpenKit with GameCenter ID: %@, display name: %@",[player playerID], [user userNick]);
+        } else {
+            OKLog(@"Failed to login to OpenKit with gamecenter ID");
+        }
+    }];
+}
+ */
+
+
 
 @end
