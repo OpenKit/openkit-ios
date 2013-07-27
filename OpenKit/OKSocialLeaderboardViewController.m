@@ -476,6 +476,7 @@ typedef enum {
     // if FB
     //   get FB scores from OpenKit
     
+    /*
     if([leaderboard gamecenter_id] && [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter])
     {
         [self getGameCenterSocialScores];
@@ -483,7 +484,10 @@ typedef enum {
         [self getUsersTopScoreFromOpenKit];
     } else {
         //TODO get local top score (not yet implemeneted)
-    }
+    } */
+    
+    
+    [self getUsersTopScoreFromOpenKit];
     
     if([OKFacebookUtilities isFBSessionOpen]) {
         [self getFacebookSocialScores];
@@ -514,6 +518,8 @@ typedef enum {
 
 -(void)getUsersTopScoreFromOpenKit
 {
+    
+    
     // Increment the counter that keeps track of requests running for social leaderboards
     [self startedSocialScoreRequest];
     
