@@ -52,6 +52,31 @@
     return self;
 }
 
+- (void)encodeWithCoder:(NSCoder *)encoder
+{
+    [encoder encodeInt32:self.OKLeaderboardID forKey:@"OKLeaderboardID"];
+    [encoder encodeInt32:self.OKScoreID forKey:@"OKScoreID"];
+    [encoder encodeInt64:self.scoreValue forKey:@"scoreValue"];
+    [encoder encodeObject:self.displayString forKey:@"displayString"];
+    [encoder encodeInt64:self.metadata forKey:@"metadata"];
+    [encoder encodeObject:self.gamecenterLeaderboardID forKey:@"gamecenterLeaderboardID"];
+}
+
+- (id)initWithCoder:(NSCoder *)decoder
+{
+    self = [super init];
+    if(self)
+    {
+        self.OKLeaderboardID = [decoder decodeInt32ForKey:@"OKLeaderboardID"];
+        self.OKScoreID =  [decoder decodeInt32ForKey:@"OKScoreID"];
+        self.scoreValue = [decoder decodeInt64ForKey:@"scoreValue"];
+        self.displayString = [decoder decodeObjectForKey:@"displayString"];
+        self.metadata = [decoder decodeInt64ForKey:@"metadata"];
+        self.gamecenterLeaderboardID = [decoder decodeObjectForKey:@"gamecenterLeaderboardID"];
+    }
+    return self;
+}
+
 -(NSDictionary*)getScoreParamDict
 {
     OKUser *currentUser = [[OKManager sharedManager] currentUser];
