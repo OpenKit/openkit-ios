@@ -12,7 +12,7 @@
 
 @implementation OKUser
 
-@synthesize OKUserID, userNick, fbUserID, twitterUserID, gameCenterID, customID;
+@synthesize OKUserID, userNick, fbUserID, twitterUserID, customID;
 
 - (id)init
 {
@@ -28,7 +28,7 @@
         self.userNick = _userNick;
         self.fbUserID = _fbID;
         self.twitterUserID = _twitterID;
-        self.gameCenterID = _gameCenterID;
+//        self.gameCenterID = _gameCenterID;
         self.customID = _customID;
     }
     

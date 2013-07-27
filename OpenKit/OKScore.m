@@ -163,8 +163,8 @@
 -(OKScoreSocialNetwork)socialNetwork {
     if([[self user] fbUserID])
         return OKScoreSocialNetworkFacebook;
-    else if ([[self user] gameCenterID])
-        return OKScoreSocialNetworkGameCenter;
+    //else if ([[self user] gameCenterID])
+    //    return OKScoreSocialNetworkGameCenter;
     else
         return OKScoreSocialNetworkUnknown;
 }

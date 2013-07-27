@@ -12,7 +12,7 @@ typedef enum {
     FacebookIDType,
     TwitterIDType,
     GoogleIDType,
-    GameCenterIDType,
+    //GameCenterIDType,
     CustomIDType
 } OKUserIDType;
 
