@@ -176,4 +176,5 @@
          completionHandler(newUser, error);
      }];
 }
+
 @end

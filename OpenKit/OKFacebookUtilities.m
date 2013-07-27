@@ -15,6 +15,7 @@
 #import "OKMacros.h"
 #import "OKError.h"
 #import "OKUser.h"
+#import "OKScoreCache.h"
 
 @implementation OKFacebookUtilities
 
@@ -123,6 +124,8 @@
         if(!errror) {
             // User was created successfully, save as current user
             [[OKManager sharedManager] saveCurrentUser:user];
+            // Submit any cached scores
+            [[OKScoreCache sharedCache] submitAllCachedScores];
         }
         
         // Call the passed in completionHandler

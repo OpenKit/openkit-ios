@@ -8,6 +8,7 @@
 
 #import "OKScoreCache.h"
 #import "OKMacros.h"
+#import "OKUser.h"
 
 #define SCORES_CACHE_KEY @"OKLeaderboardScoresCache"
 
@@ -35,15 +36,20 @@
     return self;
 }
 
+-(void)storeArrayOfEncodedScoresInDefaults:(NSArray*)encodedScores
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:encodedScores forKey:SCORES_CACHE_KEY];
+    [defaults synchronize];
+}
+
 -(void)storeScore:(OKScore*)score
 {
-    NSMutableArray *mutableScoreCache = [[NSMutableArray alloc] initWithArray:[self getScoreCacheArray]];
+    NSMutableArray *mutableScoreCache = [[NSMutableArray alloc] initWithArray:[self getCachedEncodedScoresArray]];
     NSData *encodedScore = [NSKeyedArchiver archivedDataWithRootObject:score];
     [mutableScoreCache addObject:encodedScore];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:mutableScoreCache forKey:SCORES_CACHE_KEY];
-    [defaults synchronize];
+    [self storeArrayOfEncodedScoresInDefaults:mutableScoreCache];
     
     OKLog(@"Cached score with value: %lld & leaderboard id: %d",[score scoreValue], [score OKLeaderboardID]);
 }
@@ -51,7 +57,7 @@
 -(NSArray*)getCachedScores
 {
     NSMutableArray *scoreArray = [[NSMutableArray alloc] init];
-    NSArray *encodedScoresArray = [self getScoreCacheArray];
+    NSArray *encodedScoresArray = [self getCachedEncodedScoresArray];
     
     for(int x = 0; x < [encodedScoresArray count]; x++)
     {
@@ -64,6 +70,27 @@
     return scoreArray;
 }
 
+-(void)removeScoreFromCache:(OKScore*)scoreToRemove
+{
+    NSArray *cachedEncodedScores = [self getCachedEncodedScoresArray];
+    NSMutableArray *mutableScoreCache = [[NSMutableArray alloc] init];
+    
+    // Copy the array (cache) but exclude the item to be removed
+    for(int x = 0; x < [cachedEncodedScores count]; x++)
+    {
+        NSData *encodedScore = [cachedEncodedScores objectAtIndex:x];
+        OKScore *score = (OKScore *)[NSKeyedUnarchiver unarchiveObjectWithData:encodedScore];
+        
+        if([score OKScoreID] == [scoreToRemove OKScoreID]) {
+            // Don't add it to the new one
+            OKLog(@"Removed cached score ID: %d", [scoreToRemove OKScoreID]);
+        } else {
+            [mutableScoreCache addObject:encodedScore];
+        }
+    }
+            
+    [self storeArrayOfEncodedScoresInDefaults:mutableScoreCache];
+}
 
 
 -(NSArray*)getCachedScoresForLeaderboardID:(int)leaderboardID
@@ -83,7 +110,7 @@
     return leaderboardScores;
 }
 
--(NSArray*)getScoreCacheArray
+-(NSArray*)getCachedEncodedScoresArray
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *scoresCache = [defaults objectForKey:SCORES_CACHE_KEY];
@@ -96,6 +123,43 @@
     }
 }
 
+-(void)submitCachedScore:(OKScore*)score
+{
+    if( [OKUser currentUser]) {
+        [score setUser:[OKUser currentUser]];
+        
+        [score submitScoreWithCompletionHandler:^(NSError *error) {
+            if(!error)
+            {
+                [self removeScoreFromCache:score];
+                OKLog(@"Submitted cached core succesfully");
+            }
+        }];
+        
+    } else {
+        OKLog(@"Tried to submit a cached score without having an OKUser logged in");
+        return;
+    }
+}
+
+-(void)clearCache
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:SCORES_CACHE_KEY];
+    [defaults synchronize];
+}
+
+-(void)submitAllCachedScores
+{
+    OKLog(@"Submit all cached scores");
+    
+    NSArray *cachedScores = [self getCachedScores];
+    for(int x = 0; x < [cachedScores count]; x++)
+    {
+        OKScore *score = [cachedScores objectAtIndex:x];
+        [self submitCachedScore:score];
+    }
+}
 
 - (void)dealloc
 {

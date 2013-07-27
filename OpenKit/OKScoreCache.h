@@ -16,6 +16,9 @@
 -(void)storeScore:(OKScore*)score;
 -(NSArray*)getCachedScores;
 -(NSArray*)getCachedScoresForLeaderboardID:(int)leaderboardID;
+-(void)submitCachedScore:(OKScore*)score;
+-(void)submitAllCachedScores;
+-(void)clearCache;
 
 
 @end
