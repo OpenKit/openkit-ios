@@ -138,6 +138,8 @@
         NSLog(@"Found  cached OKUser");
         OKUser *cachedUser = [OKUserUtilities createOKUserWithJSONData:userDict];
         _currentUser = cachedUser;
+        
+        [[OKScoreCache sharedCache] submitAllCachedScores];
     }
     else {
         NSLog(@"Did not find cached OKUser");

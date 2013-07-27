@@ -66,7 +66,7 @@
         [scoreArray addObject:score];
     }
     
-    OKLog(@"Got %d cached scores", [encodedScoresArray count]);
+    //OKLog(@"Got %d cached scores", [encodedScoresArray count]);
     return scoreArray;
 }
 
@@ -88,7 +88,7 @@
             [mutableScoreCache addObject:encodedScore];
         }
     }
-            
+    
     [self storeArrayOfEncodedScoresInDefaults:mutableScoreCache];
 }
 
@@ -144,6 +144,7 @@
 
 -(void)clearCache
 {
+    OKLog(@"Clear cached scores");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:SCORES_CACHE_KEY];
     [defaults synchronize];
@@ -151,13 +152,17 @@
 
 -(void)submitAllCachedScores
 {
-    OKLog(@"Submit all cached scores");
-    
     NSArray *cachedScores = [self getCachedScores];
-    for(int x = 0; x < [cachedScores count]; x++)
+    
+    if([cachedScores count] > 0)
     {
-        OKScore *score = [cachedScores objectAtIndex:x];
-        [self submitCachedScore:score];
+        OKLog(@"Submit all cached scores");
+        
+        for(int x = 0; x < [cachedScores count]; x++)
+        {
+            OKScore *score = [cachedScores objectAtIndex:x];
+            [self submitCachedScore:score];
+        }
     }
 }
 
