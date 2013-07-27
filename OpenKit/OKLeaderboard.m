@@ -93,6 +93,7 @@
 
 -(BOOL)showGlobalScoresFromGameCenter
 {
+    return NO;
     // If gamecenter is available and this leaderboard has a gamecenter ID, get global scores from gamecenter
     
     if(self.gamecenter_id && [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
