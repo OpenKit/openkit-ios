@@ -26,4 +26,6 @@ typedef enum {
 
 +(void)updateOKUser:(OKUser *)user withCompletionHandler:(void(^)(NSError *error))completionHandler;
 
++(OKUser*)guestUser;
+
 @end

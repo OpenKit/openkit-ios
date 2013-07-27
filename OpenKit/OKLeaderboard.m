@@ -17,6 +17,8 @@
 #import "OKGKScoreWrapper.h"
 #import "OKMacros.h"
 #import "OKFacebookUtilities.h"
+#import "OKScoreCache.h"
+#import "OKUserUtilities.h"
 
 @implementation OKLeaderboard
 
@@ -299,7 +301,32 @@
 }
 
 
+-(void)getUsersTopScoreWithCompletionHandler:(void (^)(OKScore *score, NSError *error))completionHandler
+{
+    if(![OKUser currentUser]) {
+        OKScore *topScore = [self getUsersTopScoreFromLocalCache];
+        if(topScore)
+            completionHandler(topScore,nil);
+        else
+            completionHandler(nil,nil);
+    } else {
+        [self getUsersTopScoreForLeaderboardForTimeRange:OKLeaderboardTimeRangeAllTime withCompletionHandler:completionHandler];
+    }
+}
 
+-(OKScore*)getUsersTopScoreFromLocalCache
+{
+    NSArray *cachedScores = [[OKScoreCache sharedCache] getCachedScoresForLeaderboardID:[self OKLeaderboard_id]];
+    
+    if([cachedScores count] == 0)
+        return nil;
+    else{
+        NSArray *sortedScores = [self sortScoresBasedOnLeaderboardType:cachedScores];
+        OKScore *topScore = [sortedScores objectAtIndex:0];
+        [topScore setUser:[OKUserUtilities guestUser]];
+        return topScore;
+    }
+}
 
 -(void)getUsersTopScoreForLeaderboardForTimeRange:(OKLeaderboardTimeRange)range withCompletionHandler:(void (^)(OKScore *score, NSError *error))completionHandler
 {

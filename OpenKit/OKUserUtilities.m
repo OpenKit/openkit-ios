@@ -47,6 +47,13 @@
     return user;
 }
 
++(OKUser*)guestUser
+{
+    OKUser *guestUser = [[OKUser alloc] init];
+    [guestUser setUserNick:@"Me"];
+    return guestUser;
+}
+
 + (NSDictionary *)getJSONRepresentationOfUser:(OKUser *)user
 {
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:4];

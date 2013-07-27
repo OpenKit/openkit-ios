@@ -7,6 +7,7 @@
 //
 
 #import "OKScoreCache.h"
+#import "OKMacros.h"
 
 #define SCORES_CACHE_KEY @"OKLeaderboardScoresCache"
 
@@ -43,12 +44,13 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:mutableScoreCache forKey:SCORES_CACHE_KEY];
     [defaults synchronize];
+    
+    OKLog(@"Cached score with value: %lld & leaderboard id: %d",[score scoreValue], [score OKLeaderboardID]);
 }
 
 -(NSArray*)getCachedScores
 {
     NSMutableArray *scoreArray = [[NSMutableArray alloc] init];
-    
     NSArray *encodedScoresArray = [self getScoreCacheArray];
     
     for(int x = 0; x < [encodedScoresArray count]; x++)
@@ -58,7 +60,27 @@
         [scoreArray addObject:score];
     }
     
+    OKLog(@"Got %d cached scores", [encodedScoresArray count]);
     return scoreArray;
+}
+
+
+
+-(NSArray*)getCachedScoresForLeaderboardID:(int)leaderboardID
+{
+    NSArray *cachedScores = [self getCachedScores];
+    
+    NSMutableArray *leaderboardScores = [[NSMutableArray alloc] init];
+    
+    for(int x = 0; x < [cachedScores count]; x++)
+    {
+        OKScore *score = [cachedScores objectAtIndex:x];
+        
+        if([score OKLeaderboardID] == leaderboardID)
+            [leaderboardScores addObject:score];
+    }
+    
+    return leaderboardScores;
 }
 
 -(NSArray*)getScoreCacheArray

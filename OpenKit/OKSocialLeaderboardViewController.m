@@ -518,12 +518,10 @@ typedef enum {
 
 -(void)getUsersTopScoreFromOpenKit
 {
-    
-    
     // Increment the counter that keeps track of requests running for social leaderboards
     [self startedSocialScoreRequest];
     
-    [leaderboard getUsersTopScoreForLeaderboardForTimeRange:OKLeaderboardTimeRangeAllTime withCompletionHandler:^(OKScore *score, NSError *error) {
+    [leaderboard getUsersTopScoreWithCompletionHandler:^(OKScore *score, NSError *error) {
         
         // Decrement the counter that keeps track of requests running for social leaderboards
         [self finishedSocialScoreRequest];

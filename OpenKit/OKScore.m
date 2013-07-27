@@ -15,6 +15,7 @@
 #import "OKGameCenterUtilities.h"
 #import "OKMacros.h"
 #import "OKError.h"
+#import "OKScoreCache.h"
 
 @implementation OKScore
 
@@ -54,6 +55,13 @@
 
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
+    // Set an ID on any score that is encoded so that when we submit it, we can remove it from the cache
+    // This ID is not used when submitting the score, it is simply used to keep track of which
+    // score to remove from the cache. We do not encode scores that are returned from the server, only
+    // locally cached scores that will be submitted to the server later so it's OK to set this value
+    int hashedScoreID = [[NSDate date] hash];
+    self.OKScoreID = hashedScoreID;
+    
     [encoder encodeInt32:self.OKLeaderboardID forKey:@"OKLeaderboardID"];
     [encoder encodeInt32:self.OKScoreID forKey:@"OKScoreID"];
     [encoder encodeInt64:self.scoreValue forKey:@"scoreValue"];
@@ -98,6 +106,7 @@
     [self setUser:[OKUser currentUser]];
     
     if (!self.user) {
+        [[OKScoreCache sharedCache] storeScore:self];
         completionHandler([OKError noOKUserError]);
         return;
     }
