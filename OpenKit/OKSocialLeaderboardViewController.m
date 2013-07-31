@@ -476,6 +476,7 @@ typedef enum {
     // if FB
     //   get FB scores from OpenKit
     
+    /*
     if([leaderboard gamecenter_id] && [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter])
     {
         [self getGameCenterSocialScores];
@@ -483,7 +484,10 @@ typedef enum {
         [self getUsersTopScoreFromOpenKit];
     } else {
         //TODO get local top score (not yet implemeneted)
-    }
+    } */
+    
+    
+    [self getUsersTopScoreFromOpenKit];
     
     if([OKFacebookUtilities isFBSessionOpen]) {
         [self getFacebookSocialScores];
@@ -517,7 +521,7 @@ typedef enum {
     // Increment the counter that keeps track of requests running for social leaderboards
     [self startedSocialScoreRequest];
     
-    [leaderboard getUsersTopScoreForLeaderboardForTimeRange:OKLeaderboardTimeRangeAllTime withCompletionHandler:^(OKScore *score, NSError *error) {
+    [leaderboard getUsersTopScoreWithCompletionHandler:^(OKScore *score, NSError *error) {
         
         // Decrement the counter that keeps track of requests running for social leaderboards
         [self finishedSocialScoreRequest];
@@ -568,20 +572,9 @@ typedef enum {
 
 -(NSMutableArray*)sortSocialScores:(NSArray*)scores
 {
-    // Sort the scores
+    NSArray *sortedScores = [leaderboard sortScoresBasedOnLeaderboardType:scores];
     
-    NSSortDescriptor *sortDescriptor;
-    
-    if([leaderboard sortType] == OKLeaderboardSortTypeHighValue){
-        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"scoreValue" ascending:NO];
-    } else {
-        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"scoreValue" ascending:YES];
-    }
-    
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    NSArray *sortedArray = [scores sortedArrayUsingDescriptors:sortDescriptors];
-    
-    NSMutableArray *mutableScores = [[NSMutableArray alloc] initWithArray:sortedArray];
+    NSMutableArray *mutableScores = [[NSMutableArray alloc] initWithArray:sortedScores];
     
     // Set the relative ranks
     for(int x = 0; x< [mutableScores count]; x++)

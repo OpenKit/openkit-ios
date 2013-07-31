@@ -16,6 +16,7 @@
 #import "OKDefines.h"
 #import "OKUserProfileImageView.h"
 #import "OKLeaderboardsViewController.h"
+#import "OKScoreCache.h"
 
 #define DEFAULT_ENDPOINT    @"stage.openkit.io"
 
@@ -111,6 +112,8 @@
     [self removeCachedUserFromKeychain];
     //Log out and clear Facebook
     [FBSession.activeSession closeAndClearTokenInformation];
+    
+    [[OKScoreCache sharedCache] clearCache];
 }
 
 - (void)saveCurrentUser:(OKUser *)aCurrentUser
@@ -135,6 +138,8 @@
         NSLog(@"Found  cached OKUser");
         OKUser *cachedUser = [OKUserUtilities createOKUserWithJSONData:userDict];
         _currentUser = cachedUser;
+        
+        [[OKScoreCache sharedCache] submitAllCachedScores];
     }
     else {
         NSLog(@"Did not find cached OKUser");

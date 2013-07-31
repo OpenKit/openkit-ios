@@ -10,7 +10,7 @@
 #import "OKScoreProtocol.h"
 
 @class OKUser;
-@interface OKScore : NSObject<OKScoreProtocol>
+@interface OKScore : NSObject<OKScoreProtocol, NSCoding>
 
 @property (nonatomic) NSInteger OKScoreID;
 @property (nonatomic) int64_t scoreValue;

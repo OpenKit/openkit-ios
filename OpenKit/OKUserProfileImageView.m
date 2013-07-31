@@ -107,9 +107,9 @@
         [self.imageView setHidden:YES];
         [self.fbProfileImageView setProfileID:[aUser.fbUserID stringValue]];
     }
-    else if ([aUser gameCenterID]) {
-        [self loadGameCenterImageForGameCenterID:[aUser gameCenterID]];
-    }
+    //else if ([aUser gameCenterID]) {
+    //    [self loadGameCenterImageForGameCenterID:[aUser gameCenterID]];
+    //}
     else if([aUser twitterUserID]) {
         //TODO Displaying twitter images is not yet implemented
         [self.fbProfileImageView setProfileID:nil];

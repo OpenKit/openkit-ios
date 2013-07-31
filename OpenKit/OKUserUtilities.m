@@ -30,7 +30,7 @@
     
     NSNumber *_OKUserID = [jsonData objectForKey:@"id"];
     NSNumber *_fbID = [jsonData objectForKey:@"fb_id"];
-    NSString *_gameCenterID = [jsonData objectForKey:@"gamecenter_id"];
+    //NSString *_gameCenterID = [jsonData objectForKey:@"gamecenter_id"];
     NSNumber *_customID = [jsonData objectForKey:@"custom_id"];
 
     
@@ -41,10 +41,17 @@
     [user setUserNick:_userNick];
     [user setFbUserID:_fbID];
     [user setTwitterUserID:_twitterID];
-    [user setGameCenterID:_gameCenterID];
+    //[user setGameCenterID:_gameCenterID];
     [user setCustomID:_customID];
     
     return user;
+}
+
++(OKUser*)guestUser
+{
+    OKUser *guestUser = [[OKUser alloc] init];
+    [guestUser setUserNick:@"Me"];
+    return guestUser;
 }
 
 + (NSDictionary *)getJSONRepresentationOfUser:(OKUser *)user
@@ -55,7 +62,7 @@
     [dict setValue:[user twitterUserID] forKey:@"twitter_id"];
     [dict setValue:[user OKUserID] forKey:@"id"];
     [dict setValue:[user fbUserID] forKey:@"fb_id"];
-    [dict setValue:[user gameCenterID] forKey:@"gamecenter_id"];
+    //[dict setValue:[user gameCenterID] forKey:@"gamecenter_id"];
     [dict setValue:[user customID] forKey:@"custom_id"];
     
     return dict;
@@ -143,9 +150,9 @@
         case GoogleIDType:
             [params setObject:userID forKey:@"google_id"];
             break;
-        case GameCenterIDType:
-            [params setObject:userID forKey:@"gamecenter_id"];
-            break;
+        //case GameCenterIDType:
+        //    [params setObject:userID forKey:@"gamecenter_id"];
+        //    break;
         case CustomIDType:
             [params setObject:userID forKey:@"custom_id"];
             break;
@@ -169,4 +176,5 @@
          completionHandler(newUser, error);
      }];
 }
+
 @end

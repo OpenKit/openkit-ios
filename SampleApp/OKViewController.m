@@ -5,6 +5,7 @@
 //  Created by Suneet Shah on 12/26/12.
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
+#import "OKScoreCache.h"
 
 #import "OKViewController.h"
 #import "ScoreSubmitterVC.h"
@@ -110,23 +111,9 @@
     CloudDataTestVC *vc = [[CloudDataTestVC alloc] initWithNibName:@"CloudDataTestVC" bundle:nil];
     [[self navigationController] pushViewController:vc animated:YES];
      */
-    
-    [OKFacebookUtilities getListOfFriendsForCurrentUserWithCompletionHandler:^(NSArray *friends, NSError *error) {
-        
-        if(friends && !error){
-            NSString *serializedFriends = [OKFacebookUtilities serializeListOfFacebookFriends:friends];
-            
-            NSLog(@"Serialized list of friends: %@", serializedFriends);
-            
-            //UnitySendMessage([objName UTF8String], "asyncCallSucceeded",[serializedFriends UTF8String]);
-        } else{
-            if(error) {
-               // UnitySendMessage([objName UTF8String], "asyncCallFailed", [[error localizedDescription] UTF8String]);
-            } else {
-                //UnitySendMessage([objName UTF8String], "asyncCallFailed", "Unknown error from native IOS when trying to get Facebook friends");
-            }
-        }
-    }];
+
+    NSLog(@"Cached scores: %@",[[OKScoreCache sharedCache] getCachedScores]);
+
 
 }
 

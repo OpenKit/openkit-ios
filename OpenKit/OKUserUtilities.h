@@ -12,7 +12,7 @@ typedef enum {
     FacebookIDType,
     TwitterIDType,
     GoogleIDType,
-    GameCenterIDType,
+    //GameCenterIDType,
     CustomIDType
 } OKUserIDType;
 
@@ -25,5 +25,7 @@ typedef enum {
 +(void)createOKUserWithUserIDType:(OKUserIDType)userIDtype withUserID:(NSString*)userID withUserNick:(NSString *)userNick withCompletionHandler:(void(^)(OKUser *user, NSError *errror))completionHandler;
 
 +(void)updateOKUser:(OKUser *)user withCompletionHandler:(void(^)(NSError *error))completionHandler;
+
++(OKUser*)guestUser;
 
 @end
