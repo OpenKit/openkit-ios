@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "OKLeaderboard.h"
 #import "OKFBLoginCell.h"
+#import <MessageUI/MessageUI.h> 
 
-@interface OKSocialLeaderboardViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, OKFBLoginCellDelegate>
+@interface OKSocialLeaderboardViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, OKFBLoginCellDelegate,UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) OKLeaderboard *leaderboard;
 @property (nonatomic, strong) IBOutlet UITableView *_tableView;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
+@property (nonatomic, strong) MFMailComposeViewController *mail;
 
 @property (nonatomic, strong) IBOutlet UIView *containerViewForLoadMoreButton;
 @property (nonatomic, strong) IBOutlet UIButton *loadMoreScoresButton;

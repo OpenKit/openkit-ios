@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2CD025EF17A8A29E001ECD84 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD025EC17A8A1A7001ECD84 /* MessageUI.framework */; };
 		321E99CB16D2FB6C005F1506 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */; };
 		321E99CF16D2FBA1005F1506 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 321E99CE16D2FBA1005F1506 /* ActionSheetStringPicker.m */; };
 		3222214B16CBB64E006EBD1C /* cell_border.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD01016CB65E800E8F185 /* cell_border.png */; };
@@ -323,6 +324,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2CD025EC17A8A1A7001ECD84 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		321E99C716D2FB6C005F1506 /* AbstractActionSheetPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractActionSheetPicker.h; sourceTree = "<group>"; };
 		321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractActionSheetPicker.m; sourceTree = "<group>"; };
 		321E99CD16D2FBA1005F1506 /* ActionSheetStringPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetStringPicker.h; sourceTree = "<group>"; };
@@ -547,6 +549,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CD025EF17A8A29E001ECD84 /* MessageUI.framework in Frameworks */,
 				445B3BFD1767F5DE00952456 /* GameKit.framework in Frameworks */,
 				32CAD0EB16CB74DF00E8F185 /* libsqlite3.dylib in Frameworks */,
 				32CAD0E916CB74D300E8F185 /* Twitter.framework in Frameworks */,
@@ -624,6 +627,7 @@
 				32CAD0EA16CB74DF00E8F185 /* libsqlite3.dylib */,
 				445B3BFB1767F5D300952456 /* GameKit.framework */,
 				32CAD0E816CB74D300E8F185 /* Twitter.framework */,
+				2CD025EC17A8A1A7001ECD84 /* MessageUI.framework */,
 				32CAD0E616CB74CB00E8F185 /* Security.framework */,
 				32CAD0E416CB74B000E8F185 /* QuartzCore.framework */,
 				32CAD0E216CB74A200E8F185 /* AdSupport.framework */,

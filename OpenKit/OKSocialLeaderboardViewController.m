@@ -20,6 +20,9 @@
 
 @interface OKSocialLeaderboardViewController ()
 
+- (void)showActionSheet:(id)sender; //Declare method to show action sheet
+- (void)showEmailUI; //Declare method to show action sheet
+
 @end
 
 @implementation OKSocialLeaderboardViewController
@@ -30,7 +33,7 @@
     BOOL isShowingInviteFriendsCell;
 }
 
-@synthesize leaderboard, _tableView, spinner, socialScores, globalScores, containerViewForLoadMoreButton, loadMoreScoresButton;
+@synthesize leaderboard, _tableView, spinner, socialScores, globalScores, containerViewForLoadMoreButton, loadMoreScoresButton, mail;
 
 static NSString *scoreCellIdentifier = kOKScoreCellIdentifier;
 static NSString *fbCellIdentifier = @"OKFBLoginCell";
@@ -52,7 +55,8 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
         
         
         //Initialize the invite button
-        UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showSmartInviteUI)];
+        //UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showSmartInviteUI)];
+        UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showActionSheet:)];
         [inviteButton setTintColor:[UIColor blueColor]];
         [[self navigationItem] setRightBarButtonItem:inviteButton];
 
@@ -60,16 +64,95 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
     return self;
 }
 
--(void)showSmartInviteUI
+-(void)showFacebookInviteUI
 {
-    if([[FBSession activeSession] isOpen]) {
-        [OKFacebookUtilities sendFacebookRequest];
-    } else {
-        [self fbLoginWithCompletionHandler:^{
-            [OKFacebookUtilities sendFacebookRequest];
-        }];
-    }
+  if([[FBSession activeSession] isOpen]) {
+    [OKFacebookUtilities sendFacebookRequest];
+  } else {
+    [self fbLoginWithCompletionHandler:^{
+      [OKFacebookUtilities sendFacebookRequest];
+    }];
+  }
 }
+
+-(void)showEmailUI
+{
+  
+  //Set up
+  mail = [[MFMailComposeViewController alloc]init];
+  
+  mail.mailComposeDelegate = self;
+  
+  //Set the subject
+  [mail setSubject:@"testing"];
+  
+  //Set the message
+  NSString * sentFrom = @"Email sent from my app";
+  [mail setMessageBody:sentFrom isHTML:YES];
+  
+  [self presentViewController:mail animated:YES completion:nil];
+  
+}
+
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+  switch (result)
+  {
+    case MFMailComposeResultCancelled:
+      NSLog(@"Mail cancelled");
+      break;
+    case MFMailComposeResultSaved:
+      NSLog(@"Mail saved");
+      break;
+    case MFMailComposeResultSent:
+      NSLog(@"Mail sent");
+      break;
+    case MFMailComposeResultFailed:
+      NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+      break;
+    default:
+      break;
+  }
+  
+  // Close the Mail Interface
+  [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)showActionSheet:(id)sender
+{
+  NSString *actionSheetTitle = @"Invite a Friend"; //Action Sheet Title
+  NSString *email = @"Email";
+  NSString *message = @"Message";
+  NSString *facebook = @"Facebook";
+  NSString *cancelTitle = @"Cancel";
+  UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                initWithTitle:actionSheetTitle
+                                delegate:self
+                                cancelButtonTitle:cancelTitle
+                                destructiveButtonTitle:nil
+                                otherButtonTitles:email, message, facebook, nil];
+  [actionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+  //Get the name of the current pressed button
+  NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+  if ([buttonTitle isEqualToString:@"Email"]) {
+    [self showEmailUI];
+  }
+  if ([buttonTitle isEqualToString:@"Message"]) {
+    NSLog(@"Message pressed");
+  }
+  if ([buttonTitle isEqualToString:@"Facebook"]) {
+    [self showFacebookInviteUI];
+  }
+  if ([buttonTitle isEqualToString:@"Cancel Button"]) {
+    NSLog(@"Cancel pressed --> Cancel ActionSheet");
+  }
+}
+
+
 
 // Used to keep track of tableView sections
 enum Sections {
@@ -417,7 +500,7 @@ typedef enum {
     
     if(!isShowingFBLoginCell && isShowingInviteFriendsCell)
     {
-        [self showSmartInviteUI];
+        [self showFacebookInviteUI];
         return;
     }
     
