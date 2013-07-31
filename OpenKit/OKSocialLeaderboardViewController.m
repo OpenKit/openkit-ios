@@ -22,6 +22,7 @@
 
 - (void)showActionSheet:(id)sender; //Declare method to show action sheet
 - (void)showEmailUI; //Declare method to show action sheet
+- (void)showMessageUI; //Declare method to show action sheet
 
 @end
 
@@ -64,6 +65,40 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
     return self;
 }
 
+- (void)showActionSheet:(id)sender
+{
+  NSString *actionSheetTitle = @"Invite a Friend"; //Action Sheet Title
+  NSString *email = @"Email";
+  NSString *message = @"Message";
+  NSString *facebook = @"Facebook";
+  NSString *cancelTitle = @"Cancel";
+  UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                initWithTitle:actionSheetTitle
+                                delegate:self
+                                cancelButtonTitle:cancelTitle
+                                destructiveButtonTitle:nil
+                                otherButtonTitles:email, message, facebook, nil];
+  [actionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+  //Get the name of the current pressed button
+  NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+  if ([buttonTitle isEqualToString:@"Email"]) {
+    [self showEmailUI];
+  }
+  if ([buttonTitle isEqualToString:@"Message"]) {
+    [self showMessageUI];
+  }
+  if ([buttonTitle isEqualToString:@"Facebook"]) {
+    [self showFacebookInviteUI];
+  }
+  if ([buttonTitle isEqualToString:@"Cancel Button"]) {
+    NSLog(@"Cancel pressed --> Cancel ActionSheet");
+  }
+}
+
 -(void)showFacebookInviteUI
 {
   if([[FBSession activeSession] isOpen]) {
@@ -84,10 +119,10 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
   mail.mailComposeDelegate = self;
   
   //Set the subject
-  [mail setSubject:@"testing"];
+  [mail setSubject:@"Check out Ridiculous Fishing"];
   
   //Set the message
-  NSString * sentFrom = @"Email sent from my app";
+  NSString * sentFrom = @"<h1>Check out this game!</h1><a href='http://toddham.com/openkit/invite.html'>Test Link</a>";
   [mail setMessageBody:sentFrom isHTML:YES];
   
   [self presentViewController:mail animated:YES completion:nil];
@@ -118,40 +153,46 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
   [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (void)showActionSheet:(id)sender
+-(void) showMessageUI
 {
-  NSString *actionSheetTitle = @"Invite a Friend"; //Action Sheet Title
-  NSString *email = @"Email";
-  NSString *message = @"Message";
-  NSString *facebook = @"Facebook";
-  NSString *cancelTitle = @"Cancel";
-  UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                initWithTitle:actionSheetTitle
-                                delegate:self
-                                cancelButtonTitle:cancelTitle
-                                destructiveButtonTitle:nil
-                                otherButtonTitles:email, message, facebook, nil];
-  [actionSheet showInView:self.view];
+	MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
+	if([MFMessageComposeViewController canSendText])
+	{
+		controller.body = @"Check out Ridiculous Fishing http://toddham.com/openkit/invite.html";
+		//controller.recipients = [NSArray arrayWithObjects:@"12345678", @"87654321", nil];
+		controller.messageComposeDelegate = self;
+		[self presentModalViewController:controller animated:YES];
+	}
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void) messageComposeViewController:(MFMessageComposeViewController *)
+controller didFinishWithResult:(MessageComposeResult)result
 {
-  //Get the name of the current pressed button
-  NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-  if ([buttonTitle isEqualToString:@"Email"]) {
-    [self showEmailUI];
+  
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"MyApp" message:@"Unknown Error"
+                        
+                                                 delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+  
+  switch (result) {
+      
+    case MessageComposeResultCancelled:
+      NSLog(@"Cancelled");
+      break;
+      
+    case MessageComposeResultFailed:
+      [alert show];
+      break;
+      
+    case MessageComposeResultSent:
+      break;
+      
+    default:
+      break;
   }
-  if ([buttonTitle isEqualToString:@"Message"]) {
-    NSLog(@"Message pressed");
-  }
-  if ([buttonTitle isEqualToString:@"Facebook"]) {
-    [self showFacebookInviteUI];
-  }
-  if ([buttonTitle isEqualToString:@"Cancel Button"]) {
-    NSLog(@"Cancel pressed --> Cancel ActionSheet");
-  }
-}
 
+  [self dismissModalViewControllerAnimated:YES];
+  
+}
 
 
 // Used to keep track of tableView sections

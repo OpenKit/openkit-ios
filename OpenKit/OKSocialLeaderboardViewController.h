@@ -11,7 +11,7 @@
 #import "OKFBLoginCell.h"
 #import <MessageUI/MessageUI.h> 
 
-@interface OKSocialLeaderboardViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, OKFBLoginCellDelegate,UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
+@interface OKSocialLeaderboardViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, OKFBLoginCellDelegate,UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
 @property (nonatomic, strong) OKLeaderboard *leaderboard;
 @property (nonatomic, strong) IBOutlet UITableView *_tableView;
