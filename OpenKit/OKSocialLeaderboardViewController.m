@@ -415,7 +415,10 @@ typedef enum {
 -(UITableViewCell*)getProgressBarCell
 {
     OKSpinnerCell *cell = [_tableView dequeueReusableCellWithIdentifier:spinnerCellIdentifier];
-    
+  
+  
+    [cell setBackgroundColor:[UIColor whiteColor]];
+  
     if(!cell) {
         cell = [[OKSpinnerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:spinnerCellIdentifier];
     }
