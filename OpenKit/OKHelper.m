@@ -19,4 +19,25 @@
     return [calendar dateByAddingComponents:components toDate:now options:0];
 }
 
++(BOOL)isEmpty:(id)obj
+{
+    return obj == nil ||
+    ([obj respondsToSelector:@selector(length)] && [(NSData *)obj length] == 0) ||
+    ([obj respondsToSelector:@selector(count)] && [(NSArray *)obj count] == 0) ||
+    (obj == [NSNull null]);
+}
+
++(NSString*)getStringSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
+{
+    NSString *value = [jsonDict objectForKey:key];
+    
+    if([OKHelper isEmpty:value]) {
+        return nil;
+    } else {
+        return value;
+    }
+}
+
+
+
 @end

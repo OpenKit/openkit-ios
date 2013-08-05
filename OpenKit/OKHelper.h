@@ -11,5 +11,6 @@
 @interface OKHelper : NSObject
 
 + (NSDate *)dateNDaysFromToday:(int)n;
++(NSString*)getStringSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict;
 
 @end

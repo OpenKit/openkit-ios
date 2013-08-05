@@ -36,7 +36,7 @@
         self.sortType               = ([sortTypeString isEqualToString:@"HighValue"]) ? OKLeaderboardSortTypeHighValue : OKLeaderboardSortTypeLowValue;
         self.icon_url               = [jsonDict objectForKey:@"icon_url"];
         self.playerCount            = [[jsonDict objectForKey:@"player_count"] integerValue];
-        self.gamecenter_id          = [jsonDict objectForKey:@"gamecenter_id"];
+        self.gamecenter_id          = [OKHelper getStringSafeForKey:@"gamecenter_id" fromJSONDictionary:jsonDict];
 
         //_timeRange = OKLeaderboardTimeRangeOneDay;
     }
@@ -95,7 +95,6 @@
 
 -(BOOL)showGlobalScoresFromGameCenter
 {
-    return NO;
     // If gamecenter is available and this leaderboard has a gamecenter ID, get global scores from gamecenter
     
     if(self.gamecenter_id && [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {

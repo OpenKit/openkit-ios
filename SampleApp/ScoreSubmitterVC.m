@@ -108,8 +108,7 @@
          
         [score setOKLeaderboardID:[(OKLeaderboard*)[leaderBoards objectAtIndex:selectedIndex] OKLeaderboard_id]];
         [score setGamecenterLeaderboardID:[leaderboard gamecenter_id]];
-
-        // Submitting twice? ... 
+        
         [score submitScoreToOpenKitAndGameCenterWithCompletionHandler:^(NSError *error) {
             
             [spinner stopAnimating];

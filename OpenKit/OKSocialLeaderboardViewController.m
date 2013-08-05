@@ -104,29 +104,6 @@ typedef enum {
     }
 }
 
-/*
--(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
-    
-    UILabel *label = [[UILabel alloc] init];
-    label.frame = CGRectMake(10, 0, 320, 30);
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = UIColorFromRGB(0x333333);
-    label.font = [UIFont boldSystemFontOfSize:13];
-    label.text = sectionTitle;
-    
-    UIView *view = [[UIView alloc] init];
-    [view addSubview:label];
-    
-    return view;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 30;
-}
-*/
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 20;
@@ -466,33 +443,26 @@ typedef enum {
 -(void)getSocialScores {
     
     // If game center
-    //   get GC friends scores
+    //   get GC friends scores (including users' top score)
     // else if OKUser
-    //   get top score from OpenKit
-    // else
-    //   get local top score (not implemented yet)
+    //   get top score from OpenKit (this will return local cached score if not logged in)
     
-    //
     // if FB
     //   get FB scores from OpenKit
     
-    /*
+    
     if([leaderboard gamecenter_id] && [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter])
     {
         [self getGameCenterSocialScores];
     } else if ([OKUser currentUser]) {
         [self getUsersTopScoreFromOpenKit];
-    } else {
-        //TODO get local top score (not yet implemeneted)
-    } */
-    
-    
-    [self getUsersTopScoreFromOpenKit];
+    }
     
     if([OKFacebookUtilities isFBSessionOpen]) {
         [self getFacebookSocialScores];
     }
 }
+
 
 -(void)getGameCenterSocialScores {
     // Increment the counter that keeps track of requests running for social leaderboards
