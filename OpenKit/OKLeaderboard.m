@@ -300,20 +300,28 @@
 }
 
 
--(void)getUsersTopScoreWithCompletionHandler:(void (^)(OKScore *score, NSError *error))completionHandler
+//Wrapper method to get player top score either from GameCenter, OpenKit, or local cache 
+-(void)getPlayerTopScoreWithCompletionHandler:(void (^)(id<OKScoreProtocol> score, NSError *error))completionHandler
 {
-    if(![OKUser currentUser]) {
-        OKScore *topScore = [self getUsersTopScoreFromLocalCache];
-        if(topScore)
-            completionHandler(topScore,nil);
-        else
-            completionHandler(nil,nil);
+    // IF using GC pull top score from GC
+    // else if OKUser, pull top score from OKUser
+    // else pull top score from cache
+    
+    if([self showGlobalScoresFromGameCenter]) {
+        [self getPlayerTopScoreFromGameCenterWithCompletionHandler:^(OKGKScoreWrapper *scoreWrapper, NSError *gamecenterError) {
+            completionHandler(scoreWrapper,gamecenterError);
+        }];
+    } else if ([OKUser currentUser]) {
+        [self getPlayerTopScoreForLeaderboardForTimeRange:OKLeaderboardTimeRangeAllTime withCompletionHandler:^(OKScore *okScore, NSError *okError) {
+            completionHandler(okScore, okError);
+        }];
     } else {
-        [self getUsersTopScoreForLeaderboardForTimeRange:OKLeaderboardTimeRangeAllTime withCompletionHandler:completionHandler];
+        OKScore *topCachedScore = [self getPlayerTopScoreFromLocalCache];
+        completionHandler(topCachedScore,nil);
     }
 }
 
--(OKScore*)getUsersTopScoreFromLocalCache
+-(OKScore*)getPlayerTopScoreFromLocalCache
 {
     NSArray *cachedScores = [[OKScoreCache sharedCache] getCachedScoresForLeaderboardID:[self OKLeaderboard_id]];
     
@@ -327,7 +335,7 @@
     }
 }
 
--(void)getUsersTopScoreForLeaderboardForTimeRange:(OKLeaderboardTimeRange)range withCompletionHandler:(void (^)(OKScore *score, NSError *error))completionHandler
+-(void)getPlayerTopScoreForLeaderboardForTimeRange:(OKLeaderboardTimeRange)range withCompletionHandler:(void (^)(OKScore *score, NSError *error))completionHandler
 {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setValue:[NSNumber numberWithInt:[self OKLeaderboard_id]] forKey:@"leaderboard_id"];
@@ -346,7 +354,7 @@
 }
 
 
--(void)getUsersTopScoreFromGameCenterWithCompletionHandler:(void (^)(OKGKScoreWrapper *score, NSError *error))completionHandler
+-(void)getPlayerTopScoreFromGameCenterWithCompletionHandler:(void (^)(OKGKScoreWrapper *score, NSError *error))completionHandler
 {
     if(![OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
         completionHandler(nil, [OKError gameCenterNotAvailableError]);

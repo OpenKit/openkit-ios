@@ -20,6 +20,7 @@
 @property (nonatomic, strong) IBOutlet UIButton *loadMoreScoresButton;
 
 @property (nonatomic, strong) NSMutableArray *globalScores, *socialScores;
+@property (nonatomic, strong) id<OKScoreProtocol> playerTopScore;
 
 - (id)initWithLeaderboard:(OKLeaderboard *)aLeaderboard;
 

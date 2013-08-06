@@ -15,6 +15,8 @@
 +(UIColor*)navbarTextColor;
 +(UIColor*)navbarTintColor;
 +(NSDictionary*)titleTextAttributesForNavBarButton;
++(UIColor*)playerTopScoreBGColor;
++(UIColor*)scoreCellBGColor;
 
 @end
 

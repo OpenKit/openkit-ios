@@ -48,16 +48,17 @@ typedef enum {
 - (void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler;
 -(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange forPageNumber:(int)pageNum
        WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler;
--(void)getUsersTopScoreForLeaderboardForTimeRange:(OKLeaderboardTimeRange)range withCompletionHandler:(void (^)(OKScore *score, NSError *error))completionHandler;
+-(void)getPlayerTopScoreForLeaderboardForTimeRange:(OKLeaderboardTimeRange)range withCompletionHandler:(void (^)(OKScore *score, NSError *error))completionHandler;
 -(void)getFacebookFriendsScoresWithCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler;
 
 //Wrapper methods
 -(void)getGlobalScoresWithPageNum:(int)pageNum withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler;
--(void)getUsersTopScoreWithCompletionHandler:(void (^)(OKScore *score, NSError *error))completionHandler;
+-(void)getPlayerTopScoreWithCompletionHandler:(void (^)(id<OKScoreProtocol> score, NSError *error))completionHandler;
 
 //GameCenter methods
 -(void)getGameCenterFriendsScoreswithCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler;
--(void)getUsersTopScoreFromGameCenterWithCompletionHandler:(void (^)(OKGKScoreWrapper *score, NSError *error))completionHandler;
+-(void)getPlayerTopScoreFromGameCenterWithCompletionHandler:(void (^)(OKGKScoreWrapper *score, NSError *error))completionHandler;
+-(BOOL)showGlobalScoresFromGameCenter;
 
 -(NSSortDescriptor*)getSortDescriptor;
 -(NSArray*)sortScoresBasedOnLeaderboardType:(NSArray*)scores;

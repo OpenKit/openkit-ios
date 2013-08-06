@@ -103,7 +103,7 @@
         }
     }];
     
-    [self.leaderboard getUsersTopScoreForLeaderboardForTimeRange:range
+    [self.leaderboard getPlayerTopScoreForLeaderboardForTimeRange:range
                                            withCompletionHandler:^(OKScore *score, NSError *error)
     {
         if(!error) {

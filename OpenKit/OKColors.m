@@ -15,4 +15,12 @@
     return  [NSDictionary dictionaryWithObjectsAndKeys:[OKColors navbarTextColor], UITextAttributeTextColor,[UIColor clearColor], UITextAttributeTextShadowColor, nil];
 }
 
++(UIColor*)playerTopScoreBGColor {
+    return UIColorFromRGB(0xe0eecf);
+}
+
++(UIColor*)scoreCellBGColor {
+    return [UIColor whiteColor];
+}
+
 @end
