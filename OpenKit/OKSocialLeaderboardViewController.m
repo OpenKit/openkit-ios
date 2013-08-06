@@ -33,11 +33,8 @@
     BOOL isShowingInviteFriendsCell;
 }
 
-<<<<<<< HEAD
-@synthesize leaderboard, _tableView, spinner, socialScores, globalScores, containerViewForLoadMoreButton, loadMoreScoresButton, playerTopScore;
-=======
-@synthesize leaderboard, _tableView, spinner, socialScores, globalScores, containerViewForLoadMoreButton, loadMoreScoresButton, mail;
->>>>>>> todd_smart_invites
+
+@synthesize leaderboard, _tableView, spinner, socialScores, globalScores, containerViewForLoadMoreButton, loadMoreScoresButton, playerTopScore, mail;
 
 static NSString *scoreCellIdentifier = kOKScoreCellIdentifier;
 static NSString *fbCellIdentifier = @"OKFBLoginCell";
@@ -58,8 +55,8 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
         
         
         //Initialize the invite button
-        //UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showSmartInviteUI)];
-        UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showActionSheet:)];
+        UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showFacebookInviteUI)];
+        //UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showActionSheet:)];
         [inviteButton setTintColor:[UIColor colorWithRed:5/255.0 green:139/255.0 blue:245/255.0 alpha:1]];
         [[self navigationItem] setRightBarButtonItem:inviteButton];
 
@@ -395,17 +392,11 @@ typedef enum {
 -(UITableViewCell*)getProgressBarCell
 {
     OKSpinnerCell *cell = [_tableView dequeueReusableCellWithIdentifier:spinnerCellIdentifier];
-<<<<<<< HEAD
-=======
-  
-  
-    [cell setBackgroundColor:[UIColor whiteColor]];
-  
->>>>>>> todd_smart_invites
     if(!cell) {
         cell = [[OKSpinnerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:spinnerCellIdentifier];
     }
     
+    [cell setBackgroundColor:[OKColors scoreCellBGColor]];
     [cell startAnimating];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
