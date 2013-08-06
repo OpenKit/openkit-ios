@@ -110,6 +110,8 @@
     if(cell == nil)
         cell = [[OKLeaderboardListCell alloc] init];
 
+    [cell setBackgroundColor:[UIColor whiteColor]];
+  
     [cell setLeaderboard:[OKLeaderBoardsList objectAtIndex:row]];
     return cell;
 }

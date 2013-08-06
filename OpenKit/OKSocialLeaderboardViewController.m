@@ -20,6 +20,10 @@
 
 @interface OKSocialLeaderboardViewController ()
 
+- (void)showActionSheet:(id)sender; //Declare method to show action sheet
+- (void)showEmailUI; //Declare method to show action sheet
+- (void)showMessageUI; //Declare method to show action sheet
+
 @end
 
 @implementation OKSocialLeaderboardViewController
@@ -29,7 +33,11 @@
     BOOL isShowingInviteFriendsCell;
 }
 
+<<<<<<< HEAD
 @synthesize leaderboard, _tableView, spinner, socialScores, globalScores, containerViewForLoadMoreButton, loadMoreScoresButton, playerTopScore;
+=======
+@synthesize leaderboard, _tableView, spinner, socialScores, globalScores, containerViewForLoadMoreButton, loadMoreScoresButton, mail;
+>>>>>>> todd_smart_invites
 
 static NSString *scoreCellIdentifier = kOKScoreCellIdentifier;
 static NSString *fbCellIdentifier = @"OKFBLoginCell";
@@ -50,24 +58,144 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
         
         
         //Initialize the invite button
-        UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showSmartInviteUI)];
-        [inviteButton setTintColor:[UIColor blueColor]];
+        //UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showSmartInviteUI)];
+        UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showActionSheet:)];
+        [inviteButton setTintColor:[UIColor colorWithRed:5/255.0 green:139/255.0 blue:245/255.0 alpha:1]];
         [[self navigationItem] setRightBarButtonItem:inviteButton];
 
     }
     return self;
 }
 
--(void)showSmartInviteUI
+- (void)showActionSheet:(id)sender
 {
-    if([[FBSession activeSession] isOpen]) {
-        [OKFacebookUtilities sendFacebookRequest];
-    } else {
-        [self fbLoginWithCompletionHandler:^{
-            [OKFacebookUtilities sendFacebookRequest];
-        }];
-    }
+  NSString *actionSheetTitle = @"Invite a Friend"; //Action Sheet Title
+  NSString *email = @"Email";
+  NSString *message = @"Message";
+  NSString *facebook = @"Facebook";
+  NSString *cancelTitle = @"Cancel";
+  UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                initWithTitle:actionSheetTitle
+                                delegate:self
+                                cancelButtonTitle:cancelTitle
+                                destructiveButtonTitle:nil
+                                otherButtonTitles:email, message, facebook, nil];
+  [actionSheet showInView:self.view];
 }
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+  //Get the name of the current pressed button
+  NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+  if ([buttonTitle isEqualToString:@"Email"]) {
+    [self showEmailUI];
+  }
+  if ([buttonTitle isEqualToString:@"Message"]) {
+    [self showMessageUI];
+  }
+  if ([buttonTitle isEqualToString:@"Facebook"]) {
+    [self showFacebookInviteUI];
+  }
+  if ([buttonTitle isEqualToString:@"Cancel Button"]) {
+    NSLog(@"Cancel pressed --> Cancel ActionSheet");
+  }
+}
+
+-(void)showFacebookInviteUI
+{
+  if([[FBSession activeSession] isOpen]) {
+    [OKFacebookUtilities sendFacebookRequest];
+  } else {
+    [self fbLoginWithCompletionHandler:^{
+      [OKFacebookUtilities sendFacebookRequest];
+    }];
+  }
+}
+
+-(void)showEmailUI
+{
+  
+  //Set up
+  mail = [[MFMailComposeViewController alloc]init];
+  
+  mail.mailComposeDelegate = self;
+  
+  //Set the subject
+  [mail setSubject:@"Check out Ridiculous Fishing"];
+  
+  //Set the message
+  NSString * sentFrom = @"<h1>Check out this game!</h1><a href='http://toddham.com/openkit/invite.html'>Test Link</a>";
+  [mail setMessageBody:sentFrom isHTML:YES];
+  
+  [self presentViewController:mail animated:YES completion:nil];
+  
+}
+
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+  switch (result)
+  {
+    case MFMailComposeResultCancelled:
+      NSLog(@"Mail cancelled");
+      break;
+    case MFMailComposeResultSaved:
+      NSLog(@"Mail saved");
+      break;
+    case MFMailComposeResultSent:
+      NSLog(@"Mail sent");
+      break;
+    case MFMailComposeResultFailed:
+      NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+      break;
+    default:
+      break;
+  }
+  
+  // Close the Mail Interface
+  [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+-(void) showMessageUI
+{
+	MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
+	if([MFMessageComposeViewController canSendText])
+	{
+		controller.body = @"Check out Ridiculous Fishing http://toddham.com/openkit/invite.html";
+		//controller.recipients = [NSArray arrayWithObjects:@"12345678", @"87654321", nil];
+		controller.messageComposeDelegate = self;
+		[self presentModalViewController:controller animated:YES];
+	}
+}
+
+- (void) messageComposeViewController:(MFMessageComposeViewController *)
+controller didFinishWithResult:(MessageComposeResult)result
+{
+  
+  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"MyApp" message:@"Unknown Error"
+                        
+                                                 delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+  
+  switch (result) {
+      
+    case MessageComposeResultCancelled:
+      NSLog(@"Cancelled");
+      break;
+      
+    case MessageComposeResultFailed:
+      [alert show];
+      break;
+      
+    case MessageComposeResultSent:
+      break;
+      
+    default:
+      break;
+  }
+
+  [self dismissModalViewControllerAnimated:YES];
+  
+}
+
 
 // Used to keep track of tableView sections
 enum Sections {
@@ -267,6 +395,13 @@ typedef enum {
 -(UITableViewCell*)getProgressBarCell
 {
     OKSpinnerCell *cell = [_tableView dequeueReusableCellWithIdentifier:spinnerCellIdentifier];
+<<<<<<< HEAD
+=======
+  
+  
+    [cell setBackgroundColor:[UIColor whiteColor]];
+  
+>>>>>>> todd_smart_invites
     if(!cell) {
         cell = [[OKSpinnerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:spinnerCellIdentifier];
     }
@@ -406,7 +541,7 @@ typedef enum {
 {
     if(!isShowingFBLoginCell && isShowingInviteFriendsCell)
     {
-        [self showSmartInviteUI];
+        [self showFacebookInviteUI];
         return;
     }
     
