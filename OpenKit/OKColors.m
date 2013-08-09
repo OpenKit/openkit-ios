@@ -16,7 +16,7 @@
 }
 
 +(UIColor*)playerTopScoreBGColor {
-    return UIColorFromRGB(0xeeeeee);
+    return UIColorFromRGB(0xcee9fe);
 }
 
 +(UIColor*)scoreCellBGColor {
