@@ -21,4 +21,8 @@
 -(void)clearCache;
 
 
+//NEW
+-(void)storeScore:(OKScore*)score wasScoreSubmitted:(BOOL)submitted;
+
+
 @end

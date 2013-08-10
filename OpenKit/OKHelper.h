@@ -12,5 +12,6 @@
 
 + (NSDate *)dateNDaysFromToday:(int)n;
 +(NSString*)getStringSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict;
++(NSString*)getPathToDocsDirectory;
 
 @end

@@ -9,10 +9,17 @@
 #import "OKScoreCache.h"
 #import "OKMacros.h"
 #import "OKUser.h"
+#import <sqlite3.h>
+#import "OKHelper.h"
 
 #define SCORES_CACHE_KEY @"OKLeaderboardScoresCache"
 
 @implementation OKScoreCache
+{
+    sqlite3 *_database;
+}
+
+static sqlite3_stmt *insertScoreStatement = nil;
 
 + (OKScoreCache*)sharedCache
 {
@@ -32,8 +39,40 @@
     self = [super init];
     if (self) {
         //init code
+        [self initDB];
     }
     return self;
+}
+
+-(NSString*)dbPath
+{
+    NSString *docsDir = [OKHelper getPathToDocsDirectory];
+    NSString *dbFilePath = [docsDir stringByAppendingPathComponent:@"okCache.db"];
+    return dbFilePath;
+}
+
+-(void)initDB
+{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    
+    if([fm fileExistsAtPath:[self dbPath]] == NO)
+    {
+        const char *dbpath = [[self dbPath] UTF8String];
+        
+        if(sqlite3_open(dbpath, &_database) == SQLITE_OK) {
+            char *errorMsg;
+            const char *dbInitStatement = "CREATE TABLE IF NOT EXISTS OKCACHE(id INTEGER PRIMARY KEY AUTOINCREMENT, leaderboardID INTEGER, scoreValue BIGINT, metadata INTEGER, displayString VARCHAR(255), submitted BOOLEAN);";
+            
+            if(sqlite3_exec(_database, dbInitStatement, NULL, NULL, &errorMsg) != SQLITE_OK) {
+                OKLog(@"Failed to create cache table");
+            }
+            
+            //TODO close?
+            sqlite3_close(_database);
+        } else {
+            OKLog(@"Failed to open/create database");
+        }
+    }
 }
 
 -(void)storeArrayOfEncodedScoresInDefaults:(NSArray*)encodedScores
@@ -42,6 +81,51 @@
     [defaults setObject:encodedScores forKey:SCORES_CACHE_KEY];
     [defaults synchronize];
 }
+
+-(void)storeScore:(OKScore*)score wasScoreSubmitted:(BOOL)submitted
+{
+    const char *dbpath = [[self dbPath] UTF8String];
+    
+    if(sqlite3_open(dbpath, &_database) == SQLITE_OK) {
+        
+        // Setup the SQL Statement
+        if(insertScoreStatement == nil) {
+            OKLog(@"Preparing statement for cache score");
+            const char *insertSQL = "INSERT INTO OKCACHE(leaderboardID,scoreValue,metadata,displayString,submitted) VALUES(?,?,?,?,?);";
+            
+            if(sqlite3_prepare_v2(_database, insertSQL, -1, &insertScoreStatement, NULL) != SQLITE_OK) {
+                OKLog(@"Failed to prepare score insert statement with message: '%s'", sqlite3_errmsg(_database));
+                return;
+            }
+        }
+        
+        // Bind the score values to the statement
+        sqlite3_bind_int(insertScoreStatement, 1, [score OKLeaderboardID]);
+        sqlite3_bind_int64(insertScoreStatement, 2, [score scoreValue]);
+        sqlite3_bind_int(insertScoreStatement, 3, [score metadata]);
+        
+        if([score displayString]) {
+            sqlite3_bind_text(insertScoreStatement, 4, [[score displayString] UTF8String], -1, SQLITE_TRANSIENT);
+        } else {
+            sqlite3_bind_null(insertScoreStatement, 4);
+        }
+        sqlite3_bind_int(insertScoreStatement, 5, (int)submitted);
+        
+        //Execute the SQL statement
+        if(sqlite3_step(insertScoreStatement) == SQLITE_ROW) {
+            OKLog(@"Stored score in cache successfully");
+        } else {
+            OKLog(@"Failed to store score in cache");
+        }
+        
+        sqlite3_reset(insertScoreStatement);
+        sqlite3_clear_bindings(insertScoreStatement);
+        sqlite3_close(_database);
+    } else {
+        OKLog(@"Could not open cache DB");
+    }
+}
+
 
 -(void)storeScore:(OKScore*)score
 {
@@ -52,6 +136,7 @@
     [self storeArrayOfEncodedScoresInDefaults:mutableScoreCache];
     
     OKLog(@"Cached score with value: %lld & leaderboard id: %d",[score scoreValue], [score OKLeaderboardID]);
+    
 }
 
 -(NSArray*)getCachedScores
