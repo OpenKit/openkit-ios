@@ -23,6 +23,6 @@
 
 //NEW
 -(void)storeScore:(OKScore*)score wasScoreSubmitted:(BOOL)submitted;
-
+-(NSArray*)getAllCachedScores;
 
 @end

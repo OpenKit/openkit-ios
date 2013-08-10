@@ -51,12 +51,21 @@ static sqlite3_stmt *insertScoreStatement = nil;
     return dbFilePath;
 }
 
+// Init cache DB
+// DB Schema is:
+// --------------------------------------------------------------------------------
+// | integer | integer       | Bigint     | integer  | varchar(255)  | integer   |
+// --------------------------------------------------------------------------------
+// | id      | leaderboardID | scoreValue | metadata | displayString | submitted |
+
 -(void)initDB
 {
     NSFileManager *fm = [NSFileManager defaultManager];
     
     if([fm fileExistsAtPath:[self dbPath]] == NO)
     {
+        OKLog(@"Creating cache DB file");
+        
         const char *dbpath = [[self dbPath] UTF8String];
         
         if(sqlite3_open(dbpath, &_database) == SQLITE_OK) {
@@ -65,6 +74,8 @@ static sqlite3_stmt *insertScoreStatement = nil;
             
             if(sqlite3_exec(_database, dbInitStatement, NULL, NULL, &errorMsg) != SQLITE_OK) {
                 OKLog(@"Failed to create cache table");
+            } else {
+                OKLog(@"Created/found cache table");
             }
             
             //TODO close?
@@ -72,6 +83,8 @@ static sqlite3_stmt *insertScoreStatement = nil;
         } else {
             OKLog(@"Failed to open/create database");
         }
+    } else {
+        OKLog(@"Cache DB file found");
     }
 }
 
@@ -112,15 +125,16 @@ static sqlite3_stmt *insertScoreStatement = nil;
         sqlite3_bind_int(insertScoreStatement, 5, (int)submitted);
         
         //Execute the SQL statement
-        if(sqlite3_step(insertScoreStatement) == SQLITE_ROW) {
-            OKLog(@"Stored score in cache successfully");
+        if(sqlite3_step(insertScoreStatement) == SQLITE_DONE) {
+            OKLog(@"Cached score with value: %lld & leaderboard id: %d",[score scoreValue], [score OKLeaderboardID]);
         } else {
-            OKLog(@"Failed to store score in cache");
+            OKLog(@"Failed to store score in cache wihth error message: %s",sqlite3_errmsg(_database));
         }
         
         sqlite3_reset(insertScoreStatement);
         sqlite3_clear_bindings(insertScoreStatement);
         sqlite3_close(_database);
+        
     } else {
         OKLog(@"Could not open cache DB");
     }
@@ -153,6 +167,65 @@ static sqlite3_stmt *insertScoreStatement = nil;
     
     //OKLog(@"Got %d cached scores", [encodedScoresArray count]);
     return scoreArray;
+}
+
+-(NSArray*)getAllCachedScores
+{
+    NSMutableArray *scoresArray = [[NSMutableArray alloc] init];
+    
+    const char *dbpath = [[self dbPath] UTF8String];
+    static sqlite3_stmt *getAllScoresStatement = nil;
+    
+    if(sqlite3_open(dbpath, &_database) == SQLITE_OK)
+    {
+        const char *querySQL = "SELECT * FROM OKCACHE";
+        
+        if(sqlite3_prepare_v2(_database, querySQL, -1, &getAllScoresStatement, NULL) == SQLITE_OK){
+            while(sqlite3_step(getAllScoresStatement) == SQLITE_ROW) {
+                OKScore *score = [self getScoreFromCacheRow:getAllScoresStatement];
+                [scoresArray addObject:score];
+            }
+        } else {
+            OKLog(@"Could not prepare statement");
+        }
+        
+    } else {
+        OKLog(@"could not open cache db");
+    }
+    
+    return scoresArray;
+}
+
+// DB Schema is:
+// --------------------------------------------------------------------------------
+// | integer | integer       | Bigint     | integer  | varchar(255)  | integer   |
+// --------------------------------------------------------------------------------
+// | id      | leaderboardID | scoreValue | metadata | displayString | submitted |
+
+-(OKScore*)getScoreFromCacheRow:(sqlite3_stmt*)statement
+{
+    OKScore *score = [[OKScore alloc] init];
+    [score setOKScoreID:sqlite3_column_int(statement, 0)];
+    [score setOKLeaderboardID:sqlite3_column_int(statement, 1)];
+    [score setScoreValue:sqlite3_column_int64(statement, 2)];
+    [score setMetadata:sqlite3_column_int(statement, 3)];
+    
+    const char* cDisplayString = (const char*)sqlite3_column_text(statement, 4);
+    NSString *displayString;
+    if(cDisplayString != NULL) {
+        displayString = [[NSString alloc] initWithUTF8String:cDisplayString];
+    } else {
+        displayString = nil;
+    }
+    if([OKHelper isEmpty:displayString]) {
+        [score setDisplayString:nil];
+    } else {
+        [score setDisplayString:displayString];
+    }
+    
+    //TODO get submitted
+    
+    return score;
 }
 
 -(void)removeScoreFromCache:(OKScore*)scoreToRemove
