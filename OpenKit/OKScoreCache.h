@@ -24,5 +24,6 @@
 //NEW
 -(void)storeScore:(OKScore*)score wasScoreSubmitted:(BOOL)submitted;
 -(NSArray*)getAllCachedScores;
+-(void)removeScore:(OKScore*)score;
 
 @end

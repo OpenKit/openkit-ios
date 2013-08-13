@@ -20,6 +20,7 @@
 }
 
 static sqlite3_stmt *insertScoreStatement = nil;
+static sqlite3_stmt *deleteScoreStatement = nil;
 
 + (OKScoreCache*)sharedCache
 {
@@ -95,6 +96,7 @@ static sqlite3_stmt *insertScoreStatement = nil;
     [defaults synchronize];
 }
 
+
 -(void)storeScore:(OKScore*)score wasScoreSubmitted:(BOOL)submitted
 {
     const char *dbpath = [[self dbPath] UTF8String];
@@ -136,7 +138,45 @@ static sqlite3_stmt *insertScoreStatement = nil;
         sqlite3_close(_database);
         
     } else {
-        OKLog(@"Could not open cache DB");
+        OKLog(@"Could not open cache DB insertScore");
+    }
+}
+
+-(void)removeScore:(OKScore*)score
+{
+    if(![score OKScoreID]) {
+        OKLog(@"Tried to remove a score without a scoreID set from cache db");
+        return;
+    }
+    
+    const char *dbpath = [[self dbPath] UTF8String];
+    
+    if(sqlite3_open(dbpath, &_database) == SQLITE_OK) {
+        if(deleteScoreStatement == nil) {
+            OKLog(@"Preparing statement for delete score");
+            const char *deleteSQL = "DELETE FROM OKCACHE WHERE id=?";
+            
+            if(sqlite3_prepare_v2(_database, deleteSQL, -1, &deleteScoreStatement, NULL) != SQLITE_OK) {
+                OKLog(@"Failed to prepare delete score statement with message: %s", sqlite3_errmsg(_database));
+                return;
+            }
+        }
+        
+        sqlite3_bind_int(deleteScoreStatement, 1, [score OKScoreID]);
+        
+        if(sqlite3_step(deleteScoreStatement) == SQLITE_DONE) {
+            OKLog(@"Removed score with from cache with score id: %d value: %lld & leaderboard id: %d",[score OKScoreID], [score scoreValue], [score OKLeaderboardID]);
+        } else {
+            OKLog(@"Failed to remove score in cache wihth error message: %s",sqlite3_errmsg(_database));
+        }
+        
+        sqlite3_reset(deleteScoreStatement);
+        sqlite3_clear_bindings(deleteScoreStatement);
+        sqlite3_close(_database);
+
+        
+    } else {
+        OKLog(@"Could not open cache db removeScore");
     }
 }
 
@@ -224,9 +264,12 @@ static sqlite3_stmt *insertScoreStatement = nil;
     }
     
     //TODO get submitted
-    
+    //    int isSubmitted = sqlite3_column_int(statement, 5);
+
     return score;
 }
+
+
 
 -(void)removeScoreFromCache:(OKScore*)scoreToRemove
 {
