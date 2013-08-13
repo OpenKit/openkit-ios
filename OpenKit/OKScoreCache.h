@@ -14,7 +14,7 @@
 + (OKScoreCache*)sharedCache;
 
 -(void)storeScore:(OKScore*)score;
--(NSArray*)getCachedScores;
+-(NSArray*)getAllCachedScores;
 -(NSArray*)getCachedScoresForLeaderboardID:(int)leaderboardID;
 -(void)submitCachedScore:(OKScore*)score;
 -(void)submitAllCachedScores;
@@ -23,7 +23,6 @@
 
 //NEW
 -(void)storeScore:(OKScore*)score wasScoreSubmitted:(BOOL)submitted;
--(NSArray*)getAllCachedScores;
 -(void)removeScore:(OKScore*)score;
 
 @end

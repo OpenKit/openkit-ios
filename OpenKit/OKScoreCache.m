@@ -66,36 +66,33 @@ static sqlite3_stmt *deleteScoreStatement = nil;
     if([fm fileExistsAtPath:[self dbPath]] == NO)
     {
         OKLog(@"Creating cache DB file");
-        
-        const char *dbpath = [[self dbPath] UTF8String];
-        
-        if(sqlite3_open(dbpath, &_database) == SQLITE_OK) {
-            char *errorMsg;
-            const char *dbInitStatement = "CREATE TABLE IF NOT EXISTS OKCACHE(id INTEGER PRIMARY KEY AUTOINCREMENT, leaderboardID INTEGER, scoreValue BIGINT, metadata INTEGER, displayString VARCHAR(255), submitted BOOLEAN);";
-            
-            if(sqlite3_exec(_database, dbInitStatement, NULL, NULL, &errorMsg) != SQLITE_OK) {
-                OKLog(@"Failed to create cache table");
-            } else {
-                OKLog(@"Created/found cache table");
-            }
-            
-            //TODO close?
-            sqlite3_close(_database);
-        } else {
-            OKLog(@"Failed to open/create database");
-        }
     } else {
         OKLog(@"Cache DB file found");
     }
+    
+    const char *dbpath = [[self dbPath] UTF8String];
+    
+    if(sqlite3_open(dbpath, &_database) == SQLITE_OK) {
+        char *errorMsg;
+        const char *dbInitStatement = "CREATE TABLE IF NOT EXISTS OKCACHE(id INTEGER PRIMARY KEY AUTOINCREMENT, leaderboardID INTEGER, scoreValue BIGINT, metadata INTEGER, displayString VARCHAR(255), submitted BOOLEAN);";
+        
+        if(sqlite3_exec(_database, dbInitStatement, NULL, NULL, &errorMsg) != SQLITE_OK) {
+            OKLog(@"Failed to create cache table");
+        } else {
+            OKLog(@"Created or found cache table");
+        }
+        
+        sqlite3_close(_database);
+    } else {
+        OKLog(@"Failed to open/create database");
+    }
 }
 
--(void)storeArrayOfEncodedScoresInDefaults:(NSArray*)encodedScores
+
+-(void)storeScore:(OKScore*)score
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:encodedScores forKey:SCORES_CACHE_KEY];
-    [defaults synchronize];
+    [self storeScore:score wasScoreSubmitted:NO];
 }
-
 
 -(void)storeScore:(OKScore*)score wasScoreSubmitted:(BOOL)submitted
 {
@@ -173,7 +170,6 @@ static sqlite3_stmt *deleteScoreStatement = nil;
         sqlite3_reset(deleteScoreStatement);
         sqlite3_clear_bindings(deleteScoreStatement);
         sqlite3_close(_database);
-
         
     } else {
         OKLog(@"Could not open cache db removeScore");
@@ -181,52 +177,28 @@ static sqlite3_stmt *deleteScoreStatement = nil;
 }
 
 
--(void)storeScore:(OKScore*)score
-{
-    NSMutableArray *mutableScoreCache = [[NSMutableArray alloc] initWithArray:[self getCachedEncodedScoresArray]];
-    NSData *encodedScore = [NSKeyedArchiver archivedDataWithRootObject:score];
-    [mutableScoreCache addObject:encodedScore];
-    
-    [self storeArrayOfEncodedScoresInDefaults:mutableScoreCache];
-    
-    OKLog(@"Cached score with value: %lld & leaderboard id: %d",[score scoreValue], [score OKLeaderboardID]);
-    
-}
-
--(NSArray*)getCachedScores
-{
-    NSMutableArray *scoreArray = [[NSMutableArray alloc] init];
-    NSArray *encodedScoresArray = [self getCachedEncodedScoresArray];
-    
-    for(int x = 0; x < [encodedScoresArray count]; x++)
-    {
-        NSData *encodedScore = [encodedScoresArray objectAtIndex:x];
-        OKScore *score = (OKScore *)[NSKeyedUnarchiver unarchiveObjectWithData:encodedScore];
-        [scoreArray addObject:score];
-    }
-    
-    //OKLog(@"Got %d cached scores", [encodedScoresArray count]);
-    return scoreArray;
-}
-
 -(NSArray*)getAllCachedScores
+{
+    const char *querySQL = "SELECT * FROM OKCACHE";
+    return [self getCachedScoresWithSQL:querySQL];
+}
+
+-(NSArray*)getCachedScoresWithSQL:(const char*)querySQL
 {
     NSMutableArray *scoresArray = [[NSMutableArray alloc] init];
     
     const char *dbpath = [[self dbPath] UTF8String];
-    static sqlite3_stmt *getAllScoresStatement = nil;
+    static sqlite3_stmt *getScoresStatement = nil;
     
     if(sqlite3_open(dbpath, &_database) == SQLITE_OK)
     {
-        const char *querySQL = "SELECT * FROM OKCACHE";
-        
-        if(sqlite3_prepare_v2(_database, querySQL, -1, &getAllScoresStatement, NULL) == SQLITE_OK){
-            while(sqlite3_step(getAllScoresStatement) == SQLITE_ROW) {
-                OKScore *score = [self getScoreFromCacheRow:getAllScoresStatement];
+        if(sqlite3_prepare_v2(_database, querySQL, -1, &getScoresStatement, NULL) == SQLITE_OK){
+            while(sqlite3_step(getScoresStatement) == SQLITE_ROW) {
+                OKScore *score = [self getScoreFromCacheRow:getScoresStatement];
                 [scoresArray addObject:score];
             }
         } else {
-            OKLog(@"Could not prepare statement");
+            OKLog(@"Could not prepare statement getCacheScoresWithSQL, error: %s", sqlite3_errmsg(_database));
         }
         
     } else {
@@ -235,6 +207,7 @@ static sqlite3_stmt *deleteScoreStatement = nil;
     
     return scoresArray;
 }
+
 
 // DB Schema is:
 // --------------------------------------------------------------------------------
@@ -270,59 +243,15 @@ static sqlite3_stmt *deleteScoreStatement = nil;
 }
 
 
-
--(void)removeScoreFromCache:(OKScore*)scoreToRemove
-{
-    NSArray *cachedEncodedScores = [self getCachedEncodedScoresArray];
-    NSMutableArray *mutableScoreCache = [[NSMutableArray alloc] init];
-    
-    // Copy the array (cache) but exclude the item to be removed
-    for(int x = 0; x < [cachedEncodedScores count]; x++)
-    {
-        NSData *encodedScore = [cachedEncodedScores objectAtIndex:x];
-        OKScore *score = (OKScore *)[NSKeyedUnarchiver unarchiveObjectWithData:encodedScore];
-        
-        if([score OKScoreID] == [scoreToRemove OKScoreID]) {
-            // Don't add it to the new one
-            OKLog(@"Removed cached score ID: %d", [scoreToRemove OKScoreID]);
-        } else {
-            [mutableScoreCache addObject:encodedScore];
-        }
-    }
-    
-    [self storeArrayOfEncodedScoresInDefaults:mutableScoreCache];
-}
-
-
 -(NSArray*)getCachedScoresForLeaderboardID:(int)leaderboardID
 {
-    NSArray *cachedScores = [self getCachedScores];
+    OKLog(@"Getting cached scores for leaderboard ID: %d",leaderboardID);
+    NSString *queryString = [NSString stringWithFormat:@"SELECT * FROM OKCACHE WHERE leaderboardID=%d",leaderboardID];
     
-    NSMutableArray *leaderboardScores = [[NSMutableArray alloc] init];
-    
-    for(int x = 0; x < [cachedScores count]; x++)
-    {
-        OKScore *score = [cachedScores objectAtIndex:x];
-        
-        if([score OKLeaderboardID] == leaderboardID)
-            [leaderboardScores addObject:score];
-    }
-    
-    return leaderboardScores;
+    const char* sqlQuery = [queryString UTF8String];
+    return [self getCachedScoresWithSQL:sqlQuery];
 }
 
--(NSArray*)getCachedEncodedScoresArray
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSArray *scoresCache = [defaults objectForKey:SCORES_CACHE_KEY];
-    
-    // If the cache is not found, return an empty array
-    if(scoresCache == nil || ![scoresCache isKindOfClass:[NSArray class]]) {
-        return [[NSArray alloc] init];
-    } else {
-        return scoresCache;
-    }
-}
 
 -(void)submitCachedScore:(OKScore*)score
 {
@@ -332,7 +261,7 @@ static sqlite3_stmt *deleteScoreStatement = nil;
         [score submitScoreWithCompletionHandler:^(NSError *error) {
             if(!error)
             {
-                [self removeScoreFromCache:score];
+                [self removeScore:score];
                 OKLog(@"Submitted cached core succesfully");
             }
         }];
@@ -343,17 +272,33 @@ static sqlite3_stmt *deleteScoreStatement = nil;
     }
 }
 
+
 -(void)clearCache
 {
     OKLog(@"Clear cached scores");
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:SCORES_CACHE_KEY];
-    [defaults synchronize];
+    
+    const char *dbpath = [[self dbPath] UTF8String];
+    
+    if(sqlite3_open(dbpath, &_database) == SQLITE_OK) {
+        char *errorMsg;
+        const char *clearDBStatement = "DROP TABLE IF EXISTS OKCACHE";
+        
+        if(sqlite3_exec(_database, clearDBStatement, NULL, NULL, &errorMsg) != SQLITE_OK) {
+            OKLog(@"Failed to drop cache table");
+        } else {
+            OKLog(@"Dropped ache table");
+        }
+        
+        sqlite3_close(_database);
+    } else {
+        OKLog(@"Coud not open DB to drop cache table");
+    }
+
 }
 
 -(void)submitAllCachedScores
 {
-    NSArray *cachedScores = [self getCachedScores];
+    NSArray *cachedScores = [self getAllCachedScores];
     
     if([cachedScores count] > 0)
     {
