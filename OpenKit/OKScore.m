@@ -203,4 +203,8 @@
         return OKScoreSocialNetworkUnknown;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"OKScore id: %d, value: %lld, leaderboard id: %d, display string: %@, metadata: %d", [self OKScoreID], [self scoreValue], [self OKLeaderboardID], [self displayString], [self metadata]];
+}
+
 @end
