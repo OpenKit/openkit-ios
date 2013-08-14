@@ -90,12 +90,7 @@ static sqlite3_stmt *updateScoreStatement = nil;
 }
 
 
--(void)storeScore:(OKScore*)score
-{
-    [self storeScore:score wasScoreSubmitted:NO];
-}
-
--(void)storeScore:(OKScore*)score wasScoreSubmitted:(BOOL)submitted
+-(void)insertScore:(OKScore*)score
 {
     const char *dbpath = [[self dbPath] UTF8String];
     
@@ -122,14 +117,17 @@ static sqlite3_stmt *updateScoreStatement = nil;
         } else {
             sqlite3_bind_null(insertScoreStatement, 4);
         }
-        sqlite3_bind_int(insertScoreStatement, 5, (int)submitted);
+        sqlite3_bind_int(insertScoreStatement, 5, (int)[score submitted]);
         
         //Execute the SQL statement
         if(sqlite3_step(insertScoreStatement) == SQLITE_DONE) {
             OKLog(@"Cached score : %@",score);
+            int scoreID = sqlite3_last_insert_rowid(_database);
+            [score setOKScoreID:scoreID];
         } else {
             OKLog(@"Failed to store score in cache wihth error message: %s",sqlite3_errmsg(_database));
         }
+        
         
         sqlite3_reset(insertScoreStatement);
         sqlite3_clear_bindings(insertScoreStatement);
@@ -140,7 +138,7 @@ static sqlite3_stmt *updateScoreStatement = nil;
     }
 }
 
--(void)removeScore:(OKScore*)score
+-(void)deleteScore:(OKScore*)score
 {
     if(![score OKScoreID]) {
         OKLog(@"Tried to remove a score without a scoreID set from cache db");
@@ -299,9 +297,6 @@ static sqlite3_stmt *updateScoreStatement = nil;
 }
 
 
-
-
-
 -(void)submitCachedScore:(OKScore*)score
 {
     if( [OKUser currentUser]) {
@@ -345,7 +340,6 @@ static sqlite3_stmt *updateScoreStatement = nil;
     
     //Reinit the DB after clearing out the cache
     [self initDB];
-
 }
 
 -(void)submitAllCachedScores
@@ -362,6 +356,67 @@ static sqlite3_stmt *updateScoreStatement = nil;
             [self submitCachedScore:score];
         }
     }
+}
+
+-(BOOL)isScoreBetterThanLocalCachedScores:(OKScore *)score
+{
+    return [self isScoreBetterThanLocalCachedScores:score storeScore:NO];
+}
+
+-(void)storeScoreIfBetter:(OKScore*)score
+{
+    [self isScoreBetterThanLocalCachedScores:score storeScore:YES];
+}
+
+//Returns YES if the score is stored in the cache
+-(BOOL)isScoreBetterThanLocalCachedScores:(OKScore*)scoreToStore storeScore:(BOOL)shouldStoreScore
+{
+    // if (score) > largestCachedScore || score < lowestCachedScore )
+    // store it
+    // return YES
+    // else
+    // don't store it, return no
+    
+    NSArray *cachedScores = [self getCachedScoresForLeaderboardID:[scoreToStore OKLeaderboardID]];
+    int numCachedScores = [cachedScores count];
+    
+    if(numCachedScores <= 1) {
+        if(shouldStoreScore) {
+            [self insertScore:scoreToStore];
+        }
+        return YES;
+    } else {
+        NSArray *sortedCachedScores = [OKScoreCache sortScoresDescending:cachedScores];
+        
+        OKScore *highestScore = [sortedCachedScores objectAtIndex:0];
+        OKScore *lowestScore = [sortedCachedScores objectAtIndex:numCachedScores-1];
+        
+        if([scoreToStore scoreValue] > [highestScore scoreValue]) {
+            if(shouldStoreScore) {
+                [self deleteScore:highestScore];
+                [self insertScore:scoreToStore];
+            }
+            return YES;
+        } else if ([scoreToStore scoreValue] < [lowestScore scoreValue]) {
+            if(shouldStoreScore) {
+                [self deleteScore:lowestScore];
+                [self insertScore:scoreToStore];
+            }
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+
++(NSArray*)sortScoresDescending:(NSArray*)scores
+{
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"scoreValue" ascending:NO];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    NSArray *sortedArray = [scores sortedArrayUsingDescriptors:sortDescriptors];
+    
+    return sortedArray;
 }
 
 - (void)dealloc

@@ -101,13 +101,49 @@
     return paramDict;
 }
 
+-(void)submitScoreBaseWithCompletionHandler:(void (^)(NSError *error))completionHandler
+{
+    //Can only submit scores for the currently logged in user
+    [self setUser:[OKUser currentUser]];
+    
+    //Create a request and send it to OpenKit
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [self getScoreParamDict], @"score", nil];
+    
+    [OKNetworker postToPath:@"/scores" parameters:params
+                    handler:^(id responseObject, NSError *error)
+     {
+         if(!error) {
+             OKLog(@"Successfully posted score to OpenKit");
+             [self setSubmitted:YES];
+             //OKLog(@"Response: %@", responseObject);
+         }else{
+             OKLog(@"Failed to post score to OpenKit");
+             OKLog(@"Error: %@", error);
+             [self setSubmitted:NO];
+         }
+         completionHandler(error);
+     }];
+}
+
+-(void)newSubmitScore
+{
+    if(![OKUser currentUser])
+    {
+        // cache the score
+    }
+ 
+    
+    
+}
+
 -(void)submitScoreWithCompletionHandler:(void (^)(NSError *error))completionHandler
 {
     //Can only submit scores for the currently logged in user
     [self setUser:[OKUser currentUser]];
     
     if (!self.user) {
-        [[OKScoreCache sharedCache] storeScore:self];
+        [[OKScoreCache sharedCache] storeScoreIfBetter:self];
         completionHandler([OKError noOKUserError]);
         return;
     }
