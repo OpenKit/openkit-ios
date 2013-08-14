@@ -21,6 +21,7 @@
 
 static sqlite3_stmt *insertScoreStatement = nil;
 static sqlite3_stmt *deleteScoreStatement = nil;
+static sqlite3_stmt *updateScoreStatement = nil;
 
 + (OKScoreCache*)sharedCache
 {
@@ -224,6 +225,45 @@ static sqlite3_stmt *deleteScoreStatement = nil;
     return scoresArray;
 }
 
+-(void)updateCachedScoreSubmitted:(OKScore*)score
+{
+    if(![score OKScoreID]) {
+        OKLog(@"Tried to update a score without a scoreID set from cache db");
+        return;
+    }
+    
+    const char *dbpath = [[self dbPath] UTF8String];
+    
+    if(sqlite3_open(dbpath, &_database) == SQLITE_OK) {
+        if(updateScoreStatement == nil) {
+            OKLog(@"Preparing statement for update score");
+            const char *updateSQL = "UPDATE OKCACHE SET Submitted=1 WHERE id=?";
+            
+            if(sqlite3_prepare_v2(_database, updateSQL, -1, &updateScoreStatement, NULL) != SQLITE_OK) {
+                OKLog(@"Failed to prepare update score statement with message: %s", sqlite3_errmsg(_database));
+                return;
+            }
+        }
+        
+        sqlite3_bind_int(updateScoreStatement, 1, [score OKScoreID]);
+        
+        if(sqlite3_step(updateScoreStatement) == SQLITE_DONE) {
+            OKLog(@"Removed score %@", score);
+        } else {
+            OKLog(@"Failed to remove score in cache wihth error message: %s",sqlite3_errmsg(_database));
+        }
+        
+        sqlite3_reset(updateScoreStatement);
+        sqlite3_clear_bindings(updateScoreStatement);
+        sqlite3_close(_database);
+        
+    } else {
+        OKLog(@"Could not open cache db removeScore");
+    }
+
+    
+}
+
 
 // DB Schema is:
 // --------------------------------------------------------------------------------
@@ -270,7 +310,7 @@ static sqlite3_stmt *deleteScoreStatement = nil;
         [score submitScoreWithCompletionHandler:^(NSError *error) {
             if(!error)
             {
-                [self removeScore:score];
+                [self updateCachedScoreSubmitted:score];
                 OKLog(@"Submitted cached core succesfully");
             }
         }];
