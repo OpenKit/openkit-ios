@@ -20,6 +20,7 @@
 @property (nonatomic) int metadata;
 @property (nonatomic, strong) NSString *displayString;
 @property (nonatomic, strong) NSString *gamecenterLeaderboardID;
+@property (nonatomic) BOOL submitted;
 
 - (id)initFromJSON:(NSDictionary*)jsonDict;
 - (void)submitScoreWithCompletionHandler:(void (^)(NSError *error))completionHandler;

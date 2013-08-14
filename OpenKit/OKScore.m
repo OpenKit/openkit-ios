@@ -19,7 +19,7 @@
 
 @implementation OKScore
 
-@synthesize OKLeaderboardID, OKScoreID, scoreValue, user, scoreRank, metadata, displayString, gamecenterLeaderboardID;
+@synthesize OKLeaderboardID, OKScoreID, scoreValue, user, scoreRank, metadata, displayString, gamecenterLeaderboardID, submitted;
 - (id)initFromJSON:(NSDictionary*)jsonDict
 {
     self = [super init];
@@ -48,6 +48,7 @@
     if(self) {
         self.OKLeaderboardID = okLeaderboardID;
         self.gamecenterLeaderboardID = gcID;
+        self.submitted = NO;
     }
     
     return self;
@@ -120,10 +121,12 @@
      {
          if(!error) {
              OKLog(@"Successfully posted score to OpenKit");
+             [self setSubmitted:YES];
              //OKLog(@"Response: %@", responseObject);
          }else{
              OKLog(@"Failed to post score to OpenKit");
              OKLog(@"Error: %@", error);
+             [self setSubmitted:NO];
          }
          completionHandler(error);
      }];
@@ -204,7 +207,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"OKScore id: %d, value: %lld, leaderboard id: %d, display string: %@, metadata: %d", [self OKScoreID], [self scoreValue], [self OKLeaderboardID], [self displayString], [self metadata]];
+    return [NSString stringWithFormat:@"OKScore id: %d, submitted: %d, value: %lld, leaderboard id: %d, display string: %@, metadata: %d", [self OKScoreID], [self submitted],[self scoreValue], [self OKLeaderboardID], [self displayString], [self metadata]];
 }
 
 @end
