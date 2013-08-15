@@ -101,10 +101,47 @@
     return paramDict;
 }
 
+
+-(void)submitScoreWithCompletionHandler:(void (^)(NSError *error))completionHandler
+{
+    // Submit to GC if GC leaderboard ID is specified
+    if(self.gamecenterLeaderboardID) {
+        [self submitScoreToGameCenter];
+    }
+    
+    // Only submit scores for the current user
+    [self setUser:[OKUser currentUser]];
+    
+    // Store the score in cache and find out if it should be submitted
+    BOOL shouldSubmit = [[OKScoreCache sharedCache] isScoreBetterThanLocalCachedScores:self storeScore:YES];
+    
+    // If there is an OKUser and the score is better than a submitted cached score
+    if([self user] && shouldSubmit) {
+        [self submitScoreBaseWithCompletionHandler:^(NSError *error) {
+            if(!error) {
+                // Score submitted successfully, update the cace
+                [[OKScoreCache sharedCache] updateCachedScoreSubmitted:self];
+                completionHandler(error);
+            }
+        }];
+    } else {
+        OKLog(@"Score was not submitted");
+        // Call the completionhandler with the appropriate error. When there is no user, call the nouser error.
+        // When a score is not submitted because it's not better, we have an explicit error for that
+        if(![self user]) {
+            completionHandler([OKError noOKUserError]);
+        } else {
+            completionHandler([OKError OKScoreNotSubmittedError]);
+        }
+    }
+}
+
 -(void)submitScoreBaseWithCompletionHandler:(void (^)(NSError *error))completionHandler
 {
-    //Can only submit scores for the currently logged in user
-    [self setUser:[OKUser currentUser]];
+    if (!self.user) {
+        completionHandler([OKError noOKUserError]);
+        return;
+    }
     
     //Create a request and send it to OpenKit
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -114,11 +151,11 @@
                     handler:^(id responseObject, NSError *error)
      {
          if(!error) {
-             OKLog(@"Successfully posted score to OpenKit");
+             OKLog(@"Successfully posted score to OpenKit: %@", self);
              [self setSubmitted:YES];
              //OKLog(@"Response: %@", responseObject);
          }else{
-             OKLog(@"Failed to post score to OpenKit");
+             OKLog(@"Failed to post score to OpenKit: %@",self);
              OKLog(@"Error: %@", error);
              [self setSubmitted:NO];
          }
@@ -126,46 +163,9 @@
      }];
 }
 
--(void)newSubmitScore
+- (void)cachedScoreSubmit:(void (^)(NSError *error))completionHandler
 {
-    if(![OKUser currentUser])
-    {
-        // cache the score
-    }
- 
-    
-    
-}
-
--(void)submitScoreWithCompletionHandler:(void (^)(NSError *error))completionHandler
-{
-    //Can only submit scores for the currently logged in user
-    [self setUser:[OKUser currentUser]];
-    
-    if (!self.user) {
-        [[OKScoreCache sharedCache] storeScoreIfBetter:self];
-        completionHandler([OKError noOKUserError]);
-        return;
-    }
-    
-    //Create a request and send it to OpenKit
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [self getScoreParamDict], @"score", nil];
-    
-    [OKNetworker postToPath:@"/scores" parameters:params
-                    handler:^(id responseObject, NSError *error)
-     {
-         if(!error) {
-             OKLog(@"Successfully posted score to OpenKit");
-             [self setSubmitted:YES];
-             //OKLog(@"Response: %@", responseObject);
-         }else{
-             OKLog(@"Failed to post score to OpenKit");
-             OKLog(@"Error: %@", error);
-             [self setSubmitted:NO];
-         }
-         completionHandler(error);
-     }];
+    [self submitScoreBaseWithCompletionHandler:completionHandler];
 }
 
 -(void)submitScoreToGameCenter
@@ -186,31 +186,14 @@
         }];
         
     } else {
-        //TODO handle the fact that GC is not available
         OKLog(@"Not submitting score to GameCenter, GC not available");
     }
 }
 
-//TODO add completion handlers for both
--(void)submitScoreToOpenKitAndGameCenter
-{
-    if(self.gamecenterLeaderboardID && [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
-        [self submitScoreToGameCenter];
-    }
-    
-    [self submitScoreWithCompletionHandler:^(NSError *error) {
-        //do something
-    }];
-}
 
 -(void)submitScoreToOpenKitAndGameCenterWithCompletionHandler:(void (^)(NSError *error))completionHandler
 {
     OKLog(@"Submitting score to OpenKit and GC");
-    
-    if(self.gamecenterLeaderboardID && [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
-        [self submitScoreToGameCenter];
-    }
-    
    [self submitScoreWithCompletionHandler:completionHandler];
 }
 

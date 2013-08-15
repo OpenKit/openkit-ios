@@ -44,7 +44,10 @@
 
 +(NSError*)OKServerRespondedWithDifferentUserIDError {
     return [NSError errorWithDomain:OKERROR_DOMAIN code:8 userInfo:[NSDictionary dictionaryWithObject:@"The OpenKit server responded with a different OKUser id than expected" forKey:NSLocalizedDescriptionKey]];
+}
 
++(NSError*)OKScoreNotSubmittedError {
+    return [NSError errorWithDomain:OKERROR_DOMAIN code:9 userInfo:[NSDictionary dictionaryWithObject:@"The score was not submitted to the OpenKit server because it is not better than previous submitted score. It may have still been submitted to GameCenter." forKey:NSLocalizedDescriptionKey]];
 }
 
 

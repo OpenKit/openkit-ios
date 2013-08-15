@@ -18,5 +18,6 @@
 +(NSError*)unknownFacebookRequestError;
 +(NSError*)gameCenterNotAvailableError;
 +(NSError*)OKServerRespondedWithDifferentUserIDError;
++(NSError*)OKScoreNotSubmittedError;
 
 @end

@@ -59,7 +59,7 @@
          
          NSMutableArray *leaderboards = nil;
          if(!error) {
-             NSLog(@"Successfully got list of leaderboards");
+             //NSLog(@"Successfully got list of leaderboards");
              //NSLog(@"Leaderboard response is: %@", responseObject);
              NSArray *leaderBoardsJSON = (NSArray*)responseObject;
              leaderboards = [NSMutableArray arrayWithCapacity:[leaderBoardsJSON count]];
@@ -232,8 +232,7 @@
      {
          NSMutableArray *scores = nil;
          if(!error) {
-             OKLog(@"Successfully got scores");
-             
+             //OKLog(@"Successfully got scores");
              NSArray *scoresJSON = (NSArray*)responseObject;
              scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
              

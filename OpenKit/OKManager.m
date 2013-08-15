@@ -60,6 +60,7 @@
         [nc addObserver:self selector:@selector(didShowDashboard:)  name:OKLeaderboardsViewDidAppear object:nil];
         [nc addObserver:self selector:@selector(willHideDashboard:) name:OKLeaderboardsViewWillDisappear object:nil];
         [nc addObserver:self selector:@selector(didHideDashboard:)  name:OKLeaderboardsViewDidDisappear object:nil];
+        
     }
     return self;
 }
@@ -121,6 +122,7 @@
     self->_currentUser = aCurrentUser;
     [self removeCachedUserFromKeychain];
     [self saveCurrentUserToKeychain];
+    [[OKScoreCache sharedCache] submitAllCachedScores];
 }
 
 - (void)saveCurrentUserToKeychain
@@ -138,8 +140,6 @@
         NSLog(@"Found  cached OKUser");
         OKUser *cachedUser = [OKUserUtilities createOKUserWithJSONData:userDict];
         _currentUser = cachedUser;
-        
-        [[OKScoreCache sharedCache] submitAllCachedScores];
     }
     else {
         NSLog(@"Did not find cached OKUser");
@@ -159,6 +159,7 @@
 + (void)handleDidBecomeActive
 {
     [OKFacebookUtilities handleDidBecomeActive];
+    [[OKScoreCache sharedCache] submitAllCachedScores];
 }
 
 + (void)handleWillTerminate

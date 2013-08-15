@@ -19,6 +19,8 @@
 -(void)submitAllCachedScores;
 -(void)clearCache;
 
+-(void)updateCachedScoreSubmitted:(OKScore*)score;
+
 -(BOOL)isScoreBetterThanLocalCachedScores:(OKScore *)score;
 -(void)storeScoreIfBetter:(OKScore*)score;
 -(BOOL)isScoreBetterThanLocalCachedScores:(OKScore*)scoreToStore storeScore:(BOOL)shouldStoreScore;
