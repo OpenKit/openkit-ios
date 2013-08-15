@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C0E7F2017BD5DEE0052BC3A /* OKLeaderboardSetupVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CEE2A9617BC9ED600C0B3B9 /* OKLeaderboardSetupVC.xib */; };
 		2CD025EF17A8A29E001ECD84 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD025EC17A8A1A7001ECD84 /* MessageUI.framework */; };
+		2CEE2A9717BC9ED600C0B3B9 /* OKLeaderboardSetupVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CEE2A9517BC9ED600C0B3B9 /* OKLeaderboardSetupVC.m */; };
 		321E99CB16D2FB6C005F1506 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */; };
 		321E99CF16D2FBA1005F1506 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 321E99CE16D2FBA1005F1506 /* ActionSheetStringPicker.m */; };
 		3222214B16CBB64E006EBD1C /* cell_border.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD01016CB65E800E8F185 /* cell_border.png */; };
@@ -325,6 +327,9 @@
 
 /* Begin PBXFileReference section */
 		2CD025EC17A8A1A7001ECD84 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		2CEE2A9417BC9ED600C0B3B9 /* OKLeaderboardSetupVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKLeaderboardSetupVC.h; sourceTree = "<group>"; };
+		2CEE2A9517BC9ED600C0B3B9 /* OKLeaderboardSetupVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKLeaderboardSetupVC.m; sourceTree = "<group>"; };
+		2CEE2A9617BC9ED600C0B3B9 /* OKLeaderboardSetupVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OKLeaderboardSetupVC.xib; path = ../../OpenKit/OKLeaderboardSetupVC.xib; sourceTree = "<group>"; };
 		321E99C716D2FB6C005F1506 /* AbstractActionSheetPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractActionSheetPicker.h; sourceTree = "<group>"; };
 		321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractActionSheetPicker.m; sourceTree = "<group>"; };
 		321E99CD16D2FBA1005F1506 /* ActionSheetStringPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetStringPicker.h; sourceTree = "<group>"; };
@@ -745,6 +750,7 @@
 				32CAD02B16CB65E800E8F185 /* OKNickViewController.xib */,
 				32CAD02C16CB65E800E8F185 /* OKProfileViewController.xib */,
 				32CAD02D16CB65E800E8F185 /* OKScoreViewController.xib */,
+				2CEE2A9617BC9ED600C0B3B9 /* OKLeaderboardSetupVC.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -891,6 +897,8 @@
 				44B50D09176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m */,
 				44BC5336176A96800038043A /* OKGKScoreWrapper.h */,
 				44BC5337176A96800038043A /* OKGKScoreWrapper.m */,
+				2CEE2A9417BC9ED600C0B3B9 /* OKLeaderboardSetupVC.h */,
+				2CEE2A9517BC9ED600C0B3B9 /* OKLeaderboardSetupVC.m */,
 			);
 			name = "Social Leaderboard";
 			sourceTree = "<group>";
@@ -1088,6 +1096,7 @@
 				44E30584178CCFA000611E0C /* gear@2x.png in Resources */,
 				44E30585178CCFA000611E0C /* invite.png in Resources */,
 				44E30586178CCFA000611E0C /* invite@2x.png in Resources */,
+				2C0E7F2017BD5DEE0052BC3A /* OKLeaderboardSetupVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1160,6 +1169,7 @@
 				4474BCD417815C46000AEAD1 /* OKColors.m in Sources */,
 				44E3058D178CD78E00611E0C /* OKFacebookUtilities.m in Sources */,
 				4455BEBE17A396DE0079859A /* OKScoreCache.m in Sources */,
+				2CEE2A9717BC9ED600C0B3B9 /* OKLeaderboardSetupVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
