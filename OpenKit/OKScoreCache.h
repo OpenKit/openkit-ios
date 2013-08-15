@@ -13,12 +13,17 @@
 
 + (OKScoreCache*)sharedCache;
 
--(void)storeScore:(OKScore*)score;
--(NSArray*)getCachedScores;
+-(NSArray*)getAllCachedScores;
 -(NSArray*)getCachedScoresForLeaderboardID:(int)leaderboardID;
 -(void)submitCachedScore:(OKScore*)score;
 -(void)submitAllCachedScores;
 -(void)clearCache;
+
+-(void)updateCachedScoreSubmitted:(OKScore*)score;
+
+-(BOOL)isScoreBetterThanLocalCachedScores:(OKScore *)score;
+-(void)storeScoreIfBetter:(OKScore*)score;
+-(BOOL)isScoreBetterThanLocalCachedScores:(OKScore*)scoreToStore storeScore:(BOOL)shouldStoreScore;
 
 
 @end

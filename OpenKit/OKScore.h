@@ -20,12 +20,12 @@
 @property (nonatomic) int metadata;
 @property (nonatomic, strong) NSString *displayString;
 @property (nonatomic, strong) NSString *gamecenterLeaderboardID;
+@property (nonatomic) BOOL submitted;
 
 - (id)initFromJSON:(NSDictionary*)jsonDict;
 - (void)submitScoreWithCompletionHandler:(void (^)(NSError *error))completionHandler;
--(void)submitScoreToOpenKitAndGameCenter;
--(void)submitScoreToOpenKitAndGameCenterWithCompletionHandler:(void (^)(NSError *error))completionHandler;
-
--(void)setRank:(NSInteger)rank;
+- (void)submitScoreToOpenKitAndGameCenterWithCompletionHandler:(void (^)(NSError *error))completionHandler;
+- (void)setRank:(NSInteger)rank;
+- (void)cachedScoreSubmit:(void (^)(NSError *error))completionHandler;
 
 @end
