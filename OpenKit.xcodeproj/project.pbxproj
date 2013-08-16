@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		2C0E7F2017BD5DEE0052BC3A /* OKLeaderboardSetupVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CEE2A9617BC9ED600C0B3B9 /* OKLeaderboardSetupVC.xib */; };
+		2C0E7F2917BDB3E60052BC3A /* gamecenter_off_big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0E7F2217BD7BD50052BC3A /* gamecenter_off_big@2x.png */; };
+		2C0E7F2A17BDB3E60052BC3A /* gamecenter_on_big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0E7F2417BD7BD80052BC3A /* gamecenter_on_big@2x.png */; };
+		2C0E7F2B17BDB3E60052BC3A /* gamecenter_off_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0E7F2317BD7BD70052BC3A /* gamecenter_off_big.png */; };
+		2C0E7F2C17BDB3E60052BC3A /* gamecenter_on_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0E7F2117BD7BD40052BC3A /* gamecenter_on_big.png */; };
+		2C0E7F2D17BDB3E60052BC3A /* facebook_off_big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0E7F2817BD7BDC0052BC3A /* facebook_off_big@2x.png */; };
+		2C0E7F2E17BDB3E60052BC3A /* facebook_on_big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0E7F2517BD7BD90052BC3A /* facebook_on_big@2x.png */; };
+		2C0E7F2F17BDB3E60052BC3A /* facebook_off_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0E7F2617BD7BDA0052BC3A /* facebook_off_big.png */; };
+		2C0E7F3017BDB3E60052BC3A /* facebook_on_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C0E7F2717BD7BDC0052BC3A /* facebook_on_big.png */; };
 		2CD025EF17A8A29E001ECD84 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD025EC17A8A1A7001ECD84 /* MessageUI.framework */; };
 		2CEE2A9717BC9ED600C0B3B9 /* OKLeaderboardSetupVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CEE2A9517BC9ED600C0B3B9 /* OKLeaderboardSetupVC.m */; };
 		321E99CB16D2FB6C005F1506 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */; };
@@ -1066,6 +1074,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C0E7F2917BDB3E60052BC3A /* gamecenter_off_big@2x.png in Resources */,
+				2C0E7F2A17BDB3E60052BC3A /* gamecenter_on_big@2x.png in Resources */,
+				2C0E7F2B17BDB3E60052BC3A /* gamecenter_off_big.png in Resources */,
+				2C0E7F2C17BDB3E60052BC3A /* gamecenter_on_big.png in Resources */,
+				2C0E7F2D17BDB3E60052BC3A /* facebook_off_big@2x.png in Resources */,
+				2C0E7F2E17BDB3E60052BC3A /* facebook_on_big@2x.png in Resources */,
+				2C0E7F2F17BDB3E60052BC3A /* facebook_off_big.png in Resources */,
+				2C0E7F3017BDB3E60052BC3A /* facebook_on_big.png in Resources */,
 				44E3057B178CCCF000611E0C /* facebook_icon.png in Resources */,
 				44E3057C178CCCF000611E0C /* facebook_icon@2x.png in Resources */,
 				44E3057D178CCCF000611E0C /* gamecenter_icon.png in Resources */,
