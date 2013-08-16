@@ -121,8 +121,8 @@
             if(!error) {
                 // Score submitted successfully, update the cace
                 [[OKScoreCache sharedCache] updateCachedScoreSubmitted:self];
-                completionHandler(error);
             }
+            completionHandler(error);
         }];
     } else {
         OKLog(@"Score was not submitted");

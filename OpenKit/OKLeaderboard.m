@@ -322,7 +322,7 @@
 
 -(OKScore*)getPlayerTopScoreFromLocalCache
 {
-    NSArray *cachedScores = [[OKScoreCache sharedCache] getCachedScoresForLeaderboardID:[self OKLeaderboard_id]];
+    NSArray *cachedScores = [[OKScoreCache sharedCache] getCachedScoresForLeaderboardID:[self OKLeaderboard_id] andOnlyGetSubmittedScores:NO];
     
     if([cachedScores count] == 0)
         return nil;
