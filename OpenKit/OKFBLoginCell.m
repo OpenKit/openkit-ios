@@ -30,21 +30,7 @@
 }
 
 -(void)layoutSubviews {
-    [connectFBButton setBackgroundColor:UIColorFromRGB(0x1c5c97)];
-    [connectFBButton.layer setCornerRadius:3.0f];
-    
-    [connectFBButton setClipsToBounds:YES];
-    
-    [connectFBButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [connectFBButton setTintColor:UIColorFromRGB(0x277ac6)];
-    
-    //Set drop shadow 2c4372
-    connectFBButton.layer.shadowColor = [UIColorFromRGB(0x2c4372) CGColor];
-    connectFBButton.layer.shadowOpacity = 1.0;
-    connectFBButton.layer.shadowRadius = 0;
-    connectFBButton.layer.shadowOffset = CGSizeMake(2.0f, 0.0f);
-    
-    //[connectFBButton setBackgroundImage:[UIImage imagewith] forState:<#(UIControlState)#>]
+
     [super layoutSubviews];
     
 }

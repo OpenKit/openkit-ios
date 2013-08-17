@@ -121,7 +121,7 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
   [mail setSubject:@"Check out Ridiculous Fishing"];
   
   //Set the message
-  NSString * sentFrom = @"<h1>Check out this game!</h1><a href='http://toddham.com/openkit/invite.html'>Test Link</a>";
+  NSString * sentFrom = @"<p>Check out this game! <a href='http://toddham.com/openkit/invite.html'>Test Link</a></p>";
   [mail setMessageBody:sentFrom isHTML:YES];
   
   [self presentViewController:mail animated:YES completion:nil];
