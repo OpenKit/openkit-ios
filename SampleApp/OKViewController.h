@@ -18,7 +18,6 @@
 - (IBAction)submitScore:(id)sender;
 - (IBAction)showCloudDataTest:(id)sender;
 - (IBAction)launchGameCenter:(id)sender;
-- (IBAction)showLeaderboardSetup:(id)sender;
 
 @property (nonatomic, strong) IBOutlet OKUserProfileImageView *profileImageView;
 @property (nonatomic, strong) IBOutlet UIButton *logoutButton;

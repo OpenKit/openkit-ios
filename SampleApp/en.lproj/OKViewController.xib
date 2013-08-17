@@ -144,7 +144,7 @@
 					<object class="IBUIButton" id="716925360">
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{170, 204}, {130, 44}}</string>
+						<string key="NSFrame">{{20, 204}, {130, 44}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="969375901"/>
@@ -247,11 +247,11 @@
 					</object>
 					<object class="IBUIButton" id="969375901">
 						<reference key="NSNextResponder" ref="774585933"/>
-						<int key="NSvFlags">260</int>
+						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{170, 153}, {130, 44}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="762947391"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -259,28 +259,6 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<int key="IBUIButtonType">1</int>
 						<string key="IBUINormalTitle">Game Center</string>
-						<reference key="IBUIHighlightedTitleColor" ref="21934042"/>
-						<object class="NSColor" key="IBUINormalTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
-						</object>
-						<reference key="IBUINormalTitleShadowColor" ref="474637503"/>
-						<reference key="IBUIFontDescription" ref="453142712"/>
-						<reference key="IBUIFont" ref="327679662"/>
-					</object>
-					<object class="IBUIButton" id="762947391">
-						<reference key="NSNextResponder" ref="774585933"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 204}, {130, 44}}</string>
-						<reference key="NSSuperview" ref="774585933"/>
-						<reference key="NSWindow"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="IBUIOpaque">NO</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<int key="IBUIContentHorizontalAlignment">0</int>
-						<int key="IBUIContentVerticalAlignment">0</int>
-						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Landing Page</string>
 						<reference key="IBUIHighlightedTitleColor" ref="21934042"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
@@ -420,15 +398,6 @@
 					</object>
 					<int key="connectionID">199</int>
 				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">showLeaderboardSetup:</string>
-						<reference key="source" ref="762947391"/>
-						<reference key="destination" ref="372490531"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">212</int>
-				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -459,10 +428,9 @@
 							<reference ref="937853525"/>
 							<reference ref="340006078"/>
 							<reference ref="379544013"/>
-							<reference ref="716925360"/>
 							<reference ref="969375901"/>
-							<reference ref="762947391"/>
 							<reference ref="441565663"/>
+							<reference ref="716925360"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -515,11 +483,6 @@
 						<reference key="object" ref="969375901"/>
 						<reference key="parent" ref="774585933"/>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">209</int>
-						<reference key="object" ref="762947391"/>
-						<reference key="parent" ref="774585933"/>
-					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -536,7 +499,6 @@
 				<string key="190.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="193.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="197.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="209.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="97.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
@@ -564,7 +526,6 @@
 						<string key="loginToOpenKit:">id</string>
 						<string key="logoutOfOpenKit:">id</string>
 						<string key="showCloudDataTest:">id</string>
-						<string key="showLeaderboardSetup:">id</string>
 						<string key="submitScore:">id</string>
 						<string key="viewLeaderboards:">id</string>
 					</dictionary>
@@ -583,10 +544,6 @@
 						</object>
 						<object class="IBActionInfo" key="showCloudDataTest:">
 							<string key="name">showCloudDataTest:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showLeaderboardSetup:">
-							<string key="name">showLeaderboardSetup:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="submitScore:">

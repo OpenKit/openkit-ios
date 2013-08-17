@@ -26,7 +26,7 @@
 
 -(id)init
 {
-    return [self initWithLoginString:@"Create an account to access leaderboards and resume game progress from any device."];
+    return [self initWithLoginString:@"More Friends, More Fun!"];
 }
 
 -(id)initWithLoginString:(NSString *)loginString

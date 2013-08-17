@@ -12,7 +12,6 @@
 #import "CloudDataTestVC.h"
 #import "OKFacebookUtilities.h"
 #import "OKFacebookUtilities.h"
-#import "OKLeaderboardSetupVC.h"
 
 
 @implementation OKViewController
@@ -103,14 +102,6 @@
     ScoreSubmitterVC *scoreSubmitter = [[ScoreSubmitterVC alloc] initWithNibName:@"ScoreSubmitterVC" bundle:nil];
     [self presentModalViewController:scoreSubmitter animated:YES];
 }
-
-
--(IBAction)showLeaderboardSetup:(id)sender
-{
-  OKLeaderboardSetupVC *leaderboardSetup = [[OKLeaderboardSetupVC alloc] initWithNibName:@"OKLeaderboardSetupVC" bundle:nil];
-  [self presentModalViewController:leaderboardSetup animated:YES];
-}
-
 
 - (IBAction)showCloudDataTest:(id)sender
 {
