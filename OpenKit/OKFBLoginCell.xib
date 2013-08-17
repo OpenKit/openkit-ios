@@ -44,16 +44,15 @@
 							<object class="IBUIButton" id="37333658">
 								<reference key="NSNextResponder" ref="39578383"/>
 								<int key="NSvFlags">269</int>
-								<string key="NSFrame">{{147, 50}, {186, 44}}</string>
+								<string key="NSFrame">{{428, 14}, {32, 32}}</string>
 								<reference key="NSSuperview" ref="39578383"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="810369030"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<string key="IBUINormalTitle">Connect Facebook</string>
 								<object class="NSColor" key="IBUIHighlightedTitleColor" id="589702686">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
@@ -79,17 +78,17 @@
 							<object class="IBUILabel" id="1058819279">
 								<reference key="NSNextResponder" ref="39578383"/>
 								<int key="NSvFlags">295</int>
-								<string key="NSFrame">{{46, 20}, {388, 25}}</string>
+								<string key="NSFrame">{{20, 19}, {400, 25}}</string>
 								<reference key="NSSuperview" ref="39578383"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="37333658"/>
+								<reference key="NSNextKeyView" ref="810369030"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">See how your scores compare to your Facebook friends.</string>
+								<string key="IBUIText">Include friends from</string>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MCAwIDAAA</bytes>
@@ -98,10 +97,10 @@
 								<reference key="IBUIHighlightedColor" ref="589702686"/>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<int key="IBUINumberOfLines">2</int>
-								<int key="IBUITextAlignment">1</int>
-								<int key="IBUILineBreakMode">0</int>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
-									<int key="type">2</int>
+									<string key="name">Helvetica-Bold</string>
+									<string key="family">Helvetica</string>
+									<int key="traits">2</int>
 									<double key="pointSize">12</double>
 								</object>
 								<object class="NSFont" key="IBUIFont">
@@ -110,21 +109,22 @@
 									<int key="NSfFlags">16</int>
 								</object>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
-								<double key="preferredMaxLayoutWidth">388</double>
+								<double key="preferredMaxLayoutWidth">400</double>
 							</object>
 							<object class="IBUIActivityIndicatorView" id="810369030">
 								<reference key="NSNextResponder" ref="39578383"/>
 								<int key="NSvFlags">-2147483347</int>
-								<string key="NSFrame">{{230, 53}, {20, 20}}</string>
+								<string key="NSFrame">{{230, 22}, {20, 20}}</string>
 								<reference key="NSSuperview" ref="39578383"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="37333658"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIStyle">2</int>
 							</object>
 						</array>
-						<string key="NSFrameSize">{480, 114}</string>
+						<string key="NSFrameSize">{480, 59}</string>
 						<reference key="NSSuperview" ref="604679396"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1058819279"/>
@@ -140,7 +140,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{480, 115}</string>
+				<string key="NSFrameSize">{480, 60}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="39578383"/>
@@ -229,14 +229,13 @@
 						<reference key="parent" ref="604679396"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">15</int>
-						<reference key="object" ref="1058819279"/>
-						<array class="NSMutableArray" key="children"/>
+						<int key="objectID">59</int>
+						<reference key="object" ref="810369030"/>
 						<reference key="parent" ref="604679396"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">59</int>
-						<reference key="object" ref="810369030"/>
+						<int key="objectID">15</int>
+						<reference key="object" ref="1058819279"/>
 						<reference key="parent" ref="604679396"/>
 					</object>
 				</array>

@@ -244,13 +244,13 @@ typedef enum {
     switch(rowType) {
             
         case SocialSectionRowFBLoginRow:
-            return 115;
+            return 60;
             break;
         case SocialSectionRowProgressBarRow:
             return 60;
             break;
         case SocialSectionRowInviteFriends:
-            return 115;
+            return 60;
             break;
         case SocialSectionRowSocialScoreRow:
             return 60;

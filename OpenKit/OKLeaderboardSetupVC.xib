@@ -374,10 +374,10 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="facebook_off_big.png">{105, 105}</string>
-			<string key="facebook_on_big.png">{105, 105}</string>
-			<string key="gamecenter_off_big.png">{105, 105}</string>
-			<string key="gamecenter_on_big.png">{105, 105}</string>
+			<string key="facebook_off_big.png">{16, 16}</string>
+			<string key="facebook_on_big.png">{16, 16}</string>
+			<string key="gamecenter_off_big.png">{16, 16}</string>
+			<string key="gamecenter_on_big.png">{16, 16}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
