@@ -122,7 +122,7 @@
     [gcLoginButton addTarget:self
                       action:nil
             forControlEvents:UIControlEventTouchDown];
-    UIImage * gcButtonImage = [UIImage imageNamed:@"gamecenter_off_big"];
+    UIImage * gcButtonImage = [UIImage imageNamed:@"gc_off_big.png"];
     [gcLoginButton setBackgroundImage:gcButtonImage forState:UIControlStateNormal];
     
     [loginView addSubview:gcLoginButton];
@@ -135,7 +135,7 @@
                  action:@selector(performFacebookLogin:)
        forControlEvents:UIControlEventTouchDown];
     //[fbLoginButton setTitle:@"Facebook" forState:UIControlStateNormal];
-    UIImage * fbButtonImage = [UIImage imageNamed:@"facebook_off_big"];
+    UIImage * fbButtonImage = [UIImage imageNamed:@"fb_off_big.png"];
     [fbLoginButton setBackgroundImage:fbButtonImage forState:UIControlStateNormal];
     
     [loginView addSubview:fbLoginButton];

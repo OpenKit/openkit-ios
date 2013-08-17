@@ -60,7 +60,7 @@
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
-								<object class="NSColor" key="IBUINormalTitleShadowColor" id="897219647">
+								<object class="NSColor" key="IBUINormalTitleShadowColor" id="355845684">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC41AA</bytes>
 								</object>
@@ -68,11 +68,11 @@
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">include_fb_off.png</string>
 								</object>
-								<object class="IBUIFontDescription" key="IBUIFontDescription" id="909522116">
+								<object class="IBUIFontDescription" key="IBUIFontDescription" id="662518863">
 									<int key="type">2</int>
 									<double key="pointSize">15</double>
 								</object>
-								<object class="NSFont" key="IBUIFont" id="724153015">
+								<object class="NSFont" key="IBUIFont" id="366034562">
 									<string key="NSName">Helvetica-Bold</string>
 									<double key="NSSize">15</double>
 									<int key="NSfFlags">16</int>
@@ -120,13 +120,13 @@
 								<string key="NSFrame">{{230, 22}, {20, 20}}</string>
 								<reference key="NSSuperview" ref="39578383"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="1059323638"/>
+								<reference key="NSNextKeyView" ref="248530416"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIStyle">2</int>
 							</object>
-							<object class="IBUIButton" id="1059323638">
+							<object class="IBUIButton" id="248530416">
 								<reference key="NSNextResponder" ref="39578383"/>
 								<int key="NSvFlags">257</int>
 								<string key="NSFrame">{{388, 14}, {32, 32}}</string>
@@ -143,13 +143,13 @@
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
-								<reference key="IBUINormalTitleShadowColor" ref="897219647"/>
+								<reference key="IBUINormalTitleShadowColor" ref="355845684"/>
 								<object class="NSCustomResource" key="IBUINormalImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">include_gc_off.png</string>
 								</object>
-								<reference key="IBUIFontDescription" ref="909522116"/>
-								<reference key="IBUIFont" ref="724153015"/>
+								<reference key="IBUIFontDescription" ref="662518863"/>
+								<reference key="IBUIFont" ref="366034562"/>
 							</object>
 						</array>
 						<string key="NSFrameSize">{480, 59}</string>
@@ -246,7 +246,7 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="810369030"/>
 							<reference ref="37333658"/>
-							<reference ref="1059323638"/>
+							<reference ref="248530416"/>
 							<reference ref="1058819279"/>
 						</array>
 						<reference key="parent" ref="0"/>
@@ -269,7 +269,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">80</int>
-						<reference key="object" ref="1059323638"/>
+						<reference key="object" ref="248530416"/>
 						<reference key="parent" ref="604679396"/>
 					</object>
 				</array>

@@ -46,7 +46,7 @@
 
 - (NSString *)playerCountString
 {
-    return [NSString stringWithFormat:@"%d Players", playerCount];
+    return [NSString stringWithFormat:@"%d Leaderboards", playerCount];
 }
 
 + (void)getLeaderboardsWithCompletionHandler:(void (^)(NSArray* leaderboards, int playerCount, NSError* error))completionHandler

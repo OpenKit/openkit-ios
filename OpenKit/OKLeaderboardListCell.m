@@ -27,9 +27,9 @@
     
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseID];
     if (self) {
-        CGRect CellFrame = CGRectMake(0, 0, 300, 57);
-        CGRect LeaderbordLabel = CGRectMake(68, 11, 300, 20);
-        CGRect PlayersLabel = CGRectMake(68, 28, 300, 20);
+        CGRect CellFrame = CGRectMake(0, 0, 300, 60);
+        CGRect LeaderbordLabel = CGRectMake(68, 0, 300, 60);
+        //CGRect PlayersLabel = CGRectMake(68, 28, 300, 20);
         
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
@@ -41,13 +41,13 @@
         [self.contentView addSubview:label1];
         
         //Initialize Label with tag 2.
-        label2 = [[UILabel alloc] initWithFrame:PlayersLabel];
-        label2.tag = 2;
-        label2.font = [UIFont boldSystemFontOfSize:12];
-        label2.textColor = [UIColor lightGrayColor];
-        label2.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:label2];
-        
+//        label2 = [[UILabel alloc] initWithFrame:PlayersLabel];
+//        label2.tag = 2;
+//        label2.font = [UIFont boldSystemFontOfSize:12];
+//        label2.textColor = [UIColor lightGrayColor];
+//        label2.backgroundColor = [UIColor clearColor];
+//        [self.contentView addSubview:label2];
+      
         // Initialize leaderboard icon
         leaderboardIcon = [[AFImageView alloc] initWithFrame:CGRectMake(15,10, 39, 39)];
         leaderboardIcon.image = [UIImage imageNamed:@"leaderboard_icon.png"];
@@ -65,7 +65,7 @@
     leaderboard = aLeaderboard;
     
     label1.text = [leaderboard name];
-    label2.text = [leaderboard playerCountString];
+    //label2.text = [leaderboard playerCountString];
     
     [leaderboardIcon setImageWithURL:[NSURL URLWithString:[leaderboard icon_url]]];
 }
