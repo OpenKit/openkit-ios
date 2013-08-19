@@ -406,7 +406,7 @@ typedef enum {
 {
     OKScoreCell *cell = [self getScoreCellForScore:score withTableView:_tableView andShowSocialNetworkIcon:NO];
     [cell setBackgroundColor:[OKColors playerTopScoreBGColor]];
-    
+  
     return cell;
 }
 

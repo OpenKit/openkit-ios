@@ -50,7 +50,6 @@
       
         // Initialize leaderboard icon
         leaderboardIcon = [[AFImageView alloc] initWithFrame:CGRectMake(15,10, 39, 39)];
-        leaderboardIcon.image = [UIImage imageNamed:@"leaderboard_icon.png"];
         leaderboardIcon.layer.masksToBounds = YES;
         leaderboardIcon.layer.cornerRadius = 3;
         [self.contentView addSubview:leaderboardIcon];
