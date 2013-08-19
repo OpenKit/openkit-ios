@@ -43,8 +43,8 @@
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUITextField" id="88497959">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{20, 111}, {528, 30}}</string>
+						<int key="NSvFlags">258</int>
+						<string key="NSFrame">{{20, 111}, {280, 30}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1001492744"/>
@@ -80,8 +80,8 @@
 					</object>
 					<object class="IBUILabel" id="533267574">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{20, 64}, {528, 39}}</string>
+						<int key="NSvFlags">290</int>
+						<string key="NSFrame">{{20, 64}, {280, 39}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="88497959"/>
@@ -116,12 +116,12 @@
 							<int key="NSfFlags">16</int>
 						</object>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
-						<double key="preferredMaxLayoutWidth">528</double>
+						<double key="preferredMaxLayoutWidth">280</double>
 					</object>
 					<object class="IBUIButton" id="1001492744">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrame">{{20, 149}, {528, 44}}</string>
+						<string key="NSFrame">{{20, 149}, {280, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="117207920"/>
@@ -153,8 +153,8 @@
 					</object>
 					<object class="IBUIActivityIndicatorView" id="675212181">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">-2147483392</int>
-						<string key="NSFrame">{{142, 265}, {37, 37}}</string>
+						<int key="NSvFlags">-2147483355</int>
+						<string key="NSFrame">{{141, 229}, {37, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -169,7 +169,7 @@
 					<object class="IBUINavigationBar" id="753910797">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">290</int>
-						<string key="NSFrameSize">{568, 44}</string>
+						<string key="NSFrameSize">{320, 44}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="533267574"/>
@@ -196,8 +196,8 @@
 					</object>
 					<object class="IBUILabel" id="117207920">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">-2147483356</int>
-						<string key="NSFrame">{{20, 236}, {280, 21}}</string>
+						<int key="NSvFlags">-2147483358</int>
+						<string key="NSFrame">{{20, 200}, {280, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="675212181"/>
@@ -228,17 +228,13 @@
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 					</object>
 				</array>
-				<string key="NSFrameSize">{568, 320}</string>
+				<string key="NSFrameSize">{320, 568}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="753910797"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
 					<bytes key="NSRGB">MC45MjU0OTAxOTYxIDAuOTI1NDkwMTk2MSAwLjkyNTQ5MDE5NjEAA</bytes>
-				</object>
-				<object class="IBUISimulatedOrientationMetrics" key="IBUISimulatedOrientationMetrics">
-					<int key="IBUIInterfaceOrientation">3</int>
-					<int key="interfaceOrientation">3</int>
 				</object>
 				<object class="IBUIScreenMetrics" key="IBUISimulatedDestinationMetrics">
 					<string key="IBUISimulatedSizeMetricsClass">IBUIScreenMetrics</string>
@@ -342,8 +338,8 @@
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="753910797"/>
-							<reference ref="88497959"/>
 							<reference ref="533267574"/>
+							<reference ref="88497959"/>
 							<reference ref="1001492744"/>
 							<reference ref="675212181"/>
 							<reference ref="117207920"/>
