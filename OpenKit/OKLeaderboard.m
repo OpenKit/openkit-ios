@@ -76,6 +76,27 @@
      }];
 }
 
++(void)getLeaderboardID:(int)leaderboardID withCompletionHandler:(void (^)(OKLeaderboard *leaderboard, NSError *error))completionHandler
+{
+    NSString *requestPath = [NSString stringWithFormat:@"/leaderboards/%d", leaderboardID];
+    
+    [OKNetworker getFromPath:requestPath parameters:nil
+                     handler:^(id responseObject, NSError *error)
+     {
+         OKLeaderboard *leaderboard;
+         
+         if(!error) {
+             if(![responseObject isKindOfClass:[NSDictionary class]]) {
+                 completionHandler(leaderboard, [OKError unknownError]);
+                 return;
+             } else {
+                 leaderboard = [[OKLeaderboard alloc] initFromJSON:responseObject];
+             }
+         }
+         completionHandler(leaderboard, error);
+     }];
+}
+
 
 -(NSString*)getParamForLeaderboardTimeRange:(OKLeaderboardTimeRange)range
 {
