@@ -27,8 +27,27 @@
     (obj == [NSNull null]);
 }
 
++(NSArray*)getNSArraySafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
+{
+    if(![jsonDict isKindOfClass:[NSDictionary class]]) {
+        return nil;
+    }
+    
+    id value = [jsonDict objectForKey:key];
+    
+    if([value isKindOfClass:[NSArray class]]) {
+        return value;
+    } else {
+        return nil;
+    }
+}
+
 +(NSNumber*)getNSNumberSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
 {
+    if(![jsonDict isKindOfClass:[NSDictionary class]]) {
+        return nil;
+    }
+    
     id value = [jsonDict objectForKey:key];
     
     if([value isKindOfClass:[NSNumber class]]) {
@@ -46,6 +65,10 @@
 
 +(NSString*)getStringSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
 {
+    if(![jsonDict isKindOfClass:[NSDictionary class]]) {
+        return nil;
+    }
+    
     NSString *value = [jsonDict objectForKey:key];
     
     if([value isKindOfClass:[NSString class]]) {

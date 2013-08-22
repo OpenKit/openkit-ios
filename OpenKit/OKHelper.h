@@ -11,6 +11,7 @@
 @interface OKHelper : NSObject
 
 + (NSDate *)dateNDaysFromToday:(int)n;
++(NSArray*)getNSArraySafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict;
 +(NSString*)getStringSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict;
 +(NSNumber*)getNSNumberSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict;
 +(NSString*)getPathToDocsDirectory;

@@ -16,6 +16,7 @@
 #import "OKError.h"
 #import "OKUser.h"
 #import "OKScoreCache.h"
+#import "OKHelper.h"
 
 @implementation OKFacebookUtilities
 
@@ -251,7 +252,8 @@
             completionHandler(nil, error);
         }
         else {
-            NSArray *graphFriends = [result objectForKey:@"data"];
+            //NSArray *graphFriends = [result objectForKey:@"data"];
+            NSArray *graphFriends = [OKHelper getNSArraySafeForKey:@"data" fromJSONDictionary:result];
             
             if(graphFriends) {
                 OKLog(@"Received %d friends", [graphFriends count]);
@@ -298,8 +300,10 @@
     for(int x = 0; x < [friendsJSON count]; x++)
     {
         NSDictionary *friendDict = [friendsJSON objectAtIndex:x];
-        NSString *friendID = [friendDict objectForKey:@"id"];
-        [list addObject:friendID];
+        NSString *friendID = [OKHelper getStringSafeForKey:@"id" fromJSONDictionary:friendDict];
+        if(friendID != nil) {
+            [list addObject:friendID];
+        }
     }
     
     return list;
