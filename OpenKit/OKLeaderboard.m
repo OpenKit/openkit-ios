@@ -27,8 +27,10 @@
 - (id)initFromJSON:(NSDictionary*)jsonDict
 {
     if ((self = [super init])) {
-        NSString *sortTypeString    = (NSString*)[jsonDict objectForKey:@"sort_type"];
-
+        //NSString *sortTypeString    = (NSString*)[jsonDict objectForKey:@"sort_type"];
+        NSString *sortTypeString    = [OKHelper getStringSafeForKey:@"sort_type" fromJSONDictionary:jsonDict];
+        
+        /*
         self.name                   = [jsonDict objectForKey:@"name"];
         self.OKLeaderboard_id       = [[jsonDict objectForKey:@"id"] integerValue];
         self.OKApp_id               = [[jsonDict objectForKey:@"app_id"] integerValue];
@@ -37,8 +39,16 @@
         self.icon_url               = [jsonDict objectForKey:@"icon_url"];
         self.playerCount            = [[jsonDict objectForKey:@"player_count"] integerValue];
         self.gamecenter_id          = [OKHelper getStringSafeForKey:@"gamecenter_id" fromJSONDictionary:jsonDict];
-
-        //_timeRange = OKLeaderboardTimeRangeOneDay;
+        */
+        
+        self.name                   = [OKHelper getStringSafeForKey:@"name" fromJSONDictionary:jsonDict];
+        self.OKLeaderboard_id       = [[OKHelper getNSNumberSafeForKey:@"id" fromJSONDictionary:jsonDict] integerValue];
+        self.OKApp_id               = [[OKHelper getNSNumberSafeForKey:@"app_id" fromJSONDictionary:jsonDict] integerValue];
+        self.in_development         = [[OKHelper getNSNumberSafeForKey:@"in_development" fromJSONDictionary:jsonDict] boolValue];
+        self.sortType               = ([sortTypeString isEqualToString:@"HighValue"]) ? OKLeaderboardSortTypeHighValue : OKLeaderboardSortTypeLowValue;
+        self.icon_url               = [OKHelper getStringSafeForKey:@"icon_url" fromJSONDictionary:jsonDict];
+        self.playerCount            = [[OKHelper getNSNumberSafeForKey:@"player_count" fromJSONDictionary:jsonDict] integerValue];
+        self.gamecenter_id          = [OKHelper getStringSafeForKey:@"gamecenter_id" fromJSONDictionary:jsonDict];
     }
 
     return self;
@@ -63,8 +73,6 @@
              //NSLog(@"Leaderboard response is: %@", responseObject);
              NSArray *leaderBoardsJSON = (NSArray*)responseObject;
              leaderboards = [NSMutableArray arrayWithCapacity:[leaderBoardsJSON count]];
-             
-             
              
              for(id obj in leaderBoardsJSON) {
                  OKLeaderboard *leaderBoard = [[OKLeaderboard alloc] initFromJSON:obj];
