@@ -37,8 +37,7 @@
 
 -(void)makeCellInviteFriends
 {
-    [textLabel setText:@"You don't have any friends playing yet"];
-    [connectFBButton setTitle:@"Invite Friends" forState:UIControlStateNormal];
+    [textLabel setText:@"Invite friends from"];
     
     // Move the text label up a few pixels
     CGRect textFrame = [textLabel frame];
@@ -50,9 +49,6 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    
-    
-
     // Configure the view for the selected state
 }
 
