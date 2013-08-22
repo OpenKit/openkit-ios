@@ -42,6 +42,26 @@
     }
 }
 
++(int64_t)getInt64SafeForKey:(NSString *)key fromJSONDictionary:(NSDictionary*)jsonDict
+{
+    NSNumber *numberValue = [OKHelper getNSNumberSafeForKey:key fromJSONDictionary:jsonDict];
+    if(numberValue) {
+        return [numberValue longLongValue];
+    } else {
+        return 0;
+    }
+}
+
++(int)getIntSafeForKey:(NSString *)key fromJSONDictionary:(NSDictionary*)jsonDict
+{
+    NSNumber *numberValue = [OKHelper getNSNumberSafeForKey:key fromJSONDictionary:jsonDict];
+    if(numberValue) {
+        return [numberValue integerValue];
+    } else {
+        return 0;
+    }
+}
+
 +(NSNumber*)getNSNumberSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
 {
     if(![jsonDict isKindOfClass:[NSDictionary class]]) {

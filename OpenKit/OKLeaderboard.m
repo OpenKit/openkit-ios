@@ -72,8 +72,6 @@
          }else{
              NSLog(@"Failed to get list of leaderboards: %@", error);
          }
-         
-         OKLog(@"Leaderboards: %@",leaderboards);
          completionHandler(leaderboards, maxPlayerCount, error);
      }];
 }

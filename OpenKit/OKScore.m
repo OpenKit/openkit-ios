@@ -16,6 +16,7 @@
 #import "OKMacros.h"
 #import "OKError.h"
 #import "OKScoreCache.h"
+#import "OKHelper.h"
 
 @implementation OKScore
 
@@ -24,19 +25,28 @@
 {
     self = [super init];
     if (self) {
-        // Initialization code here.
-        
+        /*
         self.OKLeaderboardID = [[jsonDict objectForKey:@"leaderboard_id"] integerValue];
         self.OKScoreID = [[jsonDict objectForKey:@"id"] integerValue];
         self.scoreValue = [[jsonDict objectForKey:@"value"] longLongValue];
         self.scoreRank = [[jsonDict objectForKey:@"rank"] integerValue];
         self.user = [OKUserUtilities createOKUserWithJSONData:[jsonDict objectForKey:@"user"]];
         
+        
         if([jsonDict objectForKey:@"display_string"] != nil && [jsonDict objectForKey:@"display_string"] != [NSNull null])
             self.displayString = [jsonDict objectForKey:@"display_string"];
         
         if([jsonDict objectForKey:@"metadata"] != nil && [jsonDict objectForKey:@"metadata"] != [NSNull null])
             self.metadata = [[jsonDict objectForKey:@"metadata"] integerValue];
+        */
+        
+        self.OKLeaderboardID= [OKHelper getIntSafeForKey:@"leaderboard_id" fromJSONDictionary:jsonDict];
+        self.OKScoreID      = [OKHelper getIntSafeForKey:@"id" fromJSONDictionary:jsonDict];
+        self.scoreValue     = [OKHelper getInt64SafeForKey:@"value" fromJSONDictionary:jsonDict];
+        self.scoreRank      = [OKHelper getIntSafeForKey:@"rank" fromJSONDictionary:jsonDict];
+        self.user           = [OKUserUtilities createOKUserWithJSONData:[jsonDict objectForKey:@"user"]];
+        self.displayString  = [OKHelper getStringSafeForKey:@"display_string" fromJSONDictionary:jsonDict];
+        self.metadata       = [OKHelper getIntSafeForKey:@"metadata" fromJSONDictionary:jsonDict];
     }
     
     return self;
