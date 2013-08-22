@@ -18,13 +18,14 @@
 @interface OKBaseLoginViewController ()
 
 @property (nonatomic, strong) UIButton *fbLoginButton;
+@property (nonatomic, strong) UIButton *gcLoginButton;
 @property (nonatomic, strong) UIButton *twitterLoginButton;
 
 @end
 
 @implementation OKBaseLoginViewController
 
-@synthesize currentTwitterAccount, twitterAccounts, loginView,spinner, fbLoginButton, twitterLoginButton, delegate, loginString;
+@synthesize currentTwitterAccount, twitterAccounts, loginView,spinner, fbLoginButton, gcLoginButton, twitterLoginButton, delegate, loginString;
 
 -(id)initWithLoginString:(NSString*)aLoginString
 {
@@ -67,81 +68,96 @@
 {
     [spinner startAnimating];
     [fbLoginButton setHidden:YES];
-    [twitterLoginButton setHidden:YES];
+    //[twitterLoginButton setHidden:YES];
 }
 -(void)hideLoginDialogSpinner
 {
     [spinner stopAnimating];
     [fbLoginButton setHidden:NO];
-    [twitterLoginButton setHidden:NO];
+    //[twitterLoginButton setHidden:NO];
 }
 
 
 -(void)initLoginView
 {
-    loginView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 240)];
+    loginView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 260)];
+  
+    // Main Label
+    CGRect mainLabelRect = loginView.bounds;
+    mainLabelRect.origin.y = -10;
+    mainLabelRect.size.height = 60;
+    UIFont *mainLabelFont = [UIFont boldSystemFontOfSize:20];
+    UILabel *mainLabel = [[UILabel alloc] initWithFrame:mainLabelRect];
+    mainLabel.text = [self loginString];
+    mainLabel.numberOfLines = 1;
+    mainLabel.font = mainLabelFont;
+    mainLabel.textColor = [UIColor blackColor];
+    mainLabel.textAlignment = NSTextAlignmentCenter;
+    mainLabel.backgroundColor = [UIColor clearColor];
+    mainLabel.shadowColor = [UIColor clearColor];
+    mainLabel.shadowOffset = CGSizeMake(0, 1);
+    [loginView addSubview:mainLabel];
+  
+    // Sub Label
+    CGRect subLabelRect = loginView.bounds;
+    subLabelRect.origin.y = 35;
+    subLabelRect.size.height = 40;
+    UIFont *subLabelFont = [UIFont systemFontOfSize:14];
+    UILabel *subLabel = [[UILabel alloc] initWithFrame:subLabelRect];
+    NSString *subText = @"Leaderboards are more fun when you play against friends. Include friends from:";
+    subLabel.text = subText;
+    subLabel.numberOfLines = 2;
+    subLabel.font = subLabelFont;
+    subLabel.textColor = [UIColor grayColor];
+    subLabel.textAlignment = NSTextAlignmentCenter;
+    subLabel.backgroundColor = [UIColor clearColor];
+    subLabel.shadowColor = [UIColor clearColor];
+    subLabel.shadowOffset = CGSizeMake(0, 1);
+    [loginView addSubview:subLabel];
+  
+    // Game Center Button
+    CGRect gcButtonRect = CGRectMake(35,88,105,105);
+    gcLoginButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    gcLoginButton.frame = gcButtonRect;
+    [gcLoginButton addTarget:self
+                      action:nil
+            forControlEvents:UIControlEventTouchDown];
+    UIImage * gcButtonImageOff = [UIImage imageNamed:@"gc_off_big.png"];
+    UIImage * gcButtonImageOn = [UIImage imageNamed:@"gc_on_big.png"];
+    [gcLoginButton setBackgroundImage:gcButtonImageOff forState:UIControlStateNormal];
+    [gcLoginButton setBackgroundImage:gcButtonImageOn forState:UIControlStateHighlighted];
     
-    CGRect welcomeLabelRect = loginView.bounds;
-    welcomeLabelRect.origin.y = 0;
-    welcomeLabelRect.size.height = 60;
-    UIFont *welcomeLabelFont = [UIFont boldSystemFontOfSize:15];
-    UILabel *welcomeLabel = [[UILabel alloc] initWithFrame:welcomeLabelRect];
-    welcomeLabel.text = [self loginString];
-    welcomeLabel.numberOfLines = 3;
-    welcomeLabel.font = welcomeLabelFont;
-    welcomeLabel.textColor = [UIColor colorWithRed:51.0f/2550.f green:51.0f/2550.f blue:51.0f/2550.f alpha:1.0];
-    welcomeLabel.textAlignment = NSTextAlignmentCenter;
-    welcomeLabel.backgroundColor = [UIColor clearColor];
-    welcomeLabel.shadowColor = [UIColor clearColor];
-    welcomeLabel.shadowOffset = CGSizeMake(0, 1);
-    [loginView addSubview:welcomeLabel];
-    
-    CGRect fbButtonRect = CGRectMake(5,(CGRectGetMaxY(welcomeLabelRect)+20),270,44);
-    fbLoginButton = [UIButton buttonWithType:(UIButtonTypeRoundedRect)];
+    [loginView addSubview:gcLoginButton];
+  
+    // Facebook Button
+    CGRect fbButtonRect = CGRectMake(140,88,105,105);
+    fbLoginButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     fbLoginButton.frame = fbButtonRect;
     [fbLoginButton addTarget:self
                  action:@selector(performFacebookLogin:)
        forControlEvents:UIControlEventTouchDown];
-    [fbLoginButton setTitle:@"Sign in with Facebook" forState:UIControlStateNormal];
-    UIImage *fbBG = [[UIImage imageNamed:@"fbBtn.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0];
-    [fbLoginButton setBackgroundImage:fbBG forState:UIControlStateNormal];
-    [fbLoginButton setTitleColor:[UIColor colorWithRed:255.0f / 255.0f green:255.0f / 255.0f blue:255.0f / 255.0f alpha:1.0f] forState:UIControlStateNormal];
-    [fbLoginButton setTitleShadowColor:[UIColor colorWithRed:0.0f / 255.0f green:0.0f / 255.0f blue:0.0f / 255.0f alpha:0.75f] forState:UIControlStateNormal];
+    //[fbLoginButton setTitle:@"Facebook" forState:UIControlStateNormal];
+    UIImage * fbButtonImageOff = [UIImage imageNamed:@"fb_off_big.png"];
+    UIImage * fbButtonImageOn = [UIImage imageNamed:@"fb_on_big.png"];
+    [fbLoginButton setBackgroundImage:fbButtonImageOff forState:UIControlStateNormal];
+    [fbLoginButton setBackgroundImage:fbButtonImageOn forState:UIControlStateHighlighted];
     
     [loginView addSubview:fbLoginButton];
-    
-    CGRect twitterButtonRect = CGRectMake(5,(CGRectGetMaxY(fbButtonRect)+5),270,44);
-    twitterLoginButton = [UIButton buttonWithType:(UIButtonTypeRoundedRect)];
-    twitterLoginButton.frame = twitterButtonRect;
-    [twitterLoginButton addTarget:self
-                      action:@selector(performTwitterLogin:)
-            forControlEvents:UIControlEventTouchDown];
-    [twitterLoginButton setTitle:@"Sign in with Twitter" forState:UIControlStateNormal];
-    UIImage *twitterBG = [[UIImage imageNamed:@"twitterBtn.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0];
-    [twitterLoginButton setBackgroundImage:twitterBG forState:UIControlStateNormal];
-    [twitterLoginButton setTitleColor:[UIColor colorWithRed:255.0f / 255.0f green:255.0f / 255.0f blue:255.0f / 255.0f alpha:1.0f] forState:UIControlStateNormal];
-    [twitterLoginButton setTitleShadowColor:[UIColor colorWithRed:0.0f / 255.0f green:0.0f / 255.0f blue:0.0f / 255.0f alpha:0.75f] forState:UIControlStateNormal];
-    
-    [loginView addSubview:twitterLoginButton];
-    
-    CGRect noThanksButtonRect = CGRectMake(5,(CGRectGetMaxY(twitterButtonRect)+10),270,44);
-    UIButton *noThanksButton = [UIButton buttonWithType:(UIButtonTypeRoundedRect)];
-    noThanksButton.frame = noThanksButtonRect;
-    [noThanksButton addTarget:self
+  
+    // Finished Button
+    CGRect finishedButtonRect = CGRectMake(5,210,271,44);
+    UIButton *finishedButton = [UIButton buttonWithType:(UIButtonTypeRoundedRect)];
+    finishedButton.frame = finishedButtonRect;
+    [finishedButton addTarget:self
                        action:@selector(dismissLoginView)
              forControlEvents:UIControlEventTouchDown];
-    [noThanksButton setTitle:@"I don't want these features." forState:UIControlStateNormal];
-    noThanksButton.titleLabel.font = [UIFont systemFontOfSize:12];
-    UIImage *noThanksBG = [[UIImage imageNamed:@"noThanksBtn.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0];
-    [noThanksButton setBackgroundImage:noThanksBG forState:UIControlStateNormal];
-    [noThanksButton setTitleColor:[UIColor colorWithRed:170.0f / 255.0f green:170.0f / 255.0f blue:170.0f / 255.0f alpha:1.0f] forState:UIControlStateNormal];
-    [noThanksButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [finishedButton setTitle:@"Finished" forState:UIControlStateNormal];
     
-    [loginView addSubview:noThanksButton];
+    [loginView addSubview:finishedButton];
     
     float spinnerSize = 44;
     float spinnerxPos = [loginView bounds].size.width /2 - spinnerSize/2;
-    float spinneryPos = CGRectGetMidY(fbButtonRect);
+    float spinneryPos = CGRectGetMidY(loginView.bounds);
     CGRect spinnerRect = CGRectMake(spinnerxPos, spinneryPos, spinnerSize, spinnerSize);
     
     spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];

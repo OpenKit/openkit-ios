@@ -510,8 +510,8 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="segmented_bg.png">{556, 48}</string>
-			<string key="segmented_highlight.png">{85, 49}</string>
+			<string key="segmented_bg.png">{16, 16}</string>
+			<string key="segmented_highlight.png">{16, 16}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>

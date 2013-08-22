@@ -65,7 +65,7 @@
 
 -(IBAction)close:(id)sender
 {
-    [self dismissModalViewControllerAnimated:YES];
+      [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 -(IBAction)startEditing:(id)sender

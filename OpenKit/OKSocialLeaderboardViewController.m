@@ -59,10 +59,11 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
         //UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showActionSheet:)];
         [inviteButton setTintColor:[UIColor colorWithRed:5/255.0 green:139/255.0 blue:245/255.0 alpha:1]];
         [[self navigationItem] setRightBarButtonItem:inviteButton];
-
+      
     }
     return self;
 }
+
 
 - (void)showActionSheet:(id)sender
 {
@@ -121,7 +122,7 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
   [mail setSubject:@"Check out Ridiculous Fishing"];
   
   //Set the message
-  NSString * sentFrom = @"<h1>Check out this game!</h1><a href='http://toddham.com/openkit/invite.html'>Test Link</a>";
+  NSString * sentFrom = @"<p>Check out this game! <a href='http://toddham.com/openkit/invite.html'>Test Link</a></p>";
   [mail setMessageBody:sentFrom isHTML:YES];
   
   [self presentViewController:mail animated:YES completion:nil];
@@ -244,13 +245,13 @@ typedef enum {
     switch(rowType) {
             
         case SocialSectionRowFBLoginRow:
-            return 115;
+            return 60;
             break;
         case SocialSectionRowProgressBarRow:
             return 60;
             break;
         case SocialSectionRowInviteFriends:
-            return 115;
+            return 60;
             break;
         case SocialSectionRowSocialScoreRow:
             return 60;
@@ -406,7 +407,7 @@ typedef enum {
 {
     OKScoreCell *cell = [self getScoreCellForScore:score withTableView:_tableView andShowSocialNetworkIcon:NO];
     [cell setBackgroundColor:[OKColors playerTopScoreBGColor]];
-    
+  
     return cell;
 }
 
@@ -436,7 +437,7 @@ typedef enum {
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
+  
     [self setTitle:[leaderboard name]];
     
     //Get global scores
@@ -451,6 +452,14 @@ typedef enum {
     [self._tableView registerNib:[UINib nibWithNibName:@"OKFBLoginCell"
                                                 bundle:[NSBundle mainBundle]]
           forCellReuseIdentifier:inviteCellIdentifier];
+  
+    // iPad specific adjustments
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+      [loadMoreScoresButton setFrame:CGRectMake(30, 0, 508, 44)];
+    }else {
+      
+    }
+  
 }
 
 -(void)getScores
@@ -564,9 +573,6 @@ typedef enum {
         }];
     }
 }
-
-
-
 
 
 -(void)reloadSocialScores

@@ -14,7 +14,6 @@
 #import "OKFacebookUtilities.h"
 
 
-
 @implementation OKViewController
 
 @synthesize profileImageView;
@@ -95,15 +94,16 @@
     
     // Set the showLandscapeOnly property on OKLeaderboardsViewController to force landscape orientation
     //[leaderBoards setShowLandscapeOnly:YES];
-    [self presentModalViewController:leaderBoards animated:YES];
+    leaderBoards.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentViewController:leaderBoards animated:YES completion:nil];
 }
 
 -(IBAction)submitScore:(id)sender
 {
     ScoreSubmitterVC *scoreSubmitter = [[ScoreSubmitterVC alloc] initWithNibName:@"ScoreSubmitterVC" bundle:nil];
-    [self presentModalViewController:scoreSubmitter animated:YES];
+    scoreSubmitter.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentViewController:scoreSubmitter animated:YES completion:nil];
 }
-
 
 - (IBAction)showCloudDataTest:(id)sender
 {
