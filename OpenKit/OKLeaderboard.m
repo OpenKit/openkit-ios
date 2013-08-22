@@ -27,19 +27,7 @@
 - (id)initFromJSON:(NSDictionary*)jsonDict
 {
     if ((self = [super init])) {
-        //NSString *sortTypeString    = (NSString*)[jsonDict objectForKey:@"sort_type"];
         NSString *sortTypeString    = [OKHelper getStringSafeForKey:@"sort_type" fromJSONDictionary:jsonDict];
-        
-        /*
-        self.name                   = [jsonDict objectForKey:@"name"];
-        self.OKLeaderboard_id       = [[jsonDict objectForKey:@"id"] integerValue];
-        self.OKApp_id               = [[jsonDict objectForKey:@"app_id"] integerValue];
-        self.in_development         = [[jsonDict objectForKey:@"in_development"] boolValue];
-        self.sortType               = ([sortTypeString isEqualToString:@"HighValue"]) ? OKLeaderboardSortTypeHighValue : OKLeaderboardSortTypeLowValue;
-        self.icon_url               = [jsonDict objectForKey:@"icon_url"];
-        self.playerCount            = [[jsonDict objectForKey:@"player_count"] integerValue];
-        self.gamecenter_id          = [OKHelper getStringSafeForKey:@"gamecenter_id" fromJSONDictionary:jsonDict];
-        */
         
         self.name                   = [OKHelper getStringSafeForKey:@"name" fromJSONDictionary:jsonDict];
         self.OKLeaderboard_id       = [[OKHelper getNSNumberSafeForKey:@"id" fromJSONDictionary:jsonDict] integerValue];
@@ -84,6 +72,8 @@
          }else{
              NSLog(@"Failed to get list of leaderboards: %@", error);
          }
+         
+         OKLog(@"Leaderboards: %@",leaderboards);
          completionHandler(leaderboards, maxPlayerCount, error);
      }];
 }
@@ -421,13 +411,14 @@
 
 -(NSArray*)sortScoresBasedOnLeaderboardType:(NSArray*)scores
 {
-    // Sort the scores
     NSSortDescriptor *sortDescriptor = [self getSortDescriptor];
-    
     NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     NSArray *sortedArray = [scores sortedArrayUsingDescriptors:sortDescriptors];
-    
     return sortedArray;
+}
+ 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"OKLeaderboard name: %@ id: %d app_id: %d gamecenter_id: %@ debug?: %d sortType: %u iconURL: %@ player_count: %d", name, OKLeaderboard_id, OKApp_id, gamecenter_id, in_development, sortType, icon_url, playerCount];
 }
 
 
