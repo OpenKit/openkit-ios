@@ -312,7 +312,7 @@ typedef enum {
             return numRowsInSocial;
         case kGlobalSection:
             if(globalScores) {
-                if(playerTopScore) {
+                if([self shouldShowPlayerTopScore]) {
                     return [globalScores count] + 1;
                 } else {
                     return [globalScores count];
@@ -488,13 +488,25 @@ typedef enum {
     [self getPlayerTopScoreForGlobalSection];
 }
 
+-(BOOL)shouldShowPlayerTopScore
+{
+    if(playerTopScore != nil) {
+        if([playerTopScore rank] < [globalScores count]) {
+            return NO;
+        } else {
+            return YES;
+        }
+    } else {
+        return NO;
+    }
+}
+
 // Get the player's top score to show in the "all scores" section
 -(void)getPlayerTopScoreForGlobalSection
 {
    [leaderboard getPlayerTopScoreWithCompletionHandler:^(id<OKScoreProtocol> score, NSError *error) {
       if(score && !error) {
           [self setPlayerTopScore:score];
-          NSLog(@"Got players top score for global section");
           [_tableView reloadSections:[NSIndexSet indexSetWithIndex:kGlobalSection] withRowAnimation:UITableViewRowAnimationAutomatic];
       }
    }];

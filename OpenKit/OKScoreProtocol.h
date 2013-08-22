@@ -19,6 +19,7 @@ typedef enum {
 -(NSString*)scoreDisplayString;
 -(NSString*)userDisplayString;
 -(NSString*)rankDisplayString;
+-(int)rank;
 -(int64_t)scoreValue;
 -(void)setRank:(NSInteger)rank;
 -(OKScoreSocialNetwork)socialNetwork;

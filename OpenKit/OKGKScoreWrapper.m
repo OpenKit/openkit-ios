@@ -32,6 +32,10 @@
     return [[self score] value];
 }
 
+-(int)rank {
+    return [[self score] rank];
+}
+
 -(void)setRank:(NSInteger)rank {
     [self setExplicitlySetRank:[NSString stringWithFormat:@"%d",rank]];
 }
