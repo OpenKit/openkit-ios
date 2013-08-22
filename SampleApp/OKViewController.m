@@ -107,14 +107,8 @@
 
 - (IBAction)showCloudDataTest:(id)sender
 {
-    /*
     CloudDataTestVC *vc = [[CloudDataTestVC alloc] initWithNibName:@"CloudDataTestVC" bundle:nil];
     [[self navigationController] pushViewController:vc animated:YES];
-     */
-
-    NSLog(@"Cached scores: %@",[[OKScoreCache sharedCache] getCachedScores]);
-
-
 }
 
 
