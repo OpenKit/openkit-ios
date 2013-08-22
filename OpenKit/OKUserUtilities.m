@@ -13,6 +13,7 @@
 #import "OKDefines.h"
 #import "OKMacros.h"
 #import "OKError.h"
+#import "OKHelper.h"
 
 
 
@@ -22,26 +23,24 @@
 {
     OKUser *user = [[OKUser alloc] init];
     
-    NSString *_userNick = [jsonData objectForKey:@"nick"];
-    NSNumber *_twitterID = [jsonData objectForKey:@"twitter_id"];
-    
-    if(_twitterID == (id)[NSNull null])
-        _twitterID = nil;
-    
+    /*
     NSNumber *_OKUserID = [jsonData objectForKey:@"id"];
     NSNumber *_fbID = [jsonData objectForKey:@"fb_id"];
-    //NSString *_gameCenterID = [jsonData objectForKey:@"gamecenter_id"];
     NSNumber *_customID = [jsonData objectForKey:@"custom_id"];
+     NSString *_userNick = [jsonData objectForKey:@"nick"];
+     NSNumber *_twitterID = [jsonData objectForKey:@"twitter_id"];
+    */
+    
+    NSNumber *_twitterID=   [OKHelper getNSNumberSafeForKey:@"twitter_id" fromJSONDictionary:jsonData];
+    NSNumber *_OKUserID =   [OKHelper getNSNumberSafeForKey:@"id" fromJSONDictionary:jsonData];
+    NSNumber *_fbID     =   [OKHelper getNSNumberSafeForKey:@"fb_id" fromJSONDictionary:jsonData];
+    NSNumber *_customID =   [OKHelper getNSNumberSafeForKey:@"custom_id" fromJSONDictionary:jsonData];
+    NSString *_userNick =   [OKHelper getStringSafeForKey:@"nick" fromJSONDictionary:jsonData];
 
-    
-    if(_fbID == (id)[NSNull null])
-        _fbID = nil;
-    
     [user setOKUserID:_OKUserID];
     [user setUserNick:_userNick];
     [user setFbUserID:_fbID];
     [user setTwitterUserID:_twitterID];
-    //[user setGameCenterID:_gameCenterID];
     [user setCustomID:_customID];
     
     return user;
@@ -62,7 +61,6 @@
     [dict setValue:[user twitterUserID] forKey:@"twitter_id"];
     [dict setValue:[user OKUserID] forKey:@"id"];
     [dict setValue:[user fbUserID] forKey:@"fb_id"];
-    //[dict setValue:[user gameCenterID] forKey:@"gamecenter_id"];
     [dict setValue:[user customID] forKey:@"custom_id"];
     
     return dict;
@@ -82,6 +80,7 @@
                    handler:^(id responseObject, NSError *error)
      {
          if(!error){
+             
              
              //Check to make sure the user was returned, that way we know the response was successful
              OKUser *responseUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
@@ -163,6 +162,9 @@
      {
          OKUser *newUser = nil;
          if(!error) {
+             
+              OKLog(@"Create user JSON response is: %@",responseObject);
+             
              //Success
              OKLog(@"Successfully created/found user ID: %@", [responseObject valueForKeyPath:@"id"]);
              newUser = [OKUserUtilities createOKUserWithJSONData:responseObject];

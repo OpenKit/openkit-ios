@@ -27,14 +27,38 @@
     (obj == [NSNull null]);
 }
 
++(NSNumber*)getNSNumberSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
+{
+    id value = [jsonDict objectForKey:key];
+    
+    if([value isKindOfClass:[NSNumber class]]) {
+        return value;
+    } else if ([value isKindOfClass:[NSString class]]) {
+        NSString *stringValue = (NSString*)value;
+        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+        [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        NSNumber *number = [formatter numberFromString:stringValue];
+        return number;
+    } else {
+        return nil;
+    }
+}
+
 +(NSString*)getStringSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
 {
     NSString *value = [jsonDict objectForKey:key];
     
-    if([OKHelper isEmpty:value]) {
-        return nil;
+    if([value isKindOfClass:[NSString class]]) {
+        if([OKHelper isEmpty:value]) {
+            return nil;
+        } else {
+            return value;
+        }
+    } else if ([value isKindOfClass:[NSNumber class]]) {
+        NSNumber *numberValue = (NSNumber*)value;
+        return [numberValue stringValue];
     } else {
-        return value;
+        return  nil;
     }
 }
 
