@@ -4,15 +4,15 @@
 @implementation OKColors
 
 +(UIColor*)navbarTextColor {
-    return [UIColor colorWithRed:77.0/255.0 green:77.0/255.0 blue:77.0/255.0 alpha:1.0];
+    return [UIColor colorWithRed:89.0/255.0 green:89.0/255.0 blue:89.0/255.0 alpha:1.0];
 }
 
 +(UIColor*)navbarTintColor {
-    return UIColorFromRGB(0xe8e8e8);
+    return [UIColor colorWithRed:206.0/255.0 green:210.0/255.0 blue:213.0/255.0 alpha:1.0];
 }
 
 +(NSDictionary*)titleTextAttributesForNavBarButton {
-    return  [NSDictionary dictionaryWithObjectsAndKeys:[OKColors navbarTextColor], UITextAttributeTextColor,[UIColor clearColor], UITextAttributeTextShadowColor, nil];
+  return  [NSDictionary dictionaryWithObjectsAndKeys:[OKColors navbarTextColor], UITextAttributeTextColor,[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.75], UITextAttributeTextShadowColor, [NSValue valueWithCGSize:CGSizeMake(0.0,1.0)], UITextAttributeTextShadowOffset, nil];
 }
 
 +(UIColor*)playerTopScoreBGColor {
