@@ -22,4 +22,6 @@
 // Set to false to support portrait & landscape
 @property (nonatomic) BOOL showLandscapeOnly;
 
+-(id)initWithDefaultLeaderboardID:(int)leaderboardID;
+
 @end

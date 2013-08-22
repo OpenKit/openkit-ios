@@ -14,6 +14,7 @@
 @interface OKSocialLeaderboardViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, OKFBLoginCellDelegate,UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
 @property (nonatomic, strong) OKLeaderboard *leaderboard;
+@property (nonatomic) int leaderboardID;
 @property (nonatomic, strong) IBOutlet UITableView *_tableView;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
 @property (nonatomic, strong) MFMailComposeViewController *mail;
@@ -25,6 +26,7 @@
 @property (nonatomic, strong) id<OKScoreProtocol> playerTopScore;
 
 - (id)initWithLeaderboard:(OKLeaderboard *)aLeaderboard;
+-(id)initWithLeaderboardID:(int)aLeaderboardID;
 
 -(IBAction)loadMoreScoresPressed:(id)sender;
 

@@ -34,36 +34,42 @@
 }
 
 
-@synthesize leaderboard, _tableView, spinner, socialScores, globalScores, containerViewForLoadMoreButton, loadMoreScoresButton, playerTopScore, mail;
+@synthesize leaderboard, _tableView, spinner, socialScores, globalScores, containerViewForLoadMoreButton, loadMoreScoresButton, playerTopScore, mail, leaderboardID;
 
 static NSString *scoreCellIdentifier = kOKScoreCellIdentifier;
 static NSString *fbCellIdentifier = @"OKFBLoginCell";
 static NSString *spinnerCellIdentifier = @"OKSpinnerCell";
 static NSString *inviteCellIdentifier = @"OKInviteCell";
 
-- (id)initWithLeaderboard:(OKLeaderboard *)aLeaderboard
+- (id)initWithLeaderboard:(OKLeaderboard *)aLeaderboard {
+    return [self initWithLeaderboard:aLeaderboard withLeaderboardID:0];
+}
+
+-(id)initWithLeaderboardID:(int)aLeaderboardID {
+    return [self initWithLeaderboard:nil withLeaderboardID:aLeaderboardID];
+}
+
+-(id)initWithLeaderboard:(OKLeaderboard *)aLeaderboard withLeaderboardID:(int)aLeaderboardID
 {
     self = [super initWithNibName:@"OKSocialLeaderboardVC" bundle:nil];
     if (self) {
         leaderboard = aLeaderboard;
+        leaderboardID = aLeaderboardID;
         socialScores = [[NSMutableArray alloc] init];
         numberOfSocialRequestsRunning = 0;
         isShowingFBLoginCell = NO;
         
-        
         [_tableView setSeparatorColor:UIColorFromRGB(0xb7b9bd)];
-        
         
         //Initialize the invite button
         UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showFacebookInviteUI)];
         //UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showActionSheet:)];
         [inviteButton setTintColor:[UIColor colorWithRed:5/255.0 green:139/255.0 blue:245/255.0 alpha:1]];
         [[self navigationItem] setRightBarButtonItem:inviteButton];
-      
+
     }
     return self;
 }
-
 
 - (void)showActionSheet:(id)sender
 {
@@ -428,7 +434,7 @@ typedef enum {
 
 -(void)errorLoadingGlobalScores
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Sorry, there was an error loading the leaderboard" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Sorry, there was an error loading the leaderboard. Please try again later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [alert show];
 }
 
@@ -436,12 +442,6 @@ typedef enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-  
-    [self setTitle:[leaderboard name]];
-    
-    //Get global scores
-    [self getScores];
     
     //Register the nib file for OKFBLoginCell
     [self._tableView registerNib:[UINib nibWithNibName:@"OKFBLoginCell"
@@ -459,7 +459,31 @@ typedef enum {
     }else {
       
     }
-  
+    
+    // If leaderboard is already loaded, display it, else get it then show it
+    if([self leaderboard]) {
+        [self getScores];
+        [self setTitle:[leaderboard name]];
+    } else {
+        [self getLeaderboardThenGetScores];
+    }
+}
+
+-(void)getLeaderboardThenGetScores
+{
+    [spinner startAnimating];
+    [_tableView setHidden:YES];
+    
+    [OKLeaderboard getLeaderboardWithID:self.leaderboardID withCompletionHandler:^(OKLeaderboard *aLeaderboard, NSError *error) {
+        if(aLeaderboard && !error) {
+            [self setLeaderboard:aLeaderboard];
+            [self setTitle:[aLeaderboard name]];
+            [self getScores];
+        } else {
+            [spinner stopAnimating];
+            [self errorLoadingGlobalScores];
+        }
+    }];
 }
 
 -(void)getScores

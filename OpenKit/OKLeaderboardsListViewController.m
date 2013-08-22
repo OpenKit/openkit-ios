@@ -23,35 +23,36 @@
 @property (nonatomic, strong) NSArray *OKLeaderBoardsList;
 @property (weak, nonatomic) IBOutlet UITableView *_tableView;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
+@property (nonatomic) int defaultLeaderboardID;
 
 @end
 
 @implementation OKLeaderboardsListViewController
 
-@synthesize OKLeaderBoardsList, _tableView, spinner;
+@synthesize OKLeaderBoardsList, _tableView, spinner, defaultLeaderboardID;
 
-- (id)init
+- (id)init {
+    return [self initWithDefaultLeaderboardID:0];
+}
+
+-(id)initWithDefaultLeaderboardID:(int)leaderboardID
 {
     self = [super initWithNibName:@"OKLeaderboardsListViewController" bundle:nil];
     if (self) {
-        UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
+        self.defaultLeaderboardID = leaderboardID;
         
+        UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
         [closeButton setTintColor:[UIColor blackColor]];
-
         
         UIBarButtonItem *profileButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"gear.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showProfileView)];
-      
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
-        
         [backButton setTitleTextAttributes:[OKColors titleTextAttributesForNavBarButton] forState:UIControlStateNormal];
-        
         
         [[self navigationItem] setLeftBarButtonItem:backButton];
         [[self navigationItem] setRightBarButtonItem:profileButton];
         [[self navigationItem] setBackBarButtonItem:backButton];
-
     }
-    return self;
+    return self;    
 }
 
 - (void)viewDidLoad
@@ -61,6 +62,10 @@
   
     [[self navigationItem] setTitle:@"Leaderboards"];
   
+    if(defaultLeaderboardID) {
+        OKSocialLeaderboardViewController *vc = [[OKSocialLeaderboardViewController alloc] initWithLeaderboardID:defaultLeaderboardID];
+        [[self navigationController] pushViewController:vc animated:YES];
+    }
     [self getListOfLeaderboards];
 }
 

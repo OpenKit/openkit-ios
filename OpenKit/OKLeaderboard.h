@@ -40,9 +40,10 @@ typedef enum {
 @property (nonatomic, strong) GKScore *localPlayerScore;
 
 
-+ (void)getLeaderboardsWithCompletionHandler:(void (^)(NSArray* leaderboards, int playerCount, NSError* error))completionHandler;
-- (NSString *)playerCountString;
-- (id)initFromJSON:(NSDictionary*)jsonDict;
++(void)getLeaderboardsWithCompletionHandler:(void (^)(NSArray* leaderboards, int playerCount, NSError* error))completionHandler;
++(void)getLeaderboardWithID:(int)leaderboardID withCompletionHandler:(void (^)(OKLeaderboard *leaderboard, NSError *error))completionHandler;
+-(NSString *)playerCountString;
+-(id)initFromJSON:(NSDictionary*)jsonDict;
 
 //OpenKit Methods
 - (void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler;

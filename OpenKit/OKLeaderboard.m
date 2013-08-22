@@ -76,7 +76,7 @@
      }];
 }
 
-+(void)getLeaderboardID:(int)leaderboardID withCompletionHandler:(void (^)(OKLeaderboard *leaderboard, NSError *error))completionHandler
++(void)getLeaderboardWithID:(int)leaderboardID withCompletionHandler:(void (^)(OKLeaderboard *leaderboard, NSError *error))completionHandler
 {
     NSString *requestPath = [NSString stringWithFormat:@"/leaderboards/%d", leaderboardID];
     
