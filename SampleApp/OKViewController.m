@@ -47,14 +47,11 @@
 
 -(IBAction)launchGameCenter:(id)sender
 {
-    
     GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
-    if (gameCenterController != nil)
-    {
+    if (gameCenterController != nil) {
         gameCenterController.gameCenterDelegate = self;
         [self presentViewController: gameCenterController animated: YES completion:nil];
     }
-
 }
 
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
@@ -75,8 +72,6 @@
     [loginView showWithCompletionHandler:^{
         [self updateUIforOKUser];
     }];
-    
-    
 }
 
 
@@ -86,15 +81,15 @@
     [self updateUIforOKUser];
 }
 
-
-
 -(IBAction)viewLeaderboards:(id)sender
 {
     OKLeaderboardsViewController *leaderBoards = [[OKLeaderboardsViewController alloc] init];
-    
     // Set the showLandscapeOnly property on OKLeaderboardsViewController to force landscape orientation
     //[leaderBoards setShowLandscapeOnly:YES];
-    leaderBoards.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+    // If you want to show a specific leaderboard, use the following method
+    //OKLeaderboardsViewController *leaderBoards = [[OKLeaderboardsViewController alloc] initWithDefaultLeaderboardID:25];
+    
     [self presentViewController:leaderBoards animated:YES completion:nil];
 }
 
