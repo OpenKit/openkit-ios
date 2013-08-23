@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C31DE2917C6D918005D5918 /* back_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C31DE2717C6D909005D5918 /* back_button.png */; };
+		2C31DE2A17C6D918005D5918 /* back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C31DE2817C6D909005D5918 /* back_button@2x.png */; };
+		2C31DE2D17C6D9CD005D5918 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C31DE2B17C6D9B2005D5918 /* close.png */; };
+		2C31DE2E17C6D9CD005D5918 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C31DE2C17C6D9B2005D5918 /* close@2x.png */; };
+		2C31DE3117C6DEE1005D5918 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C31DE2F17C6DED0005D5918 /* settings.png */; };
+		2C31DE3217C6DEE1005D5918 /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C31DE3017C6DED0005D5918 /* settings@2x.png */; };
 		2C41B80A17BFD90E005F239B /* fb_off_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C41B80217BFD8E5005F239B /* fb_off_big.png */; };
 		2C41B80B17BFD90E005F239B /* fb_off_big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C41B80317BFD8E5005F239B /* fb_off_big@2x.png */; };
 		2C41B80C17BFD90E005F239B /* fb_on_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C41B80417BFD8E5005F239B /* fb_on_big.png */; };
@@ -272,6 +278,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2C31DE2717C6D909005D5918 /* back_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back_button.png; sourceTree = "<group>"; };
+		2C31DE2817C6D909005D5918 /* back_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_button@2x.png"; sourceTree = "<group>"; };
+		2C31DE2B17C6D9B2005D5918 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		2C31DE2C17C6D9B2005D5918 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
+		2C31DE2F17C6DED0005D5918 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		2C31DE3017C6DED0005D5918 /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@2x.png"; sourceTree = "<group>"; };
 		2C41B80217BFD8E5005F239B /* fb_off_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb_off_big.png; sourceTree = "<group>"; };
 		2C41B80317BFD8E5005F239B /* fb_off_big@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fb_off_big@2x.png"; sourceTree = "<group>"; };
 		2C41B80417BFD8E5005F239B /* fb_on_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb_on_big.png; sourceTree = "<group>"; };
@@ -647,6 +659,12 @@
 		32CAD00F16CB65E800E8F185 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				2C31DE2F17C6DED0005D5918 /* settings.png */,
+				2C31DE3017C6DED0005D5918 /* settings@2x.png */,
+				2C31DE2B17C6D9B2005D5918 /* close.png */,
+				2C31DE2C17C6D9B2005D5918 /* close@2x.png */,
+				2C31DE2717C6D909005D5918 /* back_button.png */,
+				2C31DE2817C6D909005D5918 /* back_button@2x.png */,
 				2C41B81217BFE56D005F239B /* include_fb_off.png */,
 				2C41B81317BFE56D005F239B /* include_fb_off@2x.png */,
 				2C41B81417BFE56D005F239B /* include_fb_on.png */,
@@ -982,6 +1000,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C31DE3117C6DEE1005D5918 /* settings.png in Resources */,
+				2C31DE3217C6DEE1005D5918 /* settings@2x.png in Resources */,
+				2C31DE2D17C6D9CD005D5918 /* close.png in Resources */,
+				2C31DE2E17C6D9CD005D5918 /* close@2x.png in Resources */,
+				2C31DE2917C6D918005D5918 /* back_button.png in Resources */,
+				2C31DE2A17C6D918005D5918 /* back_button@2x.png in Resources */,
 				2C41B81A17BFE57A005F239B /* include_fb_off.png in Resources */,
 				2C41B81B17BFE57A005F239B /* include_fb_off@2x.png in Resources */,
 				2C41B81C17BFE57A005F239B /* include_fb_on.png in Resources */,

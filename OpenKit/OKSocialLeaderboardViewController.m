@@ -50,16 +50,13 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
         numberOfSocialRequestsRunning = 0;
         isShowingFBLoginCell = NO;
         
-        
         [_tableView setSeparatorColor:UIColorFromRGB(0xb7b9bd)];
-        
-        
+      
         //Initialize the invite button
         UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showFacebookInviteUI)];
         //UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showActionSheet:)];
         [inviteButton setTintColor:[UIColor colorWithRed:5/255.0 green:139/255.0 blue:245/255.0 alpha:1]];
         [[self navigationItem] setRightBarButtonItem:inviteButton];
-      
     }
     return self;
 }

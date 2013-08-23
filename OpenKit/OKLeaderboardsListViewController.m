@@ -33,18 +33,11 @@
 - (id)init
 {
     self = [super initWithNibName:@"OKLeaderboardsListViewController" bundle:nil];
-    if (self) {
-        UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
-        
-        [closeButton setTintColor:[UIColor blackColor]];
-
-        
+    if (self) {        
         UIBarButtonItem *profileButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"gear.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showProfileView)];
       
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
-        
         [backButton setTitleTextAttributes:[OKColors titleTextAttributesForNavBarButton] forState:UIControlStateNormal];
-        
         
         [[self navigationItem] setLeftBarButtonItem:backButton];
         [[self navigationItem] setRightBarButtonItem:profileButton];
