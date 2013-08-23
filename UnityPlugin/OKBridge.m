@@ -80,13 +80,14 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 @interface OKDashBridgeViewController : BaseBridgeViewController <OKManagerDelegate>
 @property (nonatomic, retain) OKLeaderboardsViewController *leaderboardsVC;
 @property (nonatomic) BOOL shouldShowLandscapeOnly;
+@property (nonatomic) int defaultLeaderboardID;
 @end
 
 
 @implementation OKDashBridgeViewController
 @synthesize leaderboardsVC = _leaderboardsVC;
 @synthesize shouldShowLandscapeOnly = _shouldShowLandscapeOnly;
-
+@synthesize defaultLeaderboardID = _defaultLeaderboardID;
 - (id)init
 {
     if ((self = [super init])) {
@@ -97,7 +98,7 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 
 - (void)customLaunch
 {
-    self.leaderboardsVC = [[[OKLeaderboardsViewController alloc] init] autorelease];
+    self.leaderboardsVC = [[[OKLeaderboardsViewController alloc] initWithDefaultLeaderboardID:_defaultLeaderboardID] autorelease];
     [self.leaderboardsVC setShowLandscapeOnly:_shouldShowLandscapeOnly];
     [self presentModalViewController:self.leaderboardsVC animated:YES];
 }
@@ -178,15 +179,16 @@ void OKBridgeSetEndpoint(const char *endpoint)
     [OKManager setEndpoint:[NSString stringWithUTF8String:endpoint]];
 }
 
-void OKBridgeShowLeaderboardsBase(BOOL showLandscapeOnly)
+void OKBridgeShowLeaderboardsBase(BOOL showLandscapeOnly, int defaultLeaderboardID)
 {
     UIWindow *win = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     win.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     win.backgroundColor = [UIColor clearColor];
 
+    // Set shouldShowLandscapeOnly & defaultLeaderboardID
     OKDashBridgeViewController *vc = [[OKDashBridgeViewController alloc] init];
-    // Set shouldShowLandscapeOnly
     [vc setShouldShowLandscapeOnly:showLandscapeOnly];
+    [vc setDefaultLeaderboardID:defaultLeaderboardID];
     
     vc.window = win;
     [win release];
@@ -196,15 +198,19 @@ void OKBridgeShowLeaderboardsBase(BOOL showLandscapeOnly)
     [vc.window makeKeyAndVisible];
 }
 
+void OKBridgeShowLeaderboardID(int leaderboardID, BOOL landscapeOnly)
+{
+    OKBridgeShowLeaderboardsBase(landscapeOnly, leaderboardID);
+}
 
 void OKBridgeShowLeaderboards()
 {
-    OKBridgeShowLeaderboardsBase(NO);
+    OKBridgeShowLeaderboardsBase(NO,0);
 }
 
 void OKBridgeShowLeaderboardsLandscapeOnly()
 {
-    OKBridgeShowLeaderboardsBase(YES);
+    OKBridgeShowLeaderboardsBase(YES,0);
 }
 
 void OKBridgeLogoutCurrentUserFromOpenKit()
@@ -301,8 +307,6 @@ void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, co
     OKScore *score = [[OKScore alloc] init];
     score.scoreValue = scoreValue;
     score.OKLeaderboardID = leaderboardID;
-    //score.displayString = [[NSString alloc] initWithCString:displayString encoding:NSUTF8StringEncoding];
-    //score.displayString = [NSString stringWithFormat:@"%s", displayString];
     
     if(displayString != NULL) {
         score.displayString = [[NSString alloc] initWithUTF8String:displayString];
