@@ -30,9 +30,27 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
   
+    // Custom Back Button
+    UIImage *backImage = [UIImage imageNamed:@"back_button"];
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    backButton.frame = CGRectMake(0, 0, backImage.size.width, backImage.size.height);
+  
+    [backButton setImage:backImage forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(backButtonHandler:) forControlEvents:UIControlEventTouchUpInside];
+  
+    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton] ;
+  
+    self.navigationItem.hidesBackButton = YES;
+    self.navigationItem.leftBarButtonItem = backBarButtonItem;
+  
     [[self navigationItem] setTitle:@"Settings"];
   
     [self updateUI];
+}
+
+- (void)backButtonHandler:(id)sender
+{
+  [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)updateUI

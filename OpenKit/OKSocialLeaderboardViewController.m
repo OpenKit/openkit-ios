@@ -50,7 +50,7 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
         numberOfSocialRequestsRunning = 0;
         isShowingFBLoginCell = NO;
         
-        [_tableView setSeparatorColor:UIColorFromRGB(0xb7b9bd)];
+        [_tableView setSeparatorColor:UIColorFromRGB(0xcacaca)];
       
         //Initialize the invite button
         UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showFacebookInviteUI)];
@@ -211,8 +211,6 @@ typedef enum {
     return (numberOfSocialRequestsRunning > 0);
 }
 
-
-
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     switch(section) {
@@ -221,13 +219,42 @@ typedef enum {
         case kGlobalSection:
             return @"All Players";
         default:
-            return @"Unknown Section";
+            return @"";
     }
 }
 
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, tableView.frame.size.width, 18)];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor colorWithRed:76.0/255.0 green:86.0/255.0 blue:108.0/255.0 alpha:1];
+    label.font = [UIFont boldSystemFontOfSize:14];
+    label.shadowColor = [UIColor whiteColor];
+    label.shadowOffset = CGSizeMake(0.0, 1.0);
+    
+    if(section == 0)
+    {
+      label.text = @"Friends";
+    }
+    else if(section == 1)
+    {
+      label.text = @"All Players";
+    }
+    else
+    {
+      label.text = @"";
+    }
+    
+    [view addSubview:label];
+    [view setBackgroundColor:[UIColor clearColor]]; //your background color...
+    return view;
+  }
+
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 20;
+    return 18;
 }
 
 
@@ -454,10 +481,10 @@ typedef enum {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
       [loadMoreScoresButton setFrame:CGRectMake(30, 0, 508, 44)];
     }else {
-      
+      // iPhone
     }
-  
 }
+
 
 -(void)getScores
 {
