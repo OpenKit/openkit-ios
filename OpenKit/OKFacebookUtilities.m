@@ -46,12 +46,10 @@
             NSString *userNick = [result name];
             
             [OKFacebookUtilities CreateOKUserWithFacebookID:fbUserID withUserNick:userNick withCompletionHandler:^(OKUser *user, NSError *error) {
-                if(user && !error)
-                {
-                    compHandler(user, nil);
+                if(user && !error) {
+                   compHandler(user, nil);
                 }
-                else
-                {
+                else {
                     compHandler(nil,error);
                 }
             }];
@@ -123,10 +121,8 @@
     [OKUserUtilities createOKUserWithUserIDType:FacebookIDType withUserID:facebookID withUserNick:userNick withCompletionHandler:^(OKUser *user, NSError *errror) {
         
         if(!errror) {
-            // User was created successfully, save as current user
-            [[OKManager sharedManager] saveCurrentUser:user];
-            // Submit any cached scores
-            [[OKScoreCache sharedCache] submitAllCachedScores];
+            // User was created successfully
+            // createOKUserWithUserIDType saves the current user so we don't call it here (
         }
         
         // Call the passed in completionHandler

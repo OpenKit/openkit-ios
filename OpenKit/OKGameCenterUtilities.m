@@ -29,6 +29,10 @@
     return (gcClass && osVersionSupported);
 }
 
++(BOOL)isPlayerAuthenticatedWithGameCenter {
+    return [GKLocalPlayer localPlayer].isAuthenticated;
+}
+
 
 +(void)authorizeUserWithGameCenterWithBlockToHandleShowingGameCenterUI:(void(^)(UIViewController* viewControllerFromGC))showUIHandler
 {
@@ -137,9 +141,6 @@
     }];
 }
 
-+(BOOL)isPlayerAuthenticatedWithGameCenter {
-    return [GKLocalPlayer localPlayer].isAuthenticated;
-}
 
 /** Manages the logic for logging into OpenKit with GameCenter **/
 /*

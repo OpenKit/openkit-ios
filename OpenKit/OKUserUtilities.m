@@ -23,14 +23,6 @@
 {
     OKUser *user = [[OKUser alloc] init];
     
-    /*
-    NSNumber *_OKUserID = [jsonData objectForKey:@"id"];
-    NSNumber *_fbID = [jsonData objectForKey:@"fb_id"];
-    NSNumber *_customID = [jsonData objectForKey:@"custom_id"];
-     NSString *_userNick = [jsonData objectForKey:@"nick"];
-     NSNumber *_twitterID = [jsonData objectForKey:@"twitter_id"];
-    */
-    
     NSNumber *_twitterID=   [OKHelper getNSNumberSafeForKey:@"twitter_id" fromJSONDictionary:jsonData];
     NSNumber *_OKUserID =   [OKHelper getNSNumberSafeForKey:@"id" fromJSONDictionary:jsonData];
     NSNumber *_fbID     =   [OKHelper getNSNumberSafeForKey:@"fb_id" fromJSONDictionary:jsonData];
@@ -115,16 +107,14 @@
              //Check to make sure the user was returned, that way we know the response was successful
              OKUser *responseUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
              
-             if([responseUser OKUserID] == [user OKUserID])
-             {
+             if([responseUser OKUserID] == [user OKUserID]) {
                  [[OKManager sharedManager] saveCurrentUser:responseUser];
              }
-             else
-             {
+             else {
                  NSDictionary *errorInfo = [NSDictionary dictionaryWithObject:@"Unknown error from OpenKit when trying to update user nick" forKey:NSLocalizedDescriptionKey];
                  error = [[NSError alloc] initWithDomain:OKErrorDomain code:0 userInfo:errorInfo];
              }
-         }else{
+         } else {
              NSLog(@"Error updating username: %@", error);
          }
          completionHandler(error);
@@ -149,9 +139,6 @@
         case GoogleIDType:
             [params setObject:userID forKey:@"google_id"];
             break;
-        //case GameCenterIDType:
-        //    [params setObject:userID forKey:@"gamecenter_id"];
-        //    break;
         case CustomIDType:
             [params setObject:userID forKey:@"custom_id"];
             break;
@@ -162,19 +149,14 @@
      {
          OKUser *newUser = nil;
          if(!error) {
-             
-              OKLog(@"Create user JSON response is: %@",responseObject);
-             
+            //OKLog(@"Create user JSON response is: %@",responseObject);
              //Success
              OKLog(@"Successfully created/found user ID: %@", [responseObject valueForKeyPath:@"id"]);
              newUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
-             
-             // Save current user
-             //[[OKManager sharedManager] saveCurrentUser:newUser];
+             [[OKManager sharedManager] saveCurrentUser:newUser];
          } else {
              OKLog(@"Failed to create user with error: %@", error);
          }
-         
          completionHandler(newUser, error);
      }];
 }

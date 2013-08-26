@@ -18,10 +18,9 @@
 @end
 
 
-@interface OKBaseLoginViewController : UIViewController<OKNickViewControllerDelegate>
+@interface OKBaseLoginViewController : UIViewController
 
-@property (nonatomic, strong) NSArray *twitterAccounts;
-@property (nonatomic, strong) ACAccount *currentTwitterAccount;
+
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 @property (nonatomic, strong) UIView *loginView;
 @property (nonatomic, strong) id<OKLoginViewDelegate> delegate;

@@ -111,6 +111,94 @@
         completionhandler(user, errror);
     }];
 }
-                                                                                               
-                                                                                               
+
+
+/*
+ - (IBAction)performTwitterLogin:(id)sender
+ {
+ ACAccountStore *store = [[ACAccountStore alloc] init];
+ ACAccountType *twitterAccountType = [store accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+ 
+ [store requestAccessToAccountsWithType:twitterAccountType options:nil completion:^(BOOL granted, NSError *error) {
+ 
+ if (error) {
+ if ([error code] == 6) {
+ //No Twitter accounts defined
+ [self performSelectorOnMainThread:@selector(showAlertForZeroTwitterAccounts) withObject:nil waitUntilDone:NO];
+ }
+ return;
+ }
+ 
+ if (!granted) {
+ NSLog(@"User did not grant twitter account access");
+ [self performSelectorOnMainThread:@selector(showAlertForAccessNotGranted) withObject:nil waitUntilDone:NO];
+ return;
+ } else {
+ //Twitter account access granted
+ NSArray *aTwitterAccounts = [store accountsWithAccountType:twitterAccountType];
+ 
+ [self setTwitterAccounts:aTwitterAccounts];
+ 
+ if ([twitterAccounts count] == 0) {
+ //Another check for no accounts defined (not sure if this gets reached)
+ NSLog(@"No twitter accounts!");
+ [self performSelectorOnMainThread:@selector(showAlertForZeroTwitterAccounts) withObject:nil waitUntilDone:NO];
+ return;
+ } else {
+ if([twitterAccounts count] > 1) {
+ //Show UI to pick a Twitter account from the list
+ [self performSelectorOnMainThread:@selector(displayUIToPickFromMultipleTwitterAccounts:) withObject:sender waitUntilDone:NO];
+ return;
+ }
+ 
+ ACAccount *account = [twitterAccounts objectAtIndex:0];
+ [self setCurrentTwitterAccount:account];
+ [self showLoginDialogSpinner];
+ [self loginWithTwitterAccount:account];
+ }
+ }
+ 
+ }];
+ }
+ 
+ - (void)loginWithTwitterAccount:(ACAccount *)account
+ {
+ [self showLoginDialogSpinner];
+ 
+ [OKTwitterUtilities AuthorizeTwitterAccount:account withCompletionHandler:^(OKUser *newUser, NSError *error) {
+ [self hideLoginDialogSpinner];
+ 
+ if (error) {
+ NSLog(@"Error logging into twitter: %@",error);
+ } else {
+ NSLog(@"Logged in with Twitter");
+ [self showUIToEnterNickname];
+ //[self dismissModalViewControllerAnimated:YES];
+ }
+ }];
+ }
+
+- (void)displayUIToPickFromMultipleTwitterAccounts:(id)sender
+{
+    NSMutableArray *twitterAccountStrings = [[NSMutableArray alloc] initWithCapacity:[twitterAccounts count]];
+    
+    for (int x = 0; x < [twitterAccounts count]; x++) {
+        NSString *accountString = [NSString stringWithFormat:@"@%@", [[twitterAccounts objectAtIndex:x] username]];
+        [twitterAccountStrings addObject:accountString];
+    }
+    
+    
+    [ActionSheetStringPicker showPickerWithTitle:@"Choose an account" rows:twitterAccountStrings initialSelection:0
+                                       doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
+                                           NSLog(@"Picked a twitter acount account");
+                                           ACAccount *selectedAccount = [twitterAccounts objectAtIndex:selectedIndex];
+                                           [self loginWithTwitterAccount:selectedAccount];
+                                       } cancelBlock:^(ActionSheetStringPicker *picker) {
+                                           NSLog(@"Canceled");
+                                       } origin:sender];
+}
+*/
+
+
+
 @end
