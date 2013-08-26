@@ -35,6 +35,11 @@
     [self updateUI];
 }
 
+- (void)backButtonHandler:(id)sender
+{
+  [self.navigationController popViewControllerAnimated:YES];
+}
+
 -(void)updateUI
 {
     [profilePic setUser:[OKUser currentUser]];

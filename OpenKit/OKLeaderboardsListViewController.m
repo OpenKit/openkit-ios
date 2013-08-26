@@ -41,14 +41,14 @@
     if (self) {
         self.defaultLeaderboardID = leaderboardID;
         
-        UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
-        [closeButton setTintColor:[UIColor blackColor]];
-        
         UIBarButtonItem *profileButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"gear.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showProfileView)];
+      
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
         [backButton setTitleTextAttributes:[OKColors titleTextAttributesForNavBarButton] forState:UIControlStateNormal];
-        
-        [[self navigationItem] setLeftBarButtonItem:backButton];
+      
+        UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close"] style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
+      
+        [[self navigationItem] setLeftBarButtonItem:closeButton];
         [[self navigationItem] setRightBarButtonItem:profileButton];
         [[self navigationItem] setBackBarButtonItem:backButton];
     }
@@ -132,13 +132,45 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    //return [NSString stringWithFormat:@"%d Players",playerCount];
     return [NSString stringWithFormat:@"%d Leaderboards",[OKLeaderBoardsList count]];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, tableView.frame.size.width, 18)];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor colorWithRed:76.0/255.0 green:86.0/255.0 blue:108.0/255.0 alpha:1];
+    label.font = [UIFont boldSystemFontOfSize:14];
+    label.shadowColor = [UIColor whiteColor];
+    label.shadowOffset = CGSizeMake(0.0, 1.0);
+    label.text = [NSString stringWithFormat:@"%d Leaderboards",[OKLeaderBoardsList count]];
+    
+    [view addSubview:label];
+    [view setBackgroundColor:[UIColor clearColor]]; //your background color...
+    return view;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+    return @"Powered by OpenKit";
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+  UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
+  UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, tableView.frame.size.width, 18)];
+  label.backgroundColor = [UIColor clearColor];
+  label.textAlignment = UITextAlignmentCenter;
+  label.textColor = [UIColor colorWithRed:76.0/255.0 green:86.0/255.0 blue:108.0/255.0 alpha:1];
+  label.font = [UIFont systemFontOfSize:14];
+  label.shadowColor = [UIColor whiteColor];
+  label.shadowOffset = CGSizeMake(0.0, 1.0);
+  label.text = @"Powered by OpenKit";
   
-  return @"Powered by OpenKit";
+  [view addSubview:label];
+  [view setBackgroundColor:[UIColor clearColor]];
+  return view;
 }
 
 //RootViewController.m
