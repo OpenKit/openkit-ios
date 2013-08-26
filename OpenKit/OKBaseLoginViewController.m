@@ -13,6 +13,7 @@
 #import "OKFacebookUtilities.h"
 #import "KGModal.h"
 #import "OKGameCenterUtilities.h"
+#import "OKUser.h"
 
 @interface OKBaseLoginViewController ()
 
@@ -45,6 +46,7 @@
     [super viewDidLoad];
     
     [self updateGameCenterButtonVisibility];
+    [self updateFBButtonVisibility];
     
     self.view.backgroundColor = [UIColor clearColor];
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
@@ -52,17 +54,23 @@
 
 -(void)showLoginModalView
 {
+    [self updateGameCenterButtonVisibility];
+    [self updateFBButtonVisibility];
     KGModal *modal = [KGModal sharedInstance];
     [modal setTapOutsideToDismiss:NO];
     [modal setShowCloseButton:NO];
     [modal showWithContentView:loginView andAnimated:YES];
     [modal setDelegate:self];
 }
--(void)dismissLoginView
-{
+-(void)dismissLoginView {
     [[KGModal sharedInstance] hide];
     [[KGModal sharedInstance] setDelegate:nil];
     [delegate dismiss];
+}
+
+-(void)dismissLoginViewWithoutBaseDismiss {
+    [[KGModal sharedInstance] hide];
+    [[KGModal sharedInstance] setDelegate:nil];
 }
 
 -(void)showLoginDialogSpinner
@@ -124,7 +132,9 @@
     [gcLoginButton setFrame:gcButtonRect];
     [gcLoginButton addTarget:self action:@selector(gameCenterButtonPressed:) forControlEvents:UIControlEventTouchDown];
     [gcLoginButton setBackgroundImage:gcButtonImageOff forState:UIControlStateNormal];
-    [gcLoginButton setBackgroundImage:gcButtonImageOn forState:UIControlStateHighlighted];
+    [gcLoginButton setBackgroundImage:gcButtonImageOn forState:UIControlStateDisabled];
+    
+
     [self updateGameCenterButtonVisibility];
         
     // Facebook Button
@@ -134,8 +144,8 @@
     fbLoginButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     fbLoginButton.frame = fbButtonRect;
     [fbLoginButton addTarget:self action:@selector(performFacebookLogin:) forControlEvents:UIControlEventTouchDown];
+    [fbLoginButton setBackgroundImage:fbButtonImageOn forState:UIControlStateDisabled];
     [fbLoginButton setBackgroundImage:fbButtonImageOff forState:UIControlStateNormal];
-    [fbLoginButton setBackgroundImage:fbButtonImageOn forState:UIControlStateHighlighted];
     
   
     // Finished Button
@@ -166,17 +176,30 @@
 -(void)updateGameCenterButtonVisibility {
     if([OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
         [gcLoginButton setEnabled:NO];
-        [gcLoginButton setHighlighted:YES];
     } else {
         [gcLoginButton setEnabled:YES];
-        [gcLoginButton setHighlighted:NO];
+    }
+}
+
+-(void)updateFBButtonVisibility {
+    OKUser *currentUser = [OKUser currentUser];
+    
+    if(currentUser && [currentUser fbUserID] && [OKFacebookUtilities isFBSessionOpen]) {
+        [fbLoginButton setEnabled:NO];
+    } else {
+        [fbLoginButton setEnabled:YES];
     }
 }
 
 -(IBAction)gameCenterButtonPressed:(id)sender
 {
     if([OKGameCenterUtilities isGameCenterAvailable] && ![OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
-        [OKGameCenterUtilities authenticateLocalPlayer];
+        
+        [self dismissLoginViewWithoutBaseDismiss];
+        
+        [OKGameCenterUtilities authorizeUserWithGameCenterLegacyWithCompletionHandler:^(NSError *error) {
+            [self showLoginModalView];  
+        }];
     }
 }
 
@@ -198,9 +221,10 @@
     
     [OKFacebookUtilities AuthorizeUserWithFacebookWithCompletionHandler:^(OKUser *user, NSError *error) {
         [self hideLoginDialogSpinner];
+        [self updateFBButtonVisibility];
         
         if(user && !error) {
-            //[self dismissLoginView];
+            [self dismissLoginView];
         } else {
             //Did not login with Facebook, show an error if neecessary
             [OKFacebookUtilities handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:error];

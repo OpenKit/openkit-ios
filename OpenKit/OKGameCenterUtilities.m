@@ -34,10 +34,10 @@
 }
 
 
-+(void)authorizeUserWithGameCenterWithBlockToHandleShowingGameCenterUI:(void(^)(UIViewController* viewControllerFromGC))showUIHandler
++(void)authorizeUserWithGameCenterWithBlockToHandleShowingGameCenterUI:(void(^)(UIViewController* viewControllerFromGC))showUIHandler withGameCenterUICompletionHandler:(OKGameCenterLoginCompletionHandler)completionHandler
 {
     if([self shouldUseLegacyGameCenterAuth]) {
-        [self authorizeUserWithGameCenterLegacy];
+        [self authorizeUserWithGameCenterLegacyWithCompletionHandler:completionHandler];
         return;
     }
     
@@ -62,18 +62,18 @@
 
 
 // This method only works with iOS 6+
-+(void)authorizeUserWithGameCenterAndallowUI:(BOOL)allowUI withPresentingViewController:(UIViewController*)presenter
++(void)authorizeUserWithGameCenterAndallowUI:(BOOL)allowUI withPresentingViewController:(UIViewController*)presenter withCompletionHandler:(OKGameCenterLoginCompletionHandler)completionHandler
 {
     [self authorizeUserWithGameCenterWithBlockToHandleShowingGameCenterUI:^(UIViewController *viewControllerFromGC) {
         if(presenter) {
             [presenter presentModalViewController:viewControllerFromGC animated:YES];
         }
-    }];
+    } withGameCenterUICompletionHandler:completionHandler];
     
 }
 
 // Authenticate with GameCenter on iOS5
-+(void)authorizeUserWithGameCenterLegacy {
++(void)authorizeUserWithGameCenterLegacyWithCompletionHandler:(OKGameCenterLoginCompletionHandler)completionHandler {
     
     // This gamecenter method is deprecated in iOS6 but is required for iOS 5 support
     
@@ -83,12 +83,15 @@
         {
             // local player is authenticated
             OKLog(@"Authenticated with GameCenter iOS5 style");
-            //[self loginToOpenKitWithGameCenterUser:[GKLocalPlayer localPlayer]];
         }
         else
         {
             // local player is not authenticated
             OKLog(@"Did not auth with GameCenter (iOS5 style), error: %@", error);
+        }
+        
+        if(completionHandler) {
+            completionHandler(error);
         }
     }];
 }
@@ -110,14 +113,14 @@
 
 
 
-+(void)authenticateLocalPlayer
++(void)authenticateLocalPlayerWithCompletionHandler:(OKGameCenterLoginCompletionHandler)completionHandler
 {
     OKLog(@"Authenticating local GC player and logging into OpenKit");
     
     if([self shouldUseLegacyGameCenterAuth])
-        [OKGameCenterUtilities authorizeUserWithGameCenterLegacy];
+        [OKGameCenterUtilities authorizeUserWithGameCenterLegacyWithCompletionHandler:completionHandler];
     else
-        [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:NO withPresentingViewController:nil];
+        [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:NO withPresentingViewController:nil withCompletionHandler:completionHandler];
 }
 
 +(void)loadPlayerPhotoForGameCenterID:(NSString*)gameCenterID withPhotoSize:(GKPhotoSize)photoSize withCompletionHandler:(void(^)(UIImage *photo, NSError *error))completionhandler

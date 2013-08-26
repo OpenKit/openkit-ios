@@ -9,13 +9,18 @@
 #import <Foundation/Foundation.h>
 #import <GameKit/GameKit.h>
 
+typedef void(^OKGameCenterLoginCompletionHandler)(NSError *error);
+
 @interface OKGameCenterUtilities : NSObject
 
 +(void)loadPlayerPhotoForGameCenterID:(NSString*)gameCenterID withPhotoSize:(GKPhotoSize)photoSize withCompletionHandler:(void(^)(UIImage *photo, NSError *error))completionhandler;
 +(BOOL)isPlayerAuthenticatedWithGameCenter;
 +(BOOL)isGameCenterAvailable;
-+(void)authenticateLocalPlayer;
-+(void)authorizeUserWithGameCenterAndallowUI:(BOOL)allowUI withPresentingViewController:(UIViewController*)presenter;
-+(void)authorizeUserWithGameCenterWithBlockToHandleShowingGameCenterUI:(void(^)(UIViewController* viewControllerFromGC))showUIHandler;
++(void)authenticateLocalPlayerWithCompletionHandler:(OKGameCenterLoginCompletionHandler)completionHandler;
++(void)authorizeUserWithGameCenterAndallowUI:(BOOL)allowUI withPresentingViewController:(UIViewController*)presenter withCompletionHandler:(OKGameCenterLoginCompletionHandler)completionHandler;
++(void)authorizeUserWithGameCenterWithBlockToHandleShowingGameCenterUI:(void(^)(UIViewController* viewControllerFromGC))showUIHandler withGameCenterUICompletionHandler:(OKGameCenterLoginCompletionHandler)completionHandler;
++(void)authorizeUserWithGameCenterLegacyWithCompletionHandler:(OKGameCenterLoginCompletionHandler)completionHandler;
+
+
 
 @end
