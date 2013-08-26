@@ -20,10 +20,6 @@
 }
 
 
-static sqlite3_stmt *insertScoreStatement = nil;
-static sqlite3_stmt *deleteScoreStatement = nil;
-static sqlite3_stmt *updateScoreStatement = nil;
-
 + (OKScoreCache*)sharedCache
 {
     static dispatch_once_t pred;
@@ -99,14 +95,12 @@ static sqlite3_stmt *updateScoreStatement = nil;
     if(sqlite3_open(dbpath, &_scoresDB) == SQLITE_OK) {
         
         // Setup the SQL Statement
-        if(insertScoreStatement == nil) {
-            //OKLog(@"Preparing statement for cache score");
-            const char *insertSQL = "INSERT INTO OKCACHE(leaderboardID,scoreValue,metadata,displayString,submitted) VALUES(?,?,?,?,?);";
-            
-            if(sqlite3_prepare_v2(_scoresDB, insertSQL, -1, &insertScoreStatement, NULL) != SQLITE_OK) {
-                OKLog(@"Failed to prepare score insert statement with message: '%s'", sqlite3_errmsg(_scoresDB));
-                return;
-            }
+        sqlite3_stmt *insertScoreStatement = nil;
+        static const char *insertSQL = "INSERT INTO OKCACHE(leaderboardID,scoreValue,metadata,displayString,submitted) VALUES(?,?,?,?,?);";
+        
+        if(sqlite3_prepare_v2(_scoresDB, insertSQL, -1, &insertScoreStatement, NULL) != SQLITE_OK) {
+            OKLog(@"Failed to prepare score insert statement with message: '%s'", sqlite3_errmsg(_scoresDB));
+            return;
         }
         
         // Bind the score values to the statement
@@ -130,9 +124,7 @@ static sqlite3_stmt *updateScoreStatement = nil;
             OKLog(@"Failed to store score in cache wihth error message: %s",sqlite3_errmsg(_scoresDB));
         }
         
-        
-        sqlite3_reset(insertScoreStatement);
-        sqlite3_clear_bindings(insertScoreStatement);
+        sqlite3_finalize(insertScoreStatement);
         sqlite3_close(_scoresDB);
         
     } else {
@@ -148,16 +140,15 @@ static sqlite3_stmt *updateScoreStatement = nil;
     }
     
     const char *dbpath = [[self dbPath] UTF8String];
+    sqlite3_stmt *deleteScoreStatement = nil;
     
     if(sqlite3_open(dbpath, &_scoresDB) == SQLITE_OK) {
-        if(deleteScoreStatement == nil) {
-            //OKLog(@"Preparing statement for delete score");
-            const char *deleteSQL = "DELETE FROM OKCACHE WHERE id=?";
-            
-            if(sqlite3_prepare_v2(_scoresDB, deleteSQL, -1, &deleteScoreStatement, NULL) != SQLITE_OK) {
-                OKLog(@"Failed to prepare delete score statement with message: %s", sqlite3_errmsg(_scoresDB));
-                return;
-            }
+        //Prepare the SQL statement
+        static const char *deleteSQL = "DELETE FROM OKCACHE WHERE id=?";
+        
+        if(sqlite3_prepare_v2(_scoresDB, deleteSQL, -1, &deleteScoreStatement, NULL) != SQLITE_OK) {
+            OKLog(@"Failed to prepare delete score statement with message: %s", sqlite3_errmsg(_scoresDB));
+            return;
         }
         
         sqlite3_bind_int(deleteScoreStatement, 1, [score OKScoreID]);
@@ -168,10 +159,8 @@ static sqlite3_stmt *updateScoreStatement = nil;
             OKLog(@"Failed to remove score in cache wihth error message: %s",sqlite3_errmsg(_scoresDB));
         }
         
-        sqlite3_reset(deleteScoreStatement);
-        sqlite3_clear_bindings(deleteScoreStatement);
+        sqlite3_finalize(deleteScoreStatement);
         sqlite3_close(_scoresDB);
-        
     } else {
         OKLog(@"Could not open cache db removeScore");
     }
@@ -237,18 +226,18 @@ static sqlite3_stmt *updateScoreStatement = nil;
         return;
     }
     
+    sqlite3_stmt *updateScoreStatement = nil;
+    
     const char *dbpath = [[self dbPath] UTF8String];
     
     if(sqlite3_open(dbpath, &_scoresDB) == SQLITE_OK) {
-        if(updateScoreStatement == nil) {
-            //OKLog(@"Preparing statement for update score");
-            const char *updateSQL = "UPDATE OKCACHE SET Submitted=1 WHERE id=?";
-            
-            if(sqlite3_prepare_v2(_scoresDB, updateSQL, -1, &updateScoreStatement, NULL) != SQLITE_OK) {
-                OKLog(@"Failed to prepare update score statement with message: %s", sqlite3_errmsg(_scoresDB));
-                return;
-            }
+        static const char *updateSQL = "UPDATE OKCACHE SET Submitted=1 WHERE id=?";
+        
+        if(sqlite3_prepare_v2(_scoresDB, updateSQL, -1, &updateScoreStatement, NULL) != SQLITE_OK) {
+            OKLog(@"Failed to prepare update score statement with message: %s", sqlite3_errmsg(_scoresDB));
+            return;
         }
+        
         
         sqlite3_bind_int(updateScoreStatement, 1, [score OKScoreID]);
         
@@ -258,15 +247,12 @@ static sqlite3_stmt *updateScoreStatement = nil;
             OKLog(@"Failed to remove score in cache wihth error message: %s",sqlite3_errmsg(_scoresDB));
         }
         
-        sqlite3_reset(updateScoreStatement);
-        sqlite3_clear_bindings(updateScoreStatement);
+        sqlite3_finalize(updateScoreStatement);
         sqlite3_close(_scoresDB);
         
     } else {
         OKLog(@"Could not open cache db removeScore");
     }
-
-    
 }
 
 
@@ -299,7 +285,7 @@ static sqlite3_stmt *updateScoreStatement = nil;
     
     int isSubmitted = sqlite3_column_int(statement, 5);
     [score setSubmitted:(BOOL)isSubmitted];
-
+    
     return score;
 }
 
@@ -341,20 +327,20 @@ static sqlite3_stmt *updateScoreStatement = nil;
             OKLog(@"Dropped cache table");
         }
         
-    
+        
     } else {
         OKLog(@"Coud not open DB to drop cache table");
     }
-
+    
     [self closeDB];
-
+    
     //Reinit the DB after clearing out the cache
     [self initDB];
 }
 
 -(void)closeDB
 {
-     sqlite3_close(_scoresDB);
+    sqlite3_close(_scoresDB);
 }
 
 -(void)submitAllCachedScores
@@ -399,7 +385,7 @@ static sqlite3_stmt *updateScoreStatement = nil;
     // to submit the new score, and not all scores. E.g. if there is an unsubmitted score for some reason that has a higher value than the
     // one to submit, we should still submit it. This is because for some reason there might be an unsubmitted score stored that will never
     // get submitted for some unknown reason.
-
+    
     
     NSArray *cachedScores;
     if([OKUser currentUser]) {
