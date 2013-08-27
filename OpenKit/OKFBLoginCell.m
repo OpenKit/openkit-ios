@@ -12,44 +12,61 @@
 #import <QuartzCore/QuartzCore.h>
 #import "OKMacros.h"
 #import "OKColors.h"
+#import "OKGameCenterUtilities.h"
+#import "OKUser.h"
 
 @implementation OKFBLoginCell
 
-@synthesize connectFBButton, textLabel, spinner, delegate;
+@synthesize connectFBButton, textLabel, spinner, delegate, gameCenterButton;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-        
-        //Score cell is not selectable
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
+
+-(id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    
+    if(self) {
+        //Score cell is not selectable        
     }
+    
     return self;
 }
 
--(void)layoutSubviews {
-
+-(void)layoutSubviews
+{
     [super layoutSubviews];
+    [self updateButtonVisibility];
+}
+
+-(void)updateButtonVisibility
+{
+    if([OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
+        [gameCenterButton setEnabled:NO];
+    } else {
+        [gameCenterButton setEnabled:YES];
+    }
     
+    OKUser *currentUser = [OKUser currentUser];
+    if(currentUser && [currentUser fbUserID] && [OKFacebookUtilities isFBSessionOpen]) {
+        [connectFBButton setEnabled:NO];
+    } else {
+        [connectFBButton setEnabled:YES];
+    }
 }
 
 -(void)makeCellInviteFriends
 {
     [textLabel setText:@"Invite friends from"];
-    
-    // Move the text label up a few pixels
-    CGRect textFrame = [textLabel frame];
-    textFrame.origin.y = textFrame.origin.y - 5;
-    [textLabel setFrame:textFrame];
-    
+    [gameCenterButton setHidden:YES];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
+    // Don't show the selection blue color
+    [super setSelected:NO animated:NO];
+    
+    // If it was selected, trigger the Facebook login action
+    if(selected) {
+        [self connectButtonPressed:nil];
+    }
 }
 
 -(void)startSpinner
@@ -71,6 +88,10 @@
     }
 }
 
+-(IBAction)gcButtonPressed:(id)sender
+{
+    OKLog(@"Game center button pressed");
+}
 
 
 
