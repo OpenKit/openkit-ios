@@ -179,6 +179,11 @@ void OKBridgeSetEndpoint(const char *endpoint)
     [OKManager setEndpoint:[NSString stringWithUTF8String:endpoint]];
 }
 
+void OKBridgeSetLeaderboardListTag(const char *tag)
+{
+    [[OKManager sharedManager] setLeaderboardListTag:[NSString stringWithUTF8String:tag]];
+}
+
 void OKBridgeShowLeaderboardsBase(BOOL showLandscapeOnly, int defaultLeaderboardID)
 {
     UIWindow *win = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
