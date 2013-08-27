@@ -19,5 +19,6 @@
 +(NSError*)gameCenterNotAvailableError;
 +(NSError*)OKServerRespondedWithDifferentUserIDError;
 +(NSError*)OKScoreNotSubmittedError;
++(NSError*)noOKUserErrorScoreCached;
 
 @end

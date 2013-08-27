@@ -22,6 +22,11 @@
     return [NSError errorWithDomain:OKERROR_DOMAIN code:2 userInfo:[NSDictionary dictionaryWithObject:@"No valid OKUser passed in" forKey:NSLocalizedDescriptionKey]];
 }
 
++(NSError*)noOKUserErrorScoreCached {
+    return [NSError errorWithDomain:OKERROR_DOMAIN code:10 userInfo:[NSDictionary dictionaryWithObject:@"The score was not submitted to OpenKit because the user is not logged in, but it is cached locally on the device and will be submitted to OpenKit when the user logs in." forKey:NSLocalizedDescriptionKey]];
+
+}
+
 +(NSError*)unknownError {
     return [NSError errorWithDomain:OKERROR_DOMAIN code:3 userInfo:[NSDictionary dictionaryWithObject:@"Unknown OpenKit error" forKey:NSLocalizedDescriptionKey]];
 }

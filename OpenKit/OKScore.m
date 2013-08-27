@@ -139,7 +139,7 @@
         // Call the completionhandler with the appropriate error. When there is no user, call the nouser error.
         // When a score is not submitted because it's not better, we have an explicit error for that
         if(![self user]) {
-            completionHandler([OKError noOKUserError]);
+            completionHandler([OKError noOKUserErrorScoreCached]);
         } else {
             completionHandler([OKError OKScoreNotSubmittedError]);
         }
