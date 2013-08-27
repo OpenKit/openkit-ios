@@ -663,6 +663,8 @@
 			isa = PBXGroup;
 			children = (
 				32CACFD216CB637C00E8F185 /* OpenKit.h */,
+				32CACFA816CB637C00E8F185 /* OKManager.h */,
+				32CACFA916CB637C00E8F185 /* OKManager.m */,
 				32CACFAC16CB637C00E8F185 /* OKGUI.h */,
 				446BAB4C177A85050092BD58 /* Social Leaderboard */,
 				446BAB4B177A84C80092BD58 /* Login */,
@@ -883,6 +885,8 @@
 				32CACFB616CB637C00E8F185 /* OKLeaderboardsViewController.m */,
 				32CACFB316CB637C00E8F185 /* OKLeaderboardsListViewController.h */,
 				32CACFB416CB637C00E8F185 /* OKLeaderboardsListViewController.m */,
+				4455BEBC17A396DD0079859A /* OKScoreCache.h */,
+				4455BEBD17A396DE0079859A /* OKScoreCache.m */,
 			);
 			name = "Social Leaderboard";
 			sourceTree = "<group>";
@@ -893,8 +897,6 @@
 				446BAB49177A84630092BD58 /* Vendor */,
 				446BAB4D177A8F880092BD58 /* OKColors.h */,
 				4474BCD317815C46000AEAD1 /* OKColors.m */,
-				32CACFA816CB637C00E8F185 /* OKManager.h */,
-				32CACFA916CB637C00E8F185 /* OKManager.m */,
 				44E3058B178CD78E00611E0C /* OKFacebookUtilities.h */,
 				44E3058C178CD78E00611E0C /* OKFacebookUtilities.m */,
 				32CACFBC16CB637C00E8F185 /* OKNetworker.h */,
@@ -915,8 +917,6 @@
 				44E1182A1728A7CF003C2603 /* OKError.m */,
 				32CACFAD16CB637C00E8F185 /* OKHelper.h */,
 				32CACFAE16CB637C00E8F185 /* OKHelper.m */,
-				4455BEBC17A396DD0079859A /* OKScoreCache.h */,
-				4455BEBD17A396DE0079859A /* OKScoreCache.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
