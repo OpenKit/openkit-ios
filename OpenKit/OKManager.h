@@ -19,6 +19,8 @@
 @property (nonatomic, strong) NSString *secretKey;
 @property (nonatomic, strong) NSString *endpoint;
 
+@property (nonatomic) BOOL hasShownFBLoginPrompt;
+
 // See OKManagerDelegate protocol, below.
 @property (nonatomic, assign) id delegate;
 

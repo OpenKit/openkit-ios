@@ -31,6 +31,8 @@
 
 @implementation OKManager
 
+@synthesize hasShownFBLoginPrompt;
+
 + (id)sharedManager
 {
     static dispatch_once_t pred;
