@@ -14,9 +14,11 @@
 void OKBridgeSetAppKey(const char *appKey);
 void OKBridgeSetSecretKey(const char *secretKey);
 void OKBridgeSetEndpoint(const char *endpoint);
+void OKBridgeSetLeaderboardListTag(const char *tag);
 
 void OKBridgeShowLeaderboards();
 void OKBridgeShowLeaderboardsLandscapeOnly();
+void OKBridgeShowLeaderboardID(int leaderboardID, BOOL landscapeOnly);
 
 void OKBridgeShowLoginUI();
 void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, const char *displayString, const char *gameObjectName);

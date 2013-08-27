@@ -227,7 +227,9 @@ void OKBridgeLogoutCurrentUserFromOpenKit()
 void OKBridgeAuthenticateLocalPlayerWithGameCenter()
 {
     OKBridgeLog(@"authenticating local player with GC");
-    [OKGameCenterUtilities authenticateLocalPlayer];
+    [OKGameCenterUtilities authenticateLocalPlayerWithCompletionHandler:^(NSError *error) {
+        OKBridgeLog(@"Finished showing GC UI");
+    }];
 }
 
 void OKBridgeAuthenticateLocalPlayerWithGameCenterAndShowUIIfNecessary()
@@ -251,6 +253,8 @@ void OKBridgeAuthenticateLocalPlayerWithGameCenterAndShowUIIfNecessary()
         // to it.
         [vc.window setRootViewController:vc];
         [vc.window makeKeyAndVisible];
+    } withGameCenterUICompletionHandler:^(NSError *error) {
+        OKBridgeLog(@"Finished showing GC UI");
     }];
  
 }
