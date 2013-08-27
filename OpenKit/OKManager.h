@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSString *endpoint;
 
 @property (nonatomic) BOOL hasShownFBLoginPrompt;
+@property (nonatomic, strong) NSString *leaderboardListTag;
 
 // See OKManagerDelegate protocol, below.
 @property (nonatomic, assign) id delegate;

@@ -24,6 +24,8 @@
 
 @synthesize OKLeaderboard_id, OKApp_id, name, in_development, sortType, icon_url, playerCount, gamecenter_id;
 
+static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
+
 - (id)initFromJSON:(NSDictionary*)jsonDict
 {
     if ((self = [super init])) {
@@ -49,8 +51,25 @@
 
 + (void)getLeaderboardsWithCompletionHandler:(void (^)(NSArray* leaderboards, int playerCount, NSError* error))completionHandler
 {
+    // By default, if a leaderboard list tag is not defined through OKManger, we
+    // load the leaderboards with the tag = 'v1'. In the OK Dashboard, new leaderboards
+    // have a default tag of v1. This sets up future proofing so a developer can issue
+    // a set of leaderboards in the first version of their game, and then change the leaderboards
+    // in a future version of their game
+    
+    if([[OKManager sharedManager] leaderboardListTag] != nil) {
+        [OKLeaderboard getLeaderboardsWithTag:[[OKManager sharedManager] leaderboardListTag] WithCompletionHandler:completionHandler];
+    } else {
+        [OKLeaderboard getLeaderboardsWithTag:DEFAULT_LEADERBOARD_LIST_TAG WithCompletionHandler:completionHandler];
+    }
+}
+
++ (void)getLeaderboardsWithTag:(NSString*)leaderbaordListTag WithCompletionHandler:(void (^)(NSArray* leaderboards, int playerCount, NSError* error))completionHandler
+{
+    NSDictionary *requestParams = [NSDictionary dictionaryWithObject:leaderbaordListTag forKey:@"tag"];
+    
     // OK NETWORK REQUEST
-    [OKNetworker getFromPath:@"/leaderboards" parameters:nil
+    [OKNetworker getFromPath:@"/leaderboards" parameters:requestParams
                      handler:^(id responseObject, NSError *error)
      {
          int maxPlayerCount = 0;

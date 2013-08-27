@@ -27,6 +27,14 @@
     [OKManager setAppKey:@"zRn4FrBcWi6ntUmWnEwm"];
     [OKManager setSecretKey:@"rjqQmuDZaO6JtLuW25XPB2D6P0jplBfmuuANCKuu"];
     [OKManager setEndpoint:@"http://development.openkit.io"];
+    
+    // Set the leaderboard list tag. By default, client asks
+    // for tag = "v1". In the OpenKit dashboard, new leaderboards
+    // have a default tag of "v1" as well. You can use this
+    // tag feature to display different leaderboards in different
+    // versions of your game. Each leaderboard can have multiple tags, but the client
+    // will only display one tag.
+    //[[OKManager sharedManager] setLeaderboardListTag:@"v2"];
 
     // Set root view controller.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

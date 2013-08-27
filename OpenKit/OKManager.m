@@ -34,7 +34,7 @@
 
 static NSString *OK_USER_KEY = @"OKUserInfo";
 
-@synthesize hasShownFBLoginPrompt;
+@synthesize hasShownFBLoginPrompt, leaderboardListTag;
 
 + (id)sharedManager
 {
@@ -236,7 +236,6 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
         // Clear the old cache
         [SimpleKeychain clear];
         OKLog(@"Cleared old OKUser cache");
-        
         
         // getSavedUserFromKeychainAndMoveToNSUserDefaults gets called during app launch
         // and saveCurrentUserToNSUserDefaults makes a  call to [NSUserDefaults synchronize] which
