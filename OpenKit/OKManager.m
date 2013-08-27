@@ -17,6 +17,7 @@
 #import "OKUserProfileImageView.h"
 #import "OKLeaderboardsViewController.h"
 #import "OKScoreCache.h"
+#import "OKMacros.h"
 
 #define DEFAULT_ENDPOINT    @"stage.openkit.io"
 
@@ -30,6 +31,8 @@
 
 
 @implementation OKManager
+
+static NSString *OK_USER_KEY = @"OKUserInfo";
 
 @synthesize hasShownFBLoginPrompt;
 
@@ -47,7 +50,7 @@
 {
     self = [super init];
     if (self) {
-        [self getSavedUserFromKeychain];
+        [self getSavedUserFromKeychainAndMoveToNSUserDefaults];
         _endpoint = DEFAULT_ENDPOINT;
 
         // These two lines below are required for the linker to work properly such that these classes are available in XIB files
@@ -63,6 +66,7 @@
         [nc addObserver:self selector:@selector(willHideDashboard:) name:OKLeaderboardsViewWillDisappear object:nil];
         [nc addObserver:self selector:@selector(didHideDashboard:)  name:OKLeaderboardsViewDidDisappear object:nil];
         
+        [self getSavedUserFromNSUserDefaults];
     }
     return self;
 }
@@ -112,7 +116,7 @@
 {
     NSLog(@"Logged out of openkit");
     _currentUser = nil;
-    [self removeCachedUserFromKeychain];
+    [self removeCachedUserFromNSUserDefaults];
     //Log out and clear Facebook
     [FBSession.activeSession closeAndClearTokenInformation];
     
@@ -122,35 +126,53 @@
 - (void)saveCurrentUser:(OKUser *)aCurrentUser
 {
     self->_currentUser = aCurrentUser;
-    [self removeCachedUserFromKeychain];
-    [self saveCurrentUserToKeychain];
+    [self removeCachedUserFromNSUserDefaults];
+    [self saveCurrentUserToNSUserDefaults];
     [[OKScoreCache sharedCache] submitAllCachedScores];
 }
 
-- (void)saveCurrentUserToKeychain
+
+
+-(void)getSavedUserFromNSUserDefaults
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *archivedUserDict = [defaults objectForKey:OK_USER_KEY];
+    
+    if(archivedUserDict != nil) {
+        if(![archivedUserDict isKindOfClass:[NSData class]]) {
+            OKLog(@"OKUser cache is busted, clearing cache");
+            [self removeCachedUserFromNSUserDefaults];
+        } else {
+            NSDictionary *userDictionary = [NSKeyedUnarchiver unarchiveObjectWithData:archivedUserDict];
+            OKUser *cachedUser = [OKUserUtilities createOKUserWithJSONData:userDictionary];
+            _currentUser = cachedUser;
+            OKLog(@"Found  cached OKUser id: %@ from defaults", [cachedUser OKUserID]);
+            
+            if(_currentUser == nil) {
+                OKLog(@"OKUser cache is busted, clearing cache");
+                [self removeCachedUserFromNSUserDefaults];
+            }
+        }
+    } else {
+        OKLog(@"Did not find cached OKUser");
+    }
+}
+
+-(void)saveCurrentUserToNSUserDefaults
 {
     NSDictionary *userDict = [OKUserUtilities getJSONRepresentationOfUser:[OKUser currentUser]];
-    [SimpleKeychain store:[NSKeyedArchiver archivedDataWithRootObject:userDict]];
+    NSData *archivedUserDict = [NSKeyedArchiver archivedDataWithRootObject:userDict];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:archivedUserDict forKey:OK_USER_KEY];
+    [defaults synchronize];
 }
 
-- (void)getSavedUserFromKeychain
+-(void)removeCachedUserFromNSUserDefaults
 {
-    NSDictionary *userDict;
-    NSData *keychainData = [SimpleKeychain retrieve];
-    if(keychainData != nil) {
-        userDict = [[NSKeyedUnarchiver unarchiveObjectWithData:keychainData] copy];
-        NSLog(@"Found  cached OKUser");
-        OKUser *cachedUser = [OKUserUtilities createOKUserWithJSONData:userDict];
-        _currentUser = cachedUser;
-    }
-    else {
-        NSLog(@"Did not find cached OKUser");
-    }
-}
-
-- (void)removeCachedUserFromKeychain
-{
-    [SimpleKeychain clear];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:OK_USER_KEY];
+    [defaults synchronize];
 }
 
 + (BOOL)handleOpenURL:(NSURL*)url
@@ -197,5 +219,68 @@
         [_delegate openkitManagerDidHideDashboard:self];
     }
 }
+
+// This method is used to migrate the OKUser cache from keychain
+// to NSUserDefaults
+// It clears out any saved data in Keychain and moves the cached OKUserID
+// to NSUserDefaults
+//
+
+- (void)getSavedUserFromKeychainAndMoveToNSUserDefaults
+{
+    NSDictionary *userDict;
+    NSData *keychainData = [SimpleKeychain retrieve];
+    if(keychainData != nil) {
+        userDict = [[NSKeyedUnarchiver unarchiveObjectWithData:keychainData] copy];
+        OKLog(@"Found  cached OKUser from keychain, moving to NSUserDefaults");
+        OKUser *old_cached_User = [OKUserUtilities createOKUserWithJSONData:userDict];
+        
+        // Clear the old cache
+        [SimpleKeychain clear];
+        OKLog(@"Cleared old OKUser cache");
+        
+        
+        // getSavedUserFromKeychainAndMoveToNSUserDefaults gets called during app launch
+        // and saveCurrentUserToNSUserDefaults makes a  call to [NSUserDefaults synchronize] which
+        // can cause a lock during app launch, so we need to perform it on a bg thread
+        if(old_cached_User != nil) {
+            _currentUser = old_cached_User;
+            OKLog(@"Saving user to new cache in background");
+            [self performSelectorInBackground:@selector(saveCurrentUserToNSUserDefaults) withObject:nil];
+        }
+    }
+}
+
+
+/* Old KeyChain Methods */
+#pragma mark - Old Keychain methods
+/*
+- (void)getSavedUserFromKeychain
+{
+    NSDictionary *userDict;
+    NSData *keychainData = [SimpleKeychain retrieve];
+    if(keychainData != nil) {
+        userDict = [[NSKeyedUnarchiver unarchiveObjectWithData:keychainData] copy];
+        OKLog(@"Found  cached OKUser from keychain");
+        OKUser *cachedUser = [OKUserUtilities createOKUserWithJSONData:userDict];
+        _currentUser = cachedUser;
+    }
+    else {
+        OKLog(@"Did not find cached OKUser from keychain");
+    }
+}
+
+- (void)saveCurrentUserToKeychain
+{
+    NSDictionary *userDict = [OKUserUtilities getJSONRepresentationOfUser:[OKUser currentUser]];
+    [SimpleKeychain store:[NSKeyedArchiver archivedDataWithRootObject:userDict]];
+}
+
+- (void)removeCachedUserFromKeychain
+{
+    [SimpleKeychain clear];
+}
+ */
+
 
 @end

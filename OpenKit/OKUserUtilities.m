@@ -35,6 +35,11 @@
     [user setTwitterUserID:_twitterID];
     [user setCustomID:_customID];
     
+    // Can't have an OKUser without an OKUser ID
+    if(_OKUserID == nil || [_OKUserID integerValue] == 0) {
+        return nil;
+    }
+    
     return user;
 }
 
