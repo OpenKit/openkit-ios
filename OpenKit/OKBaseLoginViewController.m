@@ -126,11 +126,12 @@
   
     // Game Center Button
     CGRect gcButtonRect = CGRectMake(35,88,105,105);
-    UIImage * gcButtonImageOff = [UIImage imageNamed:@"gc_off_big.png"];
-    UIImage * gcButtonImageOn = [UIImage imageNamed:@"gc_on_big.png"];
+
     gcLoginButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     [gcLoginButton setFrame:gcButtonRect];
     [gcLoginButton addTarget:self action:@selector(gameCenterButtonPressed:) forControlEvents:UIControlEventTouchDown];
+    UIImage * gcButtonImageOff = [UIImage imageNamed:@"gc_off_big.png"];
+    UIImage * gcButtonImageOn = [UIImage imageNamed:@"gc_on_big.png"];
     [gcLoginButton setBackgroundImage:gcButtonImageOff forState:UIControlStateNormal];
     [gcLoginButton setBackgroundImage:gcButtonImageOn forState:UIControlStateDisabled];
     
@@ -139,11 +140,11 @@
         
     // Facebook Button
     CGRect fbButtonRect = CGRectMake(140,88,105,105);
-    UIImage * fbButtonImageOff = [UIImage imageNamed:@"fb_off_big.png"];
-    UIImage * fbButtonImageOn = [UIImage imageNamed:@"fb_on_big.png"];
     fbLoginButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
     fbLoginButton.frame = fbButtonRect;
     [fbLoginButton addTarget:self action:@selector(performFacebookLogin:) forControlEvents:UIControlEventTouchDown];
+    UIImage * fbButtonImageOff = [UIImage imageNamed:@"fb_off_big.png"];
+    UIImage * fbButtonImageOn = [UIImage imageNamed:@"fb_on_big.png"];
     [fbLoginButton setBackgroundImage:fbButtonImageOn forState:UIControlStateDisabled];
     [fbLoginButton setBackgroundImage:fbButtonImageOff forState:UIControlStateNormal];
     

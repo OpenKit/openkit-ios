@@ -15,6 +15,8 @@
 #import "OKFBLoginCell.h"
 #import "OKSpinnerCell.h"
 #import "OKColors.h"
+#import "OKLoginView.h"
+#import "OKManager.h"
 
 #define kOKScoreCellIdentifier @"OKScoreCell"
 
@@ -35,6 +37,7 @@
 
 
 @synthesize leaderboard, _tableView, spinner, socialScores, globalScores, containerViewForLoadMoreButton, loadMoreScoresButton, playerTopScore, mail, leaderboardID;
+@synthesize gcSocialScores, fbSocialScores, playerTopScoreSocialSection;
 
 static NSString *scoreCellIdentifier = kOKScoreCellIdentifier;
 static NSString *fbCellIdentifier = @"OKFBLoginCell";
@@ -60,7 +63,7 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
         isShowingFBLoginCell = NO;
         
         [_tableView setSeparatorColor:UIColorFromRGB(0xcacaca)];
-      
+        
         //Initialize the invite button
         UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showFacebookInviteUI)];
         //UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showActionSheet:)];
@@ -72,90 +75,90 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
 
 - (void)showActionSheet:(id)sender
 {
-  NSString *actionSheetTitle = @"Invite a Friend"; //Action Sheet Title
-  NSString *email = @"Email";
-  NSString *message = @"Message";
-  NSString *facebook = @"Facebook";
-  NSString *cancelTitle = @"Cancel";
-  UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                initWithTitle:actionSheetTitle
-                                delegate:self
-                                cancelButtonTitle:cancelTitle
-                                destructiveButtonTitle:nil
-                                otherButtonTitles:email, message, facebook, nil];
-  [actionSheet showInView:self.view];
+    NSString *actionSheetTitle = @"Invite a Friend"; //Action Sheet Title
+    NSString *email = @"Email";
+    NSString *message = @"Message";
+    NSString *facebook = @"Facebook";
+    NSString *cancelTitle = @"Cancel";
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:actionSheetTitle
+                                  delegate:self
+                                  cancelButtonTitle:cancelTitle
+                                  destructiveButtonTitle:nil
+                                  otherButtonTitles:email, message, facebook, nil];
+    [actionSheet showInView:self.view];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  //Get the name of the current pressed button
-  NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-  if ([buttonTitle isEqualToString:@"Email"]) {
-    [self showEmailUI];
-  }
-  if ([buttonTitle isEqualToString:@"Message"]) {
-    [self showMessageUI];
-  }
-  if ([buttonTitle isEqualToString:@"Facebook"]) {
-    [self showFacebookInviteUI];
-  }
-  if ([buttonTitle isEqualToString:@"Cancel Button"]) {
-    NSLog(@"Cancel pressed --> Cancel ActionSheet");
-  }
+    //Get the name of the current pressed button
+    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+    if ([buttonTitle isEqualToString:@"Email"]) {
+        [self showEmailUI];
+    }
+    if ([buttonTitle isEqualToString:@"Message"]) {
+        [self showMessageUI];
+    }
+    if ([buttonTitle isEqualToString:@"Facebook"]) {
+        [self showFacebookInviteUI];
+    }
+    if ([buttonTitle isEqualToString:@"Cancel Button"]) {
+        NSLog(@"Cancel pressed --> Cancel ActionSheet");
+    }
 }
 
 -(void)showFacebookInviteUI
 {
-  if([[FBSession activeSession] isOpen]) {
-    [OKFacebookUtilities sendFacebookRequest];
-  } else {
-    [self fbLoginWithCompletionHandler:^{
-      [OKFacebookUtilities sendFacebookRequest];
-    }];
-  }
+    if([[FBSession activeSession] isOpen]) {
+        [OKFacebookUtilities sendFacebookRequest];
+    } else {
+        [self fbLoginWithCompletionHandler:^{
+            [OKFacebookUtilities sendFacebookRequest];
+        }];
+    }
 }
 
 -(void)showEmailUI
 {
-  
-  //Set up
-  mail = [[MFMailComposeViewController alloc]init];
-  
-  mail.mailComposeDelegate = self;
-  
-  //Set the subject
-  [mail setSubject:@"Check out Ridiculous Fishing"];
-  
-  //Set the message
-  NSString * sentFrom = @"<p>Check out this game! <a href='http://toddham.com/openkit/invite.html'>Test Link</a></p>";
-  [mail setMessageBody:sentFrom isHTML:YES];
-  
-  [self presentViewController:mail animated:YES completion:nil];
-  
+    
+    //Set up
+    mail = [[MFMailComposeViewController alloc]init];
+    
+    mail.mailComposeDelegate = self;
+    
+    //Set the subject
+    [mail setSubject:@"Check out Ridiculous Fishing"];
+    
+    //Set the message
+    NSString * sentFrom = @"<p>Check out this game! <a href='http://toddham.com/openkit/invite.html'>Test Link</a></p>";
+    [mail setMessageBody:sentFrom isHTML:YES];
+    
+    [self presentViewController:mail animated:YES completion:nil];
+    
 }
 
 - (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
-  switch (result)
-  {
-    case MFMailComposeResultCancelled:
-      NSLog(@"Mail cancelled");
-      break;
-    case MFMailComposeResultSaved:
-      NSLog(@"Mail saved");
-      break;
-    case MFMailComposeResultSent:
-      NSLog(@"Mail sent");
-      break;
-    case MFMailComposeResultFailed:
-      NSLog(@"Mail sent failure: %@", [error localizedDescription]);
-      break;
-    default:
-      break;
-  }
-  
-  // Close the Mail Interface
-  [self dismissViewControllerAnimated:YES completion:NULL];
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail cancelled");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Mail sent");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+            break;
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 -(void) showMessageUI
@@ -173,30 +176,30 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
 - (void) messageComposeViewController:(MFMessageComposeViewController *)
 controller didFinishWithResult:(MessageComposeResult)result
 {
-  
-  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"MyApp" message:@"Unknown Error"
-                        
-                                                 delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-  
-  switch (result) {
-      
-    case MessageComposeResultCancelled:
-      NSLog(@"Cancelled");
-      break;
-      
-    case MessageComposeResultFailed:
-      [alert show];
-      break;
-      
-    case MessageComposeResultSent:
-      break;
-      
-    default:
-      break;
-  }
-
-  [self dismissModalViewControllerAnimated:YES];
-  
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"MyApp" message:@"Unknown Error"
+                          
+                                                   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    
+    switch (result) {
+            
+        case MessageComposeResultCancelled:
+            NSLog(@"Cancelled");
+            break;
+            
+        case MessageComposeResultFailed:
+            [alert show];
+            break;
+            
+        case MessageComposeResultSent:
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self dismissModalViewControllerAnimated:YES];
+    
 }
 
 
@@ -244,21 +247,21 @@ typedef enum {
     
     if(section == 0)
     {
-      label.text = @"Friends";
+        label.text = @"Friends";
     }
     else if(section == 1)
     {
-      label.text = @"All Players";
+        label.text = @"All Players";
     }
     else
     {
-      label.text = @"";
+        label.text = @"";
     }
     
     [view addSubview:label];
     [view setBackgroundColor:[UIColor clearColor]]; //your background color...
     return view;
-  }
+}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
@@ -405,7 +408,6 @@ typedef enum {
     if(!cell) {
         cell = [[OKFBLoginCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:fbCellIdentifier];
     }
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     [cell setDelegate:self];
     return cell;
 }
@@ -416,9 +418,7 @@ typedef enum {
         cell = [[OKFBLoginCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:inviteCellIdentifier];
     }
     [cell setDelegate:self];
-    //OKLog(@"Creating invite friends cell");
     [cell makeCellInviteFriends];
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
 }
 
@@ -439,7 +439,7 @@ typedef enum {
 {
     OKScoreCell *cell = [self getScoreCellForScore:score withTableView:_tableView andShowSocialNetworkIcon:NO];
     [cell setBackgroundColor:[OKColors playerTopScoreBGColor]];
-  
+    
     return cell;
 }
 
@@ -471,19 +471,19 @@ typedef enum {
     
     //Register the nib file for OKFBLoginCell
     [self._tableView registerNib:[UINib nibWithNibName:@"OKFBLoginCell"
-                                               bundle:[NSBundle mainBundle]]
-         forCellReuseIdentifier:fbCellIdentifier];
+                                                bundle:[NSBundle mainBundle]]
+          forCellReuseIdentifier:fbCellIdentifier];
     
     //Register the nib file for InviteCEll
     [self._tableView registerNib:[UINib nibWithNibName:@"OKFBLoginCell"
                                                 bundle:[NSBundle mainBundle]]
           forCellReuseIdentifier:inviteCellIdentifier];
-  
+    
     // iPad specific adjustments
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-      [loadMoreScoresButton setFrame:CGRectMake(30, 0, 508, 44)];
+        [loadMoreScoresButton setFrame:CGRectMake(30, 0, 508, 44)];
     }else {
-      // iPhone
+        // iPhone
     }
     
     // If leaderboard is already loaded, display it, else get it then show it
@@ -492,6 +492,19 @@ typedef enum {
         [self setTitle:[leaderboard name]];
     } else {
         [self getLeaderboardThenGetScores];
+    }
+    
+    [self showLoginPromptIfNecessary];
+}
+
+-(void)showLoginPromptIfNecessary {
+    
+    if(![OKUser currentUser] && ![[OKManager sharedManager] hasShownFBLoginPrompt]) {
+        OKLoginView *loginView = [[OKLoginView alloc] init];
+        [loginView showWithCompletionHandler:^{
+            [self getSocialScores];
+        }];
+        [[OKManager sharedManager] setHasShownFBLoginPrompt:YES];
     }
 }
 
@@ -541,7 +554,7 @@ typedef enum {
 -(BOOL)shouldShowPlayerTopScore
 {
     if(playerTopScore != nil) {
-        if([playerTopScore rank] < [globalScores count]) {
+        if([playerTopScore rank] <= [globalScores count]) {
             return NO;
         } else {
             return YES;
@@ -554,17 +567,17 @@ typedef enum {
 // Get the player's top score to show in the "all scores" section
 -(void)getPlayerTopScoreForGlobalSection
 {
-   [leaderboard getPlayerTopScoreWithCompletionHandler:^(id<OKScoreProtocol> score, NSError *error) {
-      if(score && !error) {
-          [self setPlayerTopScore:score];
-          [_tableView reloadSections:[NSIndexSet indexSetWithIndex:kGlobalSection] withRowAnimation:UITableViewRowAnimationAutomatic];
-      }
-   }];
+    [leaderboard getPlayerTopScoreWithCompletionHandler:^(id<OKScoreProtocol> score, NSError *error) {
+        if(score && !error) {
+            [self setPlayerTopScore:score];
+            [_tableView reloadSections:[NSIndexSet indexSetWithIndex:kGlobalSection] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+    }];
 }
 
 -(void)getMoreGlobalScores
 {
-     // If there are no scores already for this leaderboard, getting "More" doesn't make sense
+    // If there are no scores already for this leaderboard, getting "More" doesn't make sense
     if(globalScores == nil)
         return;
     
@@ -669,6 +682,12 @@ typedef enum {
 
 
 -(void)getGameCenterSocialScores {
+    
+    // If we already got the GC social scores, don't get them again
+    if(gcSocialScores != nil) {
+        return;
+    }
+    
     // Increment the counter that keeps track of requests running for social leaderboards
     [self startedSocialScoreRequest];
     
@@ -680,6 +699,7 @@ typedef enum {
         }
         else if(!error && scores) {
             OKLog(@"Got gamecenter friends scores");
+            gcSocialScores = scores;
             [self addSocialScores:scores];
         } else if ([scores count] == 0) {
             OKLog(@"Zero gamecenter friends scores returned");
@@ -691,6 +711,11 @@ typedef enum {
 
 -(void)getUsersTopScoreFromOpenKit
 {
+    // Only get the player's top score for the social section ones
+    if(playerTopScoreSocialSection != nil) {
+        return;
+    }
+    
     // Increment the counter that keeps track of requests running for social leaderboards
     [self startedSocialScoreRequest];
     
@@ -700,6 +725,7 @@ typedef enum {
         [self finishedSocialScoreRequest];
         
         if(!error && score) {
+            playerTopScoreSocialSection = score;
             [self addSocialScores:[NSArray arrayWithObject:score]];
         }
     }];
@@ -708,10 +734,16 @@ typedef enum {
 
 -(void)getFacebookSocialScores
 {
+    // Only fetch the fbSocialScores once
+    if(fbSocialScores != nil) {
+        return;
+    }
+    
     //Get facebook social scores
     [self startedSocialScoreRequest];
     
     [leaderboard getFacebookFriendsScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
+        fbSocialScores = scores;
         [self addSocialScores:scores];
         isShowingFBLoginCell = NO;
         [self finishedSocialScoreRequest];
