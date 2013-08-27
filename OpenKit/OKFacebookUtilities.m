@@ -203,18 +203,18 @@
     if (!error) {
         alertMessage = nil;
     }
-    else if (error.fberrorShouldNotifyUser) {
+    else if ([FBErrorUtility shouldNotifyUserForError:error]) {
         // If the SDK has a message for the user, surface it. This conveniently
         // handles cases like password change or iOS6 app slider state.
         alertTitle = @"Facebook Error";
-        alertMessage = error.fberrorUserMessage;
-    } else if (error.fberrorCategory == FBErrorCategoryAuthenticationReopenSession) {
+        alertMessage = [FBErrorUtility userMessageForError:error];
+    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession) {
         // It is important to handle session closures since they can happen
         // outside of the app. You can inspect the error for more context
         // but this sample generically notifies the user.
         alertTitle = @"Session Error";
         alertMessage = @"Your current session is no longer valid. Please log in again.";
-    } else if (error.fberrorCategory == FBErrorCategoryUserCancelled) {
+    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
         // The user has cancelled a login. You can inspect the error
         // for more context. For this sample, we will simply ignore it.
         NSLog(@"user cancelled login");
