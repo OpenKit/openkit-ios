@@ -131,8 +131,6 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     [[OKScoreCache sharedCache] submitAllCachedScores];
 }
 
-
-
 -(void)getSavedUserFromNSUserDefaults
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -250,37 +248,5 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
         }
     }
 }
-
-
-/* Old KeyChain Methods */
-#pragma mark - Old Keychain methods
-/*
-- (void)getSavedUserFromKeychain
-{
-    NSDictionary *userDict;
-    NSData *keychainData = [SimpleKeychain retrieve];
-    if(keychainData != nil) {
-        userDict = [[NSKeyedUnarchiver unarchiveObjectWithData:keychainData] copy];
-        OKLog(@"Found  cached OKUser from keychain");
-        OKUser *cachedUser = [OKUserUtilities createOKUserWithJSONData:userDict];
-        _currentUser = cachedUser;
-    }
-    else {
-        OKLog(@"Did not find cached OKUser from keychain");
-    }
-}
-
-- (void)saveCurrentUserToKeychain
-{
-    NSDictionary *userDict = [OKUserUtilities getJSONRepresentationOfUser:[OKUser currentUser]];
-    [SimpleKeychain store:[NSKeyedArchiver archivedDataWithRootObject:userDict]];
-}
-
-- (void)removeCachedUserFromKeychain
-{
-    [SimpleKeychain clear];
-}
- */
-
 
 @end
