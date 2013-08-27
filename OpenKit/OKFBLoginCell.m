@@ -90,7 +90,11 @@
 
 -(IBAction)gcButtonPressed:(id)sender
 {
-    OKLog(@"Game center button pressed");
+    if([OKGameCenterUtilities isGameCenterAvailable] && ![OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
+        [OKGameCenterUtilities authenticateLocalPlayerWithCompletionHandler:^(NSError *error) {
+            [self updateButtonVisibility];
+        }];
+    }
 }
 
 
