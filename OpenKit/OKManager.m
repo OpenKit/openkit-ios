@@ -138,21 +138,24 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSData *archivedUserDict = [defaults objectForKey:OK_USER_KEY];
     
-    if(![archivedUserDict isKindOfClass:[NSData class]]) {
-        OKLog(@"OKUser cache is busted, clearing cache");
-        [self removeCachedUserFromNSUserDefaults];
-    } else {
-        NSDictionary *userDictionary = [NSKeyedUnarchiver unarchiveObjectWithData:archivedUserDict];
-        OKUser *cachedUser = [OKUserUtilities createOKUserWithJSONData:userDictionary];
-        _currentUser = cachedUser;
-        OKLog(@"Found  cached OKUser id: %@ from defaults", [cachedUser OKUserID]);
-        
-        if(_currentUser == nil) {
+    if(archivedUserDict != nil) {
+        if(![archivedUserDict isKindOfClass:[NSData class]]) {
             OKLog(@"OKUser cache is busted, clearing cache");
             [self removeCachedUserFromNSUserDefaults];
+        } else {
+            NSDictionary *userDictionary = [NSKeyedUnarchiver unarchiveObjectWithData:archivedUserDict];
+            OKUser *cachedUser = [OKUserUtilities createOKUserWithJSONData:userDictionary];
+            _currentUser = cachedUser;
+            OKLog(@"Found  cached OKUser id: %@ from defaults", [cachedUser OKUserID]);
+            
+            if(_currentUser == nil) {
+                OKLog(@"OKUser cache is busted, clearing cache");
+                [self removeCachedUserFromNSUserDefaults];
+            }
         }
+    } else {
+        OKLog(@"Did not find cached OKUser");
     }
-
 }
 
 -(void)saveCurrentUserToNSUserDefaults
@@ -217,6 +220,12 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     }
 }
 
+// This method is used to migrate the OKUser cache from keychain
+// to NSUserDefaults
+// It clears out any saved data in Keychain and moves the cached OKUserID
+// to NSUserDefaults
+//
+
 - (void)getSavedUserFromKeychainAndMoveToNSUserDefaults
 {
     NSDictionary *userDict;
@@ -228,7 +237,15 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
         _currentUser = cachedUser;
         
         [SimpleKeychain clear];
-        [self saveCurrentUserToNSUserDefaults];
+        
+        OKLog(@"Cleared old OKUser cache");
+        
+        // getSavedUserFromKeychainAndMoveToNSUserDefaults gets called during app launch
+        // and saveCurrentUserToNSUserDefaults makes a  call to [NSUserDefaults synchronize] which
+        // can cause a lock during app launch, so we need to perform it on a bg thread
+        if(cachedUser != nil) {
+            [self performSelectorInBackground:@selector(saveCurrentUserToNSUserDefaults) withObject:nil];
+        }
     }
 }
 
