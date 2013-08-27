@@ -51,7 +51,6 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     self = [super init];
     if (self) {
         [self getSavedUserFromKeychainAndMoveToNSUserDefaults];
-        [self getSavedUserFromNSUserDefaults];
         _endpoint = DEFAULT_ENDPOINT;
 
         // These two lines below are required for the linker to work properly such that these classes are available in XIB files
@@ -67,6 +66,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
         [nc addObserver:self selector:@selector(willHideDashboard:) name:OKLeaderboardsViewWillDisappear object:nil];
         [nc addObserver:self selector:@selector(didHideDashboard:)  name:OKLeaderboardsViewDidDisappear object:nil];
         
+        [self getSavedUserFromNSUserDefaults];
     }
     return self;
 }
@@ -233,17 +233,19 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     if(keychainData != nil) {
         userDict = [[NSKeyedUnarchiver unarchiveObjectWithData:keychainData] copy];
         OKLog(@"Found  cached OKUser from keychain, moving to NSUserDefaults");
-        OKUser *cachedUser = [OKUserUtilities createOKUserWithJSONData:userDict];
-        _currentUser = cachedUser;
+        OKUser *old_cached_User = [OKUserUtilities createOKUserWithJSONData:userDict];
         
+        // Clear the old cache
         [SimpleKeychain clear];
-        
         OKLog(@"Cleared old OKUser cache");
+        
         
         // getSavedUserFromKeychainAndMoveToNSUserDefaults gets called during app launch
         // and saveCurrentUserToNSUserDefaults makes a  call to [NSUserDefaults synchronize] which
         // can cause a lock during app launch, so we need to perform it on a bg thread
-        if(cachedUser != nil) {
+        if(old_cached_User != nil) {
+            _currentUser = old_cached_User;
+            OKLog(@"Saving user to new cache in background");
             [self performSelectorInBackground:@selector(saveCurrentUserToNSUserDefaults) withObject:nil];
         }
     }
