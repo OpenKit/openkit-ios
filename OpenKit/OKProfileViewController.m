@@ -9,6 +9,7 @@
 #import "OKProfileViewController.h"
 #import "OKUserProfileImageView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "OKFacebookUtilities.h"
 
 
 @interface OKProfileViewController ()
@@ -35,33 +36,28 @@
     [self updateUI];
 }
 
-- (void)backButtonHandler:(id)sender
-{
-  [self.navigationController popViewControllerAnimated:YES];
-}
 
 -(void)updateUI
 {
-    [profilePic setUser:[OKUser currentUser]];
-    
     // If there is an OKUser and an Active Facebook Session, show the logout button
-    if([[FBSession activeSession] isOpen] && [OKUser currentUser]){
-        //[self.unlinkBtn setHidden:NO];
+    if([OKFacebookUtilities isFBSessionOpen] && [OKUser currentUser]){
         [self.unlinkBtn setTitle: @"Disconnect Facebook" forState: UIControlStateNormal];
     } else {
-        //[self.unlinkBtn setHidden:YES];
         [self.unlinkBtn setTitle: @"Connect Facebook" forState: UIControlStateNormal];
     }
-    
-     [nameLabel setText:[[OKUser currentUser] userNick]];
-
 }
 
 
 -(IBAction)logoutButtonPressed:(id)sender
 {
-    //[OKUser logoutCurrentUserFromOpenKit];
-    [FBSession.activeSession closeAndClearTokenInformation];
+    if([OKFacebookUtilities isFBSessionOpen] && [OKUser currentUser]) {
+        [[FBSession activeSession] closeAndClearTokenInformation];
+    } else {
+        [OKFacebookUtilities AuthorizeUserWithFacebookWithCompletionHandler:^(OKUser *user, NSError *error) {
+            [self updateUI];
+            [[self navigationController] popViewControllerAnimated:YES];
+        }];
+    }
     [self updateUI];
 }
 
