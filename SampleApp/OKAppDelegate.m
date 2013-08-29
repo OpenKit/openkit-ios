@@ -12,6 +12,9 @@
 #import "OKGameCenterUtilities.h"
 
 
+@interface OKAppDelegate ()
+-(void)handlePushDictionary:(NSDictionary *)dictionary;
+@end
 
 @implementation OKAppDelegate
 
@@ -26,7 +29,7 @@
     // Development branch settings
     [OKManager setAppKey:@"zRn4FrBcWi6ntUmWnEwm"];
     [OKManager setSecretKey:@"rjqQmuDZaO6JtLuW25XPB2D6P0jplBfmuuANCKuu"];
-    [OKManager setEndpoint:@"http://development.openkit.io"];
+    [OKManager setEndpoint:@"http://192.168.0.33:3000"];
     
     // Set the leaderboard list tag. By default, client asks
     // for tag = "v1". In the OpenKit dashboard, new leaderboards
@@ -36,6 +39,13 @@
     // will only display one tag.
     //[[OKManager sharedManager] setLeaderboardListTag:@"v2"];
 
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];   // | UIRemoteNotificationTypeBadge |
+
+    if (launchOptions != nil && [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil) {
+		NSDictionary* dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        [self handlePushDictionary:dictionary];
+    }
+
     // Set root view controller.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.viewController = [[OKViewController alloc] init];
@@ -43,11 +53,25 @@
     self.window.rootViewController = navi;
     [self.window makeKeyAndVisible];
     
-    [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES withPresentingViewController:self.viewController withCompletionHandler:nil];
-    
+    // [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES withPresentingViewController:self.viewController withCompletionHandler:nil];
+
 
     return YES;
 }
+
+// We should handle the push differently if the app is already open, but for now will well forward it
+// to the same handlePushDictionary method that is used for opens.
+- (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
+{
+    NSLog(@"Push notification received while open:%@", userInfo);
+    [self handlePushDictionary:userInfo];
+}
+
+-(void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+    [[OKManager sharedManager] registerToken:deviceToken];
+}
+
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
@@ -81,6 +105,12 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [OKManager handleWillTerminate];
+}
+
+- (void)handlePushDictionary:(NSDictionary *)dict
+{
+    NSLog(@"Handling push dictionary: %@", dict);
+    // int someId = [[dict valueForKey:@"some_id"] intValue];
 }
 
 @end

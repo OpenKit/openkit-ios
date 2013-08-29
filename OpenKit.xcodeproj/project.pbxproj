@@ -46,6 +46,9 @@
 		32243B0316CDE3C80077EDC8 /* OKUnityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */; };
 		32243B0516CDE3EF0077EDC8 /* libmono.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32243B0416CDE3EF0077EDC8 /* libmono.0.dylib */; };
 		326FD0CF16CB6209004248F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
+		327E9E1A17CEFABA00F33F24 /* OKFileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1517CEFABA00F33F24 /* OKFileUtil.m */; };
+		327E9E1B17CEFABA00F33F24 /* OKLocalCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1717CEFABA00F33F24 /* OKLocalCache.m */; };
+		327E9E1C17CEFABA00F33F24 /* OKSessionDb.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1917CEFABA00F33F24 /* OKSessionDb.m */; };
 		3284E16316CE4AC900624827 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3284E16216CE4AC900624827 /* Foundation.framework */; };
 		3284E16416CE4AFC00624827 /* OKUnityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */; };
 		3284E16516CE4AFE00624827 /* OKBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243AFE16CDE3C80077EDC8 /* OKBridge.m */; };
@@ -368,6 +371,12 @@
 		32243B0416CDE3EF0077EDC8 /* libmono.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libmono.0.dylib; sourceTree = "<group>"; };
 		326FD0CB16CB6209004248F9 /* libOpenKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOpenKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		326FD0CE16CB6209004248F9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		327E9E1417CEFABA00F33F24 /* OKFileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFileUtil.h; sourceTree = "<group>"; };
+		327E9E1517CEFABA00F33F24 /* OKFileUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFileUtil.m; sourceTree = "<group>"; };
+		327E9E1617CEFABA00F33F24 /* OKLocalCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKLocalCache.h; sourceTree = "<group>"; };
+		327E9E1717CEFABA00F33F24 /* OKLocalCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKLocalCache.m; sourceTree = "<group>"; };
+		327E9E1817CEFABA00F33F24 /* OKSessionDb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSessionDb.h; sourceTree = "<group>"; };
+		327E9E1917CEFABA00F33F24 /* OKSessionDb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSessionDb.m; sourceTree = "<group>"; };
 		3284E14916CE49AB00624827 /* UnityPluginMac.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnityPluginMac.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		3284E15A16CE4A6F00624827 /* UnityPluginMac-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "UnityPluginMac-Info.plist"; sourceTree = "<group>"; };
 		3284E15B16CE4A6F00624827 /* UnityPluginMac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UnityPluginMac-Prefix.pch"; sourceTree = "<group>"; };
@@ -695,6 +704,12 @@
 		32CACF9C16CB637C00E8F185 /* OpenKit */ = {
 			isa = PBXGroup;
 			children = (
+				327E9E1417CEFABA00F33F24 /* OKFileUtil.h */,
+				327E9E1517CEFABA00F33F24 /* OKFileUtil.m */,
+				327E9E1617CEFABA00F33F24 /* OKLocalCache.h */,
+				327E9E1717CEFABA00F33F24 /* OKLocalCache.m */,
+				327E9E1817CEFABA00F33F24 /* OKSessionDb.h */,
+				327E9E1917CEFABA00F33F24 /* OKSessionDb.m */,
 				32CACFD216CB637C00E8F185 /* OpenKit.h */,
 				32CACFA816CB637C00E8F185 /* OKManager.h */,
 				32CACFA916CB637C00E8F185 /* OKManager.m */,
@@ -1211,6 +1226,9 @@
 				329CB54B17C5363700D6D698 /* FMDatabaseQueue.m in Sources */,
 				329CB54C17C5363700D6D698 /* FMResultSet.m in Sources */,
 				329CB54F17C5366100D6D698 /* FMDatabasePool.m in Sources */,
+				327E9E1A17CEFABA00F33F24 /* OKFileUtil.m in Sources */,
+				327E9E1B17CEFABA00F33F24 /* OKLocalCache.m in Sources */,
+				327E9E1C17CEFABA00F33F24 /* OKSessionDb.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

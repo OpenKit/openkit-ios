@@ -17,6 +17,8 @@
 #import "OKUserProfileImageView.h"
 #import "OKLeaderboardsViewController.h"
 #import "OKScoreCache.h"
+#import "OKLocalCache.h"
+#import "OKSessionDb.h"
 #import "OKMacros.h"
 
 #define DEFAULT_ENDPOINT    @"stage.openkit.io"
@@ -54,7 +56,6 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
         _endpoint = DEFAULT_ENDPOINT;
 
         // These two lines below are required for the linker to work properly such that these classes are available in XIB files
-        // This tripped me up for way to long.
         [FBProfilePictureView class];
         [OKUserProfileImageView class];
         
@@ -67,6 +68,18 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
         [nc addObserver:self selector:@selector(didHideDashboard:)  name:OKLeaderboardsViewDidDisappear object:nil];
         
         [self getSavedUserFromNSUserDefaults];
+
+        // Testing with long delay to make sure we are sound if push comes in first.
+        dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (100.0f * NSEC_PER_MSEC));
+        dispatch_after(delay, OK_CACHE_QUEUE(), ^{
+            [[OKSessionDb db] activate];
+        });
+
+//        delay = dispatch_time(DISPATCH_TIME_NOW, (200.0f * NSEC_PER_MSEC));
+//        dispatch_after(delay, OK_CACHE_QUEUE(), ^{
+//            [[OKSessionDb db] registerPush:@"o18"];
+//        });
+
     }
     return self;
 }
@@ -79,7 +92,9 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
 
 - (OKUser*)currentUser
 {
-    return _currentUser;
+    @synchronized(self) {
+        return _currentUser;
+    }
 }
 
 + (void)setAppKey:(NSString *)appKey
@@ -187,6 +202,20 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
 + (void)handleWillTerminate
 {
     [OKFacebookUtilities handleWillTerminate];
+}
+
+- (void)registerToken:(NSData *)deviceToken
+{
+    const unsigned *tokenBytes = [deviceToken bytes];
+    NSString *hexToken = [NSString stringWithFormat:@"%08x%08x%08x%08x%08x%08x%08x%08x",
+                          ntohl(tokenBytes[0]), ntohl(tokenBytes[1]), ntohl(tokenBytes[2]),
+                          ntohl(tokenBytes[3]), ntohl(tokenBytes[4]), ntohl(tokenBytes[5]),
+                          ntohl(tokenBytes[6]), ntohl(tokenBytes[7])];
+
+    OKLogInfo(@"cache queue is %s", dispatch_queue_get_label(OK_CACHE_QUEUE()));
+    dispatch_async(OK_CACHE_QUEUE(), ^{
+        [[OKSessionDb db] registerPush:hexToken];
+    });
 }
 
 #pragma mark - Dashboard Display State Callbacks

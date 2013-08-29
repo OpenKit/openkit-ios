@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+
 @class OKUser;
 @interface OKManager : NSObject
 
 + (id)sharedManager;
 - (void)saveCurrentUser:(OKUser *)aCurrentUser;
 - (void)logoutCurrentUser;
+- (void)registerToken:(NSData *)deviceToken;
 
 @property (nonatomic, strong) NSString *appKey;
 @property (nonatomic, strong) NSString *secretKey;
