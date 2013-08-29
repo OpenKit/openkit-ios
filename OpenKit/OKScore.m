@@ -114,6 +114,17 @@
 
 -(void)submitScoreWithCompletionHandler:(void (^)(NSError *error))completionHandler
 {
+    // Hack hack hack.
+    NSArray *friends = [[NSUserDefaults standardUserDefaults] objectForKey:@"okfriendsList"];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                           friends, @"receiver_ids",
+                           [[OKUser currentUser] OKUserID], @"sender_id",
+                           nil];
+    NSString *p = [NSString stringWithFormat:@"leaderboards/%i/challenges", self.OKLeaderboardID];
+    [OKNetworker postToPath:p parameters:params handler:^(id responseObject, NSError *error) {
+        // blah blah blah.
+    }];
+
     // Submit to GC if GC leaderboard ID is specified
     if(self.gamecenterLeaderboardID) {
         [self submitScoreToGameCenter];
