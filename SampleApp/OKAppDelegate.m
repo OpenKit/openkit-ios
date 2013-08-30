@@ -37,7 +37,7 @@
     // tag feature to display different leaderboards in different
     // versions of your game. Each leaderboard can have multiple tags, but the client
     // will only display one tag.
-    //[[OKManager sharedManager] setLeaderboardListTag:@"v2"];
+    [[OKManager sharedManager] setLeaderboardListTag:@"v1"];
 
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];   // | UIRemoteNotificationTypeBadge |
 
@@ -53,7 +53,7 @@
     self.window.rootViewController = navi;
     [self.window makeKeyAndVisible];
     
-    // [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES withPresentingViewController:self.viewController withCompletionHandler:nil];
+    [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES withPresentingViewController:self.viewController withCompletionHandler:nil];
 
 
     return YES;
