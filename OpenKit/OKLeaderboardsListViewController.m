@@ -71,7 +71,8 @@
 
 - (IBAction)back
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    // Have to call dismiss on presentingViewController otherwise the presenting view controller won't get the dismissViewController message, and we need the presenting view controller to get this message in OKBridgeBaseViewController
+    [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)showProfileView

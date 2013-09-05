@@ -68,6 +68,22 @@ extern void UnitySendMessage(const char *, const char *, const char *);
     }
 }
 
+-(void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion
+{
+    OKBridgeLog(@"dismissViewController with block inOKBaseBridgeViewController");
+    [super dismissViewControllerAnimated:flag completion:^(void){
+        if(_didDisplay) {
+            [self.window setRootViewController:nil];
+            [self release];
+        }
+        if(completion != nil) {
+            completion();
+        }
+    }];
+ 
+
+}
+
 - (void)dealloc
 {
     [_window release];
@@ -122,6 +138,7 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 {
     UnitySendMessage("OpenKitPrefab", "NativeViewDidDisappear", "");
 }
+
 
 - (void)dealloc
 {
