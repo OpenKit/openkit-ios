@@ -10,6 +10,7 @@
 #import "OKLocalCache.h"
 #import "OKMacros.h"
 #import "OKNetworker.h"
+#import "OKUtils.h"
 
 // TODO: Remove this dependency.
 #import "OKUser.h"
@@ -132,14 +133,6 @@ static NSString *const kSessionTableVersion = @"0.0.38";
 
 @implementation OKSessionDb
 
-+ (NSString *)createUUID
-{
-    CFUUIDRef theUUID = CFUUIDCreate(NULL);
-    CFStringRef string = CFUUIDCreateString(NULL, theUUID);
-    CFRelease(theUUID);
-    return (__bridge NSString *)string;
-}
-
 + (id)db
 {
     id db = [[self alloc] initWithCacheName:@"Session" createSql:kSessionTableCreateSql version:kSessionTableVersion];
@@ -205,7 +198,7 @@ static NSString *const kSessionTableVersion = @"0.0.38";
     if (row == nil) {
         OKSessionTemplate *template = [[OKSessionTemplate alloc] init];
         [template migrateUser];
-        template.uuid = [OKSessionDb createUUID];
+        template.uuid = [OKUtils createUUID];
         row = [self insertRow:template];
     }
     OKLogInfo(@"Current OK Session: rowId: %i, uuid: %@, okId: %@, fbId: %@, pushToken: %@, clientCreatedAt: %@", row.rowId, row.uuid, row.okId, row.fbId, row.pushToken, row.clientCreatedAt);
@@ -279,7 +272,7 @@ static NSString *const kSessionTableVersion = @"0.0.38";
         OKLogInfo(@"No previous session found.  Creating new row with new uuid and new %@.", getName);
         template = [[OKSessionTemplate alloc] init];
         [template migrateUser];
-        template.uuid = [OKSessionDb createUUID];
+        template.uuid = [OKUtils createUUID];
     } else {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -291,7 +284,7 @@ static NSString *const kSessionTableVersion = @"0.0.38";
         } else if (![prevVal isEqualToString:newVal]) {
             OKLogInfo(@"Prev and new vals do not match. Creating new row with new uuid and new %@.", getName);
             template = [row templatize];
-            template.uuid = [OKSessionDb createUUID];
+            template.uuid = [OKUtils createUUID];
         } else {
             OKLogInfo(@"%@ is already up to date in db.  Not updating.", getName);
         }

@@ -45,3 +45,16 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut)
 #endif
 }
 
+@implementation OKUtils
+
++ (NSString *)createUUID
+{
+    CFUUIDRef theUUID = CFUUIDCreate(NULL);
+    CFStringRef string = CFUUIDCreateString(NULL, theUUID);
+    CFRelease(theUUID);
+    return (__bridge NSString *)string;
+}
+
+
+@end
+

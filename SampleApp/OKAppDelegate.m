@@ -29,7 +29,7 @@
     // Development branch settings
     [OKManager setAppKey:@"zRn4FrBcWi6ntUmWnEwm"];
     [OKManager setSecretKey:@"rjqQmuDZaO6JtLuW25XPB2D6P0jplBfmuuANCKuu"];
-    [OKManager setEndpoint:@"http://192.168.0.33:3000"];
+    [OKManager setEndpoint:@"http://10.0.1.20:3000"];
     
     // Set the leaderboard list tag. By default, client asks
     // for tag = "v1". In the OpenKit dashboard, new leaderboards

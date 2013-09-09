@@ -17,6 +17,7 @@
 #import "OKError.h"
 #import "OKScoreCache.h"
 #import "OKHelper.h"
+#import "OKUtils.h"
 
 @implementation OKScore
 
@@ -119,6 +120,7 @@
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                            friends, @"receiver_ids",
                            [[OKUser currentUser] OKUserID], @"sender_id",
+                           [OKUtils createUUID], @"challenge_uuid",
                            nil];
     NSString *p = [NSString stringWithFormat:@"leaderboards/%i/challenges", self.OKLeaderboardID];
     [OKNetworker postToPath:p parameters:params handler:^(id responseObject, NSError *error) {
