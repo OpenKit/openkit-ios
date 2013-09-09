@@ -10,24 +10,28 @@
 
 #import <Foundation/Foundation.h>
 
-
+/* Settings methods*/
 void OKBridgeSetAppKey(const char *appKey);
 void OKBridgeSetSecretKey(const char *secretKey);
 void OKBridgeSetEndpoint(const char *endpoint);
 void OKBridgeSetLeaderboardListTag(const char *tag);
 
+/* Show leaderboards and UI methods */
 void OKBridgeShowLeaderboards();
 void OKBridgeShowLeaderboardsLandscapeOnly();
-void OKBridgeShowLeaderboardID(int leaderboardID, BOOL landscapeOnly);
-
+void OKBridgeShowLeaderboardIDWithLandscapeOnly(int leaderboardID, BOOL landscapeOnly);
+void OKBridgeShowLeaderboardID(int leaderboardID);
 void OKBridgeShowLoginUI();
-void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, const char *displayString, const char *gameObjectName);
-int OKBridgeGetCurrentUserOKID();
 
+void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, const char *displayString, const char *gameObjectName);
+
+/* GameCenter Methods */
 void OKBridgeAuthenticateLocalPlayerWithGameCenter();
 bool OKBridgeIsPlayerAuthenticatedWithGameCenter();
 void OKBridgeAuthenticateLocalPlayerWithGameCenterAndShowUIIfNecessary();
 
+/*OKUser methods*/
+int OKBridgeGetCurrentUserOKID();
 const char* OKBridgeGetCurrentUserNick();
 long long OKBridgeGetCurrentUserFBID();
 long long OKBridgeGetCurrentUserTwitterID();

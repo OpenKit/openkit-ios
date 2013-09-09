@@ -62,30 +62,29 @@ extern void UnitySendMessage(const char *, const char *, const char *);
     if (!_didDisplay) {
         _didDisplay = YES;
         [self customLaunch];
-    } else {
-        [self.window setRootViewController:nil];
-        [self release];
     }
 }
 
 -(void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion
 {
-    OKBridgeLog(@"dismissViewController with block inOKBaseBridgeViewController");
     [super dismissViewControllerAnimated:flag completion:^(void){
-        if(_didDisplay) {
-            [self.window setRootViewController:nil];
-            [self release];
-        }
         if(completion != nil) {
             completion();
         }
+        
+        if(_didDisplay) {
+            _didDisplay = NO;
+            [self.window setRootViewController:nil];
+            [self release];
+        } else {
+            OKBridgeLog(@"dismissViewController called but didDisplayIsFalse");
+        }
     }];
- 
-
 }
 
 - (void)dealloc
 {
+    OKBridgeLog(@"Dealloc BaseBridgeViewController");
     [_window release];
     [super dealloc];
 }
@@ -114,6 +113,7 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 
 - (void)customLaunch
 {
+    OKBridgeLog(@"Showing OKLeaderboardsViewController with default id: %d", _defaultLeaderboardID);
     self.leaderboardsVC = [[[OKLeaderboardsViewController alloc] initWithDefaultLeaderboardID:_defaultLeaderboardID] autorelease];
     [self.leaderboardsVC setShowLandscapeOnly:_shouldShowLandscapeOnly];
     [self presentModalViewController:self.leaderboardsVC animated:YES];
@@ -220,7 +220,7 @@ void OKBridgeShowLeaderboardsBase(BOOL showLandscapeOnly, int defaultLeaderboard
     [vc.window makeKeyAndVisible];
 }
 
-void OKBridgeShowLeaderboardID(int leaderboardID, BOOL landscapeOnly)
+void OKBridgeShowLeaderboardIDWithLandscapeOnly(int leaderboardID, BOOL landscapeOnly)
 {
     OKBridgeShowLeaderboardsBase(landscapeOnly, leaderboardID);
 }
@@ -228,6 +228,11 @@ void OKBridgeShowLeaderboardID(int leaderboardID, BOOL landscapeOnly)
 void OKBridgeShowLeaderboards()
 {
     OKBridgeShowLeaderboardsBase(NO,0);
+}
+
+void OKBridgeShowLeaderboardID(int leaderboardID)
+{
+    OKBridgeShowLeaderboardIDWithLandscapeOnly(leaderboardID, NO);
 }
 
 void OKBridgeShowLeaderboardsLandscapeOnly()
