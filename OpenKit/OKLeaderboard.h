@@ -31,7 +31,6 @@ typedef enum {
 
 @property (nonatomic) int OKApp_id;
 @property (nonatomic) NSInteger OKLeaderboard_id;
-@property (nonatomic) BOOL in_development;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic) OKLeaderBoardSortType sortType;
 @property (nonatomic, strong) NSString *icon_url;

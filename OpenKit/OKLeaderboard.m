@@ -22,7 +22,7 @@
 
 @implementation OKLeaderboard
 
-@synthesize OKLeaderboard_id, OKApp_id, name, in_development, sortType, icon_url, playerCount, gamecenter_id;
+@synthesize OKLeaderboard_id, OKApp_id, name, sortType, icon_url, playerCount, gamecenter_id;
 
 static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
@@ -34,7 +34,6 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
         self.name                   = [OKHelper getStringSafeForKey:@"name" fromJSONDictionary:jsonDict];
         self.OKLeaderboard_id       = [[OKHelper getNSNumberSafeForKey:@"id" fromJSONDictionary:jsonDict] integerValue];
         self.OKApp_id               = [[OKHelper getNSNumberSafeForKey:@"app_id" fromJSONDictionary:jsonDict] integerValue];
-        self.in_development         = [[OKHelper getNSNumberSafeForKey:@"in_development" fromJSONDictionary:jsonDict] boolValue];
         self.sortType               = ([sortTypeString isEqualToString:@"HighValue"]) ? OKLeaderboardSortTypeHighValue : OKLeaderboardSortTypeLowValue;
         self.icon_url               = [OKHelper getStringSafeForKey:@"icon_url" fromJSONDictionary:jsonDict];
         self.playerCount            = [[OKHelper getNSNumberSafeForKey:@"player_count" fromJSONDictionary:jsonDict] integerValue];
@@ -456,7 +455,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
  
 - (NSString *)description {
-    return [NSString stringWithFormat:@"OKLeaderboard name: %@ id: %d app_id: %d gamecenter_id: %@ debug?: %d sortType: %u iconURL: %@ player_count: %d", name, OKLeaderboard_id, OKApp_id, gamecenter_id, in_development, sortType, icon_url, playerCount];
+    return [NSString stringWithFormat:@"OKLeaderboard name: %@ id: %d app_id: %d gamecenter_id: %@ sortType: %u iconURL: %@ player_count: %d", name, OKLeaderboard_id, OKApp_id, gamecenter_id, sortType, icon_url, playerCount];
 }
 
 
