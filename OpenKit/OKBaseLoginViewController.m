@@ -199,7 +199,12 @@
         [self dismissLoginViewWithoutBaseDismiss];
         
         [OKGameCenterUtilities authorizeUserWithGameCenterLegacyWithCompletionHandler:^(NSError *error) {
-            [self showLoginModalView];  
+            
+            if(error != nil) {
+                [self dismissLoginView];
+            } else {
+                [self showLoginModalView];
+            }
         }];
     }
 }
