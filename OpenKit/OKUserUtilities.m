@@ -14,10 +14,18 @@
 #import "OKMacros.h"
 #import "OKError.h"
 #import "OKHelper.h"
+#import "OKSessionDb.h"
 
 
 
 @implementation OKUserUtilities
+
++ (void)updateSessionUserId:(NSNumber *)okId
+{
+    dispatch_async(OK_CACHE_QUEUE(), ^{
+        [[OKSessionDb db] loginOpenKit:[okId stringValue]];
+    });
+}
 
 + (OKUser *)createOKUserWithJSONData:(NSDictionary *)jsonData
 {
@@ -81,8 +89,10 @@
              
              //Check to make sure the user was returned, that way we know the response was successful
              OKUser *responseUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
-             
-             if([[responseUser OKUserID] longValue] == [[user OKUserID] longValue]) {
+             NSNumber *userId = [responseUser OKUserID];
+             [OKUserUtilities updateSessionUserId:userId];
+
+             if([userId longValue] == [[user OKUserID] longValue]) {
                  [[OKManager sharedManager] saveCurrentUser:responseUser];
              }
              else {
@@ -156,7 +166,10 @@
          if(!error) {
             //OKLog(@"Create user JSON response is: %@",responseObject);
              //Success
-             OKLog(@"Successfully created/found user ID: %@", [responseObject valueForKeyPath:@"id"]);
+             NSNumber *userId = [responseObject valueForKeyPath:@"id"];
+             OKLog(@"Successfully created/found user ID: %@", userId);
+             [OKUserUtilities updateSessionUserId:userId];
+
              newUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
              [[OKManager sharedManager] saveCurrentUser:newUser];
          } else {

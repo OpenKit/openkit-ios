@@ -46,12 +46,20 @@
 		32243B0316CDE3C80077EDC8 /* OKUnityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */; };
 		32243B0516CDE3EF0077EDC8 /* libmono.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32243B0416CDE3EF0077EDC8 /* libmono.0.dylib */; };
 		326FD0CF16CB6209004248F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
+		327E9E1A17CEFABA00F33F24 /* OKFileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1517CEFABA00F33F24 /* OKFileUtil.m */; };
+		327E9E1B17CEFABA00F33F24 /* OKLocalCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1717CEFABA00F33F24 /* OKLocalCache.m */; };
+		327E9E1C17CEFABA00F33F24 /* OKSessionDb.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1917CEFABA00F33F24 /* OKSessionDb.m */; };
 		3284E16316CE4AC900624827 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3284E16216CE4AC900624827 /* Foundation.framework */; };
 		3284E16416CE4AFC00624827 /* OKUnityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */; };
 		3284E16516CE4AFE00624827 /* OKBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243AFE16CDE3C80077EDC8 /* OKBridge.m */; };
 		3284E16616CE4B0400624827 /* libmono.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32243B0416CDE3EF0077EDC8 /* libmono.0.dylib */; };
 		32880CE6176D2991005F8D30 /* AFOAuth1Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 32880CE5176D2991005F8D30 /* AFOAuth1Client.m */; };
 		32880CEE176DC784005F8D30 /* OKUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 32880CED176DC784005F8D30 /* OKUtils.m */; };
+		329CB54917C5363700D6D698 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 329CB54217C5363700D6D698 /* FMDatabase.m */; };
+		329CB54A17C5363700D6D698 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 329CB54417C5363700D6D698 /* FMDatabaseAdditions.m */; };
+		329CB54B17C5363700D6D698 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 329CB54617C5363700D6D698 /* FMDatabaseQueue.m */; };
+		329CB54C17C5363700D6D698 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 329CB54817C5363700D6D698 /* FMResultSet.m */; };
+		329CB54F17C5366100D6D698 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 329CB54E17C5366100D6D698 /* FMDatabasePool.m */; };
 		32CACFD716CB637C00E8F185 /* KGModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA216CB637C00E8F185 /* KGModal.m */; };
 		32CACFD816CB637C00E8F185 /* OKBaseLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA416CB637C00E8F185 /* OKBaseLoginViewController.m */; };
 		32CACFD916CB637C00E8F185 /* OKCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA616CB637C00E8F185 /* OKCloud.m */; };
@@ -367,6 +375,12 @@
 		32243B0416CDE3EF0077EDC8 /* libmono.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libmono.0.dylib; sourceTree = "<group>"; };
 		326FD0CB16CB6209004248F9 /* libOpenKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOpenKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		326FD0CE16CB6209004248F9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		327E9E1417CEFABA00F33F24 /* OKFileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFileUtil.h; sourceTree = "<group>"; };
+		327E9E1517CEFABA00F33F24 /* OKFileUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFileUtil.m; sourceTree = "<group>"; };
+		327E9E1617CEFABA00F33F24 /* OKLocalCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKLocalCache.h; sourceTree = "<group>"; };
+		327E9E1717CEFABA00F33F24 /* OKLocalCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKLocalCache.m; sourceTree = "<group>"; };
+		327E9E1817CEFABA00F33F24 /* OKSessionDb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSessionDb.h; sourceTree = "<group>"; };
+		327E9E1917CEFABA00F33F24 /* OKSessionDb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSessionDb.m; sourceTree = "<group>"; };
 		3284E14916CE49AB00624827 /* UnityPluginMac.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnityPluginMac.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		3284E15A16CE4A6F00624827 /* UnityPluginMac-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "UnityPluginMac-Info.plist"; sourceTree = "<group>"; };
 		3284E15B16CE4A6F00624827 /* UnityPluginMac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UnityPluginMac-Prefix.pch"; sourceTree = "<group>"; };
@@ -375,6 +389,16 @@
 		32880CE5176D2991005F8D30 /* AFOAuth1Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOAuth1Client.m; sourceTree = "<group>"; };
 		32880CEC176DC784005F8D30 /* OKUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUtils.h; sourceTree = "<group>"; };
 		32880CED176DC784005F8D30 /* OKUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUtils.m; sourceTree = "<group>"; };
+		329CB54117C5363700D6D698 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		329CB54217C5363700D6D698 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		329CB54317C5363700D6D698 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		329CB54417C5363700D6D698 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		329CB54517C5363700D6D698 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		329CB54617C5363700D6D698 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		329CB54717C5363700D6D698 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		329CB54817C5363700D6D698 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		329CB54D17C5366100D6D698 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		329CB54E17C5366100D6D698 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
 		32CACF7716CB62B500E8F185 /* OpenKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenKit-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		32CACFA116CB637C00E8F185 /* KGModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGModal.h; sourceTree = "<group>"; };
 		32CACFA216CB637C00E8F185 /* KGModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGModal.m; sourceTree = "<group>"; };
@@ -663,9 +687,33 @@
 			path = AFOAuth1Client;
 			sourceTree = "<group>";
 		};
+		329CB54017C5363700D6D698 /* fmdb-fd95c38 */ = {
+			isa = PBXGroup;
+			children = (
+				329CB54117C5363700D6D698 /* FMDatabase.h */,
+				329CB54217C5363700D6D698 /* FMDatabase.m */,
+				329CB54317C5363700D6D698 /* FMDatabaseAdditions.h */,
+				329CB54417C5363700D6D698 /* FMDatabaseAdditions.m */,
+				329CB54D17C5366100D6D698 /* FMDatabasePool.h */,
+				329CB54E17C5366100D6D698 /* FMDatabasePool.m */,
+				329CB54517C5363700D6D698 /* FMDatabaseQueue.h */,
+				329CB54617C5363700D6D698 /* FMDatabaseQueue.m */,
+				329CB54717C5363700D6D698 /* FMResultSet.h */,
+				329CB54817C5363700D6D698 /* FMResultSet.m */,
+			);
+			name = "fmdb-fd95c38";
+			path = "Vendor/fmdb-fd95c38";
+			sourceTree = SOURCE_ROOT;
+		};
 		32CACF9C16CB637C00E8F185 /* OpenKit */ = {
 			isa = PBXGroup;
 			children = (
+				327E9E1417CEFABA00F33F24 /* OKFileUtil.h */,
+				327E9E1517CEFABA00F33F24 /* OKFileUtil.m */,
+				327E9E1617CEFABA00F33F24 /* OKLocalCache.h */,
+				327E9E1717CEFABA00F33F24 /* OKLocalCache.m */,
+				327E9E1817CEFABA00F33F24 /* OKSessionDb.h */,
+				327E9E1917CEFABA00F33F24 /* OKSessionDb.m */,
 				32CACFD216CB637C00E8F185 /* OpenKit.h */,
 				32CACFA816CB637C00E8F185 /* OKManager.h */,
 				32CACFA916CB637C00E8F185 /* OKManager.m */,
@@ -829,6 +877,7 @@
 		446BAB49177A84630092BD58 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				329CB54017C5363700D6D698 /* fmdb-fd95c38 */,
 				321E99C716D2FB6C005F1506 /* AbstractActionSheetPicker.h */,
 				321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */,
 				321E99CD16D2FBA1005F1506 /* ActionSheetStringPicker.h */,
@@ -1176,6 +1225,14 @@
 				4474BCD417815C46000AEAD1 /* OKColors.m in Sources */,
 				44E3058D178CD78E00611E0C /* OKFacebookUtilities.m in Sources */,
 				4455BEBE17A396DE0079859A /* OKScoreCache.m in Sources */,
+				329CB54917C5363700D6D698 /* FMDatabase.m in Sources */,
+				329CB54A17C5363700D6D698 /* FMDatabaseAdditions.m in Sources */,
+				329CB54B17C5363700D6D698 /* FMDatabaseQueue.m in Sources */,
+				329CB54C17C5363700D6D698 /* FMResultSet.m in Sources */,
+				329CB54F17C5366100D6D698 /* FMDatabasePool.m in Sources */,
+				327E9E1A17CEFABA00F33F24 /* OKFileUtil.m in Sources */,
+				327E9E1B17CEFABA00F33F24 /* OKLocalCache.m in Sources */,
+				327E9E1C17CEFABA00F33F24 /* OKSessionDb.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

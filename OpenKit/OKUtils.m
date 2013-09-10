@@ -45,3 +45,24 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut)
 #endif
 }
 
+@implementation OKUtils
+
++ (NSString *)createUUID
+{
+    CFUUIDRef theUUID = CFUUIDCreate(NULL);
+    CFStringRef string = CFUUIDCreateString(NULL, theUUID);
+    CFRelease(theUUID);
+    return (__bridge NSString *)string;
+}
+
++ (NSString *)sqlStringFromDate:(NSDate *)date
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
+    [dateFormatter setTimeZone: [NSTimeZone timeZoneWithName:@"UTC"]];
+    return [dateFormatter stringFromDate:date];
+}
+
+
+@end
+

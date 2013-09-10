@@ -302,11 +302,19 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
              
              NSArray *scoresJSON = (NSArray*)responseObject;
              scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
+
+             // For now, just storing a list of friend OK Ids.
+             NSMutableArray *arr = [[NSMutableArray alloc] init];
              
              for(id obj in scoresJSON) {
+
                  OKScore *score = [[OKScore alloc] initFromJSON:obj];
+                 [arr addObject:[[score user] OKUserID]];
                  [scores addObject:score];
              }
+
+             // Store array in NSUserDefaults
+             [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"okfriendsList"];
          } else {
              NSLog(@"Failed to get scores, with error: %@", error);
          }

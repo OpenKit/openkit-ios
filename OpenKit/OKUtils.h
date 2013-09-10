@@ -10,3 +10,9 @@
 
 void OKEncodeObj(id obj, NSString **strOut, NSError **errOut);
 id OKDecodeObj(NSData *dataIn, NSError **errOut);
+
+@interface OKUtils : NSObject
++ (NSString *)createUUID;
++ (NSString *)sqlStringFromDate:(NSDate *)date;
+@end
+

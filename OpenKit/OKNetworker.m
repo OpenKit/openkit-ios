@@ -40,8 +40,13 @@ static AFOAuth1Client *_httpClient = nil;
 
     void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id response) {
         NSError *err;
-        id decodedObj = OKDecodeObj(response, &err);
-        handler(decodedObj, err);
+        BOOL empty = ([response length] == 1) && ((uint8_t *)[response bytes])[0] == ' ';
+        if (empty) {
+            handler(nil, err);
+        } else {
+            id decodedObj = OKDecodeObj(response, &err);
+            handler(decodedObj, err);
+        }
     };
 
     void (^failureBlock)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *err) {
