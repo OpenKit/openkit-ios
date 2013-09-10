@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "AFOAuth1Client.h"
 #import "OKUtils.h"
+#import "OKMacros.h"
 
 static AFOAuth1Client *_httpClient = nil;
 
@@ -19,11 +20,13 @@ static AFOAuth1Client *_httpClient = nil;
 + (AFOAuth1Client *)httpClient
 {
     if(!_httpClient) {
+        OKLog(@"Initializing AFOauth1Client");
         _httpClient = [[AFOAuth1Client alloc] initWithBaseURL:[NSURL URLWithString:[OKManager endpoint]]
                                                           key:[OKManager appKey]
                                                        secret:[OKManager secretKey]];
         [_httpClient setParameterEncoding:AFJSONParameterEncoding];
         [_httpClient setDefaultHeader:@"Accept" value:@"application/json"];
+        OKLog(@"AFOauth1Client initialized");
     }
     return _httpClient;
 }

@@ -64,9 +64,9 @@
     
     if([fm fileExistsAtPath:[self dbPath]] == NO)
     {
-        OKLog(@"Creating cache DB file");
+        OKLog(@"Creating OKScoreCache DB file");
     } else {
-        OKLog(@"Cache DB file found");
+        OKLog(@"OKScoreCache DB file found");
     }
     
     const char *dbpath = [[self dbPath] UTF8String];
@@ -76,9 +76,9 @@
         const char *dbInitStatement = "CREATE TABLE IF NOT EXISTS OKCACHE(id INTEGER PRIMARY KEY AUTOINCREMENT, leaderboardID INTEGER, scoreValue BIGINT, metadata INTEGER, displayString VARCHAR(255), submitted BOOLEAN);";
         
         if(sqlite3_exec(_scoresDB, dbInitStatement, NULL, NULL, &errorMsg) != SQLITE_OK) {
-            OKLog(@"Failed to create cache table");
+            OKLog(@"Failed to create OKScoreCache table");
         } else {
-            OKLog(@"Created or found cache table");
+            OKLog(@"Created or found OKScoreCache table");
         }
         
         sqlite3_close(_scoresDB);

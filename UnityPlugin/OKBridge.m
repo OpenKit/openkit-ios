@@ -183,21 +183,25 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 
 void OKBridgeSetAppKey(const char *appKey)
 {
+    OKBridgeLog(@"SetAppKey");
     [OKManager setAppKey:[NSString stringWithUTF8String:appKey]];
 }
 
 void OKBridgeSetSecretKey(const char *secretKey)
 {
+    OKBridgeLog(@"SetSecretKey");
     [OKManager setSecretKey:[NSString stringWithUTF8String:secretKey]];
 }
 
 void OKBridgeSetEndpoint(const char *endpoint)
 {
+    OKBridgeLog(@"SetEndpointKey");
     [OKManager setEndpoint:[NSString stringWithUTF8String:endpoint]];
 }
 
 void OKBridgeSetLeaderboardListTag(const char *tag)
 {
+    OKBridgeLog(@"SetLeaderboardListTag");
     [[OKManager sharedManager] setLeaderboardListTag:[NSString stringWithUTF8String:tag]];
 }
 
