@@ -13,5 +13,6 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut);
 
 @interface OKUtils : NSObject
 + (NSString *)createUUID;
++ (NSString *)sqlStringFromDate:(NSDate *)date;
 @end
 

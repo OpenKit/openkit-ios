@@ -121,6 +121,7 @@
                            friends, @"receiver_ids",
                            [[OKUser currentUser] OKUserID], @"sender_id",
                            [OKUtils createUUID], @"challenge_uuid",
+                           [OKUtils sqlStringFromDate:[NSDate date]], @"client_created_at",
                            nil];
     NSString *p = [NSString stringWithFormat:@"leaderboards/%i/challenges", self.OKLeaderboardID];
     [OKNetworker postToPath:p parameters:params handler:^(id responseObject, NSError *error) {

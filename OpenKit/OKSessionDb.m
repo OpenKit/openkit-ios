@@ -105,10 +105,7 @@ static NSString *const kSessionTableVersion = @"0.0.38";
 {
     NSString *sqlDate = nil;
     if (self.clientCreatedAt) {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
-        [dateFormatter setTimeZone: [NSTimeZone timeZoneWithName:@"UTC"]];
-        sqlDate = [dateFormatter stringFromDate:self.clientCreatedAt];
+        sqlDate = [OKUtils sqlStringFromDate:self.clientCreatedAt];
     }
     
     return [[NSMutableDictionary alloc] initWithObjectsAndKeys:
