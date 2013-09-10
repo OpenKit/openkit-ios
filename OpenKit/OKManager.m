@@ -50,7 +50,6 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
 {
     self = [super init];
     if (self) {
-        [self getSavedUserFromKeychainAndMoveToNSUserDefaults];
         _endpoint = DEFAULT_ENDPOINT;
 
         // These two lines below are required for the linker to work properly such that these classes are available in XIB files
@@ -153,6 +152,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
         }
     } else {
         OKLog(@"Did not find cached OKUser");
+        [self getSavedUserFromKeychainAndMoveToNSUserDefaults];
     }
 }
 
