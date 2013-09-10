@@ -161,6 +161,9 @@
 		4491D49C1728870B0084576B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4491D49B1728870B0084576B /* FacebookSDK.framework */; };
 		4491D49D1728870B0084576B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4491D49B1728870B0084576B /* FacebookSDK.framework */; };
 		4491D49E1728870B0084576B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4491D49B1728870B0084576B /* FacebookSDK.framework */; };
+		44B0E50C17DFC69F00A80DC9 /* OKFileUtil.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 327E9E1417CEFABA00F33F24 /* OKFileUtil.h */; };
+		44B0E50D17DFC69F00A80DC9 /* OKLocalCache.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 327E9E1617CEFABA00F33F24 /* OKLocalCache.h */; };
+		44B0E50E17DFC69F00A80DC9 /* OKSessionDb.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 327E9E1817CEFABA00F33F24 /* OKSessionDb.h */; };
 		44B3127B17CC99F200802B00 /* OKScoreCache.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 4455BEBC17A396DD0079859A /* OKScoreCache.h */; };
 		44B3127C17CC9A1600802B00 /* OKFacebookUtilities.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44E3058B178CD78E00611E0C /* OKFacebookUtilities.h */; };
 		44B50D0B176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B50D09176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m */; };
@@ -240,6 +243,9 @@
 			dstPath = include;
 			dstSubfolderSpec = 16;
 			files = (
+				44B0E50C17DFC69F00A80DC9 /* OKFileUtil.h in Copy Files */,
+				44B0E50D17DFC69F00A80DC9 /* OKLocalCache.h in Copy Files */,
+				44B0E50E17DFC69F00A80DC9 /* OKSessionDb.h in Copy Files */,
 				44B3127C17CC9A1600802B00 /* OKFacebookUtilities.h in Copy Files */,
 				44B3127B17CC99F200802B00 /* OKScoreCache.h in Copy Files */,
 				4474BCD617815E5C000AEAD1 /* OKUtils.h in Copy Files */,
