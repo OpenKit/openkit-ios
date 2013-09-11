@@ -20,16 +20,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    /*
-    [OKManager setAppKey:@"VwfMRAl5Gc4tirjw"];
-    // [OKManager setSecretKey:@"<secret-goes-here>"];
-    [OKManager setEndpoint:@"http://stage.openkit.io"];
-    */
-    
     // Development branch settings
-    [OKManager setAppKey:@"zRn4FrBcWi6ntUmWnEwm"];
-    [OKManager setSecretKey:@"rjqQmuDZaO6JtLuW25XPB2D6P0jplBfmuuANCKuu"];
-    [OKManager setEndpoint:@"http://development.openkit.io"];
+    [OKManager configureWithAppKey:@"zRn4FrBcWi6ntUmWnEwm" secretKey:@"rjqQmuDZaO6JtLuW25XPB2D6P0jplBfmuuANCKuu" endpoint:@"http://development.openkit.io"];
+    
+    // In a production game, you should use:
+    //[OKManager configureWithAppKey:(NSString *) secretKey:(NSString *)]
     
     // Set the leaderboard list tag. By default, client asks
     // for tag = "v1". In the OpenKit dashboard, new leaderboards

@@ -12,6 +12,7 @@
 @class OKUser;
 @interface OKManager : NSObject
 
++ (void)configureWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey;
 + (void)configureWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey endpoint:(NSString *)endpoint;
 + (id)sharedManager;
 - (void)saveCurrentUser:(OKUser *)aCurrentUser;
@@ -37,11 +38,9 @@
 //    manager.appKey     = "foo";
 //    manager.secretKey  = "bar";
 //
-+ (void)setAppKey:(NSString *)appKey;
+
 + (NSString *)appKey;
-+ (void)setEndpoint:(NSString *)endpoint;
 + (NSString *)endpoint;
-+ (void)setSecretKey:(NSString *)secretKey;
 + (NSString *)secretKey;
 
 + (BOOL)handleOpenURL:(NSURL*)url;

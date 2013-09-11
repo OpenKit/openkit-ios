@@ -22,7 +22,7 @@
 #import "OKMacros.h"
 
 
-#define DEFAULT_ENDPOINT    @"stage.openkit.io"
+#define OK_DEFAULT_ENDPOINT    @"http://api.openkit.io"
 static NSString *OK_USER_KEY = @"OKUserInfo";
 
 @interface OKManager ()
@@ -39,11 +39,23 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
 
 + (void)configureWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey endpoint:(NSString *)endpoint
 {
+    NSParameterAssert(appKey);
+    NSParameterAssert(secretKey);
     OKManager *manager = [OKManager sharedManager];
     manager.appKey = appKey;
     manager.secretKey = secretKey;
-    manager.endpoint = endpoint;
+    if(endpoint != nil) {
+        manager.endpoint = endpoint;
+    } else {
+        manager.endpoint = OK_DEFAULT_ENDPOINT;
+    }
+    
     [manager startSession];
+}
+
++ (void)configureWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey
+{
+    [OKManager configureWithAppKey:appKey secretKey:secretKey endpoint:nil];
 }
 
 + (id)sharedManager
@@ -60,7 +72,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
 {
     self = [super init];
     if (self) {
-        _endpoint = DEFAULT_ENDPOINT;
+        _endpoint = OK_DEFAULT_ENDPOINT;
 
         // These two lines below are required for the linker to work properly such that these classes are available in XIB files
         [FBProfilePictureView class];
@@ -192,7 +204,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
 + (void)handleDidBecomeActive
 {
     [OKFacebookUtilities handleDidBecomeActive];
-    [[OKScoreCache sharedCache] submitAllCachedScores];
+    [[OKManager sharedManager] submitCachedScoresAfterDelay];
 }
 
 + (void)handleWillTerminate
@@ -279,6 +291,17 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (100.0f * NSEC_PER_MSEC));
     dispatch_after(delay, OK_CACHE_QUEUE(), ^{
         [[OKSessionDb db] activate];
+    });
+    
+    [self submitCachedScoresAfterDelay];
+}
+
+-(void)submitCachedScoresAfterDelay
+{
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [[OKScoreCache sharedCache] submitAllCachedScores];
     });
 }
 
