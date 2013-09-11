@@ -714,12 +714,6 @@
 		32CACF9C16CB637C00E8F185 /* OpenKit */ = {
 			isa = PBXGroup;
 			children = (
-				327E9E1417CEFABA00F33F24 /* OKFileUtil.h */,
-				327E9E1517CEFABA00F33F24 /* OKFileUtil.m */,
-				327E9E1617CEFABA00F33F24 /* OKLocalCache.h */,
-				327E9E1717CEFABA00F33F24 /* OKLocalCache.m */,
-				327E9E1817CEFABA00F33F24 /* OKSessionDb.h */,
-				327E9E1917CEFABA00F33F24 /* OKSessionDb.m */,
 				32CACFD216CB637C00E8F185 /* OpenKit.h */,
 				32CACFA816CB637C00E8F185 /* OKManager.h */,
 				32CACFA916CB637C00E8F185 /* OKManager.m */,
@@ -727,6 +721,7 @@
 				446BAB4C177A85050092BD58 /* Social Leaderboard */,
 				446BAB4B177A84C80092BD58 /* Login */,
 				446BAB4A177A84850092BD58 /* TableCells */,
+				44DD160817DFEA0900D914FA /* Cache */,
 				44BC533217692DE20038043A /* Utilities */,
 				32CACFA516CB637C00E8F185 /* OKCloud.h */,
 				32CACFA616CB637C00E8F185 /* OKCloud.m */,
@@ -944,8 +939,6 @@
 				32CACFB616CB637C00E8F185 /* OKLeaderboardsViewController.m */,
 				32CACFB316CB637C00E8F185 /* OKLeaderboardsListViewController.h */,
 				32CACFB416CB637C00E8F185 /* OKLeaderboardsListViewController.m */,
-				4455BEBC17A396DD0079859A /* OKScoreCache.h */,
-				4455BEBD17A396DE0079859A /* OKScoreCache.m */,
 			);
 			name = "Social Leaderboard";
 			sourceTree = "<group>";
@@ -978,6 +971,21 @@
 				32CACFAE16CB637C00E8F185 /* OKHelper.m */,
 			);
 			name = Utilities;
+			sourceTree = "<group>";
+		};
+		44DD160817DFEA0900D914FA /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				327E9E1417CEFABA00F33F24 /* OKFileUtil.h */,
+				327E9E1517CEFABA00F33F24 /* OKFileUtil.m */,
+				327E9E1617CEFABA00F33F24 /* OKLocalCache.h */,
+				327E9E1717CEFABA00F33F24 /* OKLocalCache.m */,
+				327E9E1817CEFABA00F33F24 /* OKSessionDb.h */,
+				327E9E1917CEFABA00F33F24 /* OKSessionDb.m */,
+				4455BEBC17A396DD0079859A /* OKScoreCache.h */,
+				4455BEBD17A396DE0079859A /* OKScoreCache.m */,
+			);
+			name = Cache;
 			sourceTree = "<group>";
 		};
 		44F3CD4417CC195800D054CF /* Unused */ = {
