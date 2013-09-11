@@ -181,22 +181,19 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 @end
 
 
-void OKBridgeSetAppKey(const char *appKey)
+void OKBridgeConfigureOpenKit(const char *appKey, const char *secretKey, const char *endpoint)
 {
-    OKBridgeLog(@"SetAppKey");
-    [OKManager setAppKey:[NSString stringWithUTF8String:appKey]];
-}
-
-void OKBridgeSetSecretKey(const char *secretKey)
-{
-    OKBridgeLog(@"SetSecretKey");
-    [OKManager setSecretKey:[NSString stringWithUTF8String:secretKey]];
-}
-
-void OKBridgeSetEndpoint(const char *endpoint)
-{
-    OKBridgeLog(@"SetEndpointKey");
-    [OKManager setEndpoint:[NSString stringWithUTF8String:endpoint]];
+    NSString *ns_appKey = [NSString stringWithUTF8String:appKey];
+    NSString *ns_secretKey = [NSString stringWithUTF8String:secretKey];
+    
+    NSString *ns_endpoint;
+    if(endpoint != NULL) {
+        ns_endpoint = [NSString stringWithUTF8String:endpoint];
+    } else {
+        ns_endpoint = nil;
+    }
+    
+    [OKManager configureWithAppKey:ns_appKey secretKey:ns_secretKey endpoint:ns_endpoint];
 }
 
 void OKBridgeSetLeaderboardListTag(const char *tag)

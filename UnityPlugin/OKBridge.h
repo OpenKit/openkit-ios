@@ -11,9 +11,7 @@
 #import <Foundation/Foundation.h>
 
 /* Settings methods*/
-void OKBridgeSetAppKey(const char *appKey);
-void OKBridgeSetSecretKey(const char *secretKey);
-void OKBridgeSetEndpoint(const char *endpoint);
+void OKBridgeConfigureOpenKit(const char *appKey, const char *secretKey, const char *endpoint);
 void OKBridgeSetLeaderboardListTag(const char *tag);
 
 /* Show leaderboards and UI methods */
