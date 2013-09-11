@@ -31,9 +31,8 @@ void OKBridgeAuthenticateLocalPlayerWithGameCenterAndShowUIIfNecessary();
 /*OKUser methods*/
 int OKBridgeGetCurrentUserOKID();
 const char* OKBridgeGetCurrentUserNick();
-long long OKBridgeGetCurrentUserFBID();
-long long OKBridgeGetCurrentUserTwitterID();
-void OKBridgeLogoutCurrentUserFromOpenKit();
+const char* OKBridgeGetCurrentUserFBID();
 
+void OKBridgeLogoutCurrentUserFromOpenKit();
 void OKBridgeGetFacebookFriends(const char *gameObjectName);
 

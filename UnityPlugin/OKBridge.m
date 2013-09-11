@@ -385,14 +385,10 @@ const char* OKBridgeGetCurrentUserNick()
     return (u ? OK_HS([u.userNick UTF8String]) : (char *)0);
 }
 
-long long OKBridgeGetCurrentUserFBID()
+const char* OKBridgeGetCurrentUserFBID()
 {
     OKUser *u = [OKUser currentUser];
-    return (u ? [u.fbUserID longLongValue] : 0);
+    return (u ? [u.fbUserID UTF8String] : (char *)0);
 }
 
-long long OKBridgeGetCurrentUserTwitterID()
-{
-    OKUser *u = [OKUser currentUser];
-    return (u ? [u.twitterUserID longLongValue] : 0);
-}
+
