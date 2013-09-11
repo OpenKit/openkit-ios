@@ -12,6 +12,7 @@
 @class OKUser;
 @interface OKManager : NSObject
 
++ (void)configureWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey endpoint:(NSString *)endpoint;
 + (id)sharedManager;
 - (void)saveCurrentUser:(OKUser *)aCurrentUser;
 - (void)logoutCurrentUser;

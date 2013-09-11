@@ -21,22 +21,30 @@
 #import "OKSessionDb.h"
 #import "OKMacros.h"
 
-#define DEFAULT_ENDPOINT    @"stage.openkit.io"
 
+#define DEFAULT_ENDPOINT    @"stage.openkit.io"
+static NSString *OK_USER_KEY = @"OKUserInfo";
 
 @interface OKManager ()
 {
     OKUser *_currentUser;
 }
 
+- (void)startSession;
 @end
 
 
 @implementation OKManager
-
-static NSString *OK_USER_KEY = @"OKUserInfo";
-
 @synthesize hasShownFBLoginPrompt, leaderboardListTag;
+
++ (void)configureWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey endpoint:(NSString *)endpoint
+{
+    OKManager *manager = [OKManager sharedManager];
+    manager.appKey = appKey;
+    manager.secretKey = secretKey;
+    manager.endpoint = endpoint;
+    [manager startSession];
+}
 
 + (id)sharedManager
 {
@@ -67,18 +75,6 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
         [nc addObserver:self selector:@selector(didHideDashboard:)  name:OKLeaderboardsViewDidDisappear object:nil];
         
         [self getSavedUserFromNSUserDefaults];
-
-        // Testing with long delay to make sure we are sound if push comes in first.
-        dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (100.0f * NSEC_PER_MSEC));
-        dispatch_after(delay, OK_CACHE_QUEUE(), ^{
-            [[OKSessionDb db] activate];
-        });
-
-//        delay = dispatch_time(DISPATCH_TIME_NOW, (200.0f * NSEC_PER_MSEC));
-//        dispatch_after(delay, OK_CACHE_QUEUE(), ^{
-//            [[OKSessionDb db] registerPush:@"o18"];
-//        });
-
     }
     return self;
 }
@@ -275,6 +271,15 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
             [self performSelectorInBackground:@selector(saveCurrentUserToNSUserDefaults) withObject:nil];
         }
     }
+}
+
+#pragma mark - Private
+- (void)startSession
+{
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (100.0f * NSEC_PER_MSEC));
+    dispatch_after(delay, OK_CACHE_QUEUE(), ^{
+        [[OKSessionDb db] activate];
+    });
 }
 
 @end
