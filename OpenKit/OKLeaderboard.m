@@ -29,15 +29,15 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 - (id)initFromJSON:(NSDictionary*)jsonDict
 {
     if ((self = [super init])) {
-        NSString *sortTypeString    = [OKHelper getStringSafeForKey:@"sort_type" fromJSONDictionary:jsonDict];
+        NSString *sortTypeString    = [OKHelper getNSStringSafeForKey:@"sort_type" fromJSONDictionary:jsonDict];
         
-        self.name                   = [OKHelper getStringSafeForKey:@"name" fromJSONDictionary:jsonDict];
+        self.name                   = [OKHelper getNSStringSafeForKey:@"name" fromJSONDictionary:jsonDict];
         self.OKLeaderboard_id       = [[OKHelper getNSNumberSafeForKey:@"id" fromJSONDictionary:jsonDict] integerValue];
         self.OKApp_id               = [[OKHelper getNSNumberSafeForKey:@"app_id" fromJSONDictionary:jsonDict] integerValue];
         self.sortType               = ([sortTypeString isEqualToString:@"HighValue"]) ? OKLeaderboardSortTypeHighValue : OKLeaderboardSortTypeLowValue;
-        self.icon_url               = [OKHelper getStringSafeForKey:@"icon_url" fromJSONDictionary:jsonDict];
+        self.icon_url               = [OKHelper getNSStringSafeForKey:@"icon_url" fromJSONDictionary:jsonDict];
         self.playerCount            = [[OKHelper getNSNumberSafeForKey:@"player_count" fromJSONDictionary:jsonDict] integerValue];
-        self.gamecenter_id          = [OKHelper getStringSafeForKey:@"gamecenter_id" fromJSONDictionary:jsonDict];
+        self.gamecenter_id          = [OKHelper getNSStringSafeForKey:@"gamecenter_id" fromJSONDictionary:jsonDict];
     }
 
     return self;

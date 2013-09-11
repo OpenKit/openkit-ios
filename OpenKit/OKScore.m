@@ -46,7 +46,7 @@
         self.scoreValue     = [OKHelper getInt64SafeForKey:@"value" fromJSONDictionary:jsonDict];
         self.scoreRank      = [OKHelper getIntSafeForKey:@"rank" fromJSONDictionary:jsonDict];
         self.user           = [OKUserUtilities createOKUserWithJSONData:[jsonDict objectForKey:@"user"]];
-        self.displayString  = [OKHelper getStringSafeForKey:@"display_string" fromJSONDictionary:jsonDict];
+        self.displayString  = [OKHelper getNSStringSafeForKey:@"display_string" fromJSONDictionary:jsonDict];
         self.metadata       = [OKHelper getIntSafeForKey:@"metadata" fromJSONDictionary:jsonDict];
     }
     

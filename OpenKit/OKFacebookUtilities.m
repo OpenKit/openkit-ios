@@ -99,9 +99,9 @@
         {
             NSString *fbUserID = [result id];
             NSString *userNick = [result name];
-            NSNumber *fbIDNum = [NSNumber numberWithLongLong:[fbUserID longLongValue]];
+            //NSNumber *fbIDNum = [NSNumber numberWithLongLong:[fbUserID longLongValue]];
 
-            [user setFbUserID:fbIDNum];
+            [user setFbUserID:fbUserID];
             [user setUserNick:userNick];
 
             dispatch_async(OK_CACHE_QUEUE(), ^{
@@ -305,7 +305,7 @@
     for(int x = 0; x < [friendsJSON count]; x++)
     {
         NSDictionary *friendDict = [friendsJSON objectAtIndex:x];
-        NSString *friendID = [OKHelper getStringSafeForKey:@"id" fromJSONDictionary:friendDict];
+        NSString *friendID = [OKHelper getNSStringSafeForKey:@"id" fromJSONDictionary:friendDict];
         if(friendID != nil) {
             [list addObject:friendID];
         }

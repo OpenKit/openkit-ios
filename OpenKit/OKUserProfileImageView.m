@@ -105,18 +105,13 @@
     else if([aUser fbUserID] != nil) {
         [self.fbProfileImageView setHidden:NO];
         [self.imageView setHidden:YES];
-        [self.fbProfileImageView setProfileID:[aUser.fbUserID stringValue]];
+        [self.fbProfileImageView setProfileID:aUser.fbUserID];
     }
     //else if ([aUser gameCenterID]) {
     //    [self loadGameCenterImageForGameCenterID:[aUser gameCenterID]];
     //}
-    else if([aUser twitterUserID]) {
-        //TODO Displaying twitter images is not yet implemented
+    else {
         [self.fbProfileImageView setProfileID:nil];
-        //[self.fbProfileImageView setHidden:YES];
-        //[self.imageView setHidden:NO];
-        //TODO Twitter profile image
-        //[OKTwitterUtilities GetProfileImageURLFromTwitterUserID:[aUser.twitterUserID stringValue]];
     }
     _user = aUser;
 }

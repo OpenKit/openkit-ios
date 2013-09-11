@@ -21,8 +21,8 @@
 #import "OKSessionDb.h"
 #import "OKMacros.h"
 
-
 #define OK_DEFAULT_ENDPOINT    @"http://api.openkit.io"
+
 static NSString *OK_USER_KEY = @"OKUserInfo";
 
 @interface OKManager ()

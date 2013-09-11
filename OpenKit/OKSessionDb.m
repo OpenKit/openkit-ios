@@ -65,8 +65,8 @@ static NSString *const kSessionTableVersion = @"0.0.38";
     OKUser *user = [OKUser currentUser];
     if (user) {
         self.okId = user.OKUserID ? [user.OKUserID stringValue] : nil;
-        self.fbId = user.fbUserID ? [user.fbUserID stringValue] : nil;
-        self.customId = user.customID ? [user.customID stringValue] : nil;
+        self.fbId = user.fbUserID ? user.fbUserID : nil;
+        self.customId = user.customID ? user.customID : nil;
     }
 }
 

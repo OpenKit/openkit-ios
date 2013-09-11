@@ -31,16 +31,14 @@
 {
     OKUser *user = [[OKUser alloc] init];
     
-    NSNumber *_twitterID=   [OKHelper getNSNumberSafeForKey:@"twitter_id" fromJSONDictionary:jsonData];
     NSNumber *_OKUserID =   [OKHelper getNSNumberSafeForKey:@"id" fromJSONDictionary:jsonData];
-    NSNumber *_fbID     =   [OKHelper getNSNumberSafeForKey:@"fb_id" fromJSONDictionary:jsonData];
-    NSNumber *_customID =   [OKHelper getNSNumberSafeForKey:@"custom_id" fromJSONDictionary:jsonData];
-    NSString *_userNick =   [OKHelper getStringSafeForKey:@"nick" fromJSONDictionary:jsonData];
+    NSString *_fbID     =   [OKHelper getNSStringSafeForKey:@"fb_id" fromJSONDictionary:jsonData];
+    NSString *_customID =   [OKHelper getNSStringSafeForKey:@"custom_id" fromJSONDictionary:jsonData];
+    NSString *_userNick =   [OKHelper getNSStringSafeForKey:@"nick" fromJSONDictionary:jsonData];
 
     [user setOKUserID:_OKUserID];
     [user setUserNick:_userNick];
     [user setFbUserID:_fbID];
-    [user setTwitterUserID:_twitterID];
     [user setCustomID:_customID];
     
     // Can't have an OKUser without an OKUser ID
@@ -63,7 +61,6 @@
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:4];
     
     [dict setValue:[user userNick] forKey:@"nick"];
-    [dict setValue:[user twitterUserID] forKey:@"twitter_id"];
     [dict setValue:[user OKUserID] forKey:@"id"];
     [dict setValue:[user fbUserID] forKey:@"fb_id"];
     [dict setValue:[user customID] forKey:@"custom_id"];

@@ -83,7 +83,7 @@
     }
 }
 
-+(NSString*)getStringSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
++(NSString*)getNSStringSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
 {
     if(![jsonDict isKindOfClass:[NSDictionary class]]) {
         return nil;
