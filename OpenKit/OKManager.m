@@ -24,6 +24,7 @@
 #define OK_DEFAULT_ENDPOINT    @"http://api.openkit.io"
 
 static NSString *OK_USER_KEY = @"OKUserInfo";
+static NSString *OPENKIT_SDK_VERSION = @"0.9.8.7";
 
 @interface OKManager ()
 {
