@@ -81,7 +81,6 @@
 		32CACFEA16CB637C00E8F185 /* OKTwitterUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFCB16CB637C00E8F185 /* OKTwitterUtilities.m */; };
 		32CACFEB16CB637C00E8F185 /* OKUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFCD16CB637C00E8F185 /* OKUser.m */; };
 		32CACFEC16CB637C00E8F185 /* OKUserProfileImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFCF16CB637C00E8F185 /* OKUserProfileImageView.m */; };
-		32CACFED16CB637C00E8F185 /* OKUserUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFD116CB637C00E8F185 /* OKUserUtilities.m */; };
 		32CACFEE16CB637C00E8F185 /* SimpleKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFD416CB637C00E8F185 /* SimpleKeychain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		32CACFF116CB65B900E8F185 /* KGModal.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFA116CB637C00E8F185 /* KGModal.h */; };
 		32CACFF216CB65B900E8F185 /* OKBaseLoginViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFA316CB637C00E8F185 /* OKBaseLoginViewController.h */; };
@@ -107,7 +106,6 @@
 		32CAD00716CB65B900E8F185 /* OKTwitterUtilities.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFCA16CB637C00E8F185 /* OKTwitterUtilities.h */; };
 		32CAD00816CB65B900E8F185 /* OKUser.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFCC16CB637C00E8F185 /* OKUser.h */; };
 		32CAD00916CB65B900E8F185 /* OKUserProfileImageView.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFCE16CB637C00E8F185 /* OKUserProfileImageView.h */; };
-		32CAD00A16CB65B900E8F185 /* OKUserUtilities.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFD016CB637C00E8F185 /* OKUserUtilities.h */; };
 		32CAD00B16CB65B900E8F185 /* OpenKit.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFD216CB637C00E8F185 /* OpenKit.h */; };
 		32CAD00C16CB65B900E8F185 /* SimpleKeychain.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFD316CB637C00E8F185 /* SimpleKeychain.h */; };
 		32CAD04616CB65F700E8F185 /* OKLeaderboardsListViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CAD02916CB65E800E8F185 /* OKLeaderboardsListViewController.xib */; };
@@ -203,6 +201,8 @@
 		44E3058A178CD02900611E0C /* invite@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44E30582178CCFA000611E0C /* invite@2x.png */; };
 		44E3058D178CD78E00611E0C /* OKFacebookUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E3058C178CD78E00611E0C /* OKFacebookUtilities.m */; };
 		44E3F3C816EAED4500509219 /* AFImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E3F3C716EAED4500509219 /* AFImageView.m */; };
+		44F3004D17E2F1CD00108D05 /* OKUserUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 44F3004C17E2F1CD00108D05 /* OKUserUtilities.m */; };
+		44F3004E17E2F2D800108D05 /* OKUserUtilities.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44F3004B17E2F1CD00108D05 /* OKUserUtilities.h */; };
 		44F3CD4517CC1A5700D054CF /* settings.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2C31DE2F17C6DED0005D5918 /* settings.png */; };
 		44F3CD4617CC1A5700D054CF /* settings@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2C31DE3017C6DED0005D5918 /* settings@2x.png */; };
 		44F3CD4717CC1A5700D054CF /* close.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2C31DE2B17C6D9B2005D5918 /* close.png */; };
@@ -243,6 +243,7 @@
 			dstPath = include;
 			dstSubfolderSpec = 16;
 			files = (
+				44F3004E17E2F2D800108D05 /* OKUserUtilities.h in Copy Files */,
 				44B0E50C17DFC69F00A80DC9 /* OKFileUtil.h in Copy Files */,
 				44B0E50D17DFC69F00A80DC9 /* OKLocalCache.h in Copy Files */,
 				44B0E50E17DFC69F00A80DC9 /* OKSessionDb.h in Copy Files */,
@@ -284,7 +285,6 @@
 				32CAD00716CB65B900E8F185 /* OKTwitterUtilities.h in Copy Files */,
 				32CAD00816CB65B900E8F185 /* OKUser.h in Copy Files */,
 				32CAD00916CB65B900E8F185 /* OKUserProfileImageView.h in Copy Files */,
-				32CAD00A16CB65B900E8F185 /* OKUserUtilities.h in Copy Files */,
 				32CAD00B16CB65B900E8F185 /* OpenKit.h in Copy Files */,
 				32CAD00C16CB65B900E8F185 /* SimpleKeychain.h in Copy Files */,
 			);
@@ -451,8 +451,6 @@
 		32CACFCD16CB637C00E8F185 /* OKUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUser.m; sourceTree = "<group>"; };
 		32CACFCE16CB637C00E8F185 /* OKUserProfileImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUserProfileImageView.h; sourceTree = "<group>"; };
 		32CACFCF16CB637C00E8F185 /* OKUserProfileImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUserProfileImageView.m; sourceTree = "<group>"; };
-		32CACFD016CB637C00E8F185 /* OKUserUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUserUtilities.h; sourceTree = "<group>"; };
-		32CACFD116CB637C00E8F185 /* OKUserUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUserUtilities.m; sourceTree = "<group>"; };
 		32CACFD216CB637C00E8F185 /* OpenKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenKit.h; sourceTree = "<group>"; };
 		32CACFD316CB637C00E8F185 /* SimpleKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleKeychain.h; sourceTree = "<group>"; };
 		32CACFD416CB637C00E8F185 /* SimpleKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleKeychain.m; sourceTree = "<group>"; };
@@ -547,6 +545,8 @@
 		44E3058C178CD78E00611E0C /* OKFacebookUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFacebookUtilities.m; sourceTree = "<group>"; };
 		44E3F3C616EAED4500509219 /* AFImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageView.h; sourceTree = "<group>"; };
 		44E3F3C716EAED4500509219 /* AFImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageView.m; sourceTree = "<group>"; };
+		44F3004B17E2F1CD00108D05 /* OKUserUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUserUtilities.h; sourceTree = "<group>"; };
+		44F3004C17E2F1CD00108D05 /* OKUserUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUserUtilities.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -953,17 +953,15 @@
 				44E3058C178CD78E00611E0C /* OKFacebookUtilities.m */,
 				32CACFBC16CB637C00E8F185 /* OKNetworker.h */,
 				32CACFBD16CB637C00E8F185 /* OKNetworker.m */,
+				44F3004B17E2F1CD00108D05 /* OKUserUtilities.h */,
+				44F3004C17E2F1CD00108D05 /* OKUserUtilities.m */,
 				32CACFBB16CB637C00E8F185 /* OKMacros.h */,
 				32CACFD316CB637C00E8F185 /* SimpleKeychain.h */,
 				32CACFD416CB637C00E8F185 /* SimpleKeychain.m */,
 				32880CEC176DC784005F8D30 /* OKUtils.h */,
 				32880CED176DC784005F8D30 /* OKUtils.m */,
-				32CACFD016CB637C00E8F185 /* OKUserUtilities.h */,
-				32CACFD116CB637C00E8F185 /* OKUserUtilities.m */,
 				445B3BFE1769258C00952456 /* OKGameCenterUtilities.h */,
 				445B3BFF1769258C00952456 /* OKGameCenterUtilities.m */,
-				32CACFD016CB637C00E8F185 /* OKUserUtilities.h */,
-				32CACFD116CB637C00E8F185 /* OKUserUtilities.m */,
 				32CACFA716CB637C00E8F185 /* OKDefines.h */,
 				44E118291728A7CF003C2603 /* OKError.h */,
 				44E1182A1728A7CF003C2603 /* OKError.m */,
@@ -1223,7 +1221,6 @@
 				32CACFEA16CB637C00E8F185 /* OKTwitterUtilities.m in Sources */,
 				32CACFEB16CB637C00E8F185 /* OKUser.m in Sources */,
 				32CACFEC16CB637C00E8F185 /* OKUserProfileImageView.m in Sources */,
-				32CACFED16CB637C00E8F185 /* OKUserUtilities.m in Sources */,
 				32CACFEE16CB637C00E8F185 /* SimpleKeychain.m in Sources */,
 				321E99CB16D2FB6C005F1506 /* AbstractActionSheetPicker.m in Sources */,
 				321E99CF16D2FBA1005F1506 /* ActionSheetStringPicker.m in Sources */,
@@ -1247,6 +1244,7 @@
 				327E9E1A17CEFABA00F33F24 /* OKFileUtil.m in Sources */,
 				327E9E1B17CEFABA00F33F24 /* OKLocalCache.m in Sources */,
 				327E9E1C17CEFABA00F33F24 /* OKSessionDb.m in Sources */,
+				44F3004D17E2F1CD00108D05 /* OKUserUtilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
