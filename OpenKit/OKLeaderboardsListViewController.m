@@ -135,7 +135,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [NSString stringWithFormat:@"%d LEADERBOARDS",[OKLeaderBoardsList count]];
+    return [NSString stringWithFormat:@"%d Leaderboards",[OKLeaderBoardsList count]];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section

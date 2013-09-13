@@ -228,9 +228,9 @@ typedef enum {
 {
     switch(section) {
         case kSocialLeaderboardSection:
-            return @"FRIENDS";
+            return @"Friends";
         case kGlobalSection:
-            return @"ALL PLAYERS";
+            return @"All Players";
         default:
             return @"";
     }
