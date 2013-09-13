@@ -21,7 +21,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Development branch settings
-    [OKManager configureWithAppKey:@"zRn4FrBcWi6ntUmWnEwm" secretKey:@"rjqQmuDZaO6JtLuW25XPB2D6P0jplBfmuuANCKuu" endpoint:@"http://development.openkit.io"];
+    [OKManager configureWithAppKey:@"BspfxiqMuYxNEotLeGLm" secretKey:@"2sHQOuqgwzocUdiTsTWzyQlOy1paswYLGjrdRWWf" endpoint:@"http://api.openkit.io"];
     
     // In a production game, you should use:
     //[OKManager configureWithAppKey:(NSString *) secretKey:(NSString *)]

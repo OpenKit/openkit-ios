@@ -29,7 +29,6 @@
     if (self) {
         CGRect CellFrame = CGRectMake(0, 0, 300, 60);
         CGRect LeaderbordLabel = CGRectMake(68, 0, 300, 60);
-        //CGRect PlayersLabel = CGRectMake(68, 28, 300, 20);
         
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
@@ -39,14 +38,6 @@
         label1.font = [UIFont boldSystemFontOfSize:15];
         label1.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:label1];
-        
-        //Initialize Label with tag 2.
-//        label2 = [[UILabel alloc] initWithFrame:PlayersLabel];
-//        label2.tag = 2;
-//        label2.font = [UIFont boldSystemFontOfSize:12];
-//        label2.textColor = [UIColor lightGrayColor];
-//        label2.backgroundColor = [UIColor clearColor];
-//        [self.contentView addSubview:label2];
       
         // Initialize leaderboard icon
         leaderboardIcon = [[AFImageView alloc] initWithFrame:CGRectMake(15,10, 39, 39)];
