@@ -21,6 +21,8 @@
 
 @property (nonatomic) BOOL hasShownFBLoginPrompt;
 @property (nonatomic, strong) NSString *leaderboardListTag;
+@property (nonatomic, strong) NSArray *cachedFbFriendsList;
+
 
 // See OKManagerDelegate protocol, below.
 @property (nonatomic, assign) id delegate;

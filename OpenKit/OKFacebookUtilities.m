@@ -247,9 +247,16 @@
 
 +(void)getListOfFriendsForCurrentUserWithCompletionHandler:(void(^)(NSArray *friends, NSError*error))completionHandler
 {
-    FBRequest *getFriendsRequest = [FBRequest requestForMyFriends];
-    
     OKLog(@"Getting list of Facebook friends");
+    
+    // Check cache for list of friends (in-memory cache)
+    if([[OKManager sharedManager] cachedFbFriendsList] != nil) {
+        completionHandler([[OKManager sharedManager] cachedFbFriendsList], nil);
+        OKLog(@"Returned cached list of FB friends: %d", [[[OKManager sharedManager] cachedFbFriendsList] count]);
+        return;
+    }
+    
+    FBRequest *getFriendsRequest = [FBRequest requestForMyFriends];
     
     [getFriendsRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         
@@ -264,6 +271,7 @@
                 OKLog(@"Received %d friends", [graphFriends count]);
                 //Munge the list of friends into one single array of friend IDs
                 NSArray *friendsList = [OKFacebookUtilities makeListOfFacebookFriends:graphFriends];
+                [[OKManager sharedManager] setCachedFbFriendsList:friendsList];
                 completionHandler(friendsList, error);
             } else {
                 completionHandler(nil, [OKError unknownFacebookRequestError]);
@@ -333,59 +341,6 @@
                                                           }
                                                       }}];
 }
-
-/* OLD VERSION WITHOUT ABSTRACTION OF FACEBOOK OPEN SESSION METHOD
-
-+(void)AuthorizeUserWithFacebookWithCompletionHandler:(void(^)(OKUser *user, NSError *error))completionHandler
-{
-    if([[FBSession activeSession] state] == FBSessionStateOpen)
-    {
-        NSLog(@"FBSessionStateOpen, just making request to get user ID");
-        [self GetCurrentFacebookUsersIDAndCreateOKUserWithCompletionhandler:completionHandler];
-    }
-    else
-    {
-        [FBSession openActiveSessionWithReadPermissions:nil allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-            
-            switch(status)
-            {
-                case FBSessionStateOpen:
-                    NSLog(@"FBSessionStateOpen");
-                    if(!error)
-                    {
-                        //We have a valid session
-                        NSLog(@"Facebook user session found/opened successfully");
-                        // Get the user's facebook ID
-                        [self GetCurrentFacebookUsersIDAndCreateOKUserWithCompletionhandler:completionHandler];
-                    }
-                    break;
-                case FBSessionStateClosed:
-                    NSLog(@"FBSessionStateClosed");
-                    //break;
-                case FBSessionStateClosedLoginFailed:
-                    NSLog(@"FBSessionStateClosedLoginFailed");
-                    [FBSession.activeSession closeAndClearTokenInformation];
-                    
-                    
-                    if([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled){
-                        NSLog(@"User cancelled FB login");
-                        completionHandler(nil,nil);
-                        break;
-                    } else {
-                        completionHandler(nil, error);
-                    }
-                    break;
-                default:
-                    completionHandler(nil, error);
-                    break;
-            }
-            
-        }];
-    }
-}
-
- 
- */
 
 
 
