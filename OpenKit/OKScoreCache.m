@@ -11,8 +11,11 @@
 #import "OKUser.h"
 #import <sqlite3.h>
 #import "OKHelper.h"
+#import "OKFileUtil.h"
 
 #define SCORES_CACHE_KEY @"OKLeaderboardScoresCache"
+
+static NSString *dbVersion = @"1";
 
 @implementation OKScoreCache
 {
@@ -43,11 +46,16 @@
     return self;
 }
 
--(NSString*)dbPath
+
+- (NSString *)cacheDirPath
 {
-    NSString *docsDir = [OKHelper getPathToDocsDirectory];
-    NSString *dbFilePath = [docsDir stringByAppendingPathComponent:@"okCache.db"];
-    return dbFilePath;
+    return [OKFileUtil localOnlyCachePath];
+}
+
+- (NSString *)dbPath
+{
+    NSString *relativeDBPath = [NSString stringWithFormat:@"okScoreCache-%@.sqlite", dbVersion];
+    return [[self cacheDirPath] stringByAppendingPathComponent:relativeDBPath];
 }
 
 // Init cache DB

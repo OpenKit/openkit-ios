@@ -65,7 +65,7 @@
     if(errorCode == OK_UNSUBSCRIBED_USER_ERROR_CODE) {
         [[OKManager sharedManager] logoutCurrentUser];
         OKLog(@"Logging out current user b/c user is unsubscribed to app");
-    }
+    }	
 }
 
 + (NSDictionary *)getJSONRepresentationOfUser:(OKUser *)user
