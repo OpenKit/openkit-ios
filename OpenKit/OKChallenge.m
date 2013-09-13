@@ -20,7 +20,7 @@
 
 +(void)sendPushChallengewithScorePostResponseJSON:(id)responseObject withPreviousScore:(OKScore*)previousScore
 {
-    OKLog(@"Trying to send push challenge. Score response JSON: %@", responseObject);
+    OKLog(@"Trying to send push challenge.");
     
     if([OKUser currentUser] == nil) {
         OKLog(@"Can't issue push challenge without current OKUser");
@@ -114,7 +114,9 @@
 // Actually issue the challenge
 +(void)issuePushChallengeForListOfOKScores:(NSArray*)scores andLeaderboard:(OKLeaderboard*)leaderboard
 {
-    // DO THE NETWORK CALL
+    OKLog(@"Doing the network call to issue push challenge");
+    OKLog(@"Sending challenge to %d users", [scores count]);
+    
     NSMutableArray *friends_receiver_ids = [[NSMutableArray alloc] init];
     
     for(int x = 0; x < [scores count]; x++)
@@ -129,9 +131,14 @@
                             [OKUtils createUUID], @"challenge_uuid",
                             [OKUtils sqlStringFromDate:[NSDate date]], @"client_created_at",
                             nil];
-    NSString *p = [NSString stringWithFormat:@"leaderboards/%i/challenges", leaderboard.OKLeaderboard_id];
-    [OKNetworker postToPath:p parameters:params handler:^(id responseObject, NSError *error) {
-        // blah blah blah.
+    NSString *path = [NSString stringWithFormat:@"/leaderboards/%i/challenges", leaderboard.OKLeaderboard_id];
+    
+    [OKNetworker postToPath:path parameters:params handler:^(id responseObject, NSError *error) {
+        if(error) {
+            OKLog(@"Error from server is: %@", error);
+        } else {
+            OKLog(@"Response from server is: %@", responseObject);
+        }
     }];
     
 }
