@@ -153,6 +153,7 @@
 		445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
 		445B3BFD1767F5DE00952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
 		445B3C001769258C00952456 /* OKGameCenterUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 445B3BFF1769258C00952456 /* OKGameCenterUtilities.m */; };
+		446A551817E3A98900081C7B /* OKChallenge.m in Sources */ = {isa = PBXBuildFile; fileRef = 446A551717E3A98900081C7B /* OKChallenge.m */; };
 		4474BCD417815C46000AEAD1 /* OKColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4474BCD317815C46000AEAD1 /* OKColors.m */; };
 		4474BCD517815CAB000AEAD1 /* OKColors.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 446BAB4D177A8F880092BD58 /* OKColors.h */; };
 		4474BCD617815E5C000AEAD1 /* OKUtils.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32880CEC176DC784005F8D30 /* OKUtils.h */; };
@@ -517,6 +518,8 @@
 		445B3BFB1767F5D300952456 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		445B3BFE1769258C00952456 /* OKGameCenterUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGameCenterUtilities.h; sourceTree = "<group>"; };
 		445B3BFF1769258C00952456 /* OKGameCenterUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKGameCenterUtilities.m; sourceTree = "<group>"; };
+		446A551617E3A98900081C7B /* OKChallenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKChallenge.h; sourceTree = "<group>"; };
+		446A551717E3A98900081C7B /* OKChallenge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKChallenge.m; sourceTree = "<group>"; };
 		446BAB4D177A8F880092BD58 /* OKColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKColors.h; sourceTree = "<group>"; };
 		4474BCD317815C46000AEAD1 /* OKColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKColors.m; sourceTree = "<group>"; };
 		4491D49B1728870B0084576B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
@@ -939,6 +942,8 @@
 				32CACFB616CB637C00E8F185 /* OKLeaderboardsViewController.m */,
 				32CACFB316CB637C00E8F185 /* OKLeaderboardsListViewController.h */,
 				32CACFB416CB637C00E8F185 /* OKLeaderboardsListViewController.m */,
+				446A551617E3A98900081C7B /* OKChallenge.h */,
+				446A551717E3A98900081C7B /* OKChallenge.m */,
 			);
 			name = "Social Leaderboard";
 			sourceTree = "<group>";
@@ -1245,6 +1250,7 @@
 				327E9E1B17CEFABA00F33F24 /* OKLocalCache.m in Sources */,
 				327E9E1C17CEFABA00F33F24 /* OKSessionDb.m in Sources */,
 				44F3004D17E2F1CD00108D05 /* OKUserUtilities.m in Sources */,
+				446A551817E3A98900081C7B /* OKChallenge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
