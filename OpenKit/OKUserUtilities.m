@@ -15,6 +15,7 @@
 #import "OKError.h"
 #import "OKHelper.h"
 #import "OKSessionDb.h"
+#import "AFNetworking.h"
 
 
 
@@ -54,6 +55,17 @@
     OKUser *guestUser = [[OKUser alloc] init];
     [guestUser setUserNick:@"Me"];
     return guestUser;
+}
+
++(void)checkIfErrorIsUnsubscribedUserError:(NSError *)error
+{
+    int errorCode = [[[error userInfo] objectForKey:AFNetworkingOperationFailingURLResponseErrorKey] statusCode];
+    
+    // If the user is unsubscribed to the app, log out the user.
+    if(errorCode == OK_UNSUBSCRIBED_USER_ERROR_CODE) {
+        [[OKManager sharedManager] logoutCurrentUser];
+        OKLog(@"Logging out current user b/c user is unsubscribed to app");
+    }
 }
 
 + (NSDictionary *)getJSONRepresentationOfUser:(OKUser *)user
@@ -128,6 +140,8 @@
              }
          } else {
              NSLog(@"Error updating username: %@", error);
+             // If the user is unsubscribed to the app, log out the user.
+             [OKUserUtilities checkIfErrorIsUnsubscribedUserError:error];
          }
          completionHandler(error);
      }];

@@ -182,6 +182,9 @@
              OKLog(@"Failed to post score to OpenKit: %@",self);
              OKLog(@"Error: %@", error);
              [self setSubmitted:NO];
+             
+             // If the user is unsubscribed to the app, log out the user.
+             [OKUserUtilities checkIfErrorIsUnsubscribedUserError:error];
          }
          completionHandler(error);
      }];

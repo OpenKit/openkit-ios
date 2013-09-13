@@ -242,7 +242,7 @@
         sqlite3_bind_int(updateScoreStatement, 1, [score OKScoreID]);
         
         if(sqlite3_step(updateScoreStatement) == SQLITE_DONE) {
-            OKLog(@"Update score submitted %@", score);
+            //OKLog(@"Update score submitted %@", score);
         } else {
             OKLog(@"Failed to remove score in cache wihth error message: %s",sqlite3_errmsg(_scoresDB));
         }
