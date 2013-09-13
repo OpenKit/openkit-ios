@@ -13,6 +13,7 @@
 #import "OKMacros.h"
 
 static AFOAuth1Client *_httpClient = nil;
+static NSString *OK_SERVER_API_VERSION = @"v1";
 
 @implementation OKNetworker
 
@@ -20,8 +21,12 @@ static AFOAuth1Client *_httpClient = nil;
 + (AFOAuth1Client *)httpClient
 {
     if(!_httpClient) {
-        OKLog(@"Initializing AFOauth1Client with endpoint: %@",[OKManager endpoint]);
-        _httpClient = [[AFOAuth1Client alloc] initWithBaseURL:[NSURL URLWithString:[OKManager endpoint]]
+        NSURL *baseEndpointURL = [NSURL URLWithString:[OKManager endpoint]];
+        NSURL *endpointUrl = [NSURL URLWithString:OK_SERVER_API_VERSION relativeToURL:baseEndpointURL];
+        NSString *endpointString = [endpointUrl absoluteString];
+        
+        OKLog(@"Initializing AFOauth1Client with endpoint: %@",endpointString);
+        _httpClient = [[AFOAuth1Client alloc] initWithBaseURL:[NSURL URLWithString:endpointString]
                                                           key:[OKManager appKey]
                                                        secret:[OKManager secretKey]];
         [_httpClient setParameterEncoding:AFJSONParameterEncoding];
