@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OKScore.h"
 
 @interface OKChallenge : NSObject
 
