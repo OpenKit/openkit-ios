@@ -94,19 +94,13 @@
                    handler:^(id responseObject, NSError *error)
      {
          if(!error){
-             
-             
              //Check to make sure the user was returned, that way we know the response was successful
              OKUser *responseUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
              NSNumber *userId = [responseUser OKUserID];
              [OKUserUtilities updateSessionUserId:userId];
-
-             if([userId longValue] == [[user OKUserID] longValue]) {
-                 [[OKManager sharedManager] saveCurrentUser:responseUser];
-             }
-             else {
-                 error = [OKError OKServerRespondedWithDifferentUserIDError];
-             }
+             
+             // Update the OKUser with the latest info from the server
+             [[OKManager sharedManager] saveCurrentUser:responseUser];
          } else {
              NSLog(@"Error updating OKUser: %@", error);
          }
@@ -130,15 +124,8 @@
          if(!error){
              //Check to make sure the user was returned, that way we know the response was successful
              OKUser *responseUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
-             
-             if([responseUser OKUserID] == [user OKUserID]) {
-                 [[OKManager sharedManager] saveCurrentUser:responseUser];
-             }
-             else {
-                 NSDictionary *errorInfo = [NSDictionary dictionaryWithObject:@"Unknown error from OpenKit when trying to update user nick" forKey:NSLocalizedDescriptionKey];
-                 error = [[NSError alloc] initWithDomain:OKErrorDomain code:0 userInfo:errorInfo];
-             }
-         } else {
+            [[OKManager sharedManager] saveCurrentUser:responseUser];
+        } else {
              NSLog(@"Error updating username: %@", error);
              // If the user is unsubscribed to the app, log out the user.
              [OKUserUtilities checkIfErrorIsUnsubscribedUserError:error];
