@@ -367,8 +367,7 @@ void OKBridgeSubmitScoreWithGameCenter(int64_t scoreValue, int leaderboardID, in
         score.gamecenterLeaderboardID = [[NSString alloc] initWithUTF8String:gamecenterLeaderboardID];
     }
     
-    OKBridgeLog(@"Gamecenter leaderboard ID is: %@", score.gamecenterLeaderboardID);
-    OKBridgeLog(@"Submitting score with gamecenter");
+    OKBridgeLog(@"Gamecenter leaderboard ID is: %@, submitting score to GameCenter", score.gamecenterLeaderboardID);
     OKBridgeSubmitScoreBase(score, gameObjectName);
 }
 
@@ -388,7 +387,7 @@ const char* OKBridgeGetCurrentUserNick()
 const char* OKBridgeGetCurrentUserFBID()
 {
     OKUser *u = [OKUser currentUser];
-    return (u ? [u.fbUserID UTF8String] : (char *)0);
+    return (u ? OK_HS([u.fbUserID UTF8String]) : (char *)0);
 }
 
 
