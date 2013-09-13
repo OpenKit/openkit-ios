@@ -84,6 +84,10 @@
         }
     }
     
+    OKLog(@"Sorting social scores to figure out which will get a challenge");
+    OKLog(@"Player's previous top score is: %lld, and new top score is: %lldd", [previousScore scoreValue], [topScore scoreValue]);
+    
+    
     // Go through the list of friends' scores, and find scores which are < playerTopScore && > previousScore
     // If there was no previous score, the above code sets the "previous score" to the min and max values depending
     // on sort type so that all friends below the player's top score get a push
@@ -136,11 +140,8 @@
     [OKNetworker postToPath:path parameters:params handler:^(id responseObject, NSError *error) {
         if(error) {
             OKLog(@"Error from server is: %@", error);
-        } else {
-            OKLog(@"Response from server is: %@", responseObject);
         }
     }];
-    
 }
 
 
