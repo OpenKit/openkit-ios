@@ -18,7 +18,7 @@
 
 @implementation OKChallenge
 
-+(void)sendPushChallengewithScorePostResponseJSON:(id)responseObject
++(void)sendPushChallengewithScorePostResponseJSON:(id)responseObject withPreviousScore:(OKScore*)previousScore
 {
     OKLog(@"Trying to send push challenge. Score response JSON: %@", responseObject);
     
@@ -60,7 +60,7 @@
     [leaderboard getFacebookFriendsScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
         
         if(!error && scores != nil) {
-            [self issuePushChallengeforLeaderboard:leaderboard withUserTopScore:topScore withFriendsScores:scores];
+            [self issuePushChallengeforLeaderboard:leaderboard withUserTopScore:topScore withPreviousScore:previousScore withFriendsScores:scores];
         } else {
             OKLog(@"Didn't get friends scores, so not sending push challenge");
         }
@@ -69,20 +69,36 @@
 
 // Given a leaderboard, player top score, and list of social scores, figures out which OKScore objects (and their OKUsers) get sent
 // a challenge
-+(void)issuePushChallengeforLeaderboard:(OKLeaderboard*)leaderboard withUserTopScore:(OKScore*)topScore withFriendsScores:(NSArray*)friendsScores
++(void)issuePushChallengeforLeaderboard:(OKLeaderboard*)leaderboard withUserTopScore:(OKScore*)topScore withPreviousScore:(OKScore*)previousScore withFriendsScores:(NSArray*)friendsScores
 {
-    NSMutableArray *scoresToSendPushTo = [[NSMutableArray alloc] init];
+    // If there was no previous score stored, create a previous score with the maximum allowed value for a score
+    // type based on the leaderboard sort type. 
+    if(previousScore == nil)
+    {
+        previousScore = [[OKScore alloc] init];
+        
+        if([leaderboard sortType] == OKLeaderboardSortTypeHighValue) {
+            previousScore.scoreValue = 0;
+        } else {
+            previousScore.scoreValue = INT64_MAX;
+        }
+    }
     
+    // Go through the list of friends' scores, and find scores which are < playerTopScore && > previousScore
+    // If there was no previous score, the above code sets the "previous score" to the min and max values depending
+    // on sort type so that all friends below the player's top score get a push
+    
+    NSMutableArray *scoresToSendPushTo = [[NSMutableArray alloc] init];
     for(int x = 0; x < [friendsScores count]; x++)
     {
         OKScore *score = [friendsScores objectAtIndex:x];
         
         if([leaderboard sortType] == OKLeaderboardSortTypeHighValue) {
-            if([score scoreValue] < [topScore scoreValue]) {
+            if([score scoreValue] < [topScore scoreValue] && [score scoreValue] > [previousScore scoreValue]) {
                 [scoresToSendPushTo addObject:score];
             }
         } else {
-            if([score scoreValue] > [topScore scoreValue]) {
+            if([score scoreValue] > [topScore scoreValue] && [score scoreValue] < [previousScore scoreValue]) {
                 [scoresToSendPushTo addObject:score];
             }
         }
@@ -99,9 +115,16 @@
 +(void)issuePushChallengeForListOfOKScores:(NSArray*)scores andLeaderboard:(OKLeaderboard*)leaderboard
 {
     // DO THE NETWORK CALL
-    NSArray *friends = [[NSUserDefaults standardUserDefaults] objectForKey:@"okfriendsList"];
+    NSMutableArray *friends_receiver_ids = [[NSMutableArray alloc] init];
+    
+    for(int x = 0; x < [scores count]; x++)
+    {
+        OKScore *friend_score = [scores objectAtIndex:x];
+        [friends_receiver_ids addObject:[[friend_score user] OKUserID]];
+    }
+    
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            friends, @"receiver_ids",
+                            friends_receiver_ids, @"receiver_ids",
                             [[OKUser currentUser] OKUserID], @"sender_id",
                             [OKUtils createUUID], @"challenge_uuid",
                             [OKUtils sqlStringFromDate:[NSDate date]], @"client_created_at",

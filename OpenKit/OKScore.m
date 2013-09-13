@@ -164,10 +164,14 @@
          }
          completionHandler(error);
          
+         OKScore *previousScore = [[OKScoreCache sharedCache] lastScore];
+         [[OKScoreCache sharedCache] setLastScore:nil];
+         
          // If there was no error, try issuing a push challenge
          if(!error) {
-             [OKChallenge sendPushChallengewithScorePostResponseJSON:responseObject];
+             [OKChallenge sendPushChallengewithScorePostResponseJSON:responseObject withPreviousScore:previousScore];
          }
+         
      }];
 }
 
