@@ -17,7 +17,7 @@
 -(NSArray*)getCachedScoresForLeaderboardID:(int)leaderboardID andOnlyGetSubmittedScores:(BOOL)submittedOnly;
 -(void)submitCachedScore:(OKScore*)score;
 -(void)submitAllCachedScores;
--(void)clearCache;
+-(void)clearCachedSubmittedScores;
 
 -(void)updateCachedScoreSubmitted:(OKScore*)score;
 

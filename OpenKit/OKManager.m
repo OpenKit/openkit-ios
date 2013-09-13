@@ -143,7 +143,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     //Log out and clear Facebook
     [FBSession.activeSession closeAndClearTokenInformation];
     
-    [[OKScoreCache sharedCache] clearCache];
+    [[OKScoreCache sharedCache] clearCachedSubmittedScores];
 }
 
 - (void)saveCurrentUser:(OKUser *)aCurrentUser

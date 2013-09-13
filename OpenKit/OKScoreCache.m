@@ -12,6 +12,7 @@
 #import <sqlite3.h>
 #import "OKHelper.h"
 #import "OKFileUtil.h"
+#import "OKNetworker.h"
 
 #define SCORES_CACHE_KEY @"OKLeaderboardScoresCache"
 
@@ -308,6 +309,12 @@ static NSString *dbVersion = @"1";
                 [self updateCachedScoreSubmitted:score];
                 OKLog(@"Submitted cached core succesfully");
             } else {
+                // If the error code returned is in the 400s, delete the score from the cache
+                int errorCode = [OKNetworker getStatusCodeFromAFNetworkingError:error];
+                if(errorCode >= 400 && errorCode <= 500) {
+                    OKLog(@"Deleted cached score because of error code: %d",errorCode);
+                    [self deleteScore:score];
+                }
                 OKLog(@"Failed to submit cached score");
             }
         }];
@@ -318,7 +325,7 @@ static NSString *dbVersion = @"1";
     }
 }
 
-
+/*
 -(void)clearCache
 {
     OKLog(@"Clear cached scores");
@@ -344,6 +351,31 @@ static NSString *dbVersion = @"1";
     
     //Reinit the DB after clearing out the cache
     [self initDB];
+}*/
+
+-(void)clearCachedSubmittedScores
+{
+    OKLog(@"Clear cached submitted scores");
+    OKLog(@"Score cache before delete: %@", [self getAllCachedScores]);
+    
+    const char *dbpath = [[self dbPath] UTF8String];
+    
+    if(sqlite3_open(dbpath, &_scoresDB) == SQLITE_OK) {
+        char *errorMsg;
+        const char *clearDBStatement = "DELETE FROM OKCACHE WHERE submitted=1";
+        
+        if(sqlite3_exec(_scoresDB, clearDBStatement, NULL, NULL, &errorMsg) != SQLITE_OK) {
+            OKLog(@"Failed to delete cached submitted scores");
+        } else {
+            OKLog(@"Cleared all cached submitted scores");
+        }
+        
+    } else {
+        OKLog(@"Failed to open database to clear cached scores");
+    }
+    
+    
+    OKLog(@"Score cache after delete: %@", [self getAllCachedScores]);
 }
 
 -(void)closeDB

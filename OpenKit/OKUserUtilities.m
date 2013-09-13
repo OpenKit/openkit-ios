@@ -59,7 +59,7 @@
 
 +(void)checkIfErrorIsUnsubscribedUserError:(NSError *)error
 {
-    int errorCode = [[[error userInfo] objectForKey:AFNetworkingOperationFailingURLResponseErrorKey] statusCode];
+    int errorCode = [OKNetworker getStatusCodeFromAFNetworkingError:error];
     
     // If the user is unsubscribed to the app, log out the user.
     if(errorCode == OK_UNSUBSCRIBED_USER_ERROR_CODE) {

@@ -38,6 +38,14 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
     return _httpClient;
 }
 
++(int)getStatusCodeFromAFNetworkingError:(NSError*)error {
+    if([[error userInfo] objectForKey:AFNetworkingOperationFailingURLResponseErrorKey]) {
+        return [[[error userInfo] objectForKey:AFNetworkingOperationFailingURLResponseErrorKey] statusCode];
+    } else {
+        return 0;
+    }
+}
+
 + (void)requestWithMethod:(NSString *)method
                      path:(NSString *)path
                parameters:(NSDictionary *)params
