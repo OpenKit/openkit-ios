@@ -23,6 +23,8 @@ static NSString *dbVersion = @"1";
     sqlite3* _scoresDB;
 }
 
+@synthesize lastScore;
+
 
 + (OKScoreCache*)sharedCache
 {
@@ -440,6 +442,7 @@ static NSString *dbVersion = @"1";
         if(shouldStoreScore) {
             [self insertScore:scoreToStore];
         }
+        [self setLastScore:nil];
         return YES;
     } else {
         NSArray *sortedCachedScores = [OKScoreCache sortScoresDescending:cachedScores];
@@ -452,12 +455,14 @@ static NSString *dbVersion = @"1";
                 [self insertScore:scoreToStore];
                 [self deleteScore:highestScore];
             }
+            [self setLastScore:highestScore];
             return YES;
         } else if ([scoreToStore scoreValue] < [lowestScore scoreValue]) {
             if(shouldStoreScore) {
                 [self insertScore:scoreToStore];
                 [self deleteScore:lowestScore];
             }
+            [self setLastScore:lowestScore];
             return YES;
         }
     }
