@@ -19,10 +19,6 @@
 - (void)logoutCurrentUser;
 - (void)registerToken:(NSData *)deviceToken;
 
-@property (nonatomic, strong) NSString *appKey;
-@property (nonatomic, strong) NSString *secretKey;
-@property (nonatomic, strong) NSString *endpoint;
-
 @property (nonatomic) BOOL hasShownFBLoginPrompt;
 @property (nonatomic, strong) NSString *leaderboardListTag;
 

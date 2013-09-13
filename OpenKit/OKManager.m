@@ -31,6 +31,10 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     OKUser *_currentUser;
 }
 
+@property (nonatomic, strong) NSString *appKey;
+@property (nonatomic, strong) NSString *secretKey;
+@property (nonatomic, strong) NSString *endpoint;
+
 - (void)startSession;
 @end
 
@@ -52,6 +56,8 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     }
     
     [manager startSession];
+    
+    OKLog(@"OpenKit configured with endpoint: %@", [[OKManager sharedManager] endpoint]);
 }
 
 + (void)configureWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey
@@ -105,29 +111,14 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     }
 }
 
-+ (void)setAppKey:(NSString *)appKey
-{
-    [[OKManager sharedManager] setAppKey:appKey];
-}
-
 + (NSString *)appKey
 {
     return [[OKManager sharedManager] appKey];
 }
 
-+ (void)setEndpoint:(NSString *)endpoint;
-{
-    [[OKManager sharedManager] setEndpoint:endpoint];
-}
-
 + (NSString *)endpoint
 {
     return [[OKManager sharedManager] endpoint];
-}
-
-+ (void)setSecretKey:(NSString *)secretKey
-{
-    [[OKManager sharedManager] setSecretKey:secretKey];
 }
 
 + (NSString *)secretKey
