@@ -18,6 +18,9 @@
 #import "OKScoreCache.h"
 #import "OKHelper.h"
 #import "OKUtils.h"
+#import "OKLeaderboard.h"
+#import "OKFacebookUtilities.h"
+#import "OKChallenge.h"
 
 @implementation OKScore
 
@@ -26,21 +29,6 @@
 {
     self = [super init];
     if (self) {
-        /*
-        self.OKLeaderboardID = [[jsonDict objectForKey:@"leaderboard_id"] integerValue];
-        self.OKScoreID = [[jsonDict objectForKey:@"id"] integerValue];
-        self.scoreValue = [[jsonDict objectForKey:@"value"] longLongValue];
-        self.scoreRank = [[jsonDict objectForKey:@"rank"] integerValue];
-        self.user = [OKUserUtilities createOKUserWithJSONData:[jsonDict objectForKey:@"user"]];
-        
-        
-        if([jsonDict objectForKey:@"display_string"] != nil && [jsonDict objectForKey:@"display_string"] != [NSNull null])
-            self.displayString = [jsonDict objectForKey:@"display_string"];
-        
-        if([jsonDict objectForKey:@"metadata"] != nil && [jsonDict objectForKey:@"metadata"] != [NSNull null])
-            self.metadata = [[jsonDict objectForKey:@"metadata"] integerValue];
-        */
-        
         self.OKLeaderboardID= [OKHelper getIntSafeForKey:@"leaderboard_id" fromJSONDictionary:jsonDict];
         self.OKScoreID      = [OKHelper getIntSafeForKey:@"id" fromJSONDictionary:jsonDict];
         self.scoreValue     = [OKHelper getInt64SafeForKey:@"value" fromJSONDictionary:jsonDict];
@@ -115,19 +103,6 @@
 
 -(void)submitScoreWithCompletionHandler:(void (^)(NSError *error))completionHandler
 {
-    // Hack hack hack.
-    NSArray *friends = [[NSUserDefaults standardUserDefaults] objectForKey:@"okfriendsList"];
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                           friends, @"receiver_ids",
-                           [[OKUser currentUser] OKUserID], @"sender_id",
-                           [OKUtils createUUID], @"challenge_uuid",
-                           [OKUtils sqlStringFromDate:[NSDate date]], @"client_created_at",
-                           nil];
-    NSString *p = [NSString stringWithFormat:@"leaderboards/%i/challenges", self.OKLeaderboardID];
-    [OKNetworker postToPath:p parameters:params handler:^(id responseObject, NSError *error) {
-        // blah blah blah.
-    }];
-
     // Submit to GC if GC leaderboard ID is specified
     if(self.gamecenterLeaderboardID) {
         [self submitScoreToGameCenter];
@@ -160,6 +135,7 @@
     }
 }
 
+
 -(void)submitScoreBaseWithCompletionHandler:(void (^)(NSError *error))completionHandler
 {
     if (!self.user) {
@@ -177,7 +153,7 @@
          if(!error) {
              OKLog(@"Successfully posted score to OpenKit: %@", self);
              [self setSubmitted:YES];
-             //OKLog(@"Response: %@", responseObject);
+            //OKLog(@"Response: %@", responseObject);
          }else{
              OKLog(@"Failed to post score to OpenKit: %@",self);
              OKLog(@"Error: %@", error);
@@ -187,8 +163,18 @@
              [OKUserUtilities checkIfErrorIsUnsubscribedUserError:error];
          }
          completionHandler(error);
+         
+         OKScore *previousScore = [[OKScoreCache sharedCache] previousSubmittedScore];
+         [[OKScoreCache sharedCache] setPreviousSubmittedScore:nil];
+         
+         // If there was no error, try issuing a push challenge
+         if(!error) {
+             [OKChallenge sendPushChallengewithScorePostResponseJSON:responseObject withPreviousScore:previousScore];
+         }
+         
      }];
 }
+
 
 - (void)cachedScoreSubmit:(void (^)(NSError *error))completionHandler
 {

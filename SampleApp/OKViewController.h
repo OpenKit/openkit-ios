@@ -16,7 +16,6 @@
 - (IBAction)logoutOfOpenKit:(id)sender;
 - (IBAction)loginToOpenKit:(id)sender;
 - (IBAction)submitScore:(id)sender;
-- (IBAction)showCloudDataTest:(id)sender;
 - (IBAction)launchGameCenter:(id)sender;
 
 @property (nonatomic, strong) IBOutlet OKUserProfileImageView *profileImageView;

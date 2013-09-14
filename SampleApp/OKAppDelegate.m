@@ -21,7 +21,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Development branch settings
-    [OKManager configureWithAppKey:@"zRn4FrBcWi6ntUmWnEwm" secretKey:@"rjqQmuDZaO6JtLuW25XPB2D6P0jplBfmuuANCKuu" endpoint:@"http://development.openkit.io"];
+    [OKManager configureWithAppKey:@"Pjj5QTaeCqrfkuamU4r3" secretKey:@"1MSVbzdVUk4tFMuApy6MGTpTPb0MwsMaJzu201W4" endpoint:@"http://development.openkit.io"];
     
     // In a production game, you should use:
     //[OKManager configureWithAppKey:(NSString *) secretKey:(NSString *)]
@@ -64,6 +64,7 @@
 
 -(void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
+    NSLog(@"Didregister for notificatrion");
     [[OKManager sharedManager] registerToken:deviceToken];
 }
 

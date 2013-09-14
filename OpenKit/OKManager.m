@@ -40,7 +40,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
 
 
 @implementation OKManager
-@synthesize hasShownFBLoginPrompt, leaderboardListTag;
+@synthesize hasShownFBLoginPrompt, leaderboardListTag, cachedFbFriendsList;
 
 + (void)configureWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey endpoint:(NSString *)endpoint
 {

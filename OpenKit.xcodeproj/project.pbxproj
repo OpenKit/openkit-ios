@@ -37,10 +37,7 @@
 		321E99CB16D2FB6C005F1506 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */; };
 		321E99CF16D2FBA1005F1506 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 321E99CE16D2FBA1005F1506 /* ActionSheetStringPicker.m */; };
 		3222216316CBB65D006EBD1C /* OKLeaderboardsListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD02916CB65E800E8F185 /* OKLeaderboardsListViewController.xib */; };
-		3222216416CBB65D006EBD1C /* OKLeaderboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD02A16CB65E800E8F185 /* OKLeaderboardViewController.xib */; };
-		3222216516CBB65D006EBD1C /* OKNickViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD02B16CB65E800E8F185 /* OKNickViewController.xib */; };
 		3222216616CBB65D006EBD1C /* OKProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD02C16CB65E800E8F185 /* OKProfileViewController.xib */; };
-		3222216716CBB65D006EBD1C /* OKScoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD02D16CB65E800E8F185 /* OKScoreViewController.xib */; };
 		32243AF116CDD4460077EDC8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
 		32243B0216CDE3C80077EDC8 /* OKBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243AFE16CDE3C80077EDC8 /* OKBridge.m */; };
 		32243B0316CDE3C80077EDC8 /* OKUnityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */; };
@@ -62,29 +59,22 @@
 		329CB54F17C5366100D6D698 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 329CB54E17C5366100D6D698 /* FMDatabasePool.m */; };
 		32CACFD716CB637C00E8F185 /* KGModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA216CB637C00E8F185 /* KGModal.m */; };
 		32CACFD816CB637C00E8F185 /* OKBaseLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA416CB637C00E8F185 /* OKBaseLoginViewController.m */; };
-		32CACFD916CB637C00E8F185 /* OKCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA616CB637C00E8F185 /* OKCloud.m */; };
 		32CACFDA16CB637C00E8F185 /* OKManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA916CB637C00E8F185 /* OKManager.m */; };
 		32CACFDC16CB637C00E8F185 /* OKHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFAE16CB637C00E8F185 /* OKHelper.m */; };
 		32CACFDD16CB637C00E8F185 /* OKLeaderboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFB016CB637C00E8F185 /* OKLeaderboard.m */; };
 		32CACFDE16CB637C00E8F185 /* OKLeaderboardListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFB216CB637C00E8F185 /* OKLeaderboardListCell.m */; };
 		32CACFDF16CB637C00E8F185 /* OKLeaderboardsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFB416CB637C00E8F185 /* OKLeaderboardsListViewController.m */; };
 		32CACFE016CB637C00E8F185 /* OKLeaderboardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFB616CB637C00E8F185 /* OKLeaderboardsViewController.m */; };
-		32CACFE116CB637C00E8F185 /* OKLeaderboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFB816CB637C00E8F185 /* OKLeaderboardViewController.m */; };
 		32CACFE216CB637C00E8F185 /* OKLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFBA16CB637C00E8F185 /* OKLoginView.m */; };
 		32CACFE316CB637C00E8F185 /* OKNetworker.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFBD16CB637C00E8F185 /* OKNetworker.m */; };
-		32CACFE416CB637C00E8F185 /* OKNickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFBF16CB637C00E8F185 /* OKNickViewController.m */; };
 		32CACFE516CB637C00E8F185 /* OKProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFC116CB637C00E8F185 /* OKProfileViewController.m */; };
 		32CACFE616CB637C00E8F185 /* OKScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFC316CB637C00E8F185 /* OKScore.m */; };
 		32CACFE716CB637C00E8F185 /* OKScoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFC516CB637C00E8F185 /* OKScoreCell.m */; };
-		32CACFE816CB637C00E8F185 /* OKScoreViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFC716CB637C00E8F185 /* OKScoreViewCell.m */; };
-		32CACFE916CB637C00E8F185 /* OKScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFC916CB637C00E8F185 /* OKScoreViewController.m */; };
-		32CACFEA16CB637C00E8F185 /* OKTwitterUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFCB16CB637C00E8F185 /* OKTwitterUtilities.m */; };
 		32CACFEB16CB637C00E8F185 /* OKUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFCD16CB637C00E8F185 /* OKUser.m */; };
 		32CACFEC16CB637C00E8F185 /* OKUserProfileImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFCF16CB637C00E8F185 /* OKUserProfileImageView.m */; };
 		32CACFEE16CB637C00E8F185 /* SimpleKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFD416CB637C00E8F185 /* SimpleKeychain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		32CACFF116CB65B900E8F185 /* KGModal.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFA116CB637C00E8F185 /* KGModal.h */; };
 		32CACFF216CB65B900E8F185 /* OKBaseLoginViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFA316CB637C00E8F185 /* OKBaseLoginViewController.h */; };
-		32CACFF316CB65B900E8F185 /* OKCloud.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFA516CB637C00E8F185 /* OKCloud.h */; };
 		32CACFF416CB65B900E8F185 /* OKDefines.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFA716CB637C00E8F185 /* OKDefines.h */; };
 		32CACFF516CB65B900E8F185 /* OKManager.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFA816CB637C00E8F185 /* OKManager.h */; };
 		32CACFF716CB65B900E8F185 /* OKGUI.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFAC16CB637C00E8F185 /* OKGUI.h */; };
@@ -93,31 +83,21 @@
 		32CACFFA16CB65B900E8F185 /* OKLeaderboardListCell.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFB116CB637C00E8F185 /* OKLeaderboardListCell.h */; };
 		32CACFFB16CB65B900E8F185 /* OKLeaderboardsListViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFB316CB637C00E8F185 /* OKLeaderboardsListViewController.h */; };
 		32CACFFC16CB65B900E8F185 /* OKLeaderboardsViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFB516CB637C00E8F185 /* OKLeaderboardsViewController.h */; };
-		32CACFFD16CB65B900E8F185 /* OKLeaderboardViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFB716CB637C00E8F185 /* OKLeaderboardViewController.h */; };
 		32CACFFE16CB65B900E8F185 /* OKLoginView.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFB916CB637C00E8F185 /* OKLoginView.h */; };
 		32CACFFF16CB65B900E8F185 /* OKMacros.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFBB16CB637C00E8F185 /* OKMacros.h */; };
 		32CAD00016CB65B900E8F185 /* OKNetworker.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFBC16CB637C00E8F185 /* OKNetworker.h */; };
-		32CAD00116CB65B900E8F185 /* OKNickViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFBE16CB637C00E8F185 /* OKNickViewController.h */; };
 		32CAD00216CB65B900E8F185 /* OKProfileViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFC016CB637C00E8F185 /* OKProfileViewController.h */; };
 		32CAD00316CB65B900E8F185 /* OKScore.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFC216CB637C00E8F185 /* OKScore.h */; };
 		32CAD00416CB65B900E8F185 /* OKScoreCell.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFC416CB637C00E8F185 /* OKScoreCell.h */; };
-		32CAD00516CB65B900E8F185 /* OKScoreViewCell.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFC616CB637C00E8F185 /* OKScoreViewCell.h */; };
-		32CAD00616CB65B900E8F185 /* OKScoreViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFC816CB637C00E8F185 /* OKScoreViewController.h */; };
-		32CAD00716CB65B900E8F185 /* OKTwitterUtilities.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFCA16CB637C00E8F185 /* OKTwitterUtilities.h */; };
 		32CAD00816CB65B900E8F185 /* OKUser.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFCC16CB637C00E8F185 /* OKUser.h */; };
 		32CAD00916CB65B900E8F185 /* OKUserProfileImageView.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFCE16CB637C00E8F185 /* OKUserProfileImageView.h */; };
 		32CAD00B16CB65B900E8F185 /* OpenKit.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFD216CB637C00E8F185 /* OpenKit.h */; };
 		32CAD00C16CB65B900E8F185 /* SimpleKeychain.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFD316CB637C00E8F185 /* SimpleKeychain.h */; };
 		32CAD04616CB65F700E8F185 /* OKLeaderboardsListViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CAD02916CB65E800E8F185 /* OKLeaderboardsListViewController.xib */; };
-		32CAD04716CB65F700E8F185 /* OKLeaderboardViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CAD02A16CB65E800E8F185 /* OKLeaderboardViewController.xib */; };
-		32CAD04816CB65F700E8F185 /* OKNickViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CAD02B16CB65E800E8F185 /* OKNickViewController.xib */; };
 		32CAD04916CB65F700E8F185 /* OKProfileViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CAD02C16CB65E800E8F185 /* OKProfileViewController.xib */; };
-		32CAD04A16CB65F700E8F185 /* OKScoreViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CAD02D16CB65E800E8F185 /* OKScoreViewController.xib */; };
 		32CAD05116CB698C00E8F185 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05016CB698C00E8F185 /* UIKit.framework */; };
 		32CAD05216CB698C00E8F185 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
 		32CAD05416CB698C00E8F185 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05316CB698C00E8F185 /* CoreGraphics.framework */; };
-		32CAD08716CB703E00E8F185 /* CloudDataTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD06B16CB703E00E8F185 /* CloudDataTestVC.m */; };
-		32CAD08816CB703E00E8F185 /* CloudDataTestVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD06C16CB703E00E8F185 /* CloudDataTestVC.xib */; };
 		32CAD08916CB703E00E8F185 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD06D16CB703E00E8F185 /* Default-568h@2x.png */; };
 		32CAD08A16CB703E00E8F185 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD06E16CB703E00E8F185 /* Default.png */; };
 		32CAD08B16CB703E00E8F185 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD06F16CB703E00E8F185 /* Default@2x.png */; };
@@ -153,6 +133,7 @@
 		445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
 		445B3BFD1767F5DE00952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
 		445B3C001769258C00952456 /* OKGameCenterUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 445B3BFF1769258C00952456 /* OKGameCenterUtilities.m */; };
+		446A551817E3A98900081C7B /* OKChallenge.m in Sources */ = {isa = PBXBuildFile; fileRef = 446A551717E3A98900081C7B /* OKChallenge.m */; };
 		4474BCD417815C46000AEAD1 /* OKColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4474BCD317815C46000AEAD1 /* OKColors.m */; };
 		4474BCD517815CAB000AEAD1 /* OKColors.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 446BAB4D177A8F880092BD58 /* OKColors.h */; };
 		4474BCD617815E5C000AEAD1 /* OKUtils.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32880CEC176DC784005F8D30 /* OKUtils.h */; };
@@ -263,7 +244,6 @@
 				44BB68C51777E39900839D0D /* OKScoreProtocol.h in Copy Files */,
 				32CACFF116CB65B900E8F185 /* KGModal.h in Copy Files */,
 				32CACFF216CB65B900E8F185 /* OKBaseLoginViewController.h in Copy Files */,
-				32CACFF316CB65B900E8F185 /* OKCloud.h in Copy Files */,
 				32CACFF416CB65B900E8F185 /* OKDefines.h in Copy Files */,
 				32CACFF516CB65B900E8F185 /* OKManager.h in Copy Files */,
 				32CACFF716CB65B900E8F185 /* OKGUI.h in Copy Files */,
@@ -272,17 +252,12 @@
 				32CACFFA16CB65B900E8F185 /* OKLeaderboardListCell.h in Copy Files */,
 				32CACFFB16CB65B900E8F185 /* OKLeaderboardsListViewController.h in Copy Files */,
 				32CACFFC16CB65B900E8F185 /* OKLeaderboardsViewController.h in Copy Files */,
-				32CACFFD16CB65B900E8F185 /* OKLeaderboardViewController.h in Copy Files */,
 				32CACFFE16CB65B900E8F185 /* OKLoginView.h in Copy Files */,
 				32CACFFF16CB65B900E8F185 /* OKMacros.h in Copy Files */,
 				32CAD00016CB65B900E8F185 /* OKNetworker.h in Copy Files */,
-				32CAD00116CB65B900E8F185 /* OKNickViewController.h in Copy Files */,
 				32CAD00216CB65B900E8F185 /* OKProfileViewController.h in Copy Files */,
 				32CAD00316CB65B900E8F185 /* OKScore.h in Copy Files */,
 				32CAD00416CB65B900E8F185 /* OKScoreCell.h in Copy Files */,
-				32CAD00516CB65B900E8F185 /* OKScoreViewCell.h in Copy Files */,
-				32CAD00616CB65B900E8F185 /* OKScoreViewController.h in Copy Files */,
-				32CAD00716CB65B900E8F185 /* OKTwitterUtilities.h in Copy Files */,
 				32CAD00816CB65B900E8F185 /* OKUser.h in Copy Files */,
 				32CAD00916CB65B900E8F185 /* OKUserProfileImageView.h in Copy Files */,
 				32CAD00B16CB65B900E8F185 /* OpenKit.h in Copy Files */,
@@ -330,10 +305,7 @@
 				44B50D1F17713FFF00B5D8AD /* OKFBLoginCell.xib in CopyFiles */,
 				44B50D14176ED5C200B5D8AD /* OKSocialLeaderboardVC.xib in CopyFiles */,
 				32CAD04616CB65F700E8F185 /* OKLeaderboardsListViewController.xib in CopyFiles */,
-				32CAD04716CB65F700E8F185 /* OKLeaderboardViewController.xib in CopyFiles */,
-				32CAD04816CB65F700E8F185 /* OKNickViewController.xib in CopyFiles */,
 				32CAD04916CB65F700E8F185 /* OKProfileViewController.xib in CopyFiles */,
-				32CAD04A16CB65F700E8F185 /* OKScoreViewController.xib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,8 +382,6 @@
 		32CACFA216CB637C00E8F185 /* KGModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGModal.m; sourceTree = "<group>"; };
 		32CACFA316CB637C00E8F185 /* OKBaseLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKBaseLoginViewController.h; sourceTree = "<group>"; };
 		32CACFA416CB637C00E8F185 /* OKBaseLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKBaseLoginViewController.m; sourceTree = "<group>"; };
-		32CACFA516CB637C00E8F185 /* OKCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKCloud.h; sourceTree = "<group>"; };
-		32CACFA616CB637C00E8F185 /* OKCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKCloud.m; sourceTree = "<group>"; };
 		32CACFA716CB637C00E8F185 /* OKDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDefines.h; sourceTree = "<group>"; };
 		32CACFA816CB637C00E8F185 /* OKManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKManager.h; sourceTree = "<group>"; };
 		32CACFA916CB637C00E8F185 /* OKManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKManager.m; sourceTree = "<group>"; };
@@ -426,27 +396,17 @@
 		32CACFB416CB637C00E8F185 /* OKLeaderboardsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKLeaderboardsListViewController.m; sourceTree = "<group>"; };
 		32CACFB516CB637C00E8F185 /* OKLeaderboardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKLeaderboardsViewController.h; sourceTree = "<group>"; };
 		32CACFB616CB637C00E8F185 /* OKLeaderboardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKLeaderboardsViewController.m; sourceTree = "<group>"; };
-		32CACFB716CB637C00E8F185 /* OKLeaderboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKLeaderboardViewController.h; sourceTree = "<group>"; };
-		32CACFB816CB637C00E8F185 /* OKLeaderboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKLeaderboardViewController.m; sourceTree = "<group>"; };
 		32CACFB916CB637C00E8F185 /* OKLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKLoginView.h; sourceTree = "<group>"; };
 		32CACFBA16CB637C00E8F185 /* OKLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKLoginView.m; sourceTree = "<group>"; };
 		32CACFBB16CB637C00E8F185 /* OKMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKMacros.h; sourceTree = "<group>"; };
 		32CACFBC16CB637C00E8F185 /* OKNetworker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKNetworker.h; sourceTree = "<group>"; };
 		32CACFBD16CB637C00E8F185 /* OKNetworker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKNetworker.m; sourceTree = "<group>"; };
-		32CACFBE16CB637C00E8F185 /* OKNickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKNickViewController.h; sourceTree = "<group>"; };
-		32CACFBF16CB637C00E8F185 /* OKNickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKNickViewController.m; sourceTree = "<group>"; };
 		32CACFC016CB637C00E8F185 /* OKProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKProfileViewController.h; sourceTree = "<group>"; };
 		32CACFC116CB637C00E8F185 /* OKProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKProfileViewController.m; sourceTree = "<group>"; };
 		32CACFC216CB637C00E8F185 /* OKScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScore.h; sourceTree = "<group>"; };
 		32CACFC316CB637C00E8F185 /* OKScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKScore.m; sourceTree = "<group>"; };
 		32CACFC416CB637C00E8F185 /* OKScoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScoreCell.h; sourceTree = "<group>"; };
 		32CACFC516CB637C00E8F185 /* OKScoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKScoreCell.m; sourceTree = "<group>"; };
-		32CACFC616CB637C00E8F185 /* OKScoreViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScoreViewCell.h; sourceTree = "<group>"; };
-		32CACFC716CB637C00E8F185 /* OKScoreViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKScoreViewCell.m; sourceTree = "<group>"; };
-		32CACFC816CB637C00E8F185 /* OKScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScoreViewController.h; sourceTree = "<group>"; };
-		32CACFC916CB637C00E8F185 /* OKScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKScoreViewController.m; sourceTree = "<group>"; };
-		32CACFCA16CB637C00E8F185 /* OKTwitterUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKTwitterUtilities.h; sourceTree = "<group>"; };
-		32CACFCB16CB637C00E8F185 /* OKTwitterUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKTwitterUtilities.m; sourceTree = "<group>"; };
 		32CACFCC16CB637C00E8F185 /* OKUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUser.h; sourceTree = "<group>"; };
 		32CACFCD16CB637C00E8F185 /* OKUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUser.m; sourceTree = "<group>"; };
 		32CACFCE16CB637C00E8F185 /* OKUserProfileImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUserProfileImageView.h; sourceTree = "<group>"; };
@@ -455,16 +415,10 @@
 		32CACFD316CB637C00E8F185 /* SimpleKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleKeychain.h; sourceTree = "<group>"; };
 		32CACFD416CB637C00E8F185 /* SimpleKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleKeychain.m; sourceTree = "<group>"; };
 		32CAD02916CB65E800E8F185 /* OKLeaderboardsListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OKLeaderboardsListViewController.xib; sourceTree = "<group>"; };
-		32CAD02A16CB65E800E8F185 /* OKLeaderboardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OKLeaderboardViewController.xib; sourceTree = "<group>"; };
-		32CAD02B16CB65E800E8F185 /* OKNickViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OKNickViewController.xib; sourceTree = "<group>"; };
 		32CAD02C16CB65E800E8F185 /* OKProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OKProfileViewController.xib; sourceTree = "<group>"; };
-		32CAD02D16CB65E800E8F185 /* OKScoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OKScoreViewController.xib; sourceTree = "<group>"; };
 		32CAD04F16CB698C00E8F185 /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32CAD05016CB698C00E8F185 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		32CAD05316CB698C00E8F185 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		32CAD06A16CB703E00E8F185 /* CloudDataTestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudDataTestVC.h; sourceTree = "<group>"; };
-		32CAD06B16CB703E00E8F185 /* CloudDataTestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudDataTestVC.m; sourceTree = "<group>"; };
-		32CAD06C16CB703E00E8F185 /* CloudDataTestVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CloudDataTestVC.xib; sourceTree = "<group>"; };
 		32CAD06D16CB703E00E8F185 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		32CAD06E16CB703E00E8F185 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		32CAD06F16CB703E00E8F185 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -517,6 +471,8 @@
 		445B3BFB1767F5D300952456 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		445B3BFE1769258C00952456 /* OKGameCenterUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGameCenterUtilities.h; sourceTree = "<group>"; };
 		445B3BFF1769258C00952456 /* OKGameCenterUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKGameCenterUtilities.m; sourceTree = "<group>"; };
+		446A551617E3A98900081C7B /* OKChallenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKChallenge.h; sourceTree = "<group>"; };
+		446A551717E3A98900081C7B /* OKChallenge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKChallenge.m; sourceTree = "<group>"; };
 		446BAB4D177A8F880092BD58 /* OKColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKColors.h; sourceTree = "<group>"; };
 		4474BCD317815C46000AEAD1 /* OKColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKColors.m; sourceTree = "<group>"; };
 		4491D49B1728870B0084576B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
@@ -723,9 +679,6 @@
 				446BAB4A177A84850092BD58 /* TableCells */,
 				44DD160817DFEA0900D914FA /* Cache */,
 				44BC533217692DE20038043A /* Utilities */,
-				32CACFA516CB637C00E8F185 /* OKCloud.h */,
-				32CACFA616CB637C00E8F185 /* OKCloud.m */,
-				44F3CD4417CC195800D054CF /* Unused */,
 			);
 			path = OpenKit;
 			sourceTree = "<group>";
@@ -781,11 +734,8 @@
 			children = (
 				44B50D1E1771228F00B5D8AD /* OKFBLoginCell.xib */,
 				44B50D13176ED4B100B5D8AD /* OKSocialLeaderboardVC.xib */,
-				32CAD02A16CB65E800E8F185 /* OKLeaderboardViewController.xib */,
 				32CAD02916CB65E800E8F185 /* OKLeaderboardsListViewController.xib */,
-				32CAD02B16CB65E800E8F185 /* OKNickViewController.xib */,
 				32CAD02C16CB65E800E8F185 /* OKProfileViewController.xib */,
-				32CAD02D16CB65E800E8F185 /* OKScoreViewController.xib */,
 			);
 			path = Xib;
 			sourceTree = "<group>";
@@ -794,9 +744,6 @@
 			isa = PBXGroup;
 			children = (
 				32CAD14816CBA2FC00E8F185 /* SupportingFiles */,
-				32CAD06A16CB703E00E8F185 /* CloudDataTestVC.h */,
-				32CAD06B16CB703E00E8F185 /* CloudDataTestVC.m */,
-				32CAD06C16CB703E00E8F185 /* CloudDataTestVC.xib */,
 				32CAD07916CB703E00E8F185 /* KJBindingManager.h */,
 				32CAD07A16CB703E00E8F185 /* KJBindingManager.m */,
 				32CAD07C16CB703E00E8F185 /* OKAppDelegate.h */,
@@ -939,6 +886,8 @@
 				32CACFB616CB637C00E8F185 /* OKLeaderboardsViewController.m */,
 				32CACFB316CB637C00E8F185 /* OKLeaderboardsListViewController.h */,
 				32CACFB416CB637C00E8F185 /* OKLeaderboardsListViewController.m */,
+				446A551617E3A98900081C7B /* OKChallenge.h */,
+				446A551717E3A98900081C7B /* OKChallenge.m */,
 			);
 			name = "Social Leaderboard";
 			sourceTree = "<group>";
@@ -984,23 +933,6 @@
 				4455BEBD17A396DE0079859A /* OKScoreCache.m */,
 			);
 			name = Cache;
-			sourceTree = "<group>";
-		};
-		44F3CD4417CC195800D054CF /* Unused */ = {
-			isa = PBXGroup;
-			children = (
-				32CACFCA16CB637C00E8F185 /* OKTwitterUtilities.h */,
-				32CACFCB16CB637C00E8F185 /* OKTwitterUtilities.m */,
-				32CACFB716CB637C00E8F185 /* OKLeaderboardViewController.h */,
-				32CACFB816CB637C00E8F185 /* OKLeaderboardViewController.m */,
-				32CACFBE16CB637C00E8F185 /* OKNickViewController.h */,
-				32CACFBF16CB637C00E8F185 /* OKNickViewController.m */,
-				32CACFC616CB637C00E8F185 /* OKScoreViewCell.h */,
-				32CACFC716CB637C00E8F185 /* OKScoreViewCell.m */,
-				32CACFC816CB637C00E8F185 /* OKScoreViewController.h */,
-				32CACFC916CB637C00E8F185 /* OKScoreViewController.m */,
-			);
-			name = Unused;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1146,11 +1078,7 @@
 				44B50D201771401600B5D8AD /* OKFBLoginCell.xib in Resources */,
 				44B50D15176ED63100B5D8AD /* OKSocialLeaderboardVC.xib in Resources */,
 				3222216316CBB65D006EBD1C /* OKLeaderboardsListViewController.xib in Resources */,
-				3222216416CBB65D006EBD1C /* OKLeaderboardViewController.xib in Resources */,
-				3222216516CBB65D006EBD1C /* OKNickViewController.xib in Resources */,
 				3222216616CBB65D006EBD1C /* OKProfileViewController.xib in Resources */,
-				3222216716CBB65D006EBD1C /* OKScoreViewController.xib in Resources */,
-				32CAD08816CB703E00E8F185 /* CloudDataTestVC.xib in Resources */,
 				32CAD08916CB703E00E8F185 /* Default-568h@2x.png in Resources */,
 				32CAD08A16CB703E00E8F185 /* Default.png in Resources */,
 				32CAD08B16CB703E00E8F185 /* Default@2x.png in Resources */,
@@ -1202,23 +1130,17 @@
 			files = (
 				32CACFD716CB637C00E8F185 /* KGModal.m in Sources */,
 				32CACFD816CB637C00E8F185 /* OKBaseLoginViewController.m in Sources */,
-				32CACFD916CB637C00E8F185 /* OKCloud.m in Sources */,
 				32CACFDA16CB637C00E8F185 /* OKManager.m in Sources */,
 				32CACFDC16CB637C00E8F185 /* OKHelper.m in Sources */,
 				32CACFDD16CB637C00E8F185 /* OKLeaderboard.m in Sources */,
 				32CACFDE16CB637C00E8F185 /* OKLeaderboardListCell.m in Sources */,
 				32CACFDF16CB637C00E8F185 /* OKLeaderboardsListViewController.m in Sources */,
 				32CACFE016CB637C00E8F185 /* OKLeaderboardsViewController.m in Sources */,
-				32CACFE116CB637C00E8F185 /* OKLeaderboardViewController.m in Sources */,
 				32CACFE216CB637C00E8F185 /* OKLoginView.m in Sources */,
 				32CACFE316CB637C00E8F185 /* OKNetworker.m in Sources */,
-				32CACFE416CB637C00E8F185 /* OKNickViewController.m in Sources */,
 				32CACFE516CB637C00E8F185 /* OKProfileViewController.m in Sources */,
 				32CACFE616CB637C00E8F185 /* OKScore.m in Sources */,
 				32CACFE716CB637C00E8F185 /* OKScoreCell.m in Sources */,
-				32CACFE816CB637C00E8F185 /* OKScoreViewCell.m in Sources */,
-				32CACFE916CB637C00E8F185 /* OKScoreViewController.m in Sources */,
-				32CACFEA16CB637C00E8F185 /* OKTwitterUtilities.m in Sources */,
 				32CACFEB16CB637C00E8F185 /* OKUser.m in Sources */,
 				32CACFEC16CB637C00E8F185 /* OKUserProfileImageView.m in Sources */,
 				32CACFEE16CB637C00E8F185 /* SimpleKeychain.m in Sources */,
@@ -1245,6 +1167,7 @@
 				327E9E1B17CEFABA00F33F24 /* OKLocalCache.m in Sources */,
 				327E9E1C17CEFABA00F33F24 /* OKSessionDb.m in Sources */,
 				44F3004D17E2F1CD00108D05 /* OKUserUtilities.m in Sources */,
+				446A551817E3A98900081C7B /* OKChallenge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1261,7 +1184,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32CAD08716CB703E00E8F185 /* CloudDataTestVC.m in Sources */,
 				32CAD09016CB703E00E8F185 /* KJBindingManager.m in Sources */,
 				32CAD09116CB703E00E8F185 /* main.m in Sources */,
 				32CAD09216CB703E00E8F185 /* OKAppDelegate.m in Sources */,
@@ -1482,6 +1404,7 @@
 		32CAD06816CB698C00E8F185 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Louis Zell (8BBCV5P67D)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1494,6 +1417,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "B79A1472-D763-44B5-8032-502EF978E425";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1502,6 +1426,7 @@
 		32CAD06916CB698C00E8F185 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Louis Zell (8BBCV5P67D)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1514,6 +1439,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "B79A1472-D763-44B5-8032-502EF978E425";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

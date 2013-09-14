@@ -7,7 +7,6 @@
 //
 
 #import "OKLeaderboardsViewController.h"
-#import "OKLeaderboardViewController.h"
 #import "OKLeaderboardsListViewController.h"
 #import "OKHelper.h"
 #import "OKColors.h"

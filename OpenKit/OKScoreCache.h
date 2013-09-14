@@ -11,6 +11,8 @@
 
 @interface OKScoreCache : NSObject
 
+@property (nonatomic, strong) OKScore *previousSubmittedScore;
+
 + (OKScoreCache*)sharedCache;
 
 -(NSArray*)getAllCachedScores;
