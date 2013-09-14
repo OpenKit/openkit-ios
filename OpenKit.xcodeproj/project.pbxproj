@@ -59,7 +59,6 @@
 		329CB54F17C5366100D6D698 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 329CB54E17C5366100D6D698 /* FMDatabasePool.m */; };
 		32CACFD716CB637C00E8F185 /* KGModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA216CB637C00E8F185 /* KGModal.m */; };
 		32CACFD816CB637C00E8F185 /* OKBaseLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA416CB637C00E8F185 /* OKBaseLoginViewController.m */; };
-		32CACFD916CB637C00E8F185 /* OKCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA616CB637C00E8F185 /* OKCloud.m */; };
 		32CACFDA16CB637C00E8F185 /* OKManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA916CB637C00E8F185 /* OKManager.m */; };
 		32CACFDC16CB637C00E8F185 /* OKHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFAE16CB637C00E8F185 /* OKHelper.m */; };
 		32CACFDD16CB637C00E8F185 /* OKLeaderboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFB016CB637C00E8F185 /* OKLeaderboard.m */; };
@@ -76,7 +75,6 @@
 		32CACFEE16CB637C00E8F185 /* SimpleKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFD416CB637C00E8F185 /* SimpleKeychain.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		32CACFF116CB65B900E8F185 /* KGModal.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFA116CB637C00E8F185 /* KGModal.h */; };
 		32CACFF216CB65B900E8F185 /* OKBaseLoginViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFA316CB637C00E8F185 /* OKBaseLoginViewController.h */; };
-		32CACFF316CB65B900E8F185 /* OKCloud.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFA516CB637C00E8F185 /* OKCloud.h */; };
 		32CACFF416CB65B900E8F185 /* OKDefines.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFA716CB637C00E8F185 /* OKDefines.h */; };
 		32CACFF516CB65B900E8F185 /* OKManager.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFA816CB637C00E8F185 /* OKManager.h */; };
 		32CACFF716CB65B900E8F185 /* OKGUI.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFAC16CB637C00E8F185 /* OKGUI.h */; };
@@ -248,7 +246,6 @@
 				44BB68C51777E39900839D0D /* OKScoreProtocol.h in Copy Files */,
 				32CACFF116CB65B900E8F185 /* KGModal.h in Copy Files */,
 				32CACFF216CB65B900E8F185 /* OKBaseLoginViewController.h in Copy Files */,
-				32CACFF316CB65B900E8F185 /* OKCloud.h in Copy Files */,
 				32CACFF416CB65B900E8F185 /* OKDefines.h in Copy Files */,
 				32CACFF516CB65B900E8F185 /* OKManager.h in Copy Files */,
 				32CACFF716CB65B900E8F185 /* OKGUI.h in Copy Files */,
@@ -387,8 +384,6 @@
 		32CACFA216CB637C00E8F185 /* KGModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGModal.m; sourceTree = "<group>"; };
 		32CACFA316CB637C00E8F185 /* OKBaseLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKBaseLoginViewController.h; sourceTree = "<group>"; };
 		32CACFA416CB637C00E8F185 /* OKBaseLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKBaseLoginViewController.m; sourceTree = "<group>"; };
-		32CACFA516CB637C00E8F185 /* OKCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKCloud.h; sourceTree = "<group>"; };
-		32CACFA616CB637C00E8F185 /* OKCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKCloud.m; sourceTree = "<group>"; };
 		32CACFA716CB637C00E8F185 /* OKDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDefines.h; sourceTree = "<group>"; };
 		32CACFA816CB637C00E8F185 /* OKManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKManager.h; sourceTree = "<group>"; };
 		32CACFA916CB637C00E8F185 /* OKManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKManager.m; sourceTree = "<group>"; };
@@ -689,8 +684,6 @@
 				446BAB4A177A84850092BD58 /* TableCells */,
 				44DD160817DFEA0900D914FA /* Cache */,
 				44BC533217692DE20038043A /* Utilities */,
-				32CACFA516CB637C00E8F185 /* OKCloud.h */,
-				32CACFA616CB637C00E8F185 /* OKCloud.m */,
 			);
 			path = OpenKit;
 			sourceTree = "<group>";
@@ -1146,7 +1139,6 @@
 			files = (
 				32CACFD716CB637C00E8F185 /* KGModal.m in Sources */,
 				32CACFD816CB637C00E8F185 /* OKBaseLoginViewController.m in Sources */,
-				32CACFD916CB637C00E8F185 /* OKCloud.m in Sources */,
 				32CACFDA16CB637C00E8F185 /* OKManager.m in Sources */,
 				32CACFDC16CB637C00E8F185 /* OKHelper.m in Sources */,
 				32CACFDD16CB637C00E8F185 /* OKLeaderboard.m in Sources */,
