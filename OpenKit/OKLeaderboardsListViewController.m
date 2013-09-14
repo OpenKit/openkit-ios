@@ -7,7 +7,6 @@
 //
 
 #import "OKLeaderboardsListViewController.h"
-#import "OKLeaderboardViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "OKHelper.h"
 #import "OKLeaderboardListCell.h"
