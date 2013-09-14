@@ -64,6 +64,7 @@
 
 -(void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
+    NSLog(@"Didregister for notificatrion");
     [[OKManager sharedManager] registerToken:deviceToken];
 }
 
