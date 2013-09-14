@@ -164,8 +164,8 @@
          }
          completionHandler(error);
          
-         OKScore *previousScore = [[OKScoreCache sharedCache] lastScore];
-         [[OKScoreCache sharedCache] setLastScore:nil];
+         OKScore *previousScore = [[OKScoreCache sharedCache] previousSubmittedScore];
+         [[OKScoreCache sharedCache] setPreviousSubmittedScore:nil];
          
          // If there was no error, try issuing a push challenge
          if(!error) {
