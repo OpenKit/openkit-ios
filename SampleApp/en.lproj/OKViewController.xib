@@ -78,7 +78,7 @@
 						<string key="NSFrame">{{170, 98}, {130, 44}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="716925360"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -132,29 +132,6 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<int key="IBUIButtonType">1</int>
 						<string key="IBUINormalTitle">Login</string>
-						<reference key="IBUIHighlightedTitleColor" ref="21934042"/>
-						<object class="NSColor" key="IBUINormalTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
-						</object>
-						<reference key="IBUINormalTitleShadowColor" ref="474637503"/>
-						<reference key="IBUIFontDescription" ref="453142712"/>
-						<reference key="IBUIFont" ref="327679662"/>
-					</object>
-					<object class="IBUIButton" id="716925360">
-						<reference key="NSNextResponder" ref="774585933"/>
-						<int key="NSvFlags">291</int>
-						<string key="NSFrame">{{170, 149}, {130, 44}}</string>
-						<reference key="NSSuperview" ref="774585933"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="969375901"/>
-						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="IBUIOpaque">NO</bool>
-						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<int key="IBUIContentHorizontalAlignment">0</int>
-						<int key="IBUIContentVerticalAlignment">0</int>
-						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Cloud Data Test</string>
 						<reference key="IBUIHighlightedTitleColor" ref="21934042"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
@@ -248,7 +225,7 @@
 					<object class="IBUIButton" id="969375901">
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">294</int>
-						<string key="NSFrame">{{20, 200}, {129, 44}}</string>
+						<string key="NSFrame">{{170, 149}, {129, 44}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -377,15 +354,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">showCloudDataTest:</string>
-						<reference key="source" ref="716925360"/>
-						<reference key="destination" ref="372490531"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">192</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">launchGameCenter:</string>
 						<reference key="source" ref="969375901"/>
 						<reference key="destination" ref="372490531"/>
@@ -423,9 +391,8 @@
 							<reference ref="937853525"/>
 							<reference ref="340006078"/>
 							<reference ref="379544013"/>
-							<reference ref="716925360"/>
-							<reference ref="969375901"/>
 							<reference ref="441565663"/>
+							<reference ref="969375901"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -447,11 +414,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">158</int>
 						<reference key="object" ref="984608987"/>
-						<reference key="parent" ref="774585933"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">190</int>
-						<reference key="object" ref="716925360"/>
 						<reference key="parent" ref="774585933"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -487,7 +449,6 @@
 				<string key="158.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="168.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="170.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="190.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="193.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="197.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -516,7 +477,6 @@
 						<string key="launchGameCenter:">id</string>
 						<string key="loginToOpenKit:">id</string>
 						<string key="logoutOfOpenKit:">id</string>
-						<string key="showCloudDataTest:">id</string>
 						<string key="submitScore:">id</string>
 						<string key="viewLeaderboards:">id</string>
 					</dictionary>
@@ -531,10 +491,6 @@
 						</object>
 						<object class="IBActionInfo" key="logoutOfOpenKit:">
 							<string key="name">logoutOfOpenKit:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="showCloudDataTest:">
-							<string key="name">showCloudDataTest:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="submitScore:">

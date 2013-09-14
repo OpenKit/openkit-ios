@@ -9,7 +9,6 @@
 
 #import "OKViewController.h"
 #import "ScoreSubmitterVC.h"
-#import "CloudDataTestVC.h"
 #import "OKFacebookUtilities.h"
 #import "OKFacebookUtilities.h"
 
@@ -100,11 +99,7 @@
     [self presentViewController:scoreSubmitter animated:YES completion:nil];
 }
 
-- (IBAction)showCloudDataTest:(id)sender
-{
-    CloudDataTestVC *vc = [[CloudDataTestVC alloc] initWithNibName:@"CloudDataTestVC" bundle:nil];
-    [[self navigationController] pushViewController:vc animated:YES];
-}
+
 
 
 - (void)didReceiveMemoryWarning
