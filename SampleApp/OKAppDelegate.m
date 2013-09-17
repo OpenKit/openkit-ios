@@ -24,8 +24,7 @@
     NSString *myAppKey = @"BspfxiqMuYxNEotLeGLm";
     NSString *mySecretKey = @"2sHQOuqgwzocUdiTsTWzyQlOy1paswYLGjrdRWWf";
     
-    // Development branch settings! In your game you would use [OKManager configureWithAppKey: secretKey:];
-    [OKManager configureWithAppKey:myAppKey secretKey:mySecretKey endpoint:@"http://development.openkit.io"];
+    [OKManager configureWithAppKey:myAppKey secretKey:mySecretKey];
     
     // Set the leaderboard list tag. By default, client asks
     // for tag = "v1". In the OpenKit dashboard, new leaderboards
