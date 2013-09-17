@@ -31,12 +31,8 @@
 		2C41B82117BFE57A005F239B /* include_gc_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C41B81917BFE56D005F239B /* include_gc_on@2x.png */; };
 		2C74324F17E282FF0014958C /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C74324B17E282FF0014958C /* Icon-72.png */; };
 		2C74325017E282FF0014958C /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C74324C17E282FF0014958C /* Icon-72@2x.png */; };
-		2C74325117E282FF0014958C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C74324D17E282FF0014958C /* Icon.png */; };
 		2C74325217E282FF0014958C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C74324E17E282FF0014958C /* Icon@2x.png */; };
 		2C74325717E284BE0014958C /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C74325317E284BE0014958C /* Default-Landscape@2x.png */; };
-		2C74325817E284BE0014958C /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C74325417E284BE0014958C /* Default-Landscape.png */; };
-		2C74325917E284BE0014958C /* Default-Portrait@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C74325517E284BE0014958C /* Default-Portrait@2x.png */; };
-		2C74325A17E284BE0014958C /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C74325617E284BE0014958C /* Default-Portrait.png */; };
 		2CD025EF17A8A29E001ECD84 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD025EC17A8A1A7001ECD84 /* MessageUI.framework */; };
 		321E99CB16D2FB6C005F1506 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 321E99C816D2FB6C005F1506 /* AbstractActionSheetPicker.m */; };
 		321E99CF16D2FBA1005F1506 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 321E99CE16D2FBA1005F1506 /* ActionSheetStringPicker.m */; };
@@ -1026,7 +1022,7 @@
 		326FD0C316CB6209004248F9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = OpenKit;
 			};
 			buildConfigurationList = 326FD0C616CB6209004248F9 /* Build configuration list for PBXProject "OpenKit" */;
@@ -1359,7 +1355,6 @@
 		3284E15716CE49AB00624827 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1387,7 +1382,6 @@
 		3284E15816CE49AB00624827 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";

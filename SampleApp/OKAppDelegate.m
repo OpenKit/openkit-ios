@@ -20,8 +20,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Development branch settings
-    [OKManager configureWithAppKey:@"BspfxiqMuYxNEotLeGLm" secretKey:@"2sHQOuqgwzocUdiTsTWzyQlOy1paswYLGjrdRWWf" endpoint:@"http://api.openkit.io"];
+    // Development branch settings!
+    NSString *myAppKey = @"zRn4FrBcWi6ntUmWnEwm";
+    NSString *mySecretKey = @"rjqQmuDZaO6JtLuW25XPB2D6P0jplBfmuuANCKuu";
+    
+    [OKManager configureWithAppKey:myAppKey secretKey:mySecretKey endpoint:@"http://development.openkit.io"];
     
     // In a production game, you should use:
     //[OKManager configureWithAppKey:(NSString *) secretKey:(NSString *)]
@@ -34,8 +37,7 @@
     // will only display one tag.
     [[OKManager sharedManager] setLeaderboardListTag:@"v1"];
 
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];   // | UIRemoteNotificationTypeBadge |
-
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];  
     if (launchOptions != nil && [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil) {
 		NSDictionary* dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         [self handlePushDictionary:dictionary];
