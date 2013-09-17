@@ -12,11 +12,11 @@
 
 @interface OKColors : NSObject
 
-+(UIColor*)navbarTextColor;
-+(UIColor*)navbarTintColor;
-+(NSDictionary*)titleTextAttributesForNavBarButton;
-+(UIColor*)playerTopScoreBGColor;
-+(UIColor*)scoreCellBGColor;
+//+(UIColor*)navbarTextColor;
+//+(UIColor*)navbarTintColor;
+//+(NSDictionary*)titleTextAttributesForNavBarButton;
+//+(UIColor*)playerTopScoreBGColor;
+//+(UIColor*)scoreCellBGColor;
 
 @end
 

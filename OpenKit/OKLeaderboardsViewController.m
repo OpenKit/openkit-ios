@@ -30,14 +30,14 @@
     self = [super initWithRootViewController:list];
     if (self) {
         self.modalPresentationStyle = UIModalPresentationFormSheet;
-        [[self navigationBar] setBarStyle:UIBarStyleBlack];
-        [[self navigationBar] setTintColor:[OKColors navbarTintColor]];
-        [[self navigationBar] setTitleTextAttributes:
-         [NSDictionary dictionaryWithObjectsAndKeys:
-          [OKColors navbarTextColor], UITextAttributeTextColor,
-          [UIColor whiteColor], UITextAttributeTextShadowColor,
-          [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
-          nil]];
+//        [[self navigationBar] setBarStyle:UIBarStyleBlack];
+//        [[self navigationBar] setTintColor:[OKColors navbarTintColor]];
+//        [[self navigationBar] setTitleTextAttributes:
+//         [NSDictionary dictionaryWithObjectsAndKeys:
+//          [OKColors navbarTextColor], UITextAttributeTextColor,
+//          [UIColor whiteColor], UITextAttributeTextShadowColor,
+//          [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
+//          nil]];
     }
     return self;
 }
