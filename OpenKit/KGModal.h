@@ -16,7 +16,6 @@ NS_ENUM(NSUInteger, KGModalBackgroundDisplayStyle){
 
 @interface KGModal : NSObject
 
-//TODO remove this
 //Create a delegate so that our BaseViewController gets retained
 @property (nonatomic, strong) UIViewController *delegate;
 

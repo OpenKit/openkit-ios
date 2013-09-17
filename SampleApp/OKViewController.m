@@ -5,14 +5,17 @@
 //  Created by Suneet Shah on 12/26/12.
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
+#import "OKScoreCache.h"
 
 #import "OKViewController.h"
 #import "ScoreSubmitterVC.h"
-#import "CloudDataTestVC.h"
-
+#import "OKFacebookUtilities.h"
+#import "OKFacebookUtilities.h"
 
 
 @implementation OKViewController
+
+@synthesize profileImageView;
 
 
 - (id)init
@@ -29,7 +32,7 @@
         [self.loginButton setHidden:YES];
         [self.logoutButton setHidden:NO];
         
-        [self.profileImageView setUser:[OKUser currentUser]];
+        [profileImageView setUser:[OKUser currentUser]];
         [self.userNickLabel setHidden:NO];
         [self.userNickLabel setText:[NSString stringWithFormat:@"%@", [[OKUser currentUser] userNick] ]];
     } else {
@@ -39,6 +42,20 @@
         [self.userNickLabel setHidden:YES];
         
     }
+}
+
+-(IBAction)launchGameCenter:(id)sender
+{
+    GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
+    if (gameCenterController != nil) {
+        gameCenterController.gameCenterDelegate = self;
+        [self presentViewController: gameCenterController animated: YES completion:nil];
+    }
+}
+
+- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -54,8 +71,6 @@
     [loginView showWithCompletionHandler:^{
         [self updateUIforOKUser];
     }];
-    
-    
 }
 
 
@@ -65,25 +80,26 @@
     [self updateUIforOKUser];
 }
 
-
 -(IBAction)viewLeaderboards:(id)sender
 {
     OKLeaderboardsViewController *leaderBoards = [[OKLeaderboardsViewController alloc] init];
-    [self presentModalViewController:leaderBoards animated:YES];
+    // Set the showLandscapeOnly property on OKLeaderboardsViewController to force landscape orientation
+    //[leaderBoards setShowLandscapeOnly:YES];
+    
+    // If you want to show a specific leaderboard, use the following method
+    //OKLeaderboardsViewController *leaderBoards = [[OKLeaderboardsViewController alloc] initWithDefaultLeaderboardID:25];
+    
+    [self presentViewController:leaderBoards animated:YES completion:nil];
 }
 
 -(IBAction)submitScore:(id)sender
 {
     ScoreSubmitterVC *scoreSubmitter = [[ScoreSubmitterVC alloc] initWithNibName:@"ScoreSubmitterVC" bundle:nil];
-    [self presentModalViewController:scoreSubmitter animated:YES];
+    scoreSubmitter.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentViewController:scoreSubmitter animated:YES completion:nil];
 }
 
 
-- (IBAction)showCloudDataTest:(id)sender
-{
-    CloudDataTestVC *vc = [[CloudDataTestVC alloc] initWithNibName:@"CloudDataTestVC" bundle:nil];
-    [[self navigationController] pushViewController:vc animated:YES];
-}
 
 
 - (void)didReceiveMemoryWarning

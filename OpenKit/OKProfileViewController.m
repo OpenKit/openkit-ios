@@ -9,6 +9,7 @@
 #import "OKProfileViewController.h"
 #import "OKUserProfileImageView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "OKFacebookUtilities.h"
 
 
 @interface OKProfileViewController ()
@@ -30,27 +31,34 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
   
-    // Apply 4 pixel border and rounded corners to profile pic
-    self.profilePic.layer.masksToBounds = YES;
-    self.profilePic.layer.cornerRadius = 30.0;
-    //[self.profilePic.layer setBorderColor: [[UIColor whiteColor] CGColor]];
-    //[self.profilePic.layer setBorderWidth: 4.0];
-    
-    [profilePic setUser:[OKUser currentUser]];
+    [[self navigationItem] setTitle:@"Settings"];
   
-    // Custom More Button
-    UIImage *moreBG = [[UIImage imageNamed:@"grayBtn.png"] stretchableImageWithLeftCapWidth:6 topCapHeight:0];
-    [self.unlinkBtn setBackgroundImage:moreBG forState:UIControlStateNormal];
-    [self.unlinkBtn setTitleColor:[UIColor colorWithRed:60.0f / 255.0f green:60.0f / 255.0f blue:60.0f / 255.0f alpha:1.0f] forState:UIControlStateNormal];
-    [self.unlinkBtn setTitleShadowColor:[UIColor colorWithRed:255.0f / 255.0f green:255.0f / 255.0f blue:255.0f / 255.0f alpha:1.0f] forState:UIControlStateNormal];
-    
-    [nameLabel setText:[[OKUser currentUser] userNick]];
+    [self updateUI];
+}
+
+
+-(void)updateUI
+{
+    // If there is an OKUser and an Active Facebook Session, show the logout button
+    if([OKFacebookUtilities isFBSessionOpen] && [OKUser currentUser]){
+        [self.unlinkBtn setTitle: @"Disconnect Facebook" forState: UIControlStateNormal];
+    } else {
+        [self.unlinkBtn setTitle: @"Connect Facebook" forState: UIControlStateNormal];
+    }
 }
 
 
 -(IBAction)logoutButtonPressed:(id)sender
 {
-    [OKUser logoutCurrentUserFromOpenKit];
+    if([OKFacebookUtilities isFBSessionOpen] && [OKUser currentUser]) {
+        [[FBSession activeSession] closeAndClearTokenInformation];
+    } else {
+        [OKFacebookUtilities AuthorizeUserWithFacebookWithCompletionHandler:^(OKUser *user, NSError *error) {
+            [self updateUI];
+            [[self navigationController] popViewControllerAnimated:YES];
+        }];
+    }
+    [self updateUI];
 }
 
 - (void)didReceiveMemoryWarning

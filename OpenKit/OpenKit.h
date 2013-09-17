@@ -13,5 +13,4 @@
 #import "OKScore.h"
 #import "OKUser.h"
 #import "OKLeaderboard.h"
-#import "OKCloud.h"
 #import "OKGUI.h"

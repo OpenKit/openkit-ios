@@ -7,13 +7,14 @@
 //
 
 #import "OKLeaderboardsListViewController.h"
-#import "OKLeaderboardViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "OKHelper.h"
 #import "OKLeaderboardListCell.h"
 #import "OKProfileViewController.h"
 #import "OKLoginView.h"
 #import "OKMacros.h"
+#import "OKSocialLeaderboardViewController.h"
+#import "OKColors.h"
 
 
 @interface OKLeaderboardsListViewController ()
@@ -21,29 +22,38 @@
 @property (nonatomic, strong) NSArray *OKLeaderBoardsList;
 @property (weak, nonatomic) IBOutlet UITableView *_tableView;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
+@property (nonatomic) int defaultLeaderboardID;
 
 @end
 
 @implementation OKLeaderboardsListViewController
 
-@synthesize OKLeaderBoardsList, _tableView, spinner;
+@synthesize OKLeaderBoardsList, _tableView, spinner, defaultLeaderboardID;
 
-- (id)init
+- (id)init {
+    return [self initWithDefaultLeaderboardID:0];
+}
+
+-(id)initWithDefaultLeaderboardID:(int)leaderboardID
 {
     self = [super initWithNibName:@"OKLeaderboardsListViewController" bundle:nil];
     if (self) {
-        UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
-        
-        UIBarButtonItem *profileButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"profile.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showProfileView)];
+        self.defaultLeaderboardID = leaderboardID;
+//        
+//        UIBarButtonItem *profileButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"gear.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showProfileView)];
+
+        UIBarButtonItem *profileButton = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(showProfileView)];
       
-        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
-        
-        [[self navigationItem] setLeftBarButtonItem:closeButton];
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+        //[backButton setTitleTextAttributes:[OKColors titleTextAttributesForNavBarButton] forState:UIControlStateNormal];
+      
+//        UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close"] style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
+      
+        [[self navigationItem] setLeftBarButtonItem:backButton];
         [[self navigationItem] setRightBarButtonItem:profileButton];
         [[self navigationItem] setBackBarButtonItem:backButton];
-
     }
-    return self;
+    return self;    
 }
 
 - (void)viewDidLoad
@@ -53,18 +63,17 @@
   
     [[self navigationItem] setTitle:@"Leaderboards"];
   
-    [self getListOfLeaderboards];
-    
-    if(![OKUser currentUser])
-    {
-        OKLoginView *loginView = [[OKLoginView alloc] init];
-        [loginView show];
+    if(defaultLeaderboardID) {
+        OKSocialLeaderboardViewController *vc = [[OKSocialLeaderboardViewController alloc] initWithLeaderboardID:defaultLeaderboardID];
+        [[self navigationController] pushViewController:vc animated:YES];
     }
+    [self getListOfLeaderboards];
 }
 
 - (IBAction)back
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    // Have to call dismiss on presentingViewController otherwise the presenting view controller won't get the dismissViewController message, and we need the presenting view controller to get this message in OKBridgeBaseViewController
+    [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)showProfileView
@@ -108,6 +117,8 @@
     if(cell == nil)
         cell = [[OKLeaderboardListCell alloc] init];
 
+    //[cell setBackgroundColor:[UIColor whiteColor]];
+  
     [cell setLeaderboard:[OKLeaderBoardsList objectAtIndex:row]];
     return cell;
 }
@@ -115,19 +126,20 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     OKLeaderboard *selectedLeaderboard = [OKLeaderBoardsList objectAtIndex:[indexPath row]];
-    OKLeaderboardViewController *vc = [[OKLeaderboardViewController alloc] initWithLeaderboard:selectedLeaderboard];
+    //OKLeaderboardViewController *vc = [[OKLeaderboardViewController alloc] initWithLeaderboard:selectedLeaderboard];
+    
+     OKSocialLeaderboardViewController *vc = [[OKSocialLeaderboardViewController alloc] initWithLeaderboard:selectedLeaderboard];
     [[self navigationController] pushViewController:vc animated:YES];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [NSString stringWithFormat:@"%d Players",playerCount];
+    return [NSString stringWithFormat:@"%d Leaderboards",[OKLeaderBoardsList count]];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-  
-  return @"Powered by OpenKit";
-  
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+    return @"Powered by OpenKit";
 }
 
 //RootViewController.m

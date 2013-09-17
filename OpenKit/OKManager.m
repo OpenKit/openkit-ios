@@ -11,12 +11,19 @@
 #import "OKUser.h"
 #import "OKUserUtilities.h"
 #import "OKFacebookUtilities.h"
-#import "OKTwitterUtilities.h"
 #import "SimpleKeychain.h"
 #import "OKDefines.h"
+#import "OKUserProfileImageView.h"
+#import "OKLeaderboardsViewController.h"
+#import "OKScoreCache.h"
+#import "OKLocalCache.h"
+#import "OKSessionDb.h"
+#import "OKMacros.h"
 
-#define DEFAULT_ENDPOINT    @"stage.openkit.io"
+#define OK_DEFAULT_ENDPOINT    @"http://api.openkit.io"
+#define OK_OPENKIT_SDK_VERSION = @"0.9.8.7";
 
+static NSString *OK_USER_KEY = @"OKUserInfo";
 
 @interface OKManager ()
 {
@@ -24,12 +31,38 @@
 }
 
 @property (nonatomic, strong) NSString *appKey;
+@property (nonatomic, strong) NSString *secretKey;
 @property (nonatomic, strong) NSString *endpoint;
 
+- (void)startSession;
 @end
 
 
 @implementation OKManager
+@synthesize hasShownFBLoginPrompt, leaderboardListTag, cachedFbFriendsList;
+
++ (void)configureWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey endpoint:(NSString *)endpoint
+{
+    NSParameterAssert(appKey);
+    NSParameterAssert(secretKey);
+    OKManager *manager = [OKManager sharedManager];
+    manager.appKey = appKey;
+    manager.secretKey = secretKey;
+    if(endpoint != nil) {
+        manager.endpoint = endpoint;
+    } else {
+        manager.endpoint = OK_DEFAULT_ENDPOINT;
+    }
+    
+    [manager startSession];
+    
+    OKLog(@"OpenKit configured with endpoint: %@", [[OKManager sharedManager] endpoint]);
+}
+
++ (void)configureWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey
+{
+    [OKManager configureWithAppKey:appKey secretKey:secretKey endpoint:nil];
+}
 
 + (id)sharedManager
 {
@@ -45,24 +78,36 @@
 {
     self = [super init];
     if (self) {
-        [self getSavedUserFromKeychain];
-        _endpoint = DEFAULT_ENDPOINT;
+        _endpoint = OK_DEFAULT_ENDPOINT;
 
-        // This tripped me up for way to long.
+        // These two lines below are required for the linker to work properly such that these classes are available in XIB files
         [FBProfilePictureView class];
+        [OKUserProfileImageView class];
+        
         [OKFacebookUtilities OpenCachedFBSessionWithoutLoginUI];
+
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self selector:@selector(willShowDashboard:) name:OKLeaderboardsViewWillAppear object:nil];
+        [nc addObserver:self selector:@selector(didShowDashboard:)  name:OKLeaderboardsViewDidAppear object:nil];
+        [nc addObserver:self selector:@selector(willHideDashboard:) name:OKLeaderboardsViewWillDisappear object:nil];
+        [nc addObserver:self selector:@selector(didHideDashboard:)  name:OKLeaderboardsViewDidDisappear object:nil];
+        
+        [self getSavedUserFromNSUserDefaults];
     }
     return self;
 }
 
-- (OKUser*)currentUser
+- (void)dealloc
 {
-    return _currentUser;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    // Do not call super here.  Using arc.
 }
 
-+ (void)setAppKey:(NSString *)appKey
+- (OKUser*)currentUser
 {
-    [[OKManager sharedManager] setAppKey:appKey];
+    @synchronized(self) {
+        return _currentUser;
+    }
 }
 
 + (NSString *)appKey
@@ -70,56 +115,76 @@
     return [[OKManager sharedManager] appKey];
 }
 
-+ (void)setEndpoint:(NSString *)endpoint;
-{
-    [[OKManager sharedManager] setEndpoint:endpoint];
-}
-
 + (NSString *)endpoint
 {
     return [[OKManager sharedManager] endpoint];
+}
+
++ (NSString *)secretKey
+{
+    return [[OKManager sharedManager] secretKey];
 }
 
 - (void)logoutCurrentUser
 {
     NSLog(@"Logged out of openkit");
     _currentUser = nil;
-    [self removeCachedUserFromKeychain];
+    [self removeCachedUserFromNSUserDefaults];
     //Log out and clear Facebook
     [FBSession.activeSession closeAndClearTokenInformation];
+    
+    [[OKScoreCache sharedCache] clearCachedSubmittedScores];
 }
 
 - (void)saveCurrentUser:(OKUser *)aCurrentUser
 {
     self->_currentUser = aCurrentUser;
-    [self removeCachedUserFromKeychain];
-    [self saveCurrentUserToKeychain];
+    [self removeCachedUserFromNSUserDefaults];
+    [self saveCurrentUserToNSUserDefaults];
+    [[OKScoreCache sharedCache] submitAllCachedScores];
 }
 
-- (void)saveCurrentUserToKeychain
+-(void)getSavedUserFromNSUserDefaults
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *archivedUserDict = [defaults objectForKey:OK_USER_KEY];
+    
+    if(archivedUserDict != nil) {
+        if(![archivedUserDict isKindOfClass:[NSData class]]) {
+            OKLog(@"OKUser cache is busted, clearing cache");
+            [self removeCachedUserFromNSUserDefaults];
+        } else {
+            NSDictionary *userDictionary = [NSKeyedUnarchiver unarchiveObjectWithData:archivedUserDict];
+            OKUser *cachedUser = [OKUserUtilities createOKUserWithJSONData:userDictionary];
+            _currentUser = cachedUser;
+            OKLog(@"Found  cached OKUser id: %@ from defaults", [cachedUser OKUserID]);
+            
+            if(_currentUser == nil) {
+                OKLog(@"OKUser cache is busted, clearing cache");
+                [self removeCachedUserFromNSUserDefaults];
+            }
+        }
+    } else {
+        OKLog(@"Did not find cached OKUser");
+        [self getSavedUserFromKeychainAndMoveToNSUserDefaults];
+    }
+}
+
+-(void)saveCurrentUserToNSUserDefaults
 {
     NSDictionary *userDict = [OKUserUtilities getJSONRepresentationOfUser:[OKUser currentUser]];
-    [SimpleKeychain store:[NSKeyedArchiver archivedDataWithRootObject:userDict]];
+    NSData *archivedUserDict = [NSKeyedArchiver archivedDataWithRootObject:userDict];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:archivedUserDict forKey:OK_USER_KEY];
+    [defaults synchronize];
 }
 
-- (void)getSavedUserFromKeychain
+-(void)removeCachedUserFromNSUserDefaults
 {
-    NSDictionary *userDict;
-    NSData *keychainData = [SimpleKeychain retrieve];
-    if(keychainData != nil) {
-        userDict = [[NSKeyedUnarchiver unarchiveObjectWithData:keychainData] copy];
-        NSLog(@"Found  cached OKUser");
-        OKUser *cachedUser = [OKUserUtilities createOKUserWithJSONData:userDict];
-        _currentUser = cachedUser;
-    }
-    else {
-        NSLog(@"Did not find cached OKUser");
-    }
-}
-
-- (void)removeCachedUserFromKeychain
-{
-    [SimpleKeychain clear];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:OK_USER_KEY];
+    [defaults synchronize];
 }
 
 + (BOOL)handleOpenURL:(NSURL*)url
@@ -130,6 +195,7 @@
 + (void)handleDidBecomeActive
 {
     [OKFacebookUtilities handleDidBecomeActive];
+    [[OKManager sharedManager] submitCachedScoresAfterDelay];
 }
 
 + (void)handleWillTerminate
@@ -137,5 +203,97 @@
     [OKFacebookUtilities handleWillTerminate];
 }
 
+- (void)registerToken:(NSData *)deviceToken
+{
+    const unsigned *tokenBytes = [deviceToken bytes];
+    NSString *hexToken = [NSString stringWithFormat:@"%08x%08x%08x%08x%08x%08x%08x%08x",
+                          ntohl(tokenBytes[0]), ntohl(tokenBytes[1]), ntohl(tokenBytes[2]),
+                          ntohl(tokenBytes[3]), ntohl(tokenBytes[4]), ntohl(tokenBytes[5]),
+                          ntohl(tokenBytes[6]), ntohl(tokenBytes[7])];
+
+    OKLogInfo(@"cache queue is %s", dispatch_queue_get_label(OK_CACHE_QUEUE()));
+    dispatch_async(OK_CACHE_QUEUE(), ^{
+        [[OKSessionDb db] registerPush:hexToken];
+    });
+}
+
+#pragma mark - Dashboard Display State Callbacks
+- (void)willShowDashboard:(NSNotification *)note
+{
+    if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerWillShowDashboard:)]) {
+        [_delegate openkitManagerWillShowDashboard:self];
+    }
+}
+
+- (void)didShowDashboard:(NSNotification *)note
+{
+    if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerDidShowDashboard:)]) {
+        [_delegate openkitManagerDidShowDashboard:self];
+    }
+}
+
+- (void)willHideDashboard:(NSNotification *)note
+{
+    if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerWillHideDashboard:)]) {
+        [_delegate openkitManagerWillHideDashboard:self];
+    }
+}
+
+- (void)didHideDashboard:(NSNotification *)note
+{
+    if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerDidHideDashboard:)]) {
+        [_delegate openkitManagerDidHideDashboard:self];
+    }
+}
+
+// This method is used to migrate the OKUser cache from keychain
+// to NSUserDefaults
+// It clears out any saved data in Keychain and moves the cached OKUserID
+// to NSUserDefaults
+//
+
+- (void)getSavedUserFromKeychainAndMoveToNSUserDefaults
+{
+    NSDictionary *userDict;
+    NSData *keychainData = [SimpleKeychain retrieve];
+    if(keychainData != nil) {
+        userDict = [[NSKeyedUnarchiver unarchiveObjectWithData:keychainData] copy];
+        OKLog(@"Found  cached OKUser from keychain, moving to NSUserDefaults");
+        OKUser *old_cached_User = [OKUserUtilities createOKUserWithJSONData:userDict];
+        
+        // Clear the old cache
+        [SimpleKeychain clear];
+        OKLog(@"Cleared old OKUser cache");
+        
+        // getSavedUserFromKeychainAndMoveToNSUserDefaults gets called during app launch
+        // and saveCurrentUserToNSUserDefaults makes a  call to [NSUserDefaults synchronize] which
+        // can cause a lock during app launch, so we need to perform it on a bg thread
+        if(old_cached_User != nil) {
+            _currentUser = old_cached_User;
+            OKLog(@"Saving user to new cache in background");
+            [self performSelectorInBackground:@selector(saveCurrentUserToNSUserDefaults) withObject:nil];
+        }
+    }
+}
+
+#pragma mark - Private
+- (void)startSession
+{
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (100.0f * NSEC_PER_MSEC));
+    dispatch_after(delay, OK_CACHE_QUEUE(), ^{
+        [[OKSessionDb db] activate];
+    });
+    
+    [self submitCachedScoresAfterDelay];
+}
+
+-(void)submitCachedScoresAfterDelay
+{
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [[OKScoreCache sharedCache] submitAllCachedScores];
+    });
+}
 
 @end

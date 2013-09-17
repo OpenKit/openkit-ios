@@ -9,18 +9,25 @@
 #import "OKUserProfileImageView.h"
 #import "OKTwitterUtilities.h"
 #import "AFImageView.h"
-
+#import "OKGameCenterUtilities.h"
+#import "OKScore.h"
+#import "OKGKScoreWrapper.h"
+#import "OKMacros.h"
 
 @interface OKUserProfileImageView ()
 
 @property (nonatomic, strong) FBProfilePictureView *fbProfileImageView;
 @property (nonatomic, strong) AFImageView *imageView;
 
+
 @end
 
 
 @implementation OKUserProfileImageView
 
++(UIImage*)placeHolderImage{
+    return [UIImage imageNamed:@"user_icon.png"];
+}
 
 #pragma mark - Init
 - (id)init
@@ -69,25 +76,66 @@
     [self.imageView setFrame:frame];
 }
 
+-(void)setOKScoreProtocolScore:(id<OKScoreProtocol>)aScore
+{
+    if([aScore isKindOfClass:[OKScore class]]) {
+        OKScore *okscore = (OKScore*)aScore;
+        [self setUser:[okscore user]];
+    } else if ([aScore isKindOfClass:[OKGKScoreWrapper class]]) {
+        OKGKScoreWrapper *wrapper = (OKGKScoreWrapper*)aScore;
+        [self setGKPlayer:[wrapper player]];
+    } else {
+        [self setUser:nil];
+        OKLog(@"Unknown object type for OKScoreProtocol");
+    }
+}
+
 #pragma mark - Custom Setters
 - (void)setUser:(OKUser *)aUser
 {
     // Use the built in FB placeholder for nil user.
-    if (!aUser || ([aUser fbUserID] != nil)) {
+    //Clear out the FbProfileImageView
+    [self.fbProfileImageView setProfileID:nil];
+    
+    if(!aUser) {
+        [self.fbProfileImageView setHidden:YES];
+        [self.imageView setHidden:NO];
+        [self.imageView setImage:[OKUserProfileImageView placeHolderImage]];
+    }
+    else if([aUser fbUserID] != nil) {
         [self.fbProfileImageView setHidden:NO];
         [self.imageView setHidden:YES];
-        [self.fbProfileImageView setProfileID:[aUser.fbUserID stringValue]];
+        [self.fbProfileImageView setProfileID:aUser.fbUserID];
     }
-    else if([aUser twitterUserID]) {
-        //TODO Displaying twitter images is not yet implemented
+    //else if ([aUser gameCenterID]) {
+    //    [self loadGameCenterImageForGameCenterID:[aUser gameCenterID]];
+    //}
+    else {
         [self.fbProfileImageView setProfileID:nil];
-        //[self.fbProfileImageView setHidden:YES];
-        //[self.imageView setHidden:NO];
-        //TODO Twitter profile image
-        //[OKTwitterUtilities GetProfileImageURLFromTwitterUserID:[aUser.twitterUserID stringValue]];
     }
     _user = aUser;
 }
+
+-(void)setGKPlayer:(GKPlayer*)player {
+    [self loadGameCenterImageForGameCenterID:[player playerID]];
+}
+
+-(void)loadGameCenterImageForGameCenterID:(NSString *)gameCenterID {
+    [self.fbProfileImageView setHidden:YES];
+    [self.imageView setHidden:NO];
+    [self.imageView setImage:[OKUserProfileImageView placeHolderImage]];
+
+    
+    [OKGameCenterUtilities loadPlayerPhotoForGameCenterID:gameCenterID withPhotoSize:GKPhotoSizeSmall withCompletionHandler:^(UIImage *photo, NSError *error) {
+        
+        if(photo != nil) {
+            [self.imageView setImage:photo];
+        }
+    }];
+}
+
+
+
 
 - (void)setImage:(UIImage *)aImage
 {

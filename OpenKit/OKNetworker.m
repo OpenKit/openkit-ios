@@ -1,72 +1,85 @@
-//
-//  OKNetworker.m
-//  OKNetworker
-//
-//  Created by Manuel Martinez-Almeida on 9/2/13.
+//  Created by Manuel Martinez-Almeida and Lou Zell
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
+
+#define USE_JSONKIT  1
+
 
 #import "OKNetworker.h"
 #import "OKManager.h"
 #import "AFNetworking.h"
+#import "AFOAuth1Client.h"
+#import "OKUtils.h"
+#import "OKMacros.h"
 
 
-static AFHTTPClient* _httpClient = nil;
+
+static AFOAuth1Client *_httpClient = nil;
+static NSString *OK_SERVER_API_VERSION = @"v1";
+
 
 @implementation OKNetworker
 
-+ (AFHTTPClient*) httpClient
+
++ (AFOAuth1Client *)httpClient
 {
     if(!_httpClient) {
-        _httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[OKManager endpoint]]];
-        [_httpClient setParameterEncoding:AFJSONParameterEncoding];
-        [_httpClient registerHTTPOperationClass:[AFJSONRequestOperation class]];
+        NSURL *baseEndpointURL = [NSURL URLWithString:[OKManager endpoint]];
+        NSURL *endpointUrl = [NSURL URLWithString:OK_SERVER_API_VERSION relativeToURL:baseEndpointURL];
+        NSString *endpointString = [endpointUrl absoluteString];
         
-        // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
+        OKLog(@"Initializing AFOauth1Client with endpoint: %@",endpointString);
+        _httpClient = [[AFOAuth1Client alloc] initWithBaseURL:[NSURL URLWithString:endpointString]
+                                                          key:[OKManager appKey]
+                                                       secret:[OKManager secretKey]];
+        [_httpClient setParameterEncoding:AFJSONParameterEncoding];
         [_httpClient setDefaultHeader:@"Accept" value:@"application/json"];
-        [_httpClient setDefaultHeader:@"Content-Type" value:@"application/json"];
     }
     return _httpClient;
 }
 
-
-+ (NSMutableDictionary*) mergeParams:(NSDictionary*)d
-{
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:d];
-    if(![dict objectForKey:@"app_key"])
-        [dict setValue:[OKManager appKey] forKey:@"app_key"];
-    
-    return dict;
++(int)getStatusCodeFromAFNetworkingError:(NSError*)error {
+    if([[error userInfo] objectForKey:AFNetworkingOperationFailingURLResponseErrorKey]) {
+        return [[[error userInfo] objectForKey:AFNetworkingOperationFailingURLResponseErrorKey] statusCode];
+    } else {
+        return 0;
+    }
 }
 
-
-+ (void) requestWithMethod:(NSString*)method
-                      path:(NSString*)path
-                parameters:(NSDictionary*)params
-                   handler:(void (^)(id responseObject, NSError* error))handler
++ (void)requestWithMethod:(NSString *)method
+                     path:(NSString *)path
+               parameters:(NSDictionary *)params
+                  handler:(void (^)(id responseObject, NSError * error))handler
 {
-    AFHTTPClient *httpclient = [self httpClient];
-    params = [self mergeParams:params];
-    
-    NSMutableURLRequest *request = [httpclient requestWithMethod:method path:path parameters:params];
-    AFHTTPRequestOperation *operation = [httpclient HTTPRequestOperationWithRequest:request success:
-     ^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         handler(responseObject, nil);
-         
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         
-         handler(nil, error);
-         
-     }];
-    
-    [operation start];
+    AFOAuth1Client *httpclient = [self httpClient];
+    NSMutableURLRequest *request = [httpclient requestWithMethod:method
+                                                            path:path
+                                                      parameters:params];
+
+    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id response) {
+        NSError *err;
+        BOOL empty = ([response length] == 1) && ((uint8_t *)[response bytes])[0] == ' ';
+        if (empty) {
+            handler(nil, err);
+        } else {
+            id decodedObj = OKDecodeObj(response, &err);
+            handler(decodedObj, err);
+        }
+    };
+
+    void (^failureBlock)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *err) {
+        handler(nil, err);
+    };
+
+    AFHTTPRequestOperation *op = [httpclient HTTPRequestOperationWithRequest:request
+                                                                     success:successBlock
+                                                                     failure:failureBlock];
+    [op start];
 }
 
-
-+ (void) getFromPath:(NSString*)path
-          parameters:(NSDictionary*)params
-             handler:(void (^)(id responseObject, NSError* error))handler
++ (void)getFromPath:(NSString *)path
+         parameters:(NSDictionary *)params
+            handler:(void (^)(id responseObject, NSError *error))handler
 {
     [self requestWithMethod:@"GET"
                        path:path
@@ -74,10 +87,9 @@ static AFHTTPClient* _httpClient = nil;
                     handler:handler];
 }
 
-
-+ (void) postToPath:(NSString*)path
-         parameters:(NSDictionary*)params
-            handler:(void (^)(id responseObject, NSError* error))handler
++ (void)postToPath:(NSString *)path
+        parameters:(NSDictionary *)params
+           handler:(void (^)(id responseObject, NSError *error))handler
 {
     [self requestWithMethod:@"POST"
                        path:path
@@ -85,10 +97,9 @@ static AFHTTPClient* _httpClient = nil;
                     handler:handler];
 }
 
-
-+ (void) putToPath:(NSString*)path
-        parameters:(NSDictionary*)params
-           handler:(void (^)(id responseObject, NSError* error))handler
++ (void)putToPath:(NSString *)path
+       parameters:(NSDictionary *)params
+          handler:(void (^)(id responseObject, NSError *error))handler
 {
     [self requestWithMethod:@"PUT"
                        path:path

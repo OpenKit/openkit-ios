@@ -9,26 +9,37 @@
 #import "OKAppDelegate.h"
 #import "OpenKit.h"
 #import "OKViewController.h"
+#import "OKGameCenterUtilities.h"
 
-//#define LOCAL_SERVER 0
 
-//#import "OKCloud.h"
-//#import <objc/runtime.h>
-
+@interface OKAppDelegate ()
+-(void)handlePushDictionary:(NSDictionary *)dictionary;
+@end
 
 @implementation OKAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Always enter your app key in didFinishLaunchingWithOptions
-#ifdef LOCAL_SERVER
-    [OKManager setAppKey:@"VwfMRAl5Gc4tirjw"];
-    [OKManager setEndpoint:@"http://10.0.1.21:3000"];
-#else
-    [OKManager setAppKey:@"VwfMRAl5Gc4tirjw"];
-    [OKManager setEndpoint:@"http://stage.openkit.io"];
-#endif
+    
+    NSString *myAppKey = @"BspfxiqMuYxNEotLeGLm";
+    NSString *mySecretKey = @"2sHQOuqgwzocUdiTsTWzyQlOy1paswYLGjrdRWWf";
+    
+    // Development branch settings! In your game you would use [OKManager configureWithAppKey: secretKey:];
+    [OKManager configureWithAppKey:myAppKey secretKey:mySecretKey endpoint:@"http://development.openkit.io"];
+    
+    // Set the leaderboard list tag. By default, client asks
+    // for tag = "v1". In the OpenKit dashboard, new leaderboards
+    // have a default tag of "v1" as well. You can use this
+    // tag feature to display different leaderboards in different
+    // versions of your game. Each leaderboard can have multiple tags, but the client
+    // will only display one tag.
+    [[OKManager sharedManager] setLeaderboardListTag:@"v1"];
 
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];  
+    if (launchOptions != nil && [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil) {
+		NSDictionary* dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        [self handlePushDictionary:dictionary];
+    }
 
     // Set root view controller.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -36,9 +47,29 @@
     UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:self.viewController];
     self.window.rootViewController = navi;
     [self.window makeKeyAndVisible];
+    
+    // If you're using GameCenter, you can call this convenience method to authorize with game center. Set allowUI to YES if you want to show
+    // the GameCenter leaderboard controller
+    
+    [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES withPresentingViewController:self.viewController withCompletionHandler:nil];
 
     return YES;
 }
+
+// We should handle the push differently if the app is already open, but for now will well forward it
+// to the same handlePushDictionary method that is used for opens.
+- (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
+{
+    NSLog(@"Push notification received while open:%@", userInfo);
+    [self handlePushDictionary:userInfo];
+}
+
+-(void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+    NSLog(@"Didregister for notificatrion");
+    [[OKManager sharedManager] registerToken:deviceToken];
+}
+
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
@@ -72,6 +103,12 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [OKManager handleWillTerminate];
+}
+
+- (void)handlePushDictionary:(NSDictionary *)dict
+{
+    NSLog(@"Handling push dictionary: %@", dict);
+    // int someId = [[dict valueForKey:@"some_id"] intValue];
 }
 
 @end

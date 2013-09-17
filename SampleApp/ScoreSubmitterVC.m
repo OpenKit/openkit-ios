@@ -65,7 +65,7 @@
 
 -(IBAction)close:(id)sender
 {
-    [self dismissModalViewControllerAnimated:YES];
+      [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 -(IBAction)startEditing:(id)sender
@@ -88,12 +88,28 @@
     
     [ActionSheetStringPicker showPickerWithTitle:@"Choose Leaderboard" rows:rows initialSelection:0 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue)
     {
+        
+        OKLeaderboard *leaderboard = (OKLeaderboard*)[leaderBoards objectAtIndex:selectedIndex];
+        
         OKScore *score = [[OKScore alloc] init];
-        [score setScoreValue:[[textField text] integerValue]];
+        NSInteger v = [[textField text] integerValue];
+        [score setScoreValue:v];
+
+        /*
+        // Hundredths:
+        int hun = v % 100;
+        int total_sec = v / 100;
+        int total_min = total_sec / 60;
+        int hour = total_min / 60;
+        int min = total_min % 60;
+        int sec = total_sec % 60;
+        [score setDisplayString:[NSString stringWithFormat:@"%01d:%02d:%02d.%02d", hour, min, sec, hun]];
+        */
+         
         [score setOKLeaderboardID:[(OKLeaderboard*)[leaderBoards objectAtIndex:selectedIndex] OKLeaderboard_id]];
+        [score setGamecenterLeaderboardID:[leaderboard gamecenter_id]];
         
-        
-        [score submitScoreWithCompletionHandler:^(NSError *error) {
+        [score submitScoreToOpenKitAndGameCenterWithCompletionHandler:^(NSError *error) {
             
             [spinner stopAnimating];
             
