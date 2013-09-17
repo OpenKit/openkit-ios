@@ -21,13 +21,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Development branch settings!
-    NSString *myAppKey = @"zRn4FrBcWi6ntUmWnEwm";
-    NSString *mySecretKey = @"rjqQmuDZaO6JtLuW25XPB2D6P0jplBfmuuANCKuu";
+    NSString *myAppKey = @"BspfxiqMuYxNEotLeGLm";
+    NSString *mySecretKey = @"2sHQOuqgwzocUdiTsTWzyQlOy1paswYLGjrdRWWf";
     
-    [OKManager configureWithAppKey:myAppKey secretKey:mySecretKey endpoint:@"http://development.openkit.io"];
-    
-    // In a production game, you should use:
-    //[OKManager configureWithAppKey:(NSString *) secretKey:(NSString *)]
+    [OKManager configureWithAppKey:myAppKey secretKey:mySecretKey];
     
     // Set the leaderboard list tag. By default, client asks
     // for tag = "v1". In the OpenKit dashboard, new leaderboards
@@ -50,8 +47,10 @@
     self.window.rootViewController = navi;
     [self.window makeKeyAndVisible];
     
+    // If you're using GameCenter, you can call this convenience method to authorize with game center. Set allowUI to YES if you want to show
+    // the GameCenter leaderboard controller
+    
     [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES withPresentingViewController:self.viewController withCompletionHandler:nil];
-
 
     return YES;
 }
