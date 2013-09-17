@@ -11,7 +11,6 @@
 #import "OKUser.h"
 #import "OKUserUtilities.h"
 #import "OKFacebookUtilities.h"
-#import "OKTwitterUtilities.h"
 #import "SimpleKeychain.h"
 #import "OKDefines.h"
 #import "OKUserProfileImageView.h"
