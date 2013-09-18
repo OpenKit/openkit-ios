@@ -205,6 +205,8 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
 
 - (void)registerToken:(NSData *)deviceToken
 {
+    OKLog(@"OKManager registerToken, data: %@", deviceToken);
+    
     const unsigned *tokenBytes = [deviceToken bytes];
     NSString *hexToken = [NSString stringWithFormat:@"%08x%08x%08x%08x%08x%08x%08x%08x",
                           ntohl(tokenBytes[0]), ntohl(tokenBytes[1]), ntohl(tokenBytes[2]),
