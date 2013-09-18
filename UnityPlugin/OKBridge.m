@@ -341,7 +341,8 @@ void OKBridgeShowLoginUIWithBlock(const char *gameObjectName)
     OKLoginView *loginView = [[OKLoginView alloc] init];
     [loginView showWithCompletionHandler:^{
         OKBridgeLog(@"Login window completion block");
-        UnitySendMessage([objName UTF8String], "asyncCallSucceeded",[serializedFriends UTF8String]);
+        NSString *paramString = @"OKLoginWindow completed";
+        UnitySendMessage([objName UTF8String], "asyncCallSucceeded",[paramString UTF8String]);
         [loginView release];
         [objName release];
     }];
