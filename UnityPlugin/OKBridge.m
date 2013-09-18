@@ -333,6 +333,20 @@ void OKBridgeSubmitScoreBase(OKScore *score, const char *gameObjectName)
     }];
 }
 
+void OKBridgeShowLoginUIWithBlock(const char *gameObjectName)
+{
+     __block NSString *objName = [[NSString alloc] initWithUTF8String:gameObjectName];
+    
+    OKBridgeLog(@"Showing OpenKit login window with block");
+    OKLoginView *loginView = [[OKLoginView alloc] init];
+    [loginView showWithCompletionHandler:^{
+        OKBridgeLog(@"Login window completion block");
+        UnitySendMessage([objName UTF8String], "asyncCallSucceeded",[serializedFriends UTF8String]);
+        [loginView release];
+        [objName release];
+    }];
+}
+
 
 void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, const char *displayString, const char *gameObjectName )
 {
