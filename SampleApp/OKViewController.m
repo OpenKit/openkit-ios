@@ -44,6 +44,15 @@
     }
 }
 
+// On load, if
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    if([OKUser currentUser] == nil) {
+        [self loginToOpenKit:nil];
+    }
+}
+
 -(IBAction)launchGameCenter:(id)sender
 {
     GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
@@ -69,6 +78,7 @@
 {
     OKLoginView *loginView = [[OKLoginView alloc] init];
     [loginView showWithCompletionHandler:^{
+        NSLog(@"Finished showing OpenKit login dialog");
         [self updateUIforOKUser];
     }];
 }
