@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <Accounts/Accounts.h>
 #import <Twitter/Twitter.h>
-#import "OKNickViewController.h"
 
 @protocol OKLoginViewDelegate <NSObject>
 

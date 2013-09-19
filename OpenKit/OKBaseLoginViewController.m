@@ -34,6 +34,7 @@
     {
         [self setLoginString:aLoginString];
         [self initLoginView];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateGameCenterButtonVisibility) name:OK_GAMECENTER_AUTH_NOTIFICATION_NAME object:nil];
     }
     return self;
 }
@@ -66,6 +67,7 @@
     [[KGModal sharedInstance] hide];
     [[KGModal sharedInstance] setDelegate:nil];
     [delegate dismiss];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)dismissLoginViewWithoutBaseDismiss {

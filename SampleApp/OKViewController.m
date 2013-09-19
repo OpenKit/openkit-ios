@@ -73,6 +73,16 @@
     }];
 }
 
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    if([OKUser currentUser] == nil) {
+        [self loginToOpenKit:nil];
+    }
+    
+}
+
 
 -(void)viewWillAppear:(BOOL)animated
 {

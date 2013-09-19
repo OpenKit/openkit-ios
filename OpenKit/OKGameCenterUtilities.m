@@ -12,8 +12,6 @@
 #import "OKManager.h"
 #import "OKUser.h"
 
-#define OK_GAMECENTER_AUTH_NOTIFICATION_NAME @"OKGameCenterAuthNotification"
-
 @implementation OKGameCenterUtilities
 
 // Check to see if the device supports GameCenter
