@@ -282,6 +282,11 @@ void OKBridgeAuthenticateLocalPlayerWithGameCenterAndShowUIIfNecessary()
  
 }
 
+bool OKBridgeIsCurrentUserAuthenticated()
+{
+    return ([OKUser currentUser] != nil);
+}
+
 bool OKBridgeIsPlayerAuthenticatedWithGameCenter()
 {
     return [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter];

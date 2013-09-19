@@ -30,6 +30,7 @@ bool OKBridgeIsPlayerAuthenticatedWithGameCenter();
 void OKBridgeAuthenticateLocalPlayerWithGameCenterAndShowUIIfNecessary();
 
 /*OKUser methods*/
+bool OKBridgeIsCurrentUserAuthenticated();
 int OKBridgeGetCurrentUserOKID();
 const char* OKBridgeGetCurrentUserNick();
 const char* OKBridgeGetCurrentUserFBID();
