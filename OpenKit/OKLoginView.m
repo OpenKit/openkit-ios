@@ -42,12 +42,18 @@
 
 -(void)show
 {
-    //Show the base view controller on the main thread
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[[UIApplication sharedApplication] keyWindow] addSubview:baseViewController.view];
-    });
+    UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    window.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    window.backgroundColor = [UIColor clearColor];
     
     [baseViewController setDelegate:self];
+    
+    [baseViewController setWindow:window];
+    
+    window = nil;
+    
+    [baseViewController.window setRootViewController:baseViewController];
+    [baseViewController.window makeKeyAndVisible];
     [baseViewController showLoginModalView];
 }
 

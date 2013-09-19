@@ -19,7 +19,7 @@
 
 @interface OKBaseLoginViewController : UIViewController
 
-
+@property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 @property (nonatomic, strong) UIView *loginView;
 @property (nonatomic, strong) id<OKLoginViewDelegate> delegate;

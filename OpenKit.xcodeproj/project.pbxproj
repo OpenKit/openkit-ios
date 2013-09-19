@@ -129,7 +129,10 @@
 		32CAD10D16CB7A9B00E8F185 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD10016CB7A9B00E8F185 /* UIImageView+AFNetworking.m */; };
 		32CAD10F16CB7A9B00E8F185 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD10416CB7A9B00E8F185 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
 		4410186B1728A1C80059BBAE /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4410186A1728A1C80059BBAE /* FacebookSDKResources.bundle */; };
+		444B59E917EBB8B40021D7DA /* OKLoginPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 444B59E817EBB8B40021D7DA /* OKLoginPopupView.m */; };
+		444B59EC17EBBC570021D7DA /* OKLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 444B59EB17EBBC570021D7DA /* OKLoginViewController.m */; };
 		4455BEBE17A396DE0079859A /* OKScoreCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4455BEBD17A396DE0079859A /* OKScoreCache.m */; };
+		445A177417EBBEB2005FB7C3 /* OKLoginViewNew.m in Sources */ = {isa = PBXBuildFile; fileRef = 445A177317EBBEB2005FB7C3 /* OKLoginViewNew.m */; };
 		445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
 		445B3BFD1767F5DE00952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
 		445B3C001769258C00952456 /* OKGameCenterUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 445B3BFF1769258C00952456 /* OKGameCenterUtilities.m */; };
@@ -470,8 +473,14 @@
 		32CAD10316CB7A9B00E8F185 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		32CAD10416CB7A9B00E8F185 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		4410186A1728A1C80059BBAE /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		444B59E717EBB8B40021D7DA /* OKLoginPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKLoginPopupView.h; sourceTree = "<group>"; };
+		444B59E817EBB8B40021D7DA /* OKLoginPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKLoginPopupView.m; sourceTree = "<group>"; };
+		444B59EA17EBBC570021D7DA /* OKLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKLoginViewController.h; sourceTree = "<group>"; };
+		444B59EB17EBBC570021D7DA /* OKLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKLoginViewController.m; sourceTree = "<group>"; };
 		4455BEBC17A396DD0079859A /* OKScoreCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScoreCache.h; sourceTree = "<group>"; };
 		4455BEBD17A396DE0079859A /* OKScoreCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKScoreCache.m; sourceTree = "<group>"; };
+		445A177217EBBEB2005FB7C3 /* OKLoginViewNew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKLoginViewNew.h; sourceTree = "<group>"; };
+		445A177317EBBEB2005FB7C3 /* OKLoginViewNew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKLoginViewNew.m; sourceTree = "<group>"; };
 		445B3BFB1767F5D300952456 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		445B3BFE1769258C00952456 /* OKGameCenterUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGameCenterUtilities.h; sourceTree = "<group>"; };
 		445B3BFF1769258C00952456 /* OKGameCenterUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKGameCenterUtilities.m; sourceTree = "<group>"; };
@@ -830,6 +839,19 @@
 			name = SupportingFiles;
 			sourceTree = "<group>";
 		};
+		444B59E617EBB88F0021D7DA /* LoginPopup */ = {
+			isa = PBXGroup;
+			children = (
+				444B59E717EBB8B40021D7DA /* OKLoginPopupView.h */,
+				444B59E817EBB8B40021D7DA /* OKLoginPopupView.m */,
+				444B59EA17EBBC570021D7DA /* OKLoginViewController.h */,
+				444B59EB17EBBC570021D7DA /* OKLoginViewController.m */,
+				445A177217EBBEB2005FB7C3 /* OKLoginViewNew.h */,
+				445A177317EBBEB2005FB7C3 /* OKLoginViewNew.m */,
+			);
+			name = LoginPopup;
+			sourceTree = "<group>";
+		};
 		446BAB49177A84630092BD58 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
@@ -864,6 +886,7 @@
 		446BAB4B177A84C80092BD58 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				444B59E617EBB88F0021D7DA /* LoginPopup */,
 				32CACFCC16CB637C00E8F185 /* OKUser.h */,
 				32CACFCD16CB637C00E8F185 /* OKUser.m */,
 				32CACFB916CB637C00E8F185 /* OKLoginView.h */,
@@ -1148,7 +1171,9 @@
 				32CACFE316CB637C00E8F185 /* OKNetworker.m in Sources */,
 				32CACFE516CB637C00E8F185 /* OKProfileViewController.m in Sources */,
 				32CACFE616CB637C00E8F185 /* OKScore.m in Sources */,
+				444B59E917EBB8B40021D7DA /* OKLoginPopupView.m in Sources */,
 				32CACFE716CB637C00E8F185 /* OKScoreCell.m in Sources */,
+				444B59EC17EBBC570021D7DA /* OKLoginViewController.m in Sources */,
 				32CACFEB16CB637C00E8F185 /* OKUser.m in Sources */,
 				32CACFEC16CB637C00E8F185 /* OKUserProfileImageView.m in Sources */,
 				32CACFEE16CB637C00E8F185 /* SimpleKeychain.m in Sources */,
@@ -1162,6 +1187,7 @@
 				44BC5338176A96810038043A /* OKGKScoreWrapper.m in Sources */,
 				44B50D0B176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m in Sources */,
 				44B50D1D1771227D00B5D8AD /* OKFBLoginCell.m in Sources */,
+				445A177417EBBEB2005FB7C3 /* OKLoginViewNew.m in Sources */,
 				44B50D2417728E0300B5D8AD /* OKSpinnerCell.m in Sources */,
 				4474BCD417815C46000AEAD1 /* OKColors.m in Sources */,
 				44E3058D178CD78E00611E0C /* OKFacebookUtilities.m in Sources */,

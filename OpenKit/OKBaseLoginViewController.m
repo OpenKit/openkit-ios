@@ -67,6 +67,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[KGModal sharedInstance] hide];
     [[KGModal sharedInstance] setDelegate:nil];
+    [self setWindow:nil];
     [delegate dismiss];
 }
 

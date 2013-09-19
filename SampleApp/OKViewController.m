@@ -12,6 +12,8 @@
 #import "OKFacebookUtilities.h"
 #import "OKFacebookUtilities.h"
 
+#import "OKLoginViewNew.h"
+
 
 @implementation OKViewController
 
@@ -45,12 +47,21 @@
 }
 
 -(IBAction)launchGameCenter:(id)sender
-{
+{ /*
     GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
     if (gameCenterController != nil) {
         gameCenterController.gameCenterDelegate = self;
         [self presentViewController: gameCenterController animated: YES completion:nil];
     }
+   */
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"test" message:@"test" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+    
+    OKLoginView *loginView = [[OKLoginView alloc] init];
+    [loginView showWithCompletionHandler:^{
+        NSLog(@"Login view completion handler done");
+        [self updateUIforOKUser];
+    }];
 }
 
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
@@ -67,10 +78,18 @@
 
 -(IBAction)loginToOpenKit:(id)sender
 {
+    /*
     OKLoginView *loginView = [[OKLoginView alloc] init];
     [loginView showWithCompletionHandler:^{
         [self updateUIforOKUser];
     }];
+    */
+    
+    OKLoginViewNew *loginView = [[OKLoginViewNew alloc] init];
+    [loginView show];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"test" message:@"test" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
 }
 
 
