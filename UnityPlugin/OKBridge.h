@@ -27,6 +27,8 @@ void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, co
 void OKBridgeAuthenticateLocalPlayerWithGameCenter();
 bool OKBridgeIsPlayerAuthenticatedWithGameCenter();
 void OKBridgeAuthenticateLocalPlayerWithGameCenterAndShowUIIfNecessary();
+void OKBridgeShowGCAuthUI();
+
 
 /*OKUser methods*/
 int OKBridgeGetCurrentUserOKID();
