@@ -50,7 +50,9 @@
     // If you're using GameCenter, you can call this convenience method to authorize with game center. Set allowUI to YES if you want to show
     // the GameCenter leaderboard controller
     
-    [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES withPresentingViewController:self.viewController withCompletionHandler:nil];
+    [OKGameCenterUtilities authenticateLocalPlayerWithCompletionHandler:^(NSError *error) {
+        NSLog(@"Game Center auth completion handler called");
+    } showUI:YES presentingViewController:navi];
 
     return YES;
 }

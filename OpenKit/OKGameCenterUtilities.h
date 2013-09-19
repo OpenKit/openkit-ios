@@ -16,11 +16,10 @@ typedef void(^OKGameCenterLoginCompletionHandler)(NSError *error);
 +(void)loadPlayerPhotoForGameCenterID:(NSString*)gameCenterID withPhotoSize:(GKPhotoSize)photoSize withCompletionHandler:(void(^)(UIImage *photo, NSError *error))completionhandler;
 +(BOOL)isPlayerAuthenticatedWithGameCenter;
 +(BOOL)isGameCenterAvailable;
-+(void)authenticateLocalPlayerWithCompletionHandler:(OKGameCenterLoginCompletionHandler)completionHandler;
-+(void)authorizeUserWithGameCenterAndallowUI:(BOOL)allowUI withPresentingViewController:(UIViewController*)presenter withCompletionHandler:(OKGameCenterLoginCompletionHandler)completionHandler;
-+(void)authorizeUserWithGameCenterWithBlockToHandleShowingGameCenterUI:(void(^)(UIViewController* viewControllerFromGC))showUIHandler withGameCenterUICompletionHandler:(OKGameCenterLoginCompletionHandler)completionHandler;
-+(void)authorizeUserWithGameCenterLegacyWithCompletionHandler:(OKGameCenterLoginCompletionHandler)completionHandler;
 
++(BOOL)shouldUseLegacyGameCenterAuth;
++(void)authenticateLocalPlayerLegacyWithCompletionHandler:(OKGameCenterLoginCompletionHandler)completionHandler;
++(void)authenticateLocalPlayerWithCompletionHandler:(OKGameCenterLoginCompletionHandler)completionHandler showUI:(BOOL)showUI presentingViewController:(UIViewController*)presenter;
 
 
 @end

@@ -91,9 +91,10 @@
 -(IBAction)gcButtonPressed:(id)sender
 {
     if([OKGameCenterUtilities isGameCenterAvailable] && ![OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
+        
         [OKGameCenterUtilities authenticateLocalPlayerWithCompletionHandler:^(NSError *error) {
             [self updateButtonVisibility];
-        }];
+        } showUI:YES presentingViewController:nil];
     }
 }
 

@@ -198,7 +198,7 @@
         
         [self dismissLoginViewWithoutBaseDismiss];
         
-        [OKGameCenterUtilities authorizeUserWithGameCenterLegacyWithCompletionHandler:^(NSError *error) {
+        [OKGameCenterUtilities authenticateLocalPlayerLegacyWithCompletionHandler:^(NSError *error) {
             
             if(error != nil) {
                 [self dismissLoginView];
