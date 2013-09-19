@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <GameKit/GameKit.h>
 
+#define OK_GAMECENTER_AUTH_NOTIFICATION @"OKGameCenterAuthNotification"
+
 typedef void(^OKGameCenterLoginCompletionHandler)(NSError *error);
 
 @interface OKGameCenterUtilities : NSObject
