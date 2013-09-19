@@ -67,6 +67,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[KGModal sharedInstance] hide];
     [[KGModal sharedInstance] setDelegate:nil];
+    [self setWindow:nil];
     [delegate dismiss];
 }
 
@@ -204,6 +205,8 @@
             
             if(error != nil) {
                 [self dismissLoginView];
+                UIAlertView *gcAlert = [[UIAlertView alloc] initWithTitle:@"Sorry" message:@"There was a problm authenticating with GameCenter. Try signing in with the GameCenter app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                [gcAlert show];
             } else {
                 [self showLoginModalView];
             }
