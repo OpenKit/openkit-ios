@@ -31,6 +31,7 @@ void OKBridgeShowGCAuthUI();
 
 
 /*OKUser methods*/
+bool OKBridgeIsCurrentOKUserAuthenticated();
 int OKBridgeGetCurrentUserOKID();
 const char* OKBridgeGetCurrentUserNick();
 const char* OKBridgeGetCurrentUserFBID();

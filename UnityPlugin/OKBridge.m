@@ -258,6 +258,10 @@ void OKBridgeSubmitScoreWithGameCenter(int64_t scoreValue, int leaderboardID, in
     OKBridgeSubmitScoreBase(score, gameObjectName);
 }
 
+bool OKBridgeIsCurrentOKUserAuthenticated()
+{
+    return ([OKUser currentUser] != nil);
+}
 
 int OKBridgeGetCurrentUserOKID()
 {
