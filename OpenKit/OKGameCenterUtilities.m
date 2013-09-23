@@ -79,6 +79,9 @@
     
     GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
     [localPlayer authenticateWithCompletionHandler:^(NSError *error) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:OK_GAMECENTER_AUTH_NOTIFICATION object:nil];
+        
         if (localPlayer.isAuthenticated)
         {
             // local player is authenticated

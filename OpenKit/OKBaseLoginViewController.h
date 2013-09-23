@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <Accounts/Accounts.h>
 #import <Twitter/Twitter.h>
-#import "OKNickViewController.h"
 
 @protocol OKLoginViewDelegate <NSObject>
 
@@ -21,6 +20,7 @@
 @interface OKBaseLoginViewController : UIViewController
 
 
+@property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 @property (nonatomic, strong) UIView *loginView;
 @property (nonatomic, strong) id<OKLoginViewDelegate> delegate;

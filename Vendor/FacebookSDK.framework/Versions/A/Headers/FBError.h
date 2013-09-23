@@ -88,8 +88,8 @@ typedef enum FBErrorCode {
     /// An error occurred while trying to display a native dialog
     FBErrorDialog,
     
-    /// An error occurred using the FBInsights class
-    FBErrorInsights,
+    /// An error occurred using the FBAppEvents class
+    FBErrorAppEvents,
     
     /// An error occurred related to an iOS API call
     FBErrorSystemAPI,
@@ -113,6 +113,11 @@ typedef enum FBErrorCode {
      The URL passed to FBAppCall, was not able to be parsed
      */
     FBErrorMalformedURL,
+    
+    /*!
+     The operation failed because the session is currently busy reconnecting.
+    */
+    FBErrorSessionReconnectInProgess,
 } FBErrorCode;
 
 /*!
@@ -243,6 +248,13 @@ extern NSString *const FBErrorLoginFailedReasonUserCancelledSystemValue;
 
 /*!
  A value that may appear in an NSError userInfo dictionary under the
+ `FBErrorLoginFailedReason` key for login failures. Indicates an error
+ condition. You may inspect the rest of userInfo for other data.
+ */
+extern NSString *const FBErrorLoginFailedReasonOtherError;
+
+/*!
+ A value that may appear in an NSError userInfo dictionary under the
  `FBErrorLoginFailedReason` key for login failures. Indicates the app's
  slider in iOS 6 (device Settings -> Privacy -> Facebook {app} ) has
  been disabled.
@@ -338,9 +350,9 @@ extern NSString *const FBErrorDialogInvalidOpenGraphActionParameters;
 
 /*!
  The key in the userInfo NSDictionary of NSError for errors
- encountered with `FBInsights` operations (error.code equals FBErrorInsights).
+ encountered with `FBAppEvents` operations (error.code equals FBErrorAppEvents).
 */
-extern NSString *const FBErrorInsightsReasonKey;
+extern NSString *const FBErrorAppEventsReasonKey;
 
 // Exception strings raised by the Facebook SDK
 

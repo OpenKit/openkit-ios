@@ -43,8 +43,8 @@
         // Did everything come back okay with no errors?
         if (!error && result)
         {
-            NSString *fbUserID = [result id];
-            NSString *userNick = [result name];
+            NSString *fbUserID = [result objectForKey:@"id"];
+            NSString *userNick = [result objectForKey:@"name"];
 
             dispatch_async(OK_CACHE_QUEUE(), ^{
                 [[OKSessionDb db] loginFB:fbUserID];
@@ -97,8 +97,8 @@
         // Did everything come back okay with no errors?
         if (!error && result)
         {
-            NSString *fbUserID = [result id];
-            NSString *userNick = [result name];
+            NSString *fbUserID = [result objectForKey:@"id"];
+            NSString *userNick = [result objectForKey:@"name"];
             //NSNumber *fbIDNum = [NSNumber numberWithLongLong:[fbUserID longLongValue]];
 
             [user setFbUserID:fbUserID];

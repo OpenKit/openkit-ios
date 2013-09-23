@@ -282,6 +282,11 @@ void OKBridgeAuthenticateLocalPlayerWithGameCenterAndShowUIIfNecessary()
  
 }
 
+bool OKBridgeIsCurrentUserAuthenticated()
+{
+    return ([OKUser currentUser] != nil);
+}
+
 bool OKBridgeIsPlayerAuthenticatedWithGameCenter()
 {
     return [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter];
@@ -329,6 +334,21 @@ void OKBridgeSubmitScoreBase(OKScore *score, const char *gameObjectName)
         } else {
             UnitySendMessage([objName UTF8String], "scoreSubmissionFailed", [[error localizedDescription] UTF8String]);
         }
+        [objName release];
+    }];
+}
+
+void OKBridgeShowLoginUIWithBlock(const char *gameObjectName)
+{
+     __block NSString *objName = [[NSString alloc] initWithUTF8String:gameObjectName];
+    
+    OKBridgeLog(@"Showing OpenKit login window with block");
+    OKLoginView *loginView = [[OKLoginView alloc] init];
+    [loginView showWithCompletionHandler:^{
+        OKBridgeLog(@"Login window completion block");
+        NSString *paramString = @"OKLoginWindow completed";
+        UnitySendMessage([objName UTF8String], "asyncCallSucceeded",[paramString UTF8String]);
+        [loginView release];
         [objName release];
     }];
 }

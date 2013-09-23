@@ -7,7 +7,6 @@
 //
 
 #import "OKUserProfileImageView.h"
-#import "OKTwitterUtilities.h"
 #import "AFImageView.h"
 #import "OKGameCenterUtilities.h"
 #import "OKScore.h"

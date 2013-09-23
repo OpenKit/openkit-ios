@@ -20,6 +20,7 @@ void OKBridgeShowLeaderboardsLandscapeOnly();
 void OKBridgeShowLeaderboardIDWithLandscapeOnly(int leaderboardID, BOOL landscapeOnly);
 void OKBridgeShowLeaderboardID(int leaderboardID);
 void OKBridgeShowLoginUI();
+void OKBridgeShowLoginUIWithBlock(const char *gameObjectName);
 
 void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, const char *displayString, const char *gameObjectName);
 
@@ -29,6 +30,7 @@ bool OKBridgeIsPlayerAuthenticatedWithGameCenter();
 void OKBridgeAuthenticateLocalPlayerWithGameCenterAndShowUIIfNecessary();
 
 /*OKUser methods*/
+bool OKBridgeIsCurrentUserAuthenticated();
 int OKBridgeGetCurrentUserOKID();
 const char* OKBridgeGetCurrentUserNick();
 const char* OKBridgeGetCurrentUserFBID();

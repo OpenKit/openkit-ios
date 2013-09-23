@@ -22,7 +22,7 @@
 #import "FBOpenGraphAction.h"
 
 /*! The base URL used for graph requests */
-extern NSString* const FBGraphBasePath;
+extern NSString* const FBGraphBasePath __attribute__((deprecated));
 
 // up-front decl's
 @protocol FBRequestDelegate;
@@ -278,6 +278,7 @@ typedef NSUInteger FBRequestState __attribute__((deprecated));
  request completes with a success, error, or cancel.
 
  @param handler   The handler block to call when the request completes with a success, error, or cancel action.
+ The handler will be invoked on the main thread.
 */
 - (FBRequestConnection*)startWithCompletionHandler:(FBRequestHandler)handler;
 
@@ -460,12 +461,11 @@ typedef NSUInteger FBRequestState __attribute__((deprecated));
  and then use the resultant Custom Audience to target ads.
  
  @param session    The FBSession to use to establish the user's identity for users logged into Facebook through this app.
- If `nil`, then the activeSession is used.  If the session is not open, then the appID|clientToken are used to construct the access
- token for the request.
+ If `nil`, then the activeSession is used.
  
  @discussion  
- This method will thrown an exception if either <[FBSettings defaultAppID]> or <[FBSettings clientToken]> are `nil`.  The appID won't be nil when the pList 
- includes the appID, or if it's explicitly set.  The clientToken needs to be set via <[FBSettings setClientToken:]>.
+ This method will throw an exception if <[FBSettings defaultAppID]> is `nil`.  The appID won't be nil when the pList
+ includes the appID, or if it's explicitly set.  
  
  The JSON in the request's response will include an "custom_audience_third_party_id" key/value pair, with the value being the ID retrieved.
  This ID is an encrypted encoding of the Facebook user's ID and the invoking Facebook app ID.
@@ -477,8 +477,8 @@ typedef NSUInteger FBRequestState __attribute__((deprecated));
  native Facebook app on the device.  If there is no native Facebook app, no one is logged into it, or the user has opted out
  at the iOS level from ad tracking, then a `nil` ID will be returned.
  
- This method itself returning `nil` indicates that either the user has opted-out (via iOS) from Ad Tracking, or a specific Facebook user cannot
- be identified.
+ This method returns `nil` if either the user has opted-out (via iOS) from Ad Tracking, the app itself has limited event usage
+ via the `[FBAppEvents setLimitEventUsage]` flag, or a specific Facebook user cannot be identified.
  */
 + (FBRequest *)requestForCustomAudienceThirdPartyID:(FBSession *)session;
 
