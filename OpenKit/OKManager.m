@@ -21,7 +21,7 @@
 #import "OKMacros.h"
 
 #define OK_DEFAULT_ENDPOINT    @"http://api.openkit.io"
-#define OK_OPENKIT_SDK_VERSION = @"1.0";
+#define OK_OPENKIT_SDK_VERSION = @"1.0.1";
 
 static NSString *OK_USER_KEY = @"OKUserInfo";
 
