@@ -11,10 +11,12 @@ Getting started instructions for OpenKit's iOS client:
   Briefly, this is what you just got: 
 
   <pre>openkit-ios 
+				/Samples			&lt;-- OpenKit sample app
+				/OpenKitSDK			&lt;-- The built OpenKitSDk. To use this, simply drag this folder into your xcode project
                 /OpenKit            &lt;-- The OpenKit source
                 /Vendor             &lt;-- Libraries that OpenKit depends on
                 /Resources          &lt;-- Images and xib files
-                /OpenKit.xcodeproj  &lt;-- A project to build the SDK and/or run a sample app
+                /OpenKit.xcodeproj  &lt;-- A project to build the SDK
   </pre>
 
   When you build the OpenKit target, a new directory will be created at openkit-ios/OpenKitSDK.  
@@ -25,14 +27,10 @@ Getting started instructions for OpenKit's iOS client:
 
   - Drag the Vendor folder into your project
 
-  - Drag the Vendor/FacebookSDK.framework/Resources/FacebookSDKResources.bundle into your project.
-  Note: this step is required even though you just dragged the whole Vendor folder in!
-
   - Add the following frameworks to your project:
     
     ```
       libsqlite3.dylib
-      Twitter.framework
       Security.framework
       QuartzCore.framework
       AdSupport.framework
@@ -49,25 +47,24 @@ Getting started instructions for OpenKit's iOS client:
      #import <MobileCoreServices/MobileCoreServices.h>
     ```
 
-  - Browse the sample app found in OpenKit.xcodeproj for the API calls to make. Or keep reading...
+  - Browse the sample app found in Samples/ directory to see the API calls to make. Or keep reading...
 
 
 Introduction
 ------------
-OpenKit gives you cloud data storage, leaderboards, and user account management as a service.
+OpenKit gives you social leaderboards, achievements, social challenges, and user account management as a service.
 
-OpenKit relies on Facebook and Twitter for user authentication. Your users login with those services, and there is no "OpenKit account" that is shown to them. 
-
+OpenKit relies on Facebook for user authentication. Your users login with those services, and there is no "OpenKit account" that is shown to them. 
 
 
 Basic SDK Usage
 ---------------
-Be sure to read how to integrate the SDK into your app at http://openkit.io/docs/
+Be sure to read how to integrate the SDK into your app at http://openkit.io/documentation
 
 
-Initialize the SDK and set your application id
+Initialize the SDK and set your app keys
 ----------------------------------------------
-In your main activity and all launchable activities, be sure to intialize the SDK:
+Be sure to intialize the SDK in didFinishLaunchingWithOptions
 
 Import the OpenKit Header
 ```
@@ -75,54 +72,25 @@ Import the OpenKit Header
 ```
 
 Specify your application key in application:didFinishLaunchingWithOptions:. You can get your application key from the OpenKit dashboard.
-```
+```objc
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Always enter your app key in didFinishLaunchingWithOptions
-    [OpenKit initializeWithAppID:@"VwfMRAl5Gc4tirjw"];
+    // Always enter your app key and secretKey in didFinishLaunchingWithOptions
+    NSString *myAppKey = @"BspfxiqMuYxNEotLeGLm";
+    NSString *mySecretKey = @"2sHQOuqgwzocUdiTsTWzyQlOy1paswYLGjrdRWWf";
+    
+    [OKManager configureWithAppKey:myAppKey secretKey:mySecretKey];
 	...
+	
+	// If you're using GameCenter, you can authenticate with GameCenter here as well. 
+	// OpenKit provides some convenience methods for authenticating with GameCenter
+	
+	[OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES withPresentingViewController:self.viewController withCompletionHandler:nil];
 }
 ```
 
 
 
-
-User accounts
-==============
-Because OpenKit uses Facebook and Twitter(coming soon!) as authentication providers, you don't need to worry about user account management.
-
-OpenKit provides a user class, OKUser, that manages most of the functionality you'll need for account management. 
-
-Users are unique to each developer, but can be shared across multiple OpenKit applications from the same developer account. 
-
-To get the current OpenKit user, simply call:
-
-```
-if([OKUser currentUser] != nil) {
-	//User is logged in
-	OKUser *currentUser = [OKUser currentUser];
-}
-else {
-	// No user is logged in
-}
-```
-You can get the current user any time, it will return null if the user is not authenticated. 
-
-User Login
-----------
-
-If you're using OpenKit leaderboards, your users will be prompted to log in when the Leaderboards UI is shown. You can optionally prompt them to login at anytime:
-
-```
-OKLoginView *loginView = [[OKLoginView alloc] init];
-    [loginView showWithCompletionHandler:^{
-        // The login view was dismissed
-		// You can check whether the user is currently logged in
-		// by calling [OKUser currentUser]
-    }];
-```
-
-If you're using cloud storage, the cloud storage calls require an authenticated user.
 
 
 
@@ -142,7 +110,7 @@ Import the OpenKit header file
 ```
 
 Start the Leaderboards view controller. If the user isn't logged in, they will be prompted to login when the activity is shown.
-```
+```objc
 OKLeaderboardsViewController *leaderBoards = [[OKLeaderboardsViewController alloc] init];
     [self presentModalViewController:leaderBoards animated:YES];
 ```
@@ -151,17 +119,22 @@ This will show a list of all the leaderboards defined for your app.
 
 Submit a Score
 --------------
-To submit a score, you simply create an OKScore object, set it's value, and then call submit. 
-
-Submitting a score requires the user to be authenticated.
+To submit a score, you simply create an OKScore object, set it's value, and then call submit. If the player is not authenticated with OpenKit, their score is cached locally and submitted once they authenticate. 
 
 You can use blocks callbacks to handle success and failure when submitting a score, and handle them appropriately. 
 
-```
+```objc
 OKScore *scoreToSubmit = [[OKScore alloc] init];
+
 [scoreToSubmit setScoreValue:487];
 [scoreToSubmit setOKLeaderboardID:23];
- 
+
+// Optional, if you're using GameCenter also, set the score's gamecenter leaderboard category
+[scoreToSubmit setGamecenterLeaderboardID:@"level1"];
+
+// Optional, set the display strong
+[scoreToSubmit setDisplayString:[NSString stringWithFormat:@"%d points", [scoreToSubmit scoreValue]]];
+
 [scoreToSubmit submitScoreWithCompletionHandler:^(NSError *error) {
     if(error) {
         //There was an error submitting the score
@@ -173,105 +146,41 @@ OKScore *scoreToSubmit = [[OKScore alloc] init];
 }
 ```
 
+User accounts
+==============
+Because OpenKit uses Facebook as authentication providers, you don't need to worry about user account management.
 
+OpenKit provides a user class, OKUser, that manages most of the functionality you'll need for account management. 
 
+Users are unique to each developer, but can be shared across multiple OpenKit applications from the same developer account. 
 
+To get the current OpenKit user, simply call:
 
-Cloud Storage
-=============
-OpenKit allows you to seamlessly store data user data in the cloud. Saving user progress, game state, and other user information is as easy as using get and set methods. This data can then be accessed on both iOS and Android.
-
-The OKCloud class provides a single set/get API pair, which automatically scopes the stored data by user. 
-
-OKCloud requires that the user be authenticated before making get/set requests. 
-
-Simple Example
---------------
-Let's take a simple example, first storing the string "Hello world" for the key "myKey":
-
-First, import the necessary package:
+```objc
+if([OKUser currentUser] != nil) {
+	//User is logged in
+	OKUser *currentUser = [OKUser currentUser];
+}
+else {
+	// No user is logged in
+}
 ```
-#import "OKCloud.h";
-```
-Now, call [OKCloud set]. This will be stored for the current authenticated OKUser.
-```
-[OKCloud set:@"Hello World" key:@"firstKey" completion:^(id obj, NSError *err) {
-       if (!err) {
-           NSLog(@"Successfully set string: %@", obj);
-       } else {
-           NSLog(@"Error setting string! %@", err);
-       }
-   }];
-```
-Sometime later, you can get the "Hello World" back with: 
-```
-[OKCloud get:@"firstKey" completion:^(id obj, NSError *err) {
-        if (!err) {
-            NSLog(@"Successfully got: %@", obj);
-        } else {
-            NSLog(@"Error getting string! %@", err);
-        }
+You can get the current user any time, it will return null if the user is not authenticated. 
+
+User Login
+----------
+
+If you're using OpenKit leaderboards, your users will be prompted to log in when the Leaderboards UI is shown. You can optionally prompt them to login at anytime:
+
+```objc
+OKLoginView *loginView = [[OKLoginView alloc] init];
+    [loginView showWithCompletionHandler:^{
+        // The login view was dismissed
+		// You can check whether the user is currently logged in
+		// by calling [OKUser currentUser]
     }];
 ```
-Data Types 
-------------
-Along with Strings, the following data types can be stored successfully: 
 
-* NSDictionary
-* NSArray
-* NSNumber (which includes Bool/Int/Float)
-* Strings
 
-Each of the above will be serialized and deserialized automatically for you.  For example, if we initialize a Dictionary like this: 
-
-```
-NSArray *arr = [NSArray arrayWithObjects:@"one", @"two", nil];
-NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                   @"foo",                           @"property1",
-                   [NSNumber numberWithInt:-99],     @"property2",
-                   [NSNumber numberWithBool:YES],    @"property3",
-                   arr,                              @"property4",
-                   nil];
-
-```
-
-We can then store the full object like this: 
-
-```java
-[OKCloud set:dict key:@"secondKey" completion:^(id obj, NSError *err) {
-	if (!err) {
-		NSLog(@"Successfully set dictionary: %@", obj);
-	} 
-	else {
-     NSLog(@"Error setting dictionary! %@", err);
- 	}
-	}];
-```
-
-And then we can retrieve it (and print the deserialized data types) with:  
-
-```
- [OKCloud get:@"secondKey" completion:^(id obj, NSError *err) {
-        if (!err) {
-            NSLog(@"Successfully got: %@", obj);
-            NSLog(@"Class of property1: %@", [[obj objectForKey:@"property1"] class]);
-            NSLog(@"Class of property2: %@", [[obj objectForKey:@"property2"] class]);
-            NSLog(@"Class of property3: %@", [[obj objectForKey:@"property3"] class]);
-            NSLog(@"Class of property4: %@", [[obj objectForKey:@"property4"] class]);
-        } else {
-            NSLog(@"Error getting dictionary! %@", err);
-        }
-    }];
-
-```
-
-This will output: 
-
-```
-Class of property1: __NSCFString
-Class of property2: __NSCFNumber
-Class of property3: __NSCFBoolean
-Class of property4: JKArray
-```
 
 

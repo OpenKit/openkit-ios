@@ -1,8 +1,8 @@
 //
 //  main.m
-//  SampleApp
+//  OpenKit Sample App
 //
-//  Created by Suneet Shah on 12/26/12.
+//  Created by Suneet Shah on 9/17/13.
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 #import "OKAppDelegate.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char * argv[])
 {
     @autoreleasepool {
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([OKAppDelegate class]));
