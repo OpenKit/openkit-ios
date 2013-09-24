@@ -102,7 +102,6 @@
 		32CAD08A16CB703E00E8F185 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD06E16CB703E00E8F185 /* Default.png */; };
 		32CAD08B16CB703E00E8F185 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD06F16CB703E00E8F185 /* Default@2x.png */; };
 		32CAD08D16CB703E00E8F185 /* OKViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CAD07316CB703E00E8F185 /* OKViewController.xib */; };
-		32CAD09016CB703E00E8F185 /* KJBindingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD07A16CB703E00E8F185 /* KJBindingManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		32CAD09116CB703E00E8F185 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD07B16CB703E00E8F185 /* main.m */; };
 		32CAD09216CB703E00E8F185 /* OKAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD07D16CB703E00E8F185 /* OKAppDelegate.m */; };
 		32CAD09316CB703E00E8F185 /* OKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CAD07F16CB703E00E8F185 /* OKViewController.m */; };
@@ -425,8 +424,6 @@
 		32CAD06E16CB703E00E8F185 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		32CAD06F16CB703E00E8F185 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		32CAD07416CB703E00E8F185 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = OKViewController.xib; sourceTree = "<group>"; };
-		32CAD07916CB703E00E8F185 /* KJBindingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KJBindingManager.h; sourceTree = "<group>"; };
-		32CAD07A16CB703E00E8F185 /* KJBindingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KJBindingManager.m; sourceTree = "<group>"; };
 		32CAD07B16CB703E00E8F185 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CAD07C16CB703E00E8F185 /* OKAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKAppDelegate.h; sourceTree = "<group>"; };
 		32CAD07D16CB703E00E8F185 /* OKAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKAppDelegate.m; sourceTree = "<group>"; };
@@ -744,8 +741,6 @@
 			isa = PBXGroup;
 			children = (
 				32CAD14816CBA2FC00E8F185 /* SupportingFiles */,
-				32CAD07916CB703E00E8F185 /* KJBindingManager.h */,
-				32CAD07A16CB703E00E8F185 /* KJBindingManager.m */,
 				32CAD07C16CB703E00E8F185 /* OKAppDelegate.h */,
 				32CAD07D16CB703E00E8F185 /* OKAppDelegate.m */,
 				32CAD07E16CB703E00E8F185 /* OKViewController.h */,
@@ -1186,7 +1181,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32CAD09016CB703E00E8F185 /* KJBindingManager.m in Sources */,
 				32CAD09116CB703E00E8F185 /* main.m in Sources */,
 				32CAD09216CB703E00E8F185 /* OKAppDelegate.m in Sources */,
 				32CAD09316CB703E00E8F185 /* OKViewController.m in Sources */,
