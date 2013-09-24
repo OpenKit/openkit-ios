@@ -132,6 +132,23 @@
 		44F3CD5A17CC1A5700D054CF /* gc_on_big@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2C41B80917BFD8E5005F239B /* gc_on_big@2x.png */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		44C31A1E17F2588A004EE2EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 44C31A1917F25889004EE2EC /* OpenKit Sample App.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4487EFA817E84017004CFB57;
+			remoteInfo = "OpenKit Sample App";
+		};
+		44C31A2017F2588A004EE2EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 44C31A1917F25889004EE2EC /* OpenKit Sample App.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4487EFC317E84017004CFB57;
+			remoteInfo = "OpenKit Sample AppTests";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		32243AEE16CDD4460077EDC8 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -390,6 +407,7 @@
 		44B50D2317728E0200B5D8AD /* OKSpinnerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSpinnerCell.m; sourceTree = "<group>"; };
 		44BC5336176A96800038043A /* OKGKScoreWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGKScoreWrapper.h; sourceTree = "<group>"; };
 		44BC5337176A96800038043A /* OKGKScoreWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKGKScoreWrapper.m; sourceTree = "<group>"; };
+		44C31A1917F25889004EE2EC /* OpenKit Sample App.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "OpenKit Sample App.xcodeproj"; path = "Samples/OpenKit Sample App/OpenKit Sample App.xcodeproj"; sourceTree = "<group>"; };
 		44E118291728A7CF003C2603 /* OKError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKError.h; sourceTree = "<group>"; };
 		44E1182A1728A7CF003C2603 /* OKError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKError.m; sourceTree = "<group>"; };
 		44E30573178CCC6D00611E0C /* facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_icon.png; sourceTree = "<group>"; };
@@ -474,6 +492,7 @@
 				32CAD0EC16CB7A9B00E8F185 /* Vendor */,
 				326FD0CD16CB6209004248F9 /* Frameworks */,
 				326FD0CC16CB6209004248F9 /* Products */,
+				44C31A1917F25889004EE2EC /* OpenKit Sample App.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -762,6 +781,15 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
+		44C31A1A17F25889004EE2EC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				44C31A1F17F2588A004EE2EC /* OpenKit Sample App.app */,
+				44C31A2117F2588A004EE2EC /* OpenKit Sample AppTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		44DD160817DFEA0900D914FA /* Cache */ = {
 			isa = PBXGroup;
 			children = (
@@ -852,6 +880,12 @@
 			mainGroup = 326FD0C216CB6209004248F9;
 			productRefGroup = 326FD0CC16CB6209004248F9 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 44C31A1A17F25889004EE2EC /* Products */;
+					ProjectRef = 44C31A1917F25889004EE2EC /* OpenKit Sample App.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				326FD0CA16CB6209004248F9 /* OpenKit */,
@@ -860,6 +894,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		44C31A1F17F2588A004EE2EC /* OpenKit Sample App.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "OpenKit Sample App.app";
+			remoteRef = 44C31A1E17F2588A004EE2EC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		44C31A2117F2588A004EE2EC /* OpenKit Sample AppTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "OpenKit Sample AppTests.xctest";
+			remoteRef = 44C31A2017F2588A004EE2EC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3284E14716CE49AB00624827 /* Resources */ = {
