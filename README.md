@@ -20,12 +20,10 @@ Getting started instructions for OpenKit's iOS client:
   </pre>
 
   When you build the OpenKit target, a new directory will be created at openkit-ios/OpenKitSDK.  
-  This will contain the static lib, headers, and resources to use in your own project.  To add
+  This will contain the static lib, headers, resources, and vendor code to use in your own project.  To add
   OpenKit to your own project: 
   
   - Drag the OpenKitSDK folder into your project (build first!)
-
-  - Drag the Vendor folder into your project
 
   - Add the following frameworks to your project:
     
