@@ -916,23 +916,6 @@
 			productReference = 3284E14916CE49AB00624827 /* UnityPluginMac.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
-		32CAD04E16CB698C00E8F185 /* SampleApp */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 32CAD06716CB698C00E8F185 /* Build configuration list for PBXNativeTarget "SampleApp" */;
-			buildPhases = (
-				32CAD04B16CB698C00E8F185 /* Sources */,
-				32CAD04C16CB698C00E8F185 /* Frameworks */,
-				32CAD04D16CB698C00E8F185 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = SampleApp;
-			productName = SampleApp;
-			productReference = 32CAD04F16CB698C00E8F185 /* SampleApp.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -955,7 +938,6 @@
 			projectRoot = "";
 			targets = (
 				326FD0CA16CB6209004248F9 /* OpenKit */,
-				32CAD04E16CB698C00E8F185 /* SampleApp */,
 				32243AEF16CDD4460077EDC8 /* OpenKitUnity */,
 				3284E14816CE49AB00624827 /* UnityPluginMac */,
 			);
@@ -1299,52 +1281,6 @@
 			};
 			name = Release;
 		};
-		32CAD06816CB698C00E8F185 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Louis Zell (8BBCV5P67D)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/Vendor\\\"",
-					"/Users/suneets/OpenKit/public_repos/openkit-ios/Vendor",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SampleApp/SampleApp-Prefix.pch";
-				INFOPLIST_FILE = "SampleApp/SampleApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				OTHER_CFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B79A1472-D763-44B5-8032-502EF978E425";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		32CAD06916CB698C00E8F185 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Louis Zell (8BBCV5P67D)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/Vendor\\\"",
-					"/Users/suneets/OpenKit/public_repos/openkit-ios/Vendor",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SampleApp/SampleApp-Prefix.pch";
-				INFOPLIST_FILE = "SampleApp/SampleApp-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B79A1472-D763-44B5-8032-502EF978E425";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1380,15 +1316,6 @@
 			buildConfigurations = (
 				3284E15716CE49AB00624827 /* Debug */,
 				3284E15816CE49AB00624827 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		32CAD06716CB698C00E8F185 /* Build configuration list for PBXNativeTarget "SampleApp" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				32CAD06816CB698C00E8F185 /* Debug */,
-				32CAD06916CB698C00E8F185 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
