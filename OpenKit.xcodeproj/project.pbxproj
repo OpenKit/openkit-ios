@@ -384,8 +384,6 @@
 		32CAD0FE16CB7A9B00E8F185 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		32CAD0FF16CB7A9B00E8F185 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		32CAD10016CB7A9B00E8F185 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
-		32CAD10316CB7A9B00E8F185 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		32CAD10416CB7A9B00E8F185 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		4455BEBC17A396DD0079859A /* OKScoreCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScoreCache.h; sourceTree = "<group>"; };
 		4455BEBD17A396DE0079859A /* OKScoreCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKScoreCache.m; sourceTree = "<group>"; };
 		445B3BFB1767F5D300952456 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -643,7 +641,6 @@
 				44B0EBB417EC3FFD00955089 /* FacebookSDK.framework */,
 				32880CE3176D2991005F8D30 /* AFOAuth1Client */,
 				32CAD0ED16CB7A9B00E8F185 /* AFNetworking */,
-				32CAD10216CB7A9B00E8F185 /* JSONKit */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -672,15 +669,6 @@
 				32CAD10016CB7A9B00E8F185 /* UIImageView+AFNetworking.m */,
 			);
 			path = AFNetworking;
-			sourceTree = "<group>";
-		};
-		32CAD10216CB7A9B00E8F185 /* JSONKit */ = {
-			isa = PBXGroup;
-			children = (
-				32CAD10316CB7A9B00E8F185 /* JSONKit.h */,
-				32CAD10416CB7A9B00E8F185 /* JSONKit.m */,
-			);
-			path = JSONKit;
 			sourceTree = "<group>";
 		};
 		446BAB49177A84630092BD58 /* Vendor */ = {

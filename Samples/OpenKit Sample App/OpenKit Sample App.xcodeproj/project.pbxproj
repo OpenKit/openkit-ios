@@ -95,7 +95,6 @@
 		44E722EB17F24AA70066A9AE /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E722B317F24AA70066A9AE /* FMDatabasePool.m */; };
 		44E722EC17F24AA70066A9AE /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E722B517F24AA70066A9AE /* FMDatabaseQueue.m */; };
 		44E722ED17F24AA70066A9AE /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E722B717F24AA70066A9AE /* FMResultSet.m */; };
-		44E722EE17F24AA70066A9AE /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E722BA17F24AA70066A9AE /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -257,8 +256,6 @@
 		44E722B517F24AA70066A9AE /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
 		44E722B617F24AA70066A9AE /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		44E722B717F24AA70066A9AE /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
-		44E722B917F24AA70066A9AE /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		44E722BA17F24AA70066A9AE /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -501,7 +498,6 @@
 				44E722A917F24AA70066A9AE /* AFOAuth1Client */,
 				44E722AC17F24AA70066A9AE /* FacebookSDK.framework */,
 				44E722AD17F24AA70066A9AE /* fmdb-fd95c38 */,
-				44E722B817F24AA70066A9AE /* JSONKit */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -556,15 +552,6 @@
 				44E722B717F24AA70066A9AE /* FMResultSet.m */,
 			);
 			path = "fmdb-fd95c38";
-			sourceTree = "<group>";
-		};
-		44E722B817F24AA70066A9AE /* JSONKit */ = {
-			isa = PBXGroup;
-			children = (
-				44E722B917F24AA70066A9AE /* JSONKit.h */,
-				44E722BA17F24AA70066A9AE /* JSONKit.m */,
-			);
-			path = JSONKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -723,7 +710,6 @@
 				4487F0C217E8414B004CFB57 /* OKViewController.m in Sources */,
 				44E722E117F24AA70066A9AE /* AFJSONRequestOperation.m in Sources */,
 				4487EFB817E84017004CFB57 /* main.m in Sources */,
-				44E722EE17F24AA70066A9AE /* JSONKit.m in Sources */,
 				44E722E717F24AA70066A9AE /* AFOAuth1Client.m in Sources */,
 				44E722E317F24AA70066A9AE /* AFPropertyListRequestOperation.m in Sources */,
 				44E722E217F24AA70066A9AE /* AFNetworkActivityIndicatorManager.m in Sources */,
