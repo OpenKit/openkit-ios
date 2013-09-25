@@ -20,5 +20,6 @@
 +(NSError*)OKServerRespondedWithDifferentUserIDError;
 +(NSError*)OKScoreNotSubmittedError;
 +(NSError*)noOKUserErrorScoreCached;
++(NSError*)noBodyError;
 
 @end

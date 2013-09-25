@@ -55,8 +55,9 @@
     return [NSError errorWithDomain:OKERROR_DOMAIN code:9 userInfo:[NSDictionary dictionaryWithObject:@"The score was not submitted to the OpenKit server because it is not better than previous submitted score. It may have still been submitted to GameCenter." forKey:NSLocalizedDescriptionKey]];
 }
 
-
-
++(NSError*)noBodyError {
+    return [NSError errorWithDomain:OKERROR_DOMAIN code:11 userInfo:[NSDictionary dictionaryWithObject:@"No body error" forKey:NSLocalizedDescriptionKey]];
+}
 
 
 @end
