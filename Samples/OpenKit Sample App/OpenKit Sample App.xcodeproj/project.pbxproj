@@ -90,11 +90,6 @@
 		44E722E617F24AA70066A9AE /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E722A817F24AA70066A9AE /* UIImageView+AFNetworking.m */; };
 		44E722E717F24AA70066A9AE /* AFOAuth1Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E722AB17F24AA70066A9AE /* AFOAuth1Client.m */; };
 		44E722E817F24AA70066A9AE /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E722AC17F24AA70066A9AE /* FacebookSDK.framework */; };
-		44E722E917F24AA70066A9AE /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E722AF17F24AA70066A9AE /* FMDatabase.m */; };
-		44E722EA17F24AA70066A9AE /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E722B117F24AA70066A9AE /* FMDatabaseAdditions.m */; };
-		44E722EB17F24AA70066A9AE /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E722B317F24AA70066A9AE /* FMDatabasePool.m */; };
-		44E722EC17F24AA70066A9AE /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E722B517F24AA70066A9AE /* FMDatabaseQueue.m */; };
-		44E722ED17F24AA70066A9AE /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E722B717F24AA70066A9AE /* FMResultSet.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -246,16 +241,6 @@
 		44E722AA17F24AA70066A9AE /* AFOAuth1Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOAuth1Client.h; sourceTree = "<group>"; };
 		44E722AB17F24AA70066A9AE /* AFOAuth1Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOAuth1Client.m; sourceTree = "<group>"; };
 		44E722AC17F24AA70066A9AE /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
-		44E722AE17F24AA70066A9AE /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
-		44E722AF17F24AA70066A9AE /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
-		44E722B017F24AA70066A9AE /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
-		44E722B117F24AA70066A9AE /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
-		44E722B217F24AA70066A9AE /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
-		44E722B317F24AA70066A9AE /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
-		44E722B417F24AA70066A9AE /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
-		44E722B517F24AA70066A9AE /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
-		44E722B617F24AA70066A9AE /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
-		44E722B717F24AA70066A9AE /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -497,7 +482,6 @@
 				44E7229517F24AA70066A9AE /* AFNetworking */,
 				44E722A917F24AA70066A9AE /* AFOAuth1Client */,
 				44E722AC17F24AA70066A9AE /* FacebookSDK.framework */,
-				44E722AD17F24AA70066A9AE /* fmdb-fd95c38 */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -535,23 +519,6 @@
 				44E722AB17F24AA70066A9AE /* AFOAuth1Client.m */,
 			);
 			path = AFOAuth1Client;
-			sourceTree = "<group>";
-		};
-		44E722AD17F24AA70066A9AE /* fmdb-fd95c38 */ = {
-			isa = PBXGroup;
-			children = (
-				44E722AE17F24AA70066A9AE /* FMDatabase.h */,
-				44E722AF17F24AA70066A9AE /* FMDatabase.m */,
-				44E722B017F24AA70066A9AE /* FMDatabaseAdditions.h */,
-				44E722B117F24AA70066A9AE /* FMDatabaseAdditions.m */,
-				44E722B217F24AA70066A9AE /* FMDatabasePool.h */,
-				44E722B317F24AA70066A9AE /* FMDatabasePool.m */,
-				44E722B417F24AA70066A9AE /* FMDatabaseQueue.h */,
-				44E722B517F24AA70066A9AE /* FMDatabaseQueue.m */,
-				44E722B617F24AA70066A9AE /* FMResultSet.h */,
-				44E722B717F24AA70066A9AE /* FMResultSet.m */,
-			);
-			path = "fmdb-fd95c38";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -699,12 +666,9 @@
 				44E722E417F24AA70066A9AE /* AFURLConnectionOperation.m in Sources */,
 				44E722E617F24AA70066A9AE /* UIImageView+AFNetworking.m in Sources */,
 				44E722E017F24AA70066A9AE /* AFImageRequestOperation.m in Sources */,
-				44E722E917F24AA70066A9AE /* FMDatabase.m in Sources */,
 				44E722DF17F24AA70066A9AE /* AFHTTPRequestOperation.m in Sources */,
-				44E722ED17F24AA70066A9AE /* FMResultSet.m in Sources */,
 				44E722DE17F24AA70066A9AE /* AFHTTPClient.m in Sources */,
 				44E722E517F24AA70066A9AE /* AFXMLRequestOperation.m in Sources */,
-				44E722EA17F24AA70066A9AE /* FMDatabaseAdditions.m in Sources */,
 				4487F0C117E8414B004CFB57 /* OKAppDelegate.m in Sources */,
 				4487F0C417E8414B004CFB57 /* ScoreSubmitterVC.m in Sources */,
 				4487F0C217E8414B004CFB57 /* OKViewController.m in Sources */,
@@ -713,8 +677,6 @@
 				44E722E717F24AA70066A9AE /* AFOAuth1Client.m in Sources */,
 				44E722E317F24AA70066A9AE /* AFPropertyListRequestOperation.m in Sources */,
 				44E722E217F24AA70066A9AE /* AFNetworkActivityIndicatorManager.m in Sources */,
-				44E722EB17F24AA70066A9AE /* FMDatabasePool.m in Sources */,
-				44E722EC17F24AA70066A9AE /* FMDatabaseQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
