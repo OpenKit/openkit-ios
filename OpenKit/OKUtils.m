@@ -25,7 +25,7 @@ void OKEncodeObj(id obj, NSString **strOut, NSError **errOut)
     }
     NSLog(@"Json is: %@", *strOut);
 #else
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:obj options:NULL error:errOut];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:obj options:0 error:errOut];
     if (!*errOut) {
         *strOut = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         NSLog(@"Json is: %@", *strOut);
