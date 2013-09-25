@@ -8,7 +8,7 @@
 
 #import "OKUtils.h"
 
-#define USE_JSONKIT  1
+#define USE_JSONKIT  0
 #if USE_JSONKIT
 #import "JSONKit.h"
 #endif
