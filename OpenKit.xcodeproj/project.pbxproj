@@ -71,7 +71,6 @@
 		44B0E50C17DFC69F00A80DC9 /* OKFileUtil.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 327E9E1417CEFABA00F33F24 /* OKFileUtil.h */; };
 		44B0E50D17DFC69F00A80DC9 /* OKLocalCache.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 327E9E1617CEFABA00F33F24 /* OKLocalCache.h */; };
 		44B0E50E17DFC69F00A80DC9 /* OKSessionDb.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 327E9E1817CEFABA00F33F24 /* OKSessionDb.h */; };
-		44B0EBB517EC3FFD00955089 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44B0EBB417EC3FFD00955089 /* FacebookSDK.framework */; };
 		44B3127B17CC99F200802B00 /* OKScoreCache.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 4455BEBC17A396DD0079859A /* OKScoreCache.h */; };
 		44B3127C17CC9A1600802B00 /* OKFacebookUtilities.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44E3058B178CD78E00611E0C /* OKFacebookUtilities.h */; };
 		44B50D0B176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B50D09176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m */; };
@@ -95,6 +94,7 @@
 		44C31A3517F273C8004EE2EC /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C31A2E17F273C8004EE2EC /* FMDatabasePool.m */; };
 		44C31A3617F273C8004EE2EC /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C31A3017F273C8004EE2EC /* FMDatabaseQueue.m */; };
 		44C31A3717F273C8004EE2EC /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C31A3217F273C8004EE2EC /* FMResultSet.m */; };
+		44C31A3B17F27C02004EE2EC /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44C31A3A17F27C02004EE2EC /* FacebookSDK.framework */; };
 		44E1182B1728A7CF003C2603 /* OKError.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E1182A1728A7CF003C2603 /* OKError.m */; };
 		44E30577178CCCCB00611E0C /* facebook_icon.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44E30573178CCC6D00611E0C /* facebook_icon.png */; };
 		44E30578178CCCCB00611E0C /* facebook_icon@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44E30574178CCC6D00611E0C /* facebook_icon@2x.png */; };
@@ -383,7 +383,6 @@
 		446A551717E3A98900081C7B /* OKChallenge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKChallenge.m; sourceTree = "<group>"; };
 		446BAB4D177A8F880092BD58 /* OKColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKColors.h; sourceTree = "<group>"; };
 		4474BCD317815C46000AEAD1 /* OKColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKColors.m; sourceTree = "<group>"; };
-		44B0EBB417EC3FFD00955089 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		44B50D09176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSocialLeaderboardViewController.m; sourceTree = "<group>"; };
 		44B50D0A176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSocialLeaderboardViewController.h; sourceTree = "<group>"; };
 		44B50D13176ED4B100B5D8AD /* OKSocialLeaderboardVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OKSocialLeaderboardVC.xib; sourceTree = "<group>"; };
@@ -406,6 +405,7 @@
 		44C31A3017F273C8004EE2EC /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
 		44C31A3117F273C8004EE2EC /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		44C31A3217F273C8004EE2EC /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		44C31A3A17F27C02004EE2EC /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		44E118291728A7CF003C2603 /* OKError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKError.h; sourceTree = "<group>"; };
 		44E1182A1728A7CF003C2603 /* OKError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKError.m; sourceTree = "<group>"; };
 		44E30573178CCC6D00611E0C /* facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_icon.png; sourceTree = "<group>"; };
@@ -440,7 +440,7 @@
 			files = (
 				445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */,
 				326FD0CF16CB6209004248F9 /* Foundation.framework in Frameworks */,
-				44B0EBB517EC3FFD00955089 /* FacebookSDK.framework in Frameworks */,
+				44C31A3B17F27C02004EE2EC /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,7 +620,7 @@
 		32CAD0EC16CB7A9B00E8F185 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				44B0EBB417EC3FFD00955089 /* FacebookSDK.framework */,
+				44C31A3A17F27C02004EE2EC /* FacebookSDK.framework */,
 				32880CE3176D2991005F8D30 /* AFOAuth1Client */,
 				32CAD0ED16CB7A9B00E8F185 /* AFNetworking */,
 			);
@@ -1093,11 +1093,11 @@
 		326FD0DA16CB6209004248F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				DSTROOT = /tmp/OpenKit.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/Vendor\\\"",
-					"/Users/suneets/OpenKit/public_repos/openkit-ios/Vendor",
+					"$(srcroot)Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenKit-Prefix.pch";
@@ -1110,11 +1110,11 @@
 		326FD0DB16CB6209004248F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				DSTROOT = /tmp/OpenKit.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/Vendor\\\"",
-					"/Users/suneets/OpenKit/public_repos/openkit-ios/Vendor",
+					"$(srcroot)Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenKit-Prefix.pch";

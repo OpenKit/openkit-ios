@@ -797,9 +797,8 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
+					"$(srcroot)../../Vendor",
 					"$(inherited)",
-					"/Users/suneets/OpenKit/released_downloads/openkit-ios-1.0/OpenKitSDK/Vendor",
-					"/Users/suneets/OpenKit/public_repos/openkit-ios/OpenKitSDK/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenKit Sample App/OpenKit Sample App-Prefix.pch";
@@ -807,8 +806,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/suneets/OpenKit/released_downloads/openkit-ios-1.0/OpenKitSDK",
-					"/Users/suneets/OpenKit/public_repos/openkit-ios/OpenKitSDK",
+					"$(srcroot)../../OpenKitSDK",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -823,9 +821,8 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
+					"$(srcroot)../../Vendor",
 					"$(inherited)",
-					"/Users/suneets/OpenKit/released_downloads/openkit-ios-1.0/OpenKitSDK/Vendor",
-					"/Users/suneets/OpenKit/public_repos/openkit-ios/OpenKitSDK/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenKit Sample App/OpenKit Sample App-Prefix.pch";
@@ -833,8 +830,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/suneets/OpenKit/released_downloads/openkit-ios-1.0/OpenKitSDK",
-					"/Users/suneets/OpenKit/public_repos/openkit-ios/OpenKitSDK",
+					"$(srcroot)../../OpenKitSDK",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
