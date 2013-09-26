@@ -797,7 +797,7 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(srcroot)../../Vendor",
+					"$(srcroot)../../OpenKitSDK/Vendor",
 					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -821,7 +821,7 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(srcroot)../../Vendor",
+					"$(srcroot)../../OpenKitSDK/Vendor",
 					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
