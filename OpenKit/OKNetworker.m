@@ -2,8 +2,6 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
-#define USE_JSONKIT  1
-
 
 #import "OKNetworker.h"
 #import "OKManager.h"
@@ -11,6 +9,7 @@
 #import "AFOAuth1Client.h"
 #import "OKUtils.h"
 #import "OKMacros.h"
+#import "OKError.h"
 
 
 
@@ -63,6 +62,10 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
             handler(nil, err);
         } else {
             id decodedObj = OKDecodeObj(response, &err);
+            if (decodedObj == [NSNull null]) {
+                decodedObj = nil;
+                err = [OKError noBodyError];
+            }
             handler(decodedObj, err);
         }
     };
