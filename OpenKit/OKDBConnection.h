@@ -1,5 +1,5 @@
 //
-//  OKLocalCache.h
+//  OKDBConnection.h
 //  OpenKit
 //
 //  Created by Louis Zell on 8/20/13.

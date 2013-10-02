@@ -15,8 +15,8 @@
 		32243B0516CDE3EF0077EDC8 /* libmono.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32243B0416CDE3EF0077EDC8 /* libmono.0.dylib */; };
 		326FD0CF16CB6209004248F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
 		327E9E1A17CEFABA00F33F24 /* OKFileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1517CEFABA00F33F24 /* OKFileUtil.m */; };
-		327E9E1B17CEFABA00F33F24 /* OKLocalCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1717CEFABA00F33F24 /* OKLocalCache.m */; };
-		327E9E1C17CEFABA00F33F24 /* OKSessionDb.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1917CEFABA00F33F24 /* OKSessionDb.m */; };
+		327E9E1B17CEFABA00F33F24 /* OKDBConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1717CEFABA00F33F24 /* OKDBConnection.m */; };
+		327E9E1C17CEFABA00F33F24 /* OKDBSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1917CEFABA00F33F24 /* OKDBSession.m */; };
 		3284E16316CE4AC900624827 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3284E16216CE4AC900624827 /* Foundation.framework */; };
 		3284E16416CE4AFC00624827 /* OKUnityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */; };
 		3284E16516CE4AFE00624827 /* OKBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243AFE16CDE3C80077EDC8 /* OKBridge.m */; };
@@ -69,8 +69,8 @@
 		4474BCD517815CAB000AEAD1 /* OKColors.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 446BAB4D177A8F880092BD58 /* OKColors.h */; };
 		4474BCD617815E5C000AEAD1 /* OKUtils.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32880CEC176DC784005F8D30 /* OKUtils.h */; };
 		44B0E50C17DFC69F00A80DC9 /* OKFileUtil.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 327E9E1417CEFABA00F33F24 /* OKFileUtil.h */; };
-		44B0E50D17DFC69F00A80DC9 /* OKLocalCache.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 327E9E1617CEFABA00F33F24 /* OKLocalCache.h */; };
-		44B0E50E17DFC69F00A80DC9 /* OKSessionDb.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 327E9E1817CEFABA00F33F24 /* OKSessionDb.h */; };
+		44B0E50D17DFC69F00A80DC9 /* OKDBConnection.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 327E9E1617CEFABA00F33F24 /* OKDBConnection.h */; };
+		44B0E50E17DFC69F00A80DC9 /* OKDBSession.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 327E9E1817CEFABA00F33F24 /* OKDBSession.h */; };
 		44B3127B17CC99F200802B00 /* OKScoreCache.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 4455BEBC17A396DD0079859A /* OKScoreCache.h */; };
 		44B3127C17CC9A1600802B00 /* OKFacebookUtilities.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44E3058B178CD78E00611E0C /* OKFacebookUtilities.h */; };
 		44B50D0B176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B50D09176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m */; };
@@ -130,6 +130,7 @@
 		44F3CD5817CC1A5700D054CF /* gc_off_big@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2C41B80717BFD8E5005F239B /* gc_off_big@2x.png */; };
 		44F3CD5917CC1A5700D054CF /* gc_on_big.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2C41B80817BFD8E5005F239B /* gc_on_big.png */; };
 		44F3CD5A17CC1A5700D054CF /* gc_on_big@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2C41B80917BFD8E5005F239B /* gc_on_big@2x.png */; };
+		A95FF91117FB721D00611351 /* OKSession.m in Sources */ = {isa = PBXBuildFile; fileRef = A95FF91017FB721D00611351 /* OKSession.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,8 +168,8 @@
 			files = (
 				44F3004E17E2F2D800108D05 /* OKUserUtilities.h in Copy Files */,
 				44B0E50C17DFC69F00A80DC9 /* OKFileUtil.h in Copy Files */,
-				44B0E50D17DFC69F00A80DC9 /* OKLocalCache.h in Copy Files */,
-				44B0E50E17DFC69F00A80DC9 /* OKSessionDb.h in Copy Files */,
+				44B0E50D17DFC69F00A80DC9 /* OKDBConnection.h in Copy Files */,
+				44B0E50E17DFC69F00A80DC9 /* OKDBSession.h in Copy Files */,
 				44B3127C17CC9A1600802B00 /* OKFacebookUtilities.h in Copy Files */,
 				44B3127B17CC99F200802B00 /* OKScoreCache.h in Copy Files */,
 				4474BCD617815E5C000AEAD1 /* OKUtils.h in Copy Files */,
@@ -292,10 +293,10 @@
 		326FD0CE16CB6209004248F9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		327E9E1417CEFABA00F33F24 /* OKFileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFileUtil.h; sourceTree = "<group>"; };
 		327E9E1517CEFABA00F33F24 /* OKFileUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFileUtil.m; sourceTree = "<group>"; };
-		327E9E1617CEFABA00F33F24 /* OKLocalCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKLocalCache.h; sourceTree = "<group>"; };
-		327E9E1717CEFABA00F33F24 /* OKLocalCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKLocalCache.m; sourceTree = "<group>"; };
-		327E9E1817CEFABA00F33F24 /* OKSessionDb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSessionDb.h; sourceTree = "<group>"; };
-		327E9E1917CEFABA00F33F24 /* OKSessionDb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSessionDb.m; sourceTree = "<group>"; };
+		327E9E1617CEFABA00F33F24 /* OKDBConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDBConnection.h; sourceTree = "<group>"; };
+		327E9E1717CEFABA00F33F24 /* OKDBConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKDBConnection.m; sourceTree = "<group>"; };
+		327E9E1817CEFABA00F33F24 /* OKDBSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDBSession.h; sourceTree = "<group>"; };
+		327E9E1917CEFABA00F33F24 /* OKDBSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKDBSession.m; sourceTree = "<group>"; };
 		3284E14916CE49AB00624827 /* UnityPluginMac.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnityPluginMac.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		3284E15A16CE4A6F00624827 /* UnityPluginMac-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "UnityPluginMac-Info.plist"; sourceTree = "<group>"; };
 		3284E15B16CE4A6F00624827 /* UnityPluginMac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UnityPluginMac-Prefix.pch"; sourceTree = "<group>"; };
@@ -422,6 +423,8 @@
 		44E3F3C716EAED4500509219 /* AFImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageView.m; sourceTree = "<group>"; };
 		44F3004B17E2F1CD00108D05 /* OKUserUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUserUtilities.h; sourceTree = "<group>"; };
 		44F3004C17E2F1CD00108D05 /* OKUserUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUserUtilities.m; sourceTree = "<group>"; };
+		A95FF90F17FB721D00611351 /* OKSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSession.h; sourceTree = "<group>"; };
+		A95FF91017FB721D00611351 /* OKSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSession.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -781,12 +784,14 @@
 		44DD160817DFEA0900D914FA /* Cache */ = {
 			isa = PBXGroup;
 			children = (
+				A95FF90F17FB721D00611351 /* OKSession.h */,
+				A95FF91017FB721D00611351 /* OKSession.m */,
 				327E9E1417CEFABA00F33F24 /* OKFileUtil.h */,
 				327E9E1517CEFABA00F33F24 /* OKFileUtil.m */,
-				327E9E1617CEFABA00F33F24 /* OKLocalCache.h */,
-				327E9E1717CEFABA00F33F24 /* OKLocalCache.m */,
-				327E9E1817CEFABA00F33F24 /* OKSessionDb.h */,
-				327E9E1917CEFABA00F33F24 /* OKSessionDb.m */,
+				327E9E1617CEFABA00F33F24 /* OKDBConnection.h */,
+				327E9E1717CEFABA00F33F24 /* OKDBConnection.m */,
+				327E9E1817CEFABA00F33F24 /* OKDBSession.h */,
+				327E9E1917CEFABA00F33F24 /* OKDBSession.m */,
 				4455BEBC17A396DD0079859A /* OKScoreCache.h */,
 				4455BEBD17A396DE0079859A /* OKScoreCache.m */,
 			);
@@ -943,6 +948,7 @@
 				32CACFD716CB637C00E8F185 /* KGModal.m in Sources */,
 				32CACFD816CB637C00E8F185 /* OKBaseLoginViewController.m in Sources */,
 				32CACFDA16CB637C00E8F185 /* OKManager.m in Sources */,
+				A95FF91117FB721D00611351 /* OKSession.m in Sources */,
 				44C31A3317F273C8004EE2EC /* FMDatabase.m in Sources */,
 				32CACFDC16CB637C00E8F185 /* OKHelper.m in Sources */,
 				32CACFDD16CB637C00E8F185 /* OKLeaderboard.m in Sources */,
@@ -976,8 +982,8 @@
 				44E3058D178CD78E00611E0C /* OKFacebookUtilities.m in Sources */,
 				4455BEBE17A396DE0079859A /* OKScoreCache.m in Sources */,
 				327E9E1A17CEFABA00F33F24 /* OKFileUtil.m in Sources */,
-				327E9E1B17CEFABA00F33F24 /* OKLocalCache.m in Sources */,
-				327E9E1C17CEFABA00F33F24 /* OKSessionDb.m in Sources */,
+				327E9E1B17CEFABA00F33F24 /* OKDBConnection.m in Sources */,
+				327E9E1C17CEFABA00F33F24 /* OKDBSession.m in Sources */,
 				44F3004D17E2F1CD00108D05 /* OKUserUtilities.m in Sources */,
 				446A551817E3A98900081C7B /* OKChallenge.m in Sources */,
 			);

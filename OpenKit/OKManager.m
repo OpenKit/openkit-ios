@@ -16,8 +16,8 @@
 #import "OKUserProfileImageView.h"
 #import "OKLeaderboardsViewController.h"
 #import "OKScoreCache.h"
-#import "OKLocalCache.h"
-#import "OKSessionDb.h"
+#import "OKDBConnection.h"
+#import "OKDBSession.h"
 #import "OKMacros.h"
 
 #define OK_DEFAULT_ENDPOINT    @"http://api.openkit.io"

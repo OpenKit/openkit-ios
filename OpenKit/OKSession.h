@@ -7,7 +7,7 @@
 //
 //
 #import <Foundation/Foundation.h>
-#import "OKLocalCache.h"
+#import "OKDBConnection.h"
 
 @interface OKSession : OKDBRow
 

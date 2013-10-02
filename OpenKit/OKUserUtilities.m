@@ -14,7 +14,7 @@
 #import "OKMacros.h"
 #import "OKError.h"
 #import "OKHelper.h"
-#import "OKSessionDb.h"
+#import "OKDBSession.h"
 #import "AFNetworking.h"
 
 

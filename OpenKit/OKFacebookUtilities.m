@@ -17,7 +17,7 @@
 #import "OKUser.h"
 #import "OKScoreCache.h"
 #import "OKHelper.h"
-#import "OKSessionDb.h"
+#import "OKDBSession.h"
 
 @implementation OKFacebookUtilities
 

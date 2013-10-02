@@ -1,5 +1,5 @@
 //
-//  OKSessionDb.h
+//  OKDBSession.h
 //  OpenKit
 //
 //  Created by Louis Zell on 8/22/13.
@@ -8,7 +8,7 @@
 //
 #import <Foundation/Foundation.h>
 
-#import "OKLocalCache.h"
+#import "OKDBConnection.h"
 #import "OKSession.h"
 
 

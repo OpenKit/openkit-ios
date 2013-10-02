@@ -6,8 +6,7 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
-#import "OKSessionDb.h"
-#import "OKLocalCache.h"
+#import "OKDBSession.h"
 #import "OKMacros.h"
 #import "OKNetworker.h"
 #import "OKUtils.h"

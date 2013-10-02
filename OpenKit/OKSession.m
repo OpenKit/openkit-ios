@@ -7,7 +7,7 @@
 //
 
 #import "OKSession.h"
-#import "OKSessionDb.h"
+#import "OKDBSession.h"
 #import "OKUser.h"
 #import "OKMacros.h"
 #import "OKNetworker.h"

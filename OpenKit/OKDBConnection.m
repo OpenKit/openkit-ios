@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
-#import "OKLocalCache.h"
+#import "OKDBConnection.h"
 #import "OKMacros.h"
 #import "OKFileUtil.h"
 
