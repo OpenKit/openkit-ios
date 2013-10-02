@@ -24,7 +24,7 @@
 + (void)updateSessionUserId:(NSNumber *)okId
 {
     dispatch_async(OK_CACHE_QUEUE(), ^{
-        [[OKSessionDb db] loginOpenKit:[okId stringValue]];
+        [OKSession loginOpenKit:[okId stringValue]];
     });
 }
 

@@ -215,7 +215,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
 
     OKLogInfo(@"cache queue is %s", dispatch_queue_get_label(OK_CACHE_QUEUE()));
     dispatch_async(OK_CACHE_QUEUE(), ^{
-        [[OKSessionDb db] registerPush:hexToken];
+        [OKSession registerPush:hexToken];
     });
 }
 
@@ -283,7 +283,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
 {
     dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (100.0f * NSEC_PER_MSEC));
     dispatch_after(delay, OK_CACHE_QUEUE(), ^{
-        [[OKSessionDb db] activate];
+        [OKSession activate];
     });
     
     [self submitCachedScoresAfterDelay];

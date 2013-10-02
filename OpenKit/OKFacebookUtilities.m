@@ -47,7 +47,7 @@
             NSString *userNick = [result objectForKey:@"name"];
 
             dispatch_async(OK_CACHE_QUEUE(), ^{
-                [[OKSessionDb db] loginFB:fbUserID];
+                [OKSession loginFB:fbUserID];
             });
 
             [OKFacebookUtilities CreateOKUserWithFacebookID:fbUserID withUserNick:userNick withCompletionHandler:^(OKUser *user, NSError *error) {
@@ -105,7 +105,7 @@
             [user setUserNick:userNick];
 
             dispatch_async(OK_CACHE_QUEUE(), ^{
-                [[OKSessionDb db] loginFB:fbUserID];
+                [OKSession loginFB:fbUserID];
             });
 
             //Save the current user locally

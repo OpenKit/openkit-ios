@@ -9,25 +9,12 @@
 #import <Foundation/Foundation.h>
 
 #import "OKLocalCache.h"
+#import "OKSession.h"
 
 
-@interface OKSessionDb : OKLocalCache
+@interface OKDBSession : OKDBConnection
 
-+ (OKSessionDb *)db;
-- (void)activate;
-
-- (void)registerPush:(NSString *)pushToken;
-- (void)loginFB:(NSString *)aFacebookId;
-- (void)logoutFB;
-- (void)loginGoogle:(NSString *)aGoogleId;
-- (void)logoutGoogle;
-- (void)loginCustom:(NSString *)aCustomId;
-- (void)logoutCustom;
-
-// Temporary.
-- (void)loginOpenKit:(NSString *)anOpenKitId;
-- (void)logoutOpenKit;
-
+- (OKSession*)lastSession;
 
 @end
 
