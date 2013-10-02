@@ -394,7 +394,7 @@ static NSString *dbVersion = @"1";
     
     if([cachedScores count] > 0)
     {
-        OKLog(@"Submit all cached scores");
+        OKLogInfo(@"Submiting %d cached OpenKit scores", [cachedScores count]);
         
         for(int x = 0; x < [cachedScores count]; x++)
         {
