@@ -24,28 +24,59 @@ extern dispatch_queue_t __OKCacheQueue;
 
 
 #import "FMDatabase.h"
-#import "FMResultSet.h"
-
 #import <Foundation/Foundation.h>
 
-@interface OKLocalCache : NSObject
+
+
+@class OKDBConnection;
+
+
+typedef enum
 {
-    NSString *_createSql;
-    NSString *_version;
-    FMDatabase *_database;
-}
-@property (nonatomic, readonly) NSString *name;
+    kOKNotSubmitted,
+    kOKSubmitting,
+    kOKSubmitted
+}OKSubmitState;
 
 
-#pragma mark - API
-- (id)initWithCacheName:(NSString *)name createSql:(NSString *)sql version:(NSString *)version;
-- (void)access:(void(^)(FMDatabase *))block;
+static const int OKNoIndex = -1;
 
-// You can use this for insert/update/delete without access block.  Selects should
-// go through access block so FMResultSet access is contained.
-- (BOOL)update:(NSString *)sql, ...;
 
-#pragma mark - OK Specific
-- (BOOL)insertToken:(NSString *)tokenStr;
+@interface OKDBRow : NSObject
+
+@property(nonatomic, readwrite) int rowIndex;
+@property(nonatomic, copy) NSDate *dbModifyDate;
+@property(nonatomic, strong) OKDBConnection *dbConnection;
+@property(nonatomic, readwrite) OKSubmitState submitState;
+
+- (OKDBRow*)syncWithDB;
 
 @end
+
+
+
+@interface OKDBConnection : NSObject
+{
+    NSString *_dbPath;
+    NSString *_createSql;
+    FMDatabase *_database;
+}
+@property(nonatomic, readonly) NSString *version;
+@property(nonatomic, readonly) NSString *name;
+
++ (id)sharedConnection;
+- (id)initWithName:(NSString *)name createSql:(NSString *)sql version:(NSString *)version;
+
+//! Low level method to establish a connection with the DB.
+- (void)access:(void(^)(FMDatabase *))block;
+
+//! You can use this for insert/update/delete without access block.  Selects should
+//! go through access block so FMResultSet access is contained.
+- (BOOL)update:(NSString *)sql, ...;
+
+//! You can use this to select data from the DB connection.
+- (void)executeQuery:(NSString*)query access:(void(^)(FMResultSet *))block;
+- (id)syncRow:(OKDBRow*)row;
+
+@end
+

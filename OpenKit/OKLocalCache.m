@@ -11,18 +11,53 @@
 #import "OKFileUtil.h"
 
 
+
 #if !OK_CACHE_USES_MAIN
 dispatch_queue_t __OKCacheQueue = nil;
 #endif
 
 
-@implementation OKLocalCache
+@implementation OKDBRow
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _rowIndex = OKNoIndex;
+        _submitState = kOKNotSubmitted;
+        _dbConnection = nil;
+        _dbModifyDate = nil;
+    }
+    return self;
+}
+
+
+- (OKDBRow*)syncWithDB
+{
+    [_dbConnection syncRow:self];
+    return self;
+}
+
+@end
+
+
+
+@implementation OKDBConnection
 
 
 #pragma mark - API
-- (id)initWithCacheName:(NSString *)name createSql:(NSString *)sql version:(NSString *)version
+
++ (id)sharedConnection
+{
+    NSLog(@"Override this method");
+    return nil;
+}
+
+
+- (id)initWithName:(NSString *)name createSql:(NSString *)sql version:(NSString *)version
 {
     if ((self = [super init])) {
+        _dbPath = nil;
         _name = [name copy];
         _createSql = [sql copy];
         _version = [version copy];
@@ -43,6 +78,7 @@ dispatch_queue_t __OKCacheQueue = nil;
     }
 }
 
+
 - (BOOL)update:(NSString *)sql, ...
 {
     va_list args;
@@ -50,9 +86,9 @@ dispatch_queue_t __OKCacheQueue = nil;
 
     __block BOOL success;
     [self access:^(FMDatabase *db) {
-        OKLogInfo(@"Performing cache update: %@", sql);
+        OKLogInfo(@"DBConnection: Performing cache update: %@", sql);
         success = [db executeUpdate:sql error:nil withArgumentsInArray:nil orDictionary:nil orVAList:args];
-        OKLogInfo(@"...%@", (success ? @"success" : @"FAIL"));
+        OKLogInfo(@"    ...%@", (success ? @"success" : @"FAIL"));
     }];
     va_end(args);
 
@@ -60,14 +96,63 @@ dispatch_queue_t __OKCacheQueue = nil;
 }
 
 
+- (void)executeQuery:(NSString*)sql access:(void(^)(FMResultSet *))block
+{
+    [self access:^(FMDatabase *db){
+        OKLogInfo(@"DBConnection: Performing cache query: %@", sql);
+
+        FMResultSet *rs = [db executeQuery:sql];
+        OKLogInfo(@"    ...%@", (rs ? @"success" : @"FAIL"));
+        block(rs);
+    }];
+}
+
+
+- (id)syncRow:(OKDBRow*)row
+{
+    [row setDbConnection:self];
+    [row setDbModifyDate:[NSDate date]];
+    
+    if(row.rowIndex == OKNoIndex)
+        return [self insertRow:row];
+    else
+        return [self updateRow:row];
+    
+    return row;
+}
+
+
+- (id)insertRow:(OKDBRow*)row
+{
+    NSAssert(NO, @"This method should be override");
+    return nil;
+}
+
+
+- (id)updateRow:(OKDBRow *)row
+{
+    NSAssert(NO, @"This method should be override");
+    return nil;
+}
+
+
+- (id)removeRow:(OKDBRow*)row
+{
+    NSAssert(NO, @"This method should be override");
+    return row;
+}
+
+
 #pragma mark - Private
+
 -(FMDatabase *)database
 {
-    if (_database == nil) {
+    if (_database == nil)
         _database = [FMDatabase databaseWithPath:[self dbPath]];
-    }
+    
     return _database;
 }
+
 
 - (BOOL)executeCreateSql
 {
@@ -87,15 +172,20 @@ dispatch_queue_t __OKCacheQueue = nil;
     return !failed;
 }
 
+
 - (NSString *)cacheDirPath
 {
     return [OKFileUtil localOnlyCachePath];
 }
 
+
 - (NSString *)dbPath
 {
-    NSString *s = [NSString stringWithFormat:@"%@-%@.sqlite", _name, _version];
-    return [[self cacheDirPath] stringByAppendingPathComponent:s];
+    if(_dbPath == nil) {
+        NSString *s = [NSString stringWithFormat:@"%@-%@.sqlite", _name, _version];
+        _dbPath = [[self cacheDirPath] stringByAppendingPathComponent:s];
+    }
+    return _dbPath;
 }
 
 
@@ -114,16 +204,5 @@ dispatch_queue_t __OKCacheQueue = nil;
         }
     }
 }
-
-#pragma mark - OKSpecific
-
-- (BOOL)insertToken:(NSString *)tokenStr
-{
-    NSDate *now = [NSDate date];
-    return [self update:@"insert into tokens (token, submitted, created_at) values (?, ?, ?) ", tokenStr, [NSNumber numberWithInt:0], now];
-}
-
-
-
 
 @end
