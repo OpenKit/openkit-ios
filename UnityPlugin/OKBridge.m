@@ -85,7 +85,9 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 - (void)dealloc
 {
     OKBridgeLog(@"Dealloc BaseBridgeViewController");
+    OKBridgeLog(@"Window retain count before release: %d", [_window retainCount]);
     [_window release];
+    OKBridgeLog(@"Window retain count after release: %d", [_window retainCount]);
     [super dealloc];
 }
 
