@@ -15,7 +15,7 @@
 #import "OKDefines.h"
 #import "OKUserProfileImageView.h"
 #import "OKLeaderboardsViewController.h"
-#import "OKScoreCache.h"
+#import "OKScoreDB.h"
 #import "OKLocalCache.h"
 #import "OKSessionDb.h"
 #import "OKMacros.h"
@@ -133,7 +133,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     //Log out and clear Facebook
     [FBSession.activeSession closeAndClearTokenInformation];
     
-    [[OKScoreCache sharedCache] clearCachedSubmittedScores];
+    [[OKScoreDB sharedCache] clearCachedSubmittedScores];
 }
 
 - (void)saveCurrentUser:(OKUser *)aCurrentUser
@@ -141,7 +141,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     self->_currentUser = aCurrentUser;
     [self removeCachedUserFromNSUserDefaults];
     [self saveCurrentUserToNSUserDefaults];
-    [[OKScoreCache sharedCache] submitAllCachedScores];
+    [[OKScoreDB sharedCache] submitAllCachedScores];
 }
 
 -(void)getSavedUserFromNSUserDefaults
@@ -265,7 +265,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [[OKScoreCache sharedCache] submitAllCachedScores];
+        [[OKScoreDB sharedCache] submitAllCachedScores];
     });
 }
 

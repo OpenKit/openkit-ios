@@ -15,7 +15,6 @@
 #import "OKMacros.h"
 #import "OKError.h"
 #import "OKUser.h"
-#import "OKScoreCache.h"
 #import "OKHelper.h"
 #import "OKSessionDb.h"
 

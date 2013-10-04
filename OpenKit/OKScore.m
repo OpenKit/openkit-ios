@@ -15,7 +15,7 @@
 #import "OKGameCenterUtilities.h"
 #import "OKMacros.h"
 #import "OKError.h"
-#import "OKScoreCache.h"
+#import "OKScoreDB.h"
 #import "OKHelper.h"
 #import "OKUtils.h"
 #import "OKLeaderboard.h"
@@ -112,14 +112,14 @@
     [self setUser:[OKUser currentUser]];
     
     // Store the score in cache and find out if it should be submitted
-    BOOL shouldSubmit = [[OKScoreCache sharedCache] isScoreBetterThanLocalCachedScores:self storeScore:YES];
+    BOOL shouldSubmit = [[OKScoreDB sharedCache] isScoreBetterThanLocalCachedScores:self storeScore:YES];
     
     // If there is an OKUser and the score is better than a submitted cached score
     if([self user] && shouldSubmit) {
         [self submitScoreBaseWithCompletionHandler:^(NSError *error) {
             if(!error) {
                 // Score submitted successfully, update the cace
-                [[OKScoreCache sharedCache] updateCachedScoreSubmitted:self];
+                [[OKScoreDB sharedCache] updateCachedScoreSubmitted:self];
             }
             completionHandler(error);
         }];
@@ -164,8 +164,8 @@
          }
          completionHandler(error);
          
-         OKScore *previousScore = [[OKScoreCache sharedCache] previousSubmittedScore];
-         [[OKScoreCache sharedCache] setPreviousSubmittedScore:nil];
+         OKScore *previousScore = [[OKScoreDB sharedCache] previousSubmittedScore];
+         [[OKScoreDB sharedCache] setPreviousSubmittedScore:nil];
          
          // If there was no error, try issuing a push challenge
          if(!error) {

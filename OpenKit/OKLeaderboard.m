@@ -17,7 +17,7 @@
 #import "OKGKScoreWrapper.h"
 #import "OKMacros.h"
 #import "OKFacebookUtilities.h"
-#import "OKScoreCache.h"
+#import "OKScoreDB.h"
 #import "OKUserUtilities.h"
 
 @implementation OKLeaderboard
@@ -365,7 +365,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 -(OKScore*)getPlayerTopScoreFromLocalCache
 {
-    NSArray *cachedScores = [[OKScoreCache sharedCache] getCachedScoresForLeaderboardID:[self OKLeaderboard_id] andOnlyGetSubmittedScores:NO];
+    NSArray *cachedScores = [[OKScoreDB sharedCache] getCachedScoresForLeaderboardID:[self OKLeaderboard_id] andOnlyGetSubmittedScores:NO];
     
     if([cachedScores count] == 0)
         return nil;
