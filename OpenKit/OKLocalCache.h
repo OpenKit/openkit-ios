@@ -45,6 +45,12 @@ extern dispatch_queue_t __OKCacheQueue;
 // go through access block so FMResultSet access is contained.
 - (BOOL)update:(NSString *)sql, ...;
 
+// Get the autoincrement primary key int ID of the last inserted row
+-(int)lastInsertRowID;
+
+// Get the last error message from FMDB
+-(NSString*)lastErrorMessage;
+
 #pragma mark - OK Specific
 - (BOOL)insertToken:(NSString *)tokenStr;
 

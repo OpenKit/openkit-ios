@@ -59,6 +59,24 @@ dispatch_queue_t __OKCacheQueue = nil;
     return success;
 }
 
+-(int)lastInsertRowID
+{
+    FMDatabase *db = [self database];
+    if ([db open]){
+        int lastRow = [db lastInsertRowId];
+        [db close];
+        return lastRow;
+    } else {
+        OKLogErr(@"Could not open db in local cache.");
+        return 0;
+    }
+}
+
+-(NSString*)lastErrorMessage
+{
+    return [[self database] lastErrorMessage];
+}
+
 
 #pragma mark - Private
 -(FMDatabase *)database
