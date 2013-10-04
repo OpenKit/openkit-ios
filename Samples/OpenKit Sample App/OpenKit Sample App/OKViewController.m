@@ -5,8 +5,8 @@
 //  Created by Suneet Shah on 12/26/12.
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
-#import "OKScoreCache.h"
 
+#import "OKScoreDB.h"
 #import "OKViewController.h"
 #import "ScoreSubmitterVC.h"
 #import "OKFacebookUtilities.h"
@@ -90,6 +90,8 @@
     //OKLeaderboardsViewController *leaderBoards = [[OKLeaderboardsViewController alloc] initWithDefaultLeaderboardID:25];
     
     [self presentViewController:leaderBoards animated:YES completion:nil];
+    
+    NSLog(@"Score cache is: %@", [[OKScoreDB sharedCache] getAllCachedScores]);
 }
 
 -(IBAction)submitScore:(id)sender
