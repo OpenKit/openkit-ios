@@ -62,6 +62,7 @@
 		32CAD04616CB65F700E8F185 /* OKLeaderboardsListViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CAD02916CB65E800E8F185 /* OKLeaderboardsListViewController.xib */; };
 		32CAD04916CB65F700E8F185 /* OKProfileViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CAD02C16CB65E800E8F185 /* OKProfileViewController.xib */; };
 		44469D8D17FE4F1800BEBF41 /* OKScoreDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 44469D8C17FE4F1800BEBF41 /* OKScoreDB.m */; };
+		44469D9217FE640500BEBF41 /* OKScoreDB.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44469D8B17FE4F1800BEBF41 /* OKScoreDB.h */; };
 		445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
 		445B3C001769258C00952456 /* OKGameCenterUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 445B3BFF1769258C00952456 /* OKGameCenterUtilities.m */; };
 		446A551817E3A98900081C7B /* OKChallenge.m in Sources */ = {isa = PBXBuildFile; fileRef = 446A551717E3A98900081C7B /* OKChallenge.m */; };
@@ -164,6 +165,7 @@
 			dstPath = include;
 			dstSubfolderSpec = 16;
 			files = (
+				44469D9217FE640500BEBF41 /* OKScoreDB.h in Copy Files */,
 				44F3004E17E2F2D800108D05 /* OKUserUtilities.h in Copy Files */,
 				44B0E50C17DFC69F00A80DC9 /* OKFileUtil.h in Copy Files */,
 				44B0E50D17DFC69F00A80DC9 /* OKLocalCache.h in Copy Files */,

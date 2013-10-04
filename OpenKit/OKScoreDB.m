@@ -7,10 +7,13 @@
 //
 
 #import "OKScoreDB.h"
+#import "OKScore.h"
 #import "OKMacros.h"
 #import "OKHelper.h"
 #import "OKUser.h"
 #import "OKNetworker.h"
+#import "FMResultSet.h"
+#import "FMDatabase.h"
 
 
 // DB Schema is:
@@ -50,9 +53,14 @@ static NSString* const kScoreTableCreateSQL = @"CREATE TABLE IF NOT EXISTS OKCAC
 
 -(void)insertScore:(OKScore*)score
 {
-    NSString *scoreUpdateString = @"INSERT INTO OKCACHE(leaderboardID,scoreValue,metadata,displayString,submitted) VALUES(?,?,?,?,?);";
+    NSString *scoreUpdateString = @"INSERT INTO OKCACHE (leaderboardID,scoreValue,metadata,displayString,submitted) VALUES(?,?,?,?,?)";
     
-    BOOL inserted = [self update:scoreUpdateString,score.OKLeaderboardID,score.scoreValue,score.metadata,score.displayString,score.submitted];
+    BOOL inserted = [self update:scoreUpdateString,
+                     [NSNumber numberWithInt:score.OKLeaderboardID],
+                     [NSNumber numberWithLongLong:score.scoreValue],
+                     [NSNumber numberWithInt:score.metadata],
+                     score.displayString,
+                     [NSNumber numberWithBool:score.submitted]];
     
     if(inserted) {
         int scoreID = [self lastInsertRowID];
@@ -75,7 +83,7 @@ static NSString* const kScoreTableCreateSQL = @"CREATE TABLE IF NOT EXISTS OKCAC
     
     NSString *deleteSQL = @"DELETE FROM OKCACHE WHERE id=?";
     
-    BOOL deleted = [self update:deleteSQL,[score OKScoreID]];
+    BOOL deleted = [self update:deleteSQL,[NSNumber numberWithInt:[score OKScoreID]]];
     
     if(deleted) {
         OKLogInfo(@"Removed score: %@", score);
@@ -93,7 +101,7 @@ static NSString* const kScoreTableCreateSQL = @"CREATE TABLE IF NOT EXISTS OKCAC
     
     NSString *updateString = @"UPDATE OKCACHE SET Submitted=1 WHERE id=?";
     
-    BOOL updated = [self update:updateString, [score OKScoreID]];
+    BOOL updated = [self update:updateString, [NSNumber numberWithInt:[score OKScoreID]]];
     
     if(!updated) {
         OKLog(@"Failed to update score row with error message %@", [self lastErrorMessage]);
