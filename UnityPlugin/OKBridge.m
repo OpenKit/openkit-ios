@@ -120,6 +120,13 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 {
     OKBridgeLog(@"Showing OKLeaderboardsViewController with default id: %d", _defaultLeaderboardID);
     self.leaderboardsVC = [[[OKLeaderboardsViewController alloc] initWithDefaultLeaderboardID:_defaultLeaderboardID] autorelease];
+    
+    if(self.leaderboardsVC == nil) {
+        OKLog(@"OKDashBridgeVC: couldn't alloc OKleaderboardsViewController");
+        [self dismissViewControllerAnimated:NO completion:nil];
+        return;
+    }
+    
     [self.leaderboardsVC setShowLandscapeOnly:_shouldShowLandscapeOnly];
     [self presentModalViewController:self.leaderboardsVC animated:YES];
 }
@@ -215,6 +222,15 @@ void OKBridgeShowLeaderboardsBase(BOOL showLandscapeOnly, int defaultLeaderboard
 
     // Set shouldShowLandscapeOnly & defaultLeaderboardID
     OKDashBridgeViewController *vc = [[OKDashBridgeViewController alloc] init];
+    
+    if(vc == nil) {
+        if(win) {
+            [win release];
+        }
+        OKLog(@"OKBridge: could not show leaderboard because OKDashBridgeViewController came back as nil");
+        return;
+    }
+    
     [vc setShouldShowLandscapeOnly:showLandscapeOnly];
     [vc setDefaultLeaderboardID:defaultLeaderboardID];
     
