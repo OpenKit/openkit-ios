@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "OKLocalCache.h"
-#import "OKScore.h"
+
+@class OKScore;
 
 @interface OKScoreDB : OKLocalCache
 
