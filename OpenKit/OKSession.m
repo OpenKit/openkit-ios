@@ -40,7 +40,9 @@ OKSession *__currentSession = nil;
     self.okId = [OKHelper getNSStringSafeForKey:@"ok_id" fromJSONDictionary:dict];
 
     // date
-    //self.dbModifyDate = [OKHelper getNSStringSafeForKey:@"client_created_at" fromJSONDictionary:dict];
+    NSString *date = [dict objectForKey:@"modify_date"];
+    if(date)
+        self.modifyDate = [OKUtils dateFromSqlString:date];
 }
 
 
