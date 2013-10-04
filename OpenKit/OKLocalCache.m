@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
+#import "FMResultSet.h"
+#import "FMDatabase.h"
 #import "OKLocalCache.h"
 #import "OKMacros.h"
 #import "OKFileUtil.h"
@@ -17,6 +19,7 @@ dispatch_queue_t __OKCacheQueue = nil;
 
 
 @implementation OKLocalCache
+
 
 
 #pragma mark - API
@@ -53,10 +56,26 @@ dispatch_queue_t __OKCacheQueue = nil;
         OKLogInfo(@"Performing cache update: %@", sql);
         success = [db executeUpdate:sql error:nil withArgumentsInArray:nil orDictionary:nil orVAList:args];
         OKLogInfo(@"...%@", (success ? @"success" : @"FAIL"));
+        
+        // We have to cache the last inserted row ID because
+        // we open and close the connection the database on every exec statement
+        if([db lastInsertRowId] != 0) {
+            lastInsertRowID = [db lastInsertRowId];
+        }
     }];
     va_end(args);
 
     return success;
+}
+
+-(int)lastInsertRowID
+{
+    return lastInsertRowID;
+}
+
+-(NSString*)lastErrorMessage
+{
+    return [[self database] lastErrorMessage];
 }
 
 
