@@ -11,7 +11,7 @@
 
 @interface OKSession : OKDBRow
 
-@property(nonatomic, copy) NSString *uuid;
+@property(nonatomic, copy) NSString *token;
 @property(nonatomic, copy) NSString *fbId;
 @property(nonatomic, copy) NSString *googleId;
 @property(nonatomic, copy) NSString *customId;
@@ -19,9 +19,9 @@
 // Temporary.
 @property(nonatomic, copy) NSString *okId;
 
+
 - (id)initWithDictionary:(NSDictionary*)dict;
 - (void)configWithDictionary:(NSDictionary*)dict;
-
 
 + (void)activate;
 + (void)registerPush:(NSString *)pushToken;

@@ -15,9 +15,7 @@
 #import "OKUtils.h"
 
 
-
 OKSession *__currentSession = nil;
-
 
 @implementation OKSession
 
@@ -34,7 +32,7 @@ OKSession *__currentSession = nil;
 - (void)configWithDictionary:(NSDictionary*)dict
 {
     self.rowIndex = [OKHelper getIntSafeForKey:@"id" fromJSONDictionary:dict];
-    self.uuid = [OKHelper getNSStringSafeForKey:@"uuid" fromJSONDictionary:dict];
+    self.token = [OKHelper getNSStringSafeForKey:@"token" fromJSONDictionary:dict];
     self.fbId = [OKHelper getNSStringSafeForKey:@"fb_id" fromJSONDictionary:dict];
     self.googleId = [OKHelper getNSStringSafeForKey:@"google_id" fromJSONDictionary:dict];
     self.customId = [OKHelper getNSStringSafeForKey:@"custom_id" fromJSONDictionary:dict];
@@ -59,19 +57,16 @@ OKSession *__currentSession = nil;
 
 - (NSMutableDictionary*)dictionary
 {
-    NSString *sqlDate = nil;
-    if (self.dbModifyDate)
-        sqlDate = [OKUtils sqlStringFromDate:self.dbModifyDate];
-    
+    NSString *sqlDate = [self dbModifyDate];
     
     return [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-            self.uuid, @"uuid",
+            self.token, @"token",
             self.fbId ? self.fbId : [NSNull null], @"fb_id",
             self.googleId ? self.googleId : [NSNull null], @"google_id",
             self.customId ? self.customId : [NSNull null], @"custom_id",
             self.pushToken ? self.pushToken : [NSNull null], @"push_token",
             self.okId ? self.okId : [NSNull null], @"ok_id",
-            sqlDate ? sqlDate : [NSNull null], @"client_created_at",
+            sqlDate ? sqlDate : [NSNull null], @"modify_date",
             nil];
 }
 
@@ -127,6 +122,7 @@ OKSession *__currentSession = nil;
 {
     [OKSession newVal:aPushToken getSelName:@"pushToken" setSelName:@"setPushToken:"];
 }
+
 
 // See comment on -registerPush.
 // DRY this.
@@ -188,7 +184,7 @@ OKSession *__currentSession = nil;
     if (currentSession == nil) {
         OKLogInfo(@"No previous session found. Creating new row with new uuid and new %@.", getName);
         currentSession = [[OKSession alloc] init];
-        currentSession.uuid = [OKUtils createUUID];
+        currentSession.token = [OKUtils createUUID];
         [currentSession migrateUser];
 
     } else if(getName)
@@ -205,7 +201,7 @@ OKSession *__currentSession = nil;
 
         } else if (![prevVal isEqualToString:newVal]) {
             OKLogInfo(@"Prev and new vals do not match. Creating new row with new uuid and new %@.", getName);
-            currentSession.uuid = [OKUtils createUUID];
+            currentSession.token = [OKUtils createUUID];
             
         } else {
             OKLogInfo(@"%@ is already up to date in db.  Not updating.", getName);

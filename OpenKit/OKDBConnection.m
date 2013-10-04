@@ -9,8 +9,7 @@
 #import "OKDBConnection.h"
 #import "OKMacros.h"
 #import "OKFileUtil.h"
-
-
+#import "OKUtils.h"
 
 #if !OK_CACHE_USES_MAIN
 dispatch_queue_t __OKCacheQueue = nil;
@@ -26,7 +25,7 @@ dispatch_queue_t __OKCacheQueue = nil;
         _rowIndex = OKNoIndex;
         _submitState = kOKNotSubmitted;
         _dbConnection = nil;
-        _dbModifyDate = nil;
+        _modifyDate = nil;
     }
     return self;
 }
@@ -38,19 +37,35 @@ dispatch_queue_t __OKCacheQueue = nil;
     return self;
 }
 
+
+- (NSString*)dbModifyDate
+{
+    return [OKUtils sqlStringFromDate:self.modifyDate];
+}
+
 @end
 
 
 
 @implementation OKDBConnection
 
-
 #pragma mark - API
 
 + (id)sharedConnection
 {
-    NSLog(@"Override this method");
-    return nil;
+    static dispatch_once_t pred;
+    static id sharedInstance = nil;
+    dispatch_once(&pred, ^{
+        sharedInstance = [[[self class] alloc] init];
+    });
+    return sharedInstance;
+}
+
+
+- (id)init
+{
+    NSAssert(NO, @"This method should be override");
+    return self;
 }
 
 
@@ -108,38 +123,52 @@ dispatch_queue_t __OKCacheQueue = nil;
 }
 
 
-- (id)syncRow:(OKDBRow*)row
+- (BOOL)syncRow:(OKDBRow*)row
 {
     [row setDbConnection:self];
-    [row setDbModifyDate:[NSDate date]];
+    [row setModifyDate:[NSDate date]];
     
+    BOOL success = NO;
     if(row.rowIndex == OKNoIndex)
-        return [self insertRow:row];
+        success = [self insertRow:row];
     else
-        return [self updateRow:row];
+        success = [self updateRow:row];
     
-    return row;
+    if(!success) {
+        OKLogErr(@"Could not create new session.");
+        return NO;
+    }
+    
+    // Get row id and update OKDBRow
+    int index = [self lastModifiedIndex];
+    if(index == -1) {
+        OKLogErr(@"Could not get index.");
+        return NO;
+    }
+    
+    [row setRowIndex:index];
+    return YES;
 }
 
 
-- (id)insertRow:(OKDBRow*)row
+- (int)lastModifiedIndex
 {
     NSAssert(NO, @"This method should be override");
-    return nil;
+    return -1;
 }
 
 
-- (id)updateRow:(OKDBRow *)row
+- (BOOL)insertRow:(OKDBRow*)row
 {
     NSAssert(NO, @"This method should be override");
-    return nil;
+    return NO;
 }
 
 
-- (id)removeRow:(OKDBRow*)row
+- (BOOL)updateRow:(OKDBRow *)row
 {
     NSAssert(NO, @"This method should be override");
-    return row;
+    return NO;
 }
 
 

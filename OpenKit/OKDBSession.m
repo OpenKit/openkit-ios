@@ -16,12 +16,18 @@
 
 
 
-static NSString *const kOKSessionTableVersion = @"0.0.38";
-static NSString *const kOKSessionTableCreateSql =
-    @"CREATE TABLE 'sessions' "
+static NSString *const kOKDBSessionName = @"Session";
+static NSString *const kOKDBSessionVersion = @"0.0.39";
+static NSString *const kOKDBSessionCreateSql =
+    @"CREATE TABLE IF NOT EXISTS 'sessions' "
     "("
-    "'id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , "
-    "'uuid' VARCHAR(255) , "
+    // default OpenKit DB columns
+    "'id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
+    "'submit_state' INTEGER, "
+    "'modify_date' DATETIME, "
+
+    // rest columns
+    "'token' VARCHAR(255), "
     "'fb_id' VARCHAR(40), "
     "'fb_active' BOOLEAN, "
     "'google_id' VARCHAR(40), "
@@ -30,36 +36,17 @@ static NSString *const kOKSessionTableCreateSql =
     "'custom_active' BOOLEAN, "
     "'ok_id' VARCHAR(40), "
     "'ok_active' BOOLEAN, "
-    "'push_token' VARCHAR(64), "
-    "'client_created_at' DATETIME"
-    ")"
-    "\n"        // Important.
-    "CREATE TABLE 'submissions' "
-    "("
-    "'id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , "
-    "'payload' TEXT , "
-    "'status' INTEGER "
+    "'push_token' VARCHAR(64) "
     "); ";
 
 
 @implementation OKDBSession
 
-+ (id)sharedConnection
-{
-    static dispatch_once_t pred;
-    static OKDBSession *sharedInstance = nil;
-    dispatch_once(&pred, ^{
-        sharedInstance = [[OKDBSession alloc] init];
-    });
-    return sharedInstance;
-}
-
-
 - (id)init
 {
-    self = [super initWithName:@"Session"
-                     createSql:kOKSessionTableCreateSql
-                       version:kOKSessionTableVersion];
+    self = [super initWithName:kOKDBSessionName
+                     createSql:kOKDBSessionCreateSql
+                       version:kOKDBSessionVersion];
 
     return self;
 }
@@ -68,8 +55,8 @@ static NSString *const kOKSessionTableCreateSql =
 - (OKSession*)lastSession
 {
     __block OKSession *session = nil;
-    [[OKDBSession sharedConnection] executeQuery:@"select * from sessions order by client_created_at DESC limit 1"
-                                          access:^(FMResultSet *rs)
+    [self executeQuery:@"SELECT * FROM sessions ORDER BY modify_date DESC LIMIT 1"
+                access:^(FMResultSet *rs)
     {
         if([rs next]) {
             NSDictionary *dict = [rs resultDictionary];
@@ -81,56 +68,62 @@ static NSString *const kOKSessionTableCreateSql =
 }
 
 
-- (id)insertRow:(OKDBRow*)row
+- (BOOL)insertRow:(OKDBRow*)row
 {
     OKSession *session = (OKSession*)row;
+    NSString *insertSql = @"INSERT INTO sessions (submit_state, modify_date, token, fb_id, google_id, custom_id, ok_id, push_token) VALUES (?,?,?,?,?,?,?,?)";
     
-    NSString *insertSql = @"insert into sessions (uuid, fb_id, google_id, custom_id, ok_id, push_token, client_created_at) values (?, ?, ?, ?, ?, ?, ?)";
-    
-    BOOL success = [self update:insertSql,
-                    session.uuid,
-                    session.fbId,
-                    session.googleId,
-                    session.customId,
-                    session.okId,
-                    session.pushToken,
-                    session.dbModifyDate];
-    
-    if(!success) {
-        OKLogErr(@"Could not create new session.");
-        return nil;
+    if(![self update:insertSql,
+         session.submitState,
+         session.dbModifyDate,
+         session.token,
+         session.fbId,
+         session.googleId,
+         session.customId,
+         session.okId,
+         session.pushToken]) {
+        
+        return NO;
     }
     
-    
-    // get last session
-    session = [self lastSession];
-    return session;
+    return YES;
 }
 
 
-- (id)updateRow:(OKDBRow *)row
+- (BOOL)updateRow:(OKDBRow *)row
 {
     OKSession *session = (OKSession*)row;
     
-    NSString *updateSql = @"update sessions uuid='?', fb_id='?', google_id='?', custom_id='?', ok_id='?', push_token='?', client_created_at='?' WHERE ID = ?";
+    NSString *updateSql = @"UPDATE sessions submit_state='?', modify_date='?', token='?', fb_id='?', google_id='?', custom_id='?', ok_id='?', push_token='?' WHERE id = ?";
     
-    BOOL success = [self update:updateSql,
-                    session.uuid,
-                    session.fbId,
-                    session.googleId,
-                    session.customId,
-                    session.okId,
-                    session.pushToken,
-                    session.dbModifyDate,
-                    
-                    session.rowIndex];
-    
-    if(!success) {
-        OKLogErr(@"Could not create new session.");
-        return nil;
+    if(![self update:updateSql,
+         session.submitState,
+         session.dbModifyDate,
+         session.token,
+         session.fbId,
+         session.googleId,
+         session.customId,
+         session.okId,
+         session.pushToken,
+         session.rowIndex]) {
+        
+        return NO;
     }
+    return YES;
+}
 
-    return session;
+
+- (int)lastModifiedIndex
+{
+    __block int index = -1;
+    [self executeQuery:@"SELECT * FROM sessions ORDER BY modify_date DESC LIMIT 1"
+                access:^(FMResultSet *rs)
+     {
+         if([rs next])
+             index = [rs intForColumn:@"id"];
+     }];
+    
+    return index;
 }
 
 @end

@@ -33,9 +33,9 @@ extern dispatch_queue_t __OKCacheQueue;
 
 typedef enum
 {
-    kOKNotSubmitted,
-    kOKSubmitting,
-    kOKSubmitted
+    kOKNotSubmitted = 0,
+    kOKSubmitted = 1,
+    kOKSubmitting = 2,
 }OKSubmitState;
 
 
@@ -45,11 +45,12 @@ static const int OKNoIndex = -1;
 @interface OKDBRow : NSObject
 
 @property(nonatomic, readwrite) int rowIndex;
-@property(nonatomic, copy) NSDate *dbModifyDate;
+@property(nonatomic, copy) NSDate *modifyDate;
 @property(nonatomic, strong) OKDBConnection *dbConnection;
 @property(nonatomic, readwrite) OKSubmitState submitState;
 
 - (OKDBRow*)syncWithDB;
+- (NSString*)dbModifyDate;
 
 @end
 
@@ -76,7 +77,7 @@ static const int OKNoIndex = -1;
 
 //! You can use this to select data from the DB connection.
 - (void)executeQuery:(NSString*)query access:(void(^)(FMResultSet *))block;
-- (id)syncRow:(OKDBRow*)row;
+- (BOOL)syncRow:(OKDBRow*)row;
 
 @end
 
