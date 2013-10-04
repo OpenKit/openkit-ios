@@ -32,6 +32,7 @@ extern dispatch_queue_t __OKCacheQueue;
     NSString *_createSql;
     NSString *_version;
     FMDatabase *_database;
+    int lastInsertRowID;
 }
 @property (nonatomic, readonly) NSString *name;
 

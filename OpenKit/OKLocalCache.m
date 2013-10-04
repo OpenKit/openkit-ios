@@ -21,6 +21,7 @@ dispatch_queue_t __OKCacheQueue = nil;
 @implementation OKLocalCache
 
 
+
 #pragma mark - API
 - (id)initWithCacheName:(NSString *)name createSql:(NSString *)sql version:(NSString *)version
 {
@@ -55,6 +56,12 @@ dispatch_queue_t __OKCacheQueue = nil;
         OKLogInfo(@"Performing cache update: %@", sql);
         success = [db executeUpdate:sql error:nil withArgumentsInArray:nil orDictionary:nil orVAList:args];
         OKLogInfo(@"...%@", (success ? @"success" : @"FAIL"));
+        
+        // We have to cache the last inserted row ID because
+        // we open and close the connection the database on every exec statement
+        if([db lastInsertRowId] != 0) {
+            lastInsertRowID = [db lastInsertRowId];
+        }
     }];
     va_end(args);
 
@@ -63,15 +70,7 @@ dispatch_queue_t __OKCacheQueue = nil;
 
 -(int)lastInsertRowID
 {
-    FMDatabase *db = [self database];
-    if ([db open]){
-        int lastRow = [db lastInsertRowId];
-        [db close];
-        return lastRow;
-    } else {
-        OKLogErr(@"Could not open db in local cache.");
-        return 0;
-    }
+    return lastInsertRowID;
 }
 
 -(NSString*)lastErrorMessage
