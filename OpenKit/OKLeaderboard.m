@@ -17,7 +17,7 @@
 #import "OKGKScoreWrapper.h"
 #import "OKMacros.h"
 #import "OKFacebookUtilities.h"
-#import "OKScoreCache.h"
+#import "OKDBScore.h"
 #import "OKUserUtilities.h"
 
 @implementation OKLeaderboard

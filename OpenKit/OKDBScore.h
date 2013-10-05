@@ -1,5 +1,5 @@
 //
-//  OKScoreCache.h
+//  OKDBScore.h
 //  OpenKit
 //
 //  Created by Suneet Shah on 7/26/13.

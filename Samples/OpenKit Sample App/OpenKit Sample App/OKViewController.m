@@ -5,7 +5,7 @@
 //  Created by Suneet Shah on 12/26/12.
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
-#import "OKScoreCache.h"
+#import "OKDBScore.h"
 
 #import "OKViewController.h"
 #import "ScoreSubmitterVC.h"

@@ -15,7 +15,7 @@
 #import "OKDefines.h"
 #import "OKUserProfileImageView.h"
 #import "OKLeaderboardsViewController.h"
-#import "OKScoreCache.h"
+#import "OKDBScore.h"
 #import "OKDBConnection.h"
 #import "OKDBSession.h"
 #import "OKMacros.h"

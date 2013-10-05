@@ -1,5 +1,5 @@
 //
-//  OKScoreCache.m
+//  OKDBScore.m
 //  OpenKit
 //
 //  Created by Suneet Shah on 7/26/13.
@@ -7,7 +7,7 @@
 //
 
 #import "FMDatabase.h"
-#import "OKScoreCache.h"
+#import "OKDBScore.h"
 #import "OKMacros.h"
 #import "OKUser.h"
 #import <sqlite3.h>

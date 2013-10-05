@@ -15,7 +15,7 @@
 #import "OKGameCenterUtilities.h"
 #import "OKMacros.h"
 #import "OKError.h"
-#import "OKScoreCache.h"
+#import "OKDBScore.h"
 #import "OKHelper.h"
 #import "OKUtils.h"
 #import "OKLeaderboard.h"

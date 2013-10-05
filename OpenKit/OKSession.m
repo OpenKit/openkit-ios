@@ -158,18 +158,18 @@ OKSession *__currentSession = nil;
        
 + (void)logoutFB
 {
-
+    [OKSession newVal:nil getSelName:@"fbId" setSelName:@"setFbId:"];
 }
 
 
 + (void)loginGoogle:(NSString *)aGoogleId
 {
-
+    [OKSession newVal:aGoogleId getSelName:@"googleId" setSelName:@"setGoogleId:"];
 }
 
 + (void)logoutGoogle
 {
-
+    [OKSession newVal:nil getSelName:@"googleId" setSelName:@"setGoogleId:"];
 }
 
 + (void)loginCustom:(NSString *)aCustomId
