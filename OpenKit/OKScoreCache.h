@@ -8,24 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import "OKScore.h"
+#import "OKDBConnection.h"
 
-@interface OKScoreCache : NSObject
+
+@interface OKDBScore : OKDBConnection
 
 @property(nonatomic, strong) OKScore *previousSubmittedScore;
 
-+ (OKScoreCache*)sharedCache;
-
--(NSArray*)getAllCachedScores;
--(NSArray*)getCachedScoresForLeaderboardID:(int)leaderboardID andOnlyGetSubmittedScores:(BOOL)submittedOnly;
--(void)submitCachedScore:(OKScore*)score;
--(void)submitAllCachedScores;
--(void)clearCachedSubmittedScores;
-
--(void)updateCachedScoreSubmitted:(OKScore*)score;
-
--(BOOL)isScoreBetterThanLocalCachedScores:(OKScore *)score;
--(void)storeScoreIfBetter:(OKScore*)score;
--(BOOL)isScoreBetterThanLocalCachedScores:(OKScore*)scoreToStore storeScore:(BOOL)shouldStoreScore;
-
+-(NSArray*)getAllScores;
+-(NSArray*)getScoresForLeaderboardID:(int)leaderboardID andOnlyGetSubmittedScores:(BOOL)submittedOnly;
+-(void)clearSubmittedScores;
+-(NSArray*)getUnsubmittedScores;
 
 @end

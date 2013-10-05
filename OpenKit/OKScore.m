@@ -22,164 +22,81 @@
 #import "OKFacebookUtilities.h"
 #import "OKChallenge.h"
 
+
 @implementation OKScore
 
-@synthesize OKLeaderboardID, OKScoreID, scoreValue, user, scoreRank, metadata, displayString, gamecenterLeaderboardID, submitted;
-- (id)initFromJSON:(NSDictionary*)jsonDict
+- (id)init
 {
     self = [super init];
     if (self) {
-        self.OKLeaderboardID= [OKHelper getIntSafeForKey:@"leaderboard_id" fromJSONDictionary:jsonDict];
-        self.OKScoreID      = [OKHelper getIntSafeForKey:@"id" fromJSONDictionary:jsonDict];
-        self.scoreValue     = [OKHelper getInt64SafeForKey:@"value" fromJSONDictionary:jsonDict];
-        self.scoreRank      = [OKHelper getIntSafeForKey:@"rank" fromJSONDictionary:jsonDict];
-        self.user           = [OKUserUtilities createOKUserWithJSONData:[jsonDict objectForKey:@"user"]];
-        self.displayString  = [OKHelper getNSStringSafeForKey:@"display_string" fromJSONDictionary:jsonDict];
-        self.metadata       = [OKHelper getIntSafeForKey:@"metadata" fromJSONDictionary:jsonDict];
+        _scoreID = -1;
+        _leaderboardID = -1;
     }
-    
     return self;
 }
 
--(id)initWithOKLeaderboardID:(int)okLeaderboardID withGameCenterLeaderboardID:(NSString*)gcID
+
+- (id)initWithDictionary:(NSDictionary*)dict
 {
     self = [super init];
-    if(self) {
-        self.OKLeaderboardID = okLeaderboardID;
-        self.gamecenterLeaderboardID = gcID;
-        self.submitted = NO;
+    if (self) {
+        [self configWithDictionary:dict];
     }
-    
     return self;
 }
 
-- (void)encodeWithCoder:(NSCoder *)encoder
-{
-    // Set an ID on any score that is encoded so that when we submit it, we can remove it from the cache
-    // This ID is not used when submitting the score, it is simply used to keep track of which
-    // score to remove from the cache. We do not encode scores that are returned from the server, only
-    // locally cached scores that will be submitted to the server later so it's OK to set this value
-    int hashedScoreID = [[NSDate date] hash];
-    self.OKScoreID = hashedScoreID;
-    
-    [encoder encodeInt32:self.OKLeaderboardID forKey:@"OKLeaderboardID"];
-    [encoder encodeInt32:self.OKScoreID forKey:@"OKScoreID"];
-    [encoder encodeInt64:self.scoreValue forKey:@"scoreValue"];
-    [encoder encodeObject:self.displayString forKey:@"displayString"];
-    [encoder encodeInt64:self.metadata forKey:@"metadata"];
-    [encoder encodeObject:self.gamecenterLeaderboardID forKey:@"gamecenterLeaderboardID"];
-}
 
-- (id)initWithCoder:(NSCoder *)decoder
+- (id)initWithLeaderboardId:(int)index
 {
     self = [super init];
-    if(self)
-    {
-        self.OKLeaderboardID = [decoder decodeInt32ForKey:@"OKLeaderboardID"];
-        self.OKScoreID =  [decoder decodeInt32ForKey:@"OKScoreID"];
-        self.scoreValue = [decoder decodeInt64ForKey:@"scoreValue"];
-        self.displayString = [decoder decodeObjectForKey:@"displayString"];
-        self.metadata = [decoder decodeInt64ForKey:@"metadata"];
-        self.gamecenterLeaderboardID = [decoder decodeObjectForKey:@"gamecenterLeaderboardID"];
+    if (self) {
+        self.leaderboardID = index;
     }
     return self;
 }
 
--(NSDictionary*)getScoreParamDict
+
+- (void)configWithDictionary:(NSDictionary*)dict
 {
-    OKUser *currentUser = [[OKManager sharedManager] currentUser];
+    self.rowIndex       = [OKHelper getIntSafeForKey:@"row_id" fromJSONDictionary:dict];
+    self.modifyDate     = [OKHelper getNSDateSafeForKey:@"modify_date" fromJSONDictionary:dict];
     
+    self.scoreID        = [OKHelper getIntSafeForKey:@"id" fromJSONDictionary:dict];
+    self.scoreValue     = [OKHelper getInt64SafeForKey:@"value" fromJSONDictionary:dict];
+    self.scoreRank      = [OKHelper getIntSafeForKey:@"rank" fromJSONDictionary:dict];
+    self.leaderboardID  = [OKHelper getIntSafeForKey:@"leaderboard_id" fromJSONDictionary:dict];
+    self.user           = [OKUserUtilities createOKUserWithJSONData:[dict objectForKey:@"user"]];
+    self.displayString  = [OKHelper getNSStringSafeForKey:@"display_string" fromJSONDictionary:dict];
+    self.metadata       = [OKHelper getIntSafeForKey:@"metadata" fromJSONDictionary:dict];
+}
+
+
+- (NSDictionary*)JSONDictionary
+{
     NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] initWithCapacity:3];
-    
-    [paramDict setValue:[NSNumber numberWithLongLong:scoreValue] forKey:@"value"];
-    [paramDict setValue:[NSNumber numberWithInt:OKLeaderboardID] forKey:@"leaderboard_id"];
-    [paramDict setValue:[NSNumber numberWithInt:metadata] forKey:@"metadata"];
-    [paramDict setValue:displayString forKey:@"display_string"];
-    [paramDict setValue:[currentUser OKUserID] forKey:@"user_id"];
+    [paramDict setValue:[NSNumber numberWithInt:_leaderboardID] forKey:@"leaderboard_id"];
+    [paramDict setValue:[NSNumber numberWithLongLong:_scoreValue] forKey:@"value"];
+    [paramDict setValue:[_user OKUserID] forKey:@"user_id"];
+    [paramDict setValue:[NSNumber numberWithInt:_metadata] forKey:@"metadata"];
+    [paramDict setValue:[self scoreDisplayString] forKey:@"display_string"];
     
     return paramDict;
 }
 
 
--(void)submitScoreWithCompletionHandler:(void (^)(NSError *error))completionHandler
+- (void)submitWithCompletion:(void (^)(NSError *error))completion
 {
-    // Submit to GC if GC leaderboard ID is specified
-    if(self.gamecenterLeaderboardID) {
-        [self submitScoreToGameCenter];
-    }
-    
-    // Only submit scores for the current user
-    [self setUser:[OKUser currentUser]];
-    
-    // Store the score in cache and find out if it should be submitted
-    BOOL shouldSubmit = [[OKScoreCache sharedCache] isScoreBetterThanLocalCachedScores:self storeScore:YES];
-    
-    // If there is an OKUser and the score is better than a submitted cached score
-    if([self user] && shouldSubmit) {
-        [self submitScoreBaseWithCompletionHandler:^(NSError *error) {
-            if(!error) {
-                // Score submitted successfully, update the cace
-                [[OKScoreCache sharedCache] updateCachedScoreSubmitted:self];
-            }
-            completionHandler(error);
-        }];
-    } else {
-        OKLog(@"Score was not submitted");
-        // Call the completionhandler with the appropriate error. When there is no user, call the nouser error.
-        // When a score is not submitted because it's not better, we have an explicit error for that
-        if(![self user]) {
-            completionHandler([OKError noOKUserErrorScoreCached]);
-        } else {
-            completionHandler([OKError OKScoreNotSubmittedError]);
-        }
-    }
+    [OKScore submitScore:self withCompletion:completion];
 }
 
 
--(void)submitScoreBaseWithCompletionHandler:(void (^)(NSError *error))completionHandler
+- (BOOL)isSubmissible
 {
-    if (!self.user) {
-        completionHandler([OKError noOKUserError]);
-        return;
-    }
-    
-    //Create a request and send it to OpenKit
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [self getScoreParamDict], @"score", nil];
-    
-    [OKNetworker postToPath:@"/scores" parameters:params
-                    handler:^(id responseObject, NSError *error)
-     {
-         if(!error) {
-             OKLog(@"Successfully posted score to OpenKit: %@", self);
-             [self setSubmitted:YES];
-            //OKLog(@"Response: %@", responseObject);
-         }else{
-             OKLog(@"Failed to post score to OpenKit: %@",self);
-             OKLog(@"Error: %@", error);
-             [self setSubmitted:NO];
-             
-             // If the user is unsubscribed to the app, log out the user.
-             [OKUserUtilities checkIfErrorIsUnsubscribedUserError:error];
-         }
-         completionHandler(error);
-         
-         OKScore *previousScore = [[OKScoreCache sharedCache] previousSubmittedScore];
-         [[OKScoreCache sharedCache] setPreviousSubmittedScore:nil];
-         
-         // If there was no error, try issuing a push challenge
-         if(!error) {
-             [OKChallenge sendPushChallengewithScorePostResponseJSON:responseObject withPreviousScore:previousScore];
-         }
-         
-     }];
+    return
+        self.leaderboardID != -1 &&
+        self.scoreValue != 0;
 }
 
-
-- (void)cachedScoreSubmit:(void (^)(NSError *error))completionHandler
-{
-    [self submitScoreBaseWithCompletionHandler:completionHandler];
-}
 
 -(void)submitScoreToGameCenter
 {
@@ -204,20 +121,18 @@
 }
 
 
--(void)submitScoreToOpenKitAndGameCenterWithCompletionHandler:(void (^)(NSError *error))completionHandler
+/** OKScoreProtocol Implementation **/
+-(NSString*)scoreDisplayString
 {
-    OKLog(@"Submitting score to OpenKit and GC");
-   [self submitScoreWithCompletionHandler:completionHandler];
+    if([self displayString])
+        return _displayString;
+    
+    return [NSString stringWithFormat:@"%lld", [self scoreValue]];
 }
 
-/** OKScoreProtocol Implementation **/
--(NSString*)scoreDisplayString {
-    if([self displayString])
-        return displayString;
-    else
-        return [NSString stringWithFormat:@"%lld",[self scoreValue]];
-}
--(NSString*)userDisplayString {
+
+-(NSString*)userDisplayString
+{
     return [[self user] userNick];
 }
 
@@ -233,7 +148,8 @@
     [self setScoreRank:rank];
 }
 
--(OKScoreSocialNetwork)socialNetwork {
+-(OKScoreSocialNetwork)socialNetwork
+{
     if([[self user] fbUserID])
         return OKScoreSocialNetworkFacebook;
     //else if ([[self user] gameCenterID])
@@ -242,8 +158,105 @@
         return OKScoreSocialNetworkUnknown;
 }
 
-- (NSString *)description {
-    return [NSString stringWithFormat:@"OKScore id: %d, submitted: %d, value: %lld, leaderboard id: %d, display string: %@, metadata: %d", [self OKScoreID], [self submitted],[self scoreValue], [self OKLeaderboardID], [self displayString], [self metadata]];
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"OKScore id: %d, submitted: %d, value: %lld, leaderboard id: %d, display string: %@, metadata: %d", [self scoreID], [self submitState], [self scoreValue], [self leaderboardID], [self displayString], [self metadata]];
+}
+
+
+
+#pragma mark - Class methods
+
++ (BOOL)isScoreBetter:(OKScore*)score
+{
+    return YES;
+}
+
++ (void)submitScore:(OKScore*)score withCompletion:(void (^)(NSError *error))completion
+{
+    [score setDbConnection:[OKDBScore sharedConnection]];
+    
+    if([score isSubmissible] && [OKScore isScoreBetter:score]) {
+        [score syncWithDB];
+        [OKScore resolveScore:score withCompletion:completion];
+    }else{
+        if(completion)
+            completion([OKError OKScoreNotSubmittedError]);
+    }
+}
+
+
++ (void)resolveScore:(OKScore*)score withCompletion:(void (^)(NSError *error))completion
+{
+    [score setUser:[OKUser currentUser]];
+    if([score user] == nil) {
+        if(completion)
+            completion([OKError noOKUserErrorScoreCached]); // ERROR
+        return;
+    }
+
+//    // If the error code returned is in the 400s, delete the score from the cache
+//    int errorCode = [OKNetworker getStatusCodeFromAFNetworkingError:error];
+//    if(errorCode >= 400 && errorCode <= 500) {
+//        OKLog(@"Deleted cached score because of error code: %d",errorCode);
+//        [self deleteScore:score];
+//    }
+//    OKLog(@"Failed to submit cached score");
+//    
+    //Create a request and send it to OpenKit
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [score JSONDictionary], @"score", nil];
+    
+    [OKNetworker postToPath:@"/scores" parameters:params
+                    handler:^(id responseObject, NSError *error)
+     {
+         if(!error) {
+             OKLog(@"Successfully posted score to OpenKit: %@", self);
+             [score setSubmitState:kOKSubmitted];
+             //OKLog(@"Response: %@", responseObject);
+         }else{
+             OKLog(@"Failed to post score to OpenKit: %@",self);
+             OKLog(@"Error: %@", error);
+             [score setSubmitState:kOKNotSubmitted];
+             
+             // If the user is unsubscribed to the app, log out the user.
+             [OKUserUtilities checkIfErrorIsUnsubscribedUserError:error];
+         }
+         [score syncWithDB];
+         
+         if(completion)
+             completion(error);
+         
+         //OKScore *previousScore = [[OKScoreCache sharedCache] previousSubmittedScore];
+         //[[OKScoreCache sharedCache] setPreviousSubmittedScore:nil];
+         
+         // If there was no error, try issuing a push challenge
+//         if(!error) {
+//             [OKChallenge sendPushChallengewithScorePostResponseJSON:responseObject withPreviousScore:previousScore];
+//         }
+         
+     }];
+}
+
+
++ (void)resolveUnsubmittedScores
+{
+    // Removing
+    NSArray *scores = [[OKDBScore sharedConnection] getUnsubmittedScores];
+    
+    for(OKScore *score in scores)
+        [OKScore resolveScore:score withCompletion:nil];
+    
+    /* Future - batch mode
+     [OKScore resolveScores:scores withCompletion:nil];
+     */
+}
+
+
++ (void)clearSubmittedScore
+{
+    [[OKDBScore sharedConnection] clearSubmittedScores];
 }
 
 @end
