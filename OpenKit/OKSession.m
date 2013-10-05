@@ -19,6 +19,16 @@ OKSession *__currentSession = nil;
 
 @implementation OKSession
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.token = [OKUtils createUUID];
+    }
+    return self;
+}
+
+
 - (id)initWithDictionary:(NSDictionary*)dict
 {
     self = [super init];
@@ -31,18 +41,15 @@ OKSession *__currentSession = nil;
 
 - (void)configWithDictionary:(NSDictionary*)dict
 {
-    self.rowIndex = [OKHelper getIntSafeForKey:@"id" fromJSONDictionary:dict];
+    self.rowIndex = [OKHelper getIntSafeForKey:@"row_id" fromJSONDictionary:dict];
+    self.modifyDate = [OKHelper getNSDateSafeForKey:@"modify_date" fromJSONDictionary:dict];
+
     self.token = [OKHelper getNSStringSafeForKey:@"token" fromJSONDictionary:dict];
     self.fbId = [OKHelper getNSStringSafeForKey:@"fb_id" fromJSONDictionary:dict];
     self.googleId = [OKHelper getNSStringSafeForKey:@"google_id" fromJSONDictionary:dict];
     self.customId = [OKHelper getNSStringSafeForKey:@"custom_id" fromJSONDictionary:dict];
     self.pushToken = [OKHelper getNSStringSafeForKey:@"push_token" fromJSONDictionary:dict];
     self.okId = [OKHelper getNSStringSafeForKey:@"ok_id" fromJSONDictionary:dict];
-
-    // date
-    NSString *date = [dict objectForKey:@"modify_date"];
-    if(date)
-        self.modifyDate = [OKUtils dateFromSqlString:date];
 }
 
 
@@ -57,10 +64,21 @@ OKSession *__currentSession = nil;
 }
 
 
-- (NSMutableDictionary*)dictionary
+- (OKSession*)getNewSession
 {
-    NSString *sqlDate = [self dbModifyDate];
+    OKSession *session = [[OKSession alloc] init];
+    session.fbId = self.fbId;
+    session.googleId = self.googleId;
+    session.customId = self.customId;
+    session.pushToken = self.pushToken;
+    session.okId = self.okId;
     
+    return session;
+}
+
+
+- (NSDictionary*)JSONDictionary
+{
     return [[NSMutableDictionary alloc] initWithObjectsAndKeys:
             self.token, @"token",
             self.fbId ? self.fbId : [NSNull null], @"fb_id",
@@ -68,7 +86,6 @@ OKSession *__currentSession = nil;
             self.customId ? self.customId : [NSNull null], @"custom_id",
             self.pushToken ? self.pushToken : [NSNull null], @"push_token",
             self.okId ? self.okId : [NSNull null], @"ok_id",
-            sqlDate ? sqlDate : [NSNull null], @"modify_date",
             nil];
 }
 
@@ -77,7 +94,11 @@ OKSession *__currentSession = nil;
 
 + (void)activate
 {
-    [OKSession newVal:nil getSelName:nil setSelName:nil];
+    if ([OKSession currentSession] == nil) {
+        OKSession *newSession = [[OKSession alloc] init];
+        [newSession migrateUser];
+        [[OKDBSession sharedConnection] syncRow:newSession];
+    }
 }
 
 
@@ -97,9 +118,10 @@ OKSession *__currentSession = nil;
     // We try to send to the backend
     if([session submitState] == kOKNotSubmitted) {
         [session setSubmitState:kOKSubmitting];
-        NSMutableDictionary *dictionary = [session dictionary];
         
-        [OKNetworker postToPath:@"/client_sessions" parameters:dictionary handler:^(id responseObject, NSError *error) {
+        [OKNetworker postToPath:@"/client_sessions"
+                     parameters:[session JSONDictionary]
+                        handler:^(id responseObject, NSError *error) {
             if (!error)
                 [session setSubmitState:kOKSubmitted];
             else
@@ -183,12 +205,14 @@ OKSession *__currentSession = nil;
 + (void)newVal:(NSString *)newVal getSelName:(NSString *)getName setSelName:(NSString *)setName
 {
     OKSession *currentSession = [OKSession currentSession];
+    OKSession *newSession = nil;
+
+    
     if (currentSession == nil) {
         OKLogInfo(@"No previous session found. Creating new row with new uuid and new %@.", getName);
-        currentSession = [[OKSession alloc] init];
-        currentSession.token = [OKUtils createUUID];
-        [currentSession migrateUser];
-
+        newSession = [[OKSession alloc] init];
+        [newSession migrateUser];
+        
     } else if(getName)
     {
         SEL getSelector = NSSelectorFromString(getName);
@@ -198,30 +222,27 @@ OKSession *__currentSession = nil;
         NSString *prevVal = [currentSession performSelector:getSelector];
 #pragma clang diagnostic pop
         
-        if (prevVal == nil) {
-            OKLogInfo(@"Row exists but no val, creating new row with same uuid and new %@.", getName);
+        //OKLogInfo(@"Row exists but no val, creating new row with same uuid and new %@.", getName);
 
-        } else if (![prevVal isEqualToString:newVal]) {
+        if (![prevVal isEqualToString:newVal]) {
             OKLogInfo(@"Prev and new vals do not match. Creating new row with new uuid and new %@.", getName);
-            currentSession.token = [OKUtils createUUID];
+            newSession = [currentSession getNewSession];
             
         } else {
             OKLogInfo(@"%@ is already up to date in db.  Not updating.", getName);
-            currentSession = nil;
         }
-    }else
-        currentSession = nil;
+    }
     
     if(setName) {
         SEL setSelector = NSSelectorFromString(setName);
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        [currentSession performSelector:setSelector withObject:newVal];
+        [newSession performSelector:setSelector withObject:newVal];
 #pragma clang diagnostic pop
     }
     
-    [OKSession submitSession:currentSession];
+    [OKSession submitSession:newSession];
 }
 
 

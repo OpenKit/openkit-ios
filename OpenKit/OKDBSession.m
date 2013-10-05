@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
+#import "FMDatabase.h"
 #import "OKDBSession.h"
 #import "OKMacros.h"
 #import "OKNetworker.h"
@@ -17,12 +18,12 @@
 
 
 static NSString *const kOKDBSessionName = @"Session";
-static NSString *const kOKDBSessionVersion = @"0.0.39";
+static NSString *const kOKDBSessionVersion = @"0.0.46";
 static NSString *const kOKDBSessionCreateSql =
     @"CREATE TABLE IF NOT EXISTS 'sessions' "
     "("
     // default OpenKit DB columns
-    "'id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
+    "'row_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
     "'submit_state' INTEGER, "
     "'modify_date' DATETIME, "
 
@@ -42,13 +43,16 @@ static NSString *const kOKDBSessionCreateSql =
 
 @implementation OKDBSession
 
-- (id)init
++ (id)sharedConnection
 {
-    self = [super initWithName:kOKDBSessionName
-                     createSql:kOKDBSessionCreateSql
-                       version:kOKDBSessionVersion];
-
-    return self;
+    static dispatch_once_t pred;
+    static id sharedInstance = nil;
+    dispatch_once(&pred, ^{
+        sharedInstance = [[OKDBSession alloc] initWithName:kOKDBSessionName
+                                                 createSql:kOKDBSessionCreateSql
+                                                   version:kOKDBSessionVersion];
+    });
+    return sharedInstance;
 }
 
 
@@ -61,6 +65,7 @@ static NSString *const kOKDBSessionCreateSql =
         if([rs next]) {
             NSDictionary *dict = [rs resultDictionary];
             session = [[OKSession alloc] initWithDictionary:dict];
+            [session setDbConnection:self];
         }
     }];
 
@@ -94,7 +99,7 @@ static NSString *const kOKDBSessionCreateSql =
 {
     OKSession *session = (OKSession*)row;
     
-    NSString *updateSql = @"UPDATE sessions SET submit_state=?, modify_date=?, token=?, fb_id=?, google_id=?, custom_id=?, ok_id=?, push_token=? WHERE id = ?";
+    NSString *updateSql = @"UPDATE sessions SET submit_state=?, modify_date=?, token=?, fb_id=?, google_id=?, custom_id=?, ok_id=?, push_token=? WHERE row_id=?";
     
     if(![self update:updateSql,
          [NSNumber numberWithInt:session.submitState],
@@ -113,6 +118,12 @@ static NSString *const kOKDBSessionCreateSql =
 }
 
 
+- (BOOL)deleteRow:(OKDBRow *)row
+{
+    return [self update:@"DELETE FROM sessions WHERE row_id=?", [NSNumber numberWithInt:row.rowIndex]];
+}
+
+
 - (int)lastModifiedIndex
 {
     __block int index = -1;
@@ -120,7 +131,7 @@ static NSString *const kOKDBSessionCreateSql =
                 access:^(FMResultSet *rs)
      {
          if([rs next])
-             index = [rs intForColumn:@"id"];
+             index = [rs intForColumn:@"row_id"];
      }];
     
     return index;

@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
+#import "FMDatabase.h"
 #import "OKDBConnection.h"
 #import "OKMacros.h"
 #import "OKFileUtil.h"
@@ -31,12 +32,16 @@ dispatch_queue_t __OKCacheQueue = nil;
 }
 
 
-- (OKDBRow*)syncWithDB
+- (BOOL)syncWithDB
 {
-    [_dbConnection syncRow:self];
-    return self;
+    return [_dbConnection syncRow:self];
 }
 
+
+- (BOOL)deleteFromDB
+{
+    return [_dbConnection deleteRow:self];
+}
 
 - (NSString*)dbModifyDate
 {
@@ -53,19 +58,8 @@ dispatch_queue_t __OKCacheQueue = nil;
 
 + (id)sharedConnection
 {
-    static dispatch_once_t pred;
-    static id sharedInstance = nil;
-    dispatch_once(&pred, ^{
-        sharedInstance = [[[self class] alloc] init];
-    });
-    return sharedInstance;
-}
-
-
-- (id)init
-{
     NSAssert(NO, @"This method should be override");
-    return self;
+    return nil;
 }
 
 
@@ -129,24 +123,28 @@ dispatch_queue_t __OKCacheQueue = nil;
     [row setModifyDate:[NSDate date]];
     
     BOOL success = NO;
-    if(row.rowIndex == OKNoIndex)
+    BOOL insert = row.rowIndex == OKNoIndex;
+    if(insert)
         success = [self insertRow:row];
     else
         success = [self updateRow:row];
     
+    
     if(!success) {
-        OKLogErr(@"Could not create new session.");
+        OKLogErr(@"Could not insert the row.");
         return NO;
     }
     
     // Get row id and update OKDBRow
-    int index = [self lastModifiedIndex];
-    if(index == -1) {
-        OKLogErr(@"Could not get index.");
-        return NO;
+    if(insert) {
+        int index = [self lastModifiedIndex];
+        if(index == -1) {
+            OKLogErr(@"Could not get the index.");
+            return NO;
+        }
+        
+        [row setRowIndex:index];
     }
-    
-    [row setRowIndex:index];
     return YES;
 }
 
@@ -166,6 +164,13 @@ dispatch_queue_t __OKCacheQueue = nil;
 
 
 - (BOOL)updateRow:(OKDBRow *)row
+{
+    NSAssert(NO, @"This method should be override");
+    return NO;
+}
+
+
+- (BOOL)deleteRow:(OKDBRow *)row
 {
     NSAssert(NO, @"This method should be override");
     return NO;

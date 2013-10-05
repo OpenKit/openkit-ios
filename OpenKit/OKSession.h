@@ -22,7 +22,10 @@
 
 - (id)initWithDictionary:(NSDictionary*)dict;
 - (void)configWithDictionary:(NSDictionary*)dict;
+- (NSDictionary*)JSONDictionary;
+- (OKSession*)getNewSession;
 
++ (OKSession*)currentSession;
 + (void)activate;
 + (void)registerPush:(NSString *)pushToken;
 + (void)loginFB:(NSString *)aFacebookId;

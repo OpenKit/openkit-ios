@@ -18,6 +18,7 @@
 +(NSArray*)getNSArraySafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict;
 +(NSString*)getNSStringSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict;
 +(NSNumber*)getNSNumberSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict;
++(NSDate*)getNSDateSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict;
 +(NSDictionary*)getNSDictionarySafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict;
 +(NSString*)getPathToDocsDirectory;
 +(BOOL)isEmpty:(id)obj;

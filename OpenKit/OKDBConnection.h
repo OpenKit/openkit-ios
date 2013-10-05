@@ -23,12 +23,13 @@ extern dispatch_queue_t __OKCacheQueue;
 #endif
 
 
-#import "FMDatabase.h"
 #import <Foundation/Foundation.h>
 
 
 
 @class OKDBConnection;
+@class FMDatabase;
+@class FMResultSet;
 
 
 typedef enum
@@ -49,7 +50,8 @@ static const int OKNoIndex = -1;
 @property(nonatomic, strong) OKDBConnection *dbConnection;
 @property(nonatomic, readwrite) OKSubmitState submitState;
 
-- (OKDBRow*)syncWithDB;
+- (BOOL)syncWithDB;
+- (BOOL)deleteFromDB;
 - (NSString*)dbModifyDate;
 
 @end
@@ -78,6 +80,7 @@ static const int OKNoIndex = -1;
 //! You can use this to select data from the DB connection.
 - (void)executeQuery:(NSString*)query access:(void(^)(FMResultSet *))block;
 - (BOOL)syncRow:(OKDBRow*)row;
+- (BOOL)deleteRow:(OKDBRow *)row;
 
 @end
 
