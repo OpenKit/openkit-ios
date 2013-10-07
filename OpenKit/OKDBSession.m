@@ -73,25 +73,20 @@ static NSString *const kOKDBSessionCreateSql =
 }
 
 
-- (BOOL)insertRow:(OKDBRow*)row
+- (int)insertRow:(OKDBRow*)row
 {
     OKSession *session = (OKSession*)row;
     NSString *insertSql = @"INSERT INTO sessions (submit_state, modify_date, token, fb_id, google_id, custom_id, ok_id, push_token) VALUES (?,?,?,?,?,?,?,?)";
     
-    if(![self update:insertSql,
-         [NSNumber numberWithInt:session.submitState],
-         session.dbModifyDate,
-         session.token,
-         session.fbId,
-         session.googleId,
-         session.customId,
-         session.okId,
-         session.pushToken]) {
-        
-        return NO;
-    }
-    
-    return YES;
+    return [self insert:insertSql,
+            [NSNumber numberWithInt:session.submitState],
+            session.dbModifyDate,
+            session.token,
+            session.fbId,
+            session.googleId,
+            session.customId,
+            session.okId,
+            session.pushToken];
 }
 
 
@@ -101,20 +96,16 @@ static NSString *const kOKDBSessionCreateSql =
     
     NSString *updateSql = @"UPDATE sessions SET submit_state=?, modify_date=?, token=?, fb_id=?, google_id=?, custom_id=?, ok_id=?, push_token=? WHERE row_id=?";
     
-    if(![self update:updateSql,
-         [NSNumber numberWithInt:session.submitState],
-         session.dbModifyDate,
-         session.token,
-         session.fbId,
-         session.googleId,
-         session.customId,
-         session.okId,
-         session.pushToken,
-         [NSNumber numberWithInt:session.rowIndex]]) {
-        
-        return NO;
-    }
-    return YES;
+    return [self update:updateSql,
+            [NSNumber numberWithInt:session.submitState],
+            session.dbModifyDate,
+            session.token,
+            session.fbId,
+            session.googleId,
+            session.customId,
+            session.okId,
+            session.pushToken,
+            [NSNumber numberWithInt:session.rowIndex]];
 }
 
 

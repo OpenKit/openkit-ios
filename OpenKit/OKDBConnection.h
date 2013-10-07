@@ -76,6 +76,7 @@ static const int OKNoIndex = -1;
 //! You can use this for insert/update/delete without access block.  Selects should
 //! go through access block so FMResultSet access is contained.
 - (BOOL)update:(NSString *)sql, ...;
+- (int)insert:(NSString*)sql, ...;
 
 //! You can use this to select data from the DB connection.
 - (void)executeQuery:(NSString*)query access:(void(^)(FMResultSet *))block;

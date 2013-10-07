@@ -18,13 +18,6 @@
 #define SCORES_CACHE_KEY @"OKLeaderboardScoresCache"
 
 
-// Init cache DB
-// DB Schema is:
-// --------------------------------------------------------------------------------
-// | integer | integer       | Bigint     | integer  | varchar(255)  | integer   |
-// --------------------------------------------------------------------------------
-// | id      | leaderboardID | scoreValue | metadata | displayString | submitted |
-
 static NSString *const kOKDBScoreName = @"Scores";
 static NSString *const kOKDBScoreVersion = @"1.0.3";
 static NSString *const kOKDBScoreCreateSql =
@@ -47,8 +40,6 @@ static NSString *const kOKDBScoreCreateSql =
 
 @synthesize previousSubmittedScore;
 
-// Data Storage structure
-// Array of cached scores
 + (id)sharedConnection
 {
     static dispatch_once_t pred;
@@ -60,6 +51,7 @@ static NSString *const kOKDBScoreCreateSql =
     });
     return sharedInstance;
 }
+
 
 - (OKScore*)lastScore
 {
@@ -98,38 +90,30 @@ static NSString *const kOKDBScoreCreateSql =
     
     NSString *updateSql = @"UPDATE scores SET submit_state=?, modify_date=?, leaderboard_id=?, value=?, metadata=?, display_string=? WHERE row_id=?";
     
-    if(![self update:updateSql,
-         [NSNumber numberWithInt:score.submitState],
-         [score dbModifyDate],
-         [NSNumber numberWithInt:score.leaderboardID],
-         [NSNumber numberWithLong:score.scoreValue],
-         [NSNumber numberWithInt:score.metadata],
-         score.displayString,
-         [NSNumber numberWithInt:score.rowIndex]]) {
-        
-        return NO;
-    }
-    return YES;
+    return [self update:updateSql,
+            [NSNumber numberWithInt:score.submitState],
+            [score dbModifyDate],
+            [NSNumber numberWithInt:score.leaderboardID],
+            [NSNumber numberWithLong:score.scoreValue],
+            [NSNumber numberWithInt:score.metadata],
+            score.displayString,
+            [NSNumber numberWithInt:score.rowIndex]];
 }
 
 
--(BOOL)insertRow:(OKDBRow*)row
+-(int)insertRow:(OKDBRow*)row
 {
     OKScore *score = (OKScore*)row;
     
     NSString *insertSql = @"INSERT INTO scores (submit_state, modify_date, leaderboard_id, value, metadata, display_string) VALUES(?,?,?,?,?,?);";
     
-    if(![self update:insertSql,
-         [NSNumber numberWithInt:score.submitState],
-         [score dbModifyDate],
-         [NSNumber numberWithInt:score.leaderboardID],
-         [NSNumber numberWithLong:score.scoreValue],
-         [NSNumber numberWithInt:score.metadata],
-         score.displayString]) {
-        
-        return NO;
-    }
-    return YES;
+    return [self insert:insertSql,
+            [NSNumber numberWithInt:score.submitState],
+            [score dbModifyDate],
+            [NSNumber numberWithInt:score.leaderboardID],
+            [NSNumber numberWithLong:score.scoreValue],
+            [NSNumber numberWithInt:score.metadata],
+            score.displayString];
 }
 
 

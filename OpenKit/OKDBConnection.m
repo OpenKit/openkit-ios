@@ -88,6 +88,27 @@ dispatch_queue_t __OKCacheQueue = nil;
 }
 
 
+- (int)insert:(NSString*)sql, ...
+{
+    va_list args;
+    va_start(args, sql);
+    
+    __block int index = -1;
+    [self access:^(FMDatabase *db) {
+        OKLogInfo(@"DBConnection: Performing cache insert: %@", sql);
+        if([db executeUpdate:sql error:nil withArgumentsInArray:nil orDictionary:nil orVAList:args]) {
+            OKLogInfo(@"    ...success");
+            index = [db lastInsertRowId];
+        }else{
+            OKLogInfo(@"    ...FAIL");
+        }
+    }];
+    va_end(args);
+    
+    return index;
+}
+
+
 - (BOOL)update:(NSString *)sql, ...
 {
     va_list args;
@@ -107,7 +128,7 @@ dispatch_queue_t __OKCacheQueue = nil;
 
 - (void)executeQuery:(NSString*)sql access:(void(^)(FMResultSet *))block
 {
-    [self access:^(FMDatabase *db){
+    [self access:^(FMDatabase *db) {
         OKLogInfo(@"DBConnection: Performing cache query: %@", sql);
 
         FMResultSet *rs = [db executeQuery:sql];
@@ -123,40 +144,25 @@ dispatch_queue_t __OKCacheQueue = nil;
     [row setModifyDate:[NSDate date]];
     
     BOOL success = NO;
-    BOOL insert = row.rowIndex == OKNoIndex;
-    if(insert)
-        success = [self insertRow:row];
-    else
-        success = [self updateRow:row];
     
-    
-    if(!success) {
-        OKLogErr(@"Could not insert the row.");
-        return NO;
-    }
-    
-    // Get row id and update OKDBRow
-    if(insert) {
-        int index = [self lastModifiedIndex];
-        if(index == -1) {
-            OKLogErr(@"Could not get the index.");
-            return NO;
+    if(row.rowIndex == OKNoIndex) {
+        // Is the row index is invalid, we insert a new row
+        int index = [self insertRow:row];
+        if(index != -1) {
+            success = YES;
+            [row setRowIndex:index];
         }
         
-        [row setRowIndex:index];
+    }else{
+        // Is the row index is valid, we update it
+        success = [self updateRow:row];
     }
-    return YES;
+    
+    return success;
 }
 
 
-- (int)lastModifiedIndex
-{
-    NSAssert(NO, @"This method should be override");
-    return -1;
-}
-
-
-- (BOOL)insertRow:(OKDBRow*)row
+- (int)insertRow:(OKDBRow*)row
 {
     NSAssert(NO, @"This method should be override");
     return NO;
