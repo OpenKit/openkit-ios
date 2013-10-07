@@ -7,6 +7,8 @@
 //
 
 #import "OKHelper.h"
+#import "OKUtils.h"
+
 
 @implementation OKHelper
 
@@ -93,6 +95,25 @@
         return nil;
     }
 }
+
+
++(NSDate*)getNSDateSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
+{
+    if(![jsonDict isKindOfClass:[NSDictionary class]]) {
+        return nil;
+    }
+    
+    id value = [jsonDict objectForKey:key];
+    
+    if([value isKindOfClass:[NSDate class]]) {
+        return value;
+    } else if([value isKindOfClass:[NSString class]]) {
+        return [OKUtils dateFromSqlString:value];
+    }else{
+        return nil;
+    }
+}
+
 
 +(NSString*)getNSStringSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
 {

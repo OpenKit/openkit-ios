@@ -15,9 +15,9 @@
 #import "OKDefines.h"
 #import "OKUserProfileImageView.h"
 #import "OKLeaderboardsViewController.h"
-#import "OKScoreCache.h"
-#import "OKLocalCache.h"
-#import "OKSessionDb.h"
+#import "OKDBScore.h"
+#import "OKDBConnection.h"
+#import "OKDBSession.h"
 #import "OKMacros.h"
 
 #define OK_DEFAULT_ENDPOINT    @"http://api.openkit.io"
@@ -133,7 +133,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     //Log out and clear Facebook
     [FBSession.activeSession closeAndClearTokenInformation];
     
-    [[OKScoreCache sharedCache] clearCachedSubmittedScores];
+    [OKScore clearSubmittedScore];
 }
 
 - (void)saveCurrentUser:(OKUser *)aCurrentUser
@@ -141,7 +141,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     self->_currentUser = aCurrentUser;
     [self removeCachedUserFromNSUserDefaults];
     [self saveCurrentUserToNSUserDefaults];
-    [[OKScoreCache sharedCache] submitAllCachedScores];
+    [OKScore resolveUnsubmittedScores];
 }
 
 -(void)getSavedUserFromNSUserDefaults
@@ -215,7 +215,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
 
     OKLogInfo(@"cache queue is %s", dispatch_queue_get_label(OK_CACHE_QUEUE()));
     dispatch_async(OK_CACHE_QUEUE(), ^{
-        [[OKSessionDb db] registerPush:hexToken];
+        [OKSession registerPush:hexToken];
     });
 }
 
@@ -283,7 +283,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
 {
     dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (100.0f * NSEC_PER_MSEC));
     dispatch_after(delay, OK_CACHE_QUEUE(), ^{
-        [[OKSessionDb db] activate];
+        [OKSession activate];
     });
     
     [self submitCachedScoresAfterDelay];
@@ -294,7 +294,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [[OKScoreCache sharedCache] submitAllCachedScores];
+        [OKScore resolveUnsubmittedScores];
     });
 }
 

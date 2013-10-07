@@ -106,10 +106,10 @@
         [score setDisplayString:[NSString stringWithFormat:@"%01d:%02d:%02d.%02d", hour, min, sec, hun]];
         */
          
-        [score setOKLeaderboardID:[(OKLeaderboard*)[leaderBoards objectAtIndex:selectedIndex] OKLeaderboard_id]];
+        [score setLeaderboardID:[(OKLeaderboard*)[leaderBoards objectAtIndex:selectedIndex] OKLeaderboard_id]];
         [score setGamecenterLeaderboardID:[leaderboard gamecenter_id]];
         
-        [score submitScoreToOpenKitAndGameCenterWithCompletionHandler:^(NSError *error) {
+        [score submitWithCompletion:^(NSError *error) {
             
             [spinner stopAnimating];
             

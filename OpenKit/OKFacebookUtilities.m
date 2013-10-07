@@ -15,9 +15,9 @@
 #import "OKMacros.h"
 #import "OKError.h"
 #import "OKUser.h"
-#import "OKScoreCache.h"
+#import "OKDBScore.h"
 #import "OKHelper.h"
-#import "OKSessionDb.h"
+#import "OKDBSession.h"
 
 @implementation OKFacebookUtilities
 
@@ -47,7 +47,7 @@
             NSString *userNick = [result objectForKey:@"name"];
 
             dispatch_async(OK_CACHE_QUEUE(), ^{
-                [[OKSessionDb db] loginFB:fbUserID];
+                [OKSession loginFB:fbUserID];
             });
 
             [OKFacebookUtilities CreateOKUserWithFacebookID:fbUserID withUserNick:userNick withCompletionHandler:^(OKUser *user, NSError *error) {
@@ -105,7 +105,7 @@
             [user setUserNick:userNick];
 
             dispatch_async(OK_CACHE_QUEUE(), ^{
-                [[OKSessionDb db] loginFB:fbUserID];
+                [OKSession loginFB:fbUserID];
             });
 
             //Save the current user locally

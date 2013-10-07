@@ -165,17 +165,14 @@
 		44E7225A17F24AA70066A9AE /* OKLeaderboardListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKLeaderboardListCell.h; sourceTree = "<group>"; };
 		44E7225B17F24AA70066A9AE /* OKLeaderboardsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKLeaderboardsListViewController.h; sourceTree = "<group>"; };
 		44E7225C17F24AA70066A9AE /* OKLeaderboardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKLeaderboardsViewController.h; sourceTree = "<group>"; };
-		44E7225D17F24AA70066A9AE /* OKLocalCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKLocalCache.h; sourceTree = "<group>"; };
 		44E7225E17F24AA70066A9AE /* OKLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKLoginView.h; sourceTree = "<group>"; };
 		44E7225F17F24AA70066A9AE /* OKMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKMacros.h; sourceTree = "<group>"; };
 		44E7226017F24AA70066A9AE /* OKManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKManager.h; sourceTree = "<group>"; };
 		44E7226117F24AA70066A9AE /* OKNetworker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKNetworker.h; sourceTree = "<group>"; };
 		44E7226217F24AA70066A9AE /* OKProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKProfileViewController.h; sourceTree = "<group>"; };
 		44E7226317F24AA70066A9AE /* OKScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScore.h; sourceTree = "<group>"; };
-		44E7226417F24AA70066A9AE /* OKScoreCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScoreCache.h; sourceTree = "<group>"; };
 		44E7226517F24AA70066A9AE /* OKScoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScoreCell.h; sourceTree = "<group>"; };
 		44E7226617F24AA70066A9AE /* OKScoreProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScoreProtocol.h; sourceTree = "<group>"; };
-		44E7226717F24AA70066A9AE /* OKSessionDb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSessionDb.h; sourceTree = "<group>"; };
 		44E7226817F24AA70066A9AE /* OKSocialLeaderboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSocialLeaderboardViewController.h; sourceTree = "<group>"; };
 		44E7226917F24AA70066A9AE /* OKSpinnerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSpinnerCell.h; sourceTree = "<group>"; };
 		44E7226A17F24AA70066A9AE /* OKUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUser.h; sourceTree = "<group>"; };
@@ -241,6 +238,9 @@
 		44E722AA17F24AA70066A9AE /* AFOAuth1Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOAuth1Client.h; sourceTree = "<group>"; };
 		44E722AB17F24AA70066A9AE /* AFOAuth1Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOAuth1Client.m; sourceTree = "<group>"; };
 		44E722AC17F24AA70066A9AE /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		A9C1014817FFC65B001AB68F /* OKDBConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDBConnection.h; sourceTree = "<group>"; };
+		A9C1014917FFC65B001AB68F /* OKDBScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDBScore.h; sourceTree = "<group>"; };
+		A9C1014A17FFC65B001AB68F /* OKDBSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDBSession.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -393,6 +393,9 @@
 		44E7224917F24AA70066A9AE /* include */ = {
 			isa = PBXGroup;
 			children = (
+				A9C1014817FFC65B001AB68F /* OKDBConnection.h */,
+				A9C1014917FFC65B001AB68F /* OKDBScore.h */,
+				A9C1014A17FFC65B001AB68F /* OKDBSession.h */,
 				44E7224A17F24AA70066A9AE /* AbstractActionSheetPicker.h */,
 				44E7224B17F24AA70066A9AE /* ActionSheetStringPicker.h */,
 				44E7224C17F24AA70066A9AE /* AFImageView.h */,
@@ -412,17 +415,14 @@
 				44E7225A17F24AA70066A9AE /* OKLeaderboardListCell.h */,
 				44E7225B17F24AA70066A9AE /* OKLeaderboardsListViewController.h */,
 				44E7225C17F24AA70066A9AE /* OKLeaderboardsViewController.h */,
-				44E7225D17F24AA70066A9AE /* OKLocalCache.h */,
 				44E7225E17F24AA70066A9AE /* OKLoginView.h */,
 				44E7225F17F24AA70066A9AE /* OKMacros.h */,
 				44E7226017F24AA70066A9AE /* OKManager.h */,
 				44E7226117F24AA70066A9AE /* OKNetworker.h */,
 				44E7226217F24AA70066A9AE /* OKProfileViewController.h */,
 				44E7226317F24AA70066A9AE /* OKScore.h */,
-				44E7226417F24AA70066A9AE /* OKScoreCache.h */,
 				44E7226517F24AA70066A9AE /* OKScoreCell.h */,
 				44E7226617F24AA70066A9AE /* OKScoreProtocol.h */,
-				44E7226717F24AA70066A9AE /* OKSessionDb.h */,
 				44E7226817F24AA70066A9AE /* OKSocialLeaderboardViewController.h */,
 				44E7226917F24AA70066A9AE /* OKSpinnerCell.h */,
 				44E7226A17F24AA70066A9AE /* OKUser.h */,

@@ -40,7 +40,7 @@
         return;
     }
     
-    OKScore *topScore = [[OKScore alloc] initFromJSON:responseObject];
+    OKScore *topScore = [[OKScore alloc] initWithDictionary:responseObject];
     if(!topScore ) {
         OKLog(@"Score JSON wasn't valid, couldn't create score");
         return;

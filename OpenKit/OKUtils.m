@@ -23,6 +23,8 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut)
     return [NSJSONSerialization JSONObjectWithData:dataIn options:opts error:errOut];
 }
 
+
+
 @implementation OKUtils
 
 + (NSString *)createUUID
@@ -39,6 +41,15 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut)
     [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
     [dateFormatter setTimeZone: [NSTimeZone timeZoneWithName:@"UTC"]];
     return [dateFormatter stringFromDate:date];
+}
+
++ (NSDate *)dateFromSqlString:(NSString *)string
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
+    [dateFormatter setTimeZone: [NSTimeZone timeZoneWithName:@"UTC"]];
+    
+    return [dateFormatter dateFromString:string];
 }
 
 

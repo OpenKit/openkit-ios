@@ -17,7 +17,7 @@
 #import "OKGKScoreWrapper.h"
 #import "OKMacros.h"
 #import "OKFacebookUtilities.h"
-#import "OKScoreCache.h"
+#import "OKDBScore.h"
 #import "OKUserUtilities.h"
 
 @implementation OKLeaderboard
@@ -47,6 +47,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 {
     return [NSString stringWithFormat:@"%d Leaderboards", playerCount];
 }
+
 
 + (void)getLeaderboardsWithCompletionHandler:(void (^)(NSArray* leaderboards, int playerCount, NSError* error))completionHandler
 {
@@ -272,7 +273,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
              scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
              
              for(id obj in scoresJSON) {
-                 OKScore *score = [[OKScore alloc] initFromJSON:obj];
+                 OKScore *score = [[OKScore alloc] initWithDictionary:obj];
                  [scores addObject:score];
              }
          } else {
@@ -308,7 +309,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
              
              for(id obj in scoresJSON) {
 
-                 OKScore *score = [[OKScore alloc] initFromJSON:obj];
+                 OKScore *score = [[OKScore alloc] initWithDictionary:obj];
                  [arr addObject:[[score user] OKUserID]];
                  [scores addObject:score];
              }
@@ -365,7 +366,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 -(OKScore*)getPlayerTopScoreFromLocalCache
 {
-    NSArray *cachedScores = [[OKScoreCache sharedCache] getCachedScoresForLeaderboardID:[self OKLeaderboard_id] andOnlyGetSubmittedScores:NO];
+    NSArray *cachedScores = [[OKDBScore sharedConnection] getScoresForLeaderboardID:[self OKLeaderboard_id] andOnlyGetSubmittedScores:NO];
     
     if([cachedScores count] == 0)
         return nil;
@@ -386,7 +387,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     
     [OKNetworker getFromPath:@"best_scores/user" parameters:params handler:^(id responseObject, NSError *error) {
         if(!error) {
-            OKScore *topScore = [[OKScore alloc] initFromJSON:(NSDictionary*)responseObject];
+            OKScore *topScore = [[OKScore alloc] initWithDictionary:(NSDictionary*)responseObject];
             completionHandler(topScore, nil);
         }
         else {

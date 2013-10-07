@@ -14,7 +14,7 @@
 #import "OKMacros.h"
 #import "OKError.h"
 #import "OKHelper.h"
-#import "OKSessionDb.h"
+#import "OKDBSession.h"
 #import "AFNetworking.h"
 
 
@@ -24,7 +24,7 @@
 + (void)updateSessionUserId:(NSNumber *)okId
 {
     dispatch_async(OK_CACHE_QUEUE(), ^{
-        [[OKSessionDb db] loginOpenKit:[okId stringValue]];
+        [OKSession loginOpenKit:[okId stringValue]];
     });
 }
 
