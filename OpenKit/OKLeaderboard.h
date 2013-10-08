@@ -44,7 +44,6 @@ typedef enum {
 + (void)getLeaderboardWithID:(int)leaderboardID withCompletion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler;
 
 //OpenKit Methods
-- (void)submitScore:(OKScore*)score withCompletion:(void (^)(NSError* error))handler;
 - (void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange pageNumber:(int)pageNum
        completion:(void (^)(NSArray* scores, NSError *error))handler;
 - (void)getPlayerTopScoreForTimeRange:(OKLeaderboardTimeRange)range completion:(void (^)(OKScore *score, NSError *error))handler;

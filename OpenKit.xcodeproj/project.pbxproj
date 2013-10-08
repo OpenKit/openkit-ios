@@ -426,6 +426,7 @@
 		A95FF90F17FB721D00611351 /* OKSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSession.h; sourceTree = "<group>"; };
 		A95FF91017FB721D00611351 /* OKSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSession.m; sourceTree = "<group>"; };
 		A96BECEE18031E40004C90C3 /* OKNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKNotifications.h; sourceTree = "<group>"; };
+		A98654071804BB2F00E03BA6 /* OKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKPrivate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -551,6 +552,7 @@
 		32CACF9C16CB637C00E8F185 /* OpenKit */ = {
 			isa = PBXGroup;
 			children = (
+				A98654071804BB2F00E03BA6 /* OKPrivate.h */,
 				A96BECEE18031E40004C90C3 /* OKNotifications.h */,
 				32CACFD216CB637C00E8F185 /* OpenKit.h */,
 				32CACFA816CB637C00E8F185 /* OKManager.h */,

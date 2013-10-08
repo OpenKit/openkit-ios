@@ -20,6 +20,7 @@
 #import "OKLeaderboard.h"
 #import "OKFacebookUtilities.h"
 #import "OKChallenge.h"
+#import "OKPrivate.h"
 
 
 @implementation OKScore
