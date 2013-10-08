@@ -47,7 +47,7 @@
     [spinner startAnimating];
     [self enableUI:NO];
     
-    [OKLeaderboard getLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, int playerCount, NSError *error)
+    [OKLeaderboard getLeaderboardsWithCompletion:^(NSArray *leaderboards, NSError *error)
     {
         [spinner stopAnimating];
         if(!error)
@@ -91,7 +91,7 @@
         
         OKLeaderboard *leaderboard = (OKLeaderboard*)[leaderBoards objectAtIndex:selectedIndex];
         
-        OKScore *score = [[OKScore alloc] init];
+        OKScore *score = [[OKScore alloc] initWithLeaderboardID:[leaderboard leaderboardID]];
         NSInteger v = [[textField text] integerValue];
         [score setScoreValue:v];
 
@@ -105,9 +105,6 @@
         int sec = total_sec % 60;
         [score setDisplayString:[NSString stringWithFormat:@"%01d:%02d:%02d.%02d", hour, min, sec, hun]];
         */
-         
-        [score setLeaderboardID:[(OKLeaderboard*)[leaderBoards objectAtIndex:selectedIndex] OKLeaderboard_id]];
-        [score setGamecenterLeaderboardID:[leaderboard gamecenter_id]];
         
         [score submitWithCompletion:^(NSError *error) {
             

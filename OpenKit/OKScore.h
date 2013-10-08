@@ -20,13 +20,13 @@
 @property (nonatomic, readwrite) NSInteger scoreRank;
 @property (nonatomic, readwrite) int metadata;
 @property (nonatomic, strong) NSString *displayString;
-@property (nonatomic, strong) NSString *gamecenterLeaderboardID;
 
 - (id)initWithDictionary:(NSDictionary*)dict;
-- (id)initWithLeaderboardId:(int)index;
+- (id)initWithLeaderboardID:(int)index;
 - (NSDictionary*)JSONDictionary;
 - (void)submitWithCompletion:(void (^)(NSError *error))completion;
 - (BOOL)isSubmissible;
+
 + (void)resolveUnsubmittedScores;
 + (void)clearSubmittedScore;
 

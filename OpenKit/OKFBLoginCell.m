@@ -12,7 +12,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "OKMacros.h"
 #import "OKColors.h"
-#import "OKGameCenterUtilities.h"
+#import "OKGameCenterPlugin.h"
 #import "OKUser.h"
 
 @implementation OKFBLoginCell
@@ -38,7 +38,7 @@
 
 -(void)updateButtonVisibility
 {
-    if([OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
+    if([OKGameCenterPlugin isPlayerAuthenticated]) {
         [gameCenterButton setEnabled:NO];
     } else {
         [gameCenterButton setEnabled:YES];
@@ -90,8 +90,8 @@
 
 -(IBAction)gcButtonPressed:(id)sender
 {
-    if([OKGameCenterUtilities isGameCenterAvailable] && ![OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
-        [OKGameCenterUtilities authenticateLocalPlayerWithCompletionHandler:^(NSError *error) {
+    if([OKGameCenterPlugin isGCAvailable] && ![OKGameCenterPlugin isPlayerAuthenticated]) {
+        [OKGameCenterPlugin authorizeUserWithViewController:nil completion:^(NSError *error) {
             [self updateButtonVisibility];
         }];
     }

@@ -12,7 +12,7 @@
 #import "OKManager.h"
 #import "OKUnityHelper.h"
 #import "OpenKit.h"
-#import "OKGameCenterUtilities.h"
+#import "OKGameCenterPlugin.h"
 #import "OKFacebookUtilities.h"
 #import "OKMacros.h"
 
@@ -156,8 +156,6 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 @end
 
 @implementation OKGameCenterBridgeViewController
-#import "OKGameCenterUtilities.h"
-
 @synthesize gcViewControllerToLaunch = _gcViewControllerToLaunch;
 
 

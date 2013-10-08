@@ -63,7 +63,7 @@
 		32CAD04916CB65F700E8F185 /* OKProfileViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CAD02C16CB65E800E8F185 /* OKProfileViewController.xib */; };
 		4455BEBE17A396DE0079859A /* OKDBScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4455BEBD17A396DE0079859A /* OKDBScore.m */; };
 		445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
-		445B3C001769258C00952456 /* OKGameCenterUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 445B3BFF1769258C00952456 /* OKGameCenterUtilities.m */; };
+		445B3C001769258C00952456 /* OKGameCenterPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 445B3BFF1769258C00952456 /* OKGameCenterPlugin.m */; };
 		446A551817E3A98900081C7B /* OKChallenge.m in Sources */ = {isa = PBXBuildFile; fileRef = 446A551717E3A98900081C7B /* OKChallenge.m */; };
 		4474BCD417815C46000AEAD1 /* OKColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4474BCD317815C46000AEAD1 /* OKColors.m */; };
 		4474BCD517815CAB000AEAD1 /* OKColors.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 446BAB4D177A8F880092BD58 /* OKColors.h */; };
@@ -81,7 +81,7 @@
 		44BB68C51777E39900839D0D /* OKScoreProtocol.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B50D16176FDADF00B5D8AD /* OKScoreProtocol.h */; };
 		44BB68C61777E3BB00839D0D /* OKSocialLeaderboardViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B50D0A176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.h */; };
 		44BB68C71777E3BB00839D0D /* OKFBLoginCell.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B50D1B1771227C00B5D8AD /* OKFBLoginCell.h */; };
-		44BB68C81777E3BB00839D0D /* OKGameCenterUtilities.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 445B3BFE1769258C00952456 /* OKGameCenterUtilities.h */; };
+		44BB68C81777E3BB00839D0D /* OKGameCenterPlugin.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 445B3BFE1769258C00952456 /* OKGameCenterPlugin.h */; };
 		44BB68C91777E3BB00839D0D /* AbstractActionSheetPicker.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 321E99C716D2FB6C005F1506 /* AbstractActionSheetPicker.h */; };
 		44BB68CA1777E3BB00839D0D /* ActionSheetStringPicker.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 321E99CD16D2FBA1005F1506 /* ActionSheetStringPicker.h */; };
 		44BB68CB1777E3BB00839D0D /* AFImageView.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44E3F3C616EAED4500509219 /* AFImageView.h */; };
@@ -176,7 +176,7 @@
 				4474BCD517815CAB000AEAD1 /* OKColors.h in Copy Files */,
 				44BB68C61777E3BB00839D0D /* OKSocialLeaderboardViewController.h in Copy Files */,
 				44BB68C71777E3BB00839D0D /* OKFBLoginCell.h in Copy Files */,
-				44BB68C81777E3BB00839D0D /* OKGameCenterUtilities.h in Copy Files */,
+				44BB68C81777E3BB00839D0D /* OKGameCenterPlugin.h in Copy Files */,
 				44BB68C91777E3BB00839D0D /* AbstractActionSheetPicker.h in Copy Files */,
 				44BB68CA1777E3BB00839D0D /* ActionSheetStringPicker.h in Copy Files */,
 				44BB68CB1777E3BB00839D0D /* AFImageView.h in Copy Files */,
@@ -378,8 +378,8 @@
 		4455BEBC17A396DD0079859A /* OKDBScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDBScore.h; sourceTree = "<group>"; };
 		4455BEBD17A396DE0079859A /* OKDBScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKDBScore.m; sourceTree = "<group>"; };
 		445B3BFB1767F5D300952456 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
-		445B3BFE1769258C00952456 /* OKGameCenterUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGameCenterUtilities.h; sourceTree = "<group>"; };
-		445B3BFF1769258C00952456 /* OKGameCenterUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKGameCenterUtilities.m; sourceTree = "<group>"; };
+		445B3BFE1769258C00952456 /* OKGameCenterPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGameCenterPlugin.h; sourceTree = "<group>"; };
+		445B3BFF1769258C00952456 /* OKGameCenterPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKGameCenterPlugin.m; sourceTree = "<group>"; };
 		446A551617E3A98900081C7B /* OKChallenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKChallenge.h; sourceTree = "<group>"; };
 		446A551717E3A98900081C7B /* OKChallenge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKChallenge.m; sourceTree = "<group>"; };
 		446BAB4D177A8F880092BD58 /* OKColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKColors.h; sourceTree = "<group>"; };
@@ -425,6 +425,7 @@
 		44F3004C17E2F1CD00108D05 /* OKUserUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUserUtilities.m; sourceTree = "<group>"; };
 		A95FF90F17FB721D00611351 /* OKSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSession.h; sourceTree = "<group>"; };
 		A95FF91017FB721D00611351 /* OKSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSession.m; sourceTree = "<group>"; };
+		A96BECEE18031E40004C90C3 /* OKNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKNotifications.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -550,6 +551,7 @@
 		32CACF9C16CB637C00E8F185 /* OpenKit */ = {
 			isa = PBXGroup;
 			children = (
+				A96BECEE18031E40004C90C3 /* OKNotifications.h */,
 				32CACFD216CB637C00E8F185 /* OpenKit.h */,
 				32CACFA816CB637C00E8F185 /* OKManager.h */,
 				32CACFA916CB637C00E8F185 /* OKManager.m */,
@@ -743,8 +745,8 @@
 				32CACFD416CB637C00E8F185 /* SimpleKeychain.m */,
 				32880CEC176DC784005F8D30 /* OKUtils.h */,
 				32880CED176DC784005F8D30 /* OKUtils.m */,
-				445B3BFE1769258C00952456 /* OKGameCenterUtilities.h */,
-				445B3BFF1769258C00952456 /* OKGameCenterUtilities.m */,
+				445B3BFE1769258C00952456 /* OKGameCenterPlugin.h */,
+				445B3BFF1769258C00952456 /* OKGameCenterPlugin.m */,
 				32CACFA716CB637C00E8F185 /* OKDefines.h */,
 				44E118291728A7CF003C2603 /* OKError.h */,
 				44E1182A1728A7CF003C2603 /* OKError.m */,
@@ -973,7 +975,7 @@
 				44E1182B1728A7CF003C2603 /* OKError.m in Sources */,
 				32880CE6176D2991005F8D30 /* AFOAuth1Client.m in Sources */,
 				32880CEE176DC784005F8D30 /* OKUtils.m in Sources */,
-				445B3C001769258C00952456 /* OKGameCenterUtilities.m in Sources */,
+				445B3C001769258C00952456 /* OKGameCenterPlugin.m in Sources */,
 				44BC5338176A96810038043A /* OKGKScoreWrapper.m in Sources */,
 				44B50D0B176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m in Sources */,
 				44B50D1D1771227D00B5D8AD /* OKFBLoginCell.m in Sources */,

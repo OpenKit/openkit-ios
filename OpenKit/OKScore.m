@@ -12,7 +12,6 @@
 #import "OKManager.h"
 #import "OKNetworker.h"
 #import "OKDefines.h"
-#import "OKGameCenterUtilities.h"
 #import "OKMacros.h"
 #import "OKError.h"
 #import "OKDBScore.h"
@@ -46,7 +45,7 @@
 }
 
 
-- (id)initWithLeaderboardId:(int)index
+- (id)initWithLeaderboardID:(int)index
 {
     self = [super init];
     if (self) {
@@ -95,29 +94,6 @@
     return
         self.leaderboardID != -1 &&
         self.scoreValue != 0;
-}
-
-
--(void)submitScoreToGameCenter
-{
-    if(self.gamecenterLeaderboardID && [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
-        
-        GKScore *scoreReporter = [[GKScore alloc] initWithCategory:[self gamecenterLeaderboardID]];
-        scoreReporter.value = [self scoreValue];
-        scoreReporter.context = [self metadata];
-        
-        [scoreReporter reportScoreWithCompletionHandler:^(NSError *error) {
-            if(error) {
-                OKLog(@"Error submitting score to GameCenter: %@",error);
-            }
-            else {
-                OKLog(@"Gamecenter score submitted successfully");
-            }
-        }];
-        
-    } else {
-        OKLog(@"Not submitting score to GameCenter, GC not available");
-    }
 }
 
 
@@ -173,70 +149,34 @@
     return YES;
 }
 
-+ (void)submitScore:(OKScore*)score withCompletion:(void (^)(NSError *error))completion
+
++ (void)submitScore:(OKScore*)score withCompletion:(void (^)(NSError *error))handler
 {
     [score setDbConnection:[OKDBScore sharedConnection]];
     
     if([score isSubmissible] && [OKScore isScoreBetter:score]) {
         [score syncWithDB];
-        [OKScore resolveScore:score withCompletion:completion];
-    }else{
-        if(completion)
-            completion([OKError OKScoreNotSubmittedError]);
-    }
+        [OKScore resolveScore:score withCompletion:handler];
+        
+    }else if(handler)
+        handler([OKError OKScoreNotSubmittedError]);
 }
 
 
-+ (void)resolveScore:(OKScore*)score withCompletion:(void (^)(NSError *error))completion
++ (void)resolveScore:(OKScore*)score withCompletion:(void (^)(NSError *error))handler
 {
     [score setUser:[OKUser currentUser]];
     if([score user] == nil) {
-        if(completion)
-            completion([OKError noOKUserErrorScoreCached]); // ERROR
+        if(handler)
+            handler([OKError noOKUserErrorScoreCached]); // ERROR
+        
         return;
     }
-
-//    // If the error code returned is in the 400s, delete the score from the cache
-//    int errorCode = [OKNetworker getStatusCodeFromAFNetworkingError:error];
-//    if(errorCode >= 400 && errorCode <= 500) {
-//        OKLog(@"Deleted cached score because of error code: %d",errorCode);
-//        [self deleteScore:score];
-//    }
-//    OKLog(@"Failed to submit cached score");
-//    
-    //Create a request and send it to OpenKit
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [score JSONDictionary], @"score", nil];
     
-    [OKNetworker postToPath:@"/scores" parameters:params
-                    handler:^(id responseObject, NSError *error)
-     {
-         if(!error) {
-             OKLog(@"Successfully posted score to OpenKit: %@", self);
-             [score setSubmitState:kOKSubmitted];
-             //OKLog(@"Response: %@", responseObject);
-         }else{
-             OKLog(@"Failed to post score to OpenKit: %@",self);
-             OKLog(@"Error: %@", error);
-             [score setSubmitState:kOKNotSubmitted];
-             
-             // If the user is unsubscribed to the app, log out the user.
-             [OKUserUtilities checkIfErrorIsUnsubscribedUserError:error];
-         }
-         [score syncWithDB];
-         
-         if(completion)
-             completion(error);
-         
-         //OKScore *previousScore = [[OKScoreCache sharedCache] previousSubmittedScore];
-         //[[OKScoreCache sharedCache] setPreviousSubmittedScore:nil];
-         
-         // If there was no error, try issuing a push challenge
-//         if(!error) {
-//             [OKChallenge sendPushChallengewithScorePostResponseJSON:responseObject withPreviousScore:previousScore];
-//         }
-         
-     }];
+    [OKLeaderboard getLeaderboardWithID:[score leaderboardID]
+                         withCompletion:^(OKLeaderboard *leaderboard, NSError *error) {
+        [leaderboard submitScore:score withCompletion:handler];
+    }];
 }
 
 
@@ -247,10 +187,6 @@
     
     for(OKScore *score in scores)
         [OKScore resolveScore:score withCompletion:nil];
-    
-    /* Future - batch mode
-     [OKScore resolveScores:scores withCompletion:nil];
-     */
 }
 
 
