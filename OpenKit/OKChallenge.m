@@ -50,14 +50,14 @@
     NSDictionary *leaderboardJSON = [OKHelper getNSDictionarySafeForKey:@"leaderboard" fromJSONDictionary:responseObject];
     
     if(leaderboardJSON != nil) {
-        leaderboard = [[OKLeaderboard alloc] initFromJSON:leaderboardJSON];
+        leaderboard = [[OKLeaderboard alloc] initWithDictionary:leaderboardJSON];
     } else {
         OKLog(@"Didn't get leaderboard JSON in response, can't issue push challenge");
         return;
     }
     
     // Get the social scores
-    [leaderboard getFacebookFriendsScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
+    [leaderboard getFacebookFriendsScoresWithCompletion:^(NSArray *scores, NSError *error) {
         
         if(!error && scores != nil) {
             [self issuePushChallengeforLeaderboard:leaderboard withUserTopScore:topScore withPreviousScore:previousScore withFriendsScores:scores];
@@ -135,7 +135,7 @@
                             [OKUtils createUUID], @"challenge_uuid",
                             [OKUtils sqlStringFromDate:[NSDate date]], @"client_created_at",
                             nil];
-    NSString *path = [NSString stringWithFormat:@"/leaderboards/%i/challenges", leaderboard.OKLeaderboard_id];
+    NSString *path = [NSString stringWithFormat:@"/leaderboards/%i/challenges", leaderboard.leaderboardID];
     
     [OKNetworker postToPath:path parameters:params handler:^(id responseObject, NSError *error) {
         if(error) {

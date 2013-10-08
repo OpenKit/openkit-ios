@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
+#include <profiler.h>
 #import "OKAppDelegate.h"
 #import "OpenKit.h"
 #import "OKViewController.h"
@@ -48,8 +49,7 @@
     
     // If you're using GameCenter, you can call this convenience method to authorize with game center. Set allowUI to YES if you want to show
     // the GameCenter leaderboard controller
-    
-    [OKGameCenterUtilities authorizeUserWithGameCenterAndallowUI:YES withPresentingViewController:self.viewController withCompletionHandler:nil];
+    [OKGameCenterPlugin authorizeUserWithViewController:self.viewController completion:nil];
 
     return YES;
 }

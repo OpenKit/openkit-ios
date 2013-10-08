@@ -486,7 +486,7 @@ typedef enum {
     [spinner startAnimating];
     [_tableView setHidden:YES];
     
-    [OKLeaderboard getLeaderboardWithID:self.leaderboardID withCompletionHandler:^(OKLeaderboard *aLeaderboard, NSError *error) {
+    [OKLeaderboard getLeaderboardWithID:self.leaderboardID withCompletion:^(OKLeaderboard *aLeaderboard, NSError *error) {
         if(aLeaderboard && !error) {
             [self setLeaderboard:aLeaderboard];
             [self setTitle:[aLeaderboard name]];
@@ -504,7 +504,10 @@ typedef enum {
     [_tableView setHidden:YES];
     
     // Get global scores-- OKLeaderboard decides where to get them from
-    [leaderboard getGlobalScoresWithPageNum:1 withCompletionHandler:^(NSArray *scores, NSError *error) {
+    [leaderboard getScoresForTimeRange:OKLeaderboardTimeRangeAllTime
+                            pageNumber:1
+                            completion:^(NSArray *scores, NSError *error)
+    {
         [spinner stopAnimating];
         [_tableView setHidden:NO];
         
@@ -540,7 +543,7 @@ typedef enum {
 // Get the player's top score to show in the "all scores" section
 -(void)getPlayerTopScoreForGlobalSection
 {
-    [leaderboard getPlayerTopScoreWithCompletionHandler:^(id<OKScoreProtocol> score, NSError *error) {
+    [leaderboard getPlayerTopScoreWithCompletion:^(id<OKScoreProtocol> score, NSError *error) {
         if(score && !error) {
             [self setPlayerTopScore:score];
             [_tableView reloadSections:[NSIndexSet indexSetWithIndex:kGlobalSection] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -565,8 +568,10 @@ typedef enum {
     
     [loadMoreScoresButton setEnabled:NO];
     
-    [leaderboard getGlobalScoresWithPageNum:nextPageNumber withCompletionHandler:^(NSArray *scores, NSError *error) {
-        
+    [leaderboard getScoresForTimeRange:OKLeaderboardTimeRangeAllTime
+                            pageNumber:nextPageNumber
+                            completion:^(NSArray *scores, NSError *error)
+     {        
         if(scores != nil) {
             [globalScores addObjectsFromArray:scores];
             [_tableView reloadSections:[NSIndexSet indexSetWithIndex:kGlobalSection] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -640,11 +645,7 @@ typedef enum {
     
     // if FB
     //   get FB scores from OpenKit
-    
-    if([leaderboard gamecenter_id] && [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter])
-    {
-        [self getGameCenterSocialScores];
-    } else if ([OKUser currentUser]) {
+    if ([OKUser currentUser]) {
         [self getUsersTopScoreFromOpenKit];
     }
     
@@ -653,34 +654,6 @@ typedef enum {
     }
 }
 
-
--(void)getGameCenterSocialScores {
-    
-    // If we already got the GC social scores, don't get them again
-    if(gcSocialScores != nil) {
-        return;
-    }
-    
-    // Increment the counter that keeps track of requests running for social leaderboards
-    [self startedSocialScoreRequest];
-    
-    [leaderboard getGameCenterFriendsScoreswithCompletionHandler:^(NSArray *scores, NSError *error) {
-        // Decrement the counter that keeps track of requests running for social leaderboards
-        [self finishedSocialScoreRequest];
-        if(error) {
-            OKLog(@"error getting gamecenter friends scores, %@", error);
-        }
-        else if(!error && scores) {
-            OKLog(@"Got gamecenter friends scores");
-            gcSocialScores = scores;
-            [self addSocialScores:scores];
-        } else if ([scores count] == 0) {
-            OKLog(@"Zero gamecenter friends scores returned");
-        } else {
-            OKLog(@"Unknown gamecenter friends scores error");
-        }
-    }];
-}
 
 -(void)getUsersTopScoreFromOpenKit
 {
@@ -692,7 +665,7 @@ typedef enum {
     // Increment the counter that keeps track of requests running for social leaderboards
     [self startedSocialScoreRequest];
     
-    [leaderboard getPlayerTopScoreWithCompletionHandler:^(OKScore *score, NSError *error) {
+    [leaderboard getPlayerTopScoreWithCompletion:^(OKScore *score, NSError *error) {
         
         // Decrement the counter that keeps track of requests running for social leaderboards
         [self finishedSocialScoreRequest];
@@ -715,7 +688,7 @@ typedef enum {
     //Get facebook social scores
     [self startedSocialScoreRequest];
     
-    [leaderboard getFacebookFriendsScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
+    [leaderboard getFacebookFriendsScoresWithCompletion:^(NSArray *scores, NSError *error) {
         fbSocialScores = scores;
         [self addSocialScores:scores];
         isShowingFBLoginCell = NO;

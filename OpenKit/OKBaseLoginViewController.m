@@ -34,7 +34,7 @@
     {
         [self setLoginString:aLoginString];
         [self initLoginView];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateGameCenterButtonVisibility) name:OK_GAMECENTER_AUTH_NOTIFICATION object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateGameCenterButtonVisibility) name:OKGameCenterPluginAuthStateNotification object:nil];
     }
     return self;
 }
@@ -178,7 +178,7 @@
 }
 
 -(void)updateGameCenterButtonVisibility {
-    if([OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
+    if([OKGameCenterPlugin isPlayerAuthenticated]) {
         [gcLoginButton setEnabled:NO];
     } else {
         [gcLoginButton setEnabled:YES];
@@ -197,11 +197,11 @@
 
 -(IBAction)gameCenterButtonPressed:(id)sender
 {
-    if([OKGameCenterUtilities isGameCenterAvailable] && ![OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
+    if([OKGameCenterPlugin isGCAvailable] && ![OKGameCenterPlugin isPlayerAuthenticated]) {
         
         [self dismissLoginViewWithoutBaseDismiss];
         
-        [OKGameCenterUtilities authorizeUserWithGameCenterLegacyWithCompletionHandler:^(NSError *error) {
+        [OKGameCenterPlugin authorizeUserWithViewController:nil completion:^(NSError *error) {
             
             if(error != nil) {
                 [self dismissLoginView];

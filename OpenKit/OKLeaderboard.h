@@ -28,39 +28,33 @@ typedef enum {
 
 @interface OKLeaderboard : NSObject
 
-
 @property (nonatomic) int OKApp_id;
-@property (nonatomic) NSInteger OKLeaderboard_id;
+@property (nonatomic) NSInteger leaderboardID;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic) OKLeaderBoardSortType sortType;
-@property (nonatomic, strong) NSString *icon_url;
+@property (nonatomic, strong) NSString *iconUrl;
 @property (nonatomic) int playerCount;
-@property (nonatomic, strong) NSString *gamecenter_id;
+@property (nonatomic, strong) NSString *gamecenterID;
 @property (nonatomic, strong) GKScore *localPlayerScore;
 
 
-+(void)getLeaderboardsWithCompletionHandler:(void (^)(NSArray* leaderboards, int playerCount, NSError* error))completionHandler;
-+(void)getLeaderboardWithID:(int)leaderboardID withCompletionHandler:(void (^)(OKLeaderboard *leaderboard, NSError *error))completionHandler;
--(NSString *)playerCountString;
--(id)initFromJSON:(NSDictionary*)jsonDict;
+- (id)initWithDictionary:(NSDictionary*)jsonDict;
+
++ (void)getLeaderboardsWithCompletion:(void (^)(NSArray* leaderboards, NSError* error))handler;
++ (void)getLeaderboardWithID:(int)leaderboardID withCompletion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler;
 
 //OpenKit Methods
-- (void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler;
--(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange forPageNumber:(int)pageNum
-       WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler;
--(void)getPlayerTopScoreForLeaderboardForTimeRange:(OKLeaderboardTimeRange)range withCompletionHandler:(void (^)(OKScore *score, NSError *error))completionHandler;
--(void)getFacebookFriendsScoresWithCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler;
+- (void)submitScore:(OKScore*)score withCompletion:(void (^)(NSError* error))handler;
+- (void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange pageNumber:(int)pageNum
+       completion:(void (^)(NSArray* scores, NSError *error))handler;
+- (void)getPlayerTopScoreForTimeRange:(OKLeaderboardTimeRange)range completion:(void (^)(OKScore *score, NSError *error))handler;
+- (void)getFacebookFriendsScoresWithCompletion:(void (^)(NSArray *scores, NSError *error))handler;
 
 //Wrapper methods
--(void)getGlobalScoresWithPageNum:(int)pageNum withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler;
--(void)getPlayerTopScoreWithCompletionHandler:(void (^)(id<OKScoreProtocol> score, NSError *error))completionHandler;
+- (void)getPlayerTopScoreWithCompletion:(void (^)(id<OKScoreProtocol> score, NSError *error))handler;
 
-//GameCenter methods
--(void)getGameCenterFriendsScoreswithCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler;
--(void)getPlayerTopScoreFromGameCenterWithCompletionHandler:(void (^)(OKGKScoreWrapper *score, NSError *error))completionHandler;
--(BOOL)showGlobalScoresFromGameCenter;
 
--(NSSortDescriptor*)getSortDescriptor;
--(NSArray*)sortScoresBasedOnLeaderboardType:(NSArray*)scores;
+- (NSSortDescriptor*)getSortDescriptor;
+- (NSArray*)sortScoresBasedOnLeaderboardType:(NSArray*)scores;
 
 @end

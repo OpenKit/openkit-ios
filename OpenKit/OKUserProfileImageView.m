@@ -125,7 +125,9 @@
     [self.imageView setImage:[OKUserProfileImageView placeHolderImage]];
 
     
-    [OKGameCenterUtilities loadPlayerPhotoForGameCenterID:gameCenterID withPhotoSize:GKPhotoSizeSmall withCompletionHandler:^(UIImage *photo, NSError *error) {
+    [OKGameCenterPlugin loadPlayerPhotoWithID:gameCenterID
+                                    photoSize:GKPhotoSizeSmall
+                                   completion:^(UIImage *photo, NSError *error) {
         
         if(photo != nil) {
             [self.imageView setImage:photo];

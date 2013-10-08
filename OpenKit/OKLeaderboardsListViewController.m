@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 Todd Hamilton. All rights reserved.
 //
 
-#import "OKLeaderboardsListViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "OKHelper.h"
 #import "OKLeaderboardListCell.h"
+#import "OKLeaderboardsListViewController.h"
 #import "OKProfileViewController.h"
 #import "OKLoginView.h"
 #import "OKMacros.h"
@@ -86,7 +86,7 @@
 {
     [spinner startAnimating];
     
-    [OKLeaderboard getLeaderboardsWithCompletionHandler:^(NSArray *leaderboards, int maxPlayerCount, NSError *error) {
+    [OKLeaderboard getLeaderboardsWithCompletion:^(NSArray *leaderboards, NSError *error) {
         
         [spinner stopAnimating];
         
@@ -96,7 +96,7 @@
             [alert show];
             
         } else {
-            playerCount = maxPlayerCount;
+            //playerCount = maxPlayerCount;
             [self setOKLeaderBoardsList:leaderboards];
             [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
         }

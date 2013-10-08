@@ -19,100 +19,90 @@
 #import "OKFacebookUtilities.h"
 #import "OKDBScore.h"
 #import "OKUserUtilities.h"
+#import "OKNotifications.h"
+
+static NSArray *__leaderboards = nil;
+
 
 @implementation OKLeaderboard
 
-@synthesize OKLeaderboard_id, OKApp_id, name, sortType, icon_url, playerCount, gamecenter_id;
-
 static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
-- (id)initFromJSON:(NSDictionary*)jsonDict
+- (id)initWithDictionary:(NSDictionary*)dict
 {
     if ((self = [super init])) {
-        NSString *sortTypeString    = [OKHelper getNSStringSafeForKey:@"sort_type" fromJSONDictionary:jsonDict];
-        
-        self.name                   = [OKHelper getNSStringSafeForKey:@"name" fromJSONDictionary:jsonDict];
-        self.OKLeaderboard_id       = [[OKHelper getNSNumberSafeForKey:@"id" fromJSONDictionary:jsonDict] integerValue];
-        self.OKApp_id               = [[OKHelper getNSNumberSafeForKey:@"app_id" fromJSONDictionary:jsonDict] integerValue];
-        self.sortType               = ([sortTypeString isEqualToString:@"HighValue"]) ? OKLeaderboardSortTypeHighValue : OKLeaderboardSortTypeLowValue;
-        self.icon_url               = [OKHelper getNSStringSafeForKey:@"icon_url" fromJSONDictionary:jsonDict];
-        self.playerCount            = [[OKHelper getNSNumberSafeForKey:@"player_count" fromJSONDictionary:jsonDict] integerValue];
-        self.gamecenter_id          = [OKHelper getNSStringSafeForKey:@"gamecenter_id" fromJSONDictionary:jsonDict];
+        [self configWithDictionary:dict];
     }
 
     return self;
 }
 
-- (NSString *)playerCountString
+
+- (void)configWithDictionary:(NSDictionary*)dict
 {
-    return [NSString stringWithFormat:@"%d Leaderboards", playerCount];
+    NSString *sortTypeString    = [OKHelper getNSStringSafeForKey:@"sort_type" fromJSONDictionary:dict];
+    
+    self.name                   = [OKHelper getNSStringSafeForKey:@"name" fromJSONDictionary:dict];
+    self.leaderboardID          = [[OKHelper getNSNumberSafeForKey:@"id" fromJSONDictionary:dict] integerValue];
+    self.OKApp_id               = [[OKHelper getNSNumberSafeForKey:@"app_id" fromJSONDictionary:dict] integerValue];
+    self.sortType               = ([sortTypeString isEqualToString:@"HighValue"]) ? OKLeaderboardSortTypeHighValue : OKLeaderboardSortTypeLowValue;
+    self.iconUrl               = [OKHelper getNSStringSafeForKey:@"icon_url" fromJSONDictionary:dict];
+    self.playerCount            = [[OKHelper getNSNumberSafeForKey:@"player_count" fromJSONDictionary:dict] integerValue];
+    self.gamecenterID           = [OKHelper getNSStringSafeForKey:@"gamecenter_id" fromJSONDictionary:dict];
 }
 
 
-+ (void)getLeaderboardsWithCompletionHandler:(void (^)(NSArray* leaderboards, int playerCount, NSError* error))completionHandler
+- (void)submitScore:(OKScore*)score withCompletion:(void (^)(NSError* error))handler
 {
-    // By default, if a leaderboard list tag is not defined through OKManger, we
-    // load the leaderboards with the tag = 'v1'. In the OK Dashboard, new leaderboards
-    // have a default tag of v1. This sets up future proofing so a developer can issue
-    // a set of leaderboards in the first version of their game, and then change the leaderboards
-    // in a future version of their game
     
-    if([[OKManager sharedManager] leaderboardListTag] != nil) {
-        [OKLeaderboard getLeaderboardsWithTag:[[OKManager sharedManager] leaderboardListTag] WithCompletionHandler:completionHandler];
-    } else {
-        [OKLeaderboard getLeaderboardsWithTag:DEFAULT_LEADERBOARD_LIST_TAG WithCompletionHandler:completionHandler];
-    }
-}
-
-+ (void)getLeaderboardsWithTag:(NSString*)leaderbaordListTag WithCompletionHandler:(void (^)(NSArray* leaderboards, int playerCount, NSError* error))completionHandler
-{
-    NSDictionary *requestParams = [NSDictionary dictionaryWithObject:leaderbaordListTag forKey:@"tag"];
+    //    // If the error code returned is in the 400s, delete the score from the cache
+    //    int errorCode = [OKNetworker getStatusCodeFromAFNetworkingError:error];
+    //    if(errorCode >= 400 && errorCode <= 500) {
+    //        OKLog(@"Deleted cached score because of error code: %d",errorCode);
+    //        [self deleteScore:score];
+    //    }
+    //    OKLog(@"Failed to submit cached score");
+    //
     
-    // OK NETWORK REQUEST
-    [OKNetworker getFromPath:@"/leaderboards" parameters:requestParams
-                     handler:^(id responseObject, NSError *error)
+    // Posting NSNotification
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:score forKey:@"score"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:OKNotificationSubmittedScore
+                                                        object:self
+                                                      userInfo:dict];
+    
+    
+    //Create a request and send it to OpenKit
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [score JSONDictionary], @"score", nil];
+    
+    [OKNetworker postToPath:@"/scores" parameters:params
+                    handler:^(id responseObject, NSError *error)
      {
-         int maxPlayerCount = 0;
-         
-         NSMutableArray *leaderboards = nil;
          if(!error) {
-             //NSLog(@"Successfully got list of leaderboards");
-             //NSLog(@"Leaderboard response is: %@", responseObject);
-             NSArray *leaderBoardsJSON = (NSArray*)responseObject;
-             leaderboards = [NSMutableArray arrayWithCapacity:[leaderBoardsJSON count]];
-             
-             for(id obj in leaderBoardsJSON) {
-                 OKLeaderboard *leaderBoard = [[OKLeaderboard alloc] initFromJSON:obj];
-                 [leaderboards addObject:leaderBoard];
-                 
-                 if([leaderBoard playerCount] > maxPlayerCount)
-                     maxPlayerCount = [leaderBoard playerCount];
-             }
+             OKLog(@"Successfully posted score to OpenKit: %@", self);
+             [score setSubmitState:kOKSubmitted];
+
          }else{
-             NSLog(@"Failed to get list of leaderboards: %@", error);
+             OKLog(@"Failed to post score to OpenKit: %@",self);
+             OKLog(@"Error: %@", error);
+             [score setSubmitState:kOKNotSubmitted];
+             
+             // If the user is unsubscribed to the app, log out the user.
+             [OKUserUtilities checkIfErrorIsUnsubscribedUserError:error];
          }
-         completionHandler(leaderboards, maxPlayerCount, error);
-     }];
-}
-
-+(void)getLeaderboardWithID:(int)leaderboardID withCompletionHandler:(void (^)(OKLeaderboard *leaderboard, NSError *error))completionHandler
-{
-    NSString *requestPath = [NSString stringWithFormat:@"/leaderboards/%d", leaderboardID];
-    
-    [OKNetworker getFromPath:requestPath parameters:nil
-                     handler:^(id responseObject, NSError *error)
-     {
-         OKLeaderboard *leaderboard;
+         [score syncWithDB];
          
-         if(!error) {
-             if(![responseObject isKindOfClass:[NSDictionary class]]) {
-                 completionHandler(leaderboard, [OKError unknownError]);
-                 return;
-             } else {
-                 leaderboard = [[OKLeaderboard alloc] initFromJSON:responseObject];
-             }
-         }
-         completionHandler(leaderboard, error);
+         if(handler)
+             handler(error);
+         
+         //OKScore *previousScore = [[OKScoreCache sharedCache] previousSubmittedScore];
+         //[[OKScoreCache sharedCache] setPreviousSubmittedScore:nil];
+         
+         // If there was no error, try issuing a push challenge
+         //         if(!error) {
+         //             [OKChallenge sendPushChallengewithScorePostResponseJSON:responseObject withPreviousScore:previousScore];
+         //         }
+         
      }];
 }
 
@@ -129,138 +119,19 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     }
 }
 
--(BOOL)showGlobalScoresFromGameCenter
-{
-    // If gamecenter is available and this leaderboard has a gamecenter ID, get global scores from gamecenter
-    
-    if(self.gamecenter_id && [OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
-        return YES;
-    }
-    else {
-        return NO;
-    }
-}
-
-// Get global scores from either GameCenter or OpenKit depending on GameCenter availability
-// Takes a page number of scores and converts to range for GameCenter
--(void)getGlobalScoresWithPageNum:(int)pageNum withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
-{
-    if([self showGlobalScoresFromGameCenter]) {
-        
-        NSRange scoreRange = NSMakeRange((pageNum-1)*NUM_SCORES_PER_PAGE+1, NUM_SCORES_PER_PAGE);
-        
-        [self getScoresFromGameCenterWithRange:scoreRange withPlayerScope:GKLeaderboardPlayerScopeGlobal withCompletionHandler:completionHandler];
-    }
-    else {
-       [self getScoresForTimeRange:OKLeaderboardTimeRangeAllTime forPageNumber:pageNum WithCompletionhandler:completionHandler];
-    }
-}
-
-//Get friends scores from gamecenter, retrieves up to 100 scores (hardcoded)
--(void)getGameCenterFriendsScoreswithCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
-{
-    [self getScoresFromGameCenterWithRange:NSMakeRange(1, 100) withPlayerScope:GKLeaderboardPlayerScopeFriendsOnly withCompletionHandler:^(NSArray *scores, NSError *error) {
-        completionHandler(scores, error);
-    }];
-}
 
 
-// Get global scores from gamecenter. Range must start from 1-25
--(void)getScoresFromGameCenterWithRange:(NSRange)scoreRange withPlayerScope:(GKLeaderboardPlayerScope)playerScope withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
-{
-    GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] init];
-    
-    if(![self gamecenter_id]) {
-        completionHandler(nil, [OKError noGameCenterIDError]);
-        return;
-    }
-    
-    if(leaderboardRequest != nil)
-    {
-        leaderboardRequest.playerScope = playerScope;
-        leaderboardRequest.timeScope = GKLeaderboardTimeScopeAllTime;
-        leaderboardRequest.category = [self gamecenter_id];
-        leaderboardRequest.range = scoreRange;
-        
-        [leaderboardRequest loadScoresWithCompletionHandler: ^(NSArray *scores, NSError *error) {
-            if (error != nil)
-            {
-                NSLog(@"Error getting gamecenter scores: %@", error);
-                completionHandler(nil, error);
-            }
-            else if (scores != nil)
-            {
-                OKLog(@"Received %d scores from GameCenter", [scores count]);
-                
-                //Get the player's local score for this leaderboard if available
-                [self setLocalPlayerScore:leaderboardRequest.localPlayerScore];
-                //OKLog(@"Local player score: %@", leaderboardRequest.localPlayerScore);
-                
-                // Get the players for the scores
-                
-                //Create an array to list the player identifiers
-                NSMutableArray *playerIDs = [[NSMutableArray alloc] initWithCapacity:[scores count]];
-                
-                for(int x = 0; x < [scores count]; x++){
-                    GKScore *score = [scores objectAtIndex:x];
-                    [playerIDs addObject:[score playerID]];
-                }
-                
-                // Get the player info for each score
-                [GKPlayer loadPlayersForIdentifiers:playerIDs withCompletionHandler:^(NSArray *players, NSError *error) {
-                    if (error != nil){
-                        // Got scores, but couldn't get player info for scores
-                        OKLog(@"Error getting player info from GameCenter scores");
-                        completionHandler(nil,error);
-                    }
-                    else if (players != nil){
-                        
-                        OKLog(@"Received player info from GameCenter for %d players", [players count]);
-                        
-                        NSMutableArray *gkScores = [[NSMutableArray alloc] initWithCapacity:[players count]];
-                        
-                        // Process the array of GKPlayer objects.
-                        for(int x = 0; x< [players count]; x++)
-                        {
-                            //Create a score wrapper that contains the GKSCore and the GKPLayer for that score
-                            OKGKScoreWrapper *gkScoreWrapper = [[OKGKScoreWrapper alloc] init];
-                            [gkScoreWrapper setScore:[scores objectAtIndex:x]];
-                            [gkScoreWrapper setPlayer:[players objectAtIndex:x]];
-                            [gkScores addObject:gkScoreWrapper];
-                        }
-                        
-                        completionHandler(gkScores, nil);
-                    }
-                    else {
-                        completionHandler(nil, nil);
-                    }
-                }];
-                
-                
-            }
-            else{
-                // This could also be 0 scores returned
-                completionHandler(nil, nil);
-            }
-        }];
-    }
-}
-
--(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange WithCompletionhandler:(void (^)(NSArray *, NSError *))completionHandler
-{
-    [self getScoresForTimeRange:timeRange forPageNumber:1 WithCompletionhandler:completionHandler];
-}
-
--(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange forPageNumber:(int)pageNum
-       WithCompletionhandler:(void (^)(NSArray* scores, NSError *error))completionHandler
+-(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange
+                  pageNumber:(int)pageNum
+                  completion:(void (^)(NSArray* scores, NSError *error))handler
 {
     //Create a request and send it to OpenKit
     //Create the request parameters
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [params setValue:[NSNumber numberWithInt:[self OKLeaderboard_id]] forKey:@"leaderboard_id"];
-    [params setValue:[NSNumber numberWithInt:pageNum] forKey:@"page_num"];
-    [params setValue:[NSNumber numberWithInt:NUM_SCORES_PER_PAGE] forKey:@"num_per_page"];
-    [params setValue:[self getParamForLeaderboardTimeRange:timeRange] forKey:@"leaderboard_range"];
+    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            [NSNumber numberWithInt:[self leaderboardID]], @"leaderboard_id",
+                            [NSNumber numberWithInt:pageNum], @"page_num",
+                            [NSNumber numberWithInt:NUM_SCORES_PER_PAGE], @"num_per_page",
+                            [self getParamForLeaderboardTimeRange:timeRange], @"leaderboard_range", nil];
     
     // OK NETWORK REQUEST
     [OKNetworker getFromPath:@"/best_scores" parameters:params
@@ -279,18 +150,19 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
          } else {
              OKLog(@"Failed to get scores, with error: %@", error);
          }
-         completionHandler(scores, error);
+         
+         if(handler)
+             handler(scores, error);
      }];
 }
 
 
--(void)getFacebookFriendsScoresWithFacebookFriends:(NSArray*)friends withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
+-(void)getFacebookFriendsScoresWithFacebookFriends:(NSArray*)friends completion:(void (^)(NSArray *scores, NSError *error))handler
 {
-    
     //Create a request and send it to OpenKit
     //Create the request parameters
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [params setValue:[NSNumber numberWithInt:[self OKLeaderboard_id]] forKey:@"leaderboard_id"];
+    [params setValue:[NSNumber numberWithInt:[self leaderboardID]] forKey:@"leaderboard_id"];
     [params setValue:friends forKey:@"fb_friends"];
     
     // OK NETWORK REQUEST
@@ -303,74 +175,70 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
              
              NSArray *scoresJSON = (NSArray*)responseObject;
              scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
-
+             
              // For now, just storing a list of friend OK Ids.
              NSMutableArray *arr = [[NSMutableArray alloc] init];
              
              for(id obj in scoresJSON) {
-
+                 
                  OKScore *score = [[OKScore alloc] initWithDictionary:obj];
                  [arr addObject:[[score user] OKUserID]];
                  [scores addObject:score];
              }
-
+             
              // Store array in NSUserDefaults
              [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"okfriendsList"];
          } else {
              NSLog(@"Failed to get scores, with error: %@", error);
          }
-         completionHandler(scores, error);
+         handler(scores, error);
      }];
-
-    
 }
 
 
--(void)getFacebookFriendsScoresWithCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
+-(void)getFacebookFriendsScoresWithCompletion:(void (^)(NSArray *scores, NSError *error))handler
 {
     // Get the facebook friends list, then get scores from OpenKit with fb friends filter
-
+    
     [OKFacebookUtilities getListOfFriendsForCurrentUserWithCompletionHandler:^(NSArray *friends, NSError *error) {
         if(error) {
-            completionHandler(nil, error);
+            handler(nil, error);
         } else if(friends){
-            [self getFacebookFriendsScoresWithFacebookFriends:friends withCompletionHandler:completionHandler];
+            [self getFacebookFriendsScoresWithFacebookFriends:friends completion:handler];
         }
         else {
-            completionHandler(nil, [OKError unknownFacebookRequestError]);
+            handler(nil, [OKError unknownFacebookRequestError]);
         }
     }];
 }
 
 
-//Wrapper method to get player top score either from GameCenter, OpenKit, or local cache 
--(void)getPlayerTopScoreWithCompletionHandler:(void (^)(id<OKScoreProtocol> score, NSError *error))completionHandler
+//Wrapper method to get player top score either from GameCenter, OpenKit, or local cache
+-(void)getPlayerTopScoreWithCompletion:(void (^)(id<OKScoreProtocol> score, NSError *error))handler
 {
-    // IF using GC pull top score from GC
+    // If using GC pull top score from GC
     // else if OKUser, pull top score from OKUser
     // else pull top score from cache
     
-    if([self showGlobalScoresFromGameCenter]) {
-        [self getPlayerTopScoreFromGameCenterWithCompletionHandler:^(OKGKScoreWrapper *scoreWrapper, NSError *gamecenterError) {
-            completionHandler(scoreWrapper,gamecenterError);
-        }];
-    } else if ([OKUser currentUser]) {
-        [self getPlayerTopScoreForLeaderboardForTimeRange:OKLeaderboardTimeRangeAllTime withCompletionHandler:^(OKScore *okScore, NSError *okError) {
-            completionHandler(okScore, okError);
+    if ([OKUser currentUser]) {
+        [self getPlayerTopScoreForTimeRange:OKLeaderboardTimeRangeAllTime completion:^(OKScore *okScore, NSError *okError) {
+            handler(okScore, okError);
         }];
     } else {
         OKScore *topCachedScore = [self getPlayerTopScoreFromLocalCache];
-        completionHandler(topCachedScore,nil);
+        handler(topCachedScore,nil);
     }
 }
 
+
 -(OKScore*)getPlayerTopScoreFromLocalCache
 {
-    NSArray *cachedScores = [[OKDBScore sharedConnection] getScoresForLeaderboardID:[self OKLeaderboard_id] andOnlyGetSubmittedScores:NO];
+    NSArray *cachedScores = [[OKDBScore sharedConnection] getScoresForLeaderboardID:[self leaderboardID] andOnlyGetSubmittedScores:NO];
     
     if([cachedScores count] == 0)
         return nil;
     else{
+        
         NSArray *sortedScores = [self sortScoresBasedOnLeaderboardType:cachedScores];
         OKScore *topScore = [sortedScores objectAtIndex:0];
         [topScore setUser:[OKUserUtilities guestUser]];
@@ -378,67 +246,23 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     }
 }
 
--(void)getPlayerTopScoreForLeaderboardForTimeRange:(OKLeaderboardTimeRange)range withCompletionHandler:(void (^)(OKScore *score, NSError *error))completionHandler
+
+-(void)getPlayerTopScoreForTimeRange:(OKLeaderboardTimeRange)range completion:(void (^)(OKScore *score, NSError *error))handler
 {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [params setValue:[NSNumber numberWithInt:[self OKLeaderboard_id]] forKey:@"leaderboard_id"];
+    [params setValue:[NSNumber numberWithInt:[self leaderboardID]] forKey:@"leaderboard_id"];
     [params setValue:[self getParamForLeaderboardTimeRange:range] forKey:@"leaderboard_range"];
     [params setValue:[[OKUser currentUser] OKUserID] forKey:@"user_id"];
     
     [OKNetworker getFromPath:@"best_scores/user" parameters:params handler:^(id responseObject, NSError *error) {
         if(!error) {
             OKScore *topScore = [[OKScore alloc] initWithDictionary:(NSDictionary*)responseObject];
-            completionHandler(topScore, nil);
+            handler(topScore, nil);
         }
         else {
-            completionHandler(nil, error);
+            handler(nil, error);
         }
     }];
-}
-
-
--(void)getPlayerTopScoreFromGameCenterWithCompletionHandler:(void (^)(OKGKScoreWrapper *score, NSError *error))completionHandler
-{
-    if(![OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
-        completionHandler(nil, [OKError gameCenterNotAvailableError]);
-        return;
-    }
-    
-    if(![self gamecenter_id]) {
-        completionHandler(nil, [OKError noGameCenterIDError]);
-        return;
-    }
-    
-    NSString *localPlayerID = [[GKLocalPlayer localPlayer] playerID];
-    
-    GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] initWithPlayerIDs:[NSArray arrayWithObject:localPlayerID]];
-    
-    leaderboardRequest.timeScope = GKLeaderboardTimeScopeAllTime;
-    leaderboardRequest.category = [self gamecenter_id];
-    
-    if(leaderboardRequest !=  nil){
-        
-        [leaderboardRequest loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
-            if(error != nil) {
-                completionHandler(nil, error);
-            } else if (scores != nil)
-            {
-                GKScore *score = [scores objectAtIndex:0];
-                
-                OKGKScoreWrapper *wrapper = [[OKGKScoreWrapper alloc] init];
-                [wrapper setScore:score];
-                [wrapper setPlayer:[GKLocalPlayer localPlayer]];
-                
-                completionHandler(wrapper, nil);
-            } else
-            {
-                completionHandler(nil, [OKError unknownGameCenterError]);
-            }
-        }];
-    }
-    else {
-        completionHandler(nil, [OKError unknownGameCenterError]);
-    }
 }
 
 
@@ -462,12 +286,104 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     NSArray *sortedArray = [scores sortedArrayUsingDescriptors:sortDescriptors];
     return sortedArray;
 }
- 
+
 - (NSString *)description {
-    return [NSString stringWithFormat:@"OKLeaderboard name: %@ id: %d app_id: %d gamecenter_id: %@ sortType: %u iconURL: %@ player_count: %d", name, OKLeaderboard_id, OKApp_id, gamecenter_id, sortType, icon_url, playerCount];
+    return [NSString stringWithFormat:@"OKLeaderboard name: %@ id: %d app_id: %d gamecenter_id: %@ sortType: %u iconURL: %@ player_count: %d", self.name, self.leaderboardID, self.OKApp_id, self.gamecenterID, self.sortType, self.iconUrl, self.playerCount];
 }
 
 
+#pragma mark - Class methods
 
++ (void)configWithDictionary:(NSArray*)dict
+{
+    if(!dict)
+        return;
+    
+    NSArray *leaderBoardsJSON = dict;
+    NSMutableArray *tmp = [NSMutableArray arrayWithCapacity:[leaderBoardsJSON count]];
+    
+    for(id obj in leaderBoardsJSON) {
+        // if the leaderboard already exist in memory, we update it
+        OKLeaderboard *leaderboard = [OKLeaderboard leaderboardForID:[[obj objectForKey:@"id"] integerValue]];
+        if(leaderboard)
+            [leaderboard configWithDictionary:obj];
+        else
+            leaderboard = [[OKLeaderboard alloc] initWithDictionary:obj];
+        
+        [tmp addObject:leaderboard];
+    }
+    __leaderboards = [NSArray arrayWithArray:tmp];
+}
+
+
++ (NSArray*)leaderboards
+{
+    return __leaderboards;
+}
+
+
++ (void)getLeaderboardsWithCompletion:(void (^)(NSArray* leaderboards, NSError* error))handler
+{
+    if(![self leaderboards]) {
+        [self syncWithCompletion:^(NSError* error) {
+            if(handler)
+                handler([self leaderboards], error);
+        }];
+        
+    }else if(handler)
+        handler([self leaderboards], nil);
+}
+
+
++ (void)getLeaderboardWithID:(int)leaderboardID withCompletion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler
+{
+    [self getLeaderboardsWithCompletion:^(NSArray* leaderboards, NSError* error) {
+        if(handler) {
+            OKLeaderboard *lb = [OKLeaderboard leaderboardForID:leaderboardID];
+            handler(lb, error);
+        }
+    }];
+}
+
+
++ (OKLeaderboard*)leaderboardForID:(int)leaderboardID
+{
+    for(OKLeaderboard* leaderboard in [OKLeaderboard leaderboards]) {
+        if(leaderboard.leaderboardID == leaderboardID)
+            return leaderboard;
+    }
+    return nil;
+}
+
+
++ (NSDictionary*)JSONDictionary
+{
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                          //_lastUpdate, @"last_update",
+                          [[OKManager sharedManager] leaderboardListTag], @"tag",
+                          nil];
+    return dict;
+}
+
+
++ (void)syncWithCompletion:(void (^)(NSError* error))handler
+{
+    // OK NETWORK REQUEST
+    [OKNetworker getFromPath:@"/leaderboards"
+                  parameters:[OKLeaderboard JSONDictionary]
+                     handler:^(id responseObject, NSError *error)
+     {
+         if(!error) {
+             OKLog(@"OpenKit: OKLeaderboard: Successfully got list of leaderboards.");
+             [OKLeaderboard configWithDictionary:responseObject];
+             
+         }else{
+             OKLogErr(@"OpenKit: OKLeaderboard: Failed to get list of leaderboards: %@", error);
+         }
+         
+         if(handler)
+             handler(error);
+     }];
+}
 
 @end
