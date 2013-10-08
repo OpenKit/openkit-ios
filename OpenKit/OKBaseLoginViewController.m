@@ -12,7 +12,7 @@
 #import "OKManager.h"
 #import "OKFacebookUtilities.h"
 #import "KGModal.h"
-#import "OKGameCenterUtilities.h"
+#import "OKGameCenterPlugin.h"
 #import "OKUser.h"
 
 @interface OKBaseLoginViewController ()

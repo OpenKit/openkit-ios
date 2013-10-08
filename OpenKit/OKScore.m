@@ -12,7 +12,6 @@
 #import "OKManager.h"
 #import "OKNetworker.h"
 #import "OKDefines.h"
-#import "OKGameCenterUtilities.h"
 #import "OKMacros.h"
 #import "OKError.h"
 #import "OKDBScore.h"

@@ -10,7 +10,7 @@
 #import "OKAppDelegate.h"
 #import "OpenKit.h"
 #import "OKViewController.h"
-#import "OKGameCenterUtilities.h"
+#import "OKGameCenterPlugin.h"
 
 
 @interface OKAppDelegate ()

@@ -7,7 +7,7 @@
 //
 
 #import <GameKit/GameKit.h>
-#import "OKGameCenterUtilities.h"
+#import "OKGameCenterPlugin.h"
 #import "OKNotifications.h"
 #import "OKScore.h"
 #import "OKLeaderboard.h"

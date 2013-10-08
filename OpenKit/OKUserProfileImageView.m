@@ -8,7 +8,7 @@
 
 #import "OKUserProfileImageView.h"
 #import "AFImageView.h"
-#import "OKGameCenterUtilities.h"
+#import "OKGameCenterPlugin.h"
 #import "OKScore.h"
 #import "OKGKScoreWrapper.h"
 #import "OKMacros.h"

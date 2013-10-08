@@ -12,7 +12,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "OKMacros.h"
 #import "OKColors.h"
-#import "OKGameCenterUtilities.h"
+#import "OKGameCenterPlugin.h"
 #import "OKUser.h"
 
 @implementation OKFBLoginCell

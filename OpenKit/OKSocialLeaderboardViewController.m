@@ -10,7 +10,7 @@
 #import "OKScoreCell.h"
 #import "OKGKScoreWrapper.h"
 #import "OKMacros.h"
-#import "OKGameCenterUtilities.h"
+#import "OKGameCenterPlugin.h"
 #import "OKFacebookUtilities.h"
 #import "OKFBLoginCell.h"
 #import "OKSpinnerCell.h"
