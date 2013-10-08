@@ -8,5 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#define OKNotificationSubmittedScore @"OKNotificationSubmittedScore"
-#define OKNotificationSubmittedAchievement @"OKNotificationSubmittedAchievement"
+
+#define OKScoreSubmittedNotification @"OKScoreSubmittedNotification"
+#define OKAchievementSubmittedNotification @"OKAchievementSubmittedNotification"

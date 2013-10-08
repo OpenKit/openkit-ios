@@ -186,8 +186,8 @@
 {
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     
-    [center addObserver:self selector:@selector(submitScore:) name:OKNotificationSubmittedScore object:self];
-    [center addObserver:self selector:@selector(submitAchievement:) name:OKNotificationSubmittedAchievement object:nil];
+    [center addObserver:self selector:@selector(submitScore:) name:OKScoreSubmittedNotification object:self];
+    [center addObserver:self selector:@selector(submitAchievement:) name:OKAchievementSubmittedNotification object:nil];
 }
 
 

@@ -65,7 +65,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     
     // Posting NSNotification
     NSDictionary *dict = [NSDictionary dictionaryWithObject:score forKey:@"score"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:OKNotificationSubmittedScore
+    [[NSNotificationCenter defaultCenter] postNotificationName:OKScoreSubmittedNotification
                                                         object:self
                                                       userInfo:dict];
     
