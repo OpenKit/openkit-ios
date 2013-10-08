@@ -36,19 +36,35 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 }
 
 @property (nonatomic, retain) UIWindow *window;
+@property (nonatomic, retain) UIWindow *previousWindow;
 @end
 
 
 @implementation BaseBridgeViewController
 
 @synthesize window = _window;
+@synthesize previousWindow;
 
 - (id)init
 {
     if(self = [super init]) {
         _didDisplay = NO;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getLostWindow:) name:UIWindowDidResignKeyNotification object:nil];
     }
     return self;
+}
+         
+-(void)getLostWindow:(NSNotification*)note
+{
+    if([[note object] isKindOfClass:[UIWindow class]]) {
+        UIWindow *noteWindow = [note object];
+        if([noteWindow windowLevel] == UIWindowLevelNormal) {
+            OKBridgeLog(@"Setting previous window: %@", noteWindow);
+            [self setPreviousWindow:noteWindow];
+        } else {
+            OKBridgeLog(@"Other window shown: %@", noteWindow);
+        }
+    }
 }
 
 - (void)customLaunch
@@ -85,12 +101,16 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 - (void)dealloc
 {
     OKBridgeLog(@"Dealloc BaseBridgeViewController");
-    OKBridgeLog(@"Window retain count before release: %d", [_window retainCount]);
     
-    while([_window retainCount] >= 1) {
-        [_window release];
-    }
-    OKBridgeLog(@"Window retain count after release: %d", [_window retainCount]);
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    OKBridgeLog(@"Make previous window key, previous window is: %@",previousWindow);
+    [previousWindow makeKeyAndVisible];
+    
+    [_window release];
+    OKBridgeLog(@"Release OK window, retain count after release: %d", [_window retainCount]);
+    
+    
     [super dealloc];
 }
 
