@@ -98,6 +98,12 @@
 }
 
 
+- (BOOL)isScoreBetter:(OKScore*)score
+{
+    return YES;
+}
+
+
 /** OKScoreProtocol Implementation **/
 -(NSString*)scoreDisplayString
 {
@@ -142,10 +148,9 @@
 }
 
 
-
 #pragma mark - Class methods
 
-+ (BOOL)isScoreBetter:(OKScore*)score
++ (BOOL)shouldSubmit:(OKScore*)score
 {
     return YES;
 }
@@ -155,10 +160,9 @@
 {
     [score setDbConnection:[OKDBScore sharedConnection]];
     
-    if([score isSubmissible] && [OKScore isScoreBetter:score]) {
+    if([score isSubmissible] && [OKScore shouldSubmit:score]) {
         [score syncWithDB];
         [OKScore resolveScore:score withCompletion:handler];
-        
     }else if(handler)
         handler([OKError OKScoreNotSubmittedError]);
 }
@@ -175,7 +179,9 @@
     }
     
     [OKLeaderboard getLeaderboardWithID:[score leaderboardID]
-                         withCompletion:^(OKLeaderboard *leaderboard, NSError *error) {
+                         withCompletion:^(OKLeaderboard *leaderboard, NSError *error)
+    {
+        // private method, never call it manually
         [leaderboard submitScore:score withCompletion:handler];
     }];
 }
