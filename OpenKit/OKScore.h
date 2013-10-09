@@ -20,13 +20,13 @@ typedef enum {
 @class OKUser;
 @interface OKScore : OKDBRow
 
-@property (nonatomic, readwrite) NSInteger scoreID;
-@property (nonatomic, readwrite) int64_t scoreValue;
-@property (nonatomic, readwrite) NSInteger leaderboardID;
-@property (nonatomic, strong) OKUser *user;
-@property (nonatomic, readwrite) NSInteger scoreRank;
-@property (nonatomic, readwrite) int metadata;
-@property (nonatomic, strong) NSString *displayString;
+@property(nonatomic, readwrite) NSInteger scoreID;
+@property(nonatomic, readwrite) int64_t scoreValue;
+@property(nonatomic, readwrite) NSInteger leaderboardID;
+@property(nonatomic, strong) OKUser *user;
+@property(nonatomic, readwrite) NSInteger scoreRank;
+@property(nonatomic, readwrite) int metadata;
+@property(nonatomic, strong) NSString *displayString;
 
 - (id)initWithDictionary:(NSDictionary*)dict;
 - (id)initWithLeaderboardID:(int)index;
@@ -43,7 +43,5 @@ typedef enum {
 
 + (void)resolveUnsubmittedScores;
 + (void)clearSubmittedScore;
-
-
 
 @end

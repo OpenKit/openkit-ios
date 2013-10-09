@@ -25,6 +25,7 @@
 
 static NSString *OK_USER_KEY = @"OKUserInfo";
 
+
 @interface OKManager ()
 {
     OKUser *_currentUser;
@@ -59,10 +60,12 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     OKLog(@"OpenKit configured with endpoint: %@", [[OKManager sharedManager] endpoint]);
 }
 
-+ (void)configureWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey
+
++ (void)configureWithAppKey:(NSString*)appKey secretKey:(NSString*)secretKey
 {
     [OKManager configureWithAppKey:appKey secretKey:secretKey endpoint:nil];
 }
+
 
 + (id)sharedManager
 {
@@ -73,6 +76,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     });
     return sharedInstance;
 }
+
 
 - (id)init
 {
@@ -97,11 +101,13 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     return self;
 }
 
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     // Do not call super here.  Using arc.
 }
+
 
 - (OKUser*)currentUser
 {
@@ -110,20 +116,24 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     }
 }
 
-+ (NSString *)appKey
+
++ (NSString*)appKey
 {
     return [[OKManager sharedManager] appKey];
 }
 
-+ (NSString *)endpoint
+
++ (NSString*)endpoint
 {
     return [[OKManager sharedManager] endpoint];
 }
 
-+ (NSString *)secretKey
+
++ (NSString*)secretKey
 {
     return [[OKManager sharedManager] secretKey];
 }
+
 
 - (void)logoutCurrentUser
 {
@@ -136,6 +146,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     [OKScore clearSubmittedScore];
 }
 
+
 - (void)saveCurrentUser:(OKUser *)aCurrentUser
 {
     self->_currentUser = aCurrentUser;
@@ -144,7 +155,8 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     [OKScore resolveUnsubmittedScores];
 }
 
--(void)getSavedUserFromNSUserDefaults
+
+- (void)getSavedUserFromNSUserDefaults
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSData *archivedUserDict = [defaults objectForKey:OK_USER_KEY];
@@ -170,7 +182,8 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     }
 }
 
--(void)saveCurrentUserToNSUserDefaults
+
+- (void)saveCurrentUserToNSUserDefaults
 {
     NSDictionary *userDict = [OKUserUtilities getJSONRepresentationOfUser:[OKUser currentUser]];
     NSData *archivedUserDict = [NSKeyedArchiver archivedDataWithRootObject:userDict];
@@ -180,17 +193,20 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     [defaults synchronize];
 }
 
--(void)removeCachedUserFromNSUserDefaults
+
+- (void)removeCachedUserFromNSUserDefaults
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:OK_USER_KEY];
     [defaults synchronize];
 }
 
+
 + (BOOL)handleOpenURL:(NSURL*)url
 {
     return [OKFacebookUtilities handleOpenURL:url];
 }
+
 
 + (void)handleDidBecomeActive
 {
@@ -198,10 +214,12 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     [[OKManager sharedManager] submitCachedScoresAfterDelay];
 }
 
+
 + (void)handleWillTerminate
 {
     [OKFacebookUtilities handleWillTerminate];
 }
+
 
 - (void)registerToken:(NSData *)deviceToken
 {
@@ -219,13 +237,16 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     });
 }
 
+
 #pragma mark - Dashboard Display State Callbacks
+
 - (void)willShowDashboard:(NSNotification *)note
 {
     if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerWillShowDashboard:)]) {
         [_delegate openkitManagerWillShowDashboard:self];
     }
 }
+
 
 - (void)didShowDashboard:(NSNotification *)note
 {
@@ -234,12 +255,14 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     }
 }
 
+
 - (void)willHideDashboard:(NSNotification *)note
 {
     if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerWillHideDashboard:)]) {
         [_delegate openkitManagerWillHideDashboard:self];
     }
 }
+
 
 - (void)didHideDashboard:(NSNotification *)note
 {
@@ -248,12 +271,12 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     }
 }
 
+
 // This method is used to migrate the OKUser cache from keychain
 // to NSUserDefaults
 // It clears out any saved data in Keychain and moves the cached OKUserID
 // to NSUserDefaults
 //
-
 - (void)getSavedUserFromKeychainAndMoveToNSUserDefaults
 {
     NSDictionary *userDict;
@@ -278,7 +301,9 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     }
 }
 
+
 #pragma mark - Private
+
 - (void)startSession
 {
     dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (100.0f * NSEC_PER_MSEC));
@@ -289,7 +314,8 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     [self submitCachedScoresAfterDelay];
 }
 
--(void)submitCachedScoresAfterDelay
+
+- (void)submitCachedScoresAfterDelay
 {
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));

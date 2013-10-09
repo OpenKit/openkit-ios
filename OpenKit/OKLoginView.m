@@ -20,25 +20,26 @@
 
 @end
 
-@implementation OKLoginView
 
-@synthesize loginView, baseViewController;
+@implementation OKLoginView
 
 -(id)init
 {
     return [self initWithLoginString:@"More Friends, More Fun!"];
 }
 
+
 -(id)initWithLoginString:(NSString *)loginString
 {
     self = [super init];
     
     if(self) {
-        baseViewController = [[OKBaseLoginViewController alloc] initWithLoginString:loginString];
+        _baseViewController = [[OKBaseLoginViewController alloc] initWithLoginString:loginString];
     }
     
     return self;
 }
+
 
 -(void)show
 {
@@ -46,16 +47,17 @@
     window.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     window.backgroundColor = [UIColor clearColor];
     
-    [baseViewController setDelegate:self];
+    [_baseViewController setDelegate:self];
     
-    [baseViewController setWindow:window];
+    [_baseViewController setWindow:window];
     
     window = nil;
     
-    [baseViewController.window setRootViewController:baseViewController];
-    [baseViewController.window makeKeyAndVisible];
-    [baseViewController showLoginModalView];
+    [_baseViewController.window setRootViewController:_baseViewController];
+    [_baseViewController.window makeKeyAndVisible];
+    [_baseViewController showLoginModalView];
 }
+
 
 -(void)showWithCompletionHandler:(OKLoginViewCompletionHandler)block
 {
@@ -63,23 +65,20 @@
     [self show];
 }
 
+
 -(void)dismiss
 {
     //Remove the base view controller on the main thread
     dispatch_async(dispatch_get_main_queue(), ^{
-        [baseViewController.view removeFromSuperview];
+        [_baseViewController.view removeFromSuperview];
     });
     
-    [baseViewController setDelegate:nil];
+    [_baseViewController setDelegate:nil];
     if(loginDialogCompletionHandler != nil) {
         loginDialogCompletionHandler();
         loginDialogCompletionHandler = nil;
     }
     
 }
-
-
-
-
 
 @end

@@ -11,22 +11,25 @@
 #import "OKScore.h"
 #import "OKMacros.h"
 
+
 @interface OKUserProfileImageView ()
 
-@property (nonatomic, strong) FBProfilePictureView *fbProfileImageView;
-@property (nonatomic, strong) AFImageView *imageView;
-
+@property(nonatomic, strong) FBProfilePictureView *fbProfileImageView;
+@property(nonatomic, strong) AFImageView *imageView;
 
 @end
 
 
 @implementation OKUserProfileImageView
 
-+(UIImage*)placeHolderImage{
++(UIImage*)placeHolderImage
+{
     return [UIImage imageNamed:@"user_icon.png"];
 }
 
+
 #pragma mark - Init
+
 - (id)init
 {
     if ((self = [super init])) {
@@ -34,6 +37,7 @@
     }
     return self;
 }
+
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -43,6 +47,7 @@
     return self;
 }
 
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     if ((self = [super initWithCoder:aDecoder])) {
@@ -50,6 +55,7 @@
     }
     return self;
 }
+
 
 - (void)initialize
 {
@@ -65,13 +71,16 @@
     [self addSubview:self.fbProfileImageView];
 }
 
+
 #pragma mark - Overridden Setters
+
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
     [self.fbProfileImageView setFrame:frame];
     [self.imageView setFrame:frame];
 }
+
 
 -(void)setOKScoreProtocolScore:(OKScore*)aScore
 {
@@ -80,7 +89,9 @@
 
 }
 
+
 #pragma mark - Custom Setters
+
 - (void)setUser:(OKUser *)aUser
 {
     // Use the built in FB placeholder for nil user.
@@ -115,7 +126,9 @@
     _image = aImage;
 }
 
+
 #pragma mark - Actions
+
 - (void)setImageURL:(NSString *)url
 {
     [self.fbProfileImageView setHidden:YES];
@@ -123,11 +136,11 @@
     [self.imageView setImageWithURL:[NSURL URLWithString:url]];
 }
 
+
 - (void)setImageURL:(NSString *)url withPlaceholderImage:(UIImage *)placeholder
 {
     [self setImage:placeholder];
     [self.imageView setImageWithURL:[NSURL URLWithString:url] placeholderImage:placeholder];
 }
-
 
 @end

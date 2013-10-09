@@ -13,51 +13,49 @@
 
 @implementation OKError
 
-+(NSError*)userNotLoggedInError
++ (NSError*)userNotLoggedInError
 {
     return [NSError errorWithDomain:OKERROR_DOMAIN code:USER_NOT_LOGGED_IN_CODE userInfo:[NSDictionary dictionaryWithObject:@"OpenKit User is not logged in" forKey:@"description"]];
 }
 
-+(NSError*)noOKUserError {
++ (NSError*)noOKUserError {
     return [NSError errorWithDomain:OKERROR_DOMAIN code:2 userInfo:[NSDictionary dictionaryWithObject:@"No valid OKUser passed in" forKey:NSLocalizedDescriptionKey]];
 }
 
-+(NSError*)noOKUserErrorScoreCached {
++ (NSError*)noOKUserErrorScoreCached {
     return [NSError errorWithDomain:OKERROR_DOMAIN code:10 userInfo:[NSDictionary dictionaryWithObject:@"The score was not submitted to OpenKit because the user is not logged in, but it is cached locally on the device and will be submitted to OpenKit when the user logs in." forKey:NSLocalizedDescriptionKey]];
-
 }
 
-+(NSError*)unknownError {
++ (NSError*)unknownError {
     return [NSError errorWithDomain:OKERROR_DOMAIN code:3 userInfo:[NSDictionary dictionaryWithObject:@"Unknown OpenKit error" forKey:NSLocalizedDescriptionKey]];
 }
 
-+(NSError*)noGameCenterIDError {
++ (NSError*)noGameCenterIDError {
      return [NSError errorWithDomain:OKERROR_DOMAIN code:4 userInfo:[NSDictionary dictionaryWithObject:@"No game center ID for this leaderboard so can't get scores from GameCenter" forKey:NSLocalizedDescriptionKey]];
 }
 
-+(NSError*)unknownGameCenterError {
++ (NSError*)unknownGameCenterError {
     return [NSError errorWithDomain:OKERROR_DOMAIN code:5 userInfo:[NSDictionary dictionaryWithObject:@"Unknown error from GameCenter" forKey:NSLocalizedDescriptionKey]];
 }
 
-+(NSError*)unknownFacebookRequestError {
++ (NSError*)unknownFacebookRequestError {
     return [NSError errorWithDomain:OKERROR_DOMAIN code:6 userInfo:[NSDictionary dictionaryWithObject:@"Unknown error from Facebook" forKey:NSLocalizedDescriptionKey]];
 }
 
-+(NSError*)gameCenterNotAvailableError {
++ (NSError*)gameCenterNotAvailableError {
         return [NSError errorWithDomain:OKERROR_DOMAIN code:7 userInfo:[NSDictionary dictionaryWithObject:@"GameCenter is not available (player may not be authenticated in)" forKey:NSLocalizedDescriptionKey]];
 }
 
-+(NSError*)OKServerRespondedWithDifferentUserIDError {
++ (NSError*)OKServerRespondedWithDifferentUserIDError {
     return [NSError errorWithDomain:OKERROR_DOMAIN code:8 userInfo:[NSDictionary dictionaryWithObject:@"The OpenKit server responded with a different OKUser id than expected" forKey:NSLocalizedDescriptionKey]];
 }
 
-+(NSError*)OKScoreNotSubmittedError {
++ (NSError*)OKScoreNotSubmittedError {
     return [NSError errorWithDomain:OKERROR_DOMAIN code:9 userInfo:[NSDictionary dictionaryWithObject:@"The score was not submitted to the OpenKit server because it is not better than previous submitted score. It may have still been submitted to GameCenter." forKey:NSLocalizedDescriptionKey]];
 }
 
-+(NSError*)noBodyError {
++ (NSError*)noBodyError {
     return [NSError errorWithDomain:OKERROR_DOMAIN code:11 userInfo:[NSDictionary dictionaryWithObject:@"No body error" forKey:NSLocalizedDescriptionKey]];
 }
-
 
 @end

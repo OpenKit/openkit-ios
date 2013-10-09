@@ -6,18 +6,16 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
-#import "OKFBLoginCell.h"
-#import "OKFacebookUtilities.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <QuartzCore/QuartzCore.h>
+#import "OKFBLoginCell.h"
+#import "OKFacebookUtilities.h"
 #import "OKMacros.h"
 #import "OKColors.h"
 #import "OKUser.h"
 
+
 @implementation OKFBLoginCell
-
-@synthesize connectFBButton, textLabel, spinner, delegate;
-
 
 -(id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
@@ -29,26 +27,30 @@
     return self;
 }
 
+
 -(void)layoutSubviews
 {
     [super layoutSubviews];
     [self updateButtonVisibility];
 }
 
+
 -(void)updateButtonVisibility
 {
     OKUser *currentUser = [OKUser currentUser];
     if(currentUser && [currentUser fbUserID] && [OKFacebookUtilities isFBSessionOpen]) {
-        [connectFBButton setEnabled:NO];
+        [_connectFBButton setEnabled:NO];
     } else {
-        [connectFBButton setEnabled:YES];
+        [_connectFBButton setEnabled:YES];
     }
 }
 
--(void)makeCellInviteFriends
+
+- (void)makeCellInviteFriends
 {
-    [textLabel setText:@"Invite friends from"];
+    [self.textLabel setText:@"Invite friends from"];
 }
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
@@ -61,22 +63,25 @@
     }
 }
 
--(void)startSpinner
+
+- (void)startSpinner
 {
-    [spinner startAnimating];
-    [connectFBButton setHidden:YES];
+    [_spinner startAnimating];
+    [_connectFBButton setHidden:YES];
 }
 
--(void)stopSpinner
+
+- (void)stopSpinner
 {
-    [spinner stopAnimating];
-    [connectFBButton setHidden:NO];
+    [_spinner stopAnimating];
+    [_connectFBButton setHidden:NO];
 }
 
--(IBAction)connectButtonPressed:(id)sender
+
+- (IBAction)connectButtonPressed:(id)sender
 {
-    if(delegate) {
-        [delegate fbLoginButtonPressed];
+    if(_delegate) {
+        [_delegate fbLoginButtonPressed];
     }
 }
 

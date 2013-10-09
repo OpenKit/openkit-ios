@@ -16,6 +16,7 @@
 #import "OKMacros.h"
 #import "OKNetworker.h"
 
+
 @implementation OKChallenge
 
 +(void)sendPushChallengewithScorePostResponseJSON:(id)responseObject withPreviousScore:(OKScore*)previousScore
@@ -67,6 +68,7 @@
     }];
 }
 
+
 // Given a leaderboard, player top score, and list of social scores, figures out which OKScore objects (and their OKUsers) get sent
 // a challenge
 +(void)issuePushChallengeforLeaderboard:(OKLeaderboard*)leaderboard withUserTopScore:(OKScore*)topScore withPreviousScore:(OKScore*)previousScore withFriendsScores:(NSArray*)friendsScores
@@ -115,6 +117,7 @@
     }
 }
 
+
 // Actually issue the challenge
 +(void)issuePushChallengeForListOfOKScores:(NSArray*)scores andLeaderboard:(OKLeaderboard*)leaderboard
 {
@@ -145,6 +148,5 @@
         }
     }];
 }
-
 
 @end

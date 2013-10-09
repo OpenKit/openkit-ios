@@ -19,7 +19,6 @@
 
 
 @implementation OKLeaderboardListCell
-@synthesize label1, label2, leaderboard;
 
 - (id)init
 {
@@ -33,11 +32,11 @@
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         //Initialize Label with tag 1.
-        label1 = [[UILabel alloc] initWithFrame:LeaderbordLabel];
-        label1.tag = 1;
-        label1.font = [UIFont boldSystemFontOfSize:15];
-        label1.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:label1];
+        _label1 = [[UILabel alloc] initWithFrame:LeaderbordLabel];
+        _label1.tag = 1;
+        _label1.font = [UIFont boldSystemFontOfSize:15];
+        _label1.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:_label1];
       
         // Initialize leaderboard icon
         leaderboardIcon = [[AFImageView alloc] initWithFrame:CGRectMake(15,10, 39, 39)];
@@ -50,15 +49,15 @@
     return self;
 }
 
+
 - (void)setLeaderboard:(OKLeaderboard *)aLeaderboard
 {
-    leaderboard = aLeaderboard;
+    _leaderboard = aLeaderboard;
     
-    label1.text = [leaderboard name];
+    _label1.text = [_leaderboard name];
     //label2.text = [leaderboard playerCountString];
     
-    [leaderboardIcon setImageWithURL:[NSURL URLWithString:[leaderboard iconUrl]]];
+    [leaderboardIcon setImageWithURL:[NSURL URLWithString:[_leaderboard iconUrl]]];
 }
 
 @end
-

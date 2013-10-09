@@ -19,22 +19,22 @@
 
 @interface OKLeaderboardsListViewController ()
 
-@property (nonatomic, strong) NSArray *OKLeaderBoardsList;
-@property (weak, nonatomic) IBOutlet UITableView *_tableView;
-@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
-@property (nonatomic) int defaultLeaderboardID;
+@property(nonatomic, strong) NSArray *OKLeaderBoardsList;
+@property(weak, nonatomic) IBOutlet UITableView *_tableView;
+@property(nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
+@property(nonatomic) int defaultLeaderboardID;
 
 @end
 
+
 @implementation OKLeaderboardsListViewController
 
-@synthesize OKLeaderBoardsList, _tableView, spinner, defaultLeaderboardID;
-
-- (id)init {
+- (id)init
+{
     return [self initWithDefaultLeaderboardID:0];
 }
 
--(id)initWithDefaultLeaderboardID:(int)leaderboardID
+- (id)initWithDefaultLeaderboardID:(int)leaderboardID
 {
     self = [super initWithNibName:@"OKLeaderboardsListViewController" bundle:nil];
     if (self) {
@@ -56,6 +56,7 @@
     return self;    
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -63,12 +64,13 @@
   
     [[self navigationItem] setTitle:@"Leaderboards"];
   
-    if(defaultLeaderboardID) {
-        OKSocialLeaderboardViewController *vc = [[OKSocialLeaderboardViewController alloc] initWithLeaderboardID:defaultLeaderboardID];
+    if(_defaultLeaderboardID) {
+        OKSocialLeaderboardViewController *vc = [[OKSocialLeaderboardViewController alloc] initWithLeaderboardID:_defaultLeaderboardID];
         [[self navigationController] pushViewController:vc animated:YES];
     }
     [self getListOfLeaderboards];
 }
+
 
 - (IBAction)back
 {
@@ -76,19 +78,21 @@
     [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
+
 - (IBAction)showProfileView
 {
     OKProfileViewController *profileView = [[OKProfileViewController alloc] init];
     [[self navigationController] pushViewController:profileView animated:YES];
 }
 
+
 - (void)getListOfLeaderboards
 {
-    [spinner startAnimating];
+    [_spinner startAnimating];
     
     [OKLeaderboard getLeaderboardsWithCompletion:^(NSArray *leaderboards, NSError *error) {
         
-        [spinner stopAnimating];
+        [_spinner stopAnimating];
         
         if (error) {
             OKLog(@"Error getting list of leaderboards, error: %@", error);
@@ -98,15 +102,17 @@
         } else {
             //playerCount = maxPlayerCount;
             [self setOKLeaderBoardsList:leaderboards];
-            [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [__tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
     }];
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-      return [OKLeaderBoardsList count];
+      return [_OKLeaderBoardsList count];
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -119,28 +125,32 @@
 
     //[cell setBackgroundColor:[UIColor whiteColor]];
   
-    [cell setLeaderboard:[OKLeaderBoardsList objectAtIndex:row]];
+    [cell setLeaderboard:[_OKLeaderBoardsList objectAtIndex:row]];
     return cell;
 }
 
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OKLeaderboard *selectedLeaderboard = [OKLeaderBoardsList objectAtIndex:[indexPath row]];
+    OKLeaderboard *selectedLeaderboard = [_OKLeaderBoardsList objectAtIndex:[indexPath row]];
     //OKLeaderboardViewController *vc = [[OKLeaderboardViewController alloc] initWithLeaderboard:selectedLeaderboard];
     
      OKSocialLeaderboardViewController *vc = [[OKSocialLeaderboardViewController alloc] initWithLeaderboard:selectedLeaderboard];
     [[self navigationController] pushViewController:vc animated:YES];
 }
 
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [NSString stringWithFormat:@"%d Leaderboards",[OKLeaderBoardsList count]];
+    return [NSString stringWithFormat:@"%d Leaderboards",[_OKLeaderBoardsList count]];
 }
+
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
     return @"Powered by OpenKit";
 }
+
 
 //RootViewController.m
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -148,14 +158,16 @@
     return 60;
 }
 
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     
-    if ([_tableView indexPathForSelectedRow]) {
-        [_tableView deselectRowAtIndexPath:[_tableView indexPathForSelectedRow] animated:YES];
+    if ([__tableView indexPathForSelectedRow]) {
+        [__tableView deselectRowAtIndexPath:[__tableView indexPathForSelectedRow] animated:YES];
     }
 }
+
 
 - (void)didReceiveMemoryWarning
 {

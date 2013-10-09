@@ -21,7 +21,8 @@
     return [calendar dateByAddingComponents:components toDate:now options:0];
 }
 
-+(BOOL)isEmpty:(id)obj
+
++ (BOOL)isEmpty:(id)obj
 {
     return obj == nil ||
     ([obj respondsToSelector:@selector(length)] && [(NSData *)obj length] == 0) ||
@@ -29,7 +30,8 @@
     (obj == [NSNull null]);
 }
 
-+(NSArray*)getNSArraySafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
+
++ (NSArray*)getNSArraySafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
 {
     if(![jsonDict isKindOfClass:[NSDictionary class]]) {
         return nil;
@@ -44,7 +46,8 @@
     }
 }
 
-+(BOOL)getBOOLSafeForKey:(NSString *)key fromJSONDictionary:(NSDictionary*)jsonDict
+
++ (BOOL)getBOOLSafeForKey:(NSString *)key fromJSONDictionary:(NSDictionary*)jsonDict
 {
     NSNumber *numberValue = [OKHelper getNSNumberSafeForKey:key fromJSONDictionary:jsonDict];
     
@@ -55,7 +58,8 @@
     }
 }
 
-+(int64_t)getInt64SafeForKey:(NSString *)key fromJSONDictionary:(NSDictionary*)jsonDict
+
++ (int64_t)getInt64SafeForKey:(NSString *)key fromJSONDictionary:(NSDictionary*)jsonDict
 {
     NSNumber *numberValue = [OKHelper getNSNumberSafeForKey:key fromJSONDictionary:jsonDict];
     if(numberValue) {
@@ -65,7 +69,8 @@
     }
 }
 
-+(int)getIntSafeForKey:(NSString *)key fromJSONDictionary:(NSDictionary*)jsonDict
+
++ (int)getIntSafeForKey:(NSString *)key fromJSONDictionary:(NSDictionary*)jsonDict
 {
     NSNumber *numberValue = [OKHelper getNSNumberSafeForKey:key fromJSONDictionary:jsonDict];
     if(numberValue) {
@@ -75,7 +80,8 @@
     }
 }
 
-+(NSNumber*)getNSNumberSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
+
++ (NSNumber*)getNSNumberSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
 {
     if(![jsonDict isKindOfClass:[NSDictionary class]]) {
         return nil;
@@ -97,7 +103,7 @@
 }
 
 
-+(NSDate*)getNSDateSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
++ (NSDate*)getNSDateSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
 {
     if(![jsonDict isKindOfClass:[NSDictionary class]]) {
         return nil;
@@ -115,7 +121,7 @@
 }
 
 
-+(NSString*)getNSStringSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
++ (NSString*)getNSStringSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
 {
     if(![jsonDict isKindOfClass:[NSDictionary class]]) {
         return nil;
@@ -137,7 +143,8 @@
     }
 }
 
-+(NSDictionary*)getNSDictionarySafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
+
++ (NSDictionary*)getNSDictionarySafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
 {
     if(![jsonDict isKindOfClass:[NSDictionary class]]) {
         return nil;
@@ -152,12 +159,11 @@
     }
 }
 
-+(NSString*)getPathToDocsDirectory
+
++ (NSString*)getPathToDocsDirectory
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     return [paths objectAtIndex:0];
 }
-
-
 
 @end

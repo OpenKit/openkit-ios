@@ -11,6 +11,7 @@
 
 #define OKGameCenterPluginAuthStateNotification @"OKGameCenterPluginAuthStateNotification"
 
+
 @interface OKGameCenterPlugin : NSObject
 
 //! Returns if GameCenter is available in this devices.

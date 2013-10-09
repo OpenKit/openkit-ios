@@ -10,7 +10,7 @@
 
 @interface OKSpinnerCell : UITableViewCell
 
-@property (nonatomic, strong) UIActivityIndicatorView *spinner;
+@property(nonatomic, strong) UIActivityIndicatorView *spinner;
 
 - (void)startAnimating;
 

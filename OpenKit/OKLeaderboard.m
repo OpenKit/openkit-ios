@@ -19,12 +19,11 @@
 #import "OKUserUtilities.h"
 #import "OKNotifications.h"
 
-static NSArray *__leaderboards = nil;
 
+static NSArray *__leaderboards = nil;
+static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 @implementation OKLeaderboard
-
-static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 - (id)initWithDictionary:(NSDictionary*)dict
 {
@@ -119,8 +118,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
-
--(void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange
+- (void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange
                   pageNumber:(int)pageNum
                   completion:(void (^)(NSArray* scores, NSError *error))handler
 {
@@ -157,7 +155,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
--(void)getFacebookFriendsScoresWithFacebookFriends:(NSArray*)friends completion:(void (^)(NSArray *scores, NSError *error))handler
+- (void)getFacebookFriendsScoresWithFacebookFriends:(NSArray*)friends completion:(void (^)(NSArray *scores, NSError *error))handler
 {
     //Create a request and send it to OpenKit
     //Create the request parameters
@@ -197,7 +195,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
--(void)getFacebookFriendsScoresWithCompletion:(void (^)(NSArray *scores, NSError *error))handler
+- (void)getFacebookFriendsScoresWithCompletion:(void (^)(NSArray *scores, NSError *error))handler
 {
     // Get the facebook friends list, then get scores from OpenKit with fb friends filter
     
@@ -215,7 +213,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 
 //Wrapper method to get player top score either from GameCenter, OpenKit, or local cache
--(void)getPlayerTopScoreWithCompletion:(void (^)(OKScore* score, NSError *error))handler
+- (void)getPlayerTopScoreWithCompletion:(void (^)(OKScore* score, NSError *error))handler
 {
     // If using GC pull top score from GC
     // else if OKUser, pull top score from OKUser
@@ -232,7 +230,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
--(OKScore*)getPlayerTopScoreFromLocalCache
+- (OKScore*)getPlayerTopScoreFromLocalCache
 {
     NSArray *cachedScores = [[OKDBScore sharedConnection] getScoresForLeaderboardID:[self leaderboardID] andOnlyGetSubmittedScores:NO];
     
@@ -248,7 +246,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
--(void)getPlayerTopScoreForTimeRange:(OKLeaderboardTimeRange)range completion:(void (^)(OKScore *score, NSError *error))handler
+- (void)getPlayerTopScoreForTimeRange:(OKLeaderboardTimeRange)range completion:(void (^)(OKScore *score, NSError *error))handler
 {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setValue:[NSNumber numberWithInt:[self leaderboardID]] forKey:@"leaderboard_id"];
@@ -270,7 +268,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
--(NSSortDescriptor*)getSortDescriptor
+- (NSSortDescriptor*)getSortDescriptor
 {
     NSSortDescriptor *sortDescriptor;
     
@@ -283,13 +281,15 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     return sortDescriptor;
 }
 
--(NSArray*)sortScoresBasedOnLeaderboardType:(NSArray*)scores
+
+- (NSArray*)sortScoresBasedOnLeaderboardType:(NSArray*)scores
 {
     NSSortDescriptor *sortDescriptor = [self getSortDescriptor];
     NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     NSArray *sortedArray = [scores sortedArrayUsingDescriptors:sortDescriptors];
     return sortedArray;
 }
+
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"OKLeaderboard name: %@ id: %d app_id: %d gamecenter_id: %@ sortType: %u iconURL: %@ player_count: %d", self.name, self.leaderboardID, self.OKApp_id, self.gamecenterID, self.sortType, self.iconUrl, self.playerCount];

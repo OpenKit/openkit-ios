@@ -8,13 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+
 typedef void(^OKLoginViewCompletionHandler)(void);
 
 @interface OKLoginView : NSObject
 
--(void)showWithCompletionHandler:(OKLoginViewCompletionHandler)block;
--(void)show;
--(id)initWithLoginString:(NSString*)loginString;
+- (void)showWithCompletionHandler:(OKLoginViewCompletionHandler)block;
+- (void)show;
+- (id)initWithLoginString:(NSString*)loginString;
 
 
 @end

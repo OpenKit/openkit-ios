@@ -7,11 +7,11 @@
 //
 
 #import <FacebookSDK/FacebookSDK.h>
+#import <FacebookSDK/FBErrorUtility.h>
 #import "OKFacebookUtilities.h"
 #import "OKUserUtilities.h"
 #import "OKManager.h"
 #import "OKNetworker.h"
-#import <FacebookSDK/FBErrorUtility.h>
 #import "OKMacros.h"
 #import "OKError.h"
 #import "OKUser.h"
@@ -19,25 +19,29 @@
 #import "OKHelper.h"
 #import "OKDBSession.h"
 
+
 @implementation OKFacebookUtilities
 
-+(BOOL)handleOpenURL:(NSURL *)url
++ (BOOL)handleOpenURL:(NSURL *)url
 {
     return [FBSession.activeSession handleOpenURL:url];
 }
 
-+(void)handleDidBecomeActive
+
++ (void)handleDidBecomeActive
 {
     [FBSession.activeSession handleDidBecomeActive];
 }
 
-+(void)handleWillTerminate
+
++ (void)handleWillTerminate
 {
     [FBSession.activeSession close];
 }
 
+
 // Assuming already logged into Facebook, get's the user's ID and creates an OKUser Account with it
-+(void)GetCurrentFacebookUsersIDAndCreateOKUserWithCompletionhandler:(void(^)(OKUser *user, NSError *error))compHandler
++ (void)GetCurrentFacebookUsersIDAndCreateOKUserWithCompletionhandler:(void(^)(OKUser *user, NSError *error))compHandler
 {
     [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         // Did everything come back okay with no errors?
@@ -67,9 +71,10 @@
     }];
 }
 
+
 // This method creates or updates the current OKUser with Facebook ID
 // IF there is an OKUser, update it. If not, create it.
-+(void)createOrUpdateCurrentOKUserWithFB
++ (void)createOrUpdateCurrentOKUserWithFB
 {
     if([OKUser currentUser]) {
         OKLog(@"Updating current OKUser with new Facebook ID");
@@ -91,7 +96,7 @@
 }
 
 
-+(void)updateOKUserWithFacebookID:(OKUser*)user 
++ (void)updateOKUserWithFacebookID:(OKUser*)user
 {
     [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         // Did everything come back okay with no errors?
@@ -125,7 +130,8 @@
     }];
 }
 
-+(void)CreateOKUserWithFacebookID:(NSString *)facebookID withUserNick:(NSString *)userNick withCompletionHandler:(void(^)(OKUser *user, NSError *error))completionhandler
+
++ (void)CreateOKUserWithFacebookID:(NSString *)facebookID withUserNick:(NSString *)userNick withCompletionHandler:(void(^)(OKUser *user, NSError *error))completionhandler
 {
     [OKUserUtilities createOKUserWithUserIDType:FacebookIDType withUserID:facebookID withUserNick:userNick withCompletionHandler:^(OKUser *user, NSError *errror) {
         
@@ -139,9 +145,9 @@
     }];
 }
 
-// Opens a Facebook session and shows UI if necessary. Completion handler is called when session is opened, fails to open, or request is cancelled by user
 
-+(void)OpenFBSessionWithCompletionHandler:(void(^)(NSError *error))completionHandler
+// Opens a Facebook session and shows UI if necessary. Completion handler is called when session is opened, fails to open, or request is cancelled by user
++ (void)OpenFBSessionWithCompletionHandler:(void(^)(NSError *error))completionHandler
 {
     [FBSession openActiveSessionWithReadPermissions:nil allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
         
@@ -179,9 +185,7 @@
 }
 
 
-
-
-+(void)AuthorizeUserWithFacebookWithCompletionHandler:(void(^)(OKUser *user, NSError *error))completionHandler
++ (void)AuthorizeUserWithFacebookWithCompletionHandler:(void(^)(OKUser *user, NSError *error))completionHandler
 {
     if([[FBSession activeSession] state] == FBSessionStateOpen)
     {
@@ -206,7 +210,7 @@
 }
 
 
-+(void)handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:(NSError *)error
++ (void)handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:(NSError *)error
 {
     NSString *alertMessage, *alertTitle;
     if (!error) {
@@ -244,8 +248,7 @@
 }
 
 
-
-+(void)getListOfFriendsForCurrentUserWithCompletionHandler:(void(^)(NSArray *friends, NSError*error))completionHandler
++ (void)getListOfFriendsForCurrentUserWithCompletionHandler:(void(^)(NSArray *friends, NSError*error))completionHandler
 {
     OKLog(@"Getting list of Facebook friends");
     
@@ -280,7 +283,8 @@
     }];
 }
 
-+(NSString*)serializeListOfFacebookFriends:(NSArray *)friendsArray
+
++ (NSString*)serializeListOfFacebookFriends:(NSArray *)friendsArray
 {
     NSMutableString *serializedString = [[NSMutableString alloc] init];
     
@@ -300,13 +304,15 @@
     return serializedString;
 }
 
-+(void)deleteLastCharacterOfMutableString:(NSMutableString*)mutableString
+
++ (void)deleteLastCharacterOfMutableString:(NSMutableString*)mutableString
 {
     int size = [mutableString length];
     [mutableString deleteCharactersInRange:NSMakeRange(size-1, 1)];
 }
 
-+(NSArray*)makeListOfFacebookFriends:(NSArray*) friendsJSON
+
++ (NSArray*)makeListOfFacebookFriends:(NSArray*) friendsJSON
 {
     NSMutableArray *list = [[NSMutableArray alloc] initWithCapacity:[friendsJSON count]];
     
@@ -322,7 +328,9 @@
     return list;
 }
 
-+(void)sendFacebookRequest {
+
++ (void)sendFacebookRequest
+{
     NSMutableDictionary* params =   [NSMutableDictionary dictionaryWithObjectsAndKeys:nil];
     [FBWebDialogs presentRequestsDialogModallyWithSession:nil
                                                   message:@"Check out this game!"
@@ -343,13 +351,14 @@
 }
 
 
-
-+(BOOL)isFBSessionOpen {
++ (BOOL)isFBSessionOpen
+{
     return ([FBSession activeSession].state == FBSessionStateOpen);
 }
 
+
 // Returns YES if a cached session was found and opened, NO if not
-+(BOOL)OpenCachedFBSessionWithoutLoginUI
++ (BOOL)OpenCachedFBSessionWithoutLoginUI
 {
     BOOL foundCachedSession = [FBSession openActiveSessionWithAllowLoginUI:NO];
     
@@ -361,14 +370,16 @@
     return foundCachedSession;
 }
 
-+(BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI
+
++ (BOOL)openSessionWithAllowLoginUI:(BOOL)allowLoginUI
 {
     return [FBSession openActiveSessionWithReadPermissions:nil allowLoginUI:allowLoginUI completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
         [self sessionStateChanged:session state:status error:error];
     }];
 }
 
-+(void)sessionStateChanged:(FBSession *)session state:(FBSessionState)state error:(NSError *)error
+
++ (void)sessionStateChanged:(FBSession *)session state:(FBSessionState)state error:(NSError *)error
 {
     switch(state)
     {
@@ -388,7 +399,5 @@
             break;
     }
 }
-
-
 
 @end

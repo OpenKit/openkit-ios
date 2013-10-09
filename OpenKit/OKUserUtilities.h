@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 typedef enum {
     FacebookIDType,
     TwitterIDType,
@@ -22,11 +23,11 @@ typedef enum {
 + (OKUser *)createOKUserWithJSONData:(NSDictionary *)jsonData;
 + (NSDictionary *)getJSONRepresentationOfUser:(OKUser *)user;
 + (void)updateUserNickForOKUser:(OKUser *)user withNewNick:(NSString *)newNick withCompletionHandler:(void(^)(NSError *error))completionHandler;
-+(void)createOKUserWithUserIDType:(OKUserIDType)userIDtype withUserID:(NSString*)userID withUserNick:(NSString *)userNick withCompletionHandler:(void(^)(OKUser *user, NSError *errror))completionHandler;
++ (void)createOKUserWithUserIDType:(OKUserIDType)userIDtype withUserID:(NSString*)userID withUserNick:(NSString *)userNick withCompletionHandler:(void(^)(OKUser *user, NSError *errror))completionHandler;
 
-+(void)updateOKUser:(OKUser *)user withCompletionHandler:(void(^)(NSError *error))completionHandler;
-+(void)checkIfErrorIsUnsubscribedUserError:(NSError *)error;
++ (void)updateOKUser:(OKUser *)user withCompletionHandler:(void(^)(NSError *error))completionHandler;
++ (void)checkIfErrorIsUnsubscribedUserError:(NSError *)error;
 
-+(OKUser*)guestUser;
++ (OKUser*)guestUser;
 
 @end

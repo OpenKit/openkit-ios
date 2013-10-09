@@ -8,6 +8,5 @@
 
 #import <Foundation/Foundation.h>
 
-
 #define OKScoreSubmittedNotification @"OKScoreSubmittedNotification"
 #define OKAchievementSubmittedNotification @"OKAchievementSubmittedNotification"

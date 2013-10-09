@@ -9,13 +9,14 @@
 #import "OKFileUtil.h"
 #import "OKMacros.h"
 
-@implementation OKFileUtil
 
+@implementation OKFileUtil
 
 + (BOOL)createDir:(NSString *)path
 {
     return [self createDir:path skipBackup:NO];
 }
+
 
 + (BOOL)createDir:(NSString *)path skipBackup:(BOOL)skipBackup
 {
@@ -35,7 +36,7 @@
 }
 
 
-+ (NSString *)localOnlyCachePath
++ (NSString*)localOnlyCachePath
 {
     NSString *p1, *p2;
     p1 = [self applicationSupportPath];
@@ -53,7 +54,7 @@
 }
 
 
-+ (NSString *)applicationSupportPath
++ (NSString*)applicationSupportPath
 {
     NSArray *arr = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
     NSString *p = [arr lastObject];

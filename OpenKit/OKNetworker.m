@@ -12,13 +12,10 @@
 #import "OKError.h"
 
 
-
 static AFOAuth1Client *_httpClient = nil;
 static NSString *OK_SERVER_API_VERSION = @"v1";
 
-
 @implementation OKNetworker
-
 
 + (AFOAuth1Client *)httpClient
 {
@@ -37,13 +34,15 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
     return _httpClient;
 }
 
-+(int)getStatusCodeFromAFNetworkingError:(NSError*)error {
+
++ (int)getStatusCodeFromAFNetworkingError:(NSError*)error {
     if([[error userInfo] objectForKey:AFNetworkingOperationFailingURLResponseErrorKey]) {
         return [[[error userInfo] objectForKey:AFNetworkingOperationFailingURLResponseErrorKey] statusCode];
     } else {
         return 0;
     }
 }
+
 
 + (void)requestWithMethod:(NSString *)method
                      path:(NSString *)path
@@ -80,6 +79,7 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
     [op start];
 }
 
+
 + (void)getFromPath:(NSString *)path
          parameters:(NSDictionary *)params
          completion:(void (^)(id responseObject, NSError *error))handler
@@ -89,6 +89,7 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
                  parameters:params
                  completion:handler];
 }
+
 
 + (void)postToPath:(NSString *)path
         parameters:(NSDictionary *)params
@@ -100,6 +101,7 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
                  completion:handler];
 }
 
+
 + (void)putToPath:(NSString *)path
        parameters:(NSDictionary *)params
        completion:(void (^)(id responseObject, NSError *error))handler
@@ -109,6 +111,5 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
                  parameters:params
                  completion:handler];
 }
-
 
 @end

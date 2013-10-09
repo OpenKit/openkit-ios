@@ -18,7 +18,6 @@
 #import "AFNetworking.h"
 
 
-
 @implementation OKUserUtilities
 
 + (void)updateSessionUserId:(NSNumber *)okId
@@ -28,7 +27,8 @@
     });
 }
 
-+ (OKUser *)createOKUserWithJSONData:(NSDictionary *)jsonData
+
++ (OKUser*)createOKUserWithJSONData:(NSDictionary *)jsonData
 {
     OKUser *user = [[OKUser alloc] init];
     
@@ -50,14 +50,16 @@
     return user;
 }
 
-+(OKUser*)guestUser
+
++ (OKUser*)guestUser
 {
     OKUser *guestUser = [[OKUser alloc] init];
     [guestUser setUserNick:@"Me"];
     return guestUser;
 }
 
-+(void)checkIfErrorIsUnsubscribedUserError:(NSError *)error
+
++ (void)checkIfErrorIsUnsubscribedUserError:(NSError *)error
 {
     int errorCode = [OKNetworker getStatusCodeFromAFNetworkingError:error];
     
@@ -67,6 +69,7 @@
         OKLog(@"Logging out current user b/c user is unsubscribed to app");
     }	
 }
+
 
 + (NSDictionary *)getJSONRepresentationOfUser:(OKUser *)user
 {
@@ -80,7 +83,8 @@
     return dict;
 }
 
-+(void)updateOKUser:(OKUser *)user withCompletionHandler:(void(^)(NSError *error))completionHandler
+
++ (void)updateOKUser:(OKUser *)user withCompletionHandler:(void(^)(NSError *error))completionHandler
 {
     if(!user){
         completionHandler([OKError noOKUserError]);
@@ -137,7 +141,7 @@
 }
 
 
-+(void)createOKUserWithUserIDType:(OKUserIDType)userIDtype withUserID:(NSString*)userID withUserNick:(NSString *)userNick withCompletionHandler:(void(^)(OKUser *user, NSError *errror))completionHandler
++ (void)createOKUserWithUserIDType:(OKUserIDType)userIDtype withUserID:(NSString*)userID withUserNick:(NSString *)userNick withCompletionHandler:(void(^)(OKUser *user, NSError *errror))completionHandler
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                             userNick, @"nick", nil];
@@ -165,12 +169,12 @@
      {
          OKUser *newUser = nil;
          if(!error) {
-            //OKLog(@"Create user JSON response is: %@",responseObject);
+             //OKLog(@"Create user JSON response is: %@",responseObject);
              //Success
              NSNumber *userId = [responseObject valueForKeyPath:@"id"];
              OKLog(@"Successfully created/found user ID: %@", userId);
              [OKUserUtilities updateSessionUserId:userId];
-
+             
              newUser = [OKUserUtilities createOKUserWithJSONData:responseObject];
              [[OKManager sharedManager] saveCurrentUser:newUser];
          } else {

@@ -12,4 +12,3 @@
 - (void)submitScore:(OKScore*)score withCompletion:(void (^)(NSError* error))handler;
 
 @end
-

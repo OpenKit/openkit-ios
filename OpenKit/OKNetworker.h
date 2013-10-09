@@ -8,7 +8,7 @@
 
 @interface OKNetworker : NSObject
 
-+(int)getStatusCodeFromAFNetworkingError:(NSError*)error;
++ (int)getStatusCodeFromAFNetworkingError:(NSError*)error;
 
 + (void)requestWithMethod:(NSString *)method
                      path:(NSString *)path

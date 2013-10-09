@@ -18,6 +18,7 @@
 
 #define kOKScoreCellIdentifier @"OKScoreCell"
 
+
 @interface OKSocialLeaderboardViewController ()
 
 - (void)showActionSheet:(id)sender; //Declare method to show action sheet
@@ -26,16 +27,13 @@
 
 @end
 
+
 @implementation OKSocialLeaderboardViewController
 {
     int numberOfSocialRequestsRunning;
     BOOL isShowingFBLoginCell;
     BOOL isShowingInviteFriendsCell;
 }
-
-
-@synthesize leaderboard, _tableView, spinner, socialScores, globalScores, containerViewForLoadMoreButton, loadMoreScoresButton, playerTopScore, mail, leaderboardID;
-@synthesize fbSocialScores, playerTopScoreSocialSection;
 
 static NSString *scoreCellIdentifier = kOKScoreCellIdentifier;
 static NSString *fbCellIdentifier = @"OKFBLoginCell";
@@ -46,17 +44,17 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
     return [self initWithLeaderboard:aLeaderboard withLeaderboardID:0];
 }
 
--(id)initWithLeaderboardID:(int)aLeaderboardID {
+- (id)initWithLeaderboardID:(int)aLeaderboardID {
     return [self initWithLeaderboard:nil withLeaderboardID:aLeaderboardID];
 }
 
--(id)initWithLeaderboard:(OKLeaderboard *)aLeaderboard withLeaderboardID:(int)aLeaderboardID
+- (id)initWithLeaderboard:(OKLeaderboard *)aLeaderboard withLeaderboardID:(int)aLeaderboardID
 {
     self = [super initWithNibName:@"OKSocialLeaderboardVC" bundle:nil];
     if (self) {
-        leaderboard = aLeaderboard;
-        leaderboardID = aLeaderboardID;
-        socialScores = [[NSMutableArray alloc] init];
+        _leaderboard = aLeaderboard;
+        _leaderboardID = aLeaderboardID;
+        _socialScores = [[NSMutableArray alloc] init];
         numberOfSocialRequestsRunning = 0;
         isShowingFBLoginCell = NO;
       
@@ -107,7 +105,7 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
     }
 }
 
--(void)showFacebookInviteUI
+- (void)showFacebookInviteUI
 {
     if([[FBSession activeSession] isOpen]) {
         [OKFacebookUtilities sendFacebookRequest];
@@ -118,26 +116,26 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
     }
 }
 
--(void)showEmailUI
+- (void)showEmailUI
 {
     
     //Set up
-    mail = [[MFMailComposeViewController alloc]init];
+    self.mail = [[MFMailComposeViewController alloc]init];
     
-    mail.mailComposeDelegate = self;
+    _mail.mailComposeDelegate = self;
     
     //Set the subject
-    [mail setSubject:@"Check out this game"];
+    [_mail setSubject:@"Check out this game"];
     
     //Set the message
     NSString * sentFrom = @"<p>Check out this game:</p>";
-    [mail setMessageBody:sentFrom isHTML:YES];
+    [_mail setMessageBody:sentFrom isHTML:YES];
     
-    [self presentViewController:mail animated:YES completion:nil];
+    [self presentViewController:_mail animated:YES completion:nil];
     
 }
 
-- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
     switch (result)
     {
@@ -161,7 +159,7 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
--(void) showMessageUI
+- (void)showMessageUI
 {
 	MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
 	if([MFMessageComposeViewController canSendText])
@@ -173,8 +171,7 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
 	}
 }
 
-- (void) messageComposeViewController:(MFMessageComposeViewController *)
-controller didFinishWithResult:(MessageComposeResult)result
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
 {
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"MyApp" message:@"Unknown Error"
@@ -218,11 +215,12 @@ typedef enum {
     SocialSectionRowUnknownRow
 } SocialSectionRow;
 
--(BOOL)isShowingSocialScoresProgressBar {
+- (BOOL)isShowingSocialScoresProgressBar {
     return (numberOfSocialRequestsRunning > 0);
 }
 
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     switch(section) {
         case kSocialLeaderboardSection:
@@ -240,7 +238,7 @@ typedef enum {
 //}
 
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return NUM_SECTIONS;
 }
@@ -271,7 +269,7 @@ typedef enum {
 
 // This method captures a lot of the logic for what type of cell is drawn at what index path so it can be reused in
 // both cellForRowAtIndexPath and heightForRow
--(SocialSectionRow)getTypeOfRow:(NSIndexPath*)indexPath {
+- (SocialSectionRow)getTypeOfRow:(NSIndexPath*)indexPath {
     
     int section = [indexPath section];
     int row = [indexPath row];
@@ -279,22 +277,22 @@ typedef enum {
     if(section != (int)kSocialLeaderboardSection)
         return SocialSectionRowUnknownRow;
     
-    if(row < [socialScores count])
+    if(row < [_socialScores count])
         return SocialSectionRowSocialScoreRow;
     
-    if(row == [socialScores count] && [self isShowingSocialScoresProgressBar])
+    if(row == [_socialScores count] && [self isShowingSocialScoresProgressBar])
         return SocialSectionRowProgressBarRow;
     
-    if(row >= [socialScores count] && isShowingFBLoginCell)
+    if(row >= [_socialScores count] && isShowingFBLoginCell)
         return SocialSectionRowFBLoginRow;
     
-    if([socialScores count] == 0 && isShowingInviteFriendsCell && !isShowingFBLoginCell)
+    if([_socialScores count] == 0 && isShowingInviteFriendsCell && !isShowingFBLoginCell)
         return SocialSectionRowInviteFriends;
     
     return SocialSectionRowUnknownRow;
 }
 
--(int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     int numRowsInSocial = 0;
     
@@ -311,17 +309,17 @@ typedef enum {
                 numRowsInSocial++;
             }
             
-            if(isShowingInviteFriendsCell && !isShowingFBLoginCell && [socialScores count] == 0)
+            if(isShowingInviteFriendsCell && !isShowingFBLoginCell && [_socialScores count] == 0)
                 numRowsInSocial++;
             
-            numRowsInSocial += [socialScores count];
+            numRowsInSocial += [_socialScores count];
             return numRowsInSocial;
         case kGlobalSection:
-            if(globalScores) {
+            if(_globalScores) {
                 if([self shouldShowPlayerTopScore]) {
-                    return [globalScores count] + 1;
+                    return [_globalScores count] + 1;
                 } else {
-                    return [globalScores count];
+                    return [_globalScores count];
                 }
             } else {
                 return 0;
@@ -333,17 +331,16 @@ typedef enum {
 }
 
 
-
--(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int section = [indexPath section];
     int row = [indexPath row];
     
     if(section == kGlobalSection) {
-        if(row >= [globalScores count]) {
-            return [self getScoreCellForPlayerTopScore:playerTopScore withTableView:tableView];
+        if(row >= [_globalScores count]) {
+            return [self getScoreCellForPlayerTopScore:_playerTopScore withTableView:tableView];
         } else {
-            return [self getScoreCellForScore:[globalScores objectAtIndex:row] withTableView:tableView andShowSocialNetworkIcon:NO];
+            return [self getScoreCellForScore:[_globalScores objectAtIndex:row] withTableView:tableView andShowSocialNetworkIcon:NO];
         }
     }
     else if(section == kSocialLeaderboardSection) {
@@ -357,7 +354,7 @@ typedef enum {
                 return [self getProgressBarCell];
                 break;
             case SocialSectionRowSocialScoreRow:
-                return [self getScoreCellForScore:[socialScores objectAtIndex:row] withTableView:tableView andShowSocialNetworkIcon:YES];
+                return [self getScoreCellForScore:[_socialScores objectAtIndex:row] withTableView:tableView andShowSocialNetworkIcon:YES];
                 break;
             case SocialSectionRowInviteFriends:
                 return [self getInviteFriendsCell];
@@ -374,8 +371,9 @@ typedef enum {
     }
 }
 
--(UITableViewCell*)getFBLoginCell {
-    OKFBLoginCell *cell =  [_tableView dequeueReusableCellWithIdentifier:fbCellIdentifier];
+
+- (UITableViewCell*)getFBLoginCell {
+    OKFBLoginCell *cell =  [__tableView dequeueReusableCellWithIdentifier:fbCellIdentifier];
     if(!cell) {
         cell = [[OKFBLoginCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:fbCellIdentifier];
     }
@@ -383,8 +381,9 @@ typedef enum {
     return cell;
 }
 
--(UITableViewCell*)getInviteFriendsCell {
-    OKFBLoginCell *cell =  [_tableView dequeueReusableCellWithIdentifier:inviteCellIdentifier];
+
+- (UITableViewCell*)getInviteFriendsCell {
+    OKFBLoginCell *cell =  [__tableView dequeueReusableCellWithIdentifier:inviteCellIdentifier];
     if(!cell) {
         cell = [[OKFBLoginCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:inviteCellIdentifier];
     }
@@ -393,9 +392,10 @@ typedef enum {
     return cell;
 }
 
--(UITableViewCell*)getProgressBarCell
+
+- (UITableViewCell*)getProgressBarCell
 {
-    OKSpinnerCell *cell = [_tableView dequeueReusableCellWithIdentifier:spinnerCellIdentifier];
+    OKSpinnerCell *cell = [__tableView dequeueReusableCellWithIdentifier:spinnerCellIdentifier];
     if(!cell) {
         cell = [[OKSpinnerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:spinnerCellIdentifier];
     }
@@ -406,15 +406,17 @@ typedef enum {
     return cell;
 }
 
--(UITableViewCell*)getScoreCellForPlayerTopScore:(OKScore*)score withTableView:(UITableView*)tableView
+
+- (UITableViewCell*)getScoreCellForPlayerTopScore:(OKScore*)score withTableView:(UITableView*)tableView
 {
-    OKScoreCell *cell = [self getScoreCellForScore:score withTableView:_tableView andShowSocialNetworkIcon:NO];
+    OKScoreCell *cell = [self getScoreCellForScore:score withTableView:__tableView andShowSocialNetworkIcon:NO];
     //[cell setBackgroundColor:[OKColors playerTopScoreBGColor]];
     
     return cell;
 }
 
--(OKScoreCell*)getScoreCellForScore:(OKScore*)score withTableView:(UITableView*)tableView andShowSocialNetworkIcon:(BOOL)showSocialNetworkIcon
+
+- (OKScoreCell*)getScoreCellForScore:(OKScore*)score withTableView:(UITableView*)tableView andShowSocialNetworkIcon:(BOOL)showSocialNetworkIcon
 {
     OKScoreCell *cell = [tableView dequeueReusableCellWithIdentifier:scoreCellIdentifier];
     if(!cell) {
@@ -429,7 +431,8 @@ typedef enum {
     return cell;
 }
 
--(void)errorLoadingGlobalScores
+
+- (void)errorLoadingGlobalScores
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Sorry, there was an error loading the leaderboard. Please try again later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [alert show];
@@ -452,7 +455,7 @@ typedef enum {
     
     // iPad specific adjustments
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        [loadMoreScoresButton setFrame:CGRectMake(30, 0, 508, 44)];
+        [_loadMoreScoresButton setFrame:CGRectMake(30, 0, 508, 44)];
     }else {
         // iPhone
     }
@@ -460,7 +463,7 @@ typedef enum {
     // If leaderboard is already loaded, display it, else get it then show it
     if([self leaderboard]) {
         [self getScores];
-        [self setTitle:[leaderboard name]];
+        [self setTitle:[_leaderboard name]];
     } else {
         [self getLeaderboardThenGetScores];
     }
@@ -468,7 +471,8 @@ typedef enum {
     [self showLoginPromptIfNecessary];
 }
 
--(void)showLoginPromptIfNecessary {
+
+- (void)showLoginPromptIfNecessary {
     
     if(![OKUser currentUser] && ![[OKManager sharedManager] hasShownFBLoginPrompt]) {
         OKLoginView *loginView = [[OKLoginView alloc] init];
@@ -479,10 +483,11 @@ typedef enum {
     }
 }
 
--(void)getLeaderboardThenGetScores
+
+- (void)getLeaderboardThenGetScores
 {
-    [spinner startAnimating];
-    [_tableView setHidden:YES];
+    [_spinner startAnimating];
+    [__tableView setHidden:YES];
     
     [OKLeaderboard getLeaderboardWithID:self.leaderboardID withCompletion:^(OKLeaderboard *aLeaderboard, NSError *error) {
         if(aLeaderboard && !error) {
@@ -490,28 +495,29 @@ typedef enum {
             [self setTitle:[aLeaderboard name]];
             [self getScores];
         } else {
-            [spinner stopAnimating];
+            [_spinner stopAnimating];
             [self errorLoadingGlobalScores];
         }
     }];
 }
 
--(void)getScores
+
+- (void)getScores
 {
-    [spinner startAnimating];
-    [_tableView setHidden:YES];
+    [_spinner startAnimating];
+    [__tableView setHidden:YES];
     
     // Get global scores-- OKLeaderboard decides where to get them from
-    [leaderboard getScoresForTimeRange:OKLeaderboardTimeRangeAllTime
+    [_leaderboard getScoresForTimeRange:OKLeaderboardTimeRangeAllTime
                             pageNumber:1
                             completion:^(NSArray *scores, NSError *error)
     {
-        [spinner stopAnimating];
-        [_tableView setHidden:NO];
+        [_spinner stopAnimating];
+        [__tableView setHidden:NO];
         
         if(!error && scores) {
-            globalScores = [NSMutableArray arrayWithArray:scores];
-            [_tableView reloadData];
+            _globalScores = [NSMutableArray arrayWithArray:scores];
+            [__tableView reloadData];
         } else if(error) {
             OKLog(@"Error getting global scores: %@", error);
             [self errorLoadingGlobalScores];
@@ -525,10 +531,11 @@ typedef enum {
     [self getPlayerTopScoreForGlobalSection];
 }
 
--(BOOL)shouldShowPlayerTopScore
+
+- (BOOL)shouldShowPlayerTopScore
 {
-    if(playerTopScore != nil) {
-        if([playerTopScore scoreRank] <= [globalScores count]) {
+    if(_playerTopScore != nil) {
+        if([_playerTopScore scoreRank] <= [_globalScores count]) {
             return NO;
         } else {
             return YES;
@@ -538,24 +545,26 @@ typedef enum {
     }
 }
 
+
 // Get the player's top score to show in the "all scores" section
--(void)getPlayerTopScoreForGlobalSection
+- (void)getPlayerTopScoreForGlobalSection
 {
-    [leaderboard getPlayerTopScoreWithCompletion:^(OKScore* score, NSError *error) {
+    [_leaderboard getPlayerTopScoreWithCompletion:^(OKScore* score, NSError *error) {
         if(score && !error) {
             [self setPlayerTopScore:score];
-            [_tableView reloadSections:[NSIndexSet indexSetWithIndex:kGlobalSection] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [__tableView reloadSections:[NSIndexSet indexSetWithIndex:kGlobalSection] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
     }];
 }
 
--(void)getMoreGlobalScores
+
+- (void)getMoreGlobalScores
 {
     // If there are no scores already for this leaderboard, getting "More" doesn't make sense
-    if(globalScores == nil)
+    if(_globalScores == nil)
         return;
     
-    int numScores = [globalScores count];
+    int numScores = [_globalScores count];
     int currentPageNumber = numScores / NUM_SCORES_PER_PAGE;
     
     if(currentPageNumber*NUM_SCORES_PER_PAGE < numScores) {
@@ -564,31 +573,33 @@ typedef enum {
     
     int nextPageNumber = currentPageNumber + 1;
     
-    [loadMoreScoresButton setEnabled:NO];
+    [_loadMoreScoresButton setEnabled:NO];
     
-    [leaderboard getScoresForTimeRange:OKLeaderboardTimeRangeAllTime
+    [_leaderboard getScoresForTimeRange:OKLeaderboardTimeRangeAllTime
                             pageNumber:nextPageNumber
                             completion:^(NSArray *scores, NSError *error)
      {        
         if(scores != nil) {
-            [globalScores addObjectsFromArray:scores];
-            [_tableView reloadSections:[NSIndexSet indexSetWithIndex:kGlobalSection] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [_globalScores addObjectsFromArray:scores];
+            [__tableView reloadSections:[NSIndexSet indexSetWithIndex:kGlobalSection] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
         
-        [loadMoreScoresButton setEnabled:YES];
+        [_loadMoreScoresButton setEnabled:YES];
     }];
 }
 
--(IBAction)loadMoreScoresPressed:(id)sender {
+
+- (IBAction)loadMoreScoresPressed:(id)sender {
     [self getMoreGlobalScores];
 }
 
--(void)fbLoginButtonPressed {
+
+- (void)fbLoginButtonPressed {
     [self fbLoginWithCompletionHandler:nil];
 }
 
 
--(void)fbLoginWithCompletionHandler:(void(^)())completionHandler
+- (void)fbLoginWithCompletionHandler:(void(^)())completionHandler
 {
     if(!isShowingFBLoginCell && isShowingInviteFriendsCell)
     {
@@ -626,15 +637,14 @@ typedef enum {
 }
 
 
--(void)reloadSocialScores
+- (void)reloadSocialScores
 {
-    [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [__tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 
-
 //Get Social scores
--(void)getSocialScores {
+- (void)getSocialScores {
     
     // If game center
     //   get GC friends scores (including users' top score)
@@ -653,54 +663,58 @@ typedef enum {
 }
 
 
--(void)getUsersTopScoreFromOpenKit
+- (void)getUsersTopScoreFromOpenKit
 {
     // Only get the player's top score for the social section ones
-    if(playerTopScoreSocialSection != nil) {
+    if(_playerTopScoreSocialSection != nil) {
         return;
     }
     
     // Increment the counter that keeps track of requests running for social leaderboards
     [self startedSocialScoreRequest];
     
-    [leaderboard getPlayerTopScoreWithCompletion:^(OKScore *score, NSError *error) {
+    [_leaderboard getPlayerTopScoreWithCompletion:^(OKScore *score, NSError *error) {
         
         // Decrement the counter that keeps track of requests running for social leaderboards
         [self finishedSocialScoreRequest];
         
         if(!error && score) {
-            playerTopScoreSocialSection = score;
+            _playerTopScoreSocialSection = score;
             [self addSocialScores:[NSArray arrayWithObject:score]];
         }
     }];
     
 }
 
--(void)getFacebookSocialScores
+
+- (void)getFacebookSocialScores
 {
     // Only fetch the fbSocialScores once
-    if(fbSocialScores != nil) {
+    if(_fbSocialScores != nil) {
         return;
     }
     
     //Get facebook social scores
     [self startedSocialScoreRequest];
     
-    [leaderboard getFacebookFriendsScoresWithCompletion:^(NSArray *scores, NSError *error) {
-        fbSocialScores = scores;
+    [_leaderboard getFacebookFriendsScoresWithCompletion:^(NSArray *scores, NSError *error) {
+        _fbSocialScores = scores;
         [self addSocialScores:scores];
         isShowingFBLoginCell = NO;
         [self finishedSocialScoreRequest];
     }];
 }
 
--(void)startedSocialScoreRequest
+
+- (void)startedSocialScoreRequest
 {
     numberOfSocialRequestsRunning++;
     [self reloadSocialScores];
     
 }
--(void)finishedSocialScoreRequest
+
+
+- (void)finishedSocialScoreRequest
 {
     numberOfSocialRequestsRunning--;
     
@@ -710,7 +724,7 @@ typedef enum {
     
     // If there are no social scores, and all social score requests are finished, then show
     // an invite friends
-    if(numberOfSocialRequestsRunning == 0 && [socialScores count] == 0) {
+    if(numberOfSocialRequestsRunning == 0 && [_socialScores count] == 0) {
         isShowingInviteFriendsCell = YES;
     } else {
         isShowingInviteFriendsCell = NO;
@@ -719,9 +733,10 @@ typedef enum {
     [self reloadSocialScores];
 }
 
--(NSMutableArray*)sortSocialScores:(NSArray*)scores
+
+- (NSMutableArray*)sortSocialScores:(NSArray*)scores
 {
-    NSArray *sortedScores = [leaderboard sortScoresBasedOnLeaderboardType:scores];
+    NSArray *sortedScores = [_leaderboard sortScoresBasedOnLeaderboardType:scores];
     NSMutableArray *mutableScores = [[NSMutableArray alloc] initWithArray:sortedScores];
     // Set the relative ranks
     for(int x = 0; x< [mutableScores count]; x++)
@@ -733,15 +748,16 @@ typedef enum {
 }
 
 
--(void)addSocialScores:(NSArray *)scores
+- (void)addSocialScores:(NSArray *)scores
 {
     if(scores) {
         [[self socialScores] addObjectsFromArray:scores];
-        NSMutableArray *sortedScores = [self sortSocialScores:socialScores];
+        NSMutableArray *sortedScores = [self sortSocialScores:_socialScores];
         [self setSocialScores:sortedScores];
-        [_tableView reloadData];
+        [__tableView reloadData];
     }
 }
+
 
 - (void)didReceiveMemoryWarning
 {

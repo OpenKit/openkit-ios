@@ -13,7 +13,7 @@
     int playerCount;
 }
 
--(id)initWithDefaultLeaderboardID:(int)leaderboardID;
+- (id)initWithDefaultLeaderboardID:(int)leaderboardID;
 - (IBAction)back;
 
 @end

@@ -6,13 +6,14 @@
 //  Copyright (c) 2013 Todd Hamilton. All rights reserved.
 //
 
+
 @class OKUserProfileImageView;
 
 @interface OKProfileViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UIButton *unlinkBtn;
-@property (strong, nonatomic) IBOutlet OKUserProfileImageView *profilePic;
-@property (nonatomic, strong) IBOutlet UILabel *nameLabel;
+@property(nonatomic, strong) IBOutlet UIButton *unlinkBtn;
+@property(nonatomic, strong) IBOutlet OKUserProfileImageView *profilePic;
+@property(nonatomic, strong) IBOutlet UILabel *nameLabel;
 
 - (IBAction)logoutButtonPressed:(id)sender;
 

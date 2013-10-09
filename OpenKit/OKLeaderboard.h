@@ -26,31 +26,28 @@ typedef enum {
 
 @interface OKLeaderboard : NSObject
 
-@property (nonatomic) int OKApp_id;
-@property (nonatomic) NSInteger leaderboardID;
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic) OKLeaderBoardSortType sortType;
-@property (nonatomic, strong) NSString *iconUrl;
-@property (nonatomic) int playerCount;
-@property (nonatomic, strong) NSString *gamecenterID;
+@property(nonatomic) int OKApp_id;
+@property(nonatomic) NSInteger leaderboardID;
+@property(nonatomic, strong) NSString *name;
+@property(nonatomic) OKLeaderBoardSortType sortType;
+@property(nonatomic, strong) NSString *iconUrl;
+@property(nonatomic) int playerCount;
+@property(nonatomic, strong) NSString *gamecenterID;
 
 
 - (id)initWithDictionary:(NSDictionary*)jsonDict;
 
-+ (void)getLeaderboardsWithCompletion:(void (^)(NSArray* leaderboards, NSError* error))handler;
-+ (void)getLeaderboardWithID:(int)leaderboardID withCompletion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler;
-
-//OpenKit Methods
 - (void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange pageNumber:(int)pageNum
        completion:(void (^)(NSArray* scores, NSError *error))handler;
 - (void)getPlayerTopScoreForTimeRange:(OKLeaderboardTimeRange)range completion:(void (^)(OKScore *score, NSError *error))handler;
 - (void)getFacebookFriendsScoresWithCompletion:(void (^)(NSArray *scores, NSError *error))handler;
-
-//Wrapper methods
 - (void)getPlayerTopScoreWithCompletion:(void (^)(OKScore* score, NSError *error))handler;
-
 
 - (NSSortDescriptor*)getSortDescriptor;
 - (NSArray*)sortScoresBasedOnLeaderboardType:(NSArray*)scores;
+
++ (void)getLeaderboardsWithCompletion:(void (^)(NSArray* leaderboards, NSError* error))handler;
++ (void)getLeaderboardWithID:(int)leaderboardID withCompletion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler;
+
 
 @end

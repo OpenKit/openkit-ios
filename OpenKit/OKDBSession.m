@@ -16,7 +16,6 @@
 #import "OKUser.h"
 
 
-
 static NSString *const kOKDBSessionName = @"Session";
 static NSString *const kOKDBSessionVersion = @"0.0.48";
 static NSString *const kOKDBSessionCreateSql =

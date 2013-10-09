@@ -8,19 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+
 @protocol OKFBLoginCellDelegate <NSObject>
 
--(void)fbLoginButtonPressed;
+- (void)fbLoginButtonPressed;
+
 @end
+
 
 @interface OKFBLoginCell : UITableViewCell
 
-@property (nonatomic, strong) IBOutlet UILabel *textLabel;
-@property (nonatomic, strong) IBOutlet UIButton *connectFBButton;
-@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
-@property (nonatomic, weak) id<OKFBLoginCellDelegate> delegate;
+@property(nonatomic, strong) IBOutlet UILabel *textLabel;
+@property(nonatomic, strong) IBOutlet UIButton *connectFBButton;
+@property(nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
+@property(nonatomic, weak) id<OKFBLoginCellDelegate> delegate;
 
--(IBAction)connectButtonPressed:(id)sender;
--(void)makeCellInviteFriends;
+- (IBAction)connectButtonPressed:(id)sender;
+- (void)makeCellInviteFriends;
 
 @end

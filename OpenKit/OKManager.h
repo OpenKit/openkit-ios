@@ -12,12 +12,12 @@
 @class OKUser;
 @interface OKManager : NSObject
 
-+ (void)configureWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey;
-+ (void)configureWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey endpoint:(NSString *)endpoint;
 + (id)sharedManager;
-- (void)saveCurrentUser:(OKUser *)aCurrentUser;
++ (void)configureWithAppKey:(NSString*)appKey secretKey:(NSString*)secretKey;
++ (void)configureWithAppKey:(NSString*)appKey secretKey:(NSString*)secretKey endpoint:(NSString*)endpoint;
+- (void)saveCurrentUser:(OKUser*)aCurrentUser;
 - (void)logoutCurrentUser;
-- (void)registerToken:(NSData *)deviceToken;
+- (void)registerToken:(NSData*)deviceToken;
 
 @property (nonatomic) BOOL hasShownFBLoginPrompt;
 @property (nonatomic, strong) NSString *leaderboardListTag;
@@ -37,9 +37,9 @@
 //    manager.secretKey  = "bar";
 //
 
-+ (NSString *)appKey;
-+ (NSString *)endpoint;
-+ (NSString *)secretKey;
++ (NSString*)appKey;
++ (NSString*)endpoint;
++ (NSString*)secretKey;
 
 + (BOOL)handleOpenURL:(NSURL*)url;
 + (void)handleDidBecomeActive;
@@ -47,14 +47,16 @@
 
 @end
 
+
 #pragma mark - OKManagerDelegate Protocol
+
 @protocol OKManagerDelegate <NSObject>
 @optional
 
-- (void)openkitManagerWillShowDashboard:(OKManager *)manager;
-- (void)openkitManagerDidShowDashboard:(OKManager *)manager;
-- (void)openkitManagerWillHideDashboard:(OKManager *)manager;
-- (void)openkitManagerDidHideDashboard:(OKManager *)manager;
+- (void)openkitManagerWillShowDashboard:(OKManager*)manager;
+- (void)openkitManagerDidShowDashboard:(OKManager*)manager;
+- (void)openkitManagerWillHideDashboard:(OKManager*)manager;
+- (void)openkitManagerDidHideDashboard:(OKManager*)manager;
 
 @end
 

@@ -12,19 +12,14 @@
 #import "OKFacebookUtilities.h"
 
 
-@interface OKProfileViewController ()
-@end
-
-
 @implementation OKProfileViewController
-
-@synthesize profilePic, nameLabel;
 
 -(id)init
 {
     self = [super initWithNibName:@"OKProfileViewController" bundle:nil];
     return self;
 }
+
 
 - (void)viewDidLoad
 {
@@ -61,12 +56,11 @@
     [self updateUI];
 }
 
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 @end

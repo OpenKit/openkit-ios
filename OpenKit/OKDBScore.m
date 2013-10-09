@@ -39,8 +39,6 @@ static NSString *const kOKDBScoreCreateSql =
 
 @implementation OKDBScore
 
-@synthesize previousSubmittedScore;
-
 + (id)sharedConnection
 {
     static dispatch_once_t pred;

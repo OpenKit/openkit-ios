@@ -14,8 +14,6 @@
 
 @implementation OKScoreCell
 
-@synthesize label1, label2, label3, label4, score, cellImage, OKScoreProtocolScore, socialNetworkIconImageView, showSocialNetworkIcon;
-
 - (id)init
 {
     static NSString *reuseID = kOKScoreCellIdentifier;
@@ -44,54 +42,53 @@
         //self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         //Initialize Label with tag 1.
-        label1 = [[UILabel alloc] initWithFrame:NameFrame];
-        label1.tag = 1;
-        label1.lineBreakMode = UILineBreakModeTailTruncation;
-        label1.font = [UIFont boldSystemFontOfSize:15];
-        label1.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:label1];
+        _label1 = [[UILabel alloc] initWithFrame:NameFrame];
+        _label1.tag = 1;
+        _label1.lineBreakMode = UILineBreakModeTailTruncation;
+        _label1.font = [UIFont boldSystemFontOfSize:15];
+        _label1.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:_label1];
         
         //Initialize Label with tag 2.
-        label2 = [[UILabel alloc] initWithFrame:ScoreFrame];
-        label2.tag = 2;
-        label2.font = [UIFont systemFontOfSize:12];
-        label2.textColor = UIColorFromRGB(0x828282);
-        label2.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:label2];
+        _label2 = [[UILabel alloc] initWithFrame:ScoreFrame];
+        _label2.tag = 2;
+        _label2.font = [UIFont systemFontOfSize:12];
+        _label2.textColor = UIColorFromRGB(0x828282);
+        _label2.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:_label2];
         
         //Initialize Label with tag 3.
-        label3 = [[UILabel alloc] initWithFrame:RankFrame];
-        label3.tag = 3;
-        label3.font = [UIFont boldSystemFontOfSize:15];
-        label3.backgroundColor = [UIColor clearColor];
-        label3.textAlignment = NSTextAlignmentCenter;
-        label3.adjustsFontSizeToFitWidth = YES;
-        [self.contentView addSubview:label3];
+        _label3 = [[UILabel alloc] initWithFrame:RankFrame];
+        _label3.tag = 3;
+        _label3.font = [UIFont boldSystemFontOfSize:15];
+        _label3.backgroundColor = [UIColor clearColor];
+        _label3.textAlignment = NSTextAlignmentCenter;
+        _label3.adjustsFontSizeToFitWidth = YES;
+        [self.contentView addSubview:_label3];
         
         //Initialize Label with tag 4.
-        label4 = [[UILabel alloc] initWithFrame:DateFrame];
-        label4.tag = 4;
-        label4.font = [UIFont boldSystemFontOfSize:12];
-        label4.textColor = [UIColor lightGrayColor];
-        label4.backgroundColor = [UIColor clearColor];
-        label4.textAlignment = NSTextAlignmentCenter;
-        label4.adjustsFontSizeToFitWidth = YES;
-        label4.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-        [self.contentView addSubview:label4];
+        _label4 = [[UILabel alloc] initWithFrame:DateFrame];
+        _label4.tag = 4;
+        _label4.font = [UIFont boldSystemFontOfSize:12];
+        _label4.textColor = [UIColor lightGrayColor];
+        _label4.backgroundColor = [UIColor clearColor];
+        _label4.textAlignment = NSTextAlignmentCenter;
+        _label4.adjustsFontSizeToFitWidth = YES;
+        _label4.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        [self.contentView addSubview:_label4];
 
         
         // Initialize user icon
-        cellImage = [[OKUserProfileImageView alloc]initWithFrame:userProfileImageFrame];
-        cellImage.image = [UIImage imageNamed:@"user_icon.png"];
-        
-        cellImage.layer.masksToBounds = YES;
-        cellImage.layer.cornerRadius = 3;
-        [self.contentView addSubview:cellImage];
+        _cellImage = [[OKUserProfileImageView alloc]initWithFrame:userProfileImageFrame];
+        _cellImage.image = [UIImage imageNamed:@"user_icon.png"];
+        _cellImage.layer.masksToBounds = YES;
+        _cellImage.layer.cornerRadius = 3;
+        [self.contentView addSubview:_cellImage];
         
         //Initialize social network icon
-        socialNetworkIconImageView = [[UIImageView alloc] initWithFrame:socialNetworkIconFrame];
-        [socialNetworkIconImageView setHidden:YES];
-        [self.contentView addSubview:socialNetworkIconImageView];
+        _socialNetworkIconImageView = [[UIImageView alloc] initWithFrame:socialNetworkIconFrame];
+        [_socialNetworkIconImageView setHidden:YES];
+        [self.contentView addSubview:_socialNetworkIconImageView];
         
         //Score cell is not selectable
         self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -99,67 +96,68 @@
     return self;
 }
 
--(void)setShowSocialNetworkIcon:(BOOL)aShowSocialNetworkIcon
+- (void)setShowSocialNetworkIcon:(BOOL)aShowSocialNetworkIcon
 {
-    showSocialNetworkIcon = aShowSocialNetworkIcon;
+    _showSocialNetworkIcon = aShowSocialNetworkIcon;
     
-    if(showSocialNetworkIcon) {
-        [socialNetworkIconImageView setHidden:NO];
+    if(_showSocialNetworkIcon) {
+        [_socialNetworkIconImageView setHidden:NO];
     } else {
-        [socialNetworkIconImageView setHidden:YES];
+        [_socialNetworkIconImageView setHidden:YES];
     }
     
 }
 
--(void)setSocialNetworkIconForNetwork:(OKScoreSocialNetwork)socialNetwork
+- (void)setSocialNetworkIconForNetwork:(OKScoreSocialNetwork)socialNetwork
 {
     switch (socialNetwork) {
         case OKScoreSocialNetworkFacebook:
-            [socialNetworkIconImageView setImage:[UIImage imageNamed:@"facebook_icon.png"]];
+            [_socialNetworkIconImageView setImage:[UIImage imageNamed:@"facebook_icon.png"]];
             break;
         case OKScoreSocialNetworkGameCenter:
-            [socialNetworkIconImageView setImage:[UIImage imageNamed:@"gamecenter_icon.png"]];
+            [_socialNetworkIconImageView setImage:[UIImage imageNamed:@"gamecenter_icon.png"]];
             break;
         default:
-            [socialNetworkIconImageView setImage:nil];
+            [_socialNetworkIconImageView setImage:nil];
             break;
     }
 }
 
 
--(void)setOKScoreProtocolScore:(OKScore*)aScore
+- (void)setOKScoreProtocolScore:(OKScore*)aScore
 {
-    OKScoreProtocolScore = aScore;
+    _OKScoreProtocolScore = aScore;
     
     // Update the text fields
-    label1.text = [OKScoreProtocolScore userDisplayString];
-    label2.text = [OKScoreProtocolScore scoreDisplayString];
-    label3.text = [OKScoreProtocolScore rankDisplayString];
+    _label1.text = [_OKScoreProtocolScore userDisplayString];
+    _label2.text = [_OKScoreProtocolScore scoreDisplayString];
+    _label3.text = [_OKScoreProtocolScore rankDisplayString];
     
     // Show the player image
-    [cellImage setOKScoreProtocolScore:OKScoreProtocolScore];
+    [_cellImage setOKScoreProtocolScore:_OKScoreProtocolScore];
     
     // Set the social network icon
     [self setSocialNetworkIconForNetwork:[aScore socialNetwork]];
 }
 
+
 // Older implementation --> use setIScore now
--(void)setScore:(OKScore *)aScore
+- (void)setScore:(OKScore *)aScore
 {
-    score = aScore;
-    label1.text = [[score user] userNick];
+    _score = aScore;
+    _label1.text = [[_score user] userNick];
     
     // Show the display string if not nil, else show the score value
-    if([score displayString] != nil) {
-        label2.text = [score displayString];
+    if([_score displayString] != nil) {
+        _label2.text = [_score displayString];
     } else {
-        label2.text = [NSString stringWithFormat:@"%lld",[score scoreValue]];
+        _label2.text = [NSString stringWithFormat:@"%lld",[_score scoreValue]];
     }
     
     //Set the rank
-    label3.text = [NSString stringWithFormat:@"%d",[score scoreRank]];
+    _label3.text = [NSString stringWithFormat:@"%d",[_score scoreRank]];
     
-    [cellImage setUser:[score user]];
+    [_cellImage setUser:[_score user]];
     
     // Set the social network icon
     [self setSocialNetworkIconForNetwork:[aScore socialNetwork]];

@@ -11,10 +11,11 @@
 #import "OKUser.h"
 #import "OKScore.h"
 
+
 @interface OKUserProfileImageView : UIView
 
-@property (nonatomic, strong) OKUser *user;
-@property (nonatomic, strong) UIImage *image;
+@property(nonatomic, strong) OKUser *user;
+@property(nonatomic, strong) UIImage *image;
 
 - (void)setImageURL:(NSString *)url;
 - (void)setImageURL:(NSString *)url withPlaceholderImage:(UIImage *)placeholder;

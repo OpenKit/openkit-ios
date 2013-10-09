@@ -14,17 +14,16 @@
 #import "KGModal.h"
 #import "OKUser.h"
 
+
 @interface OKBaseLoginViewController ()
 
-@property (nonatomic, strong) UIButton *fbLoginButton;
-@property (nonatomic, strong) UIButton *gcLoginButton;
-
+@property(nonatomic, strong) UIButton *fbLoginButton;
+@property(nonatomic, strong) UIButton *gcLoginButton;
 
 @end
 
-@implementation OKBaseLoginViewController
 
-@synthesize  loginView,spinner, fbLoginButton, gcLoginButton, delegate, loginString;
+@implementation OKBaseLoginViewController
 
 -(id)initWithLoginString:(NSString*)aLoginString
 {
@@ -37,11 +36,15 @@
     return self;
 }
 
-- (void)loadView{
+
+- (void)loadView
+{
     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 }
 
-- (void)viewDidLoad{
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     [self updateFBButtonVisibility];
@@ -50,48 +53,56 @@
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 }
 
+
 -(void)showLoginModalView
 {
     [self updateFBButtonVisibility];
     KGModal *modal = [KGModal sharedInstance];
     [modal setTapOutsideToDismiss:NO];
     [modal setShowCloseButton:NO];
-    [modal showWithContentView:loginView andAnimated:YES];
+    [modal showWithContentView:_loginView andAnimated:YES];
     [modal setDelegate:self];
 }
+
+
 -(void)dismissLoginView {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[KGModal sharedInstance] hide];
     [[KGModal sharedInstance] setDelegate:nil];
     [self setWindow:nil];
-    [delegate dismiss];
+    [_delegate dismiss];
 }
+
 
 -(void)dismissLoginViewWithoutBaseDismiss {
     [[KGModal sharedInstance] hide];
     [[KGModal sharedInstance] setDelegate:nil];
 }
 
+
+
 -(void)showLoginDialogSpinner
 {
-    [spinner startAnimating];
-    [fbLoginButton setHidden:YES];
+    [_spinner startAnimating];
+    [_fbLoginButton setHidden:YES];
     //[twitterLoginButton setHidden:YES];
 }
+
+
 -(void)hideLoginDialogSpinner
 {
-    [spinner stopAnimating];
-    [fbLoginButton setHidden:NO];
+    [_spinner stopAnimating];
+    [_fbLoginButton setHidden:NO];
     //[twitterLoginButton setHidden:NO];
 }
 
 
 -(void)initLoginView
 {
-    loginView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 260)];
+    _loginView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 260)];
   
     // Main Label
-    CGRect mainLabelRect = loginView.bounds;
+    CGRect mainLabelRect = _loginView.bounds;
     mainLabelRect.origin.y = -10;
     mainLabelRect.size.height = 60;
     UIFont *mainLabelFont = [UIFont boldSystemFontOfSize:20];
@@ -104,10 +115,10 @@
     mainLabel.backgroundColor = [UIColor clearColor];
     mainLabel.shadowColor = [UIColor clearColor];
     mainLabel.shadowOffset = CGSizeMake(0, 1);
-    [loginView addSubview:mainLabel];
+    [_loginView addSubview:mainLabel];
   
     // Sub Label
-    CGRect subLabelRect = loginView.bounds;
+    CGRect subLabelRect = _loginView.bounds;
     subLabelRect.origin.y = 35;
     subLabelRect.size.height = 40;
     UIFont *subLabelFont = [UIFont systemFontOfSize:14];
@@ -121,18 +132,18 @@
     subLabel.backgroundColor = [UIColor clearColor];
     subLabel.shadowColor = [UIColor clearColor];
     subLabel.shadowOffset = CGSizeMake(0, 1);
-    [loginView addSubview:subLabel];
+    [_loginView addSubview:subLabel];
   
         
     // Facebook Button
     CGRect fbButtonRect = CGRectMake(140,88,105,105);
-    fbLoginButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    fbLoginButton.frame = fbButtonRect;
-    [fbLoginButton addTarget:self action:@selector(performFacebookLogin:) forControlEvents:UIControlEventTouchDown];
+    _fbLoginButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    _fbLoginButton.frame = fbButtonRect;
+    [_fbLoginButton addTarget:self action:@selector(performFacebookLogin:) forControlEvents:UIControlEventTouchDown];
     UIImage * fbButtonImageOff = [UIImage imageNamed:@"fb_off_big.png"];
     UIImage * fbButtonImageOn = [UIImage imageNamed:@"fb_on_big.png"];
-    [fbLoginButton setBackgroundImage:fbButtonImageOn forState:UIControlStateDisabled];
-    [fbLoginButton setBackgroundImage:fbButtonImageOff forState:UIControlStateNormal];
+    [_fbLoginButton setBackgroundImage:fbButtonImageOn forState:UIControlStateDisabled];
+    [_fbLoginButton setBackgroundImage:fbButtonImageOff forState:UIControlStateNormal];
     
   
     // Finished Button
@@ -144,19 +155,19 @@
     
     // Spinner
     float spinnerSize = 44;
-    float spinnerxPos = [loginView bounds].size.width /2 - spinnerSize/2;
-    float spinneryPos = CGRectGetMidY(loginView.bounds);
+    float spinnerxPos = [_loginView bounds].size.width /2 - spinnerSize/2;
+    float spinneryPos = CGRectGetMidY(_loginView.bounds);
     CGRect spinnerRect = CGRectMake(spinnerxPos, spinneryPos, spinnerSize, spinnerSize);
-    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [spinner setFrame:spinnerRect];
-    [spinner setColor:[UIColor darkGrayColor]];
-    [spinner setHidesWhenStopped:YES];
+    _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [_spinner setFrame:spinnerRect];
+    [_spinner setColor:[UIColor darkGrayColor]];
+    [_spinner setHidesWhenStopped:YES];
     
     
-    [loginView addSubview:finishedButton];
-    [loginView addSubview:gcLoginButton];
-    [loginView addSubview:fbLoginButton];
-    [loginView addSubview:spinner];
+    [_loginView addSubview:finishedButton];
+    [_loginView addSubview:_gcLoginButton];
+    [_loginView addSubview:_fbLoginButton];
+    [_loginView addSubview:_spinner];
     
 }
 
@@ -165,9 +176,9 @@
     OKUser *currentUser = [OKUser currentUser];
     
     if(currentUser && [currentUser fbUserID] && [OKFacebookUtilities isFBSessionOpen]) {
-        [fbLoginButton setEnabled:NO];
+        [_fbLoginButton setEnabled:NO];
     } else {
-        [fbLoginButton setEnabled:YES];
+        [_fbLoginButton setEnabled:YES];
     }
 }
 
@@ -182,6 +193,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 - (IBAction)performFacebookLogin:(id)sender
 {

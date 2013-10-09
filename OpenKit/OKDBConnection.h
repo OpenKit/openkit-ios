@@ -26,7 +26,6 @@ extern dispatch_queue_t __OKCacheQueue;
 #import <Foundation/Foundation.h>
 
 
-
 @class OKDBConnection;
 @class FMDatabase;
 @class FMResultSet;

@@ -157,12 +157,10 @@ OKSession *__currentSession = nil;
     [OKSession newVal:aFacebookId getSelName:@"fbId" setSelName:@"setFbId:"];
 }
 
-       
 + (void)logoutFB
 {
     [OKSession newVal:nil getSelName:@"fbId" setSelName:@"setFbId:"];
 }
-
 
 + (void)loginGoogle:(NSString *)aGoogleId
 {
@@ -246,6 +244,5 @@ OKSession *__currentSession = nil;
     
     [OKSession submitSession:newSession];
 }
-
 
 @end

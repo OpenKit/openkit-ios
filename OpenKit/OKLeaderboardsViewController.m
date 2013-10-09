@@ -11,19 +11,16 @@
 #import "OKHelper.h"
 #import "OKColors.h"
 
-@interface OKLeaderboardsViewController ()
-
-@end
 
 @implementation OKLeaderboardsViewController
 
-@synthesize showLandscapeOnly;
-
-- (id)init {
+- (id)init
+{
     return [self initWithDefaultLeaderboardID:0];
 }
 
--(id)initWithDefaultLeaderboardID:(int)leaderboardID
+
+- (id)initWithDefaultLeaderboardID:(int)leaderboardID
 {
     OKLeaderboardsListViewController *list = [[OKLeaderboardsListViewController alloc] initWithDefaultLeaderboardID:leaderboardID];
     
@@ -41,6 +38,7 @@
     }
     return self;
 }
+
 
 - (void)viewDidLoad
 {
@@ -82,20 +80,19 @@
     // Dispose of any resources that can be recreated.
 }
 
+
 - (BOOL)shouldAutorotate
 {
     return YES;
 }
 
--(NSUInteger)supportedInterfaceOrientations
+
+- (NSUInteger)supportedInterfaceOrientations
 {
-    if(showLandscapeOnly)
+    if(_showLandscapeOnly)
         return UIInterfaceOrientationMaskLandscape;
     else
         return UIInterfaceOrientationMaskAllButUpsideDown;
 }
-
- 
-
 
 @end

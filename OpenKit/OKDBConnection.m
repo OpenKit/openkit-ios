@@ -43,10 +43,12 @@ dispatch_queue_t __OKCacheQueue = nil;
     return [_dbConnection deleteRow:self];
 }
 
+
 - (NSString*)dbModifyDate
 {
     return [OKUtils sqlStringFromDate:self.modifyDate];
 }
+
 
 - (NSString*)dbCreateDate
 {
@@ -54,7 +56,6 @@ dispatch_queue_t __OKCacheQueue = nil;
 }
 
 @end
-
 
 
 @implementation OKDBConnection

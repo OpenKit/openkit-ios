@@ -11,6 +11,6 @@
 
 @interface OKChallenge : NSObject
 
-+(void)sendPushChallengewithScorePostResponseJSON:(id)responseObject withPreviousScore:(OKScore*)previousScore;
++ (void)sendPushChallengewithScorePostResponseJSON:(id)responseObject withPreviousScore:(OKScore*)previousScore;
 
 @end

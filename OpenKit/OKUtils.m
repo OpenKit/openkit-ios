@@ -8,6 +8,7 @@
 
 #import "OKUtils.h"
 
+
 void OKEncodeObj(id obj, NSString **strOut, NSError **errOut)
 {
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:obj options:0 error:errOut];
@@ -17,6 +18,7 @@ void OKEncodeObj(id obj, NSString **strOut, NSError **errOut)
     }
 }
 
+
 id OKDecodeObj(NSData *dataIn, NSError **errOut)
 {
     NSJSONReadingOptions opts = NSJSONReadingAllowFragments | NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves;
@@ -24,10 +26,9 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut)
 }
 
 
-
 @implementation OKUtils
 
-+ (NSString *)createUUID
++ (NSString*)createUUID
 {
     CFUUIDRef theUUID = CFUUIDCreate(NULL);
     CFStringRef string = CFUUIDCreateString(NULL, theUUID);
@@ -35,7 +36,8 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut)
     return (__bridge NSString *)string;
 }
 
-+ (NSString *)sqlStringFromDate:(NSDate *)date
+
++ (NSString*)sqlStringFromDate:(NSDate *)date
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
@@ -43,7 +45,8 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut)
     return [dateFormatter stringFromDate:date];
 }
 
-+ (NSDate *)dateFromSqlString:(NSString *)string
+
++ (NSDate*)dateFromSqlString:(NSString *)string
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
@@ -52,6 +55,4 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut)
     return [dateFormatter dateFromString:string];
 }
 
-
 @end
-

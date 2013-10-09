@@ -8,15 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface OKUser : NSObject
 
-@property (nonatomic, strong) NSNumber *OKUserID;
-@property (nonatomic, strong) NSString *customID;
-@property (nonatomic, strong) NSString *fbUserID;
-@property (nonatomic, strong) NSString *userNick;
+@property(nonatomic, strong) NSNumber *OKUserID;
+@property(nonatomic, strong) NSString *customID;
+@property(nonatomic, strong) NSString *fbUserID;
+@property(nonatomic, strong) NSString *userNick;
 //@property (nonatomic, strong) NSString *gameCenterID;
 //@property (nonatomic, strong) NSNumber *twitterUserID;
-
 
 + (OKUser*)currentUser;
 + (void)logoutCurrentUserFromOpenKit;

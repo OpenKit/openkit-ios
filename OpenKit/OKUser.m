@@ -10,24 +10,23 @@
 #import "OKUser.h"
 #import "OKManager.h"
 
-@implementation OKUser
 
-@synthesize OKUserID, userNick, fbUserID, customID;
+@implementation OKUser
 
 - (id)init
 {
     return [self initWithUserID:nil withUserNick:nil withFBID:nil withCustomID:nil];
 }
 
-//Designated initializer
-- (id)initWithUserID:(NSNumber *)_OKUserID withUserNick:(NSString *)_userNick withFBID:(NSString *)_fbID withCustomID:(NSString*)_customID
+
+- (id)initWithUserID:(NSNumber *)userID withUserNick:(NSString *)nick withFBID:(NSString *)fbID withCustomID:(NSString*)customID
 {
     self = [super init];
     if (self) {
-        self.OKUserID = _OKUserID;
-        self.userNick = _userNick;
-        self.fbUserID = _fbID;
-        self.customID = _customID;
+        _OKUserID = userID;
+        _userNick = nick;
+        _fbUserID = fbID;
+        _customID = customID;
         //self.twitterUserID = _twitterID;
         //self.gameCenterID = _gameCenterID;
     }
@@ -35,10 +34,12 @@
     return self;
 }
 
+
 + (OKUser*)currentUser
 {
     return [[OKManager sharedManager] currentUser];
 }
+
 
 + (void)logoutCurrentUserFromOpenKit
 {

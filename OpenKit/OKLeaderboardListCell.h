@@ -14,9 +14,9 @@
 
 @interface OKLeaderboardListCell : UITableViewCell
 
-@property (nonatomic, strong) UILabel *label1;
-@property (nonatomic, strong) UILabel *label2;
-@property (nonatomic, strong) OKLeaderboard *leaderboard;
+@property(nonatomic, strong) UILabel *label1;
+@property(nonatomic, strong) UILabel *label2;
+@property(nonatomic, strong) OKLeaderboard *leaderboard;
 
 - (id)init;
 

@@ -8,9 +8,8 @@
 
 #import "OKSpinnerCell.h"
 
-@implementation OKSpinnerCell
 
-@synthesize spinner;
+@implementation OKSpinnerCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -21,14 +20,14 @@
         
         [self setFrame:cellFrame];
         
-        spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         
         //Resize the spinner for horizontal view
-        [spinner setAutoresizingMask:(UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin)];
-        [spinner setCenter:CGPointMake(self.frame.size.width/2, self.frame.size.height/2)];
-        [spinner setColor:[UIColor blackColor]];
+        [_spinner setAutoresizingMask:(UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin)];
+        [_spinner setCenter:CGPointMake(self.frame.size.width/2, self.frame.size.height/2)];
+        [_spinner setColor:[UIColor blackColor]];
         
-        [self addSubview:spinner];
+        [self addSubview:_spinner];
         
         //Spinner cell is not selectable
         self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -37,8 +36,9 @@
     return self;
 }
 
-- (void)startAnimating {
-    [spinner startAnimating];
+- (void)startAnimating
+{
+    [_spinner startAnimating];
 }
 
 
