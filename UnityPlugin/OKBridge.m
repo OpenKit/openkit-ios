@@ -33,6 +33,7 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 @interface BaseBridgeViewController : UIViewController
 {
     BOOL _didDisplay;
+    BOOL _didCapturePreviousWindow;
 }
 
 @property (nonatomic, retain) UIWindow *window;
@@ -49,6 +50,7 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 {
     if(self = [super init]) {
         _didDisplay = NO;
+        _didCapturePreviousWindow = NO;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getLostWindow:) name:UIWindowDidResignKeyNotification object:nil];
     }
     return self;
@@ -56,13 +58,24 @@ extern void UnitySendMessage(const char *, const char *, const char *);
          
 -(void)getLostWindow:(NSNotification*)note
 {
+    // Only allow previousWindow to be set once!
+    if(_didCapturePreviousWindow)
+        return;
+    
+    
+    // Only set the previous window if the Window is normal level, it has a root viewController, and the viewcontroller isKindOfClass BaseBridgeViewController
     if([[note object] isKindOfClass:[UIWindow class]]) {
         UIWindow *noteWindow = [note object];
-        if([noteWindow windowLevel] == UIWindowLevelNormal) {
-            OKBridgeLog(@"Setting previous window: %@", noteWindow);
+        
+        if([noteWindow windowLevel] == UIWindowLevelNormal &&
+           noteWindow.rootViewController != nil &&
+           ![noteWindow.rootViewController isKindOfClass:[BaseBridgeViewController class]])
+        {
             [self setPreviousWindow:noteWindow];
+            _didCapturePreviousWindow = YES;
+            OKBridgeLog(@"****Setting previous window: %@", noteWindow);
         } else {
-            OKBridgeLog(@"Other window shown: %@", noteWindow);
+            OKBridgeLog(@"****Other window shown: %@", noteWindow);
         }
     }
 }
