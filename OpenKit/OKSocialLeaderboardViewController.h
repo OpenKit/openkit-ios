@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 #import "OKLeaderboard.h"
 #import "OKFBLoginCell.h"
-#import <MessageUI/MessageUI.h> 
 
 @interface OKSocialLeaderboardViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, OKFBLoginCellDelegate,UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
@@ -23,12 +23,12 @@
 @property (nonatomic, strong) IBOutlet UIButton *loadMoreScoresButton;
 
 @property (nonatomic, strong) NSMutableArray *globalScores, *socialScores;
-@property (nonatomic, strong) NSArray *gcSocialScores, *fbSocialScores;
+@property (nonatomic, strong) NSArray *fbSocialScores;
 @property (nonatomic, strong) OKScore* playerTopScore, *playerTopScoreSocialSection;
 
 - (id)initWithLeaderboard:(OKLeaderboard *)aLeaderboard;
--(id)initWithLeaderboardID:(int)aLeaderboardID;
+- (id)initWithLeaderboardID:(int)aLeaderboardID;
 
--(IBAction)loadMoreScoresPressed:(id)sender;
+- (IBAction)loadMoreScoresPressed:(id)sender;
 
 @end

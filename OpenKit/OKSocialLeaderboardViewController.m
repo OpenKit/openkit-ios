@@ -9,7 +9,6 @@
 #import "OKSocialLeaderboardViewController.h"
 #import "OKScoreCell.h"
 #import "OKMacros.h"
-#import "OKGameCenterPlugin.h"
 #import "OKFacebookUtilities.h"
 #import "OKFBLoginCell.h"
 #import "OKSpinnerCell.h"
@@ -36,7 +35,7 @@
 
 
 @synthesize leaderboard, _tableView, spinner, socialScores, globalScores, containerViewForLoadMoreButton, loadMoreScoresButton, playerTopScore, mail, leaderboardID;
-@synthesize gcSocialScores, fbSocialScores, playerTopScoreSocialSection;
+@synthesize fbSocialScores, playerTopScoreSocialSection;
 
 static NSString *scoreCellIdentifier = kOKScoreCellIdentifier;
 static NSString *fbCellIdentifier = @"OKFBLoginCell";

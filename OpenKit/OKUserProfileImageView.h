@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
-#import <GameKit/GameKit.h>
 #import "OKUser.h"
 #import "OKScore.h"
 
@@ -19,7 +18,6 @@
 
 - (void)setImageURL:(NSString *)url;
 - (void)setImageURL:(NSString *)url withPlaceholderImage:(UIImage *)placeholder;
-- (void)setGKPlayer:(GKPlayer*)player;
 - (void)setOKScoreProtocolScore:(OKScore*)aScore;
 
 @end

@@ -8,7 +8,6 @@
 
 #import "OKUserProfileImageView.h"
 #import "AFImageView.h"
-#import "OKGameCenterPlugin.h"
 #import "OKScore.h"
 #import "OKMacros.h"
 
@@ -106,28 +105,6 @@
     }
     _user = aUser;
 }
-
--(void)setGKPlayer:(GKPlayer*)player {
-    [self loadGameCenterImageForGameCenterID:[player playerID]];
-}
-
--(void)loadGameCenterImageForGameCenterID:(NSString *)gameCenterID {
-    [self.fbProfileImageView setHidden:YES];
-    [self.imageView setHidden:NO];
-    [self.imageView setImage:[OKUserProfileImageView placeHolderImage]];
-
-    
-    [OKGameCenterPlugin loadPlayerPhotoWithID:gameCenterID
-                                    photoSize:GKPhotoSizeSmall
-                                   completion:^(UIImage *photo, NSError *error) {
-        
-        if(photo != nil) {
-            [self.imageView setImage:photo];
-        }
-    }];
-}
-
-
 
 
 - (void)setImage:(UIImage *)aImage

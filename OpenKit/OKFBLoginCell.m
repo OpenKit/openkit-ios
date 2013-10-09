@@ -12,12 +12,11 @@
 #import <QuartzCore/QuartzCore.h>
 #import "OKMacros.h"
 #import "OKColors.h"
-#import "OKGameCenterPlugin.h"
 #import "OKUser.h"
 
 @implementation OKFBLoginCell
 
-@synthesize connectFBButton, textLabel, spinner, delegate, gameCenterButton;
+@synthesize connectFBButton, textLabel, spinner, delegate;
 
 
 -(id)initWithCoder:(NSCoder *)aDecoder {
@@ -38,12 +37,6 @@
 
 -(void)updateButtonVisibility
 {
-    if([OKGameCenterPlugin isPlayerAuthenticated]) {
-        [gameCenterButton setEnabled:NO];
-    } else {
-        [gameCenterButton setEnabled:YES];
-    }
-    
     OKUser *currentUser = [OKUser currentUser];
     if(currentUser && [currentUser fbUserID] && [OKFacebookUtilities isFBSessionOpen]) {
         [connectFBButton setEnabled:NO];
@@ -55,7 +48,6 @@
 -(void)makeCellInviteFriends
 {
     [textLabel setText:@"Invite friends from"];
-    [gameCenterButton setHidden:YES];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -87,17 +79,5 @@
         [delegate fbLoginButtonPressed];
     }
 }
-
--(IBAction)gcButtonPressed:(id)sender
-{
-    if([OKGameCenterPlugin isGCAvailable] && ![OKGameCenterPlugin isPlayerAuthenticated]) {
-        [OKGameCenterPlugin authorizeUserWithViewController:nil completion:^(NSError *error) {
-            [self updateButtonVisibility];
-        }];
-    }
-}
-
-
-
 
 @end

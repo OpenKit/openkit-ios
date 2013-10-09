@@ -12,7 +12,6 @@
 #import "OKManager.h"
 #import "OKFacebookUtilities.h"
 #import "KGModal.h"
-#import "OKGameCenterPlugin.h"
 #import "OKUser.h"
 
 @interface OKBaseLoginViewController ()
@@ -34,7 +33,6 @@
     {
         [self setLoginString:aLoginString];
         [self initLoginView];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateGameCenterButtonVisibility) name:OKGameCenterPluginAuthStateNotification object:nil];
     }
     return self;
 }
@@ -46,7 +44,6 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-    [self updateGameCenterButtonVisibility];
     [self updateFBButtonVisibility];
     
     self.view.backgroundColor = [UIColor clearColor];
@@ -55,7 +52,6 @@
 
 -(void)showLoginModalView
 {
-    [self updateGameCenterButtonVisibility];
     [self updateFBButtonVisibility];
     KGModal *modal = [KGModal sharedInstance];
     [modal setTapOutsideToDismiss:NO];
@@ -127,19 +123,6 @@
     subLabel.shadowOffset = CGSizeMake(0, 1);
     [loginView addSubview:subLabel];
   
-    // Game Center Button
-    CGRect gcButtonRect = CGRectMake(35,88,105,105);
-
-    gcLoginButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
-    [gcLoginButton setFrame:gcButtonRect];
-    [gcLoginButton addTarget:self action:@selector(gameCenterButtonPressed:) forControlEvents:UIControlEventTouchDown];
-    UIImage * gcButtonImageOff = [UIImage imageNamed:@"gc_off_big.png"];
-    UIImage * gcButtonImageOn = [UIImage imageNamed:@"gc_on_big.png"];
-    [gcLoginButton setBackgroundImage:gcButtonImageOff forState:UIControlStateNormal];
-    [gcLoginButton setBackgroundImage:gcButtonImageOn forState:UIControlStateDisabled];
-    
-
-    [self updateGameCenterButtonVisibility];
         
     // Facebook Button
     CGRect fbButtonRect = CGRectMake(140,88,105,105);
@@ -177,13 +160,6 @@
     
 }
 
--(void)updateGameCenterButtonVisibility {
-    if([OKGameCenterPlugin isPlayerAuthenticated]) {
-        [gcLoginButton setEnabled:NO];
-    } else {
-        [gcLoginButton setEnabled:YES];
-    }
-}
 
 -(void)updateFBButtonVisibility {
     OKUser *currentUser = [OKUser currentUser];
@@ -192,23 +168,6 @@
         [fbLoginButton setEnabled:NO];
     } else {
         [fbLoginButton setEnabled:YES];
-    }
-}
-
--(IBAction)gameCenterButtonPressed:(id)sender
-{
-    if([OKGameCenterPlugin isGCAvailable] && ![OKGameCenterPlugin isPlayerAuthenticated]) {
-        
-        [self dismissLoginViewWithoutBaseDismiss];
-        
-        [OKGameCenterPlugin authorizeUserWithViewController:nil completion:^(NSError *error) {
-            
-            if(error != nil) {
-                [self dismissLoginView];
-            } else {
-                [self showLoginModalView];
-            }
-        }];
     }
 }
 
@@ -240,12 +199,5 @@
         }
     }];
 }
-
-
-
-
-
-
-
 
 @end
