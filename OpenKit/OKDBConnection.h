@@ -47,12 +47,14 @@ static const int OKNoIndex = -1;
 
 @property(nonatomic, readwrite) int rowIndex;
 @property(nonatomic, copy) NSDate *modifyDate;
+@property(nonatomic, copy) NSDate *createDate;
 @property(nonatomic, strong) OKDBConnection *dbConnection;
 @property(nonatomic, readwrite) OKSubmitState submitState;
 
 - (BOOL)syncWithDB;
 - (BOOL)deleteFromDB;
 - (NSString*)dbModifyDate;
+- (NSString*)dbCreateDate;
 
 @end
 

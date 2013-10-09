@@ -48,6 +48,11 @@ dispatch_queue_t __OKCacheQueue = nil;
     return [OKUtils sqlStringFromDate:self.modifyDate];
 }
 
+- (NSString*)dbCreateDate
+{
+    return [OKUtils sqlStringFromDate:self.createDate];
+}
+
 @end
 
 
@@ -140,13 +145,15 @@ dispatch_queue_t __OKCacheQueue = nil;
 
 - (BOOL)syncRow:(OKDBRow*)row
 {
+    NSDate *now = [NSDate date];
     [row setDbConnection:self];
-    [row setModifyDate:[NSDate date]];
+    [row setModifyDate:now];
     
     BOOL success = NO;
     
     if(row.rowIndex == OKNoIndex) {
         // Is the row index is invalid, we insert a new row
+        [row setCreateDate:now];
         int index = [self insertRow:row];
         if(index != -1) {
             success = YES;

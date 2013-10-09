@@ -41,15 +41,16 @@ OKSession *__currentSession = nil;
 
 - (void)configWithDictionary:(NSDictionary*)dict
 {
-    self.rowIndex = [OKHelper getIntSafeForKey:@"row_id" fromJSONDictionary:dict];
+    self.rowIndex   = [OKHelper getIntSafeForKey:@"row_id" fromJSONDictionary:dict];
     self.modifyDate = [OKHelper getNSDateSafeForKey:@"modify_date" fromJSONDictionary:dict];
-
-    self.token = [OKHelper getNSStringSafeForKey:@"token" fromJSONDictionary:dict];
-    self.fbId = [OKHelper getNSStringSafeForKey:@"fb_id" fromJSONDictionary:dict];
-    self.googleId = [OKHelper getNSStringSafeForKey:@"google_id" fromJSONDictionary:dict];
-    self.customId = [OKHelper getNSStringSafeForKey:@"custom_id" fromJSONDictionary:dict];
-    self.pushToken = [OKHelper getNSStringSafeForKey:@"push_token" fromJSONDictionary:dict];
-    self.okId = [OKHelper getNSStringSafeForKey:@"ok_id" fromJSONDictionary:dict];
+    self.createDate = [OKHelper getNSDateSafeForKey:@"client_created_at" fromJSONDictionary:dict];
+    
+    self.token      = [OKHelper getNSStringSafeForKey:@"uuid" fromJSONDictionary:dict];
+    self.fbId       = [OKHelper getNSStringSafeForKey:@"fb_id" fromJSONDictionary:dict];
+    self.googleId   = [OKHelper getNSStringSafeForKey:@"google_id" fromJSONDictionary:dict];
+    self.customId   = [OKHelper getNSStringSafeForKey:@"custom_id" fromJSONDictionary:dict];
+    self.pushToken  = [OKHelper getNSStringSafeForKey:@"push_token" fromJSONDictionary:dict];
+    self.okId       = [OKHelper getNSStringSafeForKey:@"ok_id" fromJSONDictionary:dict];
 }
 
 
@@ -80,12 +81,13 @@ OKSession *__currentSession = nil;
 - (NSDictionary*)JSONDictionary
 {
     return [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-            self.token, @"token",
+            self.token, @"uuid",
             self.fbId ? self.fbId : [NSNull null], @"fb_id",
             self.googleId ? self.googleId : [NSNull null], @"google_id",
             self.customId ? self.customId : [NSNull null], @"custom_id",
             self.pushToken ? self.pushToken : [NSNull null], @"push_token",
             self.okId ? self.okId : [NSNull null], @"ok_id",
+            [self dbCreateDate], @"client_created_at",
             nil];
 }
 

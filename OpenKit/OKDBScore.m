@@ -19,7 +19,7 @@
 
 
 static NSString *const kOKDBScoreName = @"Scores";
-static NSString *const kOKDBScoreVersion = @"1.0.3";
+static NSString *const kOKDBScoreVersion = @"1.0.4";
 static NSString *const kOKDBScoreCreateSql =
     @"CREATE TABLE IF NOT EXISTS 'scores' "
     "("
@@ -27,6 +27,7 @@ static NSString *const kOKDBScoreCreateSql =
     "'row_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
     "'submit_state' INTEGER, "
     "'modify_date' DATETIME, "
+    "'client_created_at' DATETIME, "
 
     "'leaderboard_id' INTEGER, "
     "'value' BIGINT, "
@@ -105,11 +106,12 @@ static NSString *const kOKDBScoreCreateSql =
 {
     OKScore *score = (OKScore*)row;
     
-    NSString *insertSql = @"INSERT INTO scores (submit_state, modify_date, leaderboard_id, value, metadata, display_string) VALUES(?,?,?,?,?,?);";
+    NSString *insertSql = @"INSERT INTO scores (submit_state, modify_date, client_created_at, leaderboard_id, value, metadata, display_string) VALUES(?,?,?,?,?,?,?);";
     
     return [self insert:insertSql,
             [NSNumber numberWithInt:score.submitState],
             [score dbModifyDate],
+            [score dbCreateDate],
             [NSNumber numberWithInt:score.leaderboardID],
             [NSNumber numberWithLong:score.scoreValue],
             [NSNumber numberWithInt:score.metadata],
