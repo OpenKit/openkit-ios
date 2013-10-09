@@ -104,7 +104,6 @@
 }
 
 
-/** OKScoreProtocol Implementation **/
 -(NSString*)scoreDisplayString
 {
     if([self displayString])
@@ -119,17 +118,12 @@
     return [[self user] userNick];
 }
 
--(NSString*)rankDisplayString {
+
+-(NSString*)rankDisplayString
+{
     return [NSString stringWithFormat:@"%d", [self scoreRank]];
 }
 
--(int)rank {
-    return [self scoreRank];
-}
-
--(void)setRank:(NSInteger)rank {
-    [self setScoreRank:rank];
-}
 
 -(OKScoreSocialNetwork)socialNetwork
 {

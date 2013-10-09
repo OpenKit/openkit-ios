@@ -13,7 +13,6 @@
 #import "OKNetworker.h"
 #import "OKScore.h"
 #import "OKError.h"
-#import "OKGKScoreWrapper.h"
 #import "OKMacros.h"
 #import "OKFacebookUtilities.h"
 #import "OKDBScore.h"
@@ -216,7 +215,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 
 //Wrapper method to get player top score either from GameCenter, OpenKit, or local cache
--(void)getPlayerTopScoreWithCompletion:(void (^)(id<OKScoreProtocol> score, NSError *error))handler
+-(void)getPlayerTopScoreWithCompletion:(void (^)(OKScore* score, NSError *error))handler
 {
     // If using GC pull top score from GC
     // else if OKUser, pull top score from OKUser

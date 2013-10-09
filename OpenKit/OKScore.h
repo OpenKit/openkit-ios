@@ -7,11 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OKScoreProtocol.h"
 #import "OKDBConnection.h"
 
+
+typedef enum {
+    OKScoreSocialNetworkGameCenter,
+    OKScoreSocialNetworkFacebook,
+    OKScoreSocialNetworkUnknown
+} OKScoreSocialNetwork;
+
+
 @class OKUser;
-@interface OKScore : OKDBRow<OKScoreProtocol>
+@interface OKScore : OKDBRow
 
 @property (nonatomic, readwrite) NSInteger scoreID;
 @property (nonatomic, readwrite) int64_t scoreValue;
@@ -27,7 +34,16 @@
 - (void)submitWithCompletion:(void (^)(NSError *error))completion;
 - (BOOL)isSubmissible;
 
+-(NSString*)scoreDisplayString;
+-(NSString*)userDisplayString;
+
+-(NSString*)rankDisplayString;
+
+-(OKScoreSocialNetwork)socialNetwork;
+
 + (void)resolveUnsubmittedScores;
 + (void)clearSubmittedScore;
+
+
 
 @end

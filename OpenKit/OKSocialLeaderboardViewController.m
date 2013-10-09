@@ -8,7 +8,6 @@
 
 #import "OKSocialLeaderboardViewController.h"
 #import "OKScoreCell.h"
-#import "OKGKScoreWrapper.h"
 #import "OKMacros.h"
 #import "OKGameCenterPlugin.h"
 #import "OKFacebookUtilities.h"
@@ -408,7 +407,7 @@ typedef enum {
     return cell;
 }
 
--(UITableViewCell*)getScoreCellForPlayerTopScore:(id<OKScoreProtocol>)score withTableView:(UITableView*)tableView
+-(UITableViewCell*)getScoreCellForPlayerTopScore:(OKScore*)score withTableView:(UITableView*)tableView
 {
     OKScoreCell *cell = [self getScoreCellForScore:score withTableView:_tableView andShowSocialNetworkIcon:NO];
     //[cell setBackgroundColor:[OKColors playerTopScoreBGColor]];
@@ -416,7 +415,7 @@ typedef enum {
     return cell;
 }
 
--(OKScoreCell*)getScoreCellForScore:(id<OKScoreProtocol>)score withTableView:(UITableView*)tableView andShowSocialNetworkIcon:(BOOL)showSocialNetworkIcon
+-(OKScoreCell*)getScoreCellForScore:(OKScore*)score withTableView:(UITableView*)tableView andShowSocialNetworkIcon:(BOOL)showSocialNetworkIcon
 {
     OKScoreCell *cell = [tableView dequeueReusableCellWithIdentifier:scoreCellIdentifier];
     if(!cell) {
@@ -530,7 +529,7 @@ typedef enum {
 -(BOOL)shouldShowPlayerTopScore
 {
     if(playerTopScore != nil) {
-        if([playerTopScore rank] <= [globalScores count]) {
+        if([playerTopScore scoreRank] <= [globalScores count]) {
             return NO;
         } else {
             return YES;
@@ -543,7 +542,7 @@ typedef enum {
 // Get the player's top score to show in the "all scores" section
 -(void)getPlayerTopScoreForGlobalSection
 {
-    [leaderboard getPlayerTopScoreWithCompletion:^(id<OKScoreProtocol> score, NSError *error) {
+    [leaderboard getPlayerTopScoreWithCompletion:^(OKScore* score, NSError *error) {
         if(score && !error) {
             [self setPlayerTopScore:score];
             [_tableView reloadSections:[NSIndexSet indexSetWithIndex:kGlobalSection] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -728,8 +727,8 @@ typedef enum {
     // Set the relative ranks
     for(int x = 0; x< [mutableScores count]; x++)
     {
-        id<OKScoreProtocol> score = [mutableScores objectAtIndex:x];
-        [score setRank:(x+1)];
+        OKScore* score = [mutableScores objectAtIndex:x];
+        [score setScoreRank:(x+1)];
     }
     return mutableScores;
 }

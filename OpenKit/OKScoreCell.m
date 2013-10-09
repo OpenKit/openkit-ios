@@ -127,7 +127,7 @@
 }
 
 
--(void)setOKScoreProtocolScore:(id<OKScoreProtocol>)aScore
+-(void)setOKScoreProtocolScore:(OKScore*)aScore
 {
     OKScoreProtocolScore = aScore;
     

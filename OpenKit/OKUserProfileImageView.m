@@ -10,7 +10,6 @@
 #import "AFImageView.h"
 #import "OKGameCenterPlugin.h"
 #import "OKScore.h"
-#import "OKGKScoreWrapper.h"
 #import "OKMacros.h"
 
 @interface OKUserProfileImageView ()
@@ -75,18 +74,11 @@
     [self.imageView setFrame:frame];
 }
 
--(void)setOKScoreProtocolScore:(id<OKScoreProtocol>)aScore
+-(void)setOKScoreProtocolScore:(OKScore*)aScore
 {
-    if([aScore isKindOfClass:[OKScore class]]) {
-        OKScore *okscore = (OKScore*)aScore;
-        [self setUser:[okscore user]];
-    } else if ([aScore isKindOfClass:[OKGKScoreWrapper class]]) {
-        OKGKScoreWrapper *wrapper = (OKGKScoreWrapper*)aScore;
-        [self setGKPlayer:[wrapper player]];
-    } else {
-        [self setUser:nil];
-        OKLog(@"Unknown object type for OKScoreProtocol");
-    }
+    OKScore *okscore = (OKScore*)aScore;
+    [self setUser:[okscore user]];
+
 }
 
 #pragma mark - Custom Setters

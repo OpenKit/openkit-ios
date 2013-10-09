@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <GameKit/GameKit.h>
-#import "OKGKScoreWrapper.h"
 
 #define NUM_SCORES_PER_PAGE 25
 
@@ -35,7 +33,6 @@ typedef enum {
 @property (nonatomic, strong) NSString *iconUrl;
 @property (nonatomic) int playerCount;
 @property (nonatomic, strong) NSString *gamecenterID;
-@property (nonatomic, strong) GKScore *localPlayerScore;
 
 
 - (id)initWithDictionary:(NSDictionary*)jsonDict;
@@ -50,7 +47,7 @@ typedef enum {
 - (void)getFacebookFriendsScoresWithCompletion:(void (^)(NSArray *scores, NSError *error))handler;
 
 //Wrapper methods
-- (void)getPlayerTopScoreWithCompletion:(void (^)(id<OKScoreProtocol> score, NSError *error))handler;
+- (void)getPlayerTopScoreWithCompletion:(void (^)(OKScore* score, NSError *error))handler;
 
 
 - (NSSortDescriptor*)getSortDescriptor;

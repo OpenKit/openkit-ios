@@ -24,7 +24,7 @@
 
 @property (nonatomic, strong) NSMutableArray *globalScores, *socialScores;
 @property (nonatomic, strong) NSArray *gcSocialScores, *fbSocialScores;
-@property (nonatomic, strong) id<OKScoreProtocol> playerTopScore, playerTopScoreSocialSection;
+@property (nonatomic, strong) OKScore* playerTopScore, *playerTopScoreSocialSection;
 
 - (id)initWithLeaderboard:(OKLeaderboard *)aLeaderboard;
 -(id)initWithLeaderboardID:(int)aLeaderboardID;

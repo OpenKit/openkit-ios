@@ -158,7 +158,6 @@
 		44E7225317F24AA70066A9AE /* OKFBLoginCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFBLoginCell.h; sourceTree = "<group>"; };
 		44E7225417F24AA70066A9AE /* OKFileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFileUtil.h; sourceTree = "<group>"; };
 		44E7225517F24AA70066A9AE /* OKGameCenterUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGameCenterUtilities.h; sourceTree = "<group>"; };
-		44E7225617F24AA70066A9AE /* OKGKScoreWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGKScoreWrapper.h; sourceTree = "<group>"; };
 		44E7225717F24AA70066A9AE /* OKGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGUI.h; sourceTree = "<group>"; };
 		44E7225817F24AA70066A9AE /* OKHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKHelper.h; sourceTree = "<group>"; };
 		44E7225917F24AA70066A9AE /* OKLeaderboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKLeaderboard.h; sourceTree = "<group>"; };
@@ -172,7 +171,6 @@
 		44E7226217F24AA70066A9AE /* OKProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKProfileViewController.h; sourceTree = "<group>"; };
 		44E7226317F24AA70066A9AE /* OKScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScore.h; sourceTree = "<group>"; };
 		44E7226517F24AA70066A9AE /* OKScoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScoreCell.h; sourceTree = "<group>"; };
-		44E7226617F24AA70066A9AE /* OKScoreProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScoreProtocol.h; sourceTree = "<group>"; };
 		44E7226817F24AA70066A9AE /* OKSocialLeaderboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSocialLeaderboardViewController.h; sourceTree = "<group>"; };
 		44E7226917F24AA70066A9AE /* OKSpinnerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSpinnerCell.h; sourceTree = "<group>"; };
 		44E7226A17F24AA70066A9AE /* OKUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUser.h; sourceTree = "<group>"; };
@@ -393,22 +391,21 @@
 		44E7224917F24AA70066A9AE /* include */ = {
 			isa = PBXGroup;
 			children = (
-				A9C1014817FFC65B001AB68F /* OKDBConnection.h */,
-				A9C1014917FFC65B001AB68F /* OKDBScore.h */,
-				A9C1014A17FFC65B001AB68F /* OKDBSession.h */,
 				44E7224A17F24AA70066A9AE /* AbstractActionSheetPicker.h */,
 				44E7224B17F24AA70066A9AE /* ActionSheetStringPicker.h */,
 				44E7224C17F24AA70066A9AE /* AFImageView.h */,
 				44E7224D17F24AA70066A9AE /* KGModal.h */,
 				44E7224E17F24AA70066A9AE /* OKBaseLoginViewController.h */,
 				44E7224F17F24AA70066A9AE /* OKColors.h */,
+				A9C1014817FFC65B001AB68F /* OKDBConnection.h */,
+				A9C1014917FFC65B001AB68F /* OKDBScore.h */,
+				A9C1014A17FFC65B001AB68F /* OKDBSession.h */,
 				44E7225017F24AA70066A9AE /* OKDefines.h */,
 				44E7225117F24AA70066A9AE /* OKError.h */,
 				44E7225217F24AA70066A9AE /* OKFacebookUtilities.h */,
 				44E7225317F24AA70066A9AE /* OKFBLoginCell.h */,
 				44E7225417F24AA70066A9AE /* OKFileUtil.h */,
 				44E7225517F24AA70066A9AE /* OKGameCenterUtilities.h */,
-				44E7225617F24AA70066A9AE /* OKGKScoreWrapper.h */,
 				44E7225717F24AA70066A9AE /* OKGUI.h */,
 				44E7225817F24AA70066A9AE /* OKHelper.h */,
 				44E7225917F24AA70066A9AE /* OKLeaderboard.h */,
@@ -422,7 +419,6 @@
 				44E7226217F24AA70066A9AE /* OKProfileViewController.h */,
 				44E7226317F24AA70066A9AE /* OKScore.h */,
 				44E7226517F24AA70066A9AE /* OKScoreCell.h */,
-				44E7226617F24AA70066A9AE /* OKScoreProtocol.h */,
 				44E7226817F24AA70066A9AE /* OKSocialLeaderboardViewController.h */,
 				44E7226917F24AA70066A9AE /* OKSpinnerCell.h */,
 				44E7226A17F24AA70066A9AE /* OKUser.h */,

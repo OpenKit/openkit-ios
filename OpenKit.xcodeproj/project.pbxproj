@@ -78,7 +78,6 @@
 		44B50D1D1771227D00B5D8AD /* OKFBLoginCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B50D1C1771227D00B5D8AD /* OKFBLoginCell.m */; };
 		44B50D1F17713FFF00B5D8AD /* OKFBLoginCell.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44B50D1E1771228F00B5D8AD /* OKFBLoginCell.xib */; };
 		44B50D2417728E0300B5D8AD /* OKSpinnerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B50D2317728E0200B5D8AD /* OKSpinnerCell.m */; };
-		44BB68C51777E39900839D0D /* OKScoreProtocol.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B50D16176FDADF00B5D8AD /* OKScoreProtocol.h */; };
 		44BB68C61777E3BB00839D0D /* OKSocialLeaderboardViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B50D0A176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.h */; };
 		44BB68C71777E3BB00839D0D /* OKFBLoginCell.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B50D1B1771227C00B5D8AD /* OKFBLoginCell.h */; };
 		44BB68C81777E3BB00839D0D /* OKGameCenterPlugin.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 445B3BFE1769258C00952456 /* OKGameCenterPlugin.h */; };
@@ -86,9 +85,7 @@
 		44BB68CA1777E3BB00839D0D /* ActionSheetStringPicker.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 321E99CD16D2FBA1005F1506 /* ActionSheetStringPicker.h */; };
 		44BB68CB1777E3BB00839D0D /* AFImageView.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44E3F3C616EAED4500509219 /* AFImageView.h */; };
 		44BB68CC1777E3BB00839D0D /* OKError.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44E118291728A7CF003C2603 /* OKError.h */; };
-		44BB68CD1777E3BB00839D0D /* OKGKScoreWrapper.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44BC5336176A96800038043A /* OKGKScoreWrapper.h */; };
 		44BB68CE1777E3BB00839D0D /* OKSpinnerCell.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B50D2217728E0200B5D8AD /* OKSpinnerCell.h */; };
-		44BC5338176A96810038043A /* OKGKScoreWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 44BC5337176A96800038043A /* OKGKScoreWrapper.m */; };
 		44C31A3317F273C8004EE2EC /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C31A2A17F273C8004EE2EC /* FMDatabase.m */; };
 		44C31A3417F273C8004EE2EC /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C31A2C17F273C8004EE2EC /* FMDatabaseAdditions.m */; };
 		44C31A3517F273C8004EE2EC /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C31A2E17F273C8004EE2EC /* FMDatabasePool.m */; };
@@ -181,9 +178,7 @@
 				44BB68CA1777E3BB00839D0D /* ActionSheetStringPicker.h in Copy Files */,
 				44BB68CB1777E3BB00839D0D /* AFImageView.h in Copy Files */,
 				44BB68CC1777E3BB00839D0D /* OKError.h in Copy Files */,
-				44BB68CD1777E3BB00839D0D /* OKGKScoreWrapper.h in Copy Files */,
 				44BB68CE1777E3BB00839D0D /* OKSpinnerCell.h in Copy Files */,
-				44BB68C51777E39900839D0D /* OKScoreProtocol.h in Copy Files */,
 				32CACFF116CB65B900E8F185 /* KGModal.h in Copy Files */,
 				32CACFF216CB65B900E8F185 /* OKBaseLoginViewController.h in Copy Files */,
 				32CACFF416CB65B900E8F185 /* OKDefines.h in Copy Files */,
@@ -387,14 +382,11 @@
 		44B50D09176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSocialLeaderboardViewController.m; sourceTree = "<group>"; };
 		44B50D0A176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSocialLeaderboardViewController.h; sourceTree = "<group>"; };
 		44B50D13176ED4B100B5D8AD /* OKSocialLeaderboardVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OKSocialLeaderboardVC.xib; sourceTree = "<group>"; };
-		44B50D16176FDADF00B5D8AD /* OKScoreProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScoreProtocol.h; sourceTree = "<group>"; };
 		44B50D1B1771227C00B5D8AD /* OKFBLoginCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFBLoginCell.h; sourceTree = "<group>"; };
 		44B50D1C1771227D00B5D8AD /* OKFBLoginCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFBLoginCell.m; sourceTree = "<group>"; };
 		44B50D1E1771228F00B5D8AD /* OKFBLoginCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OKFBLoginCell.xib; path = ../../OpenKit/OKFBLoginCell.xib; sourceTree = "<group>"; };
 		44B50D2217728E0200B5D8AD /* OKSpinnerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSpinnerCell.h; sourceTree = "<group>"; };
 		44B50D2317728E0200B5D8AD /* OKSpinnerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSpinnerCell.m; sourceTree = "<group>"; };
-		44BC5336176A96800038043A /* OKGKScoreWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGKScoreWrapper.h; sourceTree = "<group>"; };
-		44BC5337176A96800038043A /* OKGKScoreWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKGKScoreWrapper.m; sourceTree = "<group>"; };
 		44C31A1917F25889004EE2EC /* OpenKit Sample App.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "OpenKit Sample App.xcodeproj"; path = "Samples/OpenKit Sample App/OpenKit Sample App.xcodeproj"; sourceTree = "<group>"; };
 		44C31A2917F273C8004EE2EC /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		44C31A2A17F273C8004EE2EC /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
@@ -717,9 +709,6 @@
 				44B50D09176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m */,
 				32CACFC216CB637C00E8F185 /* OKScore.h */,
 				32CACFC316CB637C00E8F185 /* OKScore.m */,
-				44B50D16176FDADF00B5D8AD /* OKScoreProtocol.h */,
-				44BC5336176A96800038043A /* OKGKScoreWrapper.h */,
-				44BC5337176A96800038043A /* OKGKScoreWrapper.m */,
 				32CACFB516CB637C00E8F185 /* OKLeaderboardsViewController.h */,
 				32CACFB616CB637C00E8F185 /* OKLeaderboardsViewController.m */,
 				32CACFB316CB637C00E8F185 /* OKLeaderboardsListViewController.h */,
@@ -978,7 +967,6 @@
 				32880CE6176D2991005F8D30 /* AFOAuth1Client.m in Sources */,
 				32880CEE176DC784005F8D30 /* OKUtils.m in Sources */,
 				445B3C001769258C00952456 /* OKGameCenterPlugin.m in Sources */,
-				44BC5338176A96810038043A /* OKGKScoreWrapper.m in Sources */,
 				44B50D0B176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m in Sources */,
 				44B50D1D1771227D00B5D8AD /* OKFBLoginCell.m in Sources */,
 				44B50D2417728E0300B5D8AD /* OKSpinnerCell.m in Sources */,
