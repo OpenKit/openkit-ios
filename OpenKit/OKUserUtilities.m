@@ -90,8 +90,9 @@
     NSDictionary *params = [NSDictionary dictionaryWithObject:userDict forKey:@"user"];
     NSString *requestPath = [NSString stringWithFormat:@"/users/%@", [user.OKUserID stringValue]];
     
-    [OKNetworker putToPath:requestPath parameters:params
-                   handler:^(id responseObject, NSError *error)
+    [OKNetworker putToPath:requestPath
+                parameters:params
+                completion:^(id responseObject, NSError *error)
      {
          if(!error){
              //Check to make sure the user was returned, that way we know the response was successful
@@ -118,8 +119,9 @@
     
     NSString *requestPath = [NSString stringWithFormat:@"/users/%@", [user.OKUserID stringValue]];
     
-    [OKNetworker putToPath:requestPath parameters:params
-                   handler:^(id responseObject, NSError *error)
+    [OKNetworker putToPath:requestPath
+                parameters:params
+                completion:^(id responseObject, NSError *error)
      {
          if(!error){
              //Check to make sure the user was returned, that way we know the response was successful
@@ -157,8 +159,9 @@
             break;
     }
     
-    [OKNetworker postToPath:@"/users" parameters:params
-                    handler:^(id responseObject, NSError *error)
+    [OKNetworker postToPath:@"/users"
+                 parameters:params
+                 completion:^(id responseObject, NSError *error)
      {
          OKUser *newUser = nil;
          if(!error) {

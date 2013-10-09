@@ -123,7 +123,7 @@ OKSession *__currentSession = nil;
         
         [OKNetworker postToPath:@"/client_sessions"
                      parameters:[session JSONDictionary]
-                        handler:^(id responseObject, NSError *error) {
+                     completion:^(id responseObject, NSError *error) {
             if (!error)
                 [session setSubmitState:kOKSubmitted];
             else

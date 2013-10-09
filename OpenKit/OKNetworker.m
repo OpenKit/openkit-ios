@@ -48,7 +48,7 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
 + (void)requestWithMethod:(NSString *)method
                      path:(NSString *)path
                parameters:(NSDictionary *)params
-                  handler:(void (^)(id responseObject, NSError * error))handler
+               completion:(void (^)(id responseObject, NSError * error))handler
 {
     AFOAuth1Client *httpclient = [self httpClient];
     NSMutableURLRequest *request = [httpclient requestWithMethod:method
@@ -82,32 +82,32 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
 
 + (void)getFromPath:(NSString *)path
          parameters:(NSDictionary *)params
-            handler:(void (^)(id responseObject, NSError *error))handler
+         completion:(void (^)(id responseObject, NSError *error))handler
 {
     [self requestWithMethod:@"GET"
                        path:path
                  parameters:params
-                    handler:handler];
+                 completion:handler];
 }
 
 + (void)postToPath:(NSString *)path
         parameters:(NSDictionary *)params
-           handler:(void (^)(id responseObject, NSError *error))handler
+        completion:(void (^)(id responseObject, NSError *error))handler
 {
     [self requestWithMethod:@"POST"
                        path:path
                  parameters:params
-                    handler:handler];
+                 completion:handler];
 }
 
 + (void)putToPath:(NSString *)path
        parameters:(NSDictionary *)params
-          handler:(void (^)(id responseObject, NSError *error))handler
+       completion:(void (^)(id responseObject, NSError *error))handler
 {
     [self requestWithMethod:@"PUT"
                        path:path
                  parameters:params
-                    handler:handler];
+                 completion:handler];
 }
 
 

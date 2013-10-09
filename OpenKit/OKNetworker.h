@@ -13,18 +13,18 @@
 + (void)requestWithMethod:(NSString *)method
                      path:(NSString *)path
                parameters:(NSDictionary *)params
-                  handler:(void (^)(id responseObject, NSError *error))handler;
+               completion:(void (^)(id responseObject, NSError *error))handler;
 
 + (void)getFromPath:(NSString *)path
          parameters:(NSDictionary *)params
-            handler:(void (^)(id responseObject, NSError *error))handler;
+         completion:(void (^)(id responseObject, NSError *error))handler;
 
 + (void)postToPath:(NSString *)path
         parameters:(NSDictionary *)params
-           handler:(void (^)(id responseObject, NSError *error))handler;
+        completion:(void (^)(id responseObject, NSError *error))handler;
 
 + (void)putToPath:(NSString *)path
        parameters:(NSDictionary *)params
-          handler:(void (^)(id responseObject, NSError *error))handler;
+       completion:(void (^)(id responseObject, NSError *error))handler;
 
 @end

@@ -74,8 +74,9 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             [score JSONDictionary], @"score", nil];
     
-    [OKNetworker postToPath:@"/scores" parameters:params
-                    handler:^(id responseObject, NSError *error)
+    [OKNetworker postToPath:@"/scores"
+                 parameters:params
+                 completion:^(id responseObject, NSError *error)
      {
          if(!error) {
              OKLog(@"Successfully posted score to OpenKit: %@", self);
@@ -133,8 +134,9 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
                             [self getParamForLeaderboardTimeRange:timeRange], @"leaderboard_range", nil];
     
     // OK NETWORK REQUEST
-    [OKNetworker getFromPath:@"/best_scores" parameters:params
-                     handler:^(id responseObject, NSError *error)
+    [OKNetworker getFromPath:@"/best_scores"
+                  parameters:params
+                  completion:^(id responseObject, NSError *error)
      {
          NSMutableArray *scores = nil;
          if(!error) {
@@ -165,8 +167,9 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     [params setValue:friends forKey:@"fb_friends"];
     
     // OK NETWORK REQUEST
-    [OKNetworker postToPath:@"/best_scores/social" parameters:params
-                    handler:^(id responseObject, NSError *error)
+    [OKNetworker postToPath:@"/best_scores/social"
+                 parameters:params
+                 completion:^(id responseObject, NSError *error)
      {
          NSMutableArray *scores = nil;
          if(!error) {
@@ -253,7 +256,10 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     [params setValue:[self getParamForLeaderboardTimeRange:range] forKey:@"leaderboard_range"];
     [params setValue:[[OKUser currentUser] OKUserID] forKey:@"user_id"];
     
-    [OKNetworker getFromPath:@"best_scores/user" parameters:params handler:^(id responseObject, NSError *error) {
+    [OKNetworker getFromPath:@"best_scores/user"
+                  parameters:params
+                  completion:^(id responseObject, NSError *error)
+    {
         if(!error) {
             OKScore *topScore = [[OKScore alloc] initWithDictionary:(NSDictionary*)responseObject];
             handler(topScore, nil);
@@ -370,7 +376,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     // OK NETWORK REQUEST
     [OKNetworker getFromPath:@"/leaderboards"
                   parameters:[OKLeaderboard JSONDictionary]
-                     handler:^(id responseObject, NSError *error)
+                  completion:^(id responseObject, NSError *error)
      {
          if(!error) {
              OKLog(@"OpenKit: OKLeaderboard: Successfully got list of leaderboards.");

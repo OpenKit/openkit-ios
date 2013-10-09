@@ -137,7 +137,9 @@
                             nil];
     NSString *path = [NSString stringWithFormat:@"/leaderboards/%i/challenges", leaderboard.leaderboardID];
     
-    [OKNetworker postToPath:path parameters:params handler:^(id responseObject, NSError *error) {
+    [OKNetworker postToPath:path
+                 parameters:params
+                 completion:^(id responseObject, NSError *error) {
         if(error) {
             OKLog(@"Error from server is: %@", error);
         }
