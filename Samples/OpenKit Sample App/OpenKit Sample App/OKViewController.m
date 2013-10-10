@@ -87,7 +87,7 @@
     //[leaderBoards setShowLandscapeOnly:YES];
     
     // If you want to show a specific leaderboard, use the following method
-    //OKLeaderboardsViewController *leaderBoards = [[OKLeaderboardsViewController alloc] initWithDefaultLeaderboardID:25];
+    //OKLeaderboardsViewController *leaderBoards = [[OKLeaderboardsViewController alloc] initWithDefaultLeaderboardID:385];
     
     [self presentViewController:leaderBoards animated:YES completion:nil];
     
@@ -96,9 +96,15 @@
 
 -(IBAction)submitScore:(id)sender
 {
+    /*
     ScoreSubmitterVC *scoreSubmitter = [[ScoreSubmitterVC alloc] initWithNibName:@"ScoreSubmitterVC" bundle:nil];
     scoreSubmitter.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:scoreSubmitter animated:YES completion:nil];
+     */
+    
+    OKLeaderboardsViewController *leaderBoards = [[OKLeaderboardsViewController alloc] initWithDefaultLeaderboardID:385];
+    
+    [self presentViewController:leaderBoards animated:YES completion:nil];
 }
 
 
