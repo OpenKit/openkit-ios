@@ -22,13 +22,9 @@
 
 @synthesize showLandscapeOnly;
 
-// Had to use a weird initializer paradigm for the initializers here because on iOS5
-// calling [super initWithRootViewController] also calls [self init] (which does not happen on ios6/ios7).
-// So don't change this, this is a bug fix for iOS5
+// Had to use a weird initializer paradigm for the initializers to fix a bug on iOS5
 
 - (id)init {
-    
-    NSLog(@"init");
     self = [super init];
     if (self) {
         self.modalPresentationStyle = UIModalPresentationFormSheet;
