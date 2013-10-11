@@ -28,13 +28,17 @@
 
 - (id)init {
     
-    OKLeaderboardsListViewController *list = [[OKLeaderboardsListViewController alloc] initWithDefaultLeaderboardID:defaultLeaderboardID];
-    self = [super initWithRootViewController:list];
+    NSLog(@"init");
+    self = [super init];
     if (self) {
         self.modalPresentationStyle = UIModalPresentationFormSheet;
+        OKLeaderboardsListViewController *list = [[OKLeaderboardsListViewController alloc]initWithDefaultLeaderboardID:defaultLeaderboardID];
+        NSArray *viewControllers = [NSArray arrayWithObject:list];
+        [self setViewControllers:viewControllers animated:NO];
     }
     return self;
 }
+
 
 -(id)initWithDefaultLeaderboardID:(int)leaderboardID
 {
