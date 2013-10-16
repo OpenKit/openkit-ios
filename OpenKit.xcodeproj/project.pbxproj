@@ -130,6 +130,8 @@
 		44F3CD5817CC1A5700D054CF /* gc_off_big@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2C41B80717BFD8E5005F239B /* gc_off_big@2x.png */; };
 		44F3CD5917CC1A5700D054CF /* gc_on_big.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2C41B80817BFD8E5005F239B /* gc_on_big.png */; };
 		44F3CD5A17CC1A5700D054CF /* gc_on_big@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2C41B80917BFD8E5005F239B /* gc_on_big@2x.png */; };
+		A96B376E180DD6DF00B9C6B2 /* OKAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = A96B376C180DD6DF00B9C6B2 /* OKAnalytics.m */; };
+		A96B3772180DD6F500B9C6B2 /* OKAnalytics.h in Copy Files */ = {isa = PBXBuildFile; fileRef = A96B376D180DD6DF00B9C6B2 /* OKAnalytics.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,6 +196,7 @@
 				32CACFFB16CB65B900E8F185 /* OKLeaderboardsListViewController.h in Copy Files */,
 				32CACFFC16CB65B900E8F185 /* OKLeaderboardsViewController.h in Copy Files */,
 				32CACFFE16CB65B900E8F185 /* OKLoginView.h in Copy Files */,
+				A96B3772180DD6F500B9C6B2 /* OKAnalytics.h in Copy Files */,
 				32CACFFF16CB65B900E8F185 /* OKMacros.h in Copy Files */,
 				32CAD00016CB65B900E8F185 /* OKNetworker.h in Copy Files */,
 				32CAD00216CB65B900E8F185 /* OKProfileViewController.h in Copy Files */,
@@ -422,6 +425,8 @@
 		44E3F3C716EAED4500509219 /* AFImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageView.m; sourceTree = "<group>"; };
 		44F3004B17E2F1CD00108D05 /* OKUserUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUserUtilities.h; sourceTree = "<group>"; };
 		44F3004C17E2F1CD00108D05 /* OKUserUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUserUtilities.m; sourceTree = "<group>"; };
+		A96B376C180DD6DF00B9C6B2 /* OKAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKAnalytics.m; sourceTree = "<group>"; };
+		A96B376D180DD6DF00B9C6B2 /* OKAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKAnalytics.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -547,6 +552,8 @@
 		32CACF9C16CB637C00E8F185 /* OpenKit */ = {
 			isa = PBXGroup;
 			children = (
+				A96B376C180DD6DF00B9C6B2 /* OKAnalytics.m */,
+				A96B376D180DD6DF00B9C6B2 /* OKAnalytics.h */,
 				32CACFD216CB637C00E8F185 /* OpenKit.h */,
 				32CACFA816CB637C00E8F185 /* OKManager.h */,
 				32CACFA916CB637C00E8F185 /* OKManager.m */,
@@ -968,6 +975,7 @@
 				32880CE6176D2991005F8D30 /* AFOAuth1Client.m in Sources */,
 				32880CEE176DC784005F8D30 /* OKUtils.m in Sources */,
 				445B3C001769258C00952456 /* OKGameCenterUtilities.m in Sources */,
+				A96B376E180DD6DF00B9C6B2 /* OKAnalytics.m in Sources */,
 				44BC5338176A96810038043A /* OKGKScoreWrapper.m in Sources */,
 				44B50D0B176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m in Sources */,
 				44B50D1D1771227D00B5D8AD /* OKFBLoginCell.m in Sources */,

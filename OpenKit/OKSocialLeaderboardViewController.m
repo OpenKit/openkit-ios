@@ -17,6 +17,7 @@
 #import "OKColors.h"
 #import "OKLoginView.h"
 #import "OKManager.h"
+#import "OKAnalytics.h"
 
 #define kOKScoreCellIdentifier @"OKScoreCell"
 
@@ -111,6 +112,8 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
 
 -(void)showFacebookInviteUI
 {
+    [OKAnalytics postEvent:@"tap_invite" metadata:nil];
+
     if([[FBSession activeSession] isOpen]) {
         [OKFacebookUtilities sendFacebookRequest];
     } else {
@@ -587,6 +590,7 @@ typedef enum {
 
 -(void)fbLoginWithCompletionHandler:(void(^)())completionHandler
 {
+    [OKAnalytics postEvent:@"fb_social" metadata:nil];
     if(!isShowingFBLoginCell && isShowingInviteFriendsCell)
     {
         [self showFacebookInviteUI];
@@ -776,6 +780,23 @@ typedef enum {
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+
+
+
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [OKAnalytics postEvent:@"lb_open" metadata:[NSNumber numberWithInt:leaderboardID]];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [OKAnalytics postEvent:@"lb_close" metadata:[NSNumber numberWithInt:leaderboardID]];
 }
 
 @end

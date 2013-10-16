@@ -19,9 +19,14 @@
 #import "OKLocalCache.h"
 #import "OKSessionDb.h"
 #import "OKMacros.h"
+#import "OKAnalytics.h"
 
 #define OK_DEFAULT_ENDPOINT    @"http://api.openkit.io"
 #define OK_OPENKIT_SDK_VERSION = @"1.0.3";
+
+
+BOOL __FACEBOOK_LOGIN = NO;
+
 
 static NSString *OK_USER_KEY = @"OKUserInfo";
 
@@ -191,14 +196,29 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     return [OKFacebookUtilities handleOpenURL:url];
 }
 
++ (void)setFacebookLoginFlag:(BOOL)flag
+{
+    __FACEBOOK_LOGIN = flag;
+}
+
++ (void)handleWillResignActive
+{
+    if(!__FACEBOOK_LOGIN)
+        [OKAnalytics endSession];
+}
+
 + (void)handleDidBecomeActive
 {
+    if(!__FACEBOOK_LOGIN)
+        [OKAnalytics startSession];
+    
     [OKFacebookUtilities handleDidBecomeActive];
     [[OKManager sharedManager] submitCachedScoresAfterDelay];
 }
 
 + (void)handleWillTerminate
 {
+    [OKAnalytics endSession];
     [OKFacebookUtilities handleWillTerminate];
 }
 

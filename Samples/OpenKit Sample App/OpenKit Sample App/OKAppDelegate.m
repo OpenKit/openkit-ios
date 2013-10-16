@@ -59,6 +59,8 @@
 // to the same handlePushDictionary method that is used for opens.
 - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
 {
+    [OKAnalytics postEvent:@"challenge_not" metadata:nil];
+    
     NSLog(@"Push notification received while open:%@", userInfo);
     [self handlePushDictionary:userInfo];
 }
@@ -77,6 +79,7 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
+    [OKManager handleWillResignActive];
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }

@@ -14,6 +14,7 @@
 #import "KGModal.h"
 #import "OKGameCenterUtilities.h"
 #import "OKUser.h"
+#import "OKAnalytics.h"
 
 @interface OKBaseLoginViewController ()
 
@@ -226,6 +227,7 @@
 
 - (IBAction)performFacebookLogin:(id)sender
 {
+    [OKAnalytics postEvent:@"fb_login" metadata:nil];
     [self showLoginDialogSpinner];
     
     [OKFacebookUtilities AuthorizeUserWithFacebookWithCompletionHandler:^(OKUser *user, NSError *error) {
@@ -240,12 +242,5 @@
         }
     }];
 }
-
-
-
-
-
-
-
 
 @end
