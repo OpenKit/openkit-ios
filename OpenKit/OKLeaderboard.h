@@ -39,15 +39,14 @@ typedef enum {
 
 - (void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange pageNumber:(int)pageNum
        completion:(void (^)(NSArray* scores, NSError *error))handler;
-- (void)getPlayerTopScoreForTimeRange:(OKLeaderboardTimeRange)range completion:(void (^)(OKScore *score, NSError *error))handler;
-- (void)getFacebookFriendsScoresWithCompletion:(void (^)(NSArray *scores, NSError *error))handler;
-- (void)getPlayerTopScoreWithCompletion:(void (^)(OKScore* score, NSError *error))handler;
+- (void)getSocialScoresForTimeRange:(OKLeaderboardTimeRange)timeRange
+                         completion:(void (^)(NSArray* scores, NSError *error))handler;
 
 - (NSSortDescriptor*)getSortDescriptor;
 - (NSArray*)sortScoresBasedOnLeaderboardType:(NSArray*)scores;
 
+
 + (void)getLeaderboardsWithCompletion:(void (^)(NSArray* leaderboards, NSError* error))handler;
 + (void)getLeaderboardWithID:(int)leaderboardID withCompletion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler;
-
 
 @end

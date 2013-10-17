@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "OKDBConnection.h"
 
+
 @interface OKSession : OKDBRow
 
 @property(nonatomic, copy) NSString *token;
@@ -27,6 +28,7 @@
 
 + (OKSession*)currentSession;
 + (void)activate;
++ (void)resolveUnsubmittedSession;
 + (void)registerPush:(NSString *)pushToken;
 + (void)loginFB:(NSString *)aFacebookId;
 + (void)logoutFB;

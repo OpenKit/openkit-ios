@@ -54,6 +54,12 @@
 }
 
 
++ (NSString*)localOnlyCachePath:(NSString*)filename
+{
+    return [[OKFileUtil localOnlyCachePath] stringByAppendingPathComponent:filename];
+}
+
+
 + (NSString*)applicationSupportPath
 {
     NSArray *arr = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);

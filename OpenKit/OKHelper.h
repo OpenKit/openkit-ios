@@ -21,5 +21,6 @@
 + (NSDictionary*)getNSDictionarySafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict;
 + (NSString*)getPathToDocsDirectory;
 + (BOOL)isEmpty:(id)obj;
++ (NSString*)serializeArray:(NSArray*)array withSorting:(BOOL)sorting;
 
 @end

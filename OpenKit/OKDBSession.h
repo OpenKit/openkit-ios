@@ -14,6 +14,7 @@
 @interface OKDBSession : OKDBConnection
 
 - (OKSession*)lastSession;
+- (NSArray*)getUnsubmittedSessions;
 
 @end
 

@@ -6,10 +6,8 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
-#import <FacebookSDK/FacebookSDK.h>
 #import "OKManager.h"
 #import "OKUser.h"
-#import "OKUserUtilities.h"
 #import "OKFacebookUtilities.h"
 #import "SimpleKeychain.h"
 #import "OKDefines.h"
@@ -19,101 +17,38 @@
 #import "OKDBConnection.h"
 #import "OKDBSession.h"
 #import "OKMacros.h"
+#import "OKAuth.h"
+#import "OKPrivate.h"
+#import "OKCrypto.h"
+#import "OKNetworker.h"
+#import "OKFileUtil.h"
+#import "OKNotifications.h"
+#import "OKUtils.h"
 
+#define OK_LOCAL_SESSION @"openkit.session"
 #define OK_DEFAULT_ENDPOINT    @"http://api.openkit.io"
 #define OK_OPENKIT_SDK_VERSION = @"1.0.2";
 
-static NSString *OK_USER_KEY = @"OKUserInfo";
 
 
 @interface OKManager ()
 {
-    OKUser *_currentUser;
+    OKLocalUser *_currentUser;
 }
 
 @property (nonatomic, strong) NSString *appKey;
 @property (nonatomic, strong) NSString *secretKey;
 @property (nonatomic, strong) NSString *endpoint;
 
-- (void)startSession;
 @end
 
 
 @implementation OKManager
 @synthesize hasShownFBLoginPrompt, leaderboardListTag, cachedFbFriendsList;
 
-+ (void)configureWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey endpoint:(NSString *)endpoint
++ (BOOL)handleOpenURL:(NSURL*)url
 {
-    NSParameterAssert(appKey);
-    NSParameterAssert(secretKey);
-    OKManager *manager = [OKManager sharedManager];
-    manager.appKey = appKey;
-    manager.secretKey = secretKey;
-    if(endpoint != nil) {
-        manager.endpoint = endpoint;
-    } else {
-        manager.endpoint = OK_DEFAULT_ENDPOINT;
-    }
-    
-    [manager startSession];
-    
-    OKLog(@"OpenKit configured with endpoint: %@", [[OKManager sharedManager] endpoint]);
-}
-
-
-+ (void)configureWithAppKey:(NSString*)appKey secretKey:(NSString*)secretKey
-{
-    [OKManager configureWithAppKey:appKey secretKey:secretKey endpoint:nil];
-}
-
-
-+ (id)sharedManager
-{
-    static dispatch_once_t pred;
-    static OKManager *sharedInstance = nil;
-    dispatch_once(&pred, ^{
-        sharedInstance = [[OKManager alloc] init];
-    });
-    return sharedInstance;
-}
-
-
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        _endpoint = OK_DEFAULT_ENDPOINT;
-
-        // These two lines below are required for the linker to work properly such that these classes are available in XIB files
-        [FBProfilePictureView class];
-        [OKUserProfileImageView class];
-        
-        [OKFacebookUtilities OpenCachedFBSessionWithoutLoginUI];
-
-        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-        [nc addObserver:self selector:@selector(willShowDashboard:) name:OKLeaderboardsViewWillAppear object:nil];
-        [nc addObserver:self selector:@selector(didShowDashboard:)  name:OKLeaderboardsViewDidAppear object:nil];
-        [nc addObserver:self selector:@selector(willHideDashboard:) name:OKLeaderboardsViewWillDisappear object:nil];
-        [nc addObserver:self selector:@selector(didHideDashboard:)  name:OKLeaderboardsViewDidDisappear object:nil];
-        
-        [self getSavedUserFromNSUserDefaults];
-    }
-    return self;
-}
-
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    // Do not call super here.  Using arc.
-}
-
-
-- (OKUser*)currentUser
-{
-    @synchronized(self) {
-        return _currentUser;
-    }
+    return [OKAuthProvider handleOpenURL:url];
 }
 
 
@@ -135,89 +70,285 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
 }
 
 
-- (void)logoutCurrentUser
++ (void)configureWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey endpoint:(NSString *)endpoint
 {
-    NSLog(@"Logged out of openkit");
-    _currentUser = nil;
-    [self removeCachedUserFromNSUserDefaults];
-    //Log out and clear Facebook
-    [FBSession.activeSession closeAndClearTokenInformation];
+    NSParameterAssert(appKey);
+    NSParameterAssert(secretKey);
     
-    [OKScore clearSubmittedScore];
+    OKManager *manager = [OKManager sharedManager];
+    [manager setAppKey:appKey];
+    [manager setSecretKey:secretKey];
+    [manager setEndpoint:(endpoint) ? endpoint : OK_DEFAULT_ENDPOINT];
+    
+    OKLog(@"OpenKit configured with endpoint: %@", [[OKManager sharedManager] endpoint]);
+    
+    [manager startSession];
+    [manager startLogin];
 }
 
 
-- (void)saveCurrentUser:(OKUser *)aCurrentUser
++ (void)configureWithAppKey:(NSString*)appKey secretKey:(NSString*)secretKey
 {
-    self->_currentUser = aCurrentUser;
-    [self removeCachedUserFromNSUserDefaults];
-    [self saveCurrentUserToNSUserDefaults];
-    [OKScore resolveUnsubmittedScores];
+    [OKManager configureWithAppKey:appKey secretKey:secretKey endpoint:nil];
 }
 
 
-- (void)getSavedUserFromNSUserDefaults
++ (id)sharedManager
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSData *archivedUserDict = [defaults objectForKey:OK_USER_KEY];
+    static dispatch_once_t pred;
+    static OKManager *sharedInstance = nil;
+    dispatch_once(&pred, ^{
+        sharedInstance = [[OKManager alloc] init];
+    });
+    return sharedInstance;
+}
+
+
+#pragma mark -
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _endpoint = OK_DEFAULT_ENDPOINT;
+        _initialized = NO;
+    }
+    return self;
+}
+
+
+#pragma mark - Login management
+
+- (void)startLogin
+{
+    OKLogInfo(@"Initializing Openkit...");
     
-    if(archivedUserDict != nil) {
-        if(![archivedUserDict isKindOfClass:[NSData class]]) {
-            OKLog(@"OKUser cache is busted, clearing cache");
-            [self removeCachedUserFromNSUserDefaults];
-        } else {
-            NSDictionary *userDictionary = [NSKeyedUnarchiver unarchiveObjectWithData:archivedUserDict];
-            OKUser *cachedUser = [OKUserUtilities createOKUserWithJSONData:userDictionary];
-            _currentUser = cachedUser;
-            OKLog(@"Found  cached OKUser id: %@ from defaults", [cachedUser OKUserID]);
-            
-            if(_currentUser == nil) {
-                OKLog(@"OKUser cache is busted, clearing cache");
-                [self removeCachedUserFromNSUserDefaults];
-            }
+    // Starting authorization providers (opening sessions from cache...)
+    [OKAuthProvider start];
+
+    // Try to open OK session from cache
+    OKLocalUser *user = [self getCachedUser];
+    if(user) {
+        OKLogInfo(@"Opened Openkit session from cache.");
+        [self setCurrentUser:user];
+        [self endLogin];
+        return;
+    }
+    
+    
+    // At this point we are not logged in Openkit, we try to get access using cached sessions (fb...)
+    NSArray *providers = [OKAuthProvider getAuthProviders];
+    if(!providers || [providers count] == 0) {
+        OKLogErr(@"You should add at less one authorization provider.");
+        [self endLogin];
+        return;
+    }
+    
+    
+    // We wait a time to make app start faster and wait until services are initialized.
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
+        
+        NSLock* lock = [NSLock new];
+        NSMutableArray *authRequests = [NSMutableArray arrayWithCapacity:[providers count]];
+        OKMutableInt *count = [[OKMutableInt alloc] initWithValue:[providers count]];
+        
+        for(OKAuthProvider *provider in providers) {
+            [provider getAuthRequestWithCompletion:^(OKAuthRequest *request, NSError *error) {
+                
+                [lock lock];
+                if(request)
+                    [authRequests addObject:request];
+                
+                [lock unlock];
+                
+                if((--count.value) == 0)
+                    [self performAuthRequest:authRequests];
+            }];
         }
-    } else {
-        OKLog(@"Did not find cached OKUser");
-        [self getSavedUserFromKeychainAndMoveToNSUserDefaults];
+    });
+}
+
+
+- (void)performAuthRequest:(NSMutableArray*)authRequests
+{
+    if([authRequests count] == 0) {
+        [self endLogin];
+        return;
+    }
+
+    [OKLocalUser loginWithAuthRequests:authRequests completion:^(OKLocalUser *user, NSError *error) {
+        if(user)
+            [self setCurrentUser:user];
+        
+        [self endLogin];
+    }];
+}
+
+
+- (void)endLogin
+{
+    NSAssert(_initialized == NO, @"Bad state, this method just can be called once.");
+    
+    OKLogInfo(@"...Openkit was initialized.");
+    _initialized = YES;
+    
+    
+    // At this point we can receive notifications and the user can user OKManager normally.
+    // Add any observer here:
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    // REVIEW
+//    [nc addObserver:self selector:@selector(willShowDashboard:) name:OKLeaderboardsViewWillAppear object:nil];
+//    [nc addObserver:self selector:@selector(didShowDashboard:)  name:OKLeaderboardsViewDidAppear object:nil];
+//    [nc addObserver:self selector:@selector(willHideDashboard:) name:OKLeaderboardsViewWillDisappear object:nil];
+//    [nc addObserver:self selector:@selector(didHideDashboard:)  name:OKLeaderboardsViewDidDisappear object:nil];
+    [nc addObserver:self selector:@selector(providerUpdated:) name:OKAuthProviderUpdatedNotification object:nil];
+    [nc addObserver:self selector:@selector(willEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [nc addObserver:self selector:@selector(enteredBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [nc addObserver:self selector:@selector(becameAction:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [nc addObserver:self selector:@selector(willTerminate:) name:UIApplicationWillTerminateNotification object:nil];
+
+
+    
+    if(![self currentUser])
+        OKLogInfo(@"Not login in openkit.");
+    else
+        [self updatedStatus];
+}
+
+
+- (void)loginWithProvider:(OKAuthProvider*)provider completion:(void(^)(OKLocalUser *user, NSError *error))handler
+{
+    OKLogInfo(@"Trying to login with %@", [provider serviceName]);
+    [provider getAuthRequestWithCompletion:^(OKAuthRequest *request, NSError *error) {
+        [OKLocalUser loginWithAuthRequests:[NSArray arrayWithObject:request] completion:handler];
+    }];
+}
+
+
+#pragma mark - User management and status
+
+- (OKLocalUser*)currentUser
+{
+    @synchronized(self) {
+        return _currentUser;
     }
 }
 
 
-- (void)saveCurrentUserToNSUserDefaults
+- (void)setCurrentUser:(OKLocalUser*)aCurrentUser
 {
-    NSDictionary *userDict = [OKUserUtilities getJSONRepresentationOfUser:[OKUser currentUser]];
-    NSData *archivedUserDict = [NSKeyedArchiver archivedDataWithRootObject:userDict];
+    if([_currentUser userID] != [aCurrentUser userID]) {
+        _currentUser = aCurrentUser;
+        [self updateCachedUser];
+        if([self initialized])
+            [self updatedStatus];
+    }
+}
+
+
+- (void)updatedStatus
+{
+    OKLocalUser *user = [self currentUser];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:archivedUserDict forKey:OK_USER_KEY];
-    [defaults synchronize];
+    if(user) {
+        OKLogInfo(@"Logged in successfully: User id: %@", [user userID]);
+        
+        // once we are logged in, we perform some tasks
+        // start local session (analytics)
+        [OKSession resolveUnsubmittedSession];
+        
+        // update friends
+        [self updateFriendsLazily:YES withCompletion:nil];
+        
+        // update local user data
+        [user syncWithCompletion:nil];
+        
+        // resolve pending scores
+        [OKScore resolveUnsubmittedScores];
+        
+        // get list of leaderboards as soon as possible
+        [OKLeaderboard getLeaderboardsWithCompletion:nil];
+        
+    }else{
+        // logout
+        
+    }
 }
 
 
-- (void)removeCachedUserFromNSUserDefaults
+- (void)updateFriendsLazily:(BOOL)lazy withCompletion:(void(^)(NSError* error))handler
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:OK_USER_KEY];
-    [defaults synchronize];
+    OKLocalUser *user = [self currentUser];
+    if(!user) {
+        OKLogErr(@"We can't upload friends because we are not logged in.");
+        return;
+    }
+    
+    NSArray *providers = [OKAuthProvider getAuthProviders];
+    for(OKAuthProvider *provider in providers) {
+        if([provider isSessionOpen]) {
+            if(!([user friendsForService:[provider serviceName]] && lazy)) {
+                [provider loadFriendsWithCompletion:^(NSArray *friends, NSError *error) {
+                    if(!error && friends) {
+                        [user setFriendIDs:friends forService:[provider serviceName]];
+                    }
+                }];
+            }
+        }
+    }
+    if(handler)
+    handler(nil);
 }
 
 
-+ (BOOL)handleOpenURL:(NSURL*)url
+- (OKLocalUser*)getCachedUser
 {
-    return [OKFacebookUtilities handleOpenURL:url];
+    NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_SESSION];
+    NSData *archive = [NSData dataWithContentsOfFile:path];
+    if(!archive)
+        return nil;
+    
+    NSData *decrypt = [OKCrypto SHA256_AES256DecryptData:archive withKey:_secretKey];
+    if(!decrypt) {
+        [self removeCachedUser];
+        return nil;
+    }
+    
+    NSDictionary *dict = [NSKeyedUnarchiver unarchiveObjectWithData:decrypt];
+    return [OKLocalUser createUserWithDictionary:dict];
 }
 
 
-+ (void)handleDidBecomeActive
+- (BOOL)updateCachedUser
 {
-    [OKFacebookUtilities handleDidBecomeActive];
-    [[OKManager sharedManager] submitCachedScoresAfterDelay];
+    OKLocalUser *user = [self currentUser];
+    if([user isAccessAllowed]) {
+        OKLogInfo(@"Updating local user in cache.");
+        NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_SESSION];
+        NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:[user dictionary]];
+        NSData *encrypt = [OKCrypto SHA256_AES256EncryptData:archive withKey:_secretKey];
+        return [encrypt writeToFile:path atomically:YES];
+    }
+    return NO;
 }
 
 
-+ (void)handleWillTerminate
+- (void)removeCachedUser
 {
-    [OKFacebookUtilities handleWillTerminate];
+    NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_SESSION];
+    [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+}
+
+
+- (void)logoutCurrentUser
+{
+    NSLog(@"Logging out of openkit");
+    [self removeCachedUser];
+    [self setCurrentUser:nil];
+    
+    [OKAuthProvider logoutAndClear];
+    [OKScore clearSubmittedScore];
 }
 
 
@@ -226,6 +357,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     OKLog(@"OKManager registerToken, data: %@", deviceToken);
     
     const unsigned *tokenBytes = [deviceToken bytes];
+    
     NSString *hexToken = [NSString stringWithFormat:@"%08x%08x%08x%08x%08x%08x%08x%08x",
                           ntohl(tokenBytes[0]), ntohl(tokenBytes[1]), ntohl(tokenBytes[2]),
                           ntohl(tokenBytes[3]), ntohl(tokenBytes[4]), ntohl(tokenBytes[5]),
@@ -238,6 +370,67 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
 }
 
 
+#pragma mark - Notifications
+
+- (void)providerUpdated:(NSNotification*)not
+{
+    if(![self initialized])
+        OKLogErr(@"The system is not initialized yet.");
+    
+    OKAuthProvider *provider = [not object];
+    
+    // Validate status
+    BOOL isValid = [[OKAuthProvider getAuthProviders] containsObject:provider] && [provider isSessionOpen];
+    BOOL alreadyLogged = [[self currentUser] userIDForService:[provider serviceName]] != nil;
+    
+    // If the provider is valid and we are not already logged in, we try to log in.
+    if(isValid && !alreadyLogged) {
+        
+        [self loginWithProvider:provider completion:^(OKLocalUser *user, NSError *error) {
+            if(user) {
+                [self updateCachedUser];
+                [self setCurrentUser:user];
+                
+                
+                // update friends
+                [provider loadFriendsWithCompletion:^(NSArray *friends, NSError *error) {
+                    if(!error && friends) {
+                        [user setFriendIDs:friends forService:[provider serviceName]];
+                    }
+                }];
+            }
+        }];
+    }
+}
+
+
+- (void)willEnterForeground
+{
+    
+}
+
+
+- (void)enteredBackground
+{
+    // Save changes in disk.
+    [self updateCachedUser];
+}
+
+
+- (void)becameAction
+{
+    [OKAuthProvider handleDidBecomeActive];
+    [[OKManager sharedManager] submitCachedScoresAfterDelay];
+}
+
+
+- (void)willTerminate
+{
+    [OKAuthProvider handleWillTerminate];
+
+}
+
+/* REVIEW
 #pragma mark - Dashboard Display State Callbacks
 
 - (void)willShowDashboard:(NSNotification *)note
@@ -270,40 +463,12 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
         [_delegate openkitManagerDidHideDashboard:self];
     }
 }
-
-
-// This method is used to migrate the OKUser cache from keychain
-// to NSUserDefaults
-// It clears out any saved data in Keychain and moves the cached OKUserID
-// to NSUserDefaults
-//
-- (void)getSavedUserFromKeychainAndMoveToNSUserDefaults
-{
-    NSDictionary *userDict;
-    NSData *keychainData = [SimpleKeychain retrieve];
-    if(keychainData != nil) {
-        userDict = [[NSKeyedUnarchiver unarchiveObjectWithData:keychainData] copy];
-        OKLog(@"Found  cached OKUser from keychain, moving to NSUserDefaults");
-        OKUser *old_cached_User = [OKUserUtilities createOKUserWithJSONData:userDict];
-        
-        // Clear the old cache
-        [SimpleKeychain clear];
-        OKLog(@"Cleared old OKUser cache");
-        
-        // getSavedUserFromKeychainAndMoveToNSUserDefaults gets called during app launch
-        // and saveCurrentUserToNSUserDefaults makes a  call to [NSUserDefaults synchronize] which
-        // can cause a lock during app launch, so we need to perform it on a bg thread
-        if(old_cached_User != nil) {
-            _currentUser = old_cached_User;
-            OKLog(@"Saving user to new cache in background");
-            [self performSelectorInBackground:@selector(saveCurrentUserToNSUserDefaults) withObject:nil];
-        }
-    }
-}
+ */
 
 
 #pragma mark - Private
 
+// REVIEW
 - (void)startSession
 {
     dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (100.0f * NSEC_PER_MSEC));
@@ -322,6 +487,13 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [OKScore resolveUnsubmittedScores];
     });
+}
+
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    // Do not call super here.  Using arc.
 }
 
 @end

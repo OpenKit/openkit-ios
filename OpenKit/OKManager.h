@@ -8,24 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
-
+// Predefinitions
+@protocol OKManagerDelegate;
 @class OKUser;
+
 @interface OKManager : NSObject
 
 + (id)sharedManager;
 + (void)configureWithAppKey:(NSString*)appKey secretKey:(NSString*)secretKey;
 + (void)configureWithAppKey:(NSString*)appKey secretKey:(NSString*)secretKey endpoint:(NSString*)endpoint;
-- (void)saveCurrentUser:(OKUser*)aCurrentUser;
 - (void)logoutCurrentUser;
 - (void)registerToken:(NSData*)deviceToken;
 
-@property (nonatomic) BOOL hasShownFBLoginPrompt;
-@property (nonatomic, strong) NSString *leaderboardListTag;
-@property (nonatomic, strong) NSArray *cachedFbFriendsList;
+@property(nonatomic) BOOL hasShownFBLoginPrompt;
+@property(nonatomic, readonly) BOOL initialized;
+@property(nonatomic, strong) NSString *leaderboardListTag;
+@property(nonatomic, strong) NSArray *cachedFbFriendsList;
 
 
 // See OKManagerDelegate protocol, below.
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, assign) id<OKManagerDelegate> delegate;
 
 // Let's stop creating class helpers for getting / setting.  Instead, grab the sharedManager
 // and set properties on that.  E.g.
@@ -42,8 +44,6 @@
 + (NSString*)secretKey;
 
 + (BOOL)handleOpenURL:(NSURL*)url;
-+ (void)handleDidBecomeActive;
-+ (void)handleWillTerminate;
 
 @end
 
@@ -53,10 +53,9 @@
 @protocol OKManagerDelegate <NSObject>
 @optional
 
-- (void)openkitManagerWillShowDashboard:(OKManager*)manager;
-- (void)openkitManagerDidShowDashboard:(OKManager*)manager;
-- (void)openkitManagerWillHideDashboard:(OKManager*)manager;
-- (void)openkitManagerDidHideDashboard:(OKManager*)manager;
+- (void)openkitDidLaunch:(OKManager*)manager;
+- (void)openkitDidChangeStatus:(OKManager*)manager;
+- (void)openkitHandledError:(NSError*)error source:(id)source;
 
 @end
 

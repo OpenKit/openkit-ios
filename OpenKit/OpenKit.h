@@ -12,4 +12,4 @@
 #import "OKScore.h"
 #import "OKUser.h"
 #import "OKLeaderboard.h"
-#import "OKGUI.h"
+#import "OKAuth.h"

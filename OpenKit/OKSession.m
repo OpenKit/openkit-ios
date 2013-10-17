@@ -56,11 +56,11 @@ OKSession *__currentSession = nil;
 
 - (void)migrateUser
 {
-    OKUser *user = [OKUser currentUser];
+    OKUser *user = [OKLocalUser currentUser];
     if (user) {
-        self.okId = user.OKUserID ? [user.OKUserID stringValue] : nil;
-        self.fbId = user.fbUserID ? user.fbUserID : nil;
-        self.customId = user.customID ? user.customID : nil;
+        self.okId = [[user userID] stringValue];
+        self.fbId = [user userIDForService:@"facebook"];
+        self.customId = [user userIDForService:@"custom"];
     }
 }
 
@@ -103,6 +103,15 @@ OKSession *__currentSession = nil;
     }
 }
 
++ (void)resolveUnsubmittedSession
+{
+    // Removing
+    NSArray *sessions = [[OKDBSession sharedConnection] getUnsubmittedSessions];
+    
+    for(OKSession *session in sessions)
+        [OKSession resolveSession:session withCompletion:nil];
+}
+
 
 // Session updates are always relayed to the backend.  It is the backend's job to
 // figure out how to stitch sessions together into single OKUser's attributes, e.g
@@ -120,18 +129,24 @@ OKSession *__currentSession = nil;
     // We try to send to the backend
     if([session submitState] == kOKNotSubmitted) {
         [session setSubmitState:kOKSubmitting];
-        
-        [OKNetworker postToPath:@"/client_sessions"
-                     parameters:[session JSONDictionary]
-                     completion:^(id responseObject, NSError *error) {
-            if (!error)
-                [session setSubmitState:kOKSubmitted];
-            else
-                [session setSubmitState:kOKNotSubmitted];
-            
-            [session syncWithDB];
-        }];
+        [OKSession resolveSession:session withCompletion:nil];
     }
+}
+
+
++ (void)resolveSession:(OKSession*)session withCompletion:(void (^)(NSError *error))handler
+{
+    [OKNetworker postToPath:@"/client_sessions"
+                 parameters:[session JSONDictionary]
+                 completion:^(id responseObject, NSError *error)
+    {
+        if (!error)
+            [session setSubmitState:kOKSubmitted];
+        else
+            [session setSubmitState:kOKNotSubmitted];
+        
+        [session syncWithDB];
+    }];
 }
 
 

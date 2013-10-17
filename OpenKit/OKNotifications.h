@@ -10,3 +10,4 @@
 
 #define OKScoreSubmittedNotification @"OKScoreSubmittedNotification"
 #define OKAchievementSubmittedNotification @"OKAchievementSubmittedNotification"
+#define OKAuthProviderUpdatedNotification @"OKAuthProviderUpdatedNotification"

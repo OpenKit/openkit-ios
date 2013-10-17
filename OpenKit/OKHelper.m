@@ -166,4 +166,21 @@
     return [paths objectAtIndex:0];
 }
 
+
++ (NSString*)serializeArray:(NSArray*)array withSorting:(BOOL)sorting
+{
+    if(sorting)
+        array = [array sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    
+    NSMutableString *result = [[NSMutableString alloc] init];
+    
+    for(NSString *string in array) {
+        [result appendString:string];
+        [result appendString:@","];
+    }
+    int size = [result length];
+    [result deleteCharactersInRange:NSMakeRange(size-1, 1)];
+    return result;
+}
+
 @end

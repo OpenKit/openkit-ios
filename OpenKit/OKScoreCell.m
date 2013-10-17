@@ -136,8 +136,8 @@
     // Show the player image
     [_cellImage setOKScoreProtocolScore:_OKScoreProtocolScore];
     
-    // Set the social network icon
-    [self setSocialNetworkIconForNetwork:[aScore socialNetwork]];
+    // Set the social network icon REVIEW
+    // [self setSocialNetworkIconForNetwork:[aScore socialNetwork]];
 }
 
 

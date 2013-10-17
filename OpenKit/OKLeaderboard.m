@@ -16,7 +16,6 @@
 #import "OKMacros.h"
 #import "OKFacebookUtilities.h"
 #import "OKDBScore.h"
-#import "OKUserUtilities.h"
 #import "OKNotifications.h"
 
 
@@ -30,7 +29,6 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     if ((self = [super init])) {
         [self configWithDictionary:dict];
     }
-
     return self;
 }
 
@@ -62,10 +60,10 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     //
     
     // Posting NSNotification
-    NSDictionary *dict = [NSDictionary dictionaryWithObject:score forKey:@"score"];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:score forKey:@"score"];
     [[NSNotificationCenter defaultCenter] postNotificationName:OKScoreSubmittedNotification
                                                         object:self
-                                                      userInfo:dict];
+                                                      userInfo:userInfo];
     
     
     //Create a request and send it to OpenKit
@@ -85,14 +83,15 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
              OKLog(@"Error: %@", error);
              [score setSubmitState:kOKNotSubmitted];
              
-             // If the user is unsubscribed to the app, log out the user.
-             [OKUserUtilities checkIfErrorIsUnsubscribedUserError:error];
+             // If the user is unsubscribed to the app, log out the user. REVIEW
+             // [OKUserUtilities checkIfErrorIsUnsubscribedUserError:error];
          }
          [score syncWithDB];
          
          if(handler)
              handler(error);
          
+         // REVIEW THIS
          //OKScore *previousScore = [[OKScoreCache sharedCache] previousSubmittedScore];
          //[[OKScoreCache sharedCache] setPreviousSubmittedScore:nil];
          
@@ -155,13 +154,14 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
-- (void)getFacebookFriendsScoresWithFacebookFriends:(NSArray*)friends completion:(void (^)(NSArray *scores, NSError *error))handler
+- (void)getSocialScoresForTimeRange:(OKLeaderboardTimeRange)timeRange
+                         completion:(void (^)(NSArray* scores, NSError *error))handler
 {
     //Create a request and send it to OpenKit
     //Create the request parameters
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [params setValue:[NSNumber numberWithInt:[self leaderboardID]] forKey:@"leaderboard_id"];
-    [params setValue:friends forKey:@"fb_friends"];
+    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:
+                            [NSNumber numberWithInt:[self leaderboardID]], @"leaderboard_id",
+                            [self getParamForLeaderboardTimeRange:timeRange], @"leaderboard_range", nil];
     
     // OK NETWORK REQUEST
     [OKNetworker postToPath:@"/best_scores/social"
@@ -181,90 +181,16 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
              for(id obj in scoresJSON) {
                  
                  OKScore *score = [[OKScore alloc] initWithDictionary:obj];
-                 [arr addObject:[[score user] OKUserID]];
+                 [arr addObject:[[score user] userID]];
                  [scores addObject:score];
              }
              
-             // Store array in NSUserDefaults
-             [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"okfriendsList"];
          } else {
              NSLog(@"Failed to get scores, with error: %@", error);
          }
+         if(handler)
          handler(scores, error);
      }];
-}
-
-
-- (void)getFacebookFriendsScoresWithCompletion:(void (^)(NSArray *scores, NSError *error))handler
-{
-    // Get the facebook friends list, then get scores from OpenKit with fb friends filter
-    
-    [OKFacebookUtilities getListOfFriendsForCurrentUserWithCompletionHandler:^(NSArray *friends, NSError *error) {
-        if(error) {
-            handler(nil, error);
-        } else if(friends){
-            [self getFacebookFriendsScoresWithFacebookFriends:friends completion:handler];
-        }
-        else {
-            handler(nil, [OKError unknownFacebookRequestError]);
-        }
-    }];
-}
-
-
-//Wrapper method to get player top score either from GameCenter, OpenKit, or local cache
-- (void)getPlayerTopScoreWithCompletion:(void (^)(OKScore* score, NSError *error))handler
-{
-    // If using GC pull top score from GC
-    // else if OKUser, pull top score from OKUser
-    // else pull top score from cache
-    
-    if ([OKUser currentUser]) {
-        [self getPlayerTopScoreForTimeRange:OKLeaderboardTimeRangeAllTime completion:^(OKScore *okScore, NSError *okError) {
-            handler(okScore, okError);
-        }];
-    } else {
-        OKScore *topCachedScore = [self getPlayerTopScoreFromLocalCache];
-        handler(topCachedScore,nil);
-    }
-}
-
-
-- (OKScore*)getPlayerTopScoreFromLocalCache
-{
-    NSArray *cachedScores = [[OKDBScore sharedConnection] getScoresForLeaderboardID:[self leaderboardID] andOnlyGetSubmittedScores:NO];
-    
-    if([cachedScores count] == 0)
-        return nil;
-    else{
-        
-        NSArray *sortedScores = [self sortScoresBasedOnLeaderboardType:cachedScores];
-        OKScore *topScore = [sortedScores objectAtIndex:0];
-        [topScore setUser:[OKUserUtilities guestUser]];
-        return topScore;
-    }
-}
-
-
-- (void)getPlayerTopScoreForTimeRange:(OKLeaderboardTimeRange)range completion:(void (^)(OKScore *score, NSError *error))handler
-{
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [params setValue:[NSNumber numberWithInt:[self leaderboardID]] forKey:@"leaderboard_id"];
-    [params setValue:[self getParamForLeaderboardTimeRange:range] forKey:@"leaderboard_range"];
-    [params setValue:[[OKUser currentUser] OKUserID] forKey:@"user_id"];
-    
-    [OKNetworker getFromPath:@"best_scores/user"
-                  parameters:params
-                  completion:^(id responseObject, NSError *error)
-    {
-        if(!error) {
-            OKScore *topScore = [[OKScore alloc] initWithDictionary:(NSDictionary*)responseObject];
-            handler(topScore, nil);
-        }
-        else {
-            handler(nil, error);
-        }
-    }];
 }
 
 
@@ -308,12 +234,15 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     
     for(id obj in leaderBoardsJSON) {
         // if the leaderboard already exist in memory, we update it
-        OKLeaderboard *leaderboard = [OKLeaderboard leaderboardForID:[[obj objectForKey:@"id"] integerValue]];
-        if(leaderboard)
-            [leaderboard configWithDictionary:obj];
-        else
+        OKLeaderboard *leaderboard = nil;
+        if(__leaderboards) {
+            leaderboard = [OKLeaderboard leaderboardForID:[[obj objectForKey:@"id"] integerValue]];
+            if(leaderboard)
+                [leaderboard configWithDictionary:obj];
+        }
+        if(!leaderboard)
             leaderboard = [[OKLeaderboard alloc] initWithDictionary:obj];
-        
+
         [tmp addObject:leaderboard];
     }
     __leaderboards = [NSArray arrayWithArray:tmp];
@@ -322,13 +251,16 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 + (NSArray*)leaderboards
 {
+    if(__leaderboards == nil) {
+        OKLogErr(@"You should call [OKLeaderboard getLeaderboardsWithCompletion:] first.");
+    }
     return __leaderboards;
 }
 
 
 + (void)getLeaderboardsWithCompletion:(void (^)(NSArray* leaderboards, NSError* error))handler
 {
-    if(![self leaderboards]) {
+    if(!__leaderboards) {
         [self syncWithCompletion:^(NSError* error) {
             if(handler)
                 handler([self leaderboards], error);

@@ -21,5 +21,6 @@
 + (NSError*)OKScoreNotSubmittedError;
 + (NSError*)noOKUserErrorScoreCached;
 + (NSError*)noBodyError;
++ (NSError*)sessionClosed;
 
 @end

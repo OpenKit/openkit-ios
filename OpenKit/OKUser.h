@@ -11,14 +11,35 @@
 
 @interface OKUser : NSObject
 
-@property(nonatomic, strong) NSNumber *OKUserID;
-@property(nonatomic, strong) NSString *customID;
-@property(nonatomic, strong) NSString *fbUserID;
-@property(nonatomic, strong) NSString *userNick;
-//@property (nonatomic, strong) NSString *gameCenterID;
-//@property (nonatomic, strong) NSNumber *twitterUserID;
+@property(nonatomic, readonly) NSNumber *userID;
+@property(nonatomic, readonly) NSString *userNick;
+@property(nonatomic, readonly) NSDictionary *services;
 
-+ (OKUser*)currentUser;
-+ (void)logoutCurrentUserFromOpenKit;
+- (NSString*)userIDForService:(NSString*)service;
+- (NSDictionary*)dictionary;
++ (OKUser*)guestUser;
++ (OKUser*)createUserWithDictionary:(NSDictionary*)dict;
 
 @end
+
+
+@interface OKLocalUser : OKUser
+{
+    NSMutableDictionary *_dirty;
+    NSDictionary *_friends;
+}
+
+@property(nonatomic, readonly) NSString *accessToken;
+@property(nonatomic, readonly) NSString *accessTokenSecret;
+
+- (BOOL)isAccessAllowed;
+- (void)setUserNick:(NSString *)userNick;
+- (void)syncWithCompletion:(void(^)(NSError *error))handler;
+- (NSString*)friendsForService:(NSString*)service;
+- (void)setFriendIDs:(NSArray*)friends forService:(NSString*)service;
+
++ (OKLocalUser*)currentUser;
++ (OKLocalUser*)createUserWithDictionary:(NSDictionary*)dict;
+
+@end
+

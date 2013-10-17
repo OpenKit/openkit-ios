@@ -101,12 +101,10 @@ dispatch_queue_t __OKCacheQueue = nil;
     
     __block int index = -1;
     [self access:^(FMDatabase *db) {
-        OKLogInfo(@"DBConnection: Performing cache insert: %@", sql);
         if([db executeUpdate:sql error:nil withArgumentsInArray:nil orDictionary:nil orVAList:args]) {
-            OKLogInfo(@"    ...success");
             index = [db lastInsertRowId];
         }else{
-            OKLogInfo(@"    ...FAIL");
+            OKLogErr(@"FAIL performing: %@", sql);
         }
     }];
     va_end(args);
@@ -122,9 +120,9 @@ dispatch_queue_t __OKCacheQueue = nil;
 
     __block BOOL success;
     [self access:^(FMDatabase *db) {
-        OKLogInfo(@"DBConnection: Performing cache update: %@", sql);
         success = [db executeUpdate:sql error:nil withArgumentsInArray:nil orDictionary:nil orVAList:args];
-        OKLogInfo(@"    ...%@", (success ? @"success" : @"FAIL"));
+        if(!success)
+            OKLogErr(@"FAIL performing: %@", sql);
     }];
     va_end(args);
 
@@ -135,10 +133,10 @@ dispatch_queue_t __OKCacheQueue = nil;
 - (void)executeQuery:(NSString*)sql access:(void(^)(FMResultSet *))block
 {
     [self access:^(FMDatabase *db) {
-        OKLogInfo(@"DBConnection: Performing cache query: %@", sql);
-
         FMResultSet *rs = [db executeQuery:sql];
-        OKLogInfo(@"    ...%@", (rs ? @"success" : @"FAIL"));
+        if(!rs)
+            OKLogErr(@"FAIL performing: %@", sql);
+        
         block(rs);
     }];
 }

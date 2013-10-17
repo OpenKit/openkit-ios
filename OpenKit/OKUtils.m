@@ -55,4 +55,29 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut)
     return [dateFormatter dateFromString:string];
 }
 
+
++ (NSString*)base64Enconding:(NSData*)data
+{
+    return [data base64EncodedStringWithOptions:0];
+}
+
++ (NSData*)base64Decoding:(NSString*)string
+{
+    return [[NSData alloc] initWithBase64EncodedString:string options:0];
+}
+
+@end
+
+
+@implementation OKMutableInt
+
+- (id)initWithValue:(int)value;
+{
+    self = [super init];
+    if (self) {
+        _value = value;
+    }
+    return self;
+}
+
 @end
