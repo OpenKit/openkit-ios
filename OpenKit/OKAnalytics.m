@@ -114,16 +114,24 @@ NSString *__currentSession = nil;
         OKLogInfo(@"Sending report");
         // first we copy the array of session we want to send
         NSArray *toSend = [NSArray arrayWithArray:__events];
-        NSDictionary *params = [NSDictionary dictionaryWithObject:toSend forKey:@"events"];
+        NSData *data = [NSJSONSerialization dataWithJSONObject:toSend options:0 error:nil];
+        NSString *events = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                events, @"events",
+                                [OKManager appKey], @"app_key",
+                                @"password69", @"pw", nil];
         
         
-        NSString *path = [NSString stringWithFormat:@"analytics_post.php?key=%@", [OKManager appKey]];
-        NSLog(@"%@", path);
-        NSURL *url = [NSURL URLWithString:@"http://toddham.com/chat"];
+        
+        
+        NSURL *url = [NSURL URLWithString:@"http://10.0.1.20:9292"];
         AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
         [httpClient setParameterEncoding:AFJSONParameterEncoding];
         [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
-        [httpClient postPath:path
+        [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
+
+        [httpClient postPath:@"analytics_post.php" //_post.php"
                   parameters:params
                      success:^(AFHTTPRequestOperation *operation, id responseObject)
          {
