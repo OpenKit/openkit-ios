@@ -23,13 +23,11 @@
 
 +(BOOL)handleOpenURL:(NSURL *)url
 {
-    [OKManager setFacebookLoginFlag:NO];
     return [FBSession.activeSession handleOpenURL:url];
 }
 
 +(void)handleDidBecomeActive
 {
-    [OKManager setFacebookLoginFlag:NO];
     [FBSession.activeSession handleDidBecomeActive];
 }
 

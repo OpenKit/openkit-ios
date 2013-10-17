@@ -12,6 +12,7 @@
 #import "OKFileUtil.h"
 #import "AFNetworking.h"
 #import "OKMacros.h"
+#import "OKManager.h"
 
 #define START_TIME @"st"
 #define E_TIME @"st"
@@ -19,8 +20,8 @@
 #define START_TIME @"st"
 
 
-NSMutableArray *__sessions = nil;
-NSMutableDictionary *__currentSession = nil;
+NSMutableArray *__events = nil;
+NSString *__currentSession = nil;
 
 @implementation OKAnalytics
 
@@ -58,23 +59,20 @@ NSMutableDictionary *__currentSession = nil;
         [OKAnalytics endSession];
     }
     
-    if(__sessions == nil)
-        __sessions = [OKAnalytics loadFromCache];
+    if(__events == nil)
+        __events = [OKAnalytics loadFromCache];
     
-    if(__sessions == nil)
-        __sessions = [NSMutableArray array];
+    if(__events == nil)
+        __events = [NSMutableArray array];
     
     // TIME TO SEND NOW
     __currentSession = nil;
-    [OKAnalytics sendReport];
+    [OKAnalytics sendReportWithCompletion:nil];
     
     
     // NEW SESSION
-    __currentSession = [NSMutableDictionary dictionaryWithCapacity:10];
-    [__currentSession setObject:[OKUtils createUUID] forKey:@"id"]; // session token
-    [__currentSession setObject:[OKAnalytics timestamp] forKey:@"st"]; // start time
-    [__currentSession setObject:[NSMutableArray array] forKey:@"ev"];
-    [__sessions addObject:__currentSession];
+    __currentSession = [OKUtils createUUID];
+    [OKAnalytics postEvent:@"start_session" metadata:nil];
 }
 
 
@@ -82,11 +80,8 @@ NSMutableDictionary *__currentSession = nil;
 {
     if(__currentSession) {
         OKLogInfo(@"Ending session");
-        [__currentSession setObject:[OKAnalytics timestamp] forKey:@"et"]; // end time
+        [OKAnalytics postEvent:@"end_session" metadata:nil];
         __currentSession = nil;
-        
-        // TIME TO WRITE TO THE FILE
-        [__sessions writeToFile:[OKAnalytics persistentPath] atomically:YES];        
     }
 }
 
@@ -102,34 +97,33 @@ NSMutableDictionary *__currentSession = nil;
 
     // create new event
     NSDictionary *newEvent = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [OKUtils createUUID], @"id",
+                              __currentSession, @"session",
                               typeName, @"t",
                               [OKAnalytics timestamp], @"ts",
                               metadata, @"m", nil];
     
-    
-    // add new event
-    NSMutableArray *eventsArray = [__currentSession objectForKey:@"ev"];
-    [eventsArray addObject:newEvent];
+    [__events addObject:newEvent];
+    [__events writeToFile:[OKAnalytics persistentPath] atomically:YES];
 }
 
 
-+ (void)sendReport
++ (void)sendReportWithCompletion:(void(^)(NSError*error))handler;
 {
-    if([__sessions count]>0) {
+    if([__events count]>0) {
         OKLogInfo(@"Sending report");
-        if(__currentSession) {
-            OKLogErr(@"ONE SESSION IS OPEN YET, we can not send the report.");
-            return;
-        }
         // first we copy the array of session we want to send
-        NSArray *toSend = [NSArray arrayWithArray:__sessions];
-        NSDictionary *params = [NSDictionary dictionaryWithObject:toSend forKey:@"sessions"];
+        NSArray *toSend = [NSArray arrayWithArray:__events];
+        NSDictionary *params = [NSDictionary dictionaryWithObject:toSend forKey:@"events"];
         
+        
+        NSString *path = [NSString stringWithFormat:@"analytics_post.php?key=%@", [OKManager appKey]];
+        NSLog(@"%@", path);
         NSURL *url = [NSURL URLWithString:@"http://toddham.com/chat"];
         AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
         [httpClient setParameterEncoding:AFJSONParameterEncoding];
         [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
-        [httpClient postPath:@"analytics_post.php"
+        [httpClient postPath:path
                   parameters:params
                      success:^(AFHTTPRequestOperation *operation, id responseObject)
          {
@@ -137,11 +131,15 @@ NSMutableDictionary *__currentSession = nil;
              NSString *responseStr = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
              NSLog(@"Request Successful, response '%@'", responseStr);
              [OKAnalytics removeCache];
-             [__sessions removeObjectsInArray:toSend];
+             [__events removeObjectsInArray:toSend];
+             
+             if(handler)
+                 handler(nil);
              
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             
              OKLogErr(@"[HTTPClient Error], we do not remove the cache");
+             if(handler)
+                 handler(nil);
          }];
     }
 }

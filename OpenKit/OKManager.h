@@ -44,7 +44,6 @@
 
 + (void)setFacebookLoginFlag:(BOOL)flag;
 + (BOOL)handleOpenURL:(NSURL*)url;
-+ (void)handleWillResignActive;
 + (void)handleDidBecomeActive;
 + (void)handleWillTerminate;
 

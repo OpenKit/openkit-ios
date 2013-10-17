@@ -55,10 +55,10 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
 
 -(id)initWithLeaderboard:(OKLeaderboard *)aLeaderboard withLeaderboardID:(int)aLeaderboardID
 {
+    leaderboardID = aLeaderboardID;
     self = [super initWithNibName:@"OKSocialLeaderboardVC" bundle:nil];
     if (self) {
         leaderboard = aLeaderboard;
-        leaderboardID = aLeaderboardID;
         socialScores = [[NSMutableArray alloc] init];
         numberOfSocialRequestsRunning = 0;
         isShowingFBLoginCell = NO;
