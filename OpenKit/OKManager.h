@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OKCrypto.h"
 
 // Predefinitions
 @protocol OKManagerDelegate;
@@ -21,6 +22,8 @@
 - (void)registerToken:(NSData*)deviceToken;
 
 @property(nonatomic) BOOL hasShownFBLoginPrompt;
+@property(nonatomic, readonly) OKCrypto *cryptor;
+
 @property(nonatomic, readonly) BOOL initialized;
 @property(nonatomic, strong) NSString *leaderboardListTag;
 @property(nonatomic, strong) NSArray *cachedFbFriendsList;

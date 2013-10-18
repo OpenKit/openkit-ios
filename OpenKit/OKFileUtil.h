@@ -19,4 +19,7 @@
 + (NSString*)localOnlyCachePath;
 + (NSString*)localOnlyCachePath:(NSString*)filename;
 
++ (id)readSecureFile:(NSString*)path;
++ (BOOL)writeOnFileSecurely:(id)object path:(NSString*)path;
+
 @end

@@ -82,8 +82,7 @@
     
     OKLog(@"OpenKit configured with endpoint: %@", [[OKManager sharedManager] endpoint]);
     
-    [manager startSession];
-    [manager startLogin];
+    [manager setup];
 }
 
 
@@ -114,6 +113,18 @@
         _initialized = NO;
     }
     return self;
+}
+
+- (void)setup
+{
+    // Init crytor
+    _cryptor = [[OKCrypto alloc] initWithMasterKey:_secretKey];
+    
+    // Preload leaderboards from cache
+    [OKLeaderboard loadFromCache];
+
+    [self startSession];
+    [self startLogin];
 }
 
 
@@ -305,17 +316,7 @@
 - (OKLocalUser*)getCachedUser
 {
     NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_SESSION];
-    NSData *archive = [NSData dataWithContentsOfFile:path];
-    if(!archive)
-        return nil;
-    
-    NSData *decrypt = [OKCrypto SHA256_AES256DecryptData:archive withKey:_secretKey];
-    if(!decrypt) {
-        [self removeCachedUser];
-        return nil;
-    }
-    
-    NSDictionary *dict = [NSKeyedUnarchiver unarchiveObjectWithData:decrypt];
+    NSDictionary *dict = [OKFileUtil readSecureFile:path];
     return [OKLocalUser createUserWithDictionary:dict];
 }
 
@@ -326,9 +327,7 @@
     if([user isAccessAllowed]) {
         OKLogInfo(@"Updating local user in cache.");
         NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_SESSION];
-        NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:[user dictionary]];
-        NSData *encrypt = [OKCrypto SHA256_AES256EncryptData:archive withKey:_secretKey];
-        return [encrypt writeToFile:path atomically:YES];
+        [OKFileUtil writeOnFileSecurely:[user dictionary] path:path];
     }
     return NO;
 }

@@ -10,7 +10,6 @@
 #import "OKUtils.h"
 #import "OKMacros.h"
 #import "OKError.h"
-#import "OKCrypto.h"
 
 
 static AFOAuth1Client *_httpClient = nil;
@@ -53,7 +52,7 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
     payload = [NSJSONSerialization dataWithJSONObject:params options:0 error:error];
     
     // Encrypt payload
-    payload = [OKCrypto SHA256_AES256EncryptData:payload withKey:[OKManager secretKey]];
+    payload = [[[OKManager sharedManager] cryptor] encryptData:payload];
     
     
     // Generate dictionary
@@ -74,10 +73,7 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
     // Decrypt payload using algorithm
     NSString *encryption = [params objectForKey:@"encryption"];
     if([encryption isEqualToString:@"SHA256_AES256"])
-        payload = [OKCrypto SHA256_AES256DecryptData:payload withKey:[OKManager secretKey]];
-    
-    else if([encryption isEqualToString:@"AES256"])
-        payload = [OKCrypto AES256DecryptData:payload withKey:[OKManager secretKey]];
+        payload = [[[OKManager sharedManager] cryptor] decryptData:payload];
     
     else {
         OKLogErr(@"Not valid encryption: %@", encryption);

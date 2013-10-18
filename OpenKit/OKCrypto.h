@@ -11,11 +11,9 @@
 @interface OKCrypto : NSObject
 
 + (uint64_t)randomInt64;
-+ (NSData*)HMACSHA256:(NSData*)data withKey:(NSString*)key;
-+ (NSData*)AES256EncryptData:(NSData*)data withKey:(NSString*)key;
-+ (NSData*)AES256DecryptData:(NSData*)data withKey:(NSString *)key;
-+ (NSData*)SHA256_AES256EncryptData:(NSData*)data withKey:(NSString *)key;
-+ (NSData*)SHA256_AES256DecryptData:(NSData*)data withKey:(NSString *)key;
+- (id)initWithMasterKey:(NSString*)key;
+- (NSData*)encryptData:(NSData*)data;
+- (NSData*)decryptData:(NSData*)data;
 
 @end
 

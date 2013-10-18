@@ -8,6 +8,7 @@
 
 #import "OKFileUtil.h"
 #import "OKMacros.h"
+#import "OKManager.h"
 
 
 @implementation OKFileUtil
@@ -72,6 +73,30 @@
         }
     }
     return p;
+}
+
+
++ (id)readSecureFile:(NSString*)path
+{
+    NSData *archive = [NSData dataWithContentsOfFile:path];
+    if(!archive)
+        return nil;
+    
+    NSData *decrypt = [[[OKManager sharedManager] cryptor] decryptData:archive];
+    if(!decrypt) {
+        [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+        return nil;
+    }
+    
+    return [NSKeyedUnarchiver unarchiveObjectWithData:decrypt];
+}
+
+
++ (BOOL)writeOnFileSecurely:(id)object path:(NSString*)path
+{
+    NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:object];
+    NSData *encrypt = [[[OKManager sharedManager] cryptor] encryptData:archive];
+    return [encrypt writeToFile:path atomically:YES];
 }
 
 @end
