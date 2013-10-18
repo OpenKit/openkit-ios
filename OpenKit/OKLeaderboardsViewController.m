@@ -31,6 +31,7 @@
         OKLeaderboardsListViewController *list = [[OKLeaderboardsListViewController alloc]initWithDefaultLeaderboardID:defaultLeaderboardID];
         NSArray *viewControllers = [NSArray arrayWithObject:list];
         [self setViewControllers:viewControllers animated:NO];
+        self.title = @"Leaderboards";
     }
     return self;
 }
