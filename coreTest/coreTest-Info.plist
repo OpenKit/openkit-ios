@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.forzefield.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>io.openkit.coreTest</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -32,9 +32,9 @@
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>FacebookAppID</key>
-	<string>450333868362300</string>
+	<string>158735787670364</string>
 	<key>FacebookDisplayName</key>
-	<string>OpenKit Sample App</string>
+	<string>Openkit core test</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>

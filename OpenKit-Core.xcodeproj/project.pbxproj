@@ -22,11 +22,6 @@
 		445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
 		445B3C001769258C00952456 /* OKGameCenterPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 445B3BFF1769258C00952456 /* OKGameCenterPlugin.m */; };
 		446A551817E3A98900081C7B /* OKChallenge.m in Sources */ = {isa = PBXBuildFile; fileRef = 446A551717E3A98900081C7B /* OKChallenge.m */; };
-		44C31A3317F273C8004EE2EC /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C31A2A17F273C8004EE2EC /* FMDatabase.m */; };
-		44C31A3417F273C8004EE2EC /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C31A2C17F273C8004EE2EC /* FMDatabaseAdditions.m */; };
-		44C31A3517F273C8004EE2EC /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C31A2E17F273C8004EE2EC /* FMDatabasePool.m */; };
-		44C31A3617F273C8004EE2EC /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C31A3017F273C8004EE2EC /* FMDatabaseQueue.m */; };
-		44C31A3717F273C8004EE2EC /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C31A3217F273C8004EE2EC /* FMResultSet.m */; };
 		44E1182B1728A7CF003C2603 /* OKError.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E1182A1728A7CF003C2603 /* OKError.m */; };
 		44E3058D178CD78E00611E0C /* OKFacebookUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E3058C178CD78E00611E0C /* OKFacebookUtilities.m */; };
 		A95655BE180777EE00B5C8DB /* OKCrypto.h in Copy Files */ = {isa = PBXBuildFile; fileRef = A9F1D3F21806196A00E593E7 /* OKCrypto.h */; };
@@ -73,17 +68,6 @@
 		A956568A18077D2F00B5C8DB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0D716CB735F00E8F185 /* MobileCoreServices.framework */; };
 		A956568B18077D2F00B5C8DB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0D516CB732200E8F185 /* SystemConfiguration.framework */; };
 		A956568F18077D5400B5C8DB /* libOpenKitCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CB16CB6209004248F9 /* libOpenKitCore.a */; };
-		A95656A918077F0200B5C8DB /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A956569318077F0200B5C8DB /* AFHTTPClient.m */; };
-		A95656AA18077F0200B5C8DB /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A956569518077F0200B5C8DB /* AFHTTPRequestOperation.m */; };
-		A95656AB18077F0200B5C8DB /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A956569718077F0200B5C8DB /* AFImageRequestOperation.m */; };
-		A95656AC18077F0200B5C8DB /* AFJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A956569918077F0200B5C8DB /* AFJSONRequestOperation.m */; };
-		A95656AD18077F0200B5C8DB /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A956569B18077F0200B5C8DB /* AFNetworkActivityIndicatorManager.m */; };
-		A95656AE18077F0200B5C8DB /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A956569E18077F0200B5C8DB /* AFPropertyListRequestOperation.m */; };
-		A95656AF18077F0200B5C8DB /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A95656A018077F0200B5C8DB /* AFURLConnectionOperation.m */; };
-		A95656B018077F0200B5C8DB /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A95656A218077F0200B5C8DB /* AFXMLRequestOperation.m */; };
-		A95656B118077F0200B5C8DB /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = A95656A418077F0200B5C8DB /* UIImageView+AFNetworking.m */; };
-		A95656B218077F0200B5C8DB /* AFOAuth1Client.m in Sources */ = {isa = PBXBuildFile; fileRef = A95656A718077F0200B5C8DB /* AFOAuth1Client.m */; };
-		A95656B318077F0200B5C8DB /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95656A818077F0200B5C8DB /* FacebookSDK.framework */; };
 		A95656B418077F8900B5C8DB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0EA16CB74DF00E8F185 /* libsqlite3.dylib */; };
 		A95656B518077F8900B5C8DB /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0E816CB74D300E8F185 /* Twitter.framework */; };
 		A95656B618077F8900B5C8DB /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD025EC17A8A1A7001ECD84 /* MessageUI.framework */; };
@@ -96,8 +80,24 @@
 		A95656BD18077F8900B5C8DB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0D516CB732200E8F185 /* SystemConfiguration.framework */; };
 		A95656BE18077F8900B5C8DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05016CB698C00E8F185 /* UIKit.framework */; };
 		A95656BF18077F8900B5C8DB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05316CB698C00E8F185 /* CoreGraphics.framework */; };
-		A95656C018077F9800B5C8DB /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95656A818077F0200B5C8DB /* FacebookSDK.framework */; };
 		A95FF91117FB721D00611351 /* OKSession.m in Sources */ = {isa = PBXBuildFile; fileRef = A95FF91017FB721D00611351 /* OKSession.m */; };
+		A9E43FE01811AB4E0057B663 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FCC1811AB4E0057B663 /* FMDatabase.m */; };
+		A9E43FE11811AB4E0057B663 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FCE1811AB4E0057B663 /* FMDatabaseAdditions.m */; };
+		A9E43FE21811AB4E0057B663 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FD01811AB4E0057B663 /* FMDatabasePool.m */; };
+		A9E43FE31811AB4E0057B663 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FD21811AB4E0057B663 /* FMDatabaseQueue.m */; };
+		A9E43FE41811AB4E0057B663 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FD41811AB4E0057B663 /* FMResultSet.m */; };
+		A9E43FFC1811B0AE0057B663 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FE71811B0AE0057B663 /* AFHTTPClient.m */; };
+		A9E43FFD1811B0AE0057B663 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FE91811B0AE0057B663 /* AFHTTPRequestOperation.m */; };
+		A9E43FFE1811B0AE0057B663 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FEB1811B0AE0057B663 /* AFImageRequestOperation.m */; };
+		A9E43FFF1811B0AE0057B663 /* AFJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FED1811B0AE0057B663 /* AFJSONRequestOperation.m */; };
+		A9E440001811B0AE0057B663 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FEF1811B0AE0057B663 /* AFNetworkActivityIndicatorManager.m */; };
+		A9E440011811B0AE0057B663 /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FF21811B0AE0057B663 /* AFPropertyListRequestOperation.m */; };
+		A9E440021811B0AE0057B663 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FF41811B0AE0057B663 /* AFURLConnectionOperation.m */; };
+		A9E440031811B0AE0057B663 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FF61811B0AE0057B663 /* AFXMLRequestOperation.m */; };
+		A9E440041811B0AE0057B663 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FF81811B0AE0057B663 /* UIImageView+AFNetworking.m */; };
+		A9E440051811B0AE0057B663 /* AFOAuth1Client.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FFB1811B0AE0057B663 /* AFOAuth1Client.m */; };
+		A9E440091811BA9E0057B663 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E440081811BA9E0057B663 /* FacebookSDK.framework */; };
+		A9E4400A1811BAC10057B663 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E440081811BA9E0057B663 /* FacebookSDK.framework */; };
 		A9F1D3EF1805EB4C00E593E7 /* OKAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F1D3EE1805EB4C00E593E7 /* OKAuth.m */; };
 		A9F1D3F41806196A00E593E7 /* OKCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F1D3F31806196A00E593E7 /* OKCrypto.m */; };
 /* End PBXBuildFile section */
@@ -203,16 +203,6 @@
 		445B3BFF1769258C00952456 /* OKGameCenterPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OKGameCenterPlugin.m; path = OpenKit/OKGameCenterPlugin.m; sourceTree = "<group>"; };
 		446A551617E3A98900081C7B /* OKChallenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKChallenge.h; sourceTree = "<group>"; };
 		446A551717E3A98900081C7B /* OKChallenge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKChallenge.m; sourceTree = "<group>"; };
-		44C31A2917F273C8004EE2EC /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
-		44C31A2A17F273C8004EE2EC /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
-		44C31A2B17F273C8004EE2EC /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
-		44C31A2C17F273C8004EE2EC /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
-		44C31A2D17F273C8004EE2EC /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
-		44C31A2E17F273C8004EE2EC /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
-		44C31A2F17F273C8004EE2EC /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
-		44C31A3017F273C8004EE2EC /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
-		44C31A3117F273C8004EE2EC /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
-		44C31A3217F273C8004EE2EC /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		44E118291728A7CF003C2603 /* OKError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKError.h; sourceTree = "<group>"; };
 		44E1182A1728A7CF003C2603 /* OKError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKError.m; sourceTree = "<group>"; };
 		44E3058B178CD78E00611E0C /* OKFacebookUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OKFacebookUtilities.h; path = OpenKit/OKFacebookUtilities.h; sourceTree = "<group>"; };
@@ -226,32 +216,42 @@
 		A956566218077CE800B5C8DB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A956566318077CE800B5C8DB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		A956566B18077CE800B5C8DB /* coreTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = coreTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A956569218077F0200B5C8DB /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
-		A956569318077F0200B5C8DB /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
-		A956569418077F0200B5C8DB /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
-		A956569518077F0200B5C8DB /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
-		A956569618077F0200B5C8DB /* AFImageRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageRequestOperation.h; sourceTree = "<group>"; };
-		A956569718077F0200B5C8DB /* AFImageRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageRequestOperation.m; sourceTree = "<group>"; };
-		A956569818077F0200B5C8DB /* AFJSONRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFJSONRequestOperation.h; sourceTree = "<group>"; };
-		A956569918077F0200B5C8DB /* AFJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFJSONRequestOperation.m; sourceTree = "<group>"; };
-		A956569A18077F0200B5C8DB /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
-		A956569B18077F0200B5C8DB /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
-		A956569C18077F0200B5C8DB /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
-		A956569D18077F0200B5C8DB /* AFPropertyListRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFPropertyListRequestOperation.h; sourceTree = "<group>"; };
-		A956569E18077F0200B5C8DB /* AFPropertyListRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFPropertyListRequestOperation.m; sourceTree = "<group>"; };
-		A956569F18077F0200B5C8DB /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation.h; sourceTree = "<group>"; };
-		A95656A018077F0200B5C8DB /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
-		A95656A118077F0200B5C8DB /* AFXMLRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFXMLRequestOperation.h; sourceTree = "<group>"; };
-		A95656A218077F0200B5C8DB /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
-		A95656A318077F0200B5C8DB /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
-		A95656A418077F0200B5C8DB /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
-		A95656A618077F0200B5C8DB /* AFOAuth1Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOAuth1Client.h; sourceTree = "<group>"; };
-		A95656A718077F0200B5C8DB /* AFOAuth1Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOAuth1Client.m; sourceTree = "<group>"; };
-		A95656A818077F0200B5C8DB /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Vendor/FacebookSDK.framework; sourceTree = "<group>"; };
 		A95FF90F17FB721D00611351 /* OKSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSession.h; sourceTree = "<group>"; };
 		A95FF91017FB721D00611351 /* OKSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSession.m; sourceTree = "<group>"; };
 		A96BECEE18031E40004C90C3 /* OKNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKNotifications.h; sourceTree = "<group>"; };
 		A98654071804BB2F00E03BA6 /* OKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKPrivate.h; sourceTree = "<group>"; };
+		A9E43FCB1811AB4E0057B663 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		A9E43FCC1811AB4E0057B663 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		A9E43FCD1811AB4E0057B663 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		A9E43FCE1811AB4E0057B663 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		A9E43FCF1811AB4E0057B663 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		A9E43FD01811AB4E0057B663 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		A9E43FD11811AB4E0057B663 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		A9E43FD21811AB4E0057B663 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		A9E43FD31811AB4E0057B663 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		A9E43FD41811AB4E0057B663 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		A9E43FE61811B0AE0057B663 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
+		A9E43FE71811B0AE0057B663 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
+		A9E43FE81811B0AE0057B663 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
+		A9E43FE91811B0AE0057B663 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
+		A9E43FEA1811B0AE0057B663 /* AFImageRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageRequestOperation.h; sourceTree = "<group>"; };
+		A9E43FEB1811B0AE0057B663 /* AFImageRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageRequestOperation.m; sourceTree = "<group>"; };
+		A9E43FEC1811B0AE0057B663 /* AFJSONRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFJSONRequestOperation.h; sourceTree = "<group>"; };
+		A9E43FED1811B0AE0057B663 /* AFJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFJSONRequestOperation.m; sourceTree = "<group>"; };
+		A9E43FEE1811B0AE0057B663 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
+		A9E43FEF1811B0AE0057B663 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
+		A9E43FF01811B0AE0057B663 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
+		A9E43FF11811B0AE0057B663 /* AFPropertyListRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFPropertyListRequestOperation.h; sourceTree = "<group>"; };
+		A9E43FF21811B0AE0057B663 /* AFPropertyListRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFPropertyListRequestOperation.m; sourceTree = "<group>"; };
+		A9E43FF31811B0AE0057B663 /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation.h; sourceTree = "<group>"; };
+		A9E43FF41811B0AE0057B663 /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
+		A9E43FF51811B0AE0057B663 /* AFXMLRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFXMLRequestOperation.h; sourceTree = "<group>"; };
+		A9E43FF61811B0AE0057B663 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
+		A9E43FF71811B0AE0057B663 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
+		A9E43FF81811B0AE0057B663 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		A9E43FFA1811B0AE0057B663 /* AFOAuth1Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOAuth1Client.h; sourceTree = "<group>"; };
+		A9E43FFB1811B0AE0057B663 /* AFOAuth1Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOAuth1Client.m; sourceTree = "<group>"; };
+		A9E440081811BA9E0057B663 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		A9F1D3ED1805EB4C00E593E7 /* OKAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKAuth.h; sourceTree = "<group>"; };
 		A9F1D3EE1805EB4C00E593E7 /* OKAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKAuth.m; sourceTree = "<group>"; };
 		A9F1D3F21806196A00E593E7 /* OKCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKCrypto.h; sourceTree = "<group>"; };
@@ -274,10 +274,10 @@
 				A95656BB18077F8900B5C8DB /* Social.framework in Frameworks */,
 				A95656BC18077F8900B5C8DB /* MobileCoreServices.framework in Frameworks */,
 				A95656BD18077F8900B5C8DB /* SystemConfiguration.framework in Frameworks */,
+				A9E440091811BA9E0057B663 /* FacebookSDK.framework in Frameworks */,
 				326FD0CF16CB6209004248F9 /* Foundation.framework in Frameworks */,
 				A95656BE18077F8900B5C8DB /* UIKit.framework in Frameworks */,
 				A95656BF18077F8900B5C8DB /* CoreGraphics.framework in Frameworks */,
-				A95656B318077F0200B5C8DB /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,7 +285,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A95656C018077F9800B5C8DB /* FacebookSDK.framework in Frameworks */,
 				A956568118077D2F00B5C8DB /* libsqlite3.dylib in Frameworks */,
 				A956568F18077D5400B5C8DB /* libOpenKitCore.a in Frameworks */,
 				A956568218077D2F00B5C8DB /* GameKit.framework in Frameworks */,
@@ -299,6 +298,7 @@
 				A956568A18077D2F00B5C8DB /* MobileCoreServices.framework in Frameworks */,
 				A956568B18077D2F00B5C8DB /* SystemConfiguration.framework in Frameworks */,
 				A956565618077CE800B5C8DB /* Foundation.framework in Frameworks */,
+				A9E4400A1811BAC10057B663 /* FacebookSDK.framework in Frameworks */,
 				A956565818077CE800B5C8DB /* UIKit.framework in Frameworks */,
 				A956565718077CE800B5C8DB /* CoreGraphics.framework in Frameworks */,
 			);
@@ -342,7 +342,6 @@
 		326FD0CD16CB6209004248F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A95656A818077F0200B5C8DB /* FacebookSDK.framework */,
 				3284E15F16CE4AA600624827 /* OS X */,
 				32CAD0EA16CB74DF00E8F185 /* libsqlite3.dylib */,
 				445B3BFB1767F5D300952456 /* GameKit.framework */,
@@ -375,6 +374,7 @@
 		32CACF9C16CB637C00E8F185 /* OpenKit core */ = {
 			isa = PBXGroup;
 			children = (
+				A9E43FB11811AB4E0057B663 /* Vendor */,
 				A9F1D3ED1805EB4C00E593E7 /* OKAuth.h */,
 				A9F1D3EE1805EB4C00E593E7 /* OKAuth.m */,
 				32CACFAF16CB637C00E8F185 /* OKLeaderboard.h */,
@@ -400,18 +400,9 @@
 			path = OpenKit;
 			sourceTree = "<group>";
 		};
-		446BAB49177A84630092BD58 /* Vendor */ = {
-			isa = PBXGroup;
-			children = (
-				44C31A2817F273C8004EE2EC /* fmdb-fd95c38 */,
-			);
-			name = Vendor;
-			sourceTree = "<group>";
-		};
 		44BC533217692DE20038043A /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				446BAB49177A84630092BD58 /* Vendor */,
 				A9F1D3F21806196A00E593E7 /* OKCrypto.h */,
 				A9F1D3F31806196A00E593E7 /* OKCrypto.m */,
 				327E9E1417CEFABA00F33F24 /* OKFileUtil.h */,
@@ -428,26 +419,6 @@
 				32CACFAE16CB637C00E8F185 /* OKHelper.m */,
 			);
 			name = Support;
-			sourceTree = "<group>";
-		};
-		44C31A2817F273C8004EE2EC /* fmdb-fd95c38 */ = {
-			isa = PBXGroup;
-			children = (
-				A956569118077F0200B5C8DB /* AFNetworking */,
-				A95656A518077F0200B5C8DB /* AFOAuth1Client */,
-				44C31A2917F273C8004EE2EC /* FMDatabase.h */,
-				44C31A2A17F273C8004EE2EC /* FMDatabase.m */,
-				44C31A2B17F273C8004EE2EC /* FMDatabaseAdditions.h */,
-				44C31A2C17F273C8004EE2EC /* FMDatabaseAdditions.m */,
-				44C31A2D17F273C8004EE2EC /* FMDatabasePool.h */,
-				44C31A2E17F273C8004EE2EC /* FMDatabasePool.m */,
-				44C31A2F17F273C8004EE2EC /* FMDatabaseQueue.h */,
-				44C31A3017F273C8004EE2EC /* FMDatabaseQueue.m */,
-				44C31A3117F273C8004EE2EC /* FMResultSet.h */,
-				44C31A3217F273C8004EE2EC /* FMResultSet.m */,
-			);
-			name = "fmdb-fd95c38";
-			path = "Vendor/fmdb-fd95c38";
 			sourceTree = "<group>";
 		};
 		44DD160817DFEA0900D914FA /* Cache */ = {
@@ -484,43 +455,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		A956569118077F0200B5C8DB /* AFNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				A956569218077F0200B5C8DB /* AFHTTPClient.h */,
-				A956569318077F0200B5C8DB /* AFHTTPClient.m */,
-				A956569418077F0200B5C8DB /* AFHTTPRequestOperation.h */,
-				A956569518077F0200B5C8DB /* AFHTTPRequestOperation.m */,
-				A956569618077F0200B5C8DB /* AFImageRequestOperation.h */,
-				A956569718077F0200B5C8DB /* AFImageRequestOperation.m */,
-				A956569818077F0200B5C8DB /* AFJSONRequestOperation.h */,
-				A956569918077F0200B5C8DB /* AFJSONRequestOperation.m */,
-				A956569A18077F0200B5C8DB /* AFNetworkActivityIndicatorManager.h */,
-				A956569B18077F0200B5C8DB /* AFNetworkActivityIndicatorManager.m */,
-				A956569C18077F0200B5C8DB /* AFNetworking.h */,
-				A956569D18077F0200B5C8DB /* AFPropertyListRequestOperation.h */,
-				A956569E18077F0200B5C8DB /* AFPropertyListRequestOperation.m */,
-				A956569F18077F0200B5C8DB /* AFURLConnectionOperation.h */,
-				A95656A018077F0200B5C8DB /* AFURLConnectionOperation.m */,
-				A95656A118077F0200B5C8DB /* AFXMLRequestOperation.h */,
-				A95656A218077F0200B5C8DB /* AFXMLRequestOperation.m */,
-				A95656A318077F0200B5C8DB /* UIImageView+AFNetworking.h */,
-				A95656A418077F0200B5C8DB /* UIImageView+AFNetworking.m */,
-			);
-			name = AFNetworking;
-			path = ../../../Vendor/AFNetworking;
-			sourceTree = "<group>";
-		};
-		A95656A518077F0200B5C8DB /* AFOAuth1Client */ = {
-			isa = PBXGroup;
-			children = (
-				A95656A618077F0200B5C8DB /* AFOAuth1Client.h */,
-				A95656A718077F0200B5C8DB /* AFOAuth1Client.m */,
-			);
-			name = AFOAuth1Client;
-			path = ../../../Vendor/AFOAuth1Client;
-			sourceTree = "<group>";
-		};
 		A9A77D4A18085F6D000B7149 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
@@ -530,6 +464,69 @@
 				445B3BFF1769258C00952456 /* OKGameCenterPlugin.m */,
 			);
 			name = Plugins;
+			sourceTree = "<group>";
+		};
+		A9E43FB11811AB4E0057B663 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				A9E440081811BA9E0057B663 /* FacebookSDK.framework */,
+				A9E43FE51811B0AE0057B663 /* AFNetworking */,
+				A9E43FF91811B0AE0057B663 /* AFOAuth1Client */,
+				A9E43FCA1811AB4E0057B663 /* fmdb-fd95c38 */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		A9E43FCA1811AB4E0057B663 /* fmdb-fd95c38 */ = {
+			isa = PBXGroup;
+			children = (
+				A9E43FCB1811AB4E0057B663 /* FMDatabase.h */,
+				A9E43FCC1811AB4E0057B663 /* FMDatabase.m */,
+				A9E43FCD1811AB4E0057B663 /* FMDatabaseAdditions.h */,
+				A9E43FCE1811AB4E0057B663 /* FMDatabaseAdditions.m */,
+				A9E43FCF1811AB4E0057B663 /* FMDatabasePool.h */,
+				A9E43FD01811AB4E0057B663 /* FMDatabasePool.m */,
+				A9E43FD11811AB4E0057B663 /* FMDatabaseQueue.h */,
+				A9E43FD21811AB4E0057B663 /* FMDatabaseQueue.m */,
+				A9E43FD31811AB4E0057B663 /* FMResultSet.h */,
+				A9E43FD41811AB4E0057B663 /* FMResultSet.m */,
+			);
+			path = "fmdb-fd95c38";
+			sourceTree = "<group>";
+		};
+		A9E43FE51811B0AE0057B663 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				A9E43FE61811B0AE0057B663 /* AFHTTPClient.h */,
+				A9E43FE71811B0AE0057B663 /* AFHTTPClient.m */,
+				A9E43FE81811B0AE0057B663 /* AFHTTPRequestOperation.h */,
+				A9E43FE91811B0AE0057B663 /* AFHTTPRequestOperation.m */,
+				A9E43FEA1811B0AE0057B663 /* AFImageRequestOperation.h */,
+				A9E43FEB1811B0AE0057B663 /* AFImageRequestOperation.m */,
+				A9E43FEC1811B0AE0057B663 /* AFJSONRequestOperation.h */,
+				A9E43FED1811B0AE0057B663 /* AFJSONRequestOperation.m */,
+				A9E43FEE1811B0AE0057B663 /* AFNetworkActivityIndicatorManager.h */,
+				A9E43FEF1811B0AE0057B663 /* AFNetworkActivityIndicatorManager.m */,
+				A9E43FF01811B0AE0057B663 /* AFNetworking.h */,
+				A9E43FF11811B0AE0057B663 /* AFPropertyListRequestOperation.h */,
+				A9E43FF21811B0AE0057B663 /* AFPropertyListRequestOperation.m */,
+				A9E43FF31811B0AE0057B663 /* AFURLConnectionOperation.h */,
+				A9E43FF41811B0AE0057B663 /* AFURLConnectionOperation.m */,
+				A9E43FF51811B0AE0057B663 /* AFXMLRequestOperation.h */,
+				A9E43FF61811B0AE0057B663 /* AFXMLRequestOperation.m */,
+				A9E43FF71811B0AE0057B663 /* UIImageView+AFNetworking.h */,
+				A9E43FF81811B0AE0057B663 /* UIImageView+AFNetworking.m */,
+			);
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		A9E43FF91811B0AE0057B663 /* AFOAuth1Client */ = {
+			isa = PBXGroup;
+			children = (
+				A9E43FFA1811B0AE0057B663 /* AFOAuth1Client.h */,
+				A9E43FFB1811B0AE0057B663 /* AFOAuth1Client.m */,
+			);
+			path = AFOAuth1Client;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -653,7 +650,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Version 2.0 (updated for Xcode 4, with some fixes)\n# Changes:\n#    - Works with xcode 4, even when running xcode 3 projects (Workarounds for apple bugs)\n#    - Faster / better: only runs lipo once, instead of once per recursion\n#    - Added some debugging statemetns that can be switched on/off by changing the DEBUG_THIS_SCRIPT variable to \"true\"\n#    - Fixed some typos\n#\n# Purpose:\n#   Create a static library for iPhone from within XCode\n#   Because Apple staff DELIBERATELY broke Xcode to make this impossible from the GUI (Xcode 3.2.3 specifically states this in the Release notes!)\n#   ...no, I don't understand why they did this!\n#\n# Author: Adam Martin - http://twitter.com/redglassesapps\n# Based on: original script from Eonil (main changes: Eonil's script WILL NOT WORK in Xcode GUI - it WILL CRASH YOUR COMPUTER)\n#\n# More info: see this Stack Overflow question: http://stackoverflow.com/questions/3520977/build-fat-static-library-device-simulator-using-xcode-and-sdk-4\n\n#################[ Tests: helps workaround any future bugs in Xcode ]########\n#\nDEBUG_THIS_SCRIPT=\"false\"\n\nif [ $DEBUG_THIS_SCRIPT = \"true\" ]\nthen\necho \"########### TESTS #############\"\necho \"Use the following variables when debugging this script; note that they may change on recursions\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"BUILT_PRODUCTS_DIR = $BUILT_PRODUCTS_DIR\"\necho \"CONFIGURATION_TEMP_DIR = $CONFIGURATION_TEMP_DIR\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\nfi\n\n#####################[ part 1 ]##################\n# First, work out the BASESDK version number (NB: Apple ought to report this, but they hide it)\n#    (incidental: searching for substrings in sh is a nightmare! Sob)\n\nSDK_VERSION=$(echo ${SDK_NAME} | grep -o '.\\{3\\}$')\n\n# Next, work out if we're in SIM or DEVICE\n\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]\nthen\nOTHER_SDK_TO_BUILD=iphoneos${SDK_VERSION}\nelse\nOTHER_SDK_TO_BUILD=iphonesimulator${SDK_VERSION}\nfi\n\necho \"XCode has selected SDK: ${PLATFORM_NAME} with version: ${SDK_VERSION} (although back-targetting: ${IPHONEOS_DEPLOYMENT_TARGET})\"\necho \"...therefore, OTHER_SDK_TO_BUILD = ${OTHER_SDK_TO_BUILD}\"\n#\n#####################[ end of part 1 ]##################\n\n#####################[ part 2 ]##################\n#\n# IF this is the original invocation, invoke WHATEVER other builds are required\n#\n# Xcode is already building ONE target...\n#\n# ...but this is a LIBRARY, so Apple is wrong to set it to build just one.\n# ...we need to build ALL targets\n# ...we MUST NOT re-build the target that is ALREADY being built: Xcode WILL CRASH YOUR COMPUTER if you try this (infinite recursion!)\n#\n#\n# So: build ONLY the missing platforms/configurations.\n\nif [ \"true\" == ${ALREADYINVOKED:-false} ]\nthen\necho \"RECURSION: I am NOT the root invocation, so I'm NOT going to recurse\"\nelse\n# CRITICAL:\n# Prevent infinite recursion (Xcode sucks)\nexport ALREADYINVOKED=\"true\"\n\necho \"RECURSION: I am the root ... recursing all missing build targets NOW...\"\necho \"RECURSION: ...about to invoke: xcodebuild -configuration \\\"${CONFIGURATION}\\\" -target \\\"${TARGET_NAME}\\\" -sdk \\\"${OTHER_SDK_TO_BUILD}\\\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO\"\nxcodebuild -configuration \"${CONFIGURATION}\" -target \"${TARGET_NAME}\" -sdk \"${OTHER_SDK_TO_BUILD}\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\nACTION=\"build\"\n\n#Merge all platform binaries as a fat binary for each configurations.\n\n# Calculate where the (multiple) built files are coming from:\nCURRENTCONFIG_DEVICE_DIR=${SYMROOT}/${CONFIGURATION}-iphoneos\nCURRENTCONFIG_SIMULATOR_DIR=${SYMROOT}/${CONFIGURATION}-iphonesimulator\n\necho \"Taking device build from: ${CURRENTCONFIG_DEVICE_DIR}\"\necho \"Taking simulator build from: ${CURRENTCONFIG_SIMULATOR_DIR}\"\n\nCREATING_UNIVERSAL_DIR=${SYMROOT}/${CONFIGURATION}-universal\necho \"...I will output a universal build to: ${CREATING_UNIVERSAL_DIR}\"\n\n# ... remove the products of previous runs of this script\n#      NB: this directory is ONLY created by this script - it should be safe to delete!\n\nrm -rf \"${CREATING_UNIVERSAL_DIR}\"\nmkdir \"${CREATING_UNIVERSAL_DIR}\"\n\n#\necho \"lipo: for current configuration (${CONFIGURATION}) creating output file: ${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nlipo -create -output \"${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\n\n#########\n#\n# Added: StackOverflow suggestion to also copy \"include\" files\n#    (untested, but should work OK)\n#\nif [ -d \"${CURRENTCONFIG_DEVICE_DIR}/usr/local/include\" ]\nthen\nmkdir -p \"${CREATING_UNIVERSAL_DIR}/usr/local/include\"\n# * needs to be outside the double quotes?\ncp \"${CURRENTCONFIG_DEVICE_DIR}/usr/local/include/\"* \"${CREATING_UNIVERSAL_DIR}/usr/local/include\"\nfi\n\n# -------------- lzell added --------------#\n# lzell added:\ncp -Rf \"${CURRENTCONFIG_DEVICE_DIR}/include\" \"${CREATING_UNIVERSAL_DIR}\"\n\n\n# Remove files under the current\nFINAL_SDK_DIR=\"${PROJECT_DIR}/OpenKitCore\"\necho \"!!! Removing directory: ${FINAL_SDK_DIR}\"\nrm -rf \"${FINAL_SDK_DIR}\"\necho \"Copying ${CREATING_UNIVERSAL_DIR} to ${FINAL_SDK_DIR}\"\ncp -Rf \"${CREATING_UNIVERSAL_DIR}\" \"${FINAL_SDK_DIR}\"\n# --------------- end lzell ---------------#\n\n\n#suneet added: copy the resources directory into the OpenKitSDK directory\necho \"Copying Vendor to ${FINAL_SDK_DIR}\"\ncp -Rf \"Vendor\" \"${FINAL_SDK_DIR}\"\n\nfi";
+			shellScript = "# Version 2.0 (updated for Xcode 4, with some fixes)\n# Changes:\n#    - Works with xcode 4, even when running xcode 3 projects (Workarounds for apple bugs)\n#    - Faster / better: only runs lipo once, instead of once per recursion\n#    - Added some debugging statemetns that can be switched on/off by changing the DEBUG_THIS_SCRIPT variable to \"true\"\n#    - Fixed some typos\n#\n# Purpose:\n#   Create a static library for iPhone from within XCode\n#   Because Apple staff DELIBERATELY broke Xcode to make this impossible from the GUI (Xcode 3.2.3 specifically states this in the Release notes!)\n#   ...no, I don't understand why they did this!\n#\n# Author: Adam Martin - http://twitter.com/redglassesapps\n# Based on: original script from Eonil (main changes: Eonil's script WILL NOT WORK in Xcode GUI - it WILL CRASH YOUR COMPUTER)\n#\n# More info: see this Stack Overflow question: http://stackoverflow.com/questions/3520977/build-fat-static-library-device-simulator-using-xcode-and-sdk-4\n\n#################[ Tests: helps workaround any future bugs in Xcode ]########\n#\nDEBUG_THIS_SCRIPT=\"false\"\n\nif [ $DEBUG_THIS_SCRIPT = \"true\" ]\nthen\necho \"########### TESTS #############\"\necho \"Use the following variables when debugging this script; note that they may change on recursions\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"BUILT_PRODUCTS_DIR = $BUILT_PRODUCTS_DIR\"\necho \"CONFIGURATION_TEMP_DIR = $CONFIGURATION_TEMP_DIR\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\nfi\n\n#####################[ part 1 ]##################\n# First, work out the BASESDK version number (NB: Apple ought to report this, but they hide it)\n#    (incidental: searching for substrings in sh is a nightmare! Sob)\n\nSDK_VERSION=$(echo ${SDK_NAME} | grep -o '.\\{3\\}$')\n\n# Next, work out if we're in SIM or DEVICE\n\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]\nthen\nOTHER_SDK_TO_BUILD=iphoneos${SDK_VERSION}\nelse\nOTHER_SDK_TO_BUILD=iphonesimulator${SDK_VERSION}\nfi\n\necho \"XCode has selected SDK: ${PLATFORM_NAME} with version: ${SDK_VERSION} (although back-targetting: ${IPHONEOS_DEPLOYMENT_TARGET})\"\necho \"...therefore, OTHER_SDK_TO_BUILD = ${OTHER_SDK_TO_BUILD}\"\n#\n#####################[ end of part 1 ]##################\n\n#####################[ part 2 ]##################\n#\n# IF this is the original invocation, invoke WHATEVER other builds are required\n#\n# Xcode is already building ONE target...\n#\n# ...but this is a LIBRARY, so Apple is wrong to set it to build just one.\n# ...we need to build ALL targets\n# ...we MUST NOT re-build the target that is ALREADY being built: Xcode WILL CRASH YOUR COMPUTER if you try this (infinite recursion!)\n#\n#\n# So: build ONLY the missing platforms/configurations.\n\nif [ \"true\" == ${ALREADYINVOKED:-false} ]\nthen\necho \"RECURSION: I am NOT the root invocation, so I'm NOT going to recurse\"\nelse\n# CRITICAL:\n# Prevent infinite recursion (Xcode sucks)\nexport ALREADYINVOKED=\"true\"\n\necho \"RECURSION: I am the root ... recursing all missing build targets NOW...\"\necho \"RECURSION: ...about to invoke: xcodebuild -configuration \\\"${CONFIGURATION}\\\" -target \\\"${TARGET_NAME}\\\" -sdk \\\"${OTHER_SDK_TO_BUILD}\\\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO\"\nxcodebuild -configuration \"${CONFIGURATION}\" -target \"${TARGET_NAME}\" -sdk \"${OTHER_SDK_TO_BUILD}\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\nACTION=\"build\"\n\n#Merge all platform binaries as a fat binary for each configurations.\n\n# Calculate where the (multiple) built files are coming from:\nCURRENTCONFIG_DEVICE_DIR=${SYMROOT}/${CONFIGURATION}-iphoneos\nCURRENTCONFIG_SIMULATOR_DIR=${SYMROOT}/${CONFIGURATION}-iphonesimulator\n\necho \"Taking device build from: ${CURRENTCONFIG_DEVICE_DIR}\"\necho \"Taking simulator build from: ${CURRENTCONFIG_SIMULATOR_DIR}\"\n\nCREATING_UNIVERSAL_DIR=${SYMROOT}/${CONFIGURATION}-universal\necho \"...I will output a universal build to: ${CREATING_UNIVERSAL_DIR}\"\n\n# ... remove the products of previous runs of this script\n#      NB: this directory is ONLY created by this script - it should be safe to delete!\n\nrm -rf \"${CREATING_UNIVERSAL_DIR}\"\nmkdir \"${CREATING_UNIVERSAL_DIR}\"\n\n#\necho \"lipo: for current configuration (${CONFIGURATION}) creating output file: ${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nlipo -create -output \"${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\n\n#########\n#\n# Added: StackOverflow suggestion to also copy \"include\" files\n#    (untested, but should work OK)\n#\nif [ -d \"${CURRENTCONFIG_DEVICE_DIR}/usr/local/include\" ]\nthen\nmkdir -p \"${CREATING_UNIVERSAL_DIR}/usr/local/include\"\n# * needs to be outside the double quotes?\ncp \"${CURRENTCONFIG_DEVICE_DIR}/usr/local/include/\"* \"${CREATING_UNIVERSAL_DIR}/usr/local/include\"\nfi\n\n# -------------- lzell added --------------#\n# lzell added:\ncp -Rf \"${CURRENTCONFIG_DEVICE_DIR}/include\" \"${CREATING_UNIVERSAL_DIR}\"\n\n\n# Remove files under the current\nFINAL_SDK_DIR=\"${PROJECT_DIR}/OpenKitCore\"\necho \"!!! Removing directory: ${FINAL_SDK_DIR}\"\nrm -rf \"${FINAL_SDK_DIR}\"\necho \"Copying ${CREATING_UNIVERSAL_DIR} to ${FINAL_SDK_DIR}\"\ncp -Rf \"${CREATING_UNIVERSAL_DIR}\" \"${FINAL_SDK_DIR}\"\n# --------------- end lzell ---------------#\n\n\n#suneet added: copy the resources directory into the OpenKitSDK directory\necho \"Copying Vendor to ${FINAL_SDK_DIR}\"\ncp -Rf \"OpenKit/Vendor\" \"${FINAL_SDK_DIR}\"\n\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -662,39 +659,39 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A95656AB18077F0200B5C8DB /* AFImageRequestOperation.m in Sources */,
-				A95656B118077F0200B5C8DB /* UIImageView+AFNetworking.m in Sources */,
-				A95656AA18077F0200B5C8DB /* AFHTTPRequestOperation.m in Sources */,
 				A9F1D3F41806196A00E593E7 /* OKCrypto.m in Sources */,
-				A95656B218077F0200B5C8DB /* AFOAuth1Client.m in Sources */,
-				A95656AE18077F0200B5C8DB /* AFPropertyListRequestOperation.m in Sources */,
 				32CACFDA16CB637C00E8F185 /* OKManager.m in Sources */,
 				A95FF91117FB721D00611351 /* OKSession.m in Sources */,
-				44C31A3317F273C8004EE2EC /* FMDatabase.m in Sources */,
 				32CACFDC16CB637C00E8F185 /* OKHelper.m in Sources */,
+				A9E440021811B0AE0057B663 /* AFURLConnectionOperation.m in Sources */,
+				A9E440031811B0AE0057B663 /* AFXMLRequestOperation.m in Sources */,
 				32CACFDD16CB637C00E8F185 /* OKLeaderboard.m in Sources */,
-				44C31A3417F273C8004EE2EC /* FMDatabaseAdditions.m in Sources */,
+				A9E43FE01811AB4E0057B663 /* FMDatabase.m in Sources */,
 				32CACFE316CB637C00E8F185 /* OKNetworker.m in Sources */,
 				32CACFE616CB637C00E8F185 /* OKScore.m in Sources */,
-				44C31A3717F273C8004EE2EC /* FMResultSet.m in Sources */,
 				32CACFEB16CB637C00E8F185 /* OKUser.m in Sources */,
-				44C31A3617F273C8004EE2EC /* FMDatabaseQueue.m in Sources */,
-				A95656AD18077F0200B5C8DB /* AFNetworkActivityIndicatorManager.m in Sources */,
-				A95656B018077F0200B5C8DB /* AFXMLRequestOperation.m in Sources */,
-				A95656AF18077F0200B5C8DB /* AFURLConnectionOperation.m in Sources */,
-				44C31A3517F273C8004EE2EC /* FMDatabasePool.m in Sources */,
-				A95656AC18077F0200B5C8DB /* AFJSONRequestOperation.m in Sources */,
+				A9E440041811B0AE0057B663 /* UIImageView+AFNetworking.m in Sources */,
 				44E1182B1728A7CF003C2603 /* OKError.m in Sources */,
+				A9E43FE21811AB4E0057B663 /* FMDatabasePool.m in Sources */,
 				32880CEE176DC784005F8D30 /* OKUtils.m in Sources */,
+				A9E440001811B0AE0057B663 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				445B3C001769258C00952456 /* OKGameCenterPlugin.m in Sources */,
-				A95656A918077F0200B5C8DB /* AFHTTPClient.m in Sources */,
 				44E3058D178CD78E00611E0C /* OKFacebookUtilities.m in Sources */,
+				A9E43FFF1811B0AE0057B663 /* AFJSONRequestOperation.m in Sources */,
 				4455BEBE17A396DE0079859A /* OKDBScore.m in Sources */,
 				327E9E1A17CEFABA00F33F24 /* OKFileUtil.m in Sources */,
+				A9E43FE31811AB4E0057B663 /* FMDatabaseQueue.m in Sources */,
+				A9E440011811B0AE0057B663 /* AFPropertyListRequestOperation.m in Sources */,
 				327E9E1B17CEFABA00F33F24 /* OKDBConnection.m in Sources */,
 				327E9E1C17CEFABA00F33F24 /* OKDBSession.m in Sources */,
 				A9F1D3EF1805EB4C00E593E7 /* OKAuth.m in Sources */,
+				A9E43FE41811AB4E0057B663 /* FMResultSet.m in Sources */,
 				446A551817E3A98900081C7B /* OKChallenge.m in Sources */,
+				A9E43FFE1811B0AE0057B663 /* AFImageRequestOperation.m in Sources */,
+				A9E43FFD1811B0AE0057B663 /* AFHTTPRequestOperation.m in Sources */,
+				A9E440051811B0AE0057B663 /* AFOAuth1Client.m in Sources */,
+				A9E43FE11811AB4E0057B663 /* FMDatabaseAdditions.m in Sources */,
+				A9E43FFC1811B0AE0057B663 /* AFHTTPClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,7 +762,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -788,7 +785,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -803,6 +800,7 @@
 					"$(inherited)",
 					"$(srcroot)Vendor",
 					"/Users/manuelmartinez-almeida/repos/openkit-ios/Vendor",
+					"/Users/manuelmartinez-almeida/repos/openkit-ios/OpenKit/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenKit-Prefix.pch";
@@ -821,6 +819,7 @@
 					"$(inherited)",
 					"$(srcroot)Vendor",
 					"/Users/manuelmartinez-almeida/repos/openkit-ios/Vendor",
+					"/Users/manuelmartinez-almeida/repos/openkit-ios/OpenKit/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenKit-Prefix.pch";
@@ -845,6 +844,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/manuelmartinez-almeida/repos/openkit-ios/Vendor",
+					"/Users/manuelmartinez-almeida/repos/openkit-ios/OpenKit/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "coreTest/coreTest-Prefix.pch";
@@ -880,6 +880,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/manuelmartinez-almeida/repos/openkit-ios/Vendor",
+					"/Users/manuelmartinez-almeida/repos/openkit-ios/OpenKit/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "coreTest/coreTest-Prefix.pch";
