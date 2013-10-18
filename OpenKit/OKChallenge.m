@@ -23,16 +23,11 @@
 {
     OKLog(@"Trying to send push challenge.");
     
-    if([OKUser currentUser] == nil) {
+    if([OKLocalUser currentUser] == nil) {
         OKLog(@"Can't issue push challenge without current OKUser");
         return;
-    } else if ([[OKUser currentUser] fbUserID] == nil) {
-        OKLog(@"Cant issue push challenge without user having fbID");
-        return;
-    } else if (![OKFacebookUtilities isFBSessionOpen]) {
-        OKLog(@"Can't issue push challenge without open FB session ");
-        return;
     }
+
     
     // See if the score was a top score
     BOOL wasTopScore = [OKHelper getBOOLSafeForKey:@"is_users_best" fromJSONDictionary:responseObject];
@@ -58,7 +53,7 @@
     }
     
     // Get the social scores
-    [leaderboard getFacebookFriendsScoresWithCompletion:^(NSArray *scores, NSError *error) {
+    [leaderboard getSocialScoresForTimeRange:0 completion:^(NSArray *scores, NSError *error) {
         
         if(!error && scores != nil) {
             [self issuePushChallengeforLeaderboard:leaderboard withUserTopScore:topScore withPreviousScore:previousScore withFriendsScores:scores];
@@ -129,12 +124,12 @@
     for(int x = 0; x < [scores count]; x++)
     {
         OKScore *friend_score = [scores objectAtIndex:x];
-        [friends_receiver_ids addObject:[[friend_score user] OKUserID]];
+        [friends_receiver_ids addObject:[[friend_score user] userID]];
     }
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             friends_receiver_ids, @"receiver_ids",
-                            [[OKUser currentUser] OKUserID], @"sender_id",
+                            [[OKLocalUser currentUser] userID], @"sender_id",
                             [OKUtils createUUID], @"challenge_uuid",
                             [OKUtils sqlStringFromDate:[NSDate date]], @"client_created_at",
                             nil];

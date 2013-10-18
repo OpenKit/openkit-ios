@@ -157,7 +157,6 @@
 		44E7225217F24AA70066A9AE /* OKFacebookUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFacebookUtilities.h; sourceTree = "<group>"; };
 		44E7225317F24AA70066A9AE /* OKFBLoginCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFBLoginCell.h; sourceTree = "<group>"; };
 		44E7225417F24AA70066A9AE /* OKFileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFileUtil.h; sourceTree = "<group>"; };
-		44E7225517F24AA70066A9AE /* OKGameCenterUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGameCenterUtilities.h; sourceTree = "<group>"; };
 		44E7225717F24AA70066A9AE /* OKGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGUI.h; sourceTree = "<group>"; };
 		44E7225817F24AA70066A9AE /* OKHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKHelper.h; sourceTree = "<group>"; };
 		44E7225917F24AA70066A9AE /* OKLeaderboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKLeaderboard.h; sourceTree = "<group>"; };
@@ -405,7 +404,6 @@
 				44E7225217F24AA70066A9AE /* OKFacebookUtilities.h */,
 				44E7225317F24AA70066A9AE /* OKFBLoginCell.h */,
 				44E7225417F24AA70066A9AE /* OKFileUtil.h */,
-				44E7225517F24AA70066A9AE /* OKGameCenterUtilities.h */,
 				44E7225717F24AA70066A9AE /* OKGUI.h */,
 				44E7225817F24AA70066A9AE /* OKHelper.h */,
 				44E7225917F24AA70066A9AE /* OKLeaderboard.h */,

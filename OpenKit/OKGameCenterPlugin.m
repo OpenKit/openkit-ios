@@ -13,7 +13,10 @@
 #import "OKLeaderboard.h"
 #import "OKMacros.h"
 #import "OKChallenge.h"
+#import "OKError.h"
 
+
+#define OK_SERVICE_NAME @"gamecenter"
 
 @implementation OKGameCenterPlugin
 
@@ -33,70 +36,80 @@
 }
 
 
-+ (BOOL)isPlayerAuthenticated {
++ (OKAuthProvider*)inject
+{
+    OKAuthProvider *p = [OKAuthProvider providerByName:OK_SERVICE_NAME];
+    if(p == nil) {
+        p = [[OKGameCenterPlugin alloc] init];
+        if([p isAuthenticationAvailable])
+            [OKAuthProvider addProvider:p];
+    }
+    return p;
+}
+
+
+- (id)init
+{
+    self = [super initWithName:OK_SERVICE_NAME];
+    return self;
+}
+
+
+- (BOOL)isAuthenticationAvailable
+{
+    NSString *reqSysVer = @"7.0";
+    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+    return [currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending;
+}
+
+
+- (BOOL)isSessionOpen
+{
     return [GKLocalPlayer localPlayer].isAuthenticated;
 }
 
 
-+ (void)logout
+- (BOOL)start
 {
-    [self removeNotifications];
-}
-
-
-+ (void)authorizeUserWithViewController:(UIViewController*)controller completion:(void(^)(NSError* error))handler
-{
-    [self registerNotifications];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(submitScore:) name:OKScoreSubmittedNotification object:self];
+    [center addObserver:self selector:@selector(submitAchievement:) name:OKAchievementSubmittedNotification object:nil];
     
-    // There are two ways to authorize users depending the OS version
-    if([self shouldUseLegacyGameCenterAuth])
-        [OKGameCenterPlugin authorizeUserV1WithCompletion:handler];
-    else
-        [OKGameCenterPlugin authorizeUserV2WithViewController:controller completion:handler];
+    return [self openSessionWithViewController:nil completion:nil];
 }
 
 
-+ (void)authorizeUserV1WithCompletion:(void(^)(NSError* error))handler
+- (BOOL)openSessionWithViewController:(UIViewController*)controller completion:(void(^)(NSError *error))handler
+{
+    if([self shouldUseLegacyGameCenterAuth])
+        [self authorizeUserV1WithCompletion:handler];
+    else
+        [self authorizeUserV2WithViewController:controller completion:handler];
+    
+    return [self isSessionOpen];
+}
+
+
+- (void)authorizeUserV1WithCompletion:(void(^)(NSError* error))handler
 {
     // This gamecenter method is deprecated in iOS6 but is required for iOS 5 support
     GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
     [localPlayer authenticateWithCompletionHandler:^(NSError *error) {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:OKGameCenterPluginAuthStateNotification object:nil];
-
-        if (localPlayer.isAuthenticated)
-        {
-            // local player is authenticated
-            OKLog(@"Authenticated with GameCenter iOS5 style");
-        }
-        else
-        {
-            // local player is not authenticated
-            OKLog(@"Did not auth with GameCenter (iOS5 style), error: %@", error);
-        }
-        
+        [self sessionStateChanged:localPlayer.isAuthenticated error:error];
         if(handler)
             handler(error);
     }];
 }
 
 
-+ (void)authorizeUserV2WithViewController:(UIViewController*)controller completion:(void(^)(NSError* error))handler
+- (void)authorizeUserV2WithViewController:(UIViewController*)controller completion:(void(^)(NSError* error))handler
 {
-    // This gamecenter method is deprecated in iOS 5 support
-    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
-    localPlayer.authenticateHandler = ^(UIViewController *gcController, NSError *error)
+    [GKLocalPlayer localPlayer].authenticateHandler = ^(UIViewController *gcController, NSError *error)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:OKGameCenterPluginAuthStateNotification object:nil];
-
-        if ([GKLocalPlayer localPlayer].isAuthenticated) {
-            // local player is authenticated
-            OKLog(@"Authenticated with GameCenter");
-            
-        } else {
-            
+        [self sessionStateChanged:[[GKLocalPlayer localPlayer] isAuthenticated] error:error];
+        if (![GKLocalPlayer localPlayer].isAuthenticated) {
             // local player is not authenticated
-            OKLog(@"Did not auth with GameCenter, error: %@", error);
             if(controller && gcController) {
                 // show the auth dialog
                 OKLog(@"Need to show GameCenter dialog");
@@ -110,8 +123,55 @@
 }
 
 
+- (void)getProfileWithCompletion:(void(^)(OKAuthProfile *profile, NSError *error))handler
+{
+    if(![self isSessionOpen]) {
+        handler(nil, [OKError sessionClosed]);
+        return;
+    }
+    
+    GKLocalPlayer *player = [GKLocalPlayer localPlayer];
+    OKAuthProfile *profile = [[OKAuthProfile alloc] initWithProvider:self userID:[player playerID] name:[player displayName]];
+    handler(profile, nil);
+}
+
+
+- (void)getAuthRequestWithCompletion:(void(^)(OKAuthRequest *request, NSError *error))handler
+{
+    if(![self isSessionOpen]) {
+        handler(nil, [OKError sessionClosed]);
+        return;
+    }
+    [self getProfileWithCompletion:^(OKAuthProfile *profile, NSError *error) {
+        GKLocalPlayer *player = [GKLocalPlayer localPlayer];
+        [player generateIdentityVerificationSignatureWithCompletionHandler:^(NSURL *publicKeyUrl, NSData *signature, NSData *salt, uint64_t timestamp, NSError *error)
+        {
+            uint64_t timestampBE = CFSwapInt64HostToBig(timestamp);
+            NSMutableData *payload = [[NSMutableData alloc] init];
+            [payload appendData:[[profile userID] dataUsingEncoding:NSASCIIStringEncoding]];
+            [payload appendData:[[[NSBundle mainBundle] bundleIdentifier] dataUsingEncoding:NSASCIIStringEncoding]];
+            [payload appendBytes:&timestampBE length:sizeof(timestampBE)];
+            [payload appendData:salt];
+
+            OKAuthRequest *request = nil;
+            if(!error)
+                request = [[OKAuthRequest alloc] initWithProvider:self publicKeyUrl:[publicKeyUrl absoluteString] signature:signature data:payload];
+            
+            handler(request, error);
+        }];
+    }];
+}
+
+
+- (void)logoutAndClear
+{
+    // IMPOSSIBLE
+}
+
+
+
 // Check to see if we should use iOS5 version of GameCenter authentication or not
-+(BOOL)shouldUseLegacyGameCenterAuth
+-(BOOL)shouldUseLegacyGameCenterAuth
 {
     //TODO remove this workaround-- using legacy auth right now always because of Unity
     //return YES;
@@ -123,6 +183,22 @@
         return NO;
     else
         return YES;
+}
+
+- (void)sessionStateChanged:(BOOL)status error:(NSError*)error
+{
+    switch(status)
+    {
+        case YES:
+            NSLog(@"GameCenterStateOpen");
+            break;
+        case NO:
+            NSLog(@"GameCenterClosed");
+            //break;
+        default:
+            break;
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:OKAuthProviderUpdatedNotification object:self];
 }
 
 
@@ -182,28 +258,19 @@
 
 #pragma mark - Private API
 
-+ (void)registerNotifications
-{
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    
-    [center addObserver:self selector:@selector(submitScore:) name:OKScoreSubmittedNotification object:self];
-    [center addObserver:self selector:@selector(submitAchievement:) name:OKAchievementSubmittedNotification object:nil];
-}
-
-
 + (void)removeNotifications
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
-+ (void)submitScore:(NSNotification*)not
+- (void)submitScore:(NSNotification*)not
 {
     OKLeaderboard *leaderboard = (OKLeaderboard*)[not object];
     OKScore *score = (OKScore*)[[not userInfo] objectForKey:@"score"];
     NSString *gcLeaderboardID = [leaderboard gamecenterID];
     
-    if(gcLeaderboardID && [OKGameCenterPlugin isPlayerAuthenticated])
+    if(gcLeaderboardID && [self isSessionOpen])
     {
         GKScore *scoreReporter = [[GKScore alloc] initWithCategory:gcLeaderboardID];
         scoreReporter.value = [score scoreValue];

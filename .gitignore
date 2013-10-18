@@ -1,6 +1,7 @@
 # OpenKit specific
 # Leaving the final build dir of the static lib out:
 OpenKitSDK/
+OpenkitCore/
 # Xcode
 .DS_Store
 build/

@@ -39,7 +39,7 @@ typedef enum {
 
 -(NSString*)rankDisplayString;
 
--(OKScoreSocialNetwork)socialNetwork;
+//-(OKScoreSocialNetwork)socialNetwork;
 
 + (void)resolveUnsubmittedScores;
 + (void)clearSubmittedScore;

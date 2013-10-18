@@ -7,7 +7,6 @@
 //
 
 #import "OKScore.h"
-#import "OKUserUtilities.h"
 #import "OKUser.h"
 #import "OKManager.h"
 #import "OKNetworker.h"
@@ -65,7 +64,7 @@
     self.scoreValue     = [OKHelper getInt64SafeForKey:@"value" fromJSONDictionary:dict];
     self.scoreRank      = [OKHelper getIntSafeForKey:@"rank" fromJSONDictionary:dict];
     self.leaderboardID  = [OKHelper getIntSafeForKey:@"leaderboard_id" fromJSONDictionary:dict];
-    self.user           = [OKUserUtilities createOKUserWithJSONData:[dict objectForKey:@"user"]];
+    self.user           = [OKUser createUserWithDictionary:[dict objectForKey:@"user"]];
     self.displayString  = [OKHelper getNSStringSafeForKey:@"display_string" fromJSONDictionary:dict];
     self.metadata       = [OKHelper getIntSafeForKey:@"metadata" fromJSONDictionary:dict];
 }
@@ -76,7 +75,7 @@
     NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] initWithCapacity:3];
     [paramDict setValue:[NSNumber numberWithInt:_leaderboardID] forKey:@"leaderboard_id"];
     [paramDict setValue:[NSNumber numberWithLongLong:_scoreValue] forKey:@"value"];
-    [paramDict setValue:[_user OKUserID] forKey:@"user_id"];
+    [paramDict setValue:[_user userID] forKey:@"user_id"];
     [paramDict setValue:[NSNumber numberWithInt:_metadata] forKey:@"metadata"];
     [paramDict setValue:[self scoreDisplayString] forKey:@"display_string"];
     
@@ -125,17 +124,6 @@
 }
 
 
--(OKScoreSocialNetwork)socialNetwork
-{
-    if([[self user] fbUserID])
-        return OKScoreSocialNetworkFacebook;
-    //else if ([[self user] gameCenterID])
-    //    return OKScoreSocialNetworkGameCenter;
-    else
-        return OKScoreSocialNetworkUnknown;
-}
-
-
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"OKScore id: %d, submitted: %d, value: %lld, leaderboard id: %d, display string: %@, metadata: %d", [self scoreID], [self submitState], [self scoreValue], [self leaderboardID], [self displayString], [self metadata]];
@@ -164,7 +152,7 @@
 
 + (void)resolveScore:(OKScore*)score withCompletion:(void (^)(NSError *error))handler
 {
-    [score setUser:[OKUser currentUser]];
+    [score setUser:[OKLocalUser currentUser]];
     if([score user] == nil) {
         if(handler)
             handler([OKError noOKUserErrorScoreCached]); // ERROR

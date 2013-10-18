@@ -58,4 +58,8 @@
     return [NSError errorWithDomain:OKERROR_DOMAIN code:11 userInfo:[NSDictionary dictionaryWithObject:@"No body error" forKey:NSLocalizedDescriptionKey]];
 }
 
++ (NSError*)sessionClosed {
+    return [NSError errorWithDomain:OKERROR_DOMAIN code:12 userInfo:[NSDictionary dictionaryWithObject:@"The session in the auth service is not open." forKey:NSLocalizedDescriptionKey]];
+}
+
 @end

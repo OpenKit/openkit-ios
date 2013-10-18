@@ -13,6 +13,7 @@
 + (void)requestWithMethod:(NSString *)method
                      path:(NSString *)path
                parameters:(NSDictionary *)params
+                encrypted:(BOOL)encrypted
                completion:(void (^)(id responseObject, NSError *error))handler;
 
 + (void)getFromPath:(NSString *)path
@@ -25,6 +26,22 @@
 
 + (void)putToPath:(NSString *)path
        parameters:(NSDictionary *)params
+       completion:(void (^)(id responseObject, NSError *error))handler;
+
+
++ (void)getFromPath:(NSString *)path
+         parameters:(NSDictionary *)params
+          encrypted:(BOOL)encrypted
+         completion:(void (^)(id responseObject, NSError *error))handler;
+
++ (void)postToPath:(NSString *)path
+        parameters:(NSDictionary *)params
+         encrypted:(BOOL)encrypted
+        completion:(void (^)(id responseObject, NSError *error))handler;
+
++ (void)putToPath:(NSString *)path
+       parameters:(NSDictionary *)params
+        encrypted:(BOOL)encrypted
        completion:(void (^)(id responseObject, NSError *error))handler;
 
 @end

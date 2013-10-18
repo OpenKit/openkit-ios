@@ -13,9 +13,16 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut);
 
 @interface OKUtils : NSObject
 
-+ (NSString *)createUUID;
-+ (NSString *)sqlStringFromDate:(NSDate *)date;
-+ (NSDate *)dateFromSqlString:(NSString *)string;
++ (NSString*)createUUID;
++ (NSString*)sqlStringFromDate:(NSDate *)date;
++ (NSDate*)dateFromSqlString:(NSString *)string;
++ (NSString*)base64Enconding:(NSData*)data;
++ (NSData*)base64Decoding:(NSString*)string;
 
+@end
+
+@interface OKMutableInt : NSObject
+@property(atomic, readwrite) int value;
+- (id)initWithValue:(int)value;
 @end
 

@@ -16,6 +16,7 @@
 + (NSString *)applicationSupportPath;
 
 // Does not sync with iCloud or iTunes.
-+ (NSString *)localOnlyCachePath;
++ (NSString*)localOnlyCachePath;
++ (NSString*)localOnlyCachePath:(NSString*)filename;
 
 @end

@@ -17,7 +17,7 @@
 
 
 static NSString *const kOKDBSessionName = @"Session";
-static NSString *const kOKDBSessionVersion = @"0.0.48";
+static NSString *const kOKDBSessionVersion = @"0.0.49";
 static NSString *const kOKDBSessionCreateSql =
     @"CREATE TABLE IF NOT EXISTS 'sessions' "
     "("
@@ -30,7 +30,6 @@ static NSString *const kOKDBSessionCreateSql =
     // rest columns
     "'uuid' VARCHAR(255), "
     "'fb_id' VARCHAR(40), "
-    "'fb_active' BOOLEAN, "
     "'google_id' VARCHAR(40), "
     "'custom_id' VARCHAR(40), "
     "'ok_id' VARCHAR(40), "
@@ -124,6 +123,29 @@ static NSString *const kOKDBSessionCreateSql =
      }];
     
     return index;
+}
+
+
+- (NSArray*)getUnsubmittedSessions
+{
+    return [self getScoresWithSQL:@"SELECT * FROM sessions WHERE submit_state=0"];
+}
+
+
+- (NSArray*)getScoresWithSQL:(NSString*)sql
+{
+    __block NSMutableArray *sessionsArray = [[NSMutableArray alloc] init];
+    [self executeQuery:sql access:^(FMResultSet *rs)
+     {
+         while([rs next]){
+             NSDictionary *dict = [rs resultDictionary];
+             OKSession *score = [[OKSession alloc] initWithDictionary:dict];
+             [score setDbConnection:self];
+             [sessionsArray addObject:score];
+         }
+     }];
+    
+    return sessionsArray;
 }
 
 @end

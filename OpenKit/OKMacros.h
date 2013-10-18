@@ -9,12 +9,11 @@
 #ifndef OKClient_OKMacros_h
 #define OKClient_OKMacros_h
 
-#ifdef DEBUG
-    #define OKLog(s, ...)     NSLog(@"OpenKit: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
+#define OKLog(s, ...)     NSLog(@"OpenKit: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
+#if defined(DEBUG)
     #define OKLogInfo(s, ...) NSLog(@"OpenKit:Info: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
     #define OKLogErr(s, ...)  NSLog(@"OpenKit:Err: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
 #else
-    #define OKLog(s, ...)     NSLog(@"OpenKit: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
     #define OKLogInfo(...)    {} while (0)
     #define OKLogErr(s, ...)  NSLog(@"OpenKit:Err: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
 #endif
