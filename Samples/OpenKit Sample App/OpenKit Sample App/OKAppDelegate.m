@@ -59,6 +59,8 @@
 // to the same handlePushDictionary method that is used for opens.
 - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
 {
+    [OKAnalytics postEvent:@"challenge_not" metadata:nil];
+    
     NSLog(@"Push notification received while open:%@", userInfo);
     [self handlePushDictionary:userInfo];
 }

@@ -10,6 +10,7 @@
 #import "OKLeaderboardsListViewController.h"
 #import "OKHelper.h"
 #import "OKColors.h"
+#import "OKAnalytics.h"
 
 @interface OKLeaderboardsViewController ()
 {
@@ -66,13 +67,16 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [OKAnalytics postEvent:@"lblist_open" metadata:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:OKLeaderboardsViewDidAppear
                                                         object:nil];
 }
 
+
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    [OKAnalytics postEvent:@"lblist_close" metadata:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:OKLeaderboardsViewDidDisappear
                                                         object:nil];
 }

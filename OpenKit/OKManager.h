@@ -41,6 +41,8 @@
 + (NSString *)endpoint;
 + (NSString *)secretKey;
 
+
++ (void)setFacebookLoginFlag:(BOOL)flag;
 + (BOOL)handleOpenURL:(NSURL*)url;
 + (void)handleDidBecomeActive;
 + (void)handleWillTerminate;

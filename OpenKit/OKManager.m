@@ -19,14 +19,20 @@
 #import "OKLocalCache.h"
 #import "OKSessionDb.h"
 #import "OKMacros.h"
+#import "OKAnalytics.h"
 
 #define OK_DEFAULT_ENDPOINT    @"http://api.openkit.io"
 #define OK_OPENKIT_SDK_VERSION = @"1.0.3";
+
+
+BOOL __FACEBOOK_LOGIN = NO;
+
 
 static NSString *OK_USER_KEY = @"OKUserInfo";
 
 @interface OKManager ()
 {
+    UIBackgroundTaskIdentifier _btask;
     OKUser *_currentUser;
 }
 
@@ -91,6 +97,14 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
         [nc addObserver:self selector:@selector(didShowDashboard:)  name:OKLeaderboardsViewDidAppear object:nil];
         [nc addObserver:self selector:@selector(willHideDashboard:) name:OKLeaderboardsViewWillDisappear object:nil];
         [nc addObserver:self selector:@selector(didHideDashboard:)  name:OKLeaderboardsViewDidDisappear object:nil];
+        [nc addObserver:self selector:@selector(enteringBackground:)
+                   name:UIApplicationDidEnterBackgroundNotification
+                 object:nil];
+        [nc addObserver:self selector:@selector(enteringForeground:)
+                   name:UIApplicationWillEnterForegroundNotification
+                 object:nil];
+
+
         
         [self getSavedUserFromNSUserDefaults];
     }
@@ -191,14 +205,56 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     return [OKFacebookUtilities handleOpenURL:url];
 }
 
++ (void)setFacebookLoginFlag:(BOOL)flag
+{
+    __FACEBOOK_LOGIN = flag;
+}
+
+- (void)enteringBackground:(NSNotification*)not
+{
+    if(!__FACEBOOK_LOGIN)
+        [OKAnalytics endSession];
+    
+    UIApplication *app = [UIApplication sharedApplication];
+    _btask = [app beginBackgroundTaskWithExpirationHandler:^{
+        [app endBackgroundTask:_btask];
+        _btask = UIBackgroundTaskInvalid;
+    }];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        [OKAnalytics endSession];
+        [OKAnalytics sendReportWithCompletion:^(NSError *error) {
+            [app endBackgroundTask:_btask];
+            _btask = UIBackgroundTaskInvalid;
+        }];
+        
+    });
+}
+
+- (void)enteringForeground:(NSNotification*)not
+{
+    if(_btask != UIBackgroundTaskInvalid) {
+        UIApplication *app = [UIApplication sharedApplication];
+        [app endBackgroundTask:_btask];
+        _btask = UIBackgroundTaskInvalid;
+    }
+}
+
 + (void)handleDidBecomeActive
 {
+    if(!__FACEBOOK_LOGIN)
+        [OKAnalytics startSession];
+    
+    __FACEBOOK_LOGIN = NO;
+    
     [OKFacebookUtilities handleDidBecomeActive];
     [[OKManager sharedManager] submitCachedScoresAfterDelay];
 }
 
 + (void)handleWillTerminate
 {
+    [OKAnalytics endSession];
     [OKFacebookUtilities handleWillTerminate];
 }
 

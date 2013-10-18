@@ -17,6 +17,7 @@
 #import "OKUser.h"
 #import "OKHelper.h"
 #import "OKSessionDb.h"
+#import "OKAnalytics.h"
 
 @implementation OKFacebookUtilities
 
@@ -142,7 +143,11 @@
 
 +(void)OpenFBSessionWithCompletionHandler:(void(^)(NSError *error))completionHandler
 {
+    [OKManager setFacebookLoginFlag:YES];
+
     [FBSession openActiveSessionWithReadPermissions:nil allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+        [OKManager setFacebookLoginFlag:NO];
+
         
         switch(status)
         {
@@ -150,6 +155,7 @@
                 NSLog(@"FBSessionStateOpen");
                 if(!error)
                 {
+                    [OKAnalytics postEvent:@"fb_success" metadata:nil];
                     //We have a valid session
                     NSLog(@"Facebook user session found/opened successfully");
                     completionHandler(nil);
@@ -337,6 +343,7 @@
                                                               NSLog(@"User canceled request.");
                                                           } else {
                                                               NSLog(@"Request Sent.");
+                                                              [OKAnalytics postEvent:@"send_invite" metadata:nil];
                                                           }
                                                       }}];
 }
