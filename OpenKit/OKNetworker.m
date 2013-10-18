@@ -35,7 +35,8 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
 }
 
 
-+ (int)getStatusCodeFromAFNetworkingError:(NSError*)error {
++ (int)getStatusCodeFromAFNetworkingError:(NSError*)error
+{
     if([[error userInfo] objectForKey:AFNetworkingOperationFailingURLResponseErrorKey]) {
         return [[[error userInfo] objectForKey:AFNetworkingOperationFailingURLResponseErrorKey] statusCode];
     } else {
@@ -132,6 +133,14 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
     };
 
     void (^failureBlock)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *err) {
+        
+        int errorCode = [OKNetworker getStatusCodeFromAFNetworkingError:err];
+        
+        // If the user is unsubscribed to the app, log out the user.
+        if(errorCode == OK_UNSUBSCRIBED_USER_ERROR_CODE) {
+            [[OKManager sharedManager] logoutCurrentUser];
+            OKLog(@"Logging out current user b/c user is unsubscribed to app");
+        }
         handler(nil, err);
     };
 
@@ -191,6 +200,7 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
                  completion:handler];
 }
 
+
 + (void)postToPath:(NSString *)path
         parameters:(NSDictionary *)params
          encrypted:(BOOL)encrypted
@@ -202,6 +212,7 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
                   encrypted:encrypted
                  completion:handler];
 }
+
 
 + (void)putToPath:(NSString *)path
        parameters:(NSDictionary *)params
