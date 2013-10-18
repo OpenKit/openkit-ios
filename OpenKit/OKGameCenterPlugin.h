@@ -19,11 +19,4 @@
 //! Gets an array of GKPlayer (instances of gamecenter users) given a the list of IDs.
 + (void)loadPlayersWithIDs:(NSArray*)playerIDs completion:(void(^)(NSArray *friends, NSError *error))handler;
 
-//! Gets an array of IDs of your GameCenter friends.
-+ (void)loadFriendIDsWithCompletion:(void(^)(NSArray *friendIDs, NSError *error))handler;
-
-
-+ (void)loadFriendsWithCompletion:(void(^)(NSArray *friendIDs, NSError *error))handler;
-
-
 @end

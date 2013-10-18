@@ -65,7 +65,7 @@
 
 - (BOOL)isSessionOpen
 {
-    return [GKLocalPlayer localPlayer].isAuthenticated;
+    return [[GKLocalPlayer localPlayer] isAuthenticated];
 }
 
 
@@ -81,30 +81,6 @@
 
 - (BOOL)openSessionWithViewController:(UIViewController*)controller completion:(void(^)(NSError *error))handler
 {
-    if([self shouldUseLegacyGameCenterAuth])
-        [self authorizeUserV1WithCompletion:handler];
-    else
-        [self authorizeUserV2WithViewController:controller completion:handler];
-    
-    return [self isSessionOpen];
-}
-
-
-- (void)authorizeUserV1WithCompletion:(void(^)(NSError* error))handler
-{
-    // This gamecenter method is deprecated in iOS6 but is required for iOS 5 support
-    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
-    [localPlayer authenticateWithCompletionHandler:^(NSError *error) {
-        
-        [self sessionStateChanged:localPlayer.isAuthenticated error:error];
-        if(handler)
-            handler(error);
-    }];
-}
-
-
-- (void)authorizeUserV2WithViewController:(UIViewController*)controller completion:(void(^)(NSError* error))handler
-{
     [GKLocalPlayer localPlayer].authenticateHandler = ^(UIViewController *gcController, NSError *error)
     {
         [self sessionStateChanged:[[GKLocalPlayer localPlayer] isAuthenticated] error:error];
@@ -113,13 +89,15 @@
             if(controller && gcController) {
                 // show the auth dialog
                 OKLog(@"Need to show GameCenter dialog");
-                [controller presentModalViewController:gcController animated:YES];
+                [controller presentViewController:gcController animated:YES completion:nil];
             }
         }
         
         if(handler)
             handler(error);
     };
+    
+    return [self isSessionOpen];
 }
 
 
@@ -202,24 +180,6 @@
 }
 
 
-+ (void)loadFriendIDsWithCompletion:(void(^)(NSArray *friendIDs, NSError *error))handler
-{
-    if(!handler)
-        return;
-    
-    GKLocalPlayer *player = [GKLocalPlayer localPlayer];
-    
-    NSArray *friends = [player friends];
-    if(friends)
-        handler(friends, nil);
-    else {
-        [player loadFriendsWithCompletionHandler:^(NSArray *friends, NSError *error) {
-            handler(friends, error);
-        }];
-    }
-}
-
-
 + (void)loadPlayersWithIDs:(NSArray*)playerIDs completion:(void(^)(NSArray *friends, NSError *error))handler
 {
     if(!handler)
@@ -231,9 +191,18 @@
 
 + (void)loadFriendsWithCompletion:(void(^)(NSArray *friendIDs, NSError *error))handler
 {
-    [self loadFriendIDsWithCompletion:^(NSArray *friendIDs, NSError *error) {
-        [self loadPlayersWithIDs:friendIDs completion:handler];
-    }];
+    if(!handler)
+        return;
+    
+    GKLocalPlayer *player = [GKLocalPlayer localPlayer];
+    NSArray *friends = [player friends];
+    if(friends)
+        handler(friends, nil);
+    else {
+        [player loadFriendsWithCompletionHandler:^(NSArray *friends, NSError *error) {
+            handler(friends, error);
+        }];
+    }
 }
 
 
@@ -268,7 +237,7 @@
 {
     OKLeaderboard *leaderboard = (OKLeaderboard*)[not object];
     OKScore *score = (OKScore*)[[not userInfo] objectForKey:@"score"];
-    NSString *gcLeaderboardID = [leaderboard gamecenterID];
+    NSString *gcLeaderboardID = [[leaderboard services] objectForKey:@"gamecenter"];;
     
     if(gcLeaderboardID && [self isSessionOpen])
     {
