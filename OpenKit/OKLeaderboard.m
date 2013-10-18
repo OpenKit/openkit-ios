@@ -17,8 +17,11 @@
 #import "OKFacebookUtilities.h"
 #import "OKDBScore.h"
 #import "OKNotifications.h"
+#import "OKFileUtil.h"
 
 
+#define OK_LEADERBOARDS @"leaderboards.json"
+static NSUInteger __lastUpdate = 0;
 static NSArray *__leaderboards = nil;
 static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
@@ -48,6 +51,18 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
         self.sortType = OKLeaderboardSortTypeLowValue;
     }
 }
+
+
+- (NSDictionary*)dictionary
+{
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                          self.name, @"name",
+                          self.leaderboardID, "id",
+                          self.iconUrl, @"icon_url",
+                          self.playerCount, @"player_count",
+                          self.services, @"services", nil];
+    
+    return dict;
 }
 
 
@@ -81,14 +96,13 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
          if(!error) {
              OKLog(@"Successfully posted score to OpenKit: %@", self);
              [score setSubmitState:kOKSubmitted];
+             
+             
 
          }else{
              OKLog(@"Failed to post score to OpenKit: %@",self);
              OKLog(@"Error: %@", error);
              [score setSubmitState:kOKNotSubmitted];
-             
-             // If the user is unsubscribed to the app, log out the user. REVIEW
-             // [OKUserUtilities checkIfErrorIsUnsubscribedUserError:error];
          }
          [score syncWithDB];
          
@@ -222,18 +236,18 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"OKLeaderboard name: %@ id: %d app_id: %d gamecenter_id: %@ sortType: %u iconURL: %@ player_count: %d", self.name, self.leaderboardID, self.OKApp_id, self.gamecenterID, self.sortType, self.iconUrl, self.playerCount];
+    return [NSString stringWithFormat:@"OKLeaderboard name: %@ id: %d sortType: %u iconURL: %@ player_count: %d", self.name, self.leaderboardID, self.sortType, self.iconUrl, self.playerCount];
 }
 
 
 #pragma mark - Class methods
 
-+ (void)configWithDictionary:(NSArray*)dict
++ (void)configWithDictionary:(NSDictionary*)dict
 {
     if(!dict)
         return;
     
-    NSArray *leaderBoardsJSON = dict;
+    NSArray *leaderBoardsJSON = [dict objectForKey:@"leaderboards"];
     NSMutableArray *tmp = [NSMutableArray arrayWithCapacity:[leaderBoardsJSON count]];
     
     for(id obj in leaderBoardsJSON) {
@@ -250,6 +264,32 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
         [tmp addObject:leaderboard];
     }
     __leaderboards = [NSArray arrayWithArray:tmp];
+    __lastUpdate = [[dict objectForKey:@"last_update"] unsignedIntegerValue];
+}
+
+
++ (void)loadFromCache
+{
+    NSString *path = [OKFileUtil localOnlyCachePath:OK_LEADERBOARDS];
+    NSDictionary *dict = [OKFileUtil readSecureFile:path];
+    [OKLeaderboard configWithDictionary:dict];
+}
+
+
++ (void)save
+{
+    if([__leaderboards count] > 0) {
+        NSMutableArray *leaderboards = [NSMutableArray arrayWithCapacity:[__leaderboards count]];
+        for(OKLeaderboard *lb in __leaderboards)
+            [leaderboards addObject:[lb dictionary]];
+        
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithUnsignedInteger:__lastUpdate], @"last_update",
+                              leaderboards, @"leaderboards", nil];
+        
+        NSString *path = [OKFileUtil localOnlyCachePath:OK_LEADERBOARDS];
+        [OKFileUtil writeOnFileSecurely:dict path:path];
+    }
 }
 
 
@@ -299,7 +339,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 + (NSDictionary*)JSONDictionary
 {
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                          //_lastUpdate, @"last_update",
+                          [NSNumber numberWithUnsignedInteger:__lastUpdate], @"last_update",
                           [[OKManager sharedManager] leaderboardListTag], @"tag",
                           nil];
     return dict;
@@ -316,6 +356,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
          if(!error) {
              OKLog(@"OpenKit: OKLeaderboard: Successfully got list of leaderboards.");
              [OKLeaderboard configWithDictionary:responseObject];
+             [OKLeaderboard save];
              
          }else{
              OKLogErr(@"OpenKit: OKLeaderboard: Failed to get list of leaderboards: %@", error);

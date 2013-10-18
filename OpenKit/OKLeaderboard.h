@@ -26,13 +26,12 @@ typedef enum {
 
 @interface OKLeaderboard : NSObject
 
-@property(nonatomic) int OKApp_id;
 @property(nonatomic) NSInteger leaderboardID;
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic) OKLeaderBoardSortType sortType;
 @property(nonatomic, strong) NSString *iconUrl;
 @property(nonatomic) int playerCount;
-@property(nonatomic, strong) NSString *gamecenterID;
+@property(nonatomic, strong) NSDictionary *services;
 
 
 - (id)initWithDictionary:(NSDictionary*)jsonDict;
@@ -46,6 +45,7 @@ typedef enum {
 - (NSArray*)sortScoresBasedOnLeaderboardType:(NSArray*)scores;
 
 
++ (void)syncWithCompletion:(void (^)(NSError* error))handler;
 + (void)getLeaderboardsWithCompletion:(void (^)(NSArray* leaderboards, NSError* error))handler;
 + (void)getLeaderboardWithID:(int)leaderboardID withCompletion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler;
 

@@ -12,6 +12,7 @@
 @interface OKLeaderboard (Private)
 
 - (void)submitScore:(OKScore*)score withCompletion:(void (^)(NSError* error))handler;
++ (void)loadFromCache;
 
 @end
 

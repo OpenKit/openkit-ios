@@ -34,10 +34,9 @@ typedef enum {
 - (void)submitWithCompletion:(void (^)(NSError *error))completion;
 - (BOOL)isSubmissible;
 
--(NSString*)scoreDisplayString;
--(NSString*)userDisplayString;
-
--(NSString*)rankDisplayString;
+- (NSString*)scoreDisplayString;
+- (NSString*)userDisplayString;
+- (NSString*)rankDisplayString;
 
 //-(OKScoreSocialNetwork)socialNetwork;
 
