@@ -91,15 +91,15 @@ The HTTP body is not included in the signature base string.
 	
 	```
 {
-	"requests" : 
-	[
-		{
-			"service" : *((service's name)),
-			"data" : (( )),
-			"key" : (( )),
-			"public_key_url" : (( )) #optional
-		},...
-	]
+    "requests" : 
+    [
+        {
+            "service" : *((service's name)),
+            "data" : (( )),
+            "key" : (( )),
+            "public_key_url" : (( )) #optional
+        },...
+    ]
 }
 ```
 
@@ -107,18 +107,18 @@ The HTTP body is not included in the signature base string.
 	
 	```
 {
-	"requests" : 
-	[
-		{
-			"service" : "facebook",
-			"data" : "1451173071",  #facebook user ID
-			"key" : "CAAGZAk4ZABCjwBAFN6qUw0kMSZBkfXFVIZBLB2UiZBFLsQY6lWDoyV8dta6dmLZBEFYLcgq9e5MqOGSR45VceO2o4ATg2G7kPfXOnPRoGWh2cgLwp8twCoX2NWzkVzMBoLykpx274ZBWPAIO4OA4abfvcm77uhrF4JK8wdDWeQ8zGj4RzqjC5bryRCm2sBZB8Xnpl4yXY0ObzX1oBM0yZAorJ",
-		},
-		{
-			"service" : "gamecenter",
-			"data" : "io.openkit.game1103403020498345hib6hj245b614j2j54",
-			"key" : "CAAGZAk4ZABCjwBAFN6qUw0kMSZBkfXFVIZBLB2UiZBFLsQY6lWDoyV8dta6dmLZBEFYLcgq9e5MqOGSR45VceO2o4ATg2G7kPfXOnPRoGWh2cgLwp8twCoX2NWzkVzMBoLykpx274ZBWPAIO4OA4abfvcm77uhrF4JK8wdDWeQ8zGj4RzqjC5bryRCm2sBZB8Xnpl4yXY0ObzX1oBM0yZAorJ",
-			"public_key_url" : "https://signature.gc.apple.com/public352g4tte324m"
+    "requests" : 
+    [
+        {
+            "service" : "facebook",
+            "data" : "1451173071",  #facebook user ID
+            "key" : "CAAGZAk4ZABCjwBAFN6qUw0kMSZBkfXFVIZBLB2UiZBFLsQY6lWDoyV8dta6dmLZBEFYLcgq9e5MqOGSR45VceO2o4ATg2G7kPfXOnPRoGWh2cgLwp8twCoX2NWzkVzMBoLykpx274ZBWPAIO4OA4abfvcm77uhrF4JK8wdDWeQ8zGj4RzqjC5bryRCm2sBZB8Xnpl4yXY0ObzX1oBM0yZAorJ",
+        },
+        {
+            "service" : "gamecenter",
+            "data" : "io.openkit.game1103403020498345hib6hj245b614j2j54",
+            "public_key_url" : "https://signature.gc.apple.com/public352g4tte324m"
+            "key" : "CAAGZAk4ZABCjwBAFN6qUw0kMSZBkfXFVIZBLB2UiZBFLsQY6lWDoyV8dta6dmLZBEFYLcgq9e5MqOGSR45VceO2o4ATg2G7kPfXOnPRoGWh2cgLwp8twCoX2NWzkVzMBoLykpx274ZBWPAIO4OA4abfvcm77uhrF4JK8wdDWeQ8zGj4RzqjC5bryRCm2sBZB8Xnpl4yXY0ObzX1oBM0yZAorJ",
 		}
 	]
 }
@@ -131,19 +131,18 @@ Full OKLocalUser representation.
 			
 	```
 {
-	"id" : *((user's id))",
-	"nick" : *((user's nick))",
-	"oauth_token" : "((user's access token))"",
-	"oauth_token_secret" : "((user's token secret))"",
-	"services" :
-	{	
-		# dictionary of services: facebook, twitter, etc. #
-		"*((service's name))" : *((user_id in service)),...
-	}
-	"friends" :
-		"*((service's name))" : ((serialized array of friend IDs)),
-		...
-	}
+    "id" : *((user's id))",
+    "nick" : *((user's nick))",
+    "oauth_token" : "((user's access token))"",
+    "oauth_token_secret" : "((user's token secret))"",
+    "services" : {	
+        # dictionary of services: facebook, twitter, etc. #
+        "*((service's name))" : *((user_id in service)),...
+    }
+    "friends" : {
+        "*((service's name))" : ((serialized array of friend IDs)),
+        ...
+    }
 }
 ```
 
@@ -151,19 +150,17 @@ Full OKLocalUser representation.
 
 	```
 {
-	"id" : "245",
-	"nick" : "Manu",
-	"oauth_token" : "vhj5k6c23fx3l6k3ad89jHuihhIHh",
-	"oauth_token_secret" : "hbhjkjbhHJjhbjhkHGv7v7568gbvgfGHCG456v5465V65$5465VBvhgfJgh76567BJGFhftreuhkoojiHiuoHu",
-	"services" :
-	{
-		"facebook" : "1451173071",
-		"gamecenter" : "110340"
-	}
-	"friends" :
-	{
-		"facebook" : "2342,345351,104353465,104534003450430,14030435434"
-	}
+    "id" : "245",
+    "nick" : "Manu",
+    "oauth_token" : "vhj5k6c23fx3l6k3ad89jHuihhIHh",
+    "oauth_token_secret" : "hbhjkjbhHJjhbjhkHGv7v7568gbvgfGHCG456v5465V65$5465VBvhgfJgh76567BJGFhftreuhkoojiHiuoHu",
+    "services" : {
+        "facebook" : "1451173071",
+        "gamecenter" : "110340"
+    }
+    "friends" : {
+        "facebook" : "2342,345351,104353465,104534003450430,14030435434"
+    }
 }
 ```
 See:
@@ -180,10 +177,10 @@ A valid access_token is needed to do these kind of tasks.
 
 ```
 {
-	"encryption" : "SHA256+AES256",
-	"encoding" : "UTF-8",
-	"compression" : "gzip",
-	"payload" : "hjkHJGlhkkjhñILHChiu=="
+    "encryption" : "SHA256+AES256",
+    "encoding" : "UTF-8",
+    "compression" : "gzip",
+    "payload" : "hjkHJGlhkkjhñILHChiu=="
 }
 ```
 
@@ -209,18 +206,18 @@ Json with the values you want to change. All optional.
 
 	```
 {
-	"nick" : ((user's nick)), #optional
-	"friends_((service's name))" : ((serialized array of friend IDs))
+    "nick" : ((user's nick)), #optional
+    "friends_((service's name))" : ((serialized array of friend IDs))
 }
 ```
 
 	Example:
 		
-	```
+    ```
 {
-	"nick" : "Manuel",
-	"friends_facebook" : "1400034324,1002302434,10000023232",
-	"friends_gamecenter" : "1400034324,1002302434,10000023232"
+    "nick" : "Manuel",
+    "friends_facebook" : "1400034324,1002302434,10000023232",
+    "friends_gamecenter" : "1400034324,1002302434,10000023232"
 }
 ```
 	
@@ -228,7 +225,7 @@ Json with the values you want to change. All optional.
 
 4. **Server's response:**
 
-	```
+    ```
 { } 
 ```
 Nothing, a error code if something was wrong.
@@ -261,14 +258,13 @@ It's a timestamp managed by the server that indicates the date of the last sync 
 
 	```
 {
-	"priority" : *((priority)), #optional
-	"last_update" : *((timestamp)), #optional
-	"entries" : #optional
-	{
-		# dictionary of the entries that changed since the last update #
-		"((key))" :  ((object)),
-		...
-	}
+    "priority" : *((priority)), #optional
+    "last_update" : *((timestamp)), #optional
+    "entries" : { #optional
+        # dictionary of the entries that changed since the last update #
+        "((key))" :  ((object)),
+        ...
+    }
 }
 ```
 
@@ -279,8 +275,7 @@ It's a timestamp managed by the server that indicates the date of the last sync 
 {
 	"priority" : *((priority)),
 	"last_update" : *((timestamp)),
-	"entries" :
-	{
+	"entries" : {
 		# dictionary of the entries that should change in the client #
 		"((key))" : ((object)),
 		...
@@ -301,10 +296,10 @@ Posting scores to server.
 
 	```
 {
-	"leaderboard_id" : ((score's leaderboard ID)),
-	"value" : ((score's value)),
-	"metadata" : ((score's metadata)),
-	"created_date" : *((date))
+    "leaderboard_id" : ((score's leaderboard ID)),
+    "value" : ((score's value)),
+    "metadata" : ((score's metadata)),
+    "created_date" : *((date))
 }
 ```
 
@@ -312,10 +307,10 @@ Posting scores to server.
 	
 	```
 {
-	"leaderboard_id" : 23,
-	"value" : 295826,
-	"metadata" : null,
-	"created_date" : "2013-03-12 07:23:11"
+    "leaderboard_id" : 23,
+    "value" : 295826,
+    "metadata" : null,
+    "created_date" : "2013-03-12 07:23:11"
 }
 ```
 
@@ -323,10 +318,10 @@ Posting scores to server.
 
 	```
 {
-	"id" : ((score's backend id)),
-	"leaderboard_id" : ((score's leaderboard ID)),
-	"value" : ((score's value)),
-	"rank" : ((score's rank))
+    "id" : ((score's backend id)),
+    "leaderboard_id" : ((score's leaderboard ID)),
+    "value" : ((score's value)),
+    "rank" : ((score's rank))
 }
 ```
 
@@ -334,10 +329,10 @@ Posting scores to server.
 
 	```
 {
-	"id" : 83457823,
-	"leaderboard_id" : 23,
-	"value" : 295826,
-	"rank" : 87
+    "id" : 83457823,
+    "leaderboard_id" : 23,
+    "value" : 295826,
+    "rank" : 87
 }
 ```
 
@@ -373,9 +368,9 @@ Used internally by the SDK to optimize the internet usage. Inspired by ```HTTP 3
 
 	```
 {
-	"app_key" : *((app's key)),
-	"leaderboard_version" : ((leaderboard's version)),
-	"last_update" : *((timestamp))   #optional
+    "app_key" : *((app's key)),
+    "leaderboard_version" : ((leaderboard's version)),
+    "last_update" : *((timestamp))   #optional
 }
 ```
 Example: getting leaderboards of the app "frf3352s2". ```/leaderboards?app_key=frf3352s2```
@@ -385,25 +380,24 @@ Example: getting leaderboards of the app "frf3352s2". ```/leaderboards?app_key=f
 
 	```
 {
-	"last_update" : *((timestamp)),
-	"leaderboards" :
-	[
-		# array of dictionaries updated after specified in the "last_update" request param #
-		{
-			"id" : ((leaderboard's backend id)),
-			"name" : ((leaderboard's name)),
-			"sort_type" : *((leaderboard's sort type)),
-			"icon_url" : ((leaderboard's icon url)),
-			"player_count : ((leaderboard's player count)),
-			"services" : 
-			{
-				"gamecenter_id" : (()), # leaderboard id in gamecenter
-				"custom_id" : (()),
-				...
-			}
-		},
-		...
-	]
+    "last_update" : *((timestamp)),
+    "leaderboards" :
+    [
+        # array of dictionaries updated after specified in the "last_update" request param #
+        {
+            "id" : ((leaderboard's backend id)),
+            "name" : ((leaderboard's name)),
+            "sort_type" : *((leaderboard's sort type)),
+            "icon_url" : ((leaderboard's icon url)),
+            "player_count : ((leaderboard's player count)),
+            "services" : {
+                "gamecenter_id" : (()), # leaderboard id in gamecenter
+                "custom_id" : (()),
+                ...
+            }
+        },
+        ...
+    ]
 }
 ```
 
@@ -411,44 +405,41 @@ Example: getting leaderboards of the app "frf3352s2". ```/leaderboards?app_key=f
 	
 	```
 {
-	"last_update" : 14309234930,
-	"leaderboards" :
-	[
-		{
-			"id" : 2,
-			"name" : "Level 1",
-			"sort_type" : 0,
-			"icon_url" : "http://storage.openkit.io/image_23234234.png",
-			"player_count : 18334,
-			"other_services" : 
-			{
-				"gamecenter_id" : 7342414,
-			}
-		},
-		{
-			"id" : 5,
-			"name" : "Level 2",
-			"sort_type" : 0,
-			"icon_url" : "http://storage.openkit.io/image_5325444.png",
-			"player_count : 876,
-			"other_services" : 
-			{
-				"gamecenter_id" : 3367006,
-			}
-		},
-		{
-			"id" : 12,
-			"name" : "Level 3",
-			"sort_type" : 0,
-			"icon_url" : "http://storage.openkit.io/image_45624644.png",
-			"player_count : 13330,
-			"other_services" : 
-			{
-				"gamecenter_id" : 1246512,
-			}
-		},
-		...
-	]
+    "last_update" : 14309234930,
+    "leaderboards" :
+    [
+        {
+            "id" : 2,
+            "name" : "Level 1",
+            "sort_type" : 0,
+            "icon_url" : "http://storage.openkit.io/image_23234234.png",
+            "player_count : 18334,
+            "services" : {
+                "gamecenter_id" : 7342414,
+            }
+        },
+        {
+            "id" : 5,
+            "name" : "Level 2",
+            "sort_type" : 0,
+            "icon_url" : "http://storage.openkit.io/image_5325444.png",
+            "player_count : 876,
+            "services" : {
+                "gamecenter_id" : 3367006,
+            }
+        },
+        {
+            "id" : 12,
+            "name" : "Level 3",
+            "sort_type" : 0,
+            "icon_url" : "http://storage.openkit.io/image_45624644.png",
+            "player_count : 13330,
+            "services" : {
+                "gamecenter_id" : 1246512,
+            }
+        },
+        ...
+    ]
 }
 ```
 	
@@ -473,11 +464,11 @@ To make it consistent and reusable, all these paths should use the same request/
 
 	```
 {
-	"app_key" : *((app's key)),
-	"leaderboard_id" : ((leaderboard's id)),
-	"leaderboard_range" : *((range)), #optional
-	"num_per_page" : *((size)), #optional
-	"page_num" : *((offset)), #optional
+    "app_key" : *((app's key)),
+    "leaderboard_id" : ((leaderboard's id)),
+    "leaderboard_range" : *((range)), #optional
+    "num_per_page" : *((size)), #optional
+    "page_num" : *((offset)), #optional
 }
 ```
 
@@ -485,11 +476,11 @@ To make it consistent and reusable, all these paths should use the same request/
 	
 	```
 {
-	"app_key" : "heuX3r98sjJJ",
-	"leaderboard_id" : 23,
-	"leaderboard_range" : "all_time", #optional
-	"num_per_page" : 50, #optional
-	"page_num" : 2, #optional
+    "app_key" : "heuX3r98sjJJ",
+    "leaderboard_id" : 23,
+    "leaderboard_range" : "all_time", #optional
+    "num_per_page" : 50, #optional
+    "page_num" : 2, #optional
 }
 ```
 	**((range))**  
@@ -506,19 +497,18 @@ To make it consistent and reusable, all these paths should use the same request/
 
 	```
 [
-	# array of scores #
-	{
-		"id" : ((score's id)),
-		"leaderboard_id" : ((leaderboard's id)),
-		"value" : ((score's value)),
-		"rank" : ((score's rank)),
-		"user" :
-		{
-			"id" : ((user's id)),
-			"nick" : ((user's nick))
-		}
-	},
-	...
+    # array of scores #
+    {
+        "id" : ((score's id)),
+        "leaderboard_id" : ((leaderboard's id)),
+        "value" : ((score's value)),
+        "rank" : ((score's rank)),
+        "user" : {
+            "id" : ((user's id)),
+            "nick" : ((user's nick))
+        }
+    },
+    ...
 ]
 ```
 
