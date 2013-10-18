@@ -11,6 +11,8 @@
 #import "ScoreSubmitterVC.h"
 #import "OKFacebookUtilities.h"
 #import "OKFacebookUtilities.h"
+#import "OKDashboard.h"
+#import "OKChatViewController.h"
 
 
 @implementation OKViewController
@@ -73,6 +75,15 @@
     }];
 }
 
+-(IBAction)launchDashboard:(id)sender
+{
+    UIViewController *dashVC = [OKDashboard OKDashboardViewController];
+    
+    //OKChatViewController *chatVC = [[OKChatViewController alloc] init];
+    
+    
+    [self presentModalViewController:dashVC animated:YES];
+}
 
 -(void)viewWillAppear:(BOOL)animated
 {

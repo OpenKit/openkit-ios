@@ -44,6 +44,7 @@
 		4487F0C317E8414B004CFB57 /* OKViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4487F0BD17E8414B004CFB57 /* OKViewController.xib */; };
 		4487F0C417E8414B004CFB57 /* ScoreSubmitterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4487F0BF17E8414B004CFB57 /* ScoreSubmitterVC.m */; };
 		4487F0C517E8414B004CFB57 /* ScoreSubmitterVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4487F0C017E8414B004CFB57 /* ScoreSubmitterVC.xib */; };
+		44B8578218109E2E007C82A8 /* OKChatVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44B8578118109E2E007C82A8 /* OKChatVC.xib */; };
 		44E722BB17F24AA70066A9AE /* libOpenKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E7227017F24AA70066A9AE /* libOpenKit.a */; };
 		44E722BC17F24AA70066A9AE /* back_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 44E7227217F24AA70066A9AE /* back_button.png */; };
 		44E722BD17F24AA70066A9AE /* back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44E7227317F24AA70066A9AE /* back_button@2x.png */; };
@@ -146,6 +147,9 @@
 		4487F0BE17E8414B004CFB57 /* ScoreSubmitterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreSubmitterVC.h; sourceTree = "<group>"; };
 		4487F0BF17E8414B004CFB57 /* ScoreSubmitterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreSubmitterVC.m; sourceTree = "<group>"; };
 		4487F0C017E8414B004CFB57 /* ScoreSubmitterVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreSubmitterVC.xib; sourceTree = "<group>"; };
+		44B8578118109E2E007C82A8 /* OKChatVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OKChatVC.xib; sourceTree = "<group>"; };
+		44B8578318109E3A007C82A8 /* OKChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKChatViewController.h; sourceTree = "<group>"; };
+		44B8578418109E3A007C82A8 /* OKDashboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDashboard.h; sourceTree = "<group>"; };
 		44E7224A17F24AA70066A9AE /* AbstractActionSheetPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractActionSheetPicker.h; sourceTree = "<group>"; };
 		44E7224B17F24AA70066A9AE /* ActionSheetStringPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetStringPicker.h; sourceTree = "<group>"; };
 		44E7224C17F24AA70066A9AE /* AFImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageView.h; sourceTree = "<group>"; };
@@ -393,6 +397,8 @@
 		44E7224917F24AA70066A9AE /* include */ = {
 			isa = PBXGroup;
 			children = (
+				44B8578318109E3A007C82A8 /* OKChatViewController.h */,
+				44B8578418109E3A007C82A8 /* OKDashboard.h */,
 				44E7224A17F24AA70066A9AE /* AbstractActionSheetPicker.h */,
 				44E7224B17F24AA70066A9AE /* ActionSheetStringPicker.h */,
 				44E7224C17F24AA70066A9AE /* AFImageView.h */,
@@ -438,6 +444,7 @@
 		44E7227117F24AA70066A9AE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				44B8578118109E2E007C82A8 /* OKChatVC.xib */,
 				44E7227217F24AA70066A9AE /* back_button.png */,
 				44E7227317F24AA70066A9AE /* back_button@2x.png */,
 				44E7227417F24AA70066A9AE /* close.png */,
@@ -609,6 +616,7 @@
 				44E722D317F24AA70066A9AE /* include_gc_off@2x.png in Resources */,
 				44E722D417F24AA70066A9AE /* include_gc_on.png in Resources */,
 				4487EFFE17E840E1004CFB57 /* Default-Portrait.png in Resources */,
+				44B8578218109E2E007C82A8 /* OKChatVC.xib in Resources */,
 				44E722CD17F24AA70066A9AE /* gear@2x.png in Resources */,
 				44E722DD17F24AA70066A9AE /* settings@2x.png in Resources */,
 				4487EFB617E84017004CFB57 /* InfoPlist.strings in Resources */,
