@@ -214,10 +214,10 @@
 //    [nc addObserver:self selector:@selector(willHideDashboard:) name:OKLeaderboardsViewWillDisappear object:nil];
 //    [nc addObserver:self selector:@selector(didHideDashboard:)  name:OKLeaderboardsViewDidDisappear object:nil];
     [nc addObserver:self selector:@selector(providerUpdated:) name:OKAuthProviderUpdatedNotification object:nil];
-    [nc addObserver:self selector:@selector(willEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
-    [nc addObserver:self selector:@selector(enteredBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-    [nc addObserver:self selector:@selector(becameAction:) name:UIApplicationDidBecomeActiveNotification object:nil];
-    [nc addObserver:self selector:@selector(willTerminate:) name:UIApplicationWillTerminateNotification object:nil];
+    [nc addObserver:self selector:@selector(willEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [nc addObserver:self selector:@selector(enteredBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [nc addObserver:self selector:@selector(becameAction) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [nc addObserver:self selector:@selector(willTerminate) name:UIApplicationWillTerminateNotification object:nil];
 
 
     
@@ -342,11 +342,11 @@
 
 - (void)logoutCurrentUser
 {
-    NSLog(@"Logging out of openkit");
+    OKLogInfo(@"Logging out of openkit");
     [self removeCachedUser];
     [self setCurrentUser:nil];
     
-    [OKAuthProvider logoutAndClear];
+    //[OKAuthProvider logoutAndClear];
     [OKScore clearSubmittedScore];
 }
 
