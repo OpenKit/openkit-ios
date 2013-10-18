@@ -155,7 +155,7 @@
 
 - (void)syncWithCompletion:(void(^)(NSError *error))handler
 {
-    if([_dirty count] == 0)
+    if(!_dirty || [_dirty count] == 0)
         handler(nil);
     
     NSString *path = [NSString stringWithFormat:@"localuser/"];
@@ -178,9 +178,12 @@
     [dict setValue:_accessToken forKey:@"token"];
     [dict setValue:_accessTokenSecret forKey:@"token_secret"];
     [dict setValue:_dirty forKey:@"dirty"];
+    [dict setValue:_friends forKey:@"friends"];
     return dict;
 }
 
+
+#pragma mark -
 
 + (OKLocalUser*)currentUser
 {
@@ -204,10 +207,9 @@
         [params addObject:[request JSONDictionary]];
     
     // REVIEW THIS
-    //NSDictionary *dict = [NSDictionary dictionaryWithObject:params forKey:@"requests"];
-    NSDictionary *dict = [(OKAuthRequest*)[requests objectAtIndex:0] JSONDictionary];
+    NSDictionary *paramsDict = [NSDictionary dictionaryWithObject:params forKey:@"requests"];
     [OKNetworker postToPath:@"/users"
-                 parameters:dict
+                 parameters:paramsDict
                   encrypted:YES
                  completion:^(id responseObject, NSError *error)
      {

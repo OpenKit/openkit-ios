@@ -26,7 +26,7 @@
 @interface OKLocalUser : OKUser
 {
     NSMutableDictionary *_dirty;
-    NSDictionary *_friends;
+    NSMutableDictionary *_friends;
 }
 
 @property(nonatomic, readonly) NSString *accessToken;
