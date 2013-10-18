@@ -83,6 +83,14 @@
 		44B8577E18109CEE007C82A8 /* OKChatViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B8577718109753007C82A8 /* OKChatViewController.h */; };
 		44B8577F18109CEE007C82A8 /* OKDashboard.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B8577B18109AD4007C82A8 /* OKDashboard.h */; };
 		44B8578018109CFA007C82A8 /* OKChatVC.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44B857731810962B007C82A8 /* OKChatVC.xib */; };
+		44B857941810B82B007C82A8 /* leaderboards.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44B8578A1810B818007C82A8 /* leaderboards.png */; };
+		44B857951810B82B007C82A8 /* chat.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44B8578B1810B818007C82A8 /* chat.png */; };
+		44B857961810B82B007C82A8 /* chat_active.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44B8578C1810B818007C82A8 /* chat_active.png */; };
+		44B857971810B82B007C82A8 /* leaderboards_active.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44B8578D1810B818007C82A8 /* leaderboards_active.png */; };
+		44B857981810B82B007C82A8 /* chat_active@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44B8578E1810B818007C82A8 /* chat_active@2x.png */; };
+		44B857991810B82B007C82A8 /* leaderboards_active@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44B8578F1810B818007C82A8 /* leaderboards_active@2x.png */; };
+		44B8579A1810B82B007C82A8 /* chat@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44B857901810B818007C82A8 /* chat@2x.png */; };
+		44B8579B1810B82B007C82A8 /* leaderboards@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44B857911810B818007C82A8 /* leaderboards@2x.png */; };
 		44BB68C51777E39900839D0D /* OKScoreProtocol.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B50D16176FDADF00B5D8AD /* OKScoreProtocol.h */; };
 		44BB68C61777E3BB00839D0D /* OKSocialLeaderboardViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B50D0A176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.h */; };
 		44BB68C71777E3BB00839D0D /* OKFBLoginCell.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B50D1B1771227C00B5D8AD /* OKFBLoginCell.h */; };
@@ -223,6 +231,14 @@
 			dstPath = Resources;
 			dstSubfolderSpec = 7;
 			files = (
+				44B857941810B82B007C82A8 /* leaderboards.png in CopyFiles */,
+				44B857951810B82B007C82A8 /* chat.png in CopyFiles */,
+				44B857961810B82B007C82A8 /* chat_active.png in CopyFiles */,
+				44B857971810B82B007C82A8 /* leaderboards_active.png in CopyFiles */,
+				44B857981810B82B007C82A8 /* chat_active@2x.png in CopyFiles */,
+				44B857991810B82B007C82A8 /* leaderboards_active@2x.png in CopyFiles */,
+				44B8579A1810B82B007C82A8 /* chat@2x.png in CopyFiles */,
+				44B8579B1810B82B007C82A8 /* leaderboards@2x.png in CopyFiles */,
 				44B8578018109CFA007C82A8 /* OKChatVC.xib in CopyFiles */,
 				44F3CD4517CC1A5700D054CF /* settings.png in CopyFiles */,
 				44F3CD4617CC1A5700D054CF /* settings@2x.png in CopyFiles */,
@@ -408,6 +424,14 @@
 		44B8577818109753007C82A8 /* OKChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OKChatViewController.m; path = ../../OpenKit/OKChatViewController.m; sourceTree = "<group>"; };
 		44B8577B18109AD4007C82A8 /* OKDashboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OKDashboard.h; path = OpenKit/OKDashboard.h; sourceTree = SOURCE_ROOT; };
 		44B8577C18109AD4007C82A8 /* OKDashboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OKDashboard.m; path = OpenKit/OKDashboard.m; sourceTree = SOURCE_ROOT; };
+		44B8578A1810B818007C82A8 /* leaderboards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leaderboards.png; sourceTree = "<group>"; };
+		44B8578B1810B818007C82A8 /* chat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat.png; sourceTree = "<group>"; };
+		44B8578C1810B818007C82A8 /* chat_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_active.png; sourceTree = "<group>"; };
+		44B8578D1810B818007C82A8 /* leaderboards_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leaderboards_active.png; sourceTree = "<group>"; };
+		44B8578E1810B818007C82A8 /* chat_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_active@2x.png"; sourceTree = "<group>"; };
+		44B8578F1810B818007C82A8 /* leaderboards_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leaderboards_active@2x.png"; sourceTree = "<group>"; };
+		44B857901810B818007C82A8 /* chat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat@2x.png"; sourceTree = "<group>"; };
+		44B857911810B818007C82A8 /* leaderboards@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leaderboards@2x.png"; sourceTree = "<group>"; };
 		44BC5336176A96800038043A /* OKGKScoreWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGKScoreWrapper.h; sourceTree = "<group>"; };
 		44BC5337176A96800038043A /* OKGKScoreWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKGKScoreWrapper.m; sourceTree = "<group>"; };
 		44C31A1917F25889004EE2EC /* OpenKit Sample App.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "OpenKit Sample App.xcodeproj"; path = "Samples/OpenKit Sample App/OpenKit Sample App.xcodeproj"; sourceTree = "<group>"; };
@@ -593,6 +617,14 @@
 		32CAD00F16CB65E800E8F185 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				44B8578A1810B818007C82A8 /* leaderboards.png */,
+				44B8578B1810B818007C82A8 /* chat.png */,
+				44B8578C1810B818007C82A8 /* chat_active.png */,
+				44B8578D1810B818007C82A8 /* leaderboards_active.png */,
+				44B8578E1810B818007C82A8 /* chat_active@2x.png */,
+				44B8578F1810B818007C82A8 /* leaderboards_active@2x.png */,
+				44B857901810B818007C82A8 /* chat@2x.png */,
+				44B857911810B818007C82A8 /* leaderboards@2x.png */,
 				2C31DE2F17C6DED0005D5918 /* settings.png */,
 				2C31DE3017C6DED0005D5918 /* settings@2x.png */,
 				2C31DE2B17C6D9B2005D5918 /* close.png */,

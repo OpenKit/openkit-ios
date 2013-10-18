@@ -45,6 +45,14 @@
 		4487F0C417E8414B004CFB57 /* ScoreSubmitterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4487F0BF17E8414B004CFB57 /* ScoreSubmitterVC.m */; };
 		4487F0C517E8414B004CFB57 /* ScoreSubmitterVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4487F0C017E8414B004CFB57 /* ScoreSubmitterVC.xib */; };
 		44B8578218109E2E007C82A8 /* OKChatVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44B8578118109E2E007C82A8 /* OKChatVC.xib */; };
+		44B857F61810B92A007C82A8 /* chat_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 44B857F21810B92A007C82A8 /* chat_active.png */; };
+		44B857F71810B92A007C82A8 /* chat_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44B857F31810B92A007C82A8 /* chat_active@2x.png */; };
+		44B857F81810B92A007C82A8 /* chat.png in Resources */ = {isa = PBXBuildFile; fileRef = 44B857F41810B92A007C82A8 /* chat.png */; };
+		44B857F91810B92A007C82A8 /* chat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44B857F51810B92A007C82A8 /* chat@2x.png */; };
+		44B857FE1810B935007C82A8 /* leaderboards_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 44B857FA1810B935007C82A8 /* leaderboards_active.png */; };
+		44B857FF1810B935007C82A8 /* leaderboards_active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44B857FB1810B935007C82A8 /* leaderboards_active@2x.png */; };
+		44B858001810B935007C82A8 /* leaderboards.png in Resources */ = {isa = PBXBuildFile; fileRef = 44B857FC1810B935007C82A8 /* leaderboards.png */; };
+		44B858011810B935007C82A8 /* leaderboards@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44B857FD1810B935007C82A8 /* leaderboards@2x.png */; };
 		44E722BB17F24AA70066A9AE /* libOpenKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44E7227017F24AA70066A9AE /* libOpenKit.a */; };
 		44E722BC17F24AA70066A9AE /* back_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 44E7227217F24AA70066A9AE /* back_button.png */; };
 		44E722BD17F24AA70066A9AE /* back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44E7227317F24AA70066A9AE /* back_button@2x.png */; };
@@ -150,6 +158,14 @@
 		44B8578118109E2E007C82A8 /* OKChatVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OKChatVC.xib; sourceTree = "<group>"; };
 		44B8578318109E3A007C82A8 /* OKChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKChatViewController.h; sourceTree = "<group>"; };
 		44B8578418109E3A007C82A8 /* OKDashboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDashboard.h; sourceTree = "<group>"; };
+		44B857F21810B92A007C82A8 /* chat_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_active.png; sourceTree = "<group>"; };
+		44B857F31810B92A007C82A8 /* chat_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_active@2x.png"; sourceTree = "<group>"; };
+		44B857F41810B92A007C82A8 /* chat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat.png; sourceTree = "<group>"; };
+		44B857F51810B92A007C82A8 /* chat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat@2x.png"; sourceTree = "<group>"; };
+		44B857FA1810B935007C82A8 /* leaderboards_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leaderboards_active.png; sourceTree = "<group>"; };
+		44B857FB1810B935007C82A8 /* leaderboards_active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leaderboards_active@2x.png"; sourceTree = "<group>"; };
+		44B857FC1810B935007C82A8 /* leaderboards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leaderboards.png; sourceTree = "<group>"; };
+		44B857FD1810B935007C82A8 /* leaderboards@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leaderboards@2x.png"; sourceTree = "<group>"; };
 		44E7224A17F24AA70066A9AE /* AbstractActionSheetPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractActionSheetPicker.h; sourceTree = "<group>"; };
 		44E7224B17F24AA70066A9AE /* ActionSheetStringPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetStringPicker.h; sourceTree = "<group>"; };
 		44E7224C17F24AA70066A9AE /* AFImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageView.h; sourceTree = "<group>"; };
@@ -444,6 +460,14 @@
 		44E7227117F24AA70066A9AE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				44B857FA1810B935007C82A8 /* leaderboards_active.png */,
+				44B857FB1810B935007C82A8 /* leaderboards_active@2x.png */,
+				44B857FC1810B935007C82A8 /* leaderboards.png */,
+				44B857FD1810B935007C82A8 /* leaderboards@2x.png */,
+				44B857F21810B92A007C82A8 /* chat_active.png */,
+				44B857F31810B92A007C82A8 /* chat_active@2x.png */,
+				44B857F41810B92A007C82A8 /* chat.png */,
+				44B857F51810B92A007C82A8 /* chat@2x.png */,
 				44B8578118109E2E007C82A8 /* OKChatVC.xib */,
 				44E7227217F24AA70066A9AE /* back_button.png */,
 				44E7227317F24AA70066A9AE /* back_button@2x.png */,
@@ -627,16 +651,20 @@
 				44E722C917F24AA70066A9AE /* gc_off_big@2x.png in Resources */,
 				44E722C217F24AA70066A9AE /* fb_off_big.png in Resources */,
 				44E722CC17F24AA70066A9AE /* gear.png in Resources */,
+				44B858011810B935007C82A8 /* leaderboards@2x.png in Resources */,
+				44B857F91810B92A007C82A8 /* chat@2x.png in Resources */,
 				44E722BF17F24AA70066A9AE /* close@2x.png in Resources */,
 				44E722CB17F24AA70066A9AE /* gc_on_big@2x.png in Resources */,
 				44E722C617F24AA70066A9AE /* gamecenter_icon.png in Resources */,
 				4487EFFC17E840E1004CFB57 /* Default-Landscape.png in Resources */,
+				44B857F81810B92A007C82A8 /* chat.png in Resources */,
 				44E722D117F24AA70066A9AE /* include_fb_on@2x.png in Resources */,
 				4487EFFD17E840E1004CFB57 /* Default-Portrait@2x.png in Resources */,
 				44E722DC17F24AA70066A9AE /* settings.png in Resources */,
 				44E722D617F24AA70066A9AE /* invite.png in Resources */,
 				44E722C817F24AA70066A9AE /* gc_off_big.png in Resources */,
 				44E722BD17F24AA70066A9AE /* back_button@2x.png in Resources */,
+				44B858001810B935007C82A8 /* leaderboards.png in Resources */,
 				44E722D517F24AA70066A9AE /* include_gc_on@2x.png in Resources */,
 				44E722CA17F24AA70066A9AE /* gc_on_big.png in Resources */,
 				44E722CF17F24AA70066A9AE /* include_fb_off@2x.png in Resources */,
@@ -645,8 +673,12 @@
 				4487F00417E840E1004CFB57 /* Default.png in Resources */,
 				4487EFFB17E840E1004CFB57 /* Default-Landscape@2x.png in Resources */,
 				44E722CE17F24AA70066A9AE /* include_fb_off.png in Resources */,
+				44B857FF1810B935007C82A8 /* leaderboards_active@2x.png in Resources */,
 				4487EFFF17E840E1004CFB57 /* Icon-72.png in Resources */,
 				44E722BE17F24AA70066A9AE /* close.png in Resources */,
+				44B857FE1810B935007C82A8 /* leaderboards_active.png in Resources */,
+				44B857F61810B92A007C82A8 /* chat_active.png in Resources */,
+				44B857F71810B92A007C82A8 /* chat_active@2x.png in Resources */,
 				44E722D917F24AA70066A9AE /* OKLeaderboardsListViewController.xib in Resources */,
 				44E722D217F24AA70066A9AE /* include_gc_off.png in Resources */,
 				44E722C717F24AA70066A9AE /* gamecenter_icon@2x.png in Resources */,
