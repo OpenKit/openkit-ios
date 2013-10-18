@@ -78,6 +78,11 @@
 		44B50D1D1771227D00B5D8AD /* OKFBLoginCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B50D1C1771227D00B5D8AD /* OKFBLoginCell.m */; };
 		44B50D1F17713FFF00B5D8AD /* OKFBLoginCell.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44B50D1E1771228F00B5D8AD /* OKFBLoginCell.xib */; };
 		44B50D2417728E0300B5D8AD /* OKSpinnerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B50D2317728E0200B5D8AD /* OKSpinnerCell.m */; };
+		44B8577918109753007C82A8 /* OKChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B8577818109753007C82A8 /* OKChatViewController.m */; };
+		44B8577D18109AD4007C82A8 /* OKDashboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B8577C18109AD4007C82A8 /* OKDashboard.m */; };
+		44B8577E18109CEE007C82A8 /* OKChatViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B8577718109753007C82A8 /* OKChatViewController.h */; };
+		44B8577F18109CEE007C82A8 /* OKDashboard.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B8577B18109AD4007C82A8 /* OKDashboard.h */; };
+		44B8578018109CFA007C82A8 /* OKChatVC.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44B857731810962B007C82A8 /* OKChatVC.xib */; };
 		44BB68C51777E39900839D0D /* OKScoreProtocol.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B50D16176FDADF00B5D8AD /* OKScoreProtocol.h */; };
 		44BB68C61777E3BB00839D0D /* OKSocialLeaderboardViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B50D0A176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.h */; };
 		44BB68C71777E3BB00839D0D /* OKFBLoginCell.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44B50D1B1771227C00B5D8AD /* OKFBLoginCell.h */; };
@@ -165,6 +170,8 @@
 			dstPath = include;
 			dstSubfolderSpec = 16;
 			files = (
+				44B8577E18109CEE007C82A8 /* OKChatViewController.h in Copy Files */,
+				44B8577F18109CEE007C82A8 /* OKDashboard.h in Copy Files */,
 				44469D9217FE640500BEBF41 /* OKScoreDB.h in Copy Files */,
 				44F3004E17E2F2D800108D05 /* OKUserUtilities.h in Copy Files */,
 				44B0E50C17DFC69F00A80DC9 /* OKFileUtil.h in Copy Files */,
@@ -213,6 +220,7 @@
 			dstPath = Resources;
 			dstSubfolderSpec = 7;
 			files = (
+				44B8578018109CFA007C82A8 /* OKChatVC.xib in CopyFiles */,
 				44F3CD4517CC1A5700D054CF /* settings.png in CopyFiles */,
 				44F3CD4617CC1A5700D054CF /* settings@2x.png in CopyFiles */,
 				44F3CD4717CC1A5700D054CF /* close.png in CopyFiles */,
@@ -392,6 +400,11 @@
 		44B50D1E1771228F00B5D8AD /* OKFBLoginCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OKFBLoginCell.xib; path = ../../OpenKit/OKFBLoginCell.xib; sourceTree = "<group>"; };
 		44B50D2217728E0200B5D8AD /* OKSpinnerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSpinnerCell.h; sourceTree = "<group>"; };
 		44B50D2317728E0200B5D8AD /* OKSpinnerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSpinnerCell.m; sourceTree = "<group>"; };
+		44B857731810962B007C82A8 /* OKChatVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OKChatVC.xib; path = OpenKit/OKChatVC.xib; sourceTree = SOURCE_ROOT; };
+		44B8577718109753007C82A8 /* OKChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OKChatViewController.h; path = ../../OpenKit/OKChatViewController.h; sourceTree = "<group>"; };
+		44B8577818109753007C82A8 /* OKChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OKChatViewController.m; path = ../../OpenKit/OKChatViewController.m; sourceTree = "<group>"; };
+		44B8577B18109AD4007C82A8 /* OKDashboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OKDashboard.h; path = OpenKit/OKDashboard.h; sourceTree = SOURCE_ROOT; };
+		44B8577C18109AD4007C82A8 /* OKDashboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OKDashboard.m; path = OpenKit/OKDashboard.m; sourceTree = SOURCE_ROOT; };
 		44BC5336176A96800038043A /* OKGKScoreWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGKScoreWrapper.h; sourceTree = "<group>"; };
 		44BC5337176A96800038043A /* OKGKScoreWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKGKScoreWrapper.m; sourceTree = "<group>"; };
 		44C31A1917F25889004EE2EC /* OpenKit Sample App.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "OpenKit Sample App.xcodeproj"; path = "Samples/OpenKit Sample App/OpenKit Sample App.xcodeproj"; sourceTree = "<group>"; };
@@ -556,6 +569,7 @@
 				446BAB4A177A84850092BD58 /* TableCells */,
 				44DD160817DFEA0900D914FA /* Cache */,
 				44BC533217692DE20038043A /* Utilities */,
+				44B8577A1810999C007C82A8 /* Chat */,
 			);
 			path = OpenKit;
 			sourceTree = "<group>";
@@ -609,6 +623,7 @@
 		32CAD02816CB65E800E8F185 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				44B857731810962B007C82A8 /* OKChatVC.xib */,
 				44B50D1E1771228F00B5D8AD /* OKFBLoginCell.xib */,
 				44B50D13176ED4B100B5D8AD /* OKSocialLeaderboardVC.xib */,
 				32CAD02916CB65E800E8F185 /* OKLeaderboardsListViewController.xib */,
@@ -721,6 +736,18 @@
 				446A551717E3A98900081C7B /* OKChallenge.m */,
 			);
 			name = "Social Leaderboard";
+			sourceTree = "<group>";
+		};
+		44B8577A1810999C007C82A8 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				44B8577718109753007C82A8 /* OKChatViewController.h */,
+				44B8577818109753007C82A8 /* OKChatViewController.m */,
+				44B8577B18109AD4007C82A8 /* OKDashboard.h */,
+				44B8577C18109AD4007C82A8 /* OKDashboard.m */,
+			);
+			name = Chat;
+			path = ../Resources/Xib;
 			sourceTree = "<group>";
 		};
 		44BC533217692DE20038043A /* Utilities */ = {
@@ -955,6 +982,7 @@
 				32CACFE516CB637C00E8F185 /* OKProfileViewController.m in Sources */,
 				32CACFE616CB637C00E8F185 /* OKScore.m in Sources */,
 				44C31A3717F273C8004EE2EC /* FMResultSet.m in Sources */,
+				44B8577918109753007C82A8 /* OKChatViewController.m in Sources */,
 				32CACFE716CB637C00E8F185 /* OKScoreCell.m in Sources */,
 				32CACFEB16CB637C00E8F185 /* OKUser.m in Sources */,
 				32CACFEC16CB637C00E8F185 /* OKUserProfileImageView.m in Sources */,
@@ -967,6 +995,7 @@
 				44E1182B1728A7CF003C2603 /* OKError.m in Sources */,
 				32880CE6176D2991005F8D30 /* AFOAuth1Client.m in Sources */,
 				32880CEE176DC784005F8D30 /* OKUtils.m in Sources */,
+				44B8577D18109AD4007C82A8 /* OKDashboard.m in Sources */,
 				445B3C001769258C00952456 /* OKGameCenterUtilities.m in Sources */,
 				44BC5338176A96810038043A /* OKGKScoreWrapper.m in Sources */,
 				44B50D0B176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m in Sources */,
