@@ -35,15 +35,19 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 - (void)configWithDictionary:(NSDictionary*)dict
 {
-    NSString *sortTypeString    = [OKHelper getNSStringSafeForKey:@"sort_type" fromJSONDictionary:dict];
+    self.name           = [OKHelper getNSStringFrom:dict key:@"name"];
+    self.leaderboardID  = [[OKHelper getNSNumberFrom:dict key:@"id"] integerValue];
+    self.iconUrl        = [OKHelper getNSStringFrom:dict key:@"icon_url"];
+    self.playerCount    = [[OKHelper getNSNumberFrom:dict key:@"player_count"] integerValue];
+    self.services       = [OKHelper getNSDictionaryFrom:dict key:@"services"];
     
-    self.name                   = [OKHelper getNSStringSafeForKey:@"name" fromJSONDictionary:dict];
-    self.leaderboardID          = [[OKHelper getNSNumberSafeForKey:@"id" fromJSONDictionary:dict] integerValue];
-    self.OKApp_id               = [[OKHelper getNSNumberSafeForKey:@"app_id" fromJSONDictionary:dict] integerValue];
-    self.sortType               = ([sortTypeString isEqualToString:@"HighValue"]) ? OKLeaderboardSortTypeHighValue : OKLeaderboardSortTypeLowValue;
-    self.iconUrl               = [OKHelper getNSStringSafeForKey:@"icon_url" fromJSONDictionary:dict];
-    self.playerCount            = [[OKHelper getNSNumberSafeForKey:@"player_count" fromJSONDictionary:dict] integerValue];
-    self.gamecenterID           = [OKHelper getNSStringSafeForKey:@"gamecenter_id" fromJSONDictionary:dict];
+    NSString *sortTypeString    = [OKHelper getNSStringFrom:dict key:@"sort_type"];
+    if([sortTypeString isEqualToString:@"HighValue"]) {
+        self.sortType = OKLeaderboardSortTypeHighValue;
+    }else{
+        self.sortType = OKLeaderboardSortTypeLowValue;
+    }
+}
 }
 
 

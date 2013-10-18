@@ -29,26 +29,9 @@
 
 - (void)configWithDictionary:(NSDictionary*)dict
 {
-    _userID = [OKHelper getNSNumberSafeForKey:@"id" fromJSONDictionary:dict];
-    _userNick = [OKHelper getNSStringSafeForKey:@"name" fromJSONDictionary:dict];
-
-    // REVIEW THIS
-#if 0
-    // LEGACY
-    NSString *fbID = [OKHelper getNSStringSafeForKey:@"fb_id" fromJSONDictionary:dict];
-    NSString *customID = [OKHelper getNSStringSafeForKey:@"custom_id" fromJSONDictionary:dict];
-    NSString *gamecenterID = [OKHelper getNSStringSafeForKey:@"gamecenter_id" fromJSONDictionary:dict];
-    
-    NSMutableDictionary *tmp = [NSMutableDictionary dictionaryWithCapacity:2];
-    [tmp setValue:fbID forKey:@"facebook"];
-    [tmp setValue:customID forKey:@"custom"];
-    [tmp setValue:gamecenterID forKey:@"gamecenter"];
-    
-    _services = [NSDictionary dictionaryWithDictionary:tmp];
-#else
-    // NEW
-    _services = [OKHelper getNSDictionarySafeForKey:@"services" fromJSONDictionary:dict];
-#endif
+    _userID = [OKHelper getNSNumberFrom:dict key:@"id"];
+    _userNick = [OKHelper getNSStringFrom:dict key:@"name"];
+    _services = [OKHelper getNSDictionaryFrom:dict key:@"services"];
 }
 
 
@@ -117,9 +100,10 @@
 {
     [super configWithDictionary:dict];
     
-    _accessToken = [OKHelper getNSStringSafeForKey:@"token" fromJSONDictionary:dict];
-    _accessTokenSecret = [OKHelper getNSStringSafeForKey:@"token_secret" fromJSONDictionary:dict];
-    _dirty = [NSMutableDictionary dictionaryWithDictionary:[OKHelper getNSDictionarySafeForKey:@"dirty" fromJSONDictionary:dict]];
+    _accessToken = [OKHelper getNSStringFrom:dict key:@"token"];
+    _accessTokenSecret = [OKHelper getNSStringFrom:dict key:@"token_secret"];
+    _dirty = [NSMutableDictionary dictionaryWithDictionary:[dict objectForKey:@"dirty"]];
+    _friends = [NSMutableDictionary dictionaryWithDictionary:[dict objectForKey:@"friends"]];
 }
 
 
@@ -152,6 +136,7 @@
         [self changeValues:[NSDictionary dictionaryWithObject:newFriendsString forKey:key]];
     }
 }
+
 
 - (NSString*)friendsForService:(NSString*)service
 {

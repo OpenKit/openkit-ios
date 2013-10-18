@@ -30,7 +30,7 @@
 
     
     // See if the score was a top score
-    BOOL wasTopScore = [OKHelper getBOOLSafeForKey:@"is_users_best" fromJSONDictionary:responseObject];
+    BOOL wasTopScore = [OKHelper getBOOLFrom:responseObject key:@"is_users_best"];
     if(!wasTopScore) {
         OKLog(@"Score submitted was not users best");
         return;
@@ -43,7 +43,7 @@
     }
     
     OKLeaderboard *leaderboard;
-    NSDictionary *leaderboardJSON = [OKHelper getNSDictionarySafeForKey:@"leaderboard" fromJSONDictionary:responseObject];
+    NSDictionary *leaderboardJSON = [OKHelper getNSDictionaryFrom:responseObject key:@"leaderboard"];
     
     if(leaderboardJSON != nil) {
         leaderboard = [[OKLeaderboard alloc] initWithDictionary:leaderboardJSON];

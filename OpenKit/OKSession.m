@@ -41,16 +41,16 @@ OKSession *__currentSession = nil;
 
 - (void)configWithDictionary:(NSDictionary*)dict
 {
-    self.rowIndex   = [OKHelper getIntSafeForKey:@"row_id" fromJSONDictionary:dict];
-    self.modifyDate = [OKHelper getNSDateSafeForKey:@"modify_date" fromJSONDictionary:dict];
-    self.createDate = [OKHelper getNSDateSafeForKey:@"client_created_at" fromJSONDictionary:dict];
+    self.rowIndex   = [OKHelper getIntFrom:dict key:@"row_id"];
+    self.modifyDate = [OKHelper getNSDateFrom:dict key:@"modify_date"];
+    self.createDate = [OKHelper getNSDateFrom:dict key:@"client_created_at"];
     
-    self.token      = [OKHelper getNSStringSafeForKey:@"uuid" fromJSONDictionary:dict];
-    self.fbId       = [OKHelper getNSStringSafeForKey:@"fb_id" fromJSONDictionary:dict];
-    self.googleId   = [OKHelper getNSStringSafeForKey:@"google_id" fromJSONDictionary:dict];
-    self.customId   = [OKHelper getNSStringSafeForKey:@"custom_id" fromJSONDictionary:dict];
-    self.pushToken  = [OKHelper getNSStringSafeForKey:@"push_token" fromJSONDictionary:dict];
-    self.okId       = [OKHelper getNSStringSafeForKey:@"ok_id" fromJSONDictionary:dict];
+    self.token      = [OKHelper getNSStringFrom:dict key:@"uuid"];
+    self.fbId       = [OKHelper getNSStringFrom:dict key:@"fb_id"];
+    self.googleId   = [OKHelper getNSStringFrom:dict key:@"google_id"];
+    self.customId   = [OKHelper getNSStringFrom:dict key:@"custom_id"];
+    self.pushToken  = [OKHelper getNSStringFrom:dict key:@"push_token"];
+    self.okId       = [OKHelper getNSStringFrom:dict key:@"ok_id"];
 }
 
 

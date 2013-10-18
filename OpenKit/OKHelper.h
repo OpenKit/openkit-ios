@@ -11,14 +11,14 @@
 @interface OKHelper : NSObject
 
 + (NSDate*)dateNDaysFromToday:(int)n;
-+ (int)getIntSafeForKey:(NSString *)key fromJSONDictionary:(NSDictionary*)jsonDict;
-+ (int64_t)getInt64SafeForKey:(NSString *)key fromJSONDictionary:(NSDictionary*)jsonDict;
-+ (BOOL)getBOOLSafeForKey:(NSString *)key fromJSONDictionary:(NSDictionary*)jsonDict;
-+ (NSArray*)getNSArraySafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict;
-+ (NSString*)getNSStringSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict;
-+ (NSNumber*)getNSNumberSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict;
-+ (NSDate*)getNSDateSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict;
-+ (NSDictionary*)getNSDictionarySafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict;
++ (int)getIntFrom:(NSDictionary*)dict key:(NSString *)key;
++ (int64_t)getInt64From:(NSDictionary*)dict key:(NSString *)key;
++ (BOOL)getBOOLFrom:(NSDictionary*)dict key:(NSString *)key;
++ (NSArray*)getNSArrayFrom:(NSDictionary*)dict key:(NSString *)key;
++ (NSString*)getNSStringFrom:(NSDictionary*)dict key:(NSString *)key;
++ (NSNumber*)getNSNumberFrom:(NSDictionary*)dict key:(NSString *)key;
++ (NSDate*)getNSDateFrom:(NSDictionary*)dict key:(NSString *)key;
++ (NSDictionary*)getNSDictionaryFrom:(NSDictionary*)dict key:(NSString *)key;
 + (NSString*)getPathToDocsDirectory;
 + (BOOL)isEmpty:(id)obj;
 + (NSString*)serializeArray:(NSArray*)array withSorting:(BOOL)sorting;

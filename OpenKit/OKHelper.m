@@ -31,13 +31,13 @@
 }
 
 
-+ (NSArray*)getNSArraySafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
++ (NSArray*)getNSArrayFrom:(NSDictionary*)dict key:(NSString *)key;
 {
-    if(![jsonDict isKindOfClass:[NSDictionary class]]) {
+    if(![dict isKindOfClass:[NSDictionary class]]) {
         return nil;
     }
     
-    id value = [jsonDict objectForKey:key];
+    id value = [dict objectForKey:key];
     
     if([value isKindOfClass:[NSArray class]]) {
         return value;
@@ -47,9 +47,9 @@
 }
 
 
-+ (BOOL)getBOOLSafeForKey:(NSString *)key fromJSONDictionary:(NSDictionary*)jsonDict
++ (BOOL)getBOOLFrom:(NSDictionary*)dict key:(NSString *)key;
 {
-    NSNumber *numberValue = [OKHelper getNSNumberSafeForKey:key fromJSONDictionary:jsonDict];
+    NSNumber *numberValue = [OKHelper getNSNumberFrom:dict key:key];
     
     if(numberValue != nil) {
         return [numberValue boolValue];
@@ -59,9 +59,9 @@
 }
 
 
-+ (int64_t)getInt64SafeForKey:(NSString *)key fromJSONDictionary:(NSDictionary*)jsonDict
++ (int64_t)getInt64From:(NSDictionary*)dict key:(NSString *)key;
 {
-    NSNumber *numberValue = [OKHelper getNSNumberSafeForKey:key fromJSONDictionary:jsonDict];
+    NSNumber *numberValue = [OKHelper getNSNumberFrom:dict key:key];
     if(numberValue) {
         return [numberValue longLongValue];
     } else {
@@ -70,9 +70,9 @@
 }
 
 
-+ (int)getIntSafeForKey:(NSString *)key fromJSONDictionary:(NSDictionary*)jsonDict
++ (int)getIntFrom:(NSDictionary*)dict key:(NSString *)key;
 {
-    NSNumber *numberValue = [OKHelper getNSNumberSafeForKey:key fromJSONDictionary:jsonDict];
+    NSNumber *numberValue = [OKHelper getNSNumberFrom:dict key:key];
     if(numberValue) {
         return [numberValue integerValue];
     } else {
@@ -81,13 +81,13 @@
 }
 
 
-+ (NSNumber*)getNSNumberSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
++ (NSNumber*)getNSNumberFrom:(NSDictionary*)dict key:(NSString *)key;
 {
-    if(![jsonDict isKindOfClass:[NSDictionary class]]) {
+    if(![dict isKindOfClass:[NSDictionary class]]) {
         return nil;
     }
     
-    id value = [jsonDict objectForKey:key];
+    id value = [dict objectForKey:key];
     
     if([value isKindOfClass:[NSNumber class]]) {
         return value;
@@ -103,13 +103,13 @@
 }
 
 
-+ (NSDate*)getNSDateSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
++ (NSDate*)getNSDateFrom:(NSDictionary*)dict key:(NSString *)key;
 {
-    if(![jsonDict isKindOfClass:[NSDictionary class]]) {
+    if(![dict isKindOfClass:[NSDictionary class]]) {
         return nil;
     }
     
-    id value = [jsonDict objectForKey:key];
+    id value = [dict objectForKey:key];
     
     if([value isKindOfClass:[NSDate class]]) {
         return value;
@@ -121,13 +121,13 @@
 }
 
 
-+ (NSString*)getNSStringSafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
++ (NSString*)getNSStringFrom:(NSDictionary*)dict key:(NSString *)key;
 {
-    if(![jsonDict isKindOfClass:[NSDictionary class]]) {
+    if(![dict isKindOfClass:[NSDictionary class]]) {
         return nil;
     }
     
-    NSString *value = [jsonDict objectForKey:key];
+    NSString *value = [dict objectForKey:key];
     
     if([value isKindOfClass:[NSString class]]) {
         if([OKHelper isEmpty:value]) {
@@ -144,13 +144,13 @@
 }
 
 
-+ (NSDictionary*)getNSDictionarySafeForKey:(NSString*)key fromJSONDictionary:(NSDictionary*)jsonDict
++ (NSDictionary*)getNSDictionaryFrom:(NSDictionary*)dict key:(NSString *)key;
 {
-    if(![jsonDict isKindOfClass:[NSDictionary class]]) {
+    if(![dict isKindOfClass:[NSDictionary class]]) {
         return nil;
     }
     
-    NSDictionary *value = [jsonDict objectForKey:key];
+    NSDictionary *value = [dict objectForKey:key];
     
     if([value isKindOfClass:[NSDictionary class]]) {
         return value;

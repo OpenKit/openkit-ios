@@ -57,16 +57,16 @@
 
 - (void)configWithDictionary:(NSDictionary*)dict
 {
-    self.rowIndex       = [OKHelper getIntSafeForKey:@"row_id" fromJSONDictionary:dict];
-    self.modifyDate     = [OKHelper getNSDateSafeForKey:@"modify_date" fromJSONDictionary:dict];
+    self.rowIndex       = [OKHelper getIntFrom:dict key:@"row_id"];
+    self.modifyDate     = [OKHelper getNSDateFrom:dict key:@"modify_date"];
     
-    self.scoreID        = [OKHelper getIntSafeForKey:@"id" fromJSONDictionary:dict];
-    self.scoreValue     = [OKHelper getInt64SafeForKey:@"value" fromJSONDictionary:dict];
-    self.scoreRank      = [OKHelper getIntSafeForKey:@"rank" fromJSONDictionary:dict];
-    self.leaderboardID  = [OKHelper getIntSafeForKey:@"leaderboard_id" fromJSONDictionary:dict];
+    self.scoreID        = [OKHelper getIntFrom:dict key:@"id"];
+    self.scoreValue     = [OKHelper getInt64From:dict key:@"value"];
+    self.scoreRank      = [OKHelper getIntFrom:dict key:@"rank"];
+    self.leaderboardID  = [OKHelper getIntFrom:dict key:@"leaderboard_id"];
     self.user           = [OKUser createUserWithDictionary:[dict objectForKey:@"user"]];
-    self.displayString  = [OKHelper getNSStringSafeForKey:@"display_string" fromJSONDictionary:dict];
-    self.metadata       = [OKHelper getIntSafeForKey:@"metadata" fromJSONDictionary:dict];
+    self.displayString  = [OKHelper getNSStringFrom:dict key:@"display_string"];
+    self.metadata       = [OKHelper getIntFrom:dict key:@"metadata"];
 }
 
 

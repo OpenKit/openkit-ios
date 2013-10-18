@@ -14,9 +14,9 @@
 @interface OKFacebookPlugin : OKAuthProvider
 
 // Other FB helper methods
-+ (void)handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:(NSError *)error;
+- (void)handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:(NSError *)error;
 
 // FB Invites
-+ (void)sendFacebookRequest;
+- (void)sendFacebookRequest;
 
 @end

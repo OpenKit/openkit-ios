@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
-
 #import <FacebookSDK/FacebookSDK.h>
 #import <FacebookSDK/FBErrorUtility.h>
 #import "OKFacebookUtilities.h"
@@ -167,7 +166,7 @@
         }
         else {
             //NSArray *graphFriends = [result objectForKey:@"data"];
-            NSArray *graphFriends = [OKHelper getNSArraySafeForKey:@"data" fromJSONDictionary:result];
+            NSArray *graphFriends = [OKHelper getNSArrayFrom:result key:@"data"];
             if(graphFriends) {
                 OKLog(@"Received %d friends", [graphFriends count]);
                 NSArray *friendsList = [self makeListOfFacebookFriends:graphFriends];
@@ -226,7 +225,7 @@
     for(int x = 0; x < [friendsJSON count]; x++)
     {
         NSDictionary *friendDict = [friendsJSON objectAtIndex:x];
-        NSString *friendID = [OKHelper getNSStringSafeForKey:@"id" fromJSONDictionary:friendDict];
+        NSString *friendID = [OKHelper getNSStringFrom:friendDict key:@"id"];
         if(friendID != nil) {
             [list addObject:friendID];
         }
