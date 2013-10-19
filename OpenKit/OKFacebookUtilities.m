@@ -81,10 +81,13 @@
 }
 
 
-- (BOOL)openSessionWithViewController:(UIViewController*)controller completion:(void(^)(NSError *error))handler
+- (BOOL)openSessionWithViewController:(UIViewController*)controller completion:(void(^)(BOOL login, NSError *error))handler
 {
-    if([self isSessionOpen])
+    if([self isSessionOpen]) {
+        if(handler)
+            handler(YES, nil);
         return YES;
+    }
     
     return [FBSession openActiveSessionWithReadPermissions:nil
                                               allowLoginUI:(controller != nil)
@@ -92,7 +95,7 @@
     {
         [self sessionStateChanged:status error:error];
         if(handler)
-            handler(error);
+            handler([self isSessionOpen], error);
     }];
 }
 

@@ -167,7 +167,7 @@ NSMutableArray *__providers = nil;
     return NO;
 }
 
-- (BOOL)openSessionWithViewController:(UIViewController*)controller completion:(void(^)(NSError *error))handler
+- (BOOL)openSessionWithViewController:(UIViewController*)controller completion:(void(^)(BOOL login, NSError *error))handler
 {
     NSAssert(NO, @"Override this method");
     return NO;

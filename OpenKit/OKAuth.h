@@ -21,6 +21,7 @@
 - (id)initWithName:(NSString*)name;
 + (void)addProvider:(OKAuthProvider*)provider;
 + (OKAuthProvider*)providerByName:(NSString*)name;
++ (NSArray*)getAuthProviders;
 
 
 // REQUIRED TO OVERRIDE
@@ -44,7 +45,7 @@
 //! This method can be called directly from the developer's code.
 //! If the controller is valid and the session is not open yet, this method should display the UI needed for login.
 //! Return YES if the session was opened synchronously.
-- (BOOL)openSessionWithViewController:(UIViewController*)controller completion:(void(^)(NSError *error))handler;
+- (BOOL)openSessionWithViewController:(UIViewController*)controller completion:(void(^)(BOOL login, NSError *error))handler;
 
 
 //! Gets the user's profile from the service.

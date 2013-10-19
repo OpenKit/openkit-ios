@@ -48,7 +48,7 @@
 
 - (void)dologin
 {
-    [[OKFacebookPlugin inject] openSessionWithViewController:self.viewController completion:^(NSError *error) {
+    [[OKFacebookPlugin inject] openSessionWithViewController:self.viewController completion:^(BOOL login, NSError *error) {
         NSLog(@"TRY: %@", error);
     }];
 }

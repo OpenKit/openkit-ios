@@ -71,7 +71,7 @@
 }
 
 
-- (BOOL)openSessionWithViewController:(UIViewController*)controller completion:(void(^)(NSError *error))handler
+- (BOOL)openSessionWithViewController:(UIViewController*)controller completion:(void(^)(BOOL login, NSError *error))handler
 {
     [GKLocalPlayer localPlayer].authenticateHandler = ^(UIViewController *gcController, NSError *error)
     {
@@ -86,7 +86,7 @@
         }
         
         if(handler)
-            handler(error);
+            handler([self isSessionOpen], error);
     };
     
     return [self isSessionOpen];
