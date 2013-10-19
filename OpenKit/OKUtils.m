@@ -7,6 +7,7 @@
 //
 
 #import "OKUtils.h"
+#import "OKMacros.h"
 
 
 void OKEncodeObj(id obj, NSString **strOut, NSError **errOut)
@@ -51,19 +52,25 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut)
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
     [dateFormatter setTimeZone: [NSTimeZone timeZoneWithName:@"UTC"]];
-    
     return [dateFormatter dateFromString:string];
 }
 
 
 + (NSString*)base64Enconding:(NSData*)data
 {
-    return [data base64EncodedStringWithOptions:0];
+    if(OK_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0"))
+        return [data base64EncodedStringWithOptions:0];
+    else
+        return [data base64Encoding];
 }
+
 
 + (NSData*)base64Decoding:(NSString*)string
 {
-    return [[NSData alloc] initWithBase64EncodedString:string options:0];
+    if(OK_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0"))
+        return [[NSData alloc] initWithBase64EncodedString:string options:0];
+    else
+        return [[NSData alloc] initWithBase64Encoding:string];
 }
 
 @end
