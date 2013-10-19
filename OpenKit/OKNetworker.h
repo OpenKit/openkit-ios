@@ -27,4 +27,7 @@
        parameters:(NSDictionary *)params
           handler:(void (^)(id responseObject, NSError *error))handler;
 
++ (void)postEvents:(NSDictionary *)params
+           handler:(void (^)(NSError *error))handler;
+
 @end
