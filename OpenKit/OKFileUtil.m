@@ -78,6 +78,8 @@
 
 + (id)readSecureFile:(NSString*)path
 {
+    NSParameterAssert(path);
+    
     NSData *archive = [NSData dataWithContentsOfFile:path];
     if(!archive)
         return nil;
@@ -94,6 +96,9 @@
 
 + (BOOL)writeOnFileSecurely:(id)object path:(NSString*)path
 {
+    NSParameterAssert(path);
+    NSParameterAssert(object);
+
     NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:object];
     NSData *encrypt = [[[OKManager sharedManager] cryptor] encryptData:archive];
     return [encrypt writeToFile:path atomically:YES];

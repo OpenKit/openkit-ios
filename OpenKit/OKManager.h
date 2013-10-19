@@ -44,7 +44,6 @@
 
 + (NSString*)appKey;
 + (NSString*)endpoint;
-+ (NSString*)secretKey;
 
 + (BOOL)handleOpenURL:(NSURL*)url;
 

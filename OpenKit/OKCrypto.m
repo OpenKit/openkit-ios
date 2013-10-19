@@ -64,6 +64,8 @@ static void HMACSHA256(const char *data, int dataLength,
 
 - (id)initWithMasterKey:(NSString*)masterKey
 {
+    NSParameterAssert(masterKey);
+    
     self = [super init];
     if (self) {
         // Convert masterKey to NSData

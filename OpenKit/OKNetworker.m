@@ -10,6 +10,7 @@
 #import "OKUtils.h"
 #import "OKMacros.h"
 #import "OKError.h"
+#import "OKPrivate.h"
 
 
 static AFOAuth1Client *_httpClient = nil;
@@ -47,10 +48,11 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
 
 + (NSDictionary*)encryptMessage:(NSDictionary*)params withError:(NSError**)error
 {
-    NSData *payload;
+    if(!params)
+        return nil;
     
     // Generate JSON UTF-8 encoded
-    payload = [NSJSONSerialization dataWithJSONObject:params options:0 error:error];
+    NSData *payload = [NSJSONSerialization dataWithJSONObject:params options:0 error:error];
     
     // Encrypt payload
     payload = [[[OKManager sharedManager] cryptor] encryptData:payload];

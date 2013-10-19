@@ -95,6 +95,8 @@
 
 - (void)getProfileWithCompletion:(void(^)(OKAuthProfile *profile, NSError *error))handler
 {
+    NSParameterAssert(handler);
+    
     if(![self isSessionOpen]) {
         handler(nil, [OKError sessionClosed]);
         return;
@@ -108,6 +110,8 @@
 
 - (void)getAuthRequestWithCompletion:(void(^)(OKAuthRequest *request, NSError *error))handler
 {
+    NSParameterAssert(handler);
+    
     if(![self isSessionOpen]) {
         handler(nil, [OKError sessionClosed]);
         return;
@@ -202,6 +206,8 @@
                     photoSize:(GKPhotoSize)photoSize
                    completion:(void(^)(UIImage *photo, NSError *error))handler
 {
+    NSParameterAssert(handler);
+    
     [self loadPlayersWithIDs:@[gameCenterID] completion:^(NSArray *players, NSError *error) {
         if (!error && players) {
             GKPlayer *player = [players objectAtIndex:0];

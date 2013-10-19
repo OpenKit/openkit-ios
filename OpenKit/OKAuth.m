@@ -126,6 +126,8 @@ NSMutableArray *__providers = nil;
 
 - (id)initWithName:(NSString*)name
 {
+    NSParameterAssert(name);
+
     self = [super init];
     if (self) {
         _serviceName = name;

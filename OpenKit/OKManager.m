@@ -179,7 +179,7 @@
 
 - (void)performAuthRequest:(NSMutableArray*)authRequests
 {
-    if([authRequests count] == 0) {
+    if(!authRequests || [authRequests count] == 0) {
         [self endLogin];
         return;
     }
@@ -228,9 +228,12 @@
 
 - (void)loginWithProvider:(OKAuthProvider*)provider completion:(void(^)(OKLocalUser *user, NSError *error))handler
 {
+    if(!provider)
+        return;
+    
     OKLogInfo(@"Trying to login with %@", [provider serviceName]);
     [provider getAuthRequestWithCompletion:^(OKAuthRequest *request, NSError *error) {
-        [OKLocalUser loginWithAuthRequests:[NSArray arrayWithObject:request] completion:handler];
+        [OKLocalUser loginWithAuthRequests:@[request] completion:handler];
     }];
 }
 

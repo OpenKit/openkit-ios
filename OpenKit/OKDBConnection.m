@@ -71,6 +71,10 @@ dispatch_queue_t __OKCacheQueue = nil;
 
 - (id)initWithName:(NSString *)name createSql:(NSString *)sql version:(NSString *)version
 {
+    NSParameterAssert(name);
+    NSParameterAssert(sql);
+    NSParameterAssert(version);
+    
     if ((self = [super init])) {
         _dbPath = nil;
         _name = [name copy];
@@ -83,6 +87,8 @@ dispatch_queue_t __OKCacheQueue = nil;
 
 -(void)access:(void(^)(FMDatabase *))block
 {
+    NSParameterAssert(block);
+
     [self sanity];
     FMDatabase *db = [self database];
     if ([db open]){
@@ -144,6 +150,9 @@ dispatch_queue_t __OKCacheQueue = nil;
 
 - (BOOL)syncRow:(OKDBRow*)row
 {
+    if(!row)
+        return NO;
+    
     NSDate *now = [NSDate date];
     [row setDbConnection:self];
     [row setModifyDate:now];

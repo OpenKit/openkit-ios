@@ -102,6 +102,8 @@
 
 - (void)getProfileWithCompletion:(void(^)(OKAuthProfile *profile, NSError *error))handler
 {
+    NSParameterAssert(handler);
+    
     if(![self isSessionOpen]) {
         handler(nil, [OKError sessionClosed]);
         return;
@@ -128,6 +130,8 @@
 
 - (void)getAuthRequestWithCompletion:(void(^)(OKAuthRequest *request, NSError *error))handler
 {
+    NSParameterAssert(handler);
+
     if(![self isSessionOpen]) {
         handler(nil, [OKError sessionClosed]);
         return;
@@ -161,6 +165,8 @@
 
 - (void)loadFriendsWithCompletion:(void(^)(NSArray *friends, NSError *error))handler
 {
+    NSParameterAssert(handler);
+
     [[FBRequest requestForMyFriends] startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         
         if(error) {

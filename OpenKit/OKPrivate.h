@@ -6,7 +6,16 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
+#import "OKManager.h"
 #import "OKLeaderboard.h"
+#import "OKAuth.h"
+#import "OKUser.h"
+
+@interface OKManager (Private)
+
++ (NSString*)secretKey;
+
+@end
 
 
 @interface OKLeaderboard (Private)
@@ -19,7 +28,6 @@
 
 @interface OKAuthProvider (Private)
 
-+ (NSArray*)getAuthProviders;
 + (BOOL)start;
 + (BOOL)handleOpenURL:(NSURL *)url;
 + (void)handleDidBecomeActive;

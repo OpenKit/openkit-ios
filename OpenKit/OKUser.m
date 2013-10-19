@@ -213,27 +213,32 @@
 
 + (void)loginWithAuthRequests:(NSArray*)requests completion:(void(^)(OKLocalUser *user, NSError *error))handler
 {
-    NSMutableArray *params = [NSMutableArray arrayWithCapacity:[requests count]];
-    for(OKAuthRequest *request in requests)
-        [params addObject:[request JSONDictionary]];
+    NSParameterAssert(handler);
     
-    // REVIEW THIS
-    NSDictionary *paramsDict = @{@"requests": params};
-    [OKNetworker postToPath:@"/users"
-                 parameters:paramsDict
-                  encrypted:YES
-                 completion:^(id responseObject, NSError *error)
-     {
-         OKLocalUser *newUser = nil;
-         if(!error) {
-             OKLog(@"Successfully created user ID");
-             newUser = [OKLocalUser createUserWithDictionary:responseObject];
-             
-         } else {
-             OKLog(@"Failed to create user with error: %@", error);
-         }
-         handler(newUser, error);
-     }];
+    if(requests && [requests count] > 0) {
+        
+        NSMutableArray *params = [NSMutableArray arrayWithCapacity:[requests count]];
+        for(OKAuthRequest *request in requests)
+            [params addObject:[request JSONDictionary]];
+        
+        // REVIEW THIS
+        NSDictionary *paramsDict = @{@"requests": params};
+        [OKNetworker postToPath:@"/users"
+                     parameters:paramsDict
+                      encrypted:YES
+                     completion:^(id responseObject, NSError *error)
+         {
+             OKLocalUser *newUser = nil;
+             if(!error) {
+                 OKLog(@"Successfully created user ID");
+                 newUser = [OKLocalUser createUserWithDictionary:responseObject];
+                 
+             } else {
+                 OKLog(@"Failed to create user with error: %@", error);
+             }
+             handler(newUser, error);
+         }];
+    }
 }
 
 @end
