@@ -17,7 +17,7 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
 
 @implementation OKNetworker
 
-+ (AFOAuth1Client *)httpClient
++ (AFOAuth1Client*)httpClient
 {
     if(!_httpClient) {
         NSURL *baseEndpointURL = [NSURL URLWithString:[OKManager endpoint]];
@@ -55,10 +55,8 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
     // Encrypt payload
     payload = [[[OKManager sharedManager] cryptor] encryptData:payload];
     
-    
     // Generate dictionary
-    return @{
-             @"encryption": @"SHA256_AES256",
+    return @{@"encryption": @"SHA256_AES256",
              @"encoding": @"UTF-8",
              @"payload": [OKUtils base64Enconding:payload] };
 }
@@ -66,6 +64,9 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
 
 + (NSDictionary*)decryptMessage:(NSDictionary*)params withError:(NSError**)error
 {
+    if(!params)
+        return nil;
+    
     // Convert base64 encoded string to NSData
     NSData *payload = [OKUtils base64Decoding:params[@"payload"]];
     
@@ -88,7 +89,7 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
 
 + (BOOL)isMessageEncrypted:(NSDictionary*)dict
 {
-    return dict[@"encryption"] && dict[@"encoding"] && dict[@"payload"];
+    return (dict && dict[@"encryption"] && dict[@"encoding"] && dict[@"payload"]);
 }
 
 

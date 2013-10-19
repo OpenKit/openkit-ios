@@ -37,7 +37,7 @@
         return nil;
     }
     
-    id value = [dict objectForKey:key];
+    id value = dict[key];
     
     if([value isKindOfClass:[NSArray class]]) {
         return value;
@@ -87,7 +87,7 @@
         return nil;
     }
     
-    id value = [dict objectForKey:key];
+    id value = dict[key];
     
     if([value isKindOfClass:[NSNumber class]]) {
         return value;
@@ -109,7 +109,7 @@
         return nil;
     }
     
-    id value = [dict objectForKey:key];
+    id value = dict[key];
     
     if([value isKindOfClass:[NSDate class]]) {
         return value;
@@ -127,7 +127,7 @@
         return nil;
     }
     
-    NSString *value = [dict objectForKey:key];
+    id value = dict[key];
     
     if([value isKindOfClass:[NSString class]]) {
         if([OKHelper isEmpty:value]) {
@@ -150,7 +150,7 @@
         return nil;
     }
     
-    NSDictionary *value = [dict objectForKey:key];
+    id value = dict[key];
     
     if([value isKindOfClass:[NSDictionary class]]) {
         return value;

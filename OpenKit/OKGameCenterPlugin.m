@@ -24,15 +24,7 @@
 // This method is slightly redundant because OpenKit only supports iOS 5+
 + (BOOL)isGCAvailable
 {
-    // Check for presence of GKLocalPlayer API.
-    Class gcClass = (NSClassFromString(@"GKLocalPlayer"));
-    
-    // The device must be running running iOS 4.1 or later.
-    NSString *reqSysVer = @"4.1";
-    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
-    BOOL osVersionSupported = ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending);
-    
-    return (gcClass && osVersionSupported);
+    return OK_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"4.1");
 }
 
 
@@ -210,7 +202,7 @@
                     photoSize:(GKPhotoSize)photoSize
                    completion:(void(^)(UIImage *photo, NSError *error))handler
 {
-    [self loadPlayersWithIDs:[NSArray arrayWithObject:gameCenterID] completion:^(NSArray *players, NSError *error) {
+    [self loadPlayersWithIDs:@[gameCenterID] completion:^(NSArray *players, NSError *error) {
         if (!error && players) {
             GKPlayer *player = [players objectAtIndex:0];
             [player loadPhotoForSize:photoSize withCompletionHandler:^(UIImage *photo, NSError *error) {
@@ -237,7 +229,7 @@
 {
     OKLeaderboard *leaderboard = (OKLeaderboard*)[not object];
     OKScore *score = (OKScore*)[[not userInfo] objectForKey:@"score"];
-    NSString *gcLeaderboardID = [[leaderboard services] objectForKey:@"gamecenter"];;
+    NSString *gcLeaderboardID = [[leaderboard services] objectForKey:@"gamecenter"];
     
     if(gcLeaderboardID && [self isSessionOpen])
     {

@@ -55,8 +55,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 - (NSDictionary*)dictionary
 {
-    return @{
-             @"id": @(self.leaderboardID),
+    return @{@"id": @(self.leaderboardID),
              @"name": self.name,
              @"icon_url": self.iconUrl,
              @"player_count": @(self.playerCount),
@@ -137,12 +136,10 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 {
     //Create a request and send it to OpenKit
     //Create the request parameters
-    NSDictionary *params = @{
-                             @"leaderboard_id": @([self leaderboardID]),
+    NSDictionary *params = @{@"leaderboard_id": @([self leaderboardID]),
                              @"page_num": @(pageNum),
                              @"num_per_page": @(NUM_SCORES_PER_PAGE),
-                             @"leaderboard_range": [self getParamForLeaderboardTimeRange:timeRange]
-                             };
+                             @"leaderboard_range": [self getParamForLeaderboardTimeRange:timeRange] };
     
     // OK NETWORK REQUEST
     [OKNetworker getFromPath:@"/best_scores"
@@ -151,7 +148,6 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
      {
          NSMutableArray *scores = nil;
          if(!error) {
-             //OKLog(@"Successfully got scores");
              NSArray *scoresJSON = (NSArray*)responseObject;
              scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
              
@@ -160,7 +156,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
                  [scores addObject:score];
              }
          } else {
-             OKLog(@"Failed to get scores, with error: %@", error);
+             OKLogErr(@"Failed to get scores, with error: %@", error);
          }
          
          if(handler)
@@ -174,10 +170,8 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 {
     //Create a request and send it to OpenKit
     //Create the request parameters
-    NSDictionary *params = @{
-                            @"leaderboard_id": @([self leaderboardID]),
-                            @"leaderboard_range": [self getParamForLeaderboardTimeRange:timeRange]
-                            };
+    NSDictionary *params = @{@"leaderboard_id": @([self leaderboardID]),
+                             @"leaderboard_range": [self getParamForLeaderboardTimeRange:timeRange] };
     
     // OK NETWORK REQUEST
     [OKNetworker postToPath:@"/best_scores/social"
@@ -281,10 +275,8 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
         for(OKLeaderboard *lb in __leaderboards)
             [leaderboards addObject:[lb dictionary]];
         
-        NSDictionary *dict = @{
-                               @"last_update": @(__lastUpdate),
-                               @"leaderboards": leaderboards
-                               };
+        NSDictionary *dict = @{@"last_update": @(__lastUpdate),
+                               @"leaderboards": leaderboards };
         
         NSString *path = [OKFileUtil localOnlyCachePath:OK_LEADERBOARDS];
         [OKFileUtil writeOnFileSecurely:dict path:path];
@@ -314,7 +306,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
-+ (void)getLeaderboardWithID:(int)leaderboardID withCompletion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler
++ (void)getLeaderboardWithID:(int)leaderboardID completion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler
 {
     [self getLeaderboardsWithCompletion:^(NSArray* leaderboards, NSError* error) {
         if(handler) {
@@ -337,8 +329,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 + (NSDictionary*)JSONDictionary
 {
-  return @{
-           @"last_update": [NSNumber numberWithUnsignedInteger:__lastUpdate],
+  return @{@"last_update": [NSNumber numberWithUnsignedInteger:__lastUpdate],
            @"tag": [[OKManager sharedManager] leaderboardListTag] };
 }
 

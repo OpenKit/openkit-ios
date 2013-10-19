@@ -47,6 +47,6 @@ typedef enum {
 
 + (void)syncWithCompletion:(void (^)(NSError* error))handler;
 + (void)getLeaderboardsWithCompletion:(void (^)(NSArray* leaderboards, NSError* error))handler;
-+ (void)getLeaderboardWithID:(int)leaderboardID withCompletion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler;
++ (void)getLeaderboardWithID:(int)leaderboardID completion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler;
 
 @end

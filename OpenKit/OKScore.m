@@ -72,8 +72,7 @@
 
 - (NSDictionary*)JSONDictionary
 {
-    return @{
-             @"leaderboard_id": @(_leaderboardID),
+    return @{@"leaderboard_id": @(_leaderboardID),
              @"value": @(_scoreValue),
              @"user_id": [_user userID],
              @"metadata": @(_metadata),
@@ -159,7 +158,7 @@
     }
     
     [OKLeaderboard getLeaderboardWithID:[score leaderboardID]
-                         withCompletion:^(OKLeaderboard *leaderboard, NSError *error)
+                             completion:^(OKLeaderboard *leaderboard, NSError *error)
     {
         // private method, never call it manually
         [leaderboard submitScore:score withCompletion:handler];

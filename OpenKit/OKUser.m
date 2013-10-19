@@ -44,8 +44,7 @@
 
 - (NSDictionary*)dictionary
 {
-    return @{
-             @"id": _userID,
+    return @{@"id": _userID,
              @"nick": _userNick,
              @"image_url": _userImageUrl,
              @"services": _services };
@@ -164,8 +163,11 @@
 
 - (void)syncWithCompletion:(void(^)(NSError *error))handler
 {
-    if(!_dirty || [_dirty count] == 0)
+    if(!_dirty || [_dirty count] == 0) {
+        if(handler)
         handler(nil);
+        return;
+    }
     
     [OKNetworker postToPath:@"localuser/"
                  parameters:_dirty

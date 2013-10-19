@@ -173,11 +173,6 @@ NSMutableArray *__providers = nil;
     return NO;
 }
 
-- (void)openSessionWithCompletion:(void(^)(NSError *error))handler
-{
-    NSAssert(NO, @"Override this method");
-}
-
 - (void)getProfileWithCompletion:(void(^)(OKAuthProfile *request, NSError *error))handler
 {
     NSAssert(NO, @"Override this method");
@@ -287,8 +282,7 @@ NSMutableArray *__providers = nil;
 
 - (NSDictionary*)JSONDictionary
 {
-    return @{
-             @"service": [_provider serviceName],
+    return @{@"service": [_provider serviceName],
              @"data": _data,
              @"key": _key,
              @"public_key_url": _url };

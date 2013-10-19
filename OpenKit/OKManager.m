@@ -33,15 +33,14 @@
     OKLocalUser *_currentUser;
 }
 
-@property (nonatomic, strong) NSString *appKey;
-@property (nonatomic, strong) NSString *secretKey;
-@property (nonatomic, strong) NSString *endpoint;
+@property(nonatomic, strong) NSString *appKey;
+@property(nonatomic, strong) NSString *secretKey;
+@property(nonatomic, strong) NSString *endpoint;
 
 @end
 
 
 @implementation OKManager
-@synthesize hasShownFBLoginPrompt, leaderboardListTag, cachedFbFriendsList;
 
 + (BOOL)handleOpenURL:(NSURL*)url
 {
@@ -198,7 +197,7 @@
 {
     NSAssert(_initialized == NO, @"Bad state, this method just can be called once.");
     
-    OKLogInfo(@"...Openkit was initialized.");
+    OKLogInfo(@"End initialization");
     _initialized = YES;
     
     

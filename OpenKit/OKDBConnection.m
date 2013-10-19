@@ -219,13 +219,13 @@ dispatch_queue_t __OKCacheQueue = nil;
 }
 
 
-- (NSString *)cacheDirPath
+- (NSString*)cacheDirPath
 {
     return [OKFileUtil localOnlyCachePath];
 }
 
 
-- (NSString *)dbPath
+- (NSString*)dbPath
 {
     if(_dbPath == nil) {
         NSString *s = [NSString stringWithFormat:@"%@-%@.sqlite", _name, _version];

@@ -47,31 +47,7 @@ static void HMACSHA256(const char *data, int dataLength,
     return result;
 }
 
-
-- (id)initWithMasterKey:(NSString*)masterKey
-{
-    self = [super init];
-    if (self) {
-        // Convert masterKey to NSData
-        NSData *masterKeyData = [masterKey dataUsingEncoding:NSUTF8StringEncoding];
-        
-        // Derivate keys for
-        _cryptKey = [self derivateKey:masterKeyData withString:@"encrypt"];
-        _hmacKey = [self derivateKey:masterKeyData withString:@"hmac"];
-        
-        if([_cryptKey length] != kCCKeySizeAES256 || [_hmacKey length] != kCCKeySizeAES256) {
-            OKLogErr(@"The key sizes are wrong.");
-            return nil;
-        }
-        
-        // Create HMAC context
-        CCHmacInit(&_hmacContext, kCCHmacAlgSHA256, [_hmacKey bytes], [_hmacKey length]);
-    }
-    return self;
-}
-
-
-- (NSData*)derivateKey:(NSData*)key withString:(NSString*)string
++ (NSData*)derivateKey:(NSData*)key withString:(NSString*)string
 {
     NSData *salt = [string dataUsingEncoding:NSUTF8StringEncoding];
     uint8_t derivedKey[kCCKeySizeAES256];
@@ -83,6 +59,29 @@ static void HMACSHA256(const char *data, int dataLength,
     
     
     return [NSData dataWithBytes:derivedKey length:kCCKeySizeAES256];
+}
+
+
+- (id)initWithMasterKey:(NSString*)masterKey
+{
+    self = [super init];
+    if (self) {
+        // Convert masterKey to NSData
+        NSData *masterKeyData = [masterKey dataUsingEncoding:NSUTF8StringEncoding];
+        
+        // Derivate keys for
+        _cryptKey = [OKCrypto derivateKey:masterKeyData withString:@"encrypt"];
+        _hmacKey = [OKCrypto derivateKey:masterKeyData withString:@"hmac"];
+        
+        if([_cryptKey length] != kCCKeySizeAES256 || [_hmacKey length] != kCCKeySizeAES256) {
+            OKLogErr(@"The key sizes are wrong.");
+            return nil;
+        }
+        
+        // Create HMAC context
+        CCHmacInit(&_hmacContext, kCCHmacAlgSHA256, [_hmacKey bytes], [_hmacKey length]);
+    }
+    return self;
 }
 
 
