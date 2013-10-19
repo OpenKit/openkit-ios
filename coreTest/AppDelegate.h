@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OpenKit.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, OKManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) UIViewController *viewController;
+
 
 @end

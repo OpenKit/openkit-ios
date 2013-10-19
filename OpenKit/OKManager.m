@@ -216,7 +216,9 @@
     [nc addObserver:self selector:@selector(becameAction) name:UIApplicationDidBecomeActiveNotification object:nil];
     [nc addObserver:self selector:@selector(willTerminate) name:UIApplicationWillTerminateNotification object:nil];
 
-
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(openkitDidLaunch:)])
+        [_delegate openkitDidLaunch:self];
     
     if(![self currentUser])
         OKLogInfo(@"Not login in openkit.");
@@ -231,27 +233,6 @@
     [provider getAuthRequestWithCompletion:^(OKAuthRequest *request, NSError *error) {
         [OKLocalUser loginWithAuthRequests:[NSArray arrayWithObject:request] completion:handler];
     }];
-}
-
-
-#pragma mark - User management and status
-
-- (OKLocalUser*)currentUser
-{
-    @synchronized(self) {
-        return _currentUser;
-    }
-}
-
-
-- (void)setCurrentUser:(OKLocalUser*)aCurrentUser
-{
-    if([_currentUser userID] != [aCurrentUser userID]) {
-        _currentUser = aCurrentUser;
-        [self updateCachedUser];
-        if([self initialized])
-            [self updatedStatus];
-    }
 }
 
 
@@ -281,6 +262,30 @@
     }else{
         // logout
         
+    }
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(openkitDidChangeStatus:)])
+        [_delegate openkitDidChangeStatus:self];
+}
+
+
+#pragma mark - User management and status
+
+- (OKLocalUser*)currentUser
+{
+    @synchronized(self) {
+        return _currentUser;
+    }
+}
+
+
+- (void)setCurrentUser:(OKLocalUser*)aCurrentUser
+{
+    if([_currentUser userID] != [aCurrentUser userID]) {
+        _currentUser = aCurrentUser;
+        [self updateCachedUser];
+        if([self initialized])
+            [self updatedStatus];
     }
 }
 
