@@ -16,7 +16,6 @@
 #import "OKUser.h"
 #import "OKDBScore.h"
 #import "OKHelper.h"
-#import "AFImageView.h"
 #import "OKNotifications.h"
 #import "OKPrivate.h"
 
