@@ -287,16 +287,11 @@ NSMutableArray *__providers = nil;
 
 - (NSDictionary*)JSONDictionary
 {
-    /* REVIEW
-    return [[NSDictionary alloc] initWithObjectsAndKeys:
-            [_provider serviceName], @"service",
-            _data, @"data",
-            _key, @"key",
-            _url, @"public_key_url", nil];
-    */
-    
-    return [[NSDictionary alloc] initWithObjectsAndKeys:
-            _data, @"gamecenter_id", nil];
+    return @{
+             @"service": [_provider serviceName],
+             @"data": _data,
+             @"key": _key,
+             @"public_key_url": _url };
 }
 
 @end

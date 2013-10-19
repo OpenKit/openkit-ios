@@ -31,32 +31,24 @@
 {
     _userID = [OKHelper getNSNumberFrom:dict key:@"id"];
     _userNick = [OKHelper getNSStringFrom:dict key:@"name"];
+    _userImageUrl = [OKHelper getNSStringFrom:dict key:@"image_url"];
     _services = [OKHelper getNSDictionaryFrom:dict key:@"services"];
 }
 
 
 - (NSString*)userIDForService:(NSString*)service
 {
-    return [self.services objectForKey:service];
-}
-
-
-- (NSDictionary*)JSONDictionary
-{
-    return [NSDictionary dictionaryWithObjectsAndKeys:
-            _userID, @"id",
-            _userNick, @"name", nil];
+    return self.services[service];
 }
 
 
 - (NSDictionary*)dictionary
 {
-    NSDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:5];
-    [dict setValue:_userID forKey:@"id"];
-    [dict setValue:_userNick forKey:@"nick"];
-    [dict setValue:_services forKey:@"services"];
-    
-    return dict;
+    return @{
+             @"id": _userID,
+             @"nick": _userNick,
+             @"image_url": _userImageUrl,
+             @"services": _services };
 }
 
 
@@ -65,6 +57,10 @@
     _userNick = userNick;
 }
 
+- (void)setUserImageUrl:(NSString *)userImageUrl
+{
+    _userImageUrl = userImageUrl;
+}
 
 #pragma mark -
 
@@ -102,8 +98,8 @@
     
     _accessToken = [OKHelper getNSStringFrom:dict key:@"token"];
     _accessTokenSecret = [OKHelper getNSStringFrom:dict key:@"token_secret"];
-    _dirty = [NSMutableDictionary dictionaryWithDictionary:[dict objectForKey:@"dirty"]];
-    _friends = [NSMutableDictionary dictionaryWithDictionary:[dict objectForKey:@"friends"]];
+    _dirty = [NSMutableDictionary dictionaryWithDictionary:dict[@"dirty"]];
+    _friends = [NSMutableDictionary dictionaryWithDictionary:dict[@"friends"]];
 }
 
 
@@ -111,7 +107,16 @@
 {
     if(![self.userNick isEqualToString:userNick]) {
         [super setUserNick:userNick];
-        [self changeValues:[NSDictionary dictionaryWithObject:self.userNick forKey:@"nick"]];
+        [self changeValue:self.userNick forKey:@"nick"];
+    }
+}
+
+
+- (void)setUserImageUrl:(NSString *)imageUrl
+{
+    if(![self.userImageUrl isEqualToString:imageUrl]) {
+        [super setUserImageUrl:imageUrl];
+        [self changeValue:self.userImageUrl forKey:@"image_url"];
     }
 }
 
@@ -127,29 +132,33 @@
         _friends = [NSMutableDictionary dictionary];
     
     // Serialize array
-    NSString *oldFriendsString = [_friends objectForKey:service];
+    NSString *oldFriendsString = _friends[service];
     NSString *newFriendsString = [OKHelper serializeArray:friends withSorting:YES];
     
     if(![oldFriendsString isEqualToString:newFriendsString]) {
-        [_friends setValue:newFriendsString forKey:service];
+        _friends[service] = newFriendsString;
+        
         NSString *key = [NSString stringWithFormat:@"friends_%@", service];
-        [self changeValues:[NSDictionary dictionaryWithObject:newFriendsString forKey:key]];
+        [self changeValue:newFriendsString forKey:key];
     }
 }
 
 
 - (NSString*)friendsForService:(NSString*)service
 {
-    return [_friends objectForKey:service];
+    return _friends[service];
 }
 
 
-- (void)changeValues:(NSDictionary*)params
+- (void)changeValue:(id)value forKey:(NSString*)key
 {
     if(!_dirty)
         _dirty = [NSMutableDictionary dictionary];
     
-    [_dirty addEntriesFromDictionary:params];
+    if(value == nil)
+        value = [NSNull null];
+    
+    _dirty[key] = value;
 }
 
 
@@ -158,8 +167,7 @@
     if(!_dirty || [_dirty count] == 0)
         handler(nil);
     
-    NSString *path = [NSString stringWithFormat:@"localuser/"];
-    [OKNetworker postToPath:path
+    [OKNetworker postToPath:@"localuser/"
                  parameters:_dirty
                  completion:^(id responseObject, NSError *error)
      {
@@ -175,10 +183,11 @@
 - (NSDictionary*)dictionary
 {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[super dictionary]];
-    [dict setValue:_accessToken forKey:@"token"];
-    [dict setValue:_accessTokenSecret forKey:@"token_secret"];
-    [dict setValue:_dirty forKey:@"dirty"];
-    [dict setValue:_friends forKey:@"friends"];
+    dict[@"token"] = _accessToken;
+    dict[@"token_secret"] = _accessTokenSecret;
+    dict[@"dirty"] = _dirty;
+    dict[@"_friends"] = _friends;
+
     return dict;
 }
 
@@ -207,7 +216,7 @@
         [params addObject:[request JSONDictionary]];
     
     // REVIEW THIS
-    NSDictionary *paramsDict = [NSDictionary dictionaryWithObject:params forKey:@"requests"];
+    NSDictionary *paramsDict = @{@"requests": params};
     [OKNetworker postToPath:@"/users"
                  parameters:paramsDict
                   encrypted:YES

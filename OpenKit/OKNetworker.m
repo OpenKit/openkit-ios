@@ -57,22 +57,20 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
     
     
     // Generate dictionary
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                          @"SHA256_AES256", @"encryption",
-                          @"UTF-8", @"encoding",
-                          @"payload", [OKUtils base64Enconding:payload], nil];
-    
-    return dict;
+    return @{
+             @"encryption": @"SHA256_AES256",
+             @"encoding": @"UTF-8",
+             @"payload": [OKUtils base64Enconding:payload] };
 }
 
 
 + (NSDictionary*)decryptMessage:(NSDictionary*)params withError:(NSError**)error
 {
     // Convert base64 encoded string to NSData
-    NSData *payload = [OKUtils base64Decoding:[params objectForKey:@"payload"]];
+    NSData *payload = [OKUtils base64Decoding:params[@"payload"]];
     
     // Decrypt payload using algorithm
-    NSString *encryption = [params objectForKey:@"encryption"];
+    NSString *encryption = params[@"encryption"];
     if([encryption isEqualToString:@"SHA256_AES256"])
         payload = [[[OKManager sharedManager] cryptor] decryptData:payload];
     
@@ -90,7 +88,7 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
 
 + (BOOL)isMessageEncrypted:(NSDictionary*)dict
 {
-    return [dict objectForKey:@"encryption"] && [dict objectForKey:@"encoding"] && [dict objectForKey:@"payload"];
+    return dict[@"encryption"] && dict[@"encoding"] && dict[@"payload"];
 }
 
 

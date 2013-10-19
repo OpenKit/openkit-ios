@@ -64,7 +64,7 @@
     self.scoreValue     = [OKHelper getInt64From:dict key:@"value"];
     self.scoreRank      = [OKHelper getIntFrom:dict key:@"rank"];
     self.leaderboardID  = [OKHelper getIntFrom:dict key:@"leaderboard_id"];
-    self.user           = [OKUser createUserWithDictionary:[dict objectForKey:@"user"]];
+    self.user           = [OKUser createUserWithDictionary:dict[@"user"]];
     self.displayString  = [OKHelper getNSStringFrom:dict key:@"display_string"];
     self.metadata       = [OKHelper getIntFrom:dict key:@"metadata"];
 }
@@ -72,14 +72,12 @@
 
 - (NSDictionary*)JSONDictionary
 {
-    NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] initWithCapacity:3];
-    [paramDict setValue:[NSNumber numberWithInt:_leaderboardID] forKey:@"leaderboard_id"];
-    [paramDict setValue:[NSNumber numberWithLongLong:_scoreValue] forKey:@"value"];
-    [paramDict setValue:[_user userID] forKey:@"user_id"];
-    [paramDict setValue:[NSNumber numberWithInt:_metadata] forKey:@"metadata"];
-    [paramDict setValue:[self scoreDisplayString] forKey:@"display_string"];
-    
-    return paramDict;
+    return @{
+             @"leaderboard_id": @(_leaderboardID),
+             @"value": @(_scoreValue),
+             @"user_id": [_user userID],
+             @"metadata": @(_metadata),
+             @"display_string": [self scoreDisplayString] };
 }
 
 

@@ -90,13 +90,13 @@ static NSString *const kOKDBScoreCreateSql =
     NSString *updateSql = @"UPDATE scores SET submit_state=?, modify_date=?, leaderboard_id=?, value=?, metadata=?, display_string=? WHERE row_id=?";
     
     return [self update:updateSql,
-            [NSNumber numberWithInt:score.submitState],
+            @(score.submitState),
             [score dbModifyDate],
-            [NSNumber numberWithInt:score.leaderboardID],
-            [NSNumber numberWithLong:score.scoreValue],
-            [NSNumber numberWithInt:score.metadata],
+            @(score.leaderboardID),
+            @(score.scoreValue),
+            @(score.metadata),
             score.displayString,
-            [NSNumber numberWithInt:score.rowIndex]];
+            @(score.rowIndex)];
 }
 
 
@@ -107,19 +107,19 @@ static NSString *const kOKDBScoreCreateSql =
     NSString *insertSql = @"INSERT INTO scores (submit_state, modify_date, client_created_at, leaderboard_id, value, metadata, display_string) VALUES(?,?,?,?,?,?,?);";
     
     return [self insert:insertSql,
-            [NSNumber numberWithInt:score.submitState],
+            @(score.submitState),
             [score dbModifyDate],
             [score dbCreateDate],
-            [NSNumber numberWithInt:score.leaderboardID],
-            [NSNumber numberWithLong:score.scoreValue],
-            [NSNumber numberWithInt:score.metadata],
+            @(score.leaderboardID),
+            @(score.scoreValue),
+            @(score.metadata),
             score.displayString];
 }
 
 
 - (BOOL)deleteRow:(OKDBRow *)row
 {
-    return [self update:@"DELETE FROM scores WHERE row_id=?", [NSNumber numberWithInt:row.rowIndex]];
+    return [self update:@"DELETE FROM scores WHERE row_id=?", @(row.rowIndex)];
 }
 
 

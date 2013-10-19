@@ -13,6 +13,7 @@
 
 @property(nonatomic, readonly) NSNumber *userID;
 @property(nonatomic, readonly) NSString *userNick;
+@property(nonatomic, readonly) NSString *userImageUrl;
 @property(nonatomic, readonly) NSDictionary *services;
 
 - (NSString*)userIDForService:(NSString*)service;
@@ -34,6 +35,8 @@
 
 - (BOOL)isAccessAllowed;
 - (void)setUserNick:(NSString *)userNick;
+- (void)setUserImageUrl:(NSString *)imageUrl;
+
 - (void)syncWithCompletion:(void(^)(NSError *error))handler;
 - (NSString*)friendsForService:(NSString*)service;
 - (void)setFriendIDs:(NSArray*)friends forService:(NSString*)service;

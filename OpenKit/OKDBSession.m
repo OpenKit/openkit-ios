@@ -75,7 +75,7 @@ static NSString *const kOKDBSessionCreateSql =
     NSString *insertSql = @"INSERT INTO sessions (submit_state, modify_date, client_created_at, uuid, fb_id, google_id, custom_id, ok_id, push_token) VALUES (?,?,?,?,?,?,?,?,?)";
     
     return [self insert:insertSql,
-            [NSNumber numberWithInt:session.submitState],
+            @(session.submitState),
             session.dbModifyDate,
             [session dbCreateDate],
             session.token,
@@ -94,7 +94,7 @@ static NSString *const kOKDBSessionCreateSql =
     NSString *updateSql = @"UPDATE sessions SET submit_state=?, modify_date=?, uuid=?, fb_id=?, google_id=?, custom_id=?, ok_id=?, push_token=? WHERE row_id=?";
     
     return [self update:updateSql,
-            [NSNumber numberWithInt:session.submitState],
+            @(session.submitState),
             session.dbModifyDate,
             session.token,
             session.fbId,
@@ -102,13 +102,13 @@ static NSString *const kOKDBSessionCreateSql =
             session.customId,
             session.okId,
             session.pushToken,
-            [NSNumber numberWithInt:session.rowIndex]];
+            @(session.rowIndex)];
 }
 
 
 - (BOOL)deleteRow:(OKDBRow *)row
 {
-    return [self update:@"DELETE FROM sessions WHERE row_id=?", [NSNumber numberWithInt:row.rowIndex]];
+    return [self update:@"DELETE FROM sessions WHERE row_id=?", @(row.rowIndex)];
 }
 
 

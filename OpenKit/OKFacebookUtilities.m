@@ -109,10 +109,10 @@
         // Did everything come back okay with no errors?
         if (!error && result) {
             OKAuthProfile *profile = [[OKAuthProfile alloc] initWithProvider:self
-                                                                      userID:[result objectForKey:@"id"]
-                                                                        name:[result objectForKey:@"name"]];
+                                                                      userID:result[@"id"]
+                                                                        name:result[@"name"]];
             // Set url of profile image
-            [profile setImageUrl:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", [result objectForKey:@"id"]]];
+            [profile setImageUrl:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", result[@"id"]]];
             
             handler(profile, nil);
         }
