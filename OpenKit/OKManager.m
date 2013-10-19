@@ -23,8 +23,8 @@
 #import "OKUtils.h"
 
 #define OK_LOCAL_SESSION @"openkit.session"
-#define OK_DEFAULT_ENDPOINT    @"http://api.openkit.io"
-#define OK_OPENKIT_SDK_VERSION = @"1.0.2";
+#define OK_DEFAULT_ENDPOINT @"http://api.openkit.io"
+#define OK_OPENKIT_SDK_VERSION = @"2.0";
 
 
 
