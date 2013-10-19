@@ -111,4 +111,30 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
 }
 
 
++ (void)postEvents:(NSDictionary *)params
+           handler:(void (^)(NSError *error))handler
+{
+    static AFOAuth1Client *_analyticsClient = nil;
+    if (_analyticsClient == nil) {
+        _analyticsClient = [[AFOAuth1Client alloc] initWithBaseURL:[NSURL URLWithString:@"http://analytics.openkit.io"]
+                                                               key:[OKManager appKey]
+                                                            secret:[OKManager secretKey]];
+        [_analyticsClient setParameterEncoding:AFJSONParameterEncoding];
+    }
+
+    NSMutableURLRequest *request = [_analyticsClient requestWithMethod:@"POST"
+                                                            path:@"/"
+                                                      parameters:params];
+
+    AFHTTPRequestOperation *op = [_analyticsClient HTTPRequestOperationWithRequest:request
+                                                                           success:^(AFHTTPRequestOperation *operation, id response) {
+                                                                               handler(nil);
+                                                                           }
+                                                                           failure:^(AFHTTPRequestOperation *operation, NSError *err) {
+                                                                               handler(err);
+                                                                           }];
+    [op start];
+}
+
+
 @end

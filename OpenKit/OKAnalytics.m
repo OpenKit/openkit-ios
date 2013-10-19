@@ -1,23 +1,10 @@
-//
-//  OKManager.m
-//  OKManager
-//
-//  Created by Suneet Shah on 12/27/12.
-//  Copyright (c) 2013 OpenKit. All rights reserved.
-//
-
 #import "OKAnalytics.h"
 #import "OKUtils.h"
 #import "OKHelper.h"
 #import "OKFileUtil.h"
-#import "AFNetworking.h"
 #import "OKMacros.h"
 #import "OKManager.h"
-
-#define START_TIME @"st"
-#define E_TIME @"st"
-#define START_TIME @"st"
-#define START_TIME @"st"
+#import "OKNetworker.h"
 
 
 NSMutableArray *__events = nil;
@@ -91,17 +78,18 @@ NSString *__currentSession = nil;
     OKLogInfo(@"Posting event: %@", typeName);
 
     if(!__currentSession) {
-        OKLogErr(@"NO SESSION IS OPEN YET, start it before posting events.");
+        OKLogErr(@"An analytics session hasn't been started.  Start one before posting events.");
         return;
     }
 
     // create new event
     NSDictionary *newEvent = [NSDictionary dictionaryWithObjectsAndKeys:
-                              [OKUtils createUUID], @"id",
-                              __currentSession, @"session",
-                              typeName, @"t",
-                              [OKAnalytics timestamp], @"ts",
-                              metadata, @"m", nil];
+                              [OKUtils createUUID]    , @"id",
+                              __currentSession        , @"session",
+                              typeName                , @"type",
+                              [OKAnalytics timestamp] , @"timestamp",
+                              metadata                , @"meta",
+                              nil];
     
     [__events addObject:newEvent];
     [__events writeToFile:[OKAnalytics persistentPath] atomically:YES];
@@ -116,39 +104,24 @@ NSString *__currentSession = nil;
         NSArray *toSend = [NSArray arrayWithArray:__events];
         NSData *data = [NSJSONSerialization dataWithJSONObject:toSend options:0 error:nil];
         NSString *events = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        
+
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                                 events, @"events",
-                                [OKManager appKey], @"app_key",
-                                @"password69", @"pw", nil];
-        
-        
-        
-        
-        NSURL *url = [NSURL URLWithString:@"http://10.0.1.20:9292"];
-        AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
-        [httpClient setParameterEncoding:AFJSONParameterEncoding];
-        [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
-        [httpClient setDefaultHeader:@"Accept" value:@"application/json"];
+                                nil];
 
-        [httpClient postPath:@"analytics_post.php" //_post.php"
-                  parameters:params
-                     success:^(AFHTTPRequestOperation *operation, id responseObject)
-         {
-             OKLogInfo(@"SUCCESS, removing cache");
-             NSString *responseStr = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-             NSLog(@"Request Successful, response '%@'", responseStr);
-             [OKAnalytics removeCache];
-             [__events removeObjectsInArray:toSend];
-             
-             if(handler)
-                 handler(nil);
-             
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             OKLogErr(@"[HTTPClient Error], we do not remove the cache");
-             if(handler)
-                 handler(nil);
-         }];
+        [OKNetworker postEvents:params handler:^(NSError *error) {
+            if (error) {
+                OKLogErr(@"Failed to post events, we do not remove the cache");
+                if(handler)
+                    handler(error);
+            } else {
+                OKLogInfo(@"SUCCESS, removing cache");
+                [OKAnalytics removeCache];
+                [__events removeObjectsInArray:toSend];
+                if(handler)
+                    handler(nil);
+            }
+        }];
     }
 }
 
