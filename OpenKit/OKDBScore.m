@@ -91,7 +91,7 @@ static NSString *const kOKDBScoreCreateSql =
     
     return [self update:updateSql,
             @(score.submitState),
-            [score dbModifyDate],
+            score.modifyDate,
             @(score.leaderboardID),
             @(score.scoreValue),
             @(score.metadata),
@@ -108,8 +108,8 @@ static NSString *const kOKDBScoreCreateSql =
     
     return [self insert:insertSql,
             @(score.submitState),
-            [score dbModifyDate],
-            [score dbCreateDate],
+            score.modifyDate,
+            score.createDate,
             @(score.leaderboardID),
             @(score.scoreValue),
             @(score.metadata),

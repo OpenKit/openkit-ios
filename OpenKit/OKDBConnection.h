@@ -52,8 +52,6 @@ static const int OKNoIndex = -1;
 
 - (BOOL)syncWithDB;
 - (BOOL)deleteFromDB;
-- (NSString*)dbModifyDate;
-- (NSString*)dbCreateDate;
 
 @end
 

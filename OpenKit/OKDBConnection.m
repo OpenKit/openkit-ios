@@ -43,18 +43,6 @@ dispatch_queue_t __OKCacheQueue = nil;
     return [_dbConnection deleteRow:self];
 }
 
-
-- (NSString*)dbModifyDate
-{
-    return [OKUtils sqlStringFromDate:self.modifyDate];
-}
-
-
-- (NSString*)dbCreateDate
-{
-    return [OKUtils sqlStringFromDate:self.createDate];
-}
-
 @end
 
 
@@ -107,7 +95,7 @@ dispatch_queue_t __OKCacheQueue = nil;
     
     __block int index = -1;
     [self access:^(FMDatabase *db) {
-        if([db executeUpdate:sql error:nil withArgumentsInArray:nil orDictionary:nil orVAList:args]) {
+        if([db executeQuery:sql withVAList:args]) {
             index = [db lastInsertRowId];
         }else{
             OKLogErr(@"FAIL performing: %@", sql);
@@ -124,9 +112,9 @@ dispatch_queue_t __OKCacheQueue = nil;
     va_list args;
     va_start(args, sql);
 
-    __block BOOL success;
+    __block BOOL success = NO;
     [self access:^(FMDatabase *db) {
-        success = [db executeUpdate:sql error:nil withArgumentsInArray:nil orDictionary:nil orVAList:args];
+        success = [db executeUpdate:sql withVAList:args];
         if(!success)
             OKLogErr(@"FAIL performing: %@", sql);
     }];
@@ -202,8 +190,14 @@ dispatch_queue_t __OKCacheQueue = nil;
 
 -(FMDatabase *)database
 {
-    if (_database == nil)
+    if (_database == nil) {
         _database = [FMDatabase databaseWithPath:[self dbPath]];
+     
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+        [_database setDateFormat:dateFormatter];
+    }
     
     return _database;
 }

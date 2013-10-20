@@ -76,8 +76,8 @@ static NSString *const kOKDBSessionCreateSql =
     
     return [self insert:insertSql,
             @(session.submitState),
-            session.dbModifyDate,
-            [session dbCreateDate],
+            session.modifyDate,
+            session.createDate,
             session.token,
             session.fbId,
             session.googleId,
@@ -95,7 +95,7 @@ static NSString *const kOKDBSessionCreateSql =
     
     return [self update:updateSql,
             @(session.submitState),
-            session.dbModifyDate,
+            session.modifyDate,
             session.token,
             session.fbId,
             session.googleId,
