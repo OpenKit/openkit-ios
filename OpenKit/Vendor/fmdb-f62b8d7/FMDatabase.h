@@ -347,6 +347,12 @@
 
 - (BOOL)executeUpdate:(NSString*)sql withParameterDictionary:(NSDictionary *)arguments;
 
+
+
+// Documentation forthcoming.
+- (BOOL)executeUpdate:(NSString*)sql withVAList: (va_list)args;
+
+
 /** Last insert rowid
  
  Each entry in an SQLite table has a unique 64-bit signed integer key called the "rowid". The rowid is always available as an undeclared column named `ROWID`, `OID`, or `_ROWID_` as long as those names are not also used by explicitly declared columns. If the table has a column of type `INTEGER PRIMARY KEY` then that column is another alias for the rowid.
@@ -394,9 +400,6 @@
  */
 
 - (FMResultSet *)executeQuery:(NSString*)sql, ...;
-- (FMResultSet *)executeQuery:(NSString *)sql withArgumentsInArray:(NSArray*)arrayArgs orDictionary:(NSDictionary *)dictionaryArgs orVAList:(va_list)args;
-- (BOOL)executeUpdate:(NSString*)sql error:(NSError**)outErr withArgumentsInArray:(NSArray*)arrayArgs orDictionary:(NSDictionary *)dictionaryArgs orVAList:(va_list)args;
-
 
 /** Execute select statement
 
@@ -455,6 +458,12 @@
  */
 
 - (FMResultSet *)executeQuery:(NSString *)sql withParameterDictionary:(NSDictionary *)arguments;
+
+
+// Documentation forthcoming.
+- (FMResultSet *)executeQuery:(NSString*)sql withVAList: (va_list)args;
+
+
 
 ///-------------------
 /// @name Transactions
@@ -967,7 +976,6 @@
 /** Reset statement */
 
 - (void)reset;
-
 
 @end
 

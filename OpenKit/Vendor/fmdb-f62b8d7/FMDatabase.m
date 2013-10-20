@@ -4,6 +4,8 @@
 
 @interface FMDatabase ()
 
+- (FMResultSet *)executeQuery:(NSString *)sql withArgumentsInArray:(NSArray*)arrayArgs orDictionary:(NSDictionary *)dictionaryArgs orVAList:(va_list)args;
+- (BOOL)executeUpdate:(NSString*)sql error:(NSError**)outErr withArgumentsInArray:(NSArray*)arrayArgs orDictionary:(NSDictionary *)dictionaryArgs orVAList:(va_list)args;
 @end
 
 @implementation FMDatabase
@@ -36,10 +38,10 @@
     if (self) {
         _databasePath       = [aPath copy];
         _openResultSets     = [[NSMutableSet alloc] init];
-        _db                 = 0x00;
-        _logsErrors         = 0x00;
-        _crashOnErrors      = 0x00;
-        _busyRetryTimeout   = 0x00;
+        _db                 = nil;
+        _logsErrors         = YES;
+        _crashOnErrors      = NO;
+        _busyRetryTimeout   = 0;
     }
     
     return self;
@@ -750,6 +752,10 @@
     return [self executeQuery:sql withArgumentsInArray:arguments orDictionary:nil orVAList:nil];
 }
 
+- (FMResultSet *)executeQuery:(NSString*)sql withVAList:(va_list)args {
+    return [self executeQuery:sql withArgumentsInArray:nil orDictionary:nil orVAList:args];
+}
+
 - (BOOL)executeUpdate:(NSString*)sql error:(NSError**)outErr withArgumentsInArray:(NSArray*)arrayArgs orDictionary:(NSDictionary *)dictionaryArgs orVAList:(va_list)args {
     
     if (![self databaseExists]) {
@@ -922,18 +928,24 @@
             // all is well, let's return.
         }
         else if (SQLITE_ERROR == rc) {
-            NSLog(@"Error calling sqlite3_step (%d: %s) SQLITE_ERROR", rc, sqlite3_errmsg(_db));
-            NSLog(@"DB Query: %@", sql);
+            if (_logsErrors) {
+                NSLog(@"Error calling sqlite3_step (%d: %s) SQLITE_ERROR", rc, sqlite3_errmsg(_db));
+                NSLog(@"DB Query: %@", sql);
+            }
         }
         else if (SQLITE_MISUSE == rc) {
             // uh oh.
-            NSLog(@"Error calling sqlite3_step (%d: %s) SQLITE_MISUSE", rc, sqlite3_errmsg(_db));
-            NSLog(@"DB Query: %@", sql);
+            if (_logsErrors) {
+                NSLog(@"Error calling sqlite3_step (%d: %s) SQLITE_MISUSE", rc, sqlite3_errmsg(_db));
+                NSLog(@"DB Query: %@", sql);
+            }
         }
         else {
             // wtf?
-            NSLog(@"Unknown error calling sqlite3_step (%d: %s) eu", rc, sqlite3_errmsg(_db));
-            NSLog(@"DB Query: %@", sql);
+            if (_logsErrors) {
+                NSLog(@"Unknown error calling sqlite3_step (%d: %s) eu", rc, sqlite3_errmsg(_db));
+                NSLog(@"DB Query: %@", sql);
+            }
         }
         
     } while (retry);
@@ -966,8 +978,10 @@
     }
     
     if (closeErrorCode != SQLITE_OK) {
-        NSLog(@"Unknown error finalizing or resetting statement (%d: %s)", closeErrorCode, sqlite3_errmsg(_db));
-        NSLog(@"DB Query: %@", sql);
+        if (_logsErrors) {
+            NSLog(@"Unknown error finalizing or resetting statement (%d: %s)", closeErrorCode, sqlite3_errmsg(_db));
+            NSLog(@"DB Query: %@", sql);
+        }
     }
     
     _isExecutingStatement = NO;
@@ -991,6 +1005,10 @@
 
 - (BOOL)executeUpdate:(NSString*)sql withParameterDictionary:(NSDictionary *)arguments {
     return [self executeUpdate:sql error:nil withArgumentsInArray:nil orDictionary:arguments orVAList:nil];
+}
+
+- (BOOL)executeUpdate:(NSString*)sql withVAList:(va_list)args {
+    return [self executeUpdate:sql error:nil withArgumentsInArray:nil orDictionary:nil orVAList:args];
 }
 
 - (BOOL)executeUpdateWithFormat:(NSString*)format, ... {
@@ -1065,11 +1083,9 @@
 
 - (BOOL)startSavePointWithName:(NSString*)name error:(NSError**)outErr {
     
-    // FIXME: make sure the savepoint name doesn't have a ' in it.
-    
     NSParameterAssert(name);
     
-    if (![self executeUpdate:[NSString stringWithFormat:@"savepoint '%@';", name]]) {
+    if (![self executeUpdate:@"savepoint '?';", name]) {
 
         if (outErr) {
             *outErr = [self lastError];
@@ -1085,7 +1101,7 @@
     
     NSParameterAssert(name);
     
-    BOOL worked = [self executeUpdate:[NSString stringWithFormat:@"release savepoint '%@';", name]];
+    BOOL worked = [self executeUpdate:@"release savepoint '?';", name];
     
     if (!worked && outErr) {
         *outErr = [self lastError];
@@ -1098,9 +1114,9 @@
     
     NSParameterAssert(name);
     
-    BOOL worked = [self executeUpdate:[NSString stringWithFormat:@"rollback transaction to savepoint '%@';", name]];
+    BOOL worked = [self executeUpdate:@"rollback transaction to savepoint '?';", name];
     
-    if (!worked && *outErr) {
+    if (!worked && outErr) {
         *outErr = [self lastError];
     }
     
