@@ -88,6 +88,7 @@
 
 @interface OKAuthRequest : NSObject
 {
+    NSString *_userID;
     NSObject *_data;
     NSObject *_key;
     NSString *_url;
@@ -95,7 +96,7 @@
 @property(nonatomic, readonly) OKAuthProvider *provider;
 
 - (id)initWithProvider:(OKAuthProvider*)provider userID:(NSString*)userID token:(NSString*)token;
-- (id)initWithProvider:(OKAuthProvider*)provider publicKeyUrl:(NSString*)url signature:(NSData*)signature data:(NSData*)data;
+- (id)initWithProvider:(OKAuthProvider*)provider userID:(NSString*)userID publicKeyUrl:(NSString*)url signature:(NSData*)signature data:(NSData*)data;
 - (NSDictionary*)JSONDictionary;
 
 @end

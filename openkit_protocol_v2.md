@@ -95,8 +95,9 @@ The HTTP body is not included in the signature base string.
     [
         {
             "service" : *((service's name)),
-            "data" : (( )),
+            "user_id" : ((user's id in service)),
             "key" : (( )),
+            "data" : (( )),
             "public_key_url" : (( )) #optional
         },...
     ]

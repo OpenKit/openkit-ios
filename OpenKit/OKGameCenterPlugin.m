@@ -116,7 +116,9 @@
         handler(nil, [OKError sessionClosed]);
         return;
     }
-    [self getProfileWithCompletion:^(OKAuthProfile *profile, NSError *error) {
+    
+    [self getProfileWithCompletion:^(OKAuthProfile *profile, NSError *error)
+    {
         GKLocalPlayer *player = [GKLocalPlayer localPlayer];
         [player generateIdentityVerificationSignatureWithCompletionHandler:^(NSURL *publicKeyUrl, NSData *signature, NSData *salt, uint64_t timestamp, NSError *error)
         {
@@ -129,7 +131,11 @@
 
             OKAuthRequest *request = nil;
             if(!error)
-                request = [[OKAuthRequest alloc] initWithProvider:self publicKeyUrl:[publicKeyUrl absoluteString] signature:signature data:payload];
+                request = [[OKAuthRequest alloc] initWithProvider:self
+                                                           userID:[profile userID]
+                                                     publicKeyUrl:[publicKeyUrl absoluteString]
+                                                        signature:signature
+                                                             data:payload];
             
             handler(request, error);
         }];

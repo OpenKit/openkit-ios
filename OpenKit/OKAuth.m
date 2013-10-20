@@ -102,6 +102,9 @@ NSMutableArray *__providers = nil;
 
 + (BOOL)handleOpenURL:(NSURL *)url
 {
+    if(!url)
+        return NO;
+    
     for(OKAuthProvider *provider in __providers) {
         if([provider handleOpenURL:url])
             return YES;
@@ -227,6 +230,11 @@ NSMutableArray *__providers = nil;
 
 - (id)initWithProvider:(OKAuthProvider*)provider userID:(NSString*)userid name:(NSString*)name
 {
+    // REVIEW
+    NSParameterAssert(provider);
+    NSParameterAssert(userid);
+    NSParameterAssert(name);
+    
     self = [super init];
     if (self) {
         _provider = provider;
@@ -239,6 +247,8 @@ NSMutableArray *__providers = nil;
 
 - (void)getFriendsWithCompletion:(void(^)(NSArray *ids, NSError *error))handler;
 {
+    NSParameterAssert(handler);
+    
     if(_friends) {
         handler(_friends, nil);
         
@@ -257,23 +267,42 @@ NSMutableArray *__providers = nil;
 
 @implementation OKAuthRequest
 
-- (id)initWithProvider:(OKAuthProvider*)provider userID:(NSString*)userID token:(NSString*)token
+- (id)initWithProvider:(OKAuthProvider*)provider
+                userID:(NSString*)userID
+                 token:(NSString*)token
 {
+    NSParameterAssert(provider);
+    NSParameterAssert(userID);
+    NSParameterAssert(token);
+    
     self = [super init];
     if (self) {
         _provider = provider;
-        _data = userID;
+        _userID = userID;
         _key = token;
+        _data = nil;
+        _url = nil;
     }
     return self;
 }
 
 
-- (id)initWithProvider:(OKAuthProvider*)provider publicKeyUrl:(NSString*)url signature:(NSData*)signature data:(NSData*)data;
+- (id)initWithProvider:(OKAuthProvider*)provider
+                userID:(NSString*)userID
+          publicKeyUrl:(NSString*)url
+             signature:(NSData*)signature
+                  data:(NSData*)data;
 {
+    NSParameterAssert(provider);
+    NSParameterAssert(userID);
+    NSParameterAssert(url);
+    NSParameterAssert(signature);
+    NSParameterAssert(data);
+
     self = [super init];
     if (self) {
         _provider = provider;
+        _userID = userID;
         _data = data;
         _key = signature;
         _url = url;
@@ -284,10 +313,19 @@ NSMutableArray *__providers = nil;
 
 - (NSDictionary*)JSONDictionary
 {
-    return @{@"service": [_provider serviceName],
-             @"data": _data,
-             @"key": _key,
-             @"public_key_url": _url };
+    NSAssert([_provider serviceName], @"The service's name can not be nil.");
+    NSAssert(_userID, @"The user id can not be nil.");
+    NSAssert(_key, @"The key can not be nil.");
+
+    // We can not use literal because some values can be nil.
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setValue:[_provider serviceName] forKey:@"service"];
+    [dict setValue:_userID forKey:@"user_id"];
+    [dict setValue:_key forKey:@"key"];
+    [dict setValue:_data forKey:@"data"];
+    [dict setValue:_url forKey:@"public_key_url"];
+    
+    return dict;
 }
 
 @end
