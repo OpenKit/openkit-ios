@@ -108,6 +108,7 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
                 encrypted:(BOOL)encrypted
                completion:(void (^)(id responseObject, NSError * error))handler
 {
+    // ENCRYPT MESSAGE
     if(encrypted) {
         NSDictionary *encryptedParams = [OKNetworker encryptMessage:params withError:nil];
         if(!encryptedParams)
@@ -115,33 +116,25 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
         else
             params = encryptedParams;
     }
-    
-    AFOAuth1Client *httpclient = [self httpClient];
-    NSMutableURLRequest *request = [httpclient requestWithMethod:method
-                                                            path:path
-                                                      parameters:params];
 
-    void (^successBlock)(AFHTTPRequestOperation *, id) = ^(AFHTTPRequestOperation *operation, id response) {
+    
+    // SUCCESS BLOCK
+    void (^successBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *op, id response)
+    {
         NSError *err;
-        BOOL empty = ([response length] == 1) && ((uint8_t *)[response bytes])[0] == ' ';
-        if (empty) {
-            handler(nil, nil);
-        } else {
-            id decodedObj = OKDecodeObj(response, &err);
-            if (decodedObj == [NSNull null]) {
-                decodedObj = nil;
-                err = [OKError noBodyError];
-            }else{
-                if([OKNetworker isMessageEncrypted:decodedObj]) {
-                    decodedObj = [OKNetworker decryptMessage:decodedObj withError:&err];
-                }
-            }
-            handler(decodedObj, err);
+        id decodedObj = OKDecodeObj(response, &err);
+        if([OKNetworker isMessageEncrypted:decodedObj]) {
+            decodedObj = [OKNetworker decryptMessage:decodedObj withError:&err];
         }
+        
+        if(handler)
+        handler(decodedObj, err);
     };
 
-    void (^failureBlock)(AFHTTPRequestOperation *, NSError *) = ^(AFHTTPRequestOperation *operation, NSError *err) {
-        
+    
+    // FAILURE BLOCK
+    void (^failureBlock)(AFHTTPRequestOperation*, NSError*) = ^(AFHTTPRequestOperation *op, NSError *err)
+    {
         int errorCode = [OKNetworker getStatusCodeFromAFNetworkingError:err];
         
         // If the user is unsubscribed to the app, log out the user.
@@ -149,14 +142,24 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
             [[OKManager sharedManager] logoutCurrentUser];
             OKLog(@"Logging out current user b/c user is unsubscribed to app");
         }
+        
+        if(handler)
         handler(nil, err);
     };
 
     
-    AFHTTPRequestOperation *op = [httpclient HTTPRequestOperationWithRequest:request
-                                                                     success:successBlock
-                                                                     failure:failureBlock];
-    [op start];
+    // Perform HTTP request
+    AFOAuth1Client *httpclient = [self httpClient];
+    
+    NSMutableURLRequest *request = [httpclient requestWithMethod:method
+                                                            path:path
+                                                      parameters:params];
+    
+    AFHTTPRequestOperation *operation = [httpclient HTTPRequestOperationWithRequest:request
+                                                                            success:successBlock
+                                                                            failure:failureBlock];
+    
+    [operation start];
 }
 
 
