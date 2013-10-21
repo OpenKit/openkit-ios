@@ -15,15 +15,6 @@
 #import "OKCrypto.h"
 #import "OKMacros.h"
 
-static void HMACSHA256(const char *data, int dataLength,
-                       const char *key, int keyLength,
-                       uint8_t digest[CC_SHA1_DIGEST_LENGTH])
-{
-    CCHmacContext cx;
-    CCHmacInit(&cx, kCCHmacAlgSHA256, key, keyLength);
-    CCHmacUpdate(&cx, data, dataLength);
-    CCHmacFinal(&cx, digest);
-}
 
 @interface OKCrypto ()
 {
@@ -90,7 +81,8 @@ static void HMACSHA256(const char *data, int dataLength,
 - (NSData*)HMACSHA256:(NSData*)data
 {
     uint8_t digest[CC_SHA256_DIGEST_LENGTH];
-    HMACSHA256([data bytes], [data length], [_hmacKey bytes], [_hmacKey length], digest);
+    CCHmacUpdate(&_hmacContext, [data bytes], [data length]);
+    CCHmacFinal(&_hmacContext, digest);
     return [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
 }
 
