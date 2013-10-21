@@ -53,10 +53,16 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
     
     // Generate JSON UTF-8 encoded
     NSData *payload = [NSJSONSerialization dataWithJSONObject:params options:0 error:error];
+    if(!payload)
+        return nil;
     
     // Encrypt payload
     payload = [[[OKManager sharedManager] cryptor] encryptData:payload];
-    
+    if(!payload) {
+        if(error)
+        *error = [OKError unknownError];
+        return nil;
+    }
     // Generate dictionary
     return @{@"encryption": @"SHA256_AES256",
              @"encoding": @"UTF-8",
@@ -80,7 +86,8 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
     else {
         OKLogErr(@"Not valid encryption: %@", encryption);
         // REVIEW
-        *error = [OKError unknownError];
+        if(error)
+            *error = [OKError unknownError];
         return nil;
     }
     

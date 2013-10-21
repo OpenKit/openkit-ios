@@ -47,6 +47,8 @@
 
 - (id)initWithLeaderboardID:(int)index
 {
+    NSParameterAssert(index > 0);
+    
     self = [super init];
     if (self) {
         self.leaderboardID = index;
@@ -55,8 +57,10 @@
 }
 
 
-- (void)configWithDictionary:(NSDictionary*)dict
+- (BOOL)configWithDictionary:(NSDictionary*)dict
 {
+    NSParameterAssert(dict);
+
     self.rowIndex       = [OKHelper getIntFrom:dict key:@"row_id"];
     self.modifyDate     = [OKHelper getNSDateFrom:dict key:@"modify_date"];
     
@@ -67,6 +71,8 @@
     self.user           = [OKUser createUserWithDictionary:dict[@"user"]];
     self.displayString  = [OKHelper getNSStringFrom:dict key:@"display_string"];
     self.metadata       = [OKHelper getIntFrom:dict key:@"metadata"];
+    
+    return YES;
 }
 
 
@@ -137,6 +143,8 @@
 
 + (void)submitScore:(OKScore*)score withCompletion:(void (^)(NSError *error))handler
 {
+    NSParameterAssert(score);
+    
     [score setDbConnection:[OKDBScore sharedConnection]];
     
     if([score isSubmissible] && [OKScore shouldSubmit:score]) {

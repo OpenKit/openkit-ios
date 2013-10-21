@@ -27,12 +27,16 @@
 }
 
 
-- (void)configWithDictionary:(NSDictionary*)dict
+- (BOOL)configWithDictionary:(NSDictionary*)dict
 {
+    NSParameterAssert(dict && [dict isKindOfClass:[NSDictionary class]]);
+
     _userID = [OKHelper getNSNumberFrom:dict key:@"id"];
     _userNick = [OKHelper getNSStringFrom:dict key:@"name"];
     _userImageUrl = [OKHelper getNSStringFrom:dict key:@"image_url"];
     _services = [OKHelper getNSDictionaryFrom:dict key:@"services"];
+    
+    return (_userID && _userNick);
 }
 
 
@@ -91,14 +95,14 @@
     //return (self.userID && self.accessToken && self.accessTokenSecret);
 }
 
-- (void)configWithDictionary:(NSDictionary*)dict
+- (BOOL)configWithDictionary:(NSDictionary*)dict
 {
-    [super configWithDictionary:dict];
-    
     _accessToken = [OKHelper getNSStringFrom:dict key:@"token"];
     _accessTokenSecret = [OKHelper getNSStringFrom:dict key:@"token_secret"];
     _dirty = [NSMutableDictionary dictionaryWithDictionary:dict[@"dirty"]];
     _friends = [NSMutableDictionary dictionaryWithDictionary:dict[@"friends"]];
+    
+    return ([super configWithDictionary:dict] && _accessToken && _accessTokenSecret);
 }
 
 
@@ -154,10 +158,7 @@
     if(!_dirty)
         _dirty = [NSMutableDictionary dictionary];
     
-    if(value == nil)
-        value = [NSNull null];
-    
-    _dirty[key] = value;
+    _dirty[key] = OK_NO_NIL(value);
 }
 
 
@@ -184,10 +185,17 @@
 
 - (NSDictionary*)dictionary
 {
+    NSAssert(_accessToken, @"Access token is invalid.");
+    NSAssert(_dirty, @"Access token is invalid.");
+
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[super dictionary]];
     dict[@"token"] = _accessToken;
     dict[@"token_secret"] = _accessTokenSecret;
+    
+    if(_dirty)
     dict[@"dirty"] = _dirty;
+    
+    if(_friends)
     dict[@"_friends"] = _friends;
 
     return dict;

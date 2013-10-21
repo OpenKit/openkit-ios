@@ -39,7 +39,7 @@ OKSession *__currentSession = nil;
 }
 
 
-- (void)configWithDictionary:(NSDictionary*)dict
+- (BOOL)configWithDictionary:(NSDictionary*)dict
 {
     self.rowIndex   = [OKHelper getIntFrom:dict key:@"row_id"];
     self.modifyDate = [OKHelper getNSDateFrom:dict key:@"modify_date"];
@@ -51,6 +51,8 @@ OKSession *__currentSession = nil;
     self.customId   = [OKHelper getNSStringFrom:dict key:@"custom_id"];
     self.pushToken  = [OKHelper getNSStringFrom:dict key:@"push_token"];
     self.okId       = [OKHelper getNSStringFrom:dict key:@"ok_id"];
+    
+    return YES;
 }
 
 
@@ -80,15 +82,16 @@ OKSession *__currentSession = nil;
 
 - (NSDictionary*)JSONDictionary
 {
-    return [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-            self.token, @"uuid",
-            self.fbId ? self.fbId : [NSNull null], @"fb_id",
-            self.googleId ? self.googleId : [NSNull null], @"google_id",
-            self.customId ? self.customId : [NSNull null], @"custom_id",
-            self.pushToken ? self.pushToken : [NSNull null], @"push_token",
-            self.okId ? self.okId : [NSNull null], @"ok_id",
-            [self dbCreateDate], @"client_created_at",
-            nil];
+    NSAssert(self.token, @"Token can not be nil");
+    NSAssert(self.createDate, @"Creation date can not be nil.");
+    
+    return @{@"uuid": self.token,
+             @"client_created_at": self.createDate,
+             @"fb_id": OK_NO_NIL(self.fbId),
+             @"google_id": OK_NO_NIL(self.googleId),
+             @"custom_id": OK_NO_NIL(self.customId),
+             @"push_token": OK_NO_NIL(self.pushToken),
+             @"ok_id": OK_NO_NIL(self.okId)};
 }
 
 
@@ -123,8 +126,6 @@ OKSession *__currentSession = nil;
     [session syncWithDB];
     
     __currentSession = session;
-    //OKLogInfo(@"Current OK Session: rowId: %i, uuid: %@, okId: %@, fbId: %@, pushToken: %@, clientCreatedAt: %@", row.rowId, row.uuid, row.okId, row.fbId, row.pushToken, row.clientCreatedAt);
-
     
     // We try to send to the backend
     if([session submitState] == kOKNotSubmitted) {
@@ -224,7 +225,7 @@ OKSession *__currentSession = nil;
 
     
     if (currentSession == nil) {
-        OKLogInfo(@"No previous session found. Creating new row with new uuid and new %@.", getName);
+        OKLogInfo(@"No previous session found. Creating new row with new %@.", getName);
         newSession = [[OKSession alloc] init];
         [newSession migrateUser];
         
@@ -240,7 +241,7 @@ OKSession *__currentSession = nil;
         //OKLogInfo(@"Row exists but no val, creating new row with same uuid and new %@.", getName);
 
         if (![prevVal isEqualToString:newVal]) {
-            OKLogInfo(@"Prev and new vals do not match. Creating new row with new uuid and new %@.", getName);
+            OKLogInfo(@"Prev and new vals do not match. Creating new row with new %@.", getName);
             newSession = [currentSession getNewSession];
             
         } else {

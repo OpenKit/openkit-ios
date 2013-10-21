@@ -36,12 +36,12 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
-- (void)configWithDictionary:(NSDictionary*)dict
+- (BOOL)configWithDictionary:(NSDictionary*)dict
 {
     self.name           = [OKHelper getNSStringFrom:dict key:@"name"];
-    self.leaderboardID  = [[OKHelper getNSNumberFrom:dict key:@"id"] integerValue];
+    self.leaderboardID  = [OKHelper getIntFrom:dict key:@"id"];
     self.iconUrl        = [OKHelper getNSStringFrom:dict key:@"icon_url"];
-    self.playerCount    = [[OKHelper getNSNumberFrom:dict key:@"player_count"] integerValue];
+    self.playerCount    = [OKHelper getIntFrom:dict key:@"player_count"];
     self.services       = [OKHelper getNSDictionaryFrom:dict key:@"services"];
     
     NSString *sortTypeString    = [OKHelper getNSStringFrom:dict key:@"sort_type"];
@@ -50,16 +50,20 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     }else{
         self.sortType = OKLeaderboardSortTypeLowValue;
     }
+    
+    return (self.name && self.leaderboardID);
 }
 
 
 - (NSDictionary*)dictionary
 {
+    NSAssert(self.name, @"Name can not be nil.");
+    
     return @{@"id": @(self.leaderboardID),
              @"name": self.name,
-             @"icon_url": self.iconUrl,
+             @"icon_url": OK_NO_NIL(self.iconUrl),
              @"player_count": @(self.playerCount),
-             @"services": self.services };
+             @"services": OK_NO_NIL(self.services) };
 }
 
 
@@ -210,10 +214,10 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 #pragma mark - Class methods
 
-+ (void)configWithDictionary:(NSDictionary*)dict
++ (BOOL)configWithDictionary:(NSDictionary*)dict
 {
     if(!dict)
-        return;
+        return NO;
     
     NSArray *leaderBoardsJSON = dict[@"leaderboards"];
     NSMutableArray *tmp = [NSMutableArray arrayWithCapacity:[leaderBoardsJSON count]];
@@ -233,6 +237,8 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     }
     __leaderboards = [NSArray arrayWithArray:tmp];
     __lastUpdate = [dict[@"last_update"] unsignedIntegerValue];
+    
+    return YES;
 }
 
 

@@ -198,6 +198,7 @@
 
 - (void)endLogin
 {
+    NSAssert([NSThread mainThread], @"Callback must be in main thread");
     NSAssert(_initialized == NO, @"Bad state, this method just can be called once.");
     
     OKLogInfo(@"End initialization");

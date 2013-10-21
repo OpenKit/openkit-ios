@@ -22,7 +22,7 @@
 
 
 - (id)initWithDictionary:(NSDictionary*)dict;
-- (void)configWithDictionary:(NSDictionary*)dict;
+- (BOOL)configWithDictionary:(NSDictionary*)dict;
 - (NSDictionary*)JSONDictionary;
 - (OKSession*)getNewSession;
 

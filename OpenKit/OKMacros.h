@@ -34,6 +34,8 @@
 #endif
 
 
+#define OK_NO_NIL(__OBJ__) ((__OBJ__)==nil ? [NSNull null] : (__OBJ__))
+
 // System Versioning
 #define OK_SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
 #define OK_SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
