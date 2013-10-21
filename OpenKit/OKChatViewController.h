@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OKChatViewController : UIViewController
+@interface OKChatViewController : UIViewController<UIAlertViewDelegate>
 
 @end

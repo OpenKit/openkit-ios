@@ -8,6 +8,7 @@
 
 #import "OKChatViewController.h"
 #import "AFNetworking.h"
+#import "OKGameCenterUtilities.h"
 
 @interface OKChatViewController ()
 {
@@ -19,12 +20,15 @@
 @property (weak, nonatomic) IBOutlet UITextField *texBar;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @property (weak, nonatomic) IBOutlet UIView *chatTextContainerView;
-@property (strong, nonatomic) NSString *OKname;
+@property (strong, nonatomic) NSString *userName;
 @property (strong, nonatomic) NSNumber *OKuserID;
+
+@property (strong, nonatomic) UIAlertView *nicknameAlertView;
 
 @end
 
 @implementation OKChatViewController
+@synthesize nicknameAlertView;
 
 -(id)init
 {
@@ -36,6 +40,23 @@
     }
     
     return self;
+}
+
+-(void)getUserName
+{
+    if([OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
+        self.userName = [[GKLocalPlayer localPlayer] alias];
+    } else {
+        nicknameAlertView = [[UIAlertView alloc] initWithTitle:@"Nickname" message:@"Enter your nickame" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [nicknameAlertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [nicknameAlertView show];
+    }
+}
+
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    UITextField *textField = [nicknameAlertView textFieldAtIndex:0];
+    self.userName = [textField text];
 }
 
 
@@ -54,19 +75,17 @@
 
 - (IBAction)submit:(id)sender
 {
-    // REVIEW
-    self.OKname = @"toddham";
-    self.OKuserID = [NSNumber numberWithInt:2344];
-    
+    self.OKuserID = [NSNumber numberWithInt:93];
     NSString *text = [self.texBar text];
     if(text.length>0) {
-        
+
+        //TODO set the real URL
         NSURL *url = [NSURL URLWithString:@"http://toddham.com/chat"];
         AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
         
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                self.OKname, @"name",
-                                self.OKuserID, @"user_id",
+                                self.userName, @"name",
+                                //self.OKuserID, @"user_id",
                                 text, @"text",
                                 nil];
         
@@ -206,6 +225,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
     [self reloadChat];
+    
+    if(self.userName == nil) {
+        [self getUserName];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
