@@ -51,12 +51,12 @@
 }
 
 
-- (void)setUserNick:(NSString *)userNick
+- (void)setUserNick:(NSString*)userNick
 {
     _userNick = userNick;
 }
 
-- (void)setUserImageUrl:(NSString *)userImageUrl
+- (void)setUserImageUrl:(NSString*)userImageUrl
 {
     _userImageUrl = userImageUrl;
 }
@@ -102,7 +102,7 @@
 }
 
 
-- (void)setUserNick:(NSString *)userNick
+- (void)setUserNick:(NSString*)userNick
 {
     if(![self.userNick isEqualToString:userNick]) {
         [super setUserNick:userNick];
@@ -111,7 +111,7 @@
 }
 
 
-- (void)setUserImageUrl:(NSString *)imageUrl
+- (void)setUserImageUrl:(NSString*)imageUrl
 {
     if(![self.userImageUrl isEqualToString:imageUrl]) {
         [super setUserImageUrl:imageUrl];
@@ -123,7 +123,7 @@
 - (void)setFriendIDs:(NSArray*)friends forService:(NSString*)service
 {
     if([self userIDForService:service] == nil) {
-        OKLogErr(@"You can not add \"%@\" friends because you are not logged in %@", service, service);
+        OKLogErr(@"You can not add friends from %@ because you are not logged in.", service);
         return;
     }
     
@@ -211,7 +211,8 @@
 }
 
 
-+ (void)loginWithAuthRequests:(NSArray*)requests completion:(void(^)(OKLocalUser *user, NSError *error))handler
++ (void)loginWithAuthRequests:(NSArray*)requests
+                   completion:(void(^)(OKLocalUser *user, NSError *error))handler
 {
     NSParameterAssert(handler);
     

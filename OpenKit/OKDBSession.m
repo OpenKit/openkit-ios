@@ -72,7 +72,8 @@ static NSString *const kOKDBSessionCreateSql =
 - (int)insertRow:(OKDBRow*)row
 {
     OKSession *session = (OKSession*)row;
-    NSString *insertSql = @"INSERT INTO sessions (submit_state, modify_date, client_created_at, uuid, fb_id, google_id, custom_id, ok_id, push_token) VALUES (?,?,?,?,?,?,?,?,?)";
+    NSString *insertSql = @"INSERT INTO sessions (submit_state, modify_date, client_created_at, \
+    uuid, fb_id, google_id, custom_id, ok_id, push_token) VALUES (?,?,?,?,?,?,?,?,?)";
     
     return [self insert:insertSql,
             @(session.submitState),
@@ -91,7 +92,8 @@ static NSString *const kOKDBSessionCreateSql =
 {
     OKSession *session = (OKSession*)row;
     
-    NSString *updateSql = @"UPDATE sessions SET submit_state=?, modify_date=?, uuid=?, fb_id=?, google_id=?, custom_id=?, ok_id=?, push_token=? WHERE row_id=?";
+    NSString *updateSql = @"UPDATE sessions SET submit_state=?, modify_date=?, uuid=?, fb_id=?, \
+    google_id=?, custom_id=?, ok_id=?, push_token=? WHERE row_id=?";
     
     return [self update:updateSql,
             @(session.submitState),

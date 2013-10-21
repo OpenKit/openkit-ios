@@ -36,17 +36,21 @@ typedef enum {
 
 - (id)initWithDictionary:(NSDictionary*)jsonDict;
 
-- (void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange pageNumber:(int)pageNum
-       completion:(void (^)(NSArray* scores, NSError *error))handler;
+- (void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange
+                   pageNumber:(int)pageNum
+                   completion:(void (^)(NSArray* scores, NSError *error))handler;
+
 - (void)getSocialScoresForTimeRange:(OKLeaderboardTimeRange)timeRange
                          completion:(void (^)(NSArray* scores, NSError *error))handler;
 
-- (NSSortDescriptor*)getSortDescriptor;
-- (NSArray*)sortScoresBasedOnLeaderboardType:(NSArray*)scores;
 
+#pragma mark -
+
++ (void)getLeaderboardsWithCompletion:(void (^)(NSArray* leaderboards, NSError* error))handler;
+
++ (void)getLeaderboardWithID:(int)leaderboardID
+                  completion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler;
 
 + (void)syncWithCompletion:(void (^)(NSError* error))handler;
-+ (void)getLeaderboardsWithCompletion:(void (^)(NSArray* leaderboards, NSError* error))handler;
-+ (void)getLeaderboardWithID:(int)leaderboardID completion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler;
 
 @end

@@ -65,7 +65,6 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 - (void)submitScore:(OKScore*)score withCompletion:(void (^)(NSError* error))handler
 {
-    
     //    // If the error code returned is in the 400s, delete the score from the cache
     //    int errorCode = [OKNetworker getStatusCodeFromAFNetworkingError:error];
     //    if(errorCode >= 400 && errorCode <= 500) {
@@ -117,7 +116,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
--(NSString*)getParamForLeaderboardTimeRange:(OKLeaderboardTimeRange)range
+-(NSString*)getParamForTimeRange:(OKLeaderboardTimeRange)range
 {
     switch (range) {
         case OKLeaderboardTimeRangeOneDay:
@@ -139,7 +138,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     NSDictionary *params = @{@"leaderboard_id": @([self leaderboardID]),
                              @"page_num": @(pageNum),
                              @"num_per_page": @(NUM_SCORES_PER_PAGE),
-                             @"leaderboard_range": [self getParamForLeaderboardTimeRange:timeRange] };
+                             @"leaderboard_range": [self getParamForTimeRange:timeRange] };
     
     // OK NETWORK REQUEST
     [OKNetworker getFromPath:@"/best_scores"
@@ -171,7 +170,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     //Create a request and send it to OpenKit
     //Create the request parameters
     NSDictionary *params = @{@"leaderboard_id": @([self leaderboardID]),
-                             @"leaderboard_range": [self getParamForLeaderboardTimeRange:timeRange] };
+                             @"leaderboard_range": [self getParamForTimeRange:timeRange] };
     
     // OK NETWORK REQUEST
     [OKNetworker postToPath:@"/best_scores/social"
@@ -201,29 +200,6 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
          if(handler)
          handler(scores, error);
      }];
-}
-
-
-- (NSSortDescriptor*)getSortDescriptor
-{
-    NSSortDescriptor *sortDescriptor;
-    
-    if([self sortType] == OKLeaderboardSortTypeHighValue){
-        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"scoreValue" ascending:NO];
-    } else {
-        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"scoreValue" ascending:YES];
-    }
-    
-    return sortDescriptor;
-}
-
-
-- (NSArray*)sortScoresBasedOnLeaderboardType:(NSArray*)scores
-{
-    NSSortDescriptor *sortDescriptor = [self getSortDescriptor];
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    NSArray *sortedArray = [scores sortedArrayUsingDescriptors:sortDescriptors];
-    return sortedArray;
 }
 
 
@@ -306,7 +282,8 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
-+ (void)getLeaderboardWithID:(int)leaderboardID completion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler
++ (void)getLeaderboardWithID:(int)leaderboardID
+                  completion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler
 {
     [self getLeaderboardsWithCompletion:^(NSArray* leaderboards, NSError* error) {
         if(handler) {
@@ -329,7 +306,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 + (NSDictionary*)JSONDictionary
 {
-  return @{@"last_update": [NSNumber numberWithUnsignedInteger:__lastUpdate],
+  return @{@"last_update": @(__lastUpdate),
            @"tag": [[OKManager sharedManager] leaderboardListTag] };
 }
 

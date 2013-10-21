@@ -35,7 +35,8 @@
 //! This method should NOT try to open it.
 - (BOOL)isSessionOpen;
 
-//! Do not call this directly.  This method is called internally by OKManager.  Your implementation of -start must:
+//! Do not call this directly.  This method is called internally by OKManager.
+//! Your implementation of -start must:
 //! - Try to open the session without making the user login, ie. doesn't display UI.
 //! - Start handling any related event from the service like state changes (logged in, logged out) and errors.
 //! - Post a notification (OKAuthProviderUpdatedNotification) each state change.
@@ -45,7 +46,8 @@
 //! This method can be called directly from the developer's code.
 //! If the controller is valid and the session is not open yet, this method should display the UI needed for login.
 //! Return YES if the session was opened synchronously.
-- (BOOL)openSessionWithViewController:(UIViewController*)controller completion:(void(^)(BOOL login, NSError *error))handler;
+- (BOOL)openSessionWithViewController:(UIViewController*)controller
+                           completion:(void(^)(BOOL login, NSError *error))handler;
 
 
 //! Gets the user's profile from the service.
@@ -62,7 +64,9 @@
 
 
 // optional
-- (void)loadUserImageForUserID:(NSString*)userid completion:(void(^)(UIImage *image, NSError *error))handler;
+- (void)loadUserImageForUserID:(NSString*)userid
+                    completion:(void(^)(UIImage *image, NSError *error))handler;
+
 - (void)loadFriendsWithCompletion:(void(^)(NSArray *friends, NSError *error))handler;
 
 - (BOOL)handleOpenURL:(NSURL *)url;
@@ -80,7 +84,10 @@
 @property(nonatomic, readonly) NSArray *friends;
 @property(nonatomic, copy) NSString *imageUrl;
 
-- (id)initWithProvider:(OKAuthProvider*)provider userID:(NSString*)userid name:(NSString*)name;
+- (id)initWithProvider:(OKAuthProvider*)provider
+                userID:(NSString*)userid
+                  name:(NSString*)name;
+
 - (void)getFriendsWithCompletion:(void(^)(NSArray *ids, NSError *error))handler;
 
 @end
@@ -95,8 +102,16 @@
 }
 @property(nonatomic, readonly) OKAuthProvider *provider;
 
-- (id)initWithProvider:(OKAuthProvider*)provider userID:(NSString*)userID token:(NSString*)token;
-- (id)initWithProvider:(OKAuthProvider*)provider userID:(NSString*)userID publicKeyUrl:(NSString*)url signature:(NSData*)signature data:(NSData*)data;
+- (id)initWithProvider:(OKAuthProvider*)provider
+                userID:(NSString*)userID
+                 token:(NSString*)token;
+
+- (id)initWithProvider:(OKAuthProvider*)provider
+                userID:(NSString*)userID
+          publicKeyUrl:(NSString*)url
+             signature:(NSData*)signature
+                  data:(NSData*)data;
+
 - (NSDictionary*)JSONDictionary;
 
 @end

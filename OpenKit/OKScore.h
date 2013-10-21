@@ -10,13 +10,6 @@
 #import "OKDBConnection.h"
 
 
-typedef enum {
-    OKScoreSocialNetworkGameCenter,
-    OKScoreSocialNetworkFacebook,
-    OKScoreSocialNetworkUnknown
-} OKScoreSocialNetwork;
-
-
 @class OKUser;
 @interface OKScore : OKDBRow
 
@@ -38,7 +31,6 @@ typedef enum {
 - (NSString*)userDisplayString;
 - (NSString*)rankDisplayString;
 
-//-(OKScoreSocialNetwork)socialNetwork;
 
 + (void)resolveUnsubmittedScores;
 + (void)clearSubmittedScore;

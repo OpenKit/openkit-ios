@@ -27,19 +27,19 @@
 
 - (BOOL)handleOpenURL:(NSURL *)url
 {
-    return [FBSession.activeSession handleOpenURL:url];
+    return [[FBSession activeSession] handleOpenURL:url];
 }
 
 
 - (void)handleDidBecomeActive
 {
-    [FBSession.activeSession handleDidBecomeActive];
+    [[FBSession activeSession] handleDidBecomeActive];
 }
 
 
 - (void)handleWillTerminate
 {
-    [FBSession.activeSession close];
+    [[FBSession activeSession] close];
 }
 
 
@@ -81,7 +81,8 @@
 }
 
 
-- (BOOL)openSessionWithViewController:(UIViewController*)controller completion:(void(^)(BOOL login, NSError *error))handler
+- (BOOL)openSessionWithViewController:(UIViewController*)controller
+                           completion:(void(^)(BOOL login, NSError *error))handler
 {
     if([self isSessionOpen]) {
         if(handler)
@@ -109,20 +110,23 @@
         return;
     }
     
-    [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+    FBRequest *request = [FBRequest requestForMe];
+    [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *err)
+    {
         // Did everything come back okay with no errors?
-        if (!error && result) {
+        if (!err && result) {
             OKAuthProfile *profile = [[OKAuthProfile alloc] initWithProvider:self
                                                                       userID:result[@"id"]
                                                                         name:result[@"name"]];
             // Set url of profile image
-            [profile setImageUrl:[NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", result[@"id"]]];
+            NSString *url = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", result[@"id"]];
+            [profile setImageUrl:url];
             
             handler(profile, nil);
         }
         else {
             //Error performing the FB request
-            handler(nil, error);
+            handler(nil, err);
         }
     }];
 }
@@ -167,10 +171,11 @@
 {
     NSParameterAssert(handler);
 
-    [[FBRequest requestForMyFriends] startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-        
-        if(error) {
-            handler(nil, error);
+    FBRequest *request = [FBRequest requestForMe];
+    [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *err)
+    {
+        if(err) {
+            handler(nil, err);
         }
         else {
             //NSArray *graphFriends = [result objectForKey:@"data"];
@@ -178,7 +183,7 @@
             if(graphFriends) {
                 OKLog(@"Received %d friends", [graphFriends count]);
                 NSArray *friendsList = [self makeListOfFacebookFriends:graphFriends];
-                handler(friendsList, error);
+                handler(friendsList, err);
 
             } else {
                 handler(nil, [OKError unknownFacebookRequestError]);
@@ -199,23 +204,31 @@
         // handles cases like password change or iOS6 app slider state.
         alertTitle = @"Facebook Error";
         alertMessage = [FBErrorUtility userMessageForError:error];
-    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession) {
-        // It is important to handle session closures since they can happen
-        // outside of the app. You can inspect the error for more context
-        // but this sample generically notifies the user.
-        alertTitle = @"Session Error";
-        alertMessage = @"Your current session is no longer valid. Please log in again.";
-    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
-        // The user has cancelled a login. You can inspect the error
-        // for more context. For this sample, we will simply ignore it.
-        NSLog(@"user cancelled login");
-    } else {
-        // For simplicity, this sample treats other errors blindly.
-        alertTitle  = @"Unknown Error";
-        alertMessage = @"Error. Please try again later.";
-        NSLog(@"Unexpected FB login error:%@", error);
+    } else{
+        
+        FBErrorCategory code = [FBErrorUtility errorCategoryForError:error];
+        switch (code) {
+            case FBErrorCategoryAuthenticationReopenSession:
+                // It is important to handle session closures since they can happen
+                // outside of the app. You can inspect the error for more context
+                // but this sample generically notifies the user.
+                alertTitle = @"Session Error";
+                alertMessage = @"Your current session is no longer valid. Please log in again.";
+                break;
+                
+            case FBErrorCategoryUserCancelled:
+                // The user has cancelled a login. You can inspect the error
+                // for more context. For this sample, we will simply ignore it.
+                NSLog(@"user cancelled login");
+                
+            default:
+                // For simplicity, this sample treats other errors blindly.
+                alertTitle  = @"Unknown Error";
+                alertMessage = @"Error. Please try again later.";
+                NSLog(@"Unexpected FB login error:%@", error);
+                break;
+        }
     }
-    
     if (alertMessage) {
         [[[UIAlertView alloc] initWithTitle:alertTitle
                                     message:alertMessage
@@ -245,23 +258,25 @@
 
 - (void)sendFacebookRequest
 {
-    NSMutableDictionary* params =   [NSMutableDictionary dictionaryWithObjectsAndKeys:nil];
+    NSDictionary* params = [NSDictionary dictionary];
     [FBWebDialogs presentRequestsDialogModallyWithSession:nil
                                                   message:@"Check out this game!"
                                                     title:@"Invite Friends"
                                                parameters:params
-                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
-                                                      if (error) {
-                                                          // Case A: Error launching the dialog or sending request.
-                                                          NSLog(@"Error sending request.");
-                                                      } else {
-                                                          if (result == FBWebDialogResultDialogNotCompleted) {
-                                                              // Case B: User clicked the "x" icon
-                                                              NSLog(@"User canceled request.");
-                                                          } else {
-                                                              NSLog(@"Request Sent.");
-                                                          }
-                                                      }}];
+                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error)
+    {
+        if (error) {
+            // Case A: Error launching the dialog or sending request.
+            NSLog(@"Error sending request.");
+        } else {
+            if (result == FBWebDialogResultDialogNotCompleted) {
+                // Case B: User clicked the "x" icon
+                NSLog(@"User canceled request.");
+            } else {
+                NSLog(@"Request Sent.");
+            }
+        }
+    }];
 }
 
 
@@ -287,7 +302,8 @@
         default:
             break;
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:OKAuthProviderUpdatedNotification object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:OKAuthProviderUpdatedNotification
+                                                        object:self];
 }
 
 @end

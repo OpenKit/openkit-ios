@@ -172,7 +172,8 @@ NSMutableArray *__providers = nil;
     return NO;
 }
 
-- (BOOL)openSessionWithViewController:(UIViewController*)controller completion:(void(^)(BOOL login, NSError *error))handler
+- (BOOL)openSessionWithViewController:(UIViewController*)controller
+                           completion:(void(^)(BOOL login, NSError *error))handler
 {
     NSAssert(NO, @"Override this method");
     return NO;
@@ -193,7 +194,8 @@ NSMutableArray *__providers = nil;
     NSAssert(NO, @"Override this method");
 }
 
-- (void)loadUserImageForUserID:(NSString*)userid completion:(void(^)(UIImage *image, NSError *error))handler
+- (void)loadUserImageForUserID:(NSString*)userid
+                    completion:(void(^)(UIImage *image, NSError *error))handler
 {
     OKLogInfo(@"loadUserImageForUserID is not implemented in %@", [self serviceName]);
     handler(nil, nil);
@@ -245,7 +247,7 @@ NSMutableArray *__providers = nil;
 }
 
 
-- (void)getFriendsWithCompletion:(void(^)(NSArray *ids, NSError *error))handler;
+- (void)getFriendsWithCompletion:(void(^)(NSArray *ids, NSError *error))handler
 {
     NSParameterAssert(handler);
     

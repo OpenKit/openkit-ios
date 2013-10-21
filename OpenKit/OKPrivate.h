@@ -40,6 +40,7 @@
 @interface OKLocalUser (Private)
 
 + (OKLocalUser*)createUserWithDictionary:(NSDictionary*)dict;
-+ (void)loginWithAuthRequests:(NSArray*)requests completion:(void(^)(OKLocalUser *user, NSError *error))handler;
++ (void)loginWithAuthRequests:(NSArray*)requests
+                   completion:(void(^)(OKLocalUser *user, NSError *error))handler;
 
 @end

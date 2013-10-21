@@ -16,7 +16,8 @@
 @property(nonatomic, strong) OKScore *previousSubmittedScore;
 
 - (NSArray*)getAllScores;
-- (NSArray*)getScoresForLeaderboardID:(int)leaderboardID andOnlyGetSubmittedScores:(BOOL)submittedOnly;
+- (NSArray*)getScoresForLeaderboardID:(int)leaderboardID
+                        onlySubmitted:(BOOL)submittedOnly;
 - (void)clearSubmittedScores;
 - (NSArray*)getUnsubmittedScores;
 

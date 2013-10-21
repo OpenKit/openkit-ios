@@ -41,8 +41,8 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut)
 + (NSString*)sqlStringFromDate:(NSDate *)date
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
-    [dateFormatter setTimeZone: [NSTimeZone timeZoneWithName:@"UTC"]];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
     return [dateFormatter stringFromDate:date];
 }
 

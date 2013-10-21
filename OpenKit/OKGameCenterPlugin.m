@@ -71,7 +71,8 @@
 }
 
 
-- (BOOL)openSessionWithViewController:(UIViewController*)controller completion:(void(^)(BOOL login, NSError *error))handler
+- (BOOL)openSessionWithViewController:(UIViewController*)controller
+                           completion:(void(^)(BOOL login, NSError *error))handler
 {
     [GKLocalPlayer localPlayer].authenticateHandler = ^(UIViewController *gcController, NSError *error)
     {
@@ -103,7 +104,9 @@
     }
     
     GKLocalPlayer *player = [GKLocalPlayer localPlayer];
-    OKAuthProfile *profile = [[OKAuthProfile alloc] initWithProvider:self userID:[player playerID] name:[player displayName]];
+    OKAuthProfile *profile = [[OKAuthProfile alloc] initWithProvider:self
+                                                              userID:[player playerID]
+                                                                name:[player displayName]];
     handler(profile, nil);
 }
 
@@ -149,22 +152,6 @@
 }
 
 
-
-// Check to see if we should use iOS5 version of GameCenter authentication or not
--(BOOL)shouldUseLegacyGameCenterAuth
-{
-    //TODO remove this workaround-- using legacy auth right now always because of Unity
-    //return YES;
-    
-    // IF GKLocalPlayer responds to setAuthenticationHandler, then this is iOS 6+ so return NO, otherwise
-    // use legacy version (return YES)
-    
-    if([[GKLocalPlayer localPlayer] respondsToSelector:@selector(setAuthenticateHandler:)])
-        return NO;
-    else
-        return YES;
-}
-
 - (void)sessionStateChanged:(BOOL)status error:(NSError*)error
 {
     switch(status)
@@ -182,7 +169,8 @@
 }
 
 
-+ (void)loadPlayersWithIDs:(NSArray*)playerIDs completion:(void(^)(NSArray *friends, NSError *error))handler
++ (void)loadPlayersWithIDs:(NSArray*)playerIDs
+                completion:(void(^)(NSArray *friends, NSError *error))handler
 {
     if(!handler)
         return;

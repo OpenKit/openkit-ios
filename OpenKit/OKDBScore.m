@@ -10,7 +10,6 @@
 #import "OKDBScore.h"
 #import "OKMacros.h"
 #import "OKUser.h"
-#import <sqlite3.h>
 #import "OKHelper.h"
 #import "OKFileUtil.h"
 #import "OKNetworker.h"
@@ -87,7 +86,8 @@ static NSString *const kOKDBScoreCreateSql =
 {
     OKScore *score = (OKScore*)row;
     
-    NSString *updateSql = @"UPDATE scores SET submit_state=?, modify_date=?, leaderboard_id=?, value=?, metadata=?, display_string=? WHERE row_id=?";
+    NSString *updateSql = @"UPDATE scores SET submit_state=?, modify_date=?, leaderboard_id=?,\
+    value=?, metadata=?, display_string=? WHERE row_id=?";
     
     return [self update:updateSql,
             @(score.submitState),
@@ -104,7 +104,8 @@ static NSString *const kOKDBScoreCreateSql =
 {
     OKScore *score = (OKScore*)row;
     
-    NSString *insertSql = @"INSERT INTO scores (submit_state, modify_date, client_created_at, leaderboard_id, value, metadata, display_string) VALUES(?,?,?,?,?,?,?);";
+    NSString *insertSql = @"INSERT INTO scores (submit_state, modify_date, client_created_at,\
+    leaderboard_id, value, metadata, display_string) VALUES(?,?,?,?,?,?,?);";
     
     return [self insert:insertSql,
             @(score.submitState),
@@ -129,17 +130,17 @@ static NSString *const kOKDBScoreCreateSql =
 }
 
 
--(NSArray*)getScoresForLeaderboardID:(int)leaderboardID andOnlyGetSubmittedScores:(BOOL)submittedOnly
+-(NSArray*)getScoresForLeaderboardID:(int)lbID onlySubmitted:(BOOL)submittedOnly
 {
     //OKLog(@"Getting cached scores for leaderboard ID: %d",leaderboardID);
-    NSString *queryString;
+    NSString *sql;
     
     if(submittedOnly)
-        queryString = [NSString stringWithFormat:@"SELECT * FROM scores WHERE leaderboard_id=%d AND submit_state=1", leaderboardID];
+        sql = [NSString stringWithFormat:@"SELECT * FROM scores WHERE leaderboard_id=%d AND submit_state=1", lbID];
     else
-        queryString = [NSString stringWithFormat:@"SELECT * FROM scores WHERE leaderboard_id=%d", leaderboardID];
+        sql = [NSString stringWithFormat:@"SELECT * FROM scores WHERE leaderboard_id=%d", lbID];
     
-    return [self getScoresWithSQL:queryString];
+    return [self getScoresWithSQL:sql];
 }
 
 

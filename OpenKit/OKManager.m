@@ -66,7 +66,9 @@
 }
 
 
-+ (void)configureWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey endpoint:(NSString *)endpoint
++ (void)configureWithAppKey:(NSString *)appKey
+                  secretKey:(NSString *)secretKey
+                   endpoint:(NSString *)endpoint
 {
     NSParameterAssert(appKey);
     NSParameterAssert(secretKey);
@@ -143,7 +145,7 @@
     }
     
     
-    // At this point we are not logged in Openkit, we try to get access using cached sessions (fb...)
+    // At this point we are not logged in Openkit, we try to get access using cached sessions.
     NSArray *providers = [OKAuthProvider getAuthProviders];
     if(!providers || [providers count] == 0) {
         OKLogErr(@"You should add at less one authorization provider.");
@@ -184,7 +186,8 @@
         return;
     }
 
-    [OKLocalUser loginWithAuthRequests:authRequests completion:^(OKLocalUser *user, NSError *error) {
+    [OKLocalUser loginWithAuthRequests:authRequests
+                            completion:^(OKLocalUser *user, NSError *error) {
         if(user)
             [self setCurrentUser:user];
         
@@ -226,7 +229,8 @@
 }
 
 
-- (void)loginWithProvider:(OKAuthProvider*)provider completion:(void(^)(OKLocalUser *user, NSError *error))handler
+- (void)loginWithProvider:(OKAuthProvider*)provider
+               completion:(void(^)(OKLocalUser *user, NSError *error))handler
 {
     if(!provider)
         return;
@@ -382,12 +386,12 @@
     
     OKAuthProvider *provider = [not object];
     
-    // Validate status
-    BOOL isValid = [[OKAuthProvider getAuthProviders] containsObject:provider] && [provider isSessionOpen];
+    // Validate provider
+    BOOL isInjected = [[OKAuthProvider getAuthProviders] containsObject:provider];
     BOOL alreadyLogged = [[self currentUser] userIDForService:[provider serviceName]] != nil;
     
     // If the provider is valid and we are not already logged in, we try to log in.
-    if(isValid && !alreadyLogged) {
+    if([provider isSessionOpen] && isInjected && !alreadyLogged) {
         
         [self loginWithProvider:provider completion:^(OKLocalUser *user, NSError *error) {
             if(user) {
@@ -485,8 +489,7 @@
 
 - (void)submitCachedScoresAfterDelay
 {
-    double delayInSeconds = 2.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [OKScore resolveUnsubmittedScores];
     });
