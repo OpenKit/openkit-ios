@@ -70,7 +70,7 @@
 -(void)reloadChat
 {
     [self.webView setAlpha:0];
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://toddham.com/chat/index.php"]]];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://chat.openkit.io/index.php"]]];
 }
 
 - (IBAction)submit:(id)sender
@@ -83,7 +83,7 @@
     if(text.length>0) {
 
         //TODO set the real URL
-        NSURL *url = [NSURL URLWithString:@"http://toddham.com/chat"];
+        NSURL *url = [NSURL URLWithString:@"http://chat.openkit.io"];
         AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:url];
         
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
