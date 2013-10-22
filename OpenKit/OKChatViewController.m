@@ -56,7 +56,9 @@
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     UITextField *textField = [nicknameAlertView textFieldAtIndex:0];
-    self.userName = [[textField text] substringToIndex:30];
+    if([[textField text] length] > 30) {
+        self.userName = [[textField text] substringToIndex:29];
+    }
 }
 
 
