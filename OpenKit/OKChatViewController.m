@@ -56,7 +56,7 @@
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     UITextField *textField = [nicknameAlertView textFieldAtIndex:0];
-    self.userName = [textField text];
+    self.userName = [[textField text] substringToIndex:30];
 }
 
 
@@ -75,7 +75,10 @@
 
 - (IBAction)submit:(id)sender
 {
-    self.OKuserID = [NSNumber numberWithInt:93];
+    // Set the user ID with a hash of the username to enable 10 different colors
+    self.OKuserID = [NSNumber numberWithInt:([self hashUserName:self.userName] %10)];
+    
+    
     NSString *text = [self.texBar text];
     if(text.length>0) {
 
@@ -85,7 +88,7 @@
         
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                                 self.userName, @"name",
-                                //self.OKuserID, @"user_id",
+                                self.OKuserID, @"user_id",
                                 text, @"text",
                                 nil];
         
@@ -99,6 +102,17 @@
              NSLog(@"[HTTPClient Error]: %@", error.localizedDescription);
          }];
     }
+}
+
+-(int)hashUserName:(NSString*)userName
+{
+    int hash = 5381;
+        
+    for(int x = 0; x < [userName length]; x++) {
+        hash = ((hash << 5) + hash) + [userName characterAtIndex:x];
+    }
+    
+    return hash;
 }
 
 
