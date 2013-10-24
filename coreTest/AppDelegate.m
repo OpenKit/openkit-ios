@@ -15,8 +15,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [OKFacebookPlugin inject];
-    [OKGameCenterPlugin inject];
+    [OKFacebookPlugin sharedInstance];
+    [OKGameCenterPlugin sharedInstance];
 
 
     
@@ -48,9 +48,8 @@
 
 - (void)dologin
 {
-    [[OKFacebookPlugin inject] openSessionWithViewController:self.viewController completion:^(BOOL login, NSError *error) {
-        NSLog(@"TRY: %@", error);
-    }];
+    OKAuthProvider *provider = [OKAuthProvider providerByName:@"facebook"];
+    [provider openSessionWithViewController:self.viewController completion:nil];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation

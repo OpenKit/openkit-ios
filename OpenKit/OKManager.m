@@ -146,7 +146,7 @@
     
     
     // At this point we are not logged in Openkit, we try to get access using cached sessions.
-    NSArray *providers = [OKAuthProvider getAuthProviders];
+    NSArray *providers = [OKAuthProvider getAllProviders];
     if(!providers || [providers count] == 0) {
         OKLogErr(@"You should add at less one authorization provider.");
         [self endLogin];
@@ -174,7 +174,7 @@
                 if((--count.value) == 0)
                     [self performAuthRequest:authRequests];
             }];
-        }
+        }        
     });
 }
 
@@ -230,16 +230,59 @@
 }
 
 
+- (void)getLocalUserWithProvider:(OKAuthProvider*)provider
+                      completion:(void(^)(OKLocalUser *user, NSError *error))handler
+{
+    [provider getAuthRequestWithCompletion:^(OKAuthRequest *request, NSError *error) {
+        
+        [OKLocalUser loginWithAuthRequests:@[request] completion:handler];
+        
+    }];
+}
+
+
+
+- (void)loginWithProviderName:(NSString*)serviceName
+               viewController:(UIViewController*)controller
+                   completion:(void(^)(OKLocalUser *user, NSError *error))handler
+{
+    [self loginWithProvider:[OKAuthProvider providerByName:serviceName] 
+             viewController:controller
+                 completion:handler];
+}
+
+
 - (void)loginWithProvider:(OKAuthProvider*)provider
+           viewController:(UIViewController*)controller
                completion:(void(^)(OKLocalUser *user, NSError *error))handler
 {
     if(!provider)
         return;
     
-    OKLogInfo(@"Trying to login with %@", [provider serviceName]);
-    [provider getAuthRequestWithCompletion:^(OKAuthRequest *request, NSError *error) {
-        [OKLocalUser loginWithAuthRequests:@[request] completion:handler];
-    }];
+    
+    void (^connection)(BOOL, NSError*) = ^(BOOL login, NSError *error) {
+
+        if(login) {
+            if(![[self currentUser] userIDForService:[provider serviceName]]) {
+                
+                [self getLocalUserWithProvider:provider completion:^(OKLocalUser *user, NSError *error) {
+                    [self updateCachedUser];
+                    [self setCurrentUser:user];
+                    
+                    if(handler)
+                        handler(user, error);
+                }];
+            }
+        }
+        
+        if(handler)
+            handler([OKLocalUser currentUser], error);
+    };
+    
+    if([provider isSessionOpen])
+        connection(YES, nil);
+    else
+        [provider openSessionWithViewController:controller completion:connection];
 }
 
 
@@ -288,12 +331,10 @@
 
 - (void)setCurrentUser:(OKLocalUser*)aCurrentUser
 {
-    if([_currentUser userID] != [aCurrentUser userID]) {
-        _currentUser = aCurrentUser;
-        [self updateCachedUser];
-        if([self initialized])
-            [self updatedStatus];
-    }
+    _currentUser = aCurrentUser;
+    [self updateCachedUser];
+    if([self initialized])
+        [self updatedStatus];
 }
 
 
@@ -305,7 +346,7 @@
         return;
     }
     
-    NSArray *providers = [OKAuthProvider getAuthProviders];
+    NSArray *providers = [OKAuthProvider getAllProviders];
     for(OKAuthProvider *provider in providers) {
         if([provider isSessionOpen]) {
             if(!([user friendsForService:[provider serviceName]] && lazy)) {
@@ -386,29 +427,8 @@
         OKLogErr(@"The system is not initialized yet.");
     
     OKAuthProvider *provider = [not object];
-    
-    // Validate provider
-    BOOL isInjected = [[OKAuthProvider getAuthProviders] containsObject:provider];
-    BOOL alreadyLogged = [[self currentUser] userIDForService:[provider serviceName]] != nil;
-    
-    // If the provider is valid and we are not already logged in, we try to log in.
-    if([provider isSessionOpen] && isInjected && !alreadyLogged) {
-        
-        [self loginWithProvider:provider completion:^(OKLocalUser *user, NSError *error) {
-            if(user) {
-                [self updateCachedUser];
-                [self setCurrentUser:user];
-                
-                
-                // update friends
-                [provider loadFriendsWithCompletion:^(NSArray *friends, NSError *error) {
-                    if(!error && friends) {
-                        [user setFriendIDs:friends forService:[provider serviceName]];
-                    }
-                }];
-            }
-        }];
-    }
+    if([provider isSessionOpen])
+        [self loginWithProvider:provider viewController:nil completion:nil];
 }
 
 

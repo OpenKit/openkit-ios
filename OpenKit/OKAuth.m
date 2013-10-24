@@ -47,11 +47,6 @@ NSMutableArray *__providers = nil;
         OKLogErr(@"Invalid auth provider.");
         return;
     }
-    
-    if(![provider isAuthenticationAvailable]) {
-        OKLogErr(@"Provider is not available.");
-        return;
-    }
 
     OKAuthProvider *p = [OKAuthProvider providerByName:[provider serviceName]];
     if(p == nil) {
@@ -69,7 +64,15 @@ NSMutableArray *__providers = nil;
 }
 
 
-+ (NSArray*)getAuthProviders
++ (NSArray*)getProviders
+{
+    return [__providers filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id obj, NSDictionary *d) {
+        return [(OKAuthProvider*)obj isUIVisible] == true;
+    }]];
+}
+
+
++ (NSArray*)getAllProviders
 {
     return __providers;
 }
@@ -142,7 +145,7 @@ NSMutableArray *__providers = nil;
 #pragma mark - Methods to override
 
 
-+ (OKAuthProvider*)inject
++ (OKAuthProvider*)sharedInstance
 {
     NSAssert(NO, @"Override this method");
     return nil;
@@ -154,9 +157,8 @@ NSMutableArray *__providers = nil;
     return nil;
 }
 
-- (BOOL)isAuthenticationAvailable
+- (BOOL)isUIVisible
 {
-    NSAssert(NO, @"Override this method");
     return NO;
 }
 
@@ -194,13 +196,6 @@ NSMutableArray *__providers = nil;
     NSAssert(NO, @"Override this method");
 }
 
-- (void)loadUserImageForUserID:(NSString*)userid
-                    completion:(void(^)(UIImage *image, NSError *error))handler
-{
-    OKLogInfo(@"loadUserImageForUserID is not implemented in %@", [self serviceName]);
-    handler(nil, nil);
-}
-
 - (void)loadFriendsWithCompletion:(void(^)(NSArray *friends, NSError *error))handler
 {
     OKLogInfo(@"loadFriendsWithCompletion is not implemented in %@", [self serviceName]);
@@ -228,59 +223,32 @@ NSMutableArray *__providers = nil;
 
 #pragma mark -
 
-@implementation OKAuthProfile
-
-- (id)initWithProvider:(OKAuthProvider*)provider userID:(NSString*)userid name:(NSString*)name
+@interface OKAuthRequest ()
 {
-    // REVIEW
-    NSParameterAssert(provider);
-    NSParameterAssert(userid);
-    NSParameterAssert(name);
-    
-    self = [super init];
-    if (self) {
-        _provider = provider;
-        _userID = userid;
-        _userName = name;
-    }
-    return self;
+    NSString *_data;
+    NSString *_key;
+    NSString *_url;
 }
-
-
-- (void)getFriendsWithCompletion:(void(^)(NSArray *ids, NSError *error))handler
-{
-    NSParameterAssert(handler);
-    
-    if(_friends) {
-        handler(_friends, nil);
-        
-    }else{
-        [_provider loadFriendsWithCompletion:^(NSArray *friends, NSError *error) {
-            if(friends)
-                _friends = friends;
-            
-            handler(_friends, error);
-        }];
-    }
-}
-
 @end
 
 
 @implementation OKAuthRequest
 
 - (id)initWithProvider:(OKAuthProvider*)provider
-                userID:(NSString*)userID
+                userID:(NSString*)userid
+              userName:(NSString*)username
+          userImageURL:(NSString*)imageUrl
                  token:(NSString*)token
 {
     NSParameterAssert(provider);
-    NSParameterAssert(userID);
-    NSParameterAssert(token);
+    NSParameterAssert(userid);
     
     self = [super init];
     if (self) {
         _provider = provider;
-        _userID = userID;
+        _userID = userid;
+        _userName = username;
+        _userImageUrl = imageUrl;
         _key = token;
         _data = nil;
         _url = nil;
@@ -290,23 +258,24 @@ NSMutableArray *__providers = nil;
 
 
 - (id)initWithProvider:(OKAuthProvider*)provider
-                userID:(NSString*)userID
-          publicKeyUrl:(NSString*)url
-             signature:(NSData*)signature
-                  data:(NSData*)data;
+                userID:(NSString*)userid
+              userName:(NSString*)username
+          userImageURL:(NSString*)imageUrl
+                   key:(NSString*)key
+                  data:(NSString*)data
+          publicKeyUrl:(NSString*)url;
 {
     NSParameterAssert(provider);
-    NSParameterAssert(userID);
-    NSParameterAssert(url);
-    NSParameterAssert(signature);
-    NSParameterAssert(data);
-
+    NSParameterAssert(userid);
+    
     self = [super init];
     if (self) {
         _provider = provider;
-        _userID = userID;
+        _userID = userid;
+        _userName = username;
+        _userImageUrl = imageUrl;
+        _key = key;
         _data = data;
-        _key = signature;
         _url = url;
     }
     return self;
@@ -315,19 +284,15 @@ NSMutableArray *__providers = nil;
 
 - (NSDictionary*)JSONDictionary
 {
-    NSAssert([_provider serviceName], @"The service's name can not be nil.");
-    NSAssert(_userID, @"The user id can not be nil.");
-    NSAssert(_key, @"The key can not be nil.");
+    NSAssert(_provider, @"The service's name can not be nil.");
 
-    // We can not use literal because some values can be nil.
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setValue:[_provider serviceName] forKey:@"service"];
-    [dict setValue:_userID forKey:@"user_id"];
-    [dict setValue:_key forKey:@"key"];
-    [dict setValue:_data forKey:@"data"];
-    [dict setValue:_url forKey:@"public_key_url"];
-    
-    return dict;
+    return @{@"service": [_provider serviceName],
+             @"user_name": OK_NO_NIL(_userName),
+             @"user_id": OK_NO_NIL(_userID),
+             @"user_image_url": OK_NO_NIL(_userImageUrl), 
+             @"key": OK_NO_NIL(_key),
+             @"data": OK_NO_NIL(_data),
+             @"public_key_url": OK_NO_NIL(_url) };
 }
 
 @end

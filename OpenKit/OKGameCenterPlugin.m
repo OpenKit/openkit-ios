@@ -14,27 +14,19 @@
 #import "OKMacros.h"
 #import "OKChallenge.h"
 #import "OKError.h"
+#import "OKUtils.h"
 
 
 #define OK_SERVICE_NAME @"gamecenter"
 
 @implementation OKGameCenterPlugin
 
-// Check to see if the device supports GameCenter
-// This method is slightly redundant because OpenKit only supports iOS 5+
-+ (BOOL)isGCAvailable
-{
-    return OK_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"4.1");
-}
-
-
-+ (OKAuthProvider*)inject
++ (OKAuthProvider*)sharedInstance
 {
     OKAuthProvider *p = [OKAuthProvider providerByName:OK_SERVICE_NAME];
     if(p == nil) {
         p = [[OKGameCenterPlugin alloc] init];
-        if([p isAuthenticationAvailable])
-            [OKAuthProvider addProvider:p];
+        [OKAuthProvider addProvider:p];
     }
     return p;
 }
@@ -47,17 +39,15 @@
 }
 
 
-- (BOOL)isAuthenticationAvailable
-{
-    NSString *reqSysVer = @"7.0";
-    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
-    return [currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending;
-}
-
-
 - (BOOL)isSessionOpen
 {
     return [[GKLocalPlayer localPlayer] isAuthenticated];
+}
+
+
+- (BOOL)isUIVisible
+{
+    return OK_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0");
 }
 
 
@@ -76,7 +66,6 @@
 {
     [GKLocalPlayer localPlayer].authenticateHandler = ^(UIViewController *gcController, NSError *error)
     {
-        [self sessionStateChanged:[[GKLocalPlayer localPlayer] isAuthenticated] error:error];
         if (![GKLocalPlayer localPlayer].isAuthenticated) {
             // local player is not authenticated
             if(controller && gcController) {
@@ -88,61 +77,51 @@
         
         if(handler)
             handler([self isSessionOpen], error);
+        
+        [self sessionStateChanged:[[GKLocalPlayer localPlayer] isAuthenticated] error:error];
     };
     
     return [self isSessionOpen];
 }
 
 
-- (void)getProfileWithCompletion:(void(^)(OKAuthProfile *profile, NSError *error))handler
-{
-    NSParameterAssert(handler);
-    
-    if(![self isSessionOpen]) {
-        handler(nil, [OKError sessionClosed]);
-        return;
-    }
-    
-    GKLocalPlayer *player = [GKLocalPlayer localPlayer];
-    OKAuthProfile *profile = [[OKAuthProfile alloc] initWithProvider:self
-                                                              userID:[player playerID]
-                                                                name:[player displayName]];
-    handler(profile, nil);
-}
-
-
 - (void)getAuthRequestWithCompletion:(void(^)(OKAuthRequest *request, NSError *error))handler
 {
     NSParameterAssert(handler);
-    
+ 
+    if(!OK_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+        handler(nil, [OKError noGameCenterIDError]);
+        return;
+    }
     if(![self isSessionOpen]) {
         handler(nil, [OKError sessionClosed]);
         return;
     }
     
-    [self getProfileWithCompletion:^(OKAuthProfile *profile, NSError *error)
-    {
-        GKLocalPlayer *player = [GKLocalPlayer localPlayer];
-        [player generateIdentityVerificationSignatureWithCompletionHandler:^(NSURL *publicKeyUrl, NSData *signature, NSData *salt, uint64_t timestamp, NSError *error)
-        {
-            uint64_t timestampBE = CFSwapInt64HostToBig(timestamp);
-            NSMutableData *payload = [[NSMutableData alloc] init];
-            [payload appendData:[[profile userID] dataUsingEncoding:NSASCIIStringEncoding]];
-            [payload appendData:[[[NSBundle mainBundle] bundleIdentifier] dataUsingEncoding:NSASCIIStringEncoding]];
-            [payload appendBytes:&timestampBE length:sizeof(timestampBE)];
-            [payload appendData:salt];
-
-            OKAuthRequest *request = nil;
-            if(!error)
-                request = [[OKAuthRequest alloc] initWithProvider:self
-                                                           userID:[profile userID]
-                                                     publicKeyUrl:[publicKeyUrl absoluteString]
-                                                        signature:signature
-                                                             data:payload];
-            
-            handler(request, error);
-        }];
-    }];
+    
+    GKLocalPlayer *player = [GKLocalPlayer localPlayer];
+    [player generateIdentityVerificationSignatureWithCompletionHandler:^(NSURL *publicKeyUrl, NSData *signature, NSData *salt, uint64_t timestamp, NSError *error)
+     {
+         uint64_t timestampBE = CFSwapInt64HostToBig(timestamp);
+         NSMutableData *payload = [[NSMutableData alloc] init];
+         [payload appendData:[[player playerID] dataUsingEncoding:NSASCIIStringEncoding]];
+         [payload appendData:[[[NSBundle mainBundle] bundleIdentifier] dataUsingEncoding:NSASCIIStringEncoding]];
+         [payload appendBytes:&timestampBE length:sizeof(timestampBE)];
+         [payload appendData:salt];
+         
+         OKAuthRequest *request = nil;
+         if(!error) {
+             request = [[OKAuthRequest alloc] initWithProvider:self
+                                                        userID:[player playerID]
+                                                      userName:[player displayName]
+                                                  userImageURL:nil
+                                                           key:[OKUtils base64Enconding:signature]
+                                                          data:[OKUtils base64Enconding:payload]
+                                                  publicKeyUrl:[publicKeyUrl absoluteString]];
+         }
+         
+         handler(request, error);
+     }];
 }
 
 
@@ -196,34 +175,7 @@
 }
 
 
-+ (void)loadPlayerPhotoWithID:(NSString*)gameCenterID
-                    photoSize:(GKPhotoSize)photoSize
-                   completion:(void(^)(UIImage *photo, NSError *error))handler
-{
-    NSParameterAssert(handler);
-    
-    [self loadPlayersWithIDs:@[gameCenterID] completion:^(NSArray *players, NSError *error) {
-        if (!error && players) {
-            GKPlayer *player = [players objectAtIndex:0];
-            [player loadPhotoForSize:photoSize withCompletionHandler:^(UIImage *photo, NSError *error) {
-                handler(photo, error);
-            }];
-            
-        }else{
-            // Couldn't load the player info, so can't load profile photo
-            handler(nil,error);
-        }
-    }];
-}
-
-
 #pragma mark - Private API
-
-+ (void)removeNotifications
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 
 - (void)submitScore:(NSNotification*)not
 {

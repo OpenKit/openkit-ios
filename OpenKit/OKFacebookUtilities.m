@@ -43,13 +43,12 @@
 }
 
 
-+ (OKAuthProvider*)inject
++ (OKAuthProvider*)sharedInstance
 {
     OKAuthProvider *p = [OKAuthProvider providerByName:OK_SERVICE_NAME];
     if(p == nil) {
         p = [[OKFacebookPlugin alloc] init];
-        if([p isAuthenticationAvailable])
-            [OKAuthProvider addProvider:p];
+        [OKAuthProvider addProvider:p];
     }
     
     return p;
@@ -63,7 +62,7 @@
 }
 
 
-- (BOOL)isAuthenticationAvailable
+- (BOOL)isUIVisible
 {
     return YES;
 }
@@ -94,40 +93,10 @@
                                               allowLoginUI:(controller != nil)
                                          completionHandler:^(FBSession *session, FBSessionState status, NSError *error)
     {
-        [self sessionStateChanged:status error:error];
         if(handler)
             handler([self isSessionOpen], error);
-    }];
-}
-
-
-- (void)getProfileWithCompletion:(void(^)(OKAuthProfile *profile, NSError *error))handler
-{
-    NSParameterAssert(handler);
-    
-    if(![self isSessionOpen]) {
-        handler(nil, [OKError sessionClosed]);
-        return;
-    }
-    
-    FBRequest *request = [FBRequest requestForMe];
-    [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *err)
-    {
-        // Did everything come back okay with no errors?
-        if (!err && result) {
-            OKAuthProfile *profile = [[OKAuthProfile alloc] initWithProvider:self
-                                                                      userID:result[@"id"]
-                                                                        name:result[@"name"]];
-            // Set url of profile image
-            NSString *url = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", result[@"id"]];
-            [profile setImageUrl:url];
-            
-            handler(profile, nil);
-        }
-        else {
-            //Error performing the FB request
-            handler(nil, err);
-        }
+        
+        [self sessionStateChanged:status error:error];
     }];
 }
 
@@ -140,30 +109,32 @@
         handler(nil, [OKError sessionClosed]);
         return;
     }
-    [self getProfileWithCompletion:^(OKAuthProfile *profile, NSError *error) {
-        
-        OKAuthRequest *request = nil;
-        NSString *token = [[[FBSession activeSession] accessTokenData] accessToken];
-        if(profile && token)
-            request = [[OKAuthRequest alloc] initWithProvider:self
-                                                       userID:[profile userID]
-                                                        token:token];
-        
-        handler(request, error);
-    }];
+    
+    FBRequest *request = [FBRequest requestForMe];
+    [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *err)
+     {
+         OKAuthRequest *request = nil;
+         if (!err && result) {
+             
+             NSString *token = [[[FBSession activeSession] accessTokenData] accessToken];
+             if(token) {
+                 NSString *imageUrl = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", result[@"id"]];
+
+                 request = [[OKAuthRequest alloc] initWithProvider:self
+                                                            userID:result[@"id"]
+                                                          userName:result[@"name"]
+                                                      userImageURL:imageUrl
+                                                             token:token];
+             }
+             handler(request, err);
+         }
+     }];
 }
 
 
 - (void)logoutAndClear
 {
     [[FBSession activeSession] closeAndClearTokenInformation];
-}
-
-
-- (void)loadUserImageForUserID:(NSString*)userid completion:(void(^)(UIImage *image, NSError *error))handler
-{
-    // https://graph.facebook.com/USER_ID/picture
-    
 }
 
 

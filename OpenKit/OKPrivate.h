@@ -29,6 +29,7 @@
 @interface OKAuthProvider (Private)
 
 + (BOOL)start;
++ (NSArray*)getAllProviders;
 + (BOOL)handleOpenURL:(NSURL *)url;
 + (void)handleDidBecomeActive;
 + (void)handleWillTerminate;

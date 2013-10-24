@@ -47,6 +47,14 @@
 
 + (BOOL)handleOpenURL:(NSURL*)url;
 
+- (void)loginWithProviderName:(NSString*)serviceName
+               viewController:(UIViewController*)controller
+                   completion:(void(^)(OKLocalUser *user, NSError *error))handler;
+
+- (void)loginWithProvider:(OKAuthProvider*)provider
+           viewController:(UIViewController*)controller
+               completion:(void(^)(OKLocalUser *user, NSError *error))handler;
+
 @end
 
 

@@ -21,15 +21,15 @@
 - (id)initWithName:(NSString*)name;
 + (void)addProvider:(OKAuthProvider*)provider;
 + (OKAuthProvider*)providerByName:(NSString*)name;
-+ (NSArray*)getAuthProviders;
++ (NSArray*)getProviders;
 
 
 // REQUIRED TO OVERRIDE
-+ (OKAuthProvider*)inject;
++ (OKAuthProvider*)sharedInstance;
 
 //! Returns if the authentication services are available.
 //! e.g. GameCenter can't provide authentication until iOS7.0
-- (BOOL)isAuthenticationAvailable;
+- (BOOL)isUIVisible;
 
 //! Returns if the session is already open.
 //! This method should NOT try to open it.
@@ -50,9 +50,6 @@
                            completion:(void(^)(BOOL login, NSError *error))handler;
 
 
-//! Gets the user's profile from the service.
-- (void)getProfileWithCompletion:(void(^)(OKAuthProfile *profile, NSError *error))handler;
-
 //! Called internally to get an valid OK Auth Request,
 //! we need this to login into openkit and get an openkit user ID.
 - (void)getAuthRequestWithCompletion:(void(^)(OKAuthRequest *request, NSError *error))handler;
@@ -64,9 +61,6 @@
 
 
 // optional
-- (void)loadUserImageForUserID:(NSString*)userid
-                    completion:(void(^)(UIImage *image, NSError *error))handler;
-
 - (void)loadFriendsWithCompletion:(void(^)(NSArray *friends, NSError *error))handler;
 
 - (BOOL)handleOpenURL:(NSURL *)url;
@@ -76,41 +70,28 @@
 @end
 
 
-@interface OKAuthProfile : NSObject
+@interface OKAuthRequest : NSObject
 
 @property(nonatomic, readonly) OKAuthProvider *provider;
 @property(nonatomic, readonly) NSString *userID;
 @property(nonatomic, readonly) NSString *userName;
-@property(nonatomic, readonly) NSArray *friends;
-@property(nonatomic, copy) NSString *imageUrl;
+@property(nonatomic, readonly) NSString *userImageUrl;
 
 - (id)initWithProvider:(OKAuthProvider*)provider
                 userID:(NSString*)userid
-                  name:(NSString*)name;
-
-- (void)getFriendsWithCompletion:(void(^)(NSArray *ids, NSError *error))handler;
-
-@end
-
-
-@interface OKAuthRequest : NSObject
-{
-    NSString *_userID;
-    NSObject *_data;
-    NSObject *_key;
-    NSString *_url;
-}
-@property(nonatomic, readonly) OKAuthProvider *provider;
-
-- (id)initWithProvider:(OKAuthProvider*)provider
-                userID:(NSString*)userID
+              userName:(NSString*)username
+          userImageURL:(NSString*)imageUrl
                  token:(NSString*)token;
 
+
 - (id)initWithProvider:(OKAuthProvider*)provider
-                userID:(NSString*)userID
-          publicKeyUrl:(NSString*)url
-             signature:(NSData*)signature
-                  data:(NSData*)data;
+                userID:(NSString*)userid
+              userName:(NSString*)username
+          userImageURL:(NSString*)imageUrl
+                   key:(NSString*)key
+                  data:(NSString*)data
+          publicKeyUrl:(NSString*)url;
+
 
 - (NSDictionary*)JSONDictionary;
 
