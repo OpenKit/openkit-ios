@@ -12,12 +12,19 @@
 		327E9E1B17CEFABA00F33F24 /* OKDBConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1717CEFABA00F33F24 /* OKDBConnection.m */; };
 		327E9E1C17CEFABA00F33F24 /* OKDBSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1917CEFABA00F33F24 /* OKDBSession.m */; };
 		32880CEE176DC784005F8D30 /* OKUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 32880CED176DC784005F8D30 /* OKUtils.m */; };
+		3295C1791819E1240044783E /* OKOpenUDID.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32AA60CA18186C7400EEFF79 /* OKOpenUDID.h */; };
+		3295C17A1819E1240044783E /* OKOpenUUIDPlugin.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32AA60C718186B4B00EEFF79 /* OKOpenUUIDPlugin.h */; };
+		3295C17B1819E2150044783E /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FF81811B0AE0057B663 /* UIImageView+AFNetworking.m */; };
+		32AA60C918186B4B00EEFF79 /* OKOpenUUIDPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AA60C818186B4B00EEFF79 /* OKOpenUUIDPlugin.m */; };
+		32AA60CC18186C7400EEFF79 /* OKOpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AA60CB18186C7400EEFF79 /* OKOpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		32CACFDA16CB637C00E8F185 /* OKManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA916CB637C00E8F185 /* OKManager.m */; };
 		32CACFDC16CB637C00E8F185 /* OKHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFAE16CB637C00E8F185 /* OKHelper.m */; };
 		32CACFDD16CB637C00E8F185 /* OKLeaderboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFB016CB637C00E8F185 /* OKLeaderboard.m */; };
 		32CACFE316CB637C00E8F185 /* OKNetworker.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFBD16CB637C00E8F185 /* OKNetworker.m */; };
 		32CACFE616CB637C00E8F185 /* OKScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFC316CB637C00E8F185 /* OKScore.m */; };
 		32CACFEB16CB637C00E8F185 /* OKUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFCD16CB637C00E8F185 /* OKUser.m */; };
+		32FB382E1817605700B2DEBC /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FB382D1817605700B2DEBC /* FacebookSDK.framework */; };
+		32FB382F1817606600B2DEBC /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FB382D1817605700B2DEBC /* FacebookSDK.framework */; };
 		4455BEBE17A396DE0079859A /* OKDBScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4455BEBD17A396DE0079859A /* OKDBScore.m */; };
 		445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
 		445B3C001769258C00952456 /* OKGameCenterPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 445B3BFF1769258C00952456 /* OKGameCenterPlugin.m */; };
@@ -50,7 +57,6 @@
 		A956565618077CE800B5C8DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
 		A956565718077CE800B5C8DB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05316CB698C00E8F185 /* CoreGraphics.framework */; };
 		A956565818077CE800B5C8DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05016CB698C00E8F185 /* UIKit.framework */; };
-		A956565E18077CE800B5C8DB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A956565C18077CE800B5C8DB /* InfoPlist.strings */; };
 		A956566018077CE800B5C8DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A956565F18077CE800B5C8DB /* main.m */; };
 		A956566418077CE800B5C8DB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A956566318077CE800B5C8DB /* AppDelegate.m */; };
 		A956568118077D2F00B5C8DB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0EA16CB74DF00E8F185 /* libsqlite3.dylib */; };
@@ -91,10 +97,7 @@
 		A9E440011811B0AE0057B663 /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FF21811B0AE0057B663 /* AFPropertyListRequestOperation.m */; };
 		A9E440021811B0AE0057B663 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FF41811B0AE0057B663 /* AFURLConnectionOperation.m */; };
 		A9E440031811B0AE0057B663 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FF61811B0AE0057B663 /* AFXMLRequestOperation.m */; };
-		A9E440041811B0AE0057B663 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FF81811B0AE0057B663 /* UIImageView+AFNetworking.m */; };
 		A9E440051811B0AE0057B663 /* AFOAuth1Client.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FFB1811B0AE0057B663 /* AFOAuth1Client.m */; };
-		A9E440091811BA9E0057B663 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E440081811BA9E0057B663 /* FacebookSDK.framework */; };
-		A9E4400A1811BAC10057B663 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9E440081811BA9E0057B663 /* FacebookSDK.framework */; };
 		A9F1D3EF1805EB4C00E593E7 /* OKAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F1D3EE1805EB4C00E593E7 /* OKAuth.m */; };
 		A9F1D3F41806196A00E593E7 /* OKCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F1D3F31806196A00E593E7 /* OKCrypto.m */; };
 /* End PBXBuildFile section */
@@ -116,6 +119,8 @@
 			dstPath = include;
 			dstSubfolderSpec = 16;
 			files = (
+				3295C1791819E1240044783E /* OKOpenUDID.h in Copy Files */,
+				3295C17A1819E1240044783E /* OKOpenUUIDPlugin.h in Copy Files */,
 				A95655BE180777EE00B5C8DB /* OKCrypto.h in Copy Files */,
 				A95655BF180777EE00B5C8DB /* OKAuth.h in Copy Files */,
 				A95655C0180777EE00B5C8DB /* OKPrivate.h in Copy Files */,
@@ -158,6 +163,10 @@
 		3284E16216CE4AC900624827 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		32880CEC176DC784005F8D30 /* OKUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUtils.h; sourceTree = "<group>"; };
 		32880CED176DC784005F8D30 /* OKUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUtils.m; sourceTree = "<group>"; };
+		32AA60C718186B4B00EEFF79 /* OKOpenUUIDPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OKOpenUUIDPlugin.h; path = OpenKit/OKOpenUUIDPlugin.h; sourceTree = "<group>"; };
+		32AA60C818186B4B00EEFF79 /* OKOpenUUIDPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OKOpenUUIDPlugin.m; path = OpenKit/OKOpenUUIDPlugin.m; sourceTree = "<group>"; };
+		32AA60CA18186C7400EEFF79 /* OKOpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OKOpenUDID.h; path = OpenKit/OKOpenUDID.h; sourceTree = "<group>"; };
+		32AA60CB18186C7400EEFF79 /* OKOpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OKOpenUDID.m; path = OpenKit/OKOpenUDID.m; sourceTree = "<group>"; };
 		32CACF7716CB62B500E8F185 /* OpenKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenKit-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		32CACFA716CB637C00E8F185 /* OKDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDefines.h; sourceTree = "<group>"; };
 		32CACFA816CB637C00E8F185 /* OKManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKManager.h; sourceTree = "<group>"; };
@@ -186,6 +195,7 @@
 		32CAD0E616CB74CB00E8F185 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		32CAD0E816CB74D300E8F185 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		32CAD0EA16CB74DF00E8F185 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		32FB382D1817605700B2DEBC /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		4455BEBC17A396DD0079859A /* OKDBScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDBScore.h; sourceTree = "<group>"; };
 		4455BEBD17A396DE0079859A /* OKDBScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKDBScore.m; sourceTree = "<group>"; };
 		445B3BFB1767F5D300952456 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -200,7 +210,6 @@
 		A956563D18077C5F00B5C8DB /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		A956565518077CE800B5C8DB /* coreTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coreTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A956565B18077CE800B5C8DB /* coreTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "coreTest-Info.plist"; sourceTree = "<group>"; };
-		A956565D18077CE800B5C8DB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A956565F18077CE800B5C8DB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A956566118077CE800B5C8DB /* coreTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "coreTest-Prefix.pch"; sourceTree = "<group>"; };
 		A956566218077CE800B5C8DB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -240,7 +249,6 @@
 		A9E43FF81811B0AE0057B663 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		A9E43FFA1811B0AE0057B663 /* AFOAuth1Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOAuth1Client.h; sourceTree = "<group>"; };
 		A9E43FFB1811B0AE0057B663 /* AFOAuth1Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOAuth1Client.m; sourceTree = "<group>"; };
-		A9E440081811BA9E0057B663 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		A9F1D3ED1805EB4C00E593E7 /* OKAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKAuth.h; sourceTree = "<group>"; };
 		A9F1D3EE1805EB4C00E593E7 /* OKAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKAuth.m; sourceTree = "<group>"; };
 		A9F1D3F21806196A00E593E7 /* OKCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKCrypto.h; sourceTree = "<group>"; };
@@ -263,7 +271,7 @@
 				A95656BB18077F8900B5C8DB /* Social.framework in Frameworks */,
 				A95656BC18077F8900B5C8DB /* MobileCoreServices.framework in Frameworks */,
 				A95656BD18077F8900B5C8DB /* SystemConfiguration.framework in Frameworks */,
-				A9E440091811BA9E0057B663 /* FacebookSDK.framework in Frameworks */,
+				32FB382E1817605700B2DEBC /* FacebookSDK.framework in Frameworks */,
 				326FD0CF16CB6209004248F9 /* Foundation.framework in Frameworks */,
 				A95656BE18077F8900B5C8DB /* UIKit.framework in Frameworks */,
 				A95656BF18077F8900B5C8DB /* CoreGraphics.framework in Frameworks */,
@@ -287,7 +295,7 @@
 				A956568A18077D2F00B5C8DB /* MobileCoreServices.framework in Frameworks */,
 				A956568B18077D2F00B5C8DB /* SystemConfiguration.framework in Frameworks */,
 				A956565618077CE800B5C8DB /* Foundation.framework in Frameworks */,
-				A9E4400A1811BAC10057B663 /* FacebookSDK.framework in Frameworks */,
+				32FB382F1817606600B2DEBC /* FacebookSDK.framework in Frameworks */,
 				A956565818077CE800B5C8DB /* UIKit.framework in Frameworks */,
 				A956565718077CE800B5C8DB /* CoreGraphics.framework in Frameworks */,
 			);
@@ -347,6 +355,15 @@
 				3284E16216CE4AC900624827 /* Foundation.framework */,
 			);
 			name = "OS X";
+			sourceTree = "<group>";
+		};
+		32AA60CD181874B400EEFF79 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				32AA60CA18186C7400EEFF79 /* OKOpenUDID.h */,
+				32AA60CB18186C7400EEFF79 /* OKOpenUDID.m */,
+			);
+			name = Vendor;
 			sourceTree = "<group>";
 		};
 		32CACF9C16CB637C00E8F185 /* OpenKit core */ = {
@@ -426,7 +443,6 @@
 			isa = PBXGroup;
 			children = (
 				A956565B18077CE800B5C8DB /* coreTest-Info.plist */,
-				A956565C18077CE800B5C8DB /* InfoPlist.strings */,
 				A956565F18077CE800B5C8DB /* main.m */,
 				A956566118077CE800B5C8DB /* coreTest-Prefix.pch */,
 			);
@@ -436,6 +452,9 @@
 		A9A77D4A18085F6D000B7149 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				32AA60CD181874B400EEFF79 /* Vendor */,
+				32AA60C718186B4B00EEFF79 /* OKOpenUUIDPlugin.h */,
+				32AA60C818186B4B00EEFF79 /* OKOpenUUIDPlugin.m */,
 				44E3058B178CD78E00611E0C /* OKFacebookUtilities.h */,
 				44E3058C178CD78E00611E0C /* OKFacebookUtilities.m */,
 				445B3BFE1769258C00952456 /* OKGameCenterPlugin.h */,
@@ -464,8 +483,8 @@
 		A9E43FB11811AB4E0057B663 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				32FB382D1817605700B2DEBC /* FacebookSDK.framework */,
 				A9B8ECDF1814591E00636137 /* fmdb-f62b8d7 */,
-				A9E440081811BA9E0057B663 /* FacebookSDK.framework */,
 				A9E43FE51811B0AE0057B663 /* AFNetworking */,
 				A9E43FF91811B0AE0057B663 /* AFOAuth1Client */,
 			);
@@ -579,7 +598,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A956565E18077CE800B5C8DB /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,7 +635,6 @@
 				A9B8ECEB1814591E00636137 /* FMDatabase.m in Sources */,
 				32CACFE616CB637C00E8F185 /* OKScore.m in Sources */,
 				32CACFEB16CB637C00E8F185 /* OKUser.m in Sources */,
-				A9E440041811B0AE0057B663 /* UIImageView+AFNetworking.m in Sources */,
 				44E1182B1728A7CF003C2603 /* OKError.m in Sources */,
 				32880CEE176DC784005F8D30 /* OKUtils.m in Sources */,
 				A9B8ECED1814591E00636137 /* FMDatabasePool.m in Sources */,
@@ -628,13 +645,16 @@
 				4455BEBE17A396DE0079859A /* OKDBScore.m in Sources */,
 				327E9E1A17CEFABA00F33F24 /* OKFileUtil.m in Sources */,
 				A9E440011811B0AE0057B663 /* AFPropertyListRequestOperation.m in Sources */,
+				3295C17B1819E2150044783E /* UIImageView+AFNetworking.m in Sources */,
 				327E9E1B17CEFABA00F33F24 /* OKDBConnection.m in Sources */,
 				327E9E1C17CEFABA00F33F24 /* OKDBSession.m in Sources */,
+				32AA60CC18186C7400EEFF79 /* OKOpenUDID.m in Sources */,
 				A9F1D3EF1805EB4C00E593E7 /* OKAuth.m in Sources */,
 				A9B8ECEE1814591E00636137 /* FMDatabaseQueue.m in Sources */,
 				446A551817E3A98900081C7B /* OKChallenge.m in Sources */,
 				A9E43FFE1811B0AE0057B663 /* AFImageRequestOperation.m in Sources */,
 				A9E43FFD1811B0AE0057B663 /* AFHTTPRequestOperation.m in Sources */,
+				32AA60C918186B4B00EEFF79 /* OKOpenUUIDPlugin.m in Sources */,
 				A9B8ECF01814591E00636137 /* FMResultSet.m in Sources */,
 				A9E440051811B0AE0057B663 /* AFOAuth1Client.m in Sources */,
 				A9E43FFC1811B0AE0057B663 /* AFHTTPClient.m in Sources */,
@@ -661,17 +681,6 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		A956565C18077CE800B5C8DB /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A956565D18077CE800B5C8DB /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		326FD0D716CB6209004248F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -686,6 +695,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(srcroot)OpenKit/Vendor";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -716,6 +726,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(srcroot)OpenKit/Vendor";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -731,12 +742,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				DSTROOT = /tmp/OpenKit.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(srcroot)Vendor",
-					"/Users/manuelmartinez-almeida/repos/openkit-ios/Vendor",
-					"/Users/manuelmartinez-almeida/repos/openkit-ios/OpenKit/Vendor",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenKit-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
@@ -750,12 +755,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				DSTROOT = /tmp/OpenKit.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(srcroot)Vendor",
-					"/Users/manuelmartinez-almeida/repos/openkit-ios/Vendor",
-					"/Users/manuelmartinez-almeida/repos/openkit-ios/OpenKit/Vendor",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenKit-Prefix.pch";
 				OTHER_LDFLAGS = "-ObjC";
@@ -776,11 +775,6 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/manuelmartinez-almeida/repos/openkit-ios/Vendor",
-					"/Users/manuelmartinez-almeida/repos/openkit-ios/OpenKit/Vendor",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "coreTest/coreTest-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -812,11 +806,6 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_NS_ASSERTIONS = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/manuelmartinez-almeida/repos/openkit-ios/Vendor",
-					"/Users/manuelmartinez-almeida/repos/openkit-ios/OpenKit/Vendor",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "coreTest/coreTest-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

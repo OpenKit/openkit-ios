@@ -159,6 +159,7 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
         
         NSLock* lock = [NSLock new];
+        
         NSMutableArray *authRequests = [NSMutableArray arrayWithCapacity:[providers count]];
         OKMutableInt *count = [[OKMutableInt alloc] initWithValue:[providers count]];
         
@@ -208,11 +209,6 @@
     // At this point we can receive notifications and the user can user OKManager normally.
     // Add any observer here:
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    // REVIEW
-//    [nc addObserver:self selector:@selector(willShowDashboard:) name:OKLeaderboardsViewWillAppear object:nil];
-//    [nc addObserver:self selector:@selector(didShowDashboard:)  name:OKLeaderboardsViewDidAppear object:nil];
-//    [nc addObserver:self selector:@selector(willHideDashboard:) name:OKLeaderboardsViewWillDisappear object:nil];
-//    [nc addObserver:self selector:@selector(didHideDashboard:)  name:OKLeaderboardsViewDidDisappear object:nil];
     [nc addObserver:self selector:@selector(providerUpdated:) name:OKAuthProviderUpdatedNotification object:nil];
     [nc addObserver:self selector:@selector(willEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
     [nc addObserver:self selector:@selector(enteredBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];

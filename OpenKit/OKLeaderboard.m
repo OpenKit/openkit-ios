@@ -69,14 +69,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 - (void)submitScore:(OKScore*)score withCompletion:(void (^)(NSError* error))handler
 {
-    //    // If the error code returned is in the 400s, delete the score from the cache
-    //    int errorCode = [OKNetworker getStatusCodeFromAFNetworkingError:error];
-    //    if(errorCode >= 400 && errorCode <= 500) {
-    //        OKLog(@"Deleted cached score because of error code: %d",errorCode);
-    //        [self deleteScore:score];
-    //    }
-    //    OKLog(@"Failed to submit cached score");
-    //
+    NSParameterAssert(score);
     
     // Posting NSNotification
     [[NSNotificationCenter defaultCenter] postNotificationName:OKScoreSubmittedNotification
@@ -95,12 +88,12 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
              OKLog(@"Successfully posted score to OpenKit: %@", self);
              [score setSubmitState:kOKSubmitted];
              
-             
-
          }else{
              OKLog(@"Failed to post score to OpenKit: %@",self);
              OKLog(@"Error: %@", error);
              [score setSubmitState:kOKNotSubmitted];
+             
+             // REVIEW: check error code. maybe we have to remove it
          }
          [score syncWithDB];
          
@@ -133,7 +126,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
-- (void)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange
+- (BOOL)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange
                   pageNumber:(int)pageNum
                   completion:(void (^)(NSArray* scores, NSError *error))handler
 {
@@ -165,50 +158,62 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
          if(handler)
              handler(scores, error);
      }];
+    
+    return NO;
 }
 
 
-- (void)getSocialScoresForTimeRange:(OKLeaderboardTimeRange)timeRange
+- (BOOL)getSocialScoresForTimeRange:(OKLeaderboardTimeRange)timeRange
                          completion:(void (^)(NSArray* scores, NSError *error))handler
 {
-    //Create a request and send it to OpenKit
-    //Create the request parameters
-    NSDictionary *params = @{@"leaderboard_id": @([self leaderboardID]),
-                             @"leaderboard_range": [self getParamForTimeRange:timeRange] };
+    OKLocalUser *user = [OKLocalUser currentUser];
+    if(!user) {
+        if(handler)
+            handler(nil, [OKError noOKUserError]);
+        
+        return YES;
+    }
     
-    // OK NETWORK REQUEST
-    [OKNetworker postToPath:@"/best_scores/social"
-                 parameters:params
-                 completion:^(id responseObject, NSError *error)
-     {
-         NSMutableArray *scores = nil;
-         if(!error) {
-             OKLog(@"Successfully got FB friends scores");
-             
-             NSArray *scoresJSON = (NSArray*)responseObject;
-             scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
-             
-             // For now, just storing a list of friend OK Ids.
-             NSMutableArray *arr = [[NSMutableArray alloc] init];
-             
-             for(id obj in scoresJSON) {
+    [user syncWithCompletion:^(NSError *error) {
+        
+        //Create a request and send it to OpenKit
+        //Create the request parameters
+        NSDictionary *params = @{@"leaderboard_id": @([self leaderboardID]),
+                                 @"leaderboard_range": [self getParamForTimeRange:timeRange] };
+        
+        // OK NETWORK REQUEST
+        [OKNetworker postToPath:@"/best_scores/social"
+                     parameters:params
+                     completion:^(id responseObject, NSError *error)
+         {
+             NSMutableArray *scores = nil;
+             if(!error) {
+                 OKLog(@"Successfully got FB friends scores");
                  
-                 OKScore *score = [[OKScore alloc] initWithDictionary:obj];
-                 [arr addObject:[[score user] userID]];
-                 [scores addObject:score];
+                 NSArray *scoresJSON = (NSArray*)responseObject;
+                 scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
+                 for(id obj in scoresJSON) {
+                     
+                     OKScore *score = [[OKScore alloc] initWithDictionary:obj];
+                     [scores addObject:score];
+                 }
+                 
+             } else {
+                 NSLog(@"Failed to get scores, with error: %@", error);
              }
-             
-         } else {
-             NSLog(@"Failed to get scores, with error: %@", error);
-         }
-         if(handler)
-         handler(scores, error);
-     }];
+             if(handler)
+                 handler(scores, error);
+         }];
+    }];
+    
+    return NO;
 }
 
 
-- (NSString *)description {
-    return [NSString stringWithFormat:@"OKLeaderboard name: %@ id: %d sortType: %u iconURL: %@ player_count: %d", self.name, self.leaderboardID, self.sortType, self.iconUrl, self.playerCount];
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"OKLeaderboard name: %@ id: %d sortType: %u iconURL: %@ player_count: %d",
+            self.name, self.leaderboardID, self.sortType, self.iconUrl, self.playerCount];
 }
 
 
@@ -275,23 +280,29 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
-+ (void)getLeaderboardsWithCompletion:(void (^)(NSArray* leaderboards, NSError* error))handler
++ (BOOL)getLeaderboardsWithCompletion:(void (^)(NSArray* leaderboards, NSError* error))handler
 {
-    if(!__leaderboards) {
+    if(__leaderboards) {
+        if(handler)
+            handler([self leaderboards], nil);
+        
+        return YES;
+        
+    }else{
         [self syncWithCompletion:^(NSError* error) {
             if(handler)
                 handler([self leaderboards], error);
         }];
-        
-    }else if(handler)
-        handler([self leaderboards], nil);
+        return NO;
+    }
 }
 
 
-+ (void)getLeaderboardWithID:(int)leaderboardID
++ (BOOL)getLeaderboardWithID:(int)leaderboardID
                   completion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler
 {
-    [self getLeaderboardsWithCompletion:^(NSArray* leaderboards, NSError* error) {
+    return [self getLeaderboardsWithCompletion:^(NSArray* leaderboards, NSError* error)
+    {
         if(handler) {
             OKLeaderboard *lb = [OKLeaderboard leaderboardForID:leaderboardID];
             handler(lb, error);

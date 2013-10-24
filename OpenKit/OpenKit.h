@@ -13,3 +13,4 @@
 #import "OKUser.h"
 #import "OKLeaderboard.h"
 #import "OKAuth.h"
+#import "OKNotifications.h"

@@ -12,6 +12,8 @@
 // Predefinitions
 @protocol OKManagerDelegate;
 @class OKUser;
+@class OKLocalUser;
+@class OKAuthProvider;
 
 @interface OKManager : NSObject
 
@@ -21,12 +23,9 @@
 - (void)logoutCurrentUser;
 - (void)registerToken:(NSData*)deviceToken;
 
-@property(nonatomic) BOOL hasShownFBLoginPrompt;
 @property(nonatomic, readonly) OKCrypto *cryptor;
-
 @property(nonatomic, readonly) BOOL initialized;
 @property(nonatomic, strong) NSString *leaderboardListTag;
-@property(nonatomic, strong) NSArray *cachedFbFriendsList;
 
 
 // See OKManagerDelegate protocol, below.

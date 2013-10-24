@@ -60,7 +60,7 @@ OKSession *__currentSession = nil;
 {
     OKUser *user = [OKLocalUser currentUser];
     if (user) {
-        self.okId = [[user userID] stringValue];
+        self.okId = [user userID];
         self.fbId = [user userIDForService:@"facebook"];
         self.customId = [user userIDForService:@"custom"];
     }
