@@ -11,11 +11,8 @@
 
 typedef void(^OKLoginViewCompletionHandler)(void);
 
-@interface OKLoginView : NSObject
+@interface OKLoginView : UIView
 
-- (void)showWithCompletionHandler:(OKLoginViewCompletionHandler)block;
-- (void)show;
 - (id)initWithLoginString:(NSString*)loginString;
-
 
 @end

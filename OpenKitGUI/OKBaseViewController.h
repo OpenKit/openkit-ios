@@ -17,12 +17,18 @@
 #define OKLeaderboardsViewDidDisappear  @"OKLeaderboardsViewDidDisappear"
 
 
-@interface OKLeaderboardsViewController : UINavigationController
+typedef void (^OKBlock)(); // an function which takes an int and return an int
+
+@interface OKViewController : UIViewController
+@property(nonatomic, strong) OKBlock okBlock;
+@property(nonatomic, weak) UIViewController *okparent;
+@end
+
+
+@interface OKBaseViewController : UINavigationController
 
 // Set this property to true to force Leaderboards view to Landscape only (both left and right)
 // Set to false to support portrait & landscape
 @property(nonatomic) BOOL showLandscapeOnly;
-
-- (id)initWithDefaultLeaderboardID:(int)leaderboardID;
 
 @end

@@ -12,6 +12,25 @@
 #import "OKFacebookUtilities.h"
 
 
+@interface OKProfileViewController ()
+
+@property(nonatomic, strong) IBOutlet NSMutableArray *buttons;
+@property(nonatomic, strong) IBOutlet OKUserProfileImageView *profilePic;
+@property(nonatomic, strong) IBOutlet UILabel *nameLabel;
+
+- (IBAction)logoutButtonPressed:(id)sender;
+
+@end
+
+
+
+@interface OKProfileButton : UIButton
+
+@property(nonatomic, weak) OKAuthProvider *provider;
+
+@end
+
+
 @implementation OKProfileViewController
 
 -(id)init
@@ -21,46 +40,60 @@
 }
 
 
-- (void)viewDidLoad
+- (void)load
 {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-  
+    // Set name
     [[self navigationItem] setTitle:@"Settings"];
-  
+    
+    NSArray *providers = [OKAuthProvider getProviders];
+    self.buttons = [[NSMutableArray alloc] initWithCapacity:[providers count]];
+    
+    NSInteger i = 0;
+    for(OKAuthProvider *provider in providers) {
+        OKProfileButton *button = [[OKProfileButton alloc] initWithFrame:CGRectZero];
+        [button setCenter:CGPointMake(100, 100+i*30)];
+        [button setProvider:provider];
+        [_buttons addObject:button];
+        ++i;
+    }
+    
+    // Update UI
     [self updateUI];
 }
 
 
+
 -(void)updateUI
 {
-    // If there is an OKUser and an Active Facebook Session, show the logout button
-    if([OKFacebookUtilities isFBSessionOpen] && [OKUser currentUser]){
-        [self.unlinkBtn setTitle: @"Disconnect Facebook" forState: UIControlStateNormal];
-    } else {
-        [self.unlinkBtn setTitle: @"Connect Facebook" forState: UIControlStateNormal];
+    for(OKProfileButton *button in _buttons) {
+        OKAuthProvider *provider = [button provider];
+        
+        NSString *text = nil;
+        if([provider isSessionOpen])
+            text = [NSString stringWithFormat:@"Connect %@", [provider serviceName]];
+        else
+            text = [NSString stringWithFormat:@"Disconnect %@", [provider serviceName]];
+        
+        [button setTitle:text forState: UIControlStateNormal];
     }
 }
 
 
 -(IBAction)logoutButtonPressed:(id)sender
 {
-    if([OKFacebookUtilities isFBSessionOpen] && [OKUser currentUser]) {
-        [[FBSession activeSession] closeAndClearTokenInformation];
-    } else {
-        [OKFacebookUtilities AuthorizeUserWithFacebookWithCompletionHandler:^(OKUser *user, NSError *error) {
-            [self updateUI];
-            [[self navigationController] popViewControllerAnimated:YES];
-        }];
-    }
-    [self updateUI];
+    OKAuthProvider *provider = [(OKProfileButton*)sender provider];
+    if([provider isSessionOpen])
+        [provider logoutAndClear];
+    else
+        [provider openSessionWithViewController:self completion:nil];
 }
 
 
-- (void)didReceiveMemoryWarning
+- (void)viewDidLoad
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [super viewDidLoad];
+    [self load];
 }
+
 
 @end

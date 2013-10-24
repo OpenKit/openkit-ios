@@ -15,8 +15,11 @@
 #import "OKColors.h"
 #import "OKLoginView.h"
 #import "OKManager.h"
+#import "OKGUI.h"
 
 #define kOKScoreCellIdentifier @"OKScoreCell"
+
+static BOOL __hasShownFBLoginPrompt = NO;
 
 
 @interface OKSocialLeaderboardViewController ()
@@ -40,19 +43,14 @@ static NSString *fbCellIdentifier = @"OKFBLoginCell";
 static NSString *spinnerCellIdentifier = @"OKSpinnerCell";
 static NSString *inviteCellIdentifier = @"OKInviteCell";
 
-- (id)initWithLeaderboard:(OKLeaderboard *)aLeaderboard {
-    return [self initWithLeaderboard:aLeaderboard withLeaderboardID:0];
-}
 
-- (id)initWithLeaderboardID:(int)aLeaderboardID {
-    return [self initWithLeaderboard:nil withLeaderboardID:aLeaderboardID];
-}
 
-- (id)initWithLeaderboard:(OKLeaderboard *)aLeaderboard withLeaderboardID:(int)aLeaderboardID
+- (id)initWithLeaderboardID:(int)aLeaderboardID
 {
+    NSParameterAssert(aLeaderboardID);
+    
     self = [super initWithNibName:@"OKSocialLeaderboardVC" bundle:nil];
     if (self) {
-        _leaderboard = aLeaderboard;
         _leaderboardID = aLeaderboardID;
         _socialScores = [[NSMutableArray alloc] init];
         numberOfSocialRequestsRunning = 0;
@@ -65,11 +63,143 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
         //UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"invite.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showActionSheet:)];
         //[inviteButton setTintColor:[UIColor colorWithRed:5/255.0 green:139/255.0 blue:245/255.0 alpha:1]];
       
-        UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStyleDone target:self action:@selector(showFacebookInviteUI)];
+        UIBarButtonItem *inviteButton = [[UIBarButtonItem alloc] initWithTitle:@"Invite"
+                                                                         style:UIBarButtonItemStyleDone
+                                                                        target:self
+                                                                        action:@selector(showFacebookInviteUI)];
         [[self navigationItem] setRightBarButtonItem:inviteButton];
     }
     return self;
 }
+
+
+- (void)load
+{
+    //Register the nib file for OKFBLoginCell
+    [self._tableView registerNib:[UINib nibWithNibName:@"OKFBLoginCell" bundle:[NSBundle mainBundle]]
+          forCellReuseIdentifier:fbCellIdentifier];
+    
+    //Register the nib file for InviteCEll
+    [self._tableView registerNib:[UINib nibWithNibName:@"OKFBLoginCell" bundle:[NSBundle mainBundle]]
+          forCellReuseIdentifier:inviteCellIdentifier];
+    
+    // iPad specific adjustments
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        [_loadMoreScoresButton setFrame:CGRectMake(30, 0, 508, 44)];
+    }
+    
+    
+    [self getLeaderboard];
+    [self showLoginPromptIfNecessary];
+}
+
+
+- (void)getLeaderboard
+{
+    BOOL sync = [OKLeaderboard getLeaderboardWithID:_leaderboardID
+                                         completion:^(OKLeaderboard *leaderboard, NSError *error)
+                 {
+                     if(!error && leaderboard) {
+                         [self setLeaderboard:leaderboard];
+                     }else{
+                         [[self navigationItem] setTitle:@"Error"];
+                         [_spinner stopAnimating];
+                         [self showErrorLoadingGlobalScores];
+                     }
+                 }];
+    
+    if(!sync) {
+        // Get leaderboard instance
+        [[self navigationItem] setTitle:@"loading..."];
+        [_spinner startAnimating];
+        [__tableView setHidden:YES];
+    }
+}
+
+
+- (void)setLeaderboard:(OKLeaderboard *)leaderboard
+{
+    if(_leaderboard) {
+        _leaderboard = leaderboard;
+        [[self navigationItem] setTitle:[_leaderboard name]];
+        
+        [self getGlobalScores];
+        [self getSocialScores];
+    }
+}
+
+
+- (void)getGlobalScores
+{
+    [_spinner startAnimating];
+    [__tableView setHidden:YES];
+    
+    // Get global scores-- OKLeaderboard decides where to get them from
+    BOOL sync = [_leaderboard getScoresForTimeRange:OKLeaderboardTimeRangeAllTime
+                                         pageNumber:1
+                                         completion:^(NSArray *scores, NSError *error)
+    {
+        [_spinner stopAnimating];
+        [__tableView setHidden:NO];
+        
+        if(!error) {
+            _globalScores = [NSMutableArray arrayWithArray:scores];
+            [__tableView reloadData];
+            
+        } else if(error) {
+            OKLog(@"Error getting global scores: %@", error);
+            [self showErrorLoadingGlobalScores];
+        }
+    }];
+    
+    if(!sync) {
+        [_spinner startAnimating];
+        [__tableView setHidden:YES];
+    }
+}
+
+
+- (void)getSocialScores
+{
+    [_spinner startAnimating];
+    [__tableView setHidden:YES];
+    
+    // Get global scores-- OKLeaderboard decides where to get them from
+    BOOL sync = [_leaderboard getSocialScoresForTimeRange:OKLeaderboardTimeRangeAllTime
+                                               completion:^(NSArray *scores, NSError *error)
+    {
+        [_spinner stopAnimating];
+        [__tableView setHidden:NO];
+        
+        if(!error) {
+            _socialScores = [NSMutableArray arrayWithArray:scores];
+            [__tableView reloadData];
+            
+        } else if(error) {
+            OKLog(@"Error getting social scores: %@", error);
+            //[self showErrorLoadingGlobalScores];
+        }
+    }];
+    
+    if(!sync) {
+        [_spinner startAnimating];
+        [__tableView setHidden:YES];
+    }
+}
+
+
+- (void)showLoginPromptIfNecessary
+{
+    if(![OKLocalUser currentUser] && !__hasShownFBLoginPrompt) {
+        [OKGUI showLoginModalWithClose:^{
+            [self getSocialScores];
+        }];
+        __hasShownFBLoginPrompt = YES;
+    }
+}
+
+
+#pragma mark -
 
 - (void)showActionSheet:(id)sender
 {
@@ -78,14 +208,15 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
     NSString *message = @"Message";
     NSString *facebook = @"Facebook";
     NSString *cancelTitle = @"Cancel";
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                  initWithTitle:actionSheetTitle
-                                  delegate:self
-                                  cancelButtonTitle:cancelTitle
-                                  destructiveButtonTitle:nil
-                                  otherButtonTitles:email, message, facebook, nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:actionSheetTitle
+                                                             delegate:self
+                                                    cancelButtonTitle:cancelTitle
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:email, message, facebook, nil];
+    
     [actionSheet showInView:self.view];
 }
+
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -105,16 +236,16 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
     }
 }
 
+
 - (void)showFacebookInviteUI
 {
-    if([[FBSession activeSession] isOpen]) {
-        [OKFacebookUtilities sendFacebookRequest];
-    } else {
-        [self fbLoginWithCompletionHandler:^{
-            [OKFacebookUtilities sendFacebookRequest];
-        }];
-    }
+    OKAuthProvider *provider = [OKAuthProvider providerByName:@"facebook"];
+    [provider openSessionWithViewController:self completion:^(BOOL login, NSError *error) {
+        if(login)
+            [provider performSelector:@selector(sendFacebookRequest)];
+    }];
 }
+
 
 - (void)showEmailUI
 {
@@ -219,54 +350,6 @@ typedef enum {
     return (numberOfSocialRequestsRunning > 0);
 }
 
-
-- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    switch(section) {
-        case kSocialLeaderboardSection:
-            return @"Friends";
-        case kGlobalSection:
-            return @"All Players";
-        default:
-            return @"";
-    }
-}
-
-//-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-//{
-//    return 18;
-//}
-
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return NUM_SECTIONS;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    SocialSectionRow rowType = [self getTypeOfRow:indexPath];
-    switch(rowType) {
-            
-        case SocialSectionRowFBLoginRow:
-            return 60;
-            break;
-        case SocialSectionRowProgressBarRow:
-            return 60;
-            break;
-        case SocialSectionRowInviteFriends:
-            return 60;
-            break;
-        case SocialSectionRowSocialScoreRow:
-            return 60;
-            break;
-        case SocialSectionRowUnknownRow:
-            // Return empty cell to avoid crash
-            return 60;
-    }
-    
-}
-
 // This method captures a lot of the logic for what type of cell is drawn at what index path so it can be reused in
 // both cellForRowAtIndexPath and heightForRow
 - (SocialSectionRow)getTypeOfRow:(NSIndexPath*)indexPath {
@@ -299,7 +382,8 @@ typedef enum {
     switch(section) {
         case kSocialLeaderboardSection:
             // If we are not logged into FB then we need an extra row to show the login button
-            if(![OKFacebookUtilities isFBSessionOpen]) {
+            // REVIEW
+            if(YES) {
                 numRowsInSocial++;
                 isShowingFBLoginCell = YES;
             } else {
@@ -327,47 +411,6 @@ typedef enum {
         default:
             OKLog(@"Unknown section requested for rows");
             return 0;
-    }
-}
-
-
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    int section = [indexPath section];
-    int row = [indexPath row];
-    
-    if(section == kGlobalSection) {
-        if(row >= [_globalScores count]) {
-            return [self getScoreCellForPlayerTopScore:_playerTopScore withTableView:tableView];
-        } else {
-            return [self getScoreCellForScore:[_globalScores objectAtIndex:row] withTableView:tableView andShowSocialNetworkIcon:NO];
-        }
-    }
-    else if(section == kSocialLeaderboardSection) {
-        
-        SocialSectionRow rowType = [self getTypeOfRow:indexPath];
-        switch(rowType) {
-            case SocialSectionRowFBLoginRow:
-                return [self getFBLoginCell];
-                break;
-            case SocialSectionRowProgressBarRow:
-                return [self getProgressBarCell];
-                break;
-            case SocialSectionRowSocialScoreRow:
-                return [self getScoreCellForScore:[_socialScores objectAtIndex:row] withTableView:tableView andShowSocialNetworkIcon:YES];
-                break;
-            case SocialSectionRowInviteFriends:
-                return [self getInviteFriendsCell];
-                break;
-            case SocialSectionRowUnknownRow:
-                OKLog(@"Unknown row type returned in social scores!");
-                // Return empty cell to avoid crash
-                return [self getScoreCellForScore:nil withTableView:tableView andShowSocialNetworkIcon:NO];
-        }
-    } else {
-        OKLog(@"Uknown section type in leaderboard");
-        // Return empty cell to avoid crash
-        return [self getScoreCellForScore:nil withTableView:tableView andShowSocialNetworkIcon:NO];;
     }
 }
 
@@ -425,14 +468,13 @@ typedef enum {
     
     //[cell setBackgroundColor:[OKColors scoreCellBGColor]];
     
-    [cell setShowSocialNetworkIcon:showSocialNetworkIcon];
-    [cell setOKScoreProtocolScore:score];
+    [cell setScore:score];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
 }
 
 
-- (void)errorLoadingGlobalScores
+- (void)showErrorLoadingGlobalScores
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Sorry, there was an error loading the leaderboard. Please try again later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [alert show];
@@ -443,92 +485,7 @@ typedef enum {
 {
     [super viewDidLoad];
     
-    //Register the nib file for OKFBLoginCell
-    [self._tableView registerNib:[UINib nibWithNibName:@"OKFBLoginCell"
-                                                bundle:[NSBundle mainBundle]]
-          forCellReuseIdentifier:fbCellIdentifier];
-    
-    //Register the nib file for InviteCEll
-    [self._tableView registerNib:[UINib nibWithNibName:@"OKFBLoginCell"
-                                                bundle:[NSBundle mainBundle]]
-          forCellReuseIdentifier:inviteCellIdentifier];
-    
-    // iPad specific adjustments
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        [_loadMoreScoresButton setFrame:CGRectMake(30, 0, 508, 44)];
-    }else {
-        // iPhone
-    }
-    
-    // If leaderboard is already loaded, display it, else get it then show it
-    if([self leaderboard]) {
-        [self getScores];
-        [self setTitle:[_leaderboard name]];
-    } else {
-        [self getLeaderboardThenGetScores];
-    }
-    
-    [self showLoginPromptIfNecessary];
-}
-
-
-- (void)showLoginPromptIfNecessary {
-    
-    if(![OKUser currentUser] && ![[OKManager sharedManager] hasShownFBLoginPrompt]) {
-        OKLoginView *loginView = [[OKLoginView alloc] init];
-        [loginView showWithCompletionHandler:^{
-            [self getSocialScores];
-        }];
-        [[OKManager sharedManager] setHasShownFBLoginPrompt:YES];
-    }
-}
-
-
-- (void)getLeaderboardThenGetScores
-{
-    [_spinner startAnimating];
-    [__tableView setHidden:YES];
-    
-    [OKLeaderboard getLeaderboardWithID:self.leaderboardID withCompletion:^(OKLeaderboard *aLeaderboard, NSError *error) {
-        if(aLeaderboard && !error) {
-            [self setLeaderboard:aLeaderboard];
-            [self setTitle:[aLeaderboard name]];
-            [self getScores];
-        } else {
-            [_spinner stopAnimating];
-            [self errorLoadingGlobalScores];
-        }
-    }];
-}
-
-
-- (void)getScores
-{
-    [_spinner startAnimating];
-    [__tableView setHidden:YES];
-    
-    // Get global scores-- OKLeaderboard decides where to get them from
-    [_leaderboard getScoresForTimeRange:OKLeaderboardTimeRangeAllTime
-                            pageNumber:1
-                            completion:^(NSArray *scores, NSError *error)
-    {
-        [_spinner stopAnimating];
-        [__tableView setHidden:NO];
-        
-        if(!error && scores) {
-            _globalScores = [NSMutableArray arrayWithArray:scores];
-            [__tableView reloadData];
-        } else if(error) {
-            OKLog(@"Error getting global scores: %@", error);
-            [self errorLoadingGlobalScores];
-        }
-    }];
-    
-    [self getSocialScores];
-    
-    // Get social scores / top score
-    
-    [self getPlayerTopScoreForGlobalSection];
+    [self load];
 }
 
 
@@ -543,18 +500,6 @@ typedef enum {
     } else {
         return NO;
     }
-}
-
-
-// Get the player's top score to show in the "all scores" section
-- (void)getPlayerTopScoreForGlobalSection
-{
-    [_leaderboard getPlayerTopScoreWithCompletion:^(OKScore* score, NSError *error) {
-        if(score && !error) {
-            [self setPlayerTopScore:score];
-            [__tableView reloadSections:[NSIndexSet indexSetWithIndex:kGlobalSection] withRowAnimation:UITableViewRowAnimationAutomatic];
-        }
-    }];
 }
 
 
@@ -594,115 +539,15 @@ typedef enum {
 }
 
 
-- (void)fbLoginButtonPressed {
-    [self fbLoginWithCompletionHandler:nil];
-}
 
 
-- (void)fbLoginWithCompletionHandler:(void(^)())completionHandler
-{
-    if(!isShowingFBLoginCell && isShowingInviteFriendsCell)
-    {
-        [self showFacebookInviteUI];
-        return;
-    }
-    
-    if([FBSession activeSession].state == FBSessionStateOpen) {
-        OKLog(@"Fb session already open");
-        [self getFacebookSocialScores];
-        [OKFacebookUtilities createOrUpdateCurrentOKUserWithFB];
-        isShowingFBLoginCell = NO;
-        [self reloadSocialScores];
-        
-        if(completionHandler)
-            completionHandler();
-    } else {
-        
-        isShowingFBLoginCell = NO;
-        [self reloadSocialScores];
-        
-        [OKFacebookUtilities OpenFBSessionWithCompletionHandler:^(NSError *error) {
-            if ([FBSession activeSession].state == FBSessionStateOpen) {
-                [self getFacebookSocialScores];
-                [OKFacebookUtilities createOrUpdateCurrentOKUserWithFB];
-                if(completionHandler)
-                    completionHandler();
-            } else {
-                [OKFacebookUtilities handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:error];
-                isShowingFBLoginCell = YES;
-            }
-            [self reloadSocialScores];
-        }];
-    }
-}
+
 
 
 - (void)reloadSocialScores
 {
-    [__tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-}
-
-
-//Get Social scores
-- (void)getSocialScores {
-    
-    // If game center
-    //   get GC friends scores (including users' top score)
-    // else if OKUser
-    //   get top score from OpenKit (this will return local cached score if not logged in)
-    
-    // if FB
-    //   get FB scores from OpenKit
-    if ([OKUser currentUser]) {
-        [self getUsersTopScoreFromOpenKit];
-    }
-    
-    if([OKFacebookUtilities isFBSessionOpen]) {
-        [self getFacebookSocialScores];
-    }
-}
-
-
-- (void)getUsersTopScoreFromOpenKit
-{
-    // Only get the player's top score for the social section ones
-    if(_playerTopScoreSocialSection != nil) {
-        return;
-    }
-    
-    // Increment the counter that keeps track of requests running for social leaderboards
-    [self startedSocialScoreRequest];
-    
-    [_leaderboard getPlayerTopScoreWithCompletion:^(OKScore *score, NSError *error) {
-        
-        // Decrement the counter that keeps track of requests running for social leaderboards
-        [self finishedSocialScoreRequest];
-        
-        if(!error && score) {
-            _playerTopScoreSocialSection = score;
-            [self addSocialScores:[NSArray arrayWithObject:score]];
-        }
-    }];
-    
-}
-
-
-- (void)getFacebookSocialScores
-{
-    // Only fetch the fbSocialScores once
-    if(_fbSocialScores != nil) {
-        return;
-    }
-    
-    //Get facebook social scores
-    [self startedSocialScoreRequest];
-    
-    [_leaderboard getFacebookFriendsScoresWithCompletion:^(NSArray *scores, NSError *error) {
-        _fbSocialScores = scores;
-        [self addSocialScores:scores];
-        isShowingFBLoginCell = NO;
-        [self finishedSocialScoreRequest];
-    }];
+    [__tableView reloadSections:[NSIndexSet indexSetWithIndex:0]
+               withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 
@@ -734,35 +579,96 @@ typedef enum {
 }
 
 
-- (NSMutableArray*)sortSocialScores:(NSArray*)scores
+#pragma mark - TableView delegate methods
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *sortedScores = [_leaderboard sortScoresBasedOnLeaderboardType:scores];
-    NSMutableArray *mutableScores = [[NSMutableArray alloc] initWithArray:sortedScores];
-    // Set the relative ranks
-    for(int x = 0; x< [mutableScores count]; x++)
-    {
-        OKScore* score = [mutableScores objectAtIndex:x];
-        [score setScoreRank:(x+1)];
+    int section = [indexPath section];
+    int row = [indexPath row];
+    
+    if(section == kGlobalSection) {
+        if(row >= [_globalScores count]) {
+            return [self getScoreCellForPlayerTopScore:_playerTopScore withTableView:tableView];
+        } else {
+            return [self getScoreCellForScore:[_globalScores objectAtIndex:row] withTableView:tableView andShowSocialNetworkIcon:NO];
+        }
     }
-    return mutableScores;
-}
-
-
-- (void)addSocialScores:(NSArray *)scores
-{
-    if(scores) {
-        [[self socialScores] addObjectsFromArray:scores];
-        NSMutableArray *sortedScores = [self sortSocialScores:_socialScores];
-        [self setSocialScores:sortedScores];
-        [__tableView reloadData];
+    else if(section == kSocialLeaderboardSection) {
+        
+        SocialSectionRow rowType = [self getTypeOfRow:indexPath];
+        switch(rowType) {
+            case SocialSectionRowFBLoginRow:
+                return [self getFBLoginCell];
+                break;
+            case SocialSectionRowProgressBarRow:
+                return [self getProgressBarCell];
+                break;
+            case SocialSectionRowSocialScoreRow:
+                return [self getScoreCellForScore:[_socialScores objectAtIndex:row] withTableView:tableView andShowSocialNetworkIcon:YES];
+                break;
+            case SocialSectionRowInviteFriends:
+                return [self getInviteFriendsCell];
+                break;
+            case SocialSectionRowUnknownRow:
+                OKLog(@"Unknown row type returned in social scores!");
+                // Return empty cell to avoid crash
+                return [self getScoreCellForScore:nil withTableView:tableView andShowSocialNetworkIcon:NO];
+        }
+    } else {
+        OKLog(@"Uknown section type in leaderboard");
+        // Return empty cell to avoid crash
+        return [self getScoreCellForScore:nil withTableView:tableView andShowSocialNetworkIcon:NO];;
     }
 }
 
 
-- (void)didReceiveMemoryWarning
+
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    switch(section) {
+        case kSocialLeaderboardSection:
+            return @"Friends";
+        case kGlobalSection:
+            return @"All Players";
+        default:
+            return @"";
+    }
 }
+
+//-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+//{
+//    return 18;
+//}
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return NUM_SECTIONS;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    SocialSectionRow rowType = [self getTypeOfRow:indexPath];
+    switch(rowType) {
+            
+        case SocialSectionRowFBLoginRow:
+            return 60;
+            break;
+        case SocialSectionRowProgressBarRow:
+            return 60;
+            break;
+        case SocialSectionRowInviteFriends:
+            return 60;
+            break;
+        case SocialSectionRowSocialScoreRow:
+            return 60;
+            break;
+        case SocialSectionRowUnknownRow:
+            // Return empty cell to avoid crash
+            return 60;
+    }
+    
+}
+
 
 @end

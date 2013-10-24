@@ -6,14 +6,7 @@
 //  Copyright (c) 2013 Todd Hamilton. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "OKBaseViewController.h"
 
-@interface OKLeaderboardsListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
-{
-    int playerCount;
-}
-
-- (id)initWithDefaultLeaderboardID:(int)leaderboardID;
-- (IBAction)back;
-
+@interface OKLeaderboardsListViewController : OKViewController<UITableViewDataSource, UITableViewDelegate>
 @end

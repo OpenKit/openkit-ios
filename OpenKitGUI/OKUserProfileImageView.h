@@ -19,6 +19,6 @@
 
 - (void)setImageURL:(NSString *)url;
 - (void)setImageURL:(NSString *)url withPlaceholderImage:(UIImage *)placeholder;
-- (void)setOKScoreProtocolScore:(OKScore*)aScore;
+- (void)setScore:(OKScore*)aScore;
 
 @end

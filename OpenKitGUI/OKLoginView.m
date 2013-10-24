@@ -7,16 +7,42 @@
 //
 
 #import "OKLoginView.h"
-#import "KGModal.h"
-#import "OKBaseLoginViewController.h"
+#import "OpenKit.h"
+#import "OKGUI.h"
 
-@interface OKLoginView()<OKLoginViewDelegate>
+
+@interface OKLoginButton : UIButton
+@property(nonatomic, readonly) OKAuthProvider *provider;
+@end
+
+
+@implementation OKLoginButton
+
+- (id)initWithProvider:(OKAuthProvider*)provider
 {
-    OKLoginViewCompletionHandler loginDialogCompletionHandler;
+    NSParameterAssert(provider);
+    
+    self = [super initWithFrame:CGRectMake(140,88,105,105)];
+    if (self) {
+        _provider = provider;
+        NSString *imageOn = [NSString stringWithFormat:@"ok_%@_on.png", [provider serviceName]];
+        NSString *imageOff = [NSString stringWithFormat:@"ok_%@_off.png", [provider serviceName]];
+        [self setBackgroundImage:[UIImage imageNamed:imageOn] forState:UIControlStateDisabled];
+        [self setBackgroundImage:[UIImage imageNamed:imageOff] forState:UIControlStateNormal];
+    }
+    return self;
 }
 
-@property (nonatomic, strong) UIView *loginView;
-@property (nonatomic, strong) OKBaseLoginViewController *baseViewController;
+@end
+
+
+@interface OKLoginView()
+{
+    NSMutableArray *_buttons;    
+}
+
+@property (unsafe_unretained, nonatomic) IBOutlet UILabel *mainLabel;
+@property (unsafe_unretained, nonatomic) IBOutlet UILabel *secondaryLabel;
 
 @end
 
@@ -34,51 +60,51 @@
     self = [super init];
     
     if(self) {
-        _baseViewController = [[OKBaseLoginViewController alloc] initWithLoginString:loginString];
+        UIView* xibView = [[[NSBundle mainBundle] loadNibNamed:@"CoverPanel" owner:self options:nil] objectAtIndex:0];
+        
+        [self addSubview:xibView];
+
+        
+        self.mainLabel.text = loginString;
+        NSInteger i = 0;
+        NSArray *providers = [OKAuthProvider getProviders];
+        _buttons = [NSMutableArray arrayWithCapacity:[providers count]];
+        for(OKAuthProvider *provider in providers) {
+            OKLoginButton *button = [[OKLoginButton alloc] initWithProvider:provider];
+            [button setCenter:CGPointMake(100, 50+50*i)];
+            [button addTarget:self action:@selector(loginPressed:) forControlEvents:UIControlEventTouchUpInside];
+            [_buttons addObject:button];
+            [self addSubview:button];
+            ++i;
+        }
+        [self updateUI];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(updateUI)
+                                                     name:OKAuthProviderUpdatedNotification
+                                                   object:nil];
     }
-    
     return self;
 }
 
 
--(void)show
+- (void)updateUI
 {
-    UIWindow *window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    window.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    window.backgroundColor = [UIColor clearColor];
-    
-    [_baseViewController setDelegate:self];
-    
-    [_baseViewController setWindow:window];
-    
-    window = nil;
-    
-    [_baseViewController.window setRootViewController:_baseViewController];
-    [_baseViewController.window makeKeyAndVisible];
-    [_baseViewController showLoginModalView];
+    for(OKLoginButton *button in _buttons)
+        [button setEnabled:![[button provider] isSessionOpen]];
 }
 
 
--(void)showWithCompletionHandler:(OKLoginViewCompletionHandler)block
+- (void)loginPressed:(id)sender
 {
-    loginDialogCompletionHandler = block;
-    [self show];
+    OKAuthProvider *provider = [(OKLoginButton*)sender provider];
+    [provider openSessionWithViewController:nil completion:nil];
 }
 
 
--(void)dismiss
+- (IBAction)finishedPressed:(id)sender
 {
-    //Remove the base view controller on the main thread
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_baseViewController.view removeFromSuperview];
-    });
-    
-    [_baseViewController setDelegate:nil];
-    if(loginDialogCompletionHandler != nil) {
-        loginDialogCompletionHandler();
-        loginDialogCompletionHandler = nil;
-    }
-    
+    [OKGUI popModal:self];
 }
 
 @end

@@ -26,9 +26,7 @@
 @property(nonatomic, strong) NSArray *fbSocialScores;
 @property(nonatomic, strong) OKScore* playerTopScore, *playerTopScoreSocialSection;
 
-- (id)initWithLeaderboard:(OKLeaderboard *)aLeaderboard;
 - (id)initWithLeaderboardID:(int)aLeaderboardID;
-
 - (IBAction)loadMoreScoresPressed:(id)sender;
 
 @end

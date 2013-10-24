@@ -2,29 +2,18 @@
 //  OKLeaderboardsViewController.m
 //  OKClient
 //
-//  Created by Suneet Shah on 1/10/13.
+//  Created by Manu Martinez-Almeida
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
-#import "OKLeaderboardsViewController.h"
-#import "OKLeaderboardsListViewController.h"
-#import "OKHelper.h"
-#import "OKColors.h"
+#import "OKBaseViewController.h"
 
 
-@implementation OKLeaderboardsViewController
+@implementation OKBaseViewController
 
-- (id)init
-{
-    return [self initWithDefaultLeaderboardID:0];
-}
-
-
-- (id)initWithDefaultLeaderboardID:(int)leaderboardID
-{
-    OKLeaderboardsListViewController *list = [[OKLeaderboardsListViewController alloc] initWithDefaultLeaderboardID:leaderboardID];
-    
-    self = [super initWithRootViewController:list];
+- (id)initWithRootViewController:(UIViewController*)controller
+{    
+    self = [super initWithRootViewController:controller];
     if (self) {
         self.modalPresentationStyle = UIModalPresentationFormSheet;
 //        [[self navigationBar] setBarStyle:UIBarStyleBlack];

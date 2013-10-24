@@ -14,12 +14,11 @@
 #import "OKLoginView.h"
 #import "OKMacros.h"
 #import "OKSocialLeaderboardViewController.h"
-#import "OKColors.h"
-
+#import "OKGUI.h"
 
 @interface OKLeaderboardsListViewController ()
 
-@property(nonatomic, strong) NSArray *OKLeaderBoardsList;
+@property(nonatomic, strong) NSArray *leaderboards;
 @property(weak, nonatomic) IBOutlet UITableView *_tableView;
 @property(nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
 @property(nonatomic) int defaultLeaderboardID;
@@ -31,24 +30,21 @@
 
 - (id)init
 {
-    return [self initWithDefaultLeaderboardID:0];
-}
-
-- (id)initWithDefaultLeaderboardID:(int)leaderboardID
-{
     self = [super initWithNibName:@"OKLeaderboardsListViewController" bundle:nil];
     if (self) {
-        self.defaultLeaderboardID = leaderboardID;
 //        
 //        UIBarButtonItem *profileButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"gear.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showProfileView)];
 
-        UIBarButtonItem *profileButton = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(showProfileView)];
+        UIBarButtonItem *profileButton = [[UIBarButtonItem alloc] initWithTitle:@"Settings"
+                                                                          style:UIBarButtonItemStylePlain
+                                                                         target:self
+                                                                         action:@selector(showProfileView)];
       
-        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-        //[backButton setTitleTextAttributes:[OKColors titleTextAttributesForNavBarButton] forState:UIControlStateNormal];
-      
-//        UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"close"] style:UIBarButtonItemStyleBordered target:self action:@selector(back)];
-      
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                       style:UIBarButtonItemStylePlain
+                                                                      target:self
+                                                                      action:@selector(goBack)];
+
         [[self navigationItem] setLeftBarButtonItem:backButton];
         [[self navigationItem] setRightBarButtonItem:profileButton];
         [[self navigationItem] setBackBarButtonItem:backButton];
@@ -57,60 +53,79 @@
 }
 
 
-- (void)viewDidLoad
+- (void)load
 {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-  
     [[self navigationItem] setTitle:@"Leaderboards"];
-  
-    if(_defaultLeaderboardID) {
-        OKSocialLeaderboardViewController *vc = [[OKSocialLeaderboardViewController alloc] initWithLeaderboardID:_defaultLeaderboardID];
-        [[self navigationController] pushViewController:vc animated:YES];
-    }
     [self getListOfLeaderboards];
 }
 
 
-- (IBAction)back
+- (void)getListOfLeaderboards
+{    
+    BOOL sync = [OKLeaderboard getLeaderboardsWithCompletion:^(NSArray *leaderboards, NSError *error)
+    {
+        [_spinner stopAnimating];
+        
+        if (error) {
+            OKLog(@"Error getting list of leaderboards, error: %@", error);
+            [[[UIAlertView alloc] initWithTitle:@"Error"
+                                        message:@"Sorry, but leaderboards are not available right now. Please try again later."
+                                       delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil] show];
+            
+        } else {
+            [self setLeaderboards:leaderboards];
+            [__tableView reloadSections:[NSIndexSet indexSetWithIndex:0]
+                       withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+    }];
+    
+    if(!sync) {
+        [_spinner startAnimating];
+    }
+}
+
+
+#pragma mark - Callbacks
+
+- (IBAction)goBack
 {
     // Have to call dismiss on presentingViewController otherwise the presenting view controller won't get the dismissViewController message, and we need the presenting view controller to get this message in OKBridgeBaseViewController
-    [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
+    [OKGUI popViewController:self];
 }
 
 
 - (IBAction)showProfileView
 {
-    OKProfileViewController *profileView = [[OKProfileViewController alloc] init];
-    [[self navigationController] pushViewController:profileView animated:YES];
+    [OKGUI showProfileWithClose:nil];
 }
 
 
-- (void)getListOfLeaderboards
+#pragma mark - View methods
+
+- (void)viewDidLoad
 {
-    [_spinner startAnimating];
-    
-    [OKLeaderboard getLeaderboardsWithCompletion:^(NSArray *leaderboards, NSError *error) {
-        
-        [_spinner stopAnimating];
-        
-        if (error) {
-            OKLog(@"Error getting list of leaderboards, error: %@", error);
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Sorry, but leaderboards are not available right now. Please try again later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            [alert show];
-            
-        } else {
-            //playerCount = maxPlayerCount;
-            [self setOKLeaderBoardsList:leaderboards];
-            [__tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-        }
-    }];
+    [super viewDidLoad];
 }
 
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if ([__tableView indexPathForSelectedRow]) {
+        [__tableView deselectRowAtIndexPath:[__tableView indexPathForSelectedRow] animated:animated];
+    }
+}
+
+
+
+#pragma mark - TableView delegate methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-      return [_OKLeaderBoardsList count];
+    return [_leaderboards count];
 }
 
 
@@ -118,31 +133,26 @@
 {
     int row = [indexPath row];
     static NSString *CellIdentifier = kOKLeaderboardListCellIdentifier;
-
+    
     OKLeaderboardListCell *cell = (OKLeaderboardListCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil)
         cell = [[OKLeaderboardListCell alloc] init];
-
-    //[cell setBackgroundColor:[UIColor whiteColor]];
-  
-    [cell setLeaderboard:[_OKLeaderBoardsList objectAtIndex:row]];
+    
+    OKLeaderboard *leaderboard = _leaderboards[row];
+    [cell setLeaderboard:leaderboard];
     return cell;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OKLeaderboard *selectedLeaderboard = [_OKLeaderBoardsList objectAtIndex:[indexPath row]];
-    //OKLeaderboardViewController *vc = [[OKLeaderboardViewController alloc] initWithLeaderboard:selectedLeaderboard];
-    
-     OKSocialLeaderboardViewController *vc = [[OKSocialLeaderboardViewController alloc] initWithLeaderboard:selectedLeaderboard];
-    [[self navigationController] pushViewController:vc animated:YES];
+    [OKGUI showLeaderboardID:[indexPath row] withClose:nil];
 }
 
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [NSString stringWithFormat:@"%d Leaderboards",[_OKLeaderBoardsList count]];
+    return [NSString stringWithFormat:@"%d Leaderboards",[_leaderboards count]];
 }
 
 
@@ -152,27 +162,9 @@
 }
 
 
-//RootViewController.m
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 60;
-}
-
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
-    
-    if ([__tableView indexPathForSelectedRow]) {
-        [__tableView deselectRowAtIndexPath:[__tableView indexPathForSelectedRow] animated:YES];
-    }
-}
-
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

@@ -7,6 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OKLeaderboardsViewController.h"
-#import "OKUserProfileImageView.h"
-#import "OKLoginView.h"
+#import "OKBaseViewController.h"
+
+
+@interface OKGUI : NSObject
+
++ (void)presentModal:(UIView*)view withClose:(OKBlock)handler;
++ (void)popModal;
++ (void)popModal:(UIView*)modal;
+
++ (void)showLeaderboardsListWithClose:(OKBlock)handler;
++ (void)showLeaderboardID:(NSInteger)lbID withClose:(OKBlock)handler;
++ (void)showProfileWithClose:(OKBlock)handler;
++ (void)showLoginModalWithClose:(OKBlock)handler;
+
++ (void)popViewController;
++ (void)popViewController:(OKViewController*)controller;
++ (void)close;
+
+@end

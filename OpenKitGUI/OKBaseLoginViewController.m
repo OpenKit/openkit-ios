@@ -43,14 +43,21 @@
 }
 
 
-- (void)viewDidLoad
+- (void)load
 {
-    [super viewDidLoad];
     
     [self updateFBButtonVisibility];
     
     self.view.backgroundColor = [UIColor clearColor];
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+}
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self load];
 }
 
 
@@ -173,6 +180,7 @@
 
 
 -(void)updateFBButtonVisibility {
+    
     OKUser *currentUser = [OKUser currentUser];
     
     if(currentUser && [currentUser fbUserID] && [OKFacebookUtilities isFBSessionOpen]) {

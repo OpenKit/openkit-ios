@@ -37,8 +37,8 @@
 
 -(void)updateButtonVisibility
 {
-    OKUser *currentUser = [OKUser currentUser];
-    if(currentUser && [currentUser fbUserID] && [OKFacebookUtilities isFBSessionOpen]) {
+    OKLocalUser *currentUser = [OKLocalUser currentUser];
+    if(currentUser) {
         [_connectFBButton setEnabled:NO];
     } else {
         [_connectFBButton setEnabled:YES];
