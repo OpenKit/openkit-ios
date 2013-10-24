@@ -11,13 +11,15 @@
 
 @interface OKUser : NSObject
 
-@property(nonatomic, readonly) NSNumber *userID;
+@property(nonatomic, readonly) NSString *userID;
 @property(nonatomic, readonly) NSString *userNick;
 @property(nonatomic, readonly) NSString *userImageUrl;
 @property(nonatomic, readonly) NSDictionary *services;
 
 - (NSString*)userIDForService:(NSString*)service;
 - (NSDictionary*)dictionary;
+- (NSArray*)resolveConnections;
+
 + (OKUser*)guestUser;
 + (OKUser*)createUserWithDictionary:(NSDictionary*)dict;
 

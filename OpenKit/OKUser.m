@@ -31,7 +31,7 @@
 {
     NSParameterAssert(dict && [dict isKindOfClass:[NSDictionary class]]);
 
-    _userID = [OKHelper getNSNumberFrom:dict key:@"id"];
+    _userID = [OKHelper getNSStringFrom:dict key:@"id"];
     _userNick = [OKHelper getNSStringFrom:dict key:@"name"];
     _userImageUrl = [OKHelper getNSStringFrom:dict key:@"image_url"];
     _services = [OKHelper getNSDictionaryFrom:dict key:@"services"];
@@ -60,9 +60,26 @@
     _userNick = userNick;
 }
 
+
 - (void)setUserImageUrl:(NSString*)userImageUrl
 {
     _userImageUrl = userImageUrl;
+}
+
+
+- (NSArray*)resolveConnections
+{
+    NSMutableArray *results = [NSMutableArray array];
+    OKLocalUser *user = [OKLocalUser currentUser];
+    if(user) {
+        [_services enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+            NSString *friends = [user friendsForService:key];
+            if(friends && [friends rangeOfString:[self userID]].location != NSNotFound)
+                [results addObject:key];
+        }];
+    }
+    
+    return results;
 }
 
 #pragma mark -
@@ -166,7 +183,7 @@
 {
     if(!_dirty || [_dirty count] == 0) {
         if(handler)
-        handler(nil);
+            handler(nil);
         return;
     }
     
@@ -178,7 +195,7 @@
              [_dirty removeAllObjects];
          }
          if(handler)
-         handler(error);
+            handler(error);
      }];
 }
 
@@ -197,7 +214,7 @@
     
     if(_friends)
     dict[@"_friends"] = _friends;
-
+    
     return dict;
 }
 
@@ -224,6 +241,7 @@
 {
     NSParameterAssert(handler);
     
+    
     if(requests && [requests count] > 0) {
         
         NSMutableArray *params = [NSMutableArray arrayWithCapacity:[requests count]];
@@ -234,7 +252,6 @@
         NSDictionary *paramsDict = @{@"requests": params};
         [OKNetworker postToPath:@"/users"
                      parameters:paramsDict
-                      encrypted:YES
                      completion:^(id responseObject, NSError *error)
          {
              OKLocalUser *newUser = nil;
