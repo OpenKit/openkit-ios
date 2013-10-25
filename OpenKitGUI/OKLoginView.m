@@ -49,23 +49,18 @@
 
 @implementation OKLoginView
 
--(id)init
++ (id)new
 {
-    return [self initWithLoginString:@"More Friends, More Fun!"];
+    return [[[NSBundle mainBundle] loadNibNamed:@"OKLoginView" owner:nil options:nil] objectAtIndex:0];
 }
 
 
--(id)initWithLoginString:(NSString *)loginString
+-(id)init
 {
     self = [super init];
     
     if(self) {
-        UIView* xibView = [[[NSBundle mainBundle] loadNibNamed:@"CoverPanel" owner:self options:nil] objectAtIndex:0];
         
-        [self addSubview:xibView];
-
-        
-        self.mainLabel.text = loginString;
         NSInteger i = 0;
         NSArray *providers = [OKAuthProvider getProviders];
         _buttons = [NSMutableArray arrayWithCapacity:[providers count]];

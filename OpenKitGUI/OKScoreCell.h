@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AFImageView.h"
 #import "OKScore.h"
 #import "OKUserProfileImageView.h"
 

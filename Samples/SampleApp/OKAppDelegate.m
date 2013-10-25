@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
-#include <profiler.h>
 #import "OKAppDelegate.h"
 #import "OpenKit.h"
 #import "OKViewController.h"
 #import "OKGameCenterPlugin.h"
+#import "OKFacebookUtilities.h"
 
 
 @interface OKAppDelegate ()
@@ -21,6 +21,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [OKGameCenterPlugin sharedInstance];
+    [OKFacebookPlugin sharedInstance];
+    
+    
     NSString *myAppKey = @"BspfxiqMuYxNEotLeGLm";
     NSString *mySecretKey = @"2sHQOuqgwzocUdiTsTWzyQlOy1paswYLGjrdRWWf";
     
@@ -33,6 +37,7 @@
     // versions of your game. Each leaderboard can have multiple tags, but the client
     // will only display one tag.
     [[OKManager sharedManager] setLeaderboardListTag:@"v1"];
+    [[OKManager sharedManager] setDelegate:self];
 
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];  
     if (launchOptions != nil && [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey] != nil) {
@@ -42,16 +47,18 @@
 
     // Set root view controller.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.viewController = [[OKViewController alloc] init];
+    self.viewController = [[ViewController alloc] init];
+    
     UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:self.viewController];
     self.window.rootViewController = navi;
     [self.window makeKeyAndVisible];
-    
-    // If you're using GameCenter, you can call this convenience method to authorize with game center. Set allowUI to YES if you want to show
-    // the GameCenter leaderboard controller
-    [OKGameCenterPlugin authorizeUserWithViewController:self.viewController completion:nil];
 
     return YES;
+}
+
+-(void)openkitDidLaunch:(OKManager *)manager
+{
+    [[OKGameCenterPlugin sharedInstance] openSessionWithViewController:self.viewController completion:nil];
 }
 
 // We should handle the push differently if the app is already open, but for now will well forward it
@@ -94,13 +101,11 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [OKManager handleDidBecomeActive];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    [OKManager handleWillTerminate];
 }
 
 - (void)handlePushDictionary:(NSDictionary *)dict

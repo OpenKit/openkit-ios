@@ -13,6 +13,6 @@ typedef void(^OKLoginViewCompletionHandler)(void);
 
 @interface OKLoginView : UIView
 
-- (id)initWithLoginString:(NSString*)loginString;
++ (id)new;
 
 @end

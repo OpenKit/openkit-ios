@@ -8,6 +8,10 @@
 
 #import "OKBaseViewController.h"
 
+@implementation OKViewController
+
+@end
+
 
 @implementation OKBaseViewController
 

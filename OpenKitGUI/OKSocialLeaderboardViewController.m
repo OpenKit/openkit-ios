@@ -164,7 +164,6 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
     [_spinner startAnimating];
     [__tableView setHidden:YES];
     
-    // Get global scores-- OKLeaderboard decides where to get them from
     BOOL sync = [_leaderboard getSocialScoresForTimeRange:OKLeaderboardTimeRangeAllTime
                                                completion:^(NSArray *scores, NSError *error)
     {
@@ -375,29 +374,28 @@ typedef enum {
     return SocialSectionRowUnknownRow;
 }
 
+
 - (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    int numRowsInSocial = 0;
+    int numRows = 0;
     
     switch(section) {
         case kSocialLeaderboardSection:
-            // If we are not logged into FB then we need an extra row to show the login button
-            // REVIEW
-            if(YES) {
-                numRowsInSocial++;
+            
+            numRows = [_socialScores count];
+            
+            if(![OKLocalUser currentUser]) {
+                numRows++;
                 isShowingFBLoginCell = YES;
-            } else {
             }
             
             if([self isShowingSocialScoresProgressBar]) {
-                numRowsInSocial++;
+                numRows++;
             }
             
             if(isShowingInviteFriendsCell && !isShowingFBLoginCell && [_socialScores count] == 0)
-                numRowsInSocial++;
+                numRows++;
             
-            numRowsInSocial += [_socialScores count];
-            return numRowsInSocial;
         case kGlobalSection:
             if(_globalScores) {
                 if([self shouldShowPlayerTopScore]) {
@@ -412,6 +410,7 @@ typedef enum {
             OKLog(@"Unknown section requested for rows");
             return 0;
     }
+    return numRows;
 }
 
 
@@ -476,15 +475,17 @@ typedef enum {
 
 - (void)showErrorLoadingGlobalScores
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Sorry, there was an error loading the leaderboard. Please try again later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alert show];
+    [[[UIAlertView alloc] initWithTitle:@"Error"
+                                message:@"Sorry, there was an error loading the leaderboard. Please try again later."
+                               delegate:nil
+                      cancelButtonTitle:@"OK"
+                      otherButtonTitles: nil] show];
 }
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [self load];
 }
 

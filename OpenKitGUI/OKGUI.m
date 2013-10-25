@@ -56,18 +56,28 @@ static UIView *__currentModal = nil;
 }
 
 
-+ (BOOL)callCloseBlocks:(NSArray*)controllers
++ (BOOL)canPop:(OKViewController*)controller
 {
-    if(!controllers || [controllers count] == 0)
+    if(!__okController)
         return NO;
-    
-    for(OKViewController *controller in controllers) {
-        if([controller isKindOfClass:[OKViewController class]] && [controller okBlock]) {
-            controller.okBlock();
-            controller.okBlock = nil;
+
+    if(controller)
+        return ([[__okController viewControllers] indexOfObject:controller] > 0);
+    else
+        return ([[__okController viewControllers] count] > 1);
+}
+
+
++ (void)callCloseBlocks:(NSArray*)controllers
+{
+    if(controllers && [controllers count] > 0) {
+        for(OKViewController *controller in controllers) {
+            if([controller isKindOfClass:[OKViewController class]] && controller.okBlock) {
+                controller.okBlock();
+                controller.okBlock = nil;
+            }
         }
     }
-    return YES;
 }
 
 
@@ -96,7 +106,7 @@ static UIView *__currentModal = nil;
 
 + (void)showLoginModalWithClose:(OKBlock)handler
 {
-    OKLoginView *modal = [[OKLoginView alloc] init];
+    OKLoginView *modal = [OKLoginView new];
     [OKGUI presentModal:modal withClose:handler];
 }
 
@@ -121,19 +131,21 @@ static UIView *__currentModal = nil;
 
 + (void)popViewController
 {
-    if(__okController) {
+    if([OKGUI canPop:nil]) {
         OKViewController *controller = (OKViewController*)[__okController popViewControllerAnimated:YES];
-        if(![OKGUI callCloseBlocks:@[controller]])
-            [OKGUI close];
-    }
+        [OKGUI callCloseBlocks:@[controller]];
+    }else
+        [OKGUI close];
 }
 
 
 + (void)popViewController:(OKViewController*)controller
 {
-    if(__okController) {
-        NSArray *controllers = [__okController popToViewController:[controller okparent] animated:YES];
-        if(![OKGUI callCloseBlocks:controllers])
+    if(controller) {
+        if([OKGUI canPop:controller]) {
+            NSArray *controllers = [__okController popToViewController:[controller okparent] animated:YES];
+            [OKGUI callCloseBlocks:controllers];
+        }else
             [OKGUI close];
     }
 }
@@ -142,8 +154,9 @@ static UIView *__currentModal = nil;
 + (void)close
 {
     if(__okController) {
-        NSArray *controllers = [__okController popToRootViewControllerAnimated:NO];
-        [OKGUI callCloseBlocks:controllers];
+        [OKGUI callCloseBlocks:[__okController viewControllers]];
+        [__okController popToRootViewControllerAnimated:NO];
+
         [__okWindow setRootViewController:nil];
         __okController = nil;
         __okWindow = nil;

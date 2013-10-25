@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
-#import "OKLeaderboardListCell.h"
 #import <QuartzCore/QuartzCore.h>
-#import "AFImageView.h"
+#import "OKLeaderboardListCell.h"
+#import "UIImageView+Openkit.h"
 
 
 @interface OKLeaderboardListCell ()
 {
-    AFImageView *leaderboardIcon;
+    UIImageView *leaderboardIcon;
 }
 @end
 
@@ -39,7 +39,7 @@
         [self.contentView addSubview:_label1];
       
         // Initialize leaderboard icon
-        leaderboardIcon = [[AFImageView alloc] initWithFrame:CGRectMake(15,10, 39, 39)];
+        leaderboardIcon = [[UIImageView alloc] initWithFrame:CGRectMake(15,10, 39, 39)];
         leaderboardIcon.layer.masksToBounds = YES;
         leaderboardIcon.layer.cornerRadius = 3;
         [self.contentView addSubview:leaderboardIcon];

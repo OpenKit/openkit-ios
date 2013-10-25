@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "OKBaseViewController.h"
+#import "UIImageView+Openkit.h"
+#import "ActionSheetStringPicker.h"
 
 
 @interface OKGUI : NSObject
