@@ -127,8 +127,8 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 
 - (BOOL)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange
-                  pageNumber:(int)pageNum
-                  completion:(void (^)(NSArray* scores, NSError *error))handler
+                   pageNumber:(NSInteger)pageNum
+                   completion:(void (^)(NSArray* scores, NSError *error))handler
 {
     //Create a request and send it to OpenKit
     //Create the request parameters
@@ -174,7 +174,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
         return YES;
     }
     
-    [user syncWithCompletion:^(NSError *error) {
+    [user syncWithCompletion:^(NSError *err) {
         
         //Create a request and send it to OpenKit
         //Create the request parameters
@@ -298,7 +298,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
-+ (BOOL)getLeaderboardWithID:(int)leaderboardID
++ (BOOL)getLeaderboardWithID:(NSInteger)leaderboardID
                   completion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler
 {
     return [self getLeaderboardsWithCompletion:^(NSArray* leaderboards, NSError* error)
@@ -311,7 +311,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
-+ (OKLeaderboard*)leaderboardForID:(int)leaderboardID
++ (OKLeaderboard*)leaderboardForID:(NSInteger)leaderboardID
 {
     for(OKLeaderboard* leaderboard in [OKLeaderboard leaderboards]) {
         if(leaderboard.leaderboardID == leaderboardID)

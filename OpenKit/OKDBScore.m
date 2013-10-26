@@ -2,7 +2,7 @@
 //  OKDBScore.m
 //  OpenKit
 //
-//  Created by Suneet Shah on 7/26/13.
+//  Created by Manu Martinez-Almeida.
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
@@ -68,9 +68,9 @@ static NSString *const kOKDBScoreCreateSql =
 }
 
 
-- (int)lastModifiedIndex
+- (NSInteger)lastModifiedIndex
 {
-    __block int index = -1;
+    __block NSInteger index = -1;
     [self executeQuery:@"SELECT * FROM scores ORDER BY modify_date DESC LIMIT 1"
                 access:^(FMResultSet *rs)
      {
@@ -100,7 +100,7 @@ static NSString *const kOKDBScoreCreateSql =
 }
 
 
--(int)insertRow:(OKDBRow*)row
+-(NSInteger)insertRow:(OKDBRow*)row
 {
     OKScore *score = (OKScore*)row;
     
@@ -130,7 +130,7 @@ static NSString *const kOKDBScoreCreateSql =
 }
 
 
--(NSArray*)getScoresForLeaderboardID:(int)lbID onlySubmitted:(BOOL)submittedOnly
+-(NSArray*)getScoresForLeaderboardID:(NSInteger)lbID onlySubmitted:(BOOL)submittedOnly
 {
     //OKLog(@"Getting cached scores for leaderboard ID: %d",leaderboardID);
     NSString *sql;

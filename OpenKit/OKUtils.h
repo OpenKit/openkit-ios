@@ -22,7 +22,7 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut);
 @end
 
 @interface OKMutableInt : NSObject
-@property(atomic, readwrite) int value;
-- (id)initWithValue:(int)value;
+@property(atomic, readwrite) NSInteger value;
+- (id)initWithValue:(NSInteger)value;
 @end
 

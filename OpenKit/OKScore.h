@@ -18,11 +18,11 @@
 @property(nonatomic, readwrite) NSInteger leaderboardID;
 @property(nonatomic, strong) OKUser *user;
 @property(nonatomic, readwrite) NSInteger scoreRank;
-@property(nonatomic, readwrite) int metadata;
+@property(nonatomic, readwrite) NSInteger metadata;
 @property(nonatomic, strong) NSString *displayString;
 
 - (id)initWithDictionary:(NSDictionary*)dict;
-- (id)initWithLeaderboardID:(int)index;
+- (id)initWithLeaderboardID:(NSInteger)index;
 - (NSDictionary*)JSONDictionary;
 - (void)submitWithCompletion:(void (^)(NSError *error))completion;
 - (BOOL)isSubmissible;

@@ -158,7 +158,7 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
                 
         NSMutableArray *authRequests = [NSMutableArray arrayWithCapacity:[providers count]];
-        OKMutableInt *count = [[OKMutableInt alloc] initWithValue:[providers count]];
+        OKMutableInt *count = [[OKMutableInt alloc] initWithValue:(NSInteger)[providers count]];
         
         for(OKAuthProvider *provider in providers) {
             [provider getAuthRequestWithCompletion:^(OKAuthRequest *request, NSError *error) {
@@ -255,7 +255,7 @@
         return;
     
     
-    void (^connection)(BOOL, NSError*) = ^(BOOL login, NSError *error) {
+    void (^connection)(BOOL, NSError*) = ^(BOOL login, NSError *err) {
 
         if(login) {
             if(![[self currentUser] userIDForService:[provider serviceName]]) {
@@ -271,7 +271,7 @@
         }
         
         if(handler)
-            handler([OKLocalUser currentUser], error);
+            handler([OKLocalUser currentUser], err);
     };
     
     if([provider isSessionOpen])

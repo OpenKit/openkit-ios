@@ -78,7 +78,7 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut)
 
 @implementation OKMutableInt
 
-- (id)initWithValue:(int)value;
+- (id)initWithValue:(NSInteger)value;
 {
     self = [super init];
     if (self) {

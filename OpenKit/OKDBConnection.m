@@ -88,12 +88,12 @@ dispatch_queue_t __OKCacheQueue = nil;
 }
 
 
-- (int)insert:(NSString*)sql, ...
+- (NSInteger)insert:(NSString*)sql, ...
 {
     va_list args;
     va_start(args, sql);
     
-    __block int index = -1;
+    __block NSInteger index = -1;
     [self access:^(FMDatabase *db) {
         if([db executeQuery:sql withVAList:args]) {
             index = [db lastInsertRowId];
@@ -150,7 +150,7 @@ dispatch_queue_t __OKCacheQueue = nil;
     if(row.rowIndex == OKNoIndex) {
         // Is the row index is invalid, we insert a new row
         [row setCreateDate:now];
-        int index = [self insertRow:row];
+        NSInteger index = [self insertRow:row];
         if(index != -1) {
             success = YES;
             [row setRowIndex:index];
@@ -165,21 +165,21 @@ dispatch_queue_t __OKCacheQueue = nil;
 }
 
 
-- (int)insertRow:(OKDBRow*)row
+- (NSInteger)insertRow:(OKDBRow*)row
 {
     NSAssert(NO, @"This method should be override");
     return NO;
 }
 
 
-- (BOOL)updateRow:(OKDBRow *)row
+- (BOOL)updateRow:(OKDBRow*)row
 {
     NSAssert(NO, @"This method should be override");
     return NO;
 }
 
 
-- (BOOL)deleteRow:(OKDBRow *)row
+- (BOOL)deleteRow:(OKDBRow*)row
 {
     NSAssert(NO, @"This method should be override");
     return NO;

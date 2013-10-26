@@ -178,7 +178,7 @@
         [result appendString:string];
         [result appendString:@","];
     }
-    int size = [result length];
+    NSUInteger size = [result length];
     [result deleteCharactersInRange:NSMakeRange(size-1, 1)];
     return result;
 }

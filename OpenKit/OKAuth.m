@@ -2,7 +2,7 @@
 //  OKAuth.m
 //  OpenKit
 //
-//  Created by Manu Mtz-Almeida
+//  Created by Manu Martinez-Almeida
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
@@ -25,9 +25,9 @@ NSMutableArray *__providers = nil;
 }
 
 
-+ (int)indexForPriority:(int)priority
++ (NSUInteger)indexForPriority:(NSInteger)priority
 {
-    int index = 0;
+    NSUInteger index = 0;
     for(OKAuthProvider *p in __providers) {
         if(priority >= [p priority])
             return index;
@@ -51,7 +51,7 @@ NSMutableArray *__providers = nil;
     OKAuthProvider *p = [OKAuthProvider providerByName:[provider serviceName]];
     if(p == nil) {
         // adding new one
-        int index = [OKAuthProvider indexForPriority:[provider priority]];
+        NSUInteger index = [OKAuthProvider indexForPriority:[provider priority]];
         [__providers insertObject:provider atIndex:index];
     }
 }

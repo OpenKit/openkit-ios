@@ -13,30 +13,30 @@
 #import "OKPrivate.h"
 
 
-static AFOAuth1Client *_httpClient = nil;
+static AFOAuth1Client *__httpClient = nil;
 static NSString *OK_SERVER_API_VERSION = @"v2";
 
 @implementation OKNetworker
 
 + (AFOAuth1Client*)httpClient
 {
-    if(!_httpClient) {
+    if(!__httpClient) {
         NSURL *baseEndpointURL = [NSURL URLWithString:[OKManager endpoint]];
         NSURL *endpointUrl = [NSURL URLWithString:OK_SERVER_API_VERSION relativeToURL:baseEndpointURL];
         NSString *endpointString = [endpointUrl absoluteString];
         
-        OKLog(@"Initializing AFOauth1Client with endpoint: %@",endpointString);
-        _httpClient = [[AFOAuth1Client alloc] initWithBaseURL:[NSURL URLWithString:endpointString]
+        OKLog(@"Initializing AFOauth1Client with endpoint: %@", endpointString);
+        __httpClient = [[AFOAuth1Client alloc] initWithBaseURL:endpointUrl
                                                           key:[OKManager appKey]
                                                        secret:[OKManager secretKey]];
-        [_httpClient setParameterEncoding:AFJSONParameterEncoding];
-        [_httpClient setDefaultHeader:@"Accept" value:@"application/json"];
+        [__httpClient setParameterEncoding:AFJSONParameterEncoding];
+        [__httpClient setDefaultHeader:@"Accept" value:@"application/json"];
     }
-    return _httpClient;
+    return __httpClient;
 }
 
 
-+ (int)getStatusCodeFromAFNetworkingError:(NSError*)error
++ (NSInteger)getStatusCodeFromAFNetworkingError:(NSError*)error
 {
     if([[error userInfo] objectForKey:AFNetworkingOperationFailingURLResponseErrorKey]) {
         return [[[error userInfo] objectForKey:AFNetworkingOperationFailingURLResponseErrorKey] statusCode];
@@ -137,7 +137,7 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
     // FAILURE BLOCK
     void (^failureBlock)(AFHTTPRequestOperation*, NSError*) = ^(AFHTTPRequestOperation *op, NSError *err)
     {
-        int errorCode = [OKNetworker getStatusCodeFromAFNetworkingError:err];
+        NSInteger errorCode = [OKNetworker getStatusCodeFromAFNetworkingError:err];
         
         // If the user is unsubscribed to the app, log out the user.
         if(errorCode == OK_UNSUBSCRIBED_USER_ERROR_CODE) {

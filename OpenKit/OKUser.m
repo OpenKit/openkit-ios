@@ -192,7 +192,7 @@
                  completion:^(id responseObject, NSError *error)
      {
          if(!error) {
-             [_dirty removeAllObjects];
+             [self->_dirty removeAllObjects];
          }
          if(handler)
             handler(error);

@@ -39,12 +39,12 @@ typedef enum
 }OKSubmitState;
 
 
-static const int OKNoIndex = -1;
+static const NSInteger OKNoIndex = -1;
 
 
 @interface OKDBRow : NSObject
 
-@property(nonatomic, readwrite) int rowIndex;
+@property(nonatomic, readwrite) NSInteger rowIndex;
 @property(nonatomic, copy) NSDate *modifyDate;
 @property(nonatomic, copy) NSDate *createDate;
 @property(nonatomic, strong) OKDBConnection *dbConnection;
@@ -75,7 +75,7 @@ static const int OKNoIndex = -1;
 //! You can use this for insert/update/delete without access block.  Selects should
 //! go through access block so FMResultSet access is contained.
 - (BOOL)update:(NSString *)sql, ...;
-- (int)insert:(NSString*)sql, ...;
+- (NSInteger)insert:(NSString*)sql, ...;
 
 //! You can use this to select data from the DB connection.
 - (void)executeQuery:(NSString*)query access:(void(^)(FMResultSet *))block;

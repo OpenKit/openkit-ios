@@ -114,8 +114,8 @@
         return;
     }
     
-    FBRequest *request = [FBRequest requestForMe];
-    [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *err)
+    FBRequest *fbrequest = [FBRequest requestForMe];
+    [fbrequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *err)
      {
          OKAuthRequest *request = nil;
          if (!err && result) {
@@ -146,8 +146,8 @@
 {
     NSParameterAssert(handler);
 
-    FBRequest *request = [FBRequest requestForMe];
-    [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *err)
+    FBRequest *fbrequest = [FBRequest requestForMe];
+    [fbrequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *err)
     {
         if(err) {
             handler(nil, err);
@@ -214,17 +214,14 @@
 }
 
 
-- (NSArray*)makeListOfFacebookFriends:(NSArray*) friendsJSON
+- (NSArray*)makeListOfFacebookFriends:(NSArray*)friendsJSON
 {
     NSMutableArray *list = [[NSMutableArray alloc] initWithCapacity:[friendsJSON count]];
     
-    for(int x = 0; x < [friendsJSON count]; x++)
-    {
-        NSDictionary *friendDict = [friendsJSON objectAtIndex:x];
+    for(NSDictionary *friendDict in friendsJSON) {
         NSString *friendID = [OKHelper getNSStringFrom:friendDict key:@"id"];
-        if(friendID != nil) {
+        if(friendID)
             [list addObject:friendID];
-        }
     }
     
     return list;

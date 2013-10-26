@@ -164,9 +164,9 @@
         return;
     
     GKLocalPlayer *player = [GKLocalPlayer localPlayer];
-    NSArray *friends = [player friends];
-    if(friends)
-        handler(friends, nil);
+    NSArray *friendsArray = [player friends];
+    if(friendsArray)
+        handler(friendsArray, nil);
     else {
         [player loadFriendsWithCompletionHandler:^(NSArray *friends, NSError *error) {
             handler(friends, error);

@@ -30,14 +30,14 @@ typedef enum {
 @property(nonatomic, strong) NSString *name;
 @property(nonatomic) OKLeaderBoardSortType sortType;
 @property(nonatomic, strong) NSString *iconUrl;
-@property(nonatomic) int playerCount;
+@property(nonatomic) NSUInteger playerCount;
 @property(nonatomic, strong) NSDictionary *services;
 
 
 - (id)initWithDictionary:(NSDictionary*)jsonDict;
 
 - (BOOL)getScoresForTimeRange:(OKLeaderboardTimeRange)timeRange
-                   pageNumber:(int)pageNum
+                   pageNumber:(NSInteger)pageNum
                    completion:(void (^)(NSArray* scores, NSError *error))handler;
 
 - (BOOL)getSocialScoresForTimeRange:(OKLeaderboardTimeRange)timeRange
@@ -48,7 +48,7 @@ typedef enum {
 
 + (BOOL)getLeaderboardsWithCompletion:(void (^)(NSArray* leaderboards, NSError* error))handler;
 
-+ (BOOL)getLeaderboardWithID:(int)leaderboardID
++ (BOOL)getLeaderboardWithID:(NSInteger)leaderboardID
                   completion:(void (^)(OKLeaderboard *leaderboard, NSError *error))handler;
 
 + (void)syncWithCompletion:(void (^)(NSError* error))handler;

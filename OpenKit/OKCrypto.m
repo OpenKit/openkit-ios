@@ -2,7 +2,7 @@
 //  OKCrypto.m
 //  OpenKit
 //
-//  Created by Manu Mtz-Almeida
+//  Created by Manu Martinez-Almeida
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 

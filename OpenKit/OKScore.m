@@ -45,7 +45,7 @@
 }
 
 
-- (id)initWithLeaderboardID:(int)index
+- (id)initWithLeaderboardID:(NSInteger)index
 {
     NSParameterAssert(index > 0);
     

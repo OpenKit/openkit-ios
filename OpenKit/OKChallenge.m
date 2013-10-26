@@ -90,9 +90,7 @@
     // on sort type so that all friends below the player's top score get a push
     
     NSMutableArray *scoresToSendPushTo = [[NSMutableArray alloc] init];
-    for(int x = 0; x < [friendsScores count]; x++)
-    {
-        OKScore *score = [friendsScores objectAtIndex:x];
+    for(OKScore *score in friendsScores) {
         
         if([leaderboard sortType] == OKLeaderboardSortTypeHighValue) {
             if([score scoreValue] < [topScore scoreValue] && [score scoreValue] > [previousScore scoreValue]) {
@@ -121,9 +119,7 @@
     
     NSMutableArray *friends_receiver_ids = [[NSMutableArray alloc] init];
     
-    for(int x = 0; x < [scores count]; x++)
-    {
-        OKScore *friend_score = [scores objectAtIndex:x];
+    for(OKScore *friend_score in scores) {
         [friends_receiver_ids addObject:[[friend_score user] userID]];
     }
     
