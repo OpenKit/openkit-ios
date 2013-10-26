@@ -47,8 +47,12 @@
 {
     OKAuthProvider *p = [OKAuthProvider providerByName:OK_SERVICE_NAME];
     if(p == nil) {
-        p = [[OKFacebookPlugin alloc] init];
-        [OKAuthProvider addProvider:p];
+        if([[[NSBundle mainBundle] infoDictionary] objectForKey:@"FacebookAppID"]) {
+            p = [[OKFacebookPlugin alloc] init];
+            [OKAuthProvider addProvider:p];
+        }else{
+            OKLogErr(@"Facebook plugin was not injected because, it was not configured in the Info.plist.");
+        }
     }
     
     return p;
