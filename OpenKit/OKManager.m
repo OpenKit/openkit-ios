@@ -121,7 +121,6 @@
     // Preload leaderboards from cache
     [OKLeaderboard loadFromCache];
 
-    [self startSession];
     [self startLogin];
 }
 
@@ -155,23 +154,19 @@
     
     
     // We wait a time to make app start faster and wait until services are initialized.
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC));
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-        
-        NSLock* lock = [NSLock new];
-        
+                
         NSMutableArray *authRequests = [NSMutableArray arrayWithCapacity:[providers count]];
         OKMutableInt *count = [[OKMutableInt alloc] initWithValue:[providers count]];
         
         for(OKAuthProvider *provider in providers) {
             [provider getAuthRequestWithCompletion:^(OKAuthRequest *request, NSError *error) {
                 
-                [lock lock];
+                NSAssert([NSThread mainThread], @"We are not in the main thread.");
                 if(request)
                     [authRequests addObject:request];
-                
-                [lock unlock];
-                
+                                
                 if((--count.value) == 0)
                     [self performAuthRequest:authRequests];
             }];
@@ -223,6 +218,10 @@
         OKLogInfo(@"Not login in openkit.");
     else
         [self updatedStatus];
+    
+    
+    // get list of leaderboards as soon as possible
+    [OKLeaderboard syncWithCompletion:nil];
 }
 
 
@@ -301,9 +300,6 @@
         
         // resolve pending scores
         [OKScore resolveUnsubmittedScores];
-        
-        // get list of leaderboards as soon as possible
-        [OKLeaderboard getLeaderboardsWithCompletion:nil];
         
     }else{
         // logout
