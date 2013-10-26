@@ -10,7 +10,6 @@
 #import "OKDBConnection.h"
 #import "OKMacros.h"
 #import "OKFileUtil.h"
-#import "OKUtils.h"
 
 #if !OK_CACHE_USES_MAIN
 dispatch_queue_t __OKCacheQueue = nil;

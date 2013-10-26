@@ -10,7 +10,6 @@
 #import "OKAuth.h"
 
 
-@class OKUser;
 @interface OKFacebookPlugin : OKAuthProvider
 
 // Other FB helper methods

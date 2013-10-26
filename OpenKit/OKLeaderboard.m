@@ -14,8 +14,6 @@
 #import "OKScore.h"
 #import "OKError.h"
 #import "OKMacros.h"
-#import "OKFacebookUtilities.h"
-#import "OKDBScore.h"
 #import "OKNotifications.h"
 #import "OKFileUtil.h"
 

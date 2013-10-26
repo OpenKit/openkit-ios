@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OKScore.h"
 
 #define kOKScoreCellIdentifier @"OKScoreCell"
 
-
+@class OKScore;
 @interface OKScoreCell : UITableViewCell
 
 - (void)setScore:(OKScore*)score;

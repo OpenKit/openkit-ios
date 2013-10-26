@@ -31,7 +31,6 @@
 		32AA60A61818470E00EEFF79 /* OKCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AA605A1818470E00EEFF79 /* OKCrypto.m */; };
 		32AA60A71818470E00EEFF79 /* OKDBConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AA605C1818470E00EEFF79 /* OKDBConnection.m */; };
 		32AA60A81818470E00EEFF79 /* OKDBScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AA605E1818470E00EEFF79 /* OKDBScore.m */; };
-		32AA60A91818470E00EEFF79 /* OKDBSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AA60601818470E00EEFF79 /* OKDBSession.m */; };
 		32AA60AA1818470E00EEFF79 /* OKError.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AA60631818470E00EEFF79 /* OKError.m */; };
 		32AA60AB1818470E00EEFF79 /* OKFacebookUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AA60651818470E00EEFF79 /* OKFacebookUtilities.m */; };
 		32AA60AC1818470E00EEFF79 /* OKFileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AA60671818470E00EEFF79 /* OKFileUtil.m */; };
@@ -41,8 +40,6 @@
 		32AA60B01818470E00EEFF79 /* OKManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AA60701818470E00EEFF79 /* OKManager.m */; };
 		32AA60B11818470E00EEFF79 /* OKNetworker.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AA60721818470E00EEFF79 /* OKNetworker.m */; };
 		32AA60B21818470E00EEFF79 /* OKScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AA60761818470E00EEFF79 /* OKScore.m */; };
-		32AA60B31818470E00EEFF79 /* OKSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AA60781818470E00EEFF79 /* OKSession.m */; };
-		32AA60B41818470E00EEFF79 /* OKSmartInvite.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AA607A1818470E00EEFF79 /* OKSmartInvite.m */; };
 		32AA60B51818470E00EEFF79 /* OKUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AA607C1818470E00EEFF79 /* OKUser.m */; };
 		32AA60B61818470E00EEFF79 /* OKUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 32AA607E1818470E00EEFF79 /* OKUtils.m */; };
 		32CCB721181B1A34000193D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
@@ -113,7 +110,6 @@
 		32CCB892181B403F000193D5 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CCB84B181B403F000193D5 /* ActionSheetStringPicker.m */; };
 		32CCB893181B403F000193D5 /* KGModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CCB84D181B403F000193D5 /* KGModal.m */; };
 		32CCB895181B403F000193D5 /* OKBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CCB851181B403F000193D5 /* OKBaseViewController.m */; };
-		32CCB896181B403F000193D5 /* OKColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CCB853181B403F000193D5 /* OKColors.m */; };
 		32CCB897181B403F000193D5 /* OKFBLoginCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CCB855181B403F000193D5 /* OKFBLoginCell.m */; };
 		32CCB898181B403F000193D5 /* OKGUI.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CCB857181B403F000193D5 /* OKGUI.m */; };
 		32CCB899181B403F000193D5 /* OKLeaderboardListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CCB859181B403F000193D5 /* OKLeaderboardListCell.m */; };
@@ -210,8 +206,6 @@
 		32AA605C1818470E00EEFF79 /* OKDBConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKDBConnection.m; sourceTree = "<group>"; };
 		32AA605D1818470E00EEFF79 /* OKDBScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDBScore.h; sourceTree = "<group>"; };
 		32AA605E1818470E00EEFF79 /* OKDBScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKDBScore.m; sourceTree = "<group>"; };
-		32AA605F1818470E00EEFF79 /* OKDBSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDBSession.h; sourceTree = "<group>"; };
-		32AA60601818470E00EEFF79 /* OKDBSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKDBSession.m; sourceTree = "<group>"; };
 		32AA60611818470E00EEFF79 /* OKDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDefines.h; sourceTree = "<group>"; };
 		32AA60621818470E00EEFF79 /* OKError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKError.h; sourceTree = "<group>"; };
 		32AA60631818470E00EEFF79 /* OKError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKError.m; sourceTree = "<group>"; };
@@ -234,10 +228,6 @@
 		32AA60741818470E00EEFF79 /* OKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKPrivate.h; sourceTree = "<group>"; };
 		32AA60751818470E00EEFF79 /* OKScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScore.h; sourceTree = "<group>"; };
 		32AA60761818470E00EEFF79 /* OKScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKScore.m; sourceTree = "<group>"; };
-		32AA60771818470E00EEFF79 /* OKSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSession.h; sourceTree = "<group>"; };
-		32AA60781818470E00EEFF79 /* OKSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSession.m; sourceTree = "<group>"; };
-		32AA60791818470E00EEFF79 /* OKSmartInvite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSmartInvite.h; sourceTree = "<group>"; };
-		32AA607A1818470E00EEFF79 /* OKSmartInvite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSmartInvite.m; sourceTree = "<group>"; };
 		32AA607B1818470E00EEFF79 /* OKUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUser.h; sourceTree = "<group>"; };
 		32AA607C1818470E00EEFF79 /* OKUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUser.m; sourceTree = "<group>"; };
 		32AA607D1818470E00EEFF79 /* OKUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUtils.h; sourceTree = "<group>"; };
@@ -320,8 +310,6 @@
 		32CCB84D181B403F000193D5 /* KGModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGModal.m; sourceTree = "<group>"; };
 		32CCB850181B403F000193D5 /* OKBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKBaseViewController.h; sourceTree = "<group>"; };
 		32CCB851181B403F000193D5 /* OKBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKBaseViewController.m; sourceTree = "<group>"; };
-		32CCB852181B403F000193D5 /* OKColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKColors.h; sourceTree = "<group>"; };
-		32CCB853181B403F000193D5 /* OKColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKColors.m; sourceTree = "<group>"; };
 		32CCB854181B403F000193D5 /* OKFBLoginCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFBLoginCell.h; sourceTree = "<group>"; };
 		32CCB855181B403F000193D5 /* OKFBLoginCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFBLoginCell.m; sourceTree = "<group>"; };
 		32CCB856181B403F000193D5 /* OKGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGUI.h; sourceTree = "<group>"; };
@@ -530,8 +518,6 @@
 				32AA605C1818470E00EEFF79 /* OKDBConnection.m */,
 				32AA605D1818470E00EEFF79 /* OKDBScore.h */,
 				32AA605E1818470E00EEFF79 /* OKDBScore.m */,
-				32AA605F1818470E00EEFF79 /* OKDBSession.h */,
-				32AA60601818470E00EEFF79 /* OKDBSession.m */,
 				32AA60611818470E00EEFF79 /* OKDefines.h */,
 				32AA60621818470E00EEFF79 /* OKError.h */,
 				32AA60631818470E00EEFF79 /* OKError.m */,
@@ -554,10 +540,6 @@
 				32AA60741818470E00EEFF79 /* OKPrivate.h */,
 				32AA60751818470E00EEFF79 /* OKScore.h */,
 				32AA60761818470E00EEFF79 /* OKScore.m */,
-				32AA60771818470E00EEFF79 /* OKSession.h */,
-				32AA60781818470E00EEFF79 /* OKSession.m */,
-				32AA60791818470E00EEFF79 /* OKSmartInvite.h */,
-				32AA607A1818470E00EEFF79 /* OKSmartInvite.m */,
 				32AA607B1818470E00EEFF79 /* OKUser.h */,
 				32AA607C1818470E00EEFF79 /* OKUser.m */,
 				32AA607D1818470E00EEFF79 /* OKUtils.h */,
@@ -680,8 +662,6 @@
 				32CCB84D181B403F000193D5 /* KGModal.m */,
 				32CCB850181B403F000193D5 /* OKBaseViewController.h */,
 				32CCB851181B403F000193D5 /* OKBaseViewController.m */,
-				32CCB852181B403F000193D5 /* OKColors.h */,
-				32CCB853181B403F000193D5 /* OKColors.m */,
 				32CCB854181B403F000193D5 /* OKFBLoginCell.h */,
 				32CCB855181B403F000193D5 /* OKFBLoginCell.m */,
 				32CCB856181B403F000193D5 /* OKGUI.h */,
@@ -960,15 +940,12 @@
 				32AA60AD1818470E00EEFF79 /* OKGameCenterPlugin.m in Sources */,
 				32CCB7D8181B2BE2000193D5 /* FMDatabaseQueue.m in Sources */,
 				32AA60B21818470E00EEFF79 /* OKScore.m in Sources */,
-				32AA60A91818470E00EEFF79 /* OKDBSession.m in Sources */,
 				32CCB7BC181B2BE2000193D5 /* AFHTTPClient.m in Sources */,
 				32CCB7D4181B2BE2000193D5 /* FMDatabaseAdditions.m in Sources */,
-				32AA60B31818470E00EEFF79 /* OKSession.m in Sources */,
 				32AA60A61818470E00EEFF79 /* OKCrypto.m in Sources */,
 				32CCB7CC181B2BE2000193D5 /* UIImageView+AFNetworking.m in Sources */,
 				32AA60A81818470E00EEFF79 /* OKDBScore.m in Sources */,
 				32AA60A71818470E00EEFF79 /* OKDBConnection.m in Sources */,
-				32AA60B41818470E00EEFF79 /* OKSmartInvite.m in Sources */,
 				32CCB7C8181B2BE2000193D5 /* AFURLConnectionOperation.m in Sources */,
 				32AA60AF1818470E00EEFF79 /* OKLeaderboard.m in Sources */,
 				32CCB7CE181B2BE2000193D5 /* AFOAuth1Client.m in Sources */,
@@ -1004,7 +981,6 @@
 				32CCB898181B403F000193D5 /* OKGUI.m in Sources */,
 				32CCB7C1181B2BE2000193D5 /* AFImageRequestOperation.m in Sources */,
 				32CCB766181B1AA7000193D5 /* OKAppDelegate.m in Sources */,
-				32CCB896181B403F000193D5 /* OKColors.m in Sources */,
 				32CCB7CB181B2BE2000193D5 /* AFXMLRequestOperation.m in Sources */,
 				32CCB7D5181B2BE2000193D5 /* FMDatabaseAdditions.m in Sources */,
 				32CCB777181B1AA7000193D5 /* ScoreSubmitterVC.m in Sources */,
@@ -1371,6 +1347,7 @@
 				32CCB746181B1A34000193D5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

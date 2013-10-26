@@ -7,14 +7,11 @@
 //
 
 #import "OKSocialLeaderboardViewController.h"
+#import "OpenKit.h"
 #import "OKScoreCell.h"
-#import "OKMacros.h"
-#import "OKFacebookUtilities.h"
 #import "OKFBLoginCell.h"
 #import "OKSpinnerCell.h"
-#import "OKColors.h"
 #import "OKLoginView.h"
-#import "OKManager.h"
 #import "OKGUI.h"
 
 #define kOKScoreCellIdentifier @"OKScoreCell"
@@ -336,8 +333,7 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
             break;
     }
     
-    [self dismissModalViewControllerAnimated:YES];
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 

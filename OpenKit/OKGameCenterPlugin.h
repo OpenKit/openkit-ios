@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <GameKit/GameKit.h>
 #import "OKAuth.h"
 
 

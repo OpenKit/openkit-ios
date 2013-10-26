@@ -8,9 +8,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "OKScoreCell.h"
+#import "OpenKit.h"
 #import "UIImageView+Openkit.h"
-#import "OKMacros.h"
-#import "OKColors.h"
 
 
 @interface OKScoreCell ()

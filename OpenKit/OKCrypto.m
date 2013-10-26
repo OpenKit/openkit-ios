@@ -10,7 +10,6 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <CommonCrypto/CommonHMAC.h>
 #import <CommonCrypto/CommonKeyDerivation.h>
-
 #import <Security/Security.h>
 #import "OKCrypto.h"
 #import "OKMacros.h"
@@ -21,7 +20,6 @@
     NSData *_cryptKey;
     NSData *_hmacKey;
 }
-
 @end
 
 
@@ -36,6 +34,7 @@
     memcpy(&result, random, 8);
     return result;
 }
+
 
 + (NSData*)derivateKey:(NSData*)key withString:(NSString*)string
 {

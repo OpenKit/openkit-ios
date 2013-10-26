@@ -8,7 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "OKProfileViewController.h"
-#import "OKFacebookUtilities.h"
+#import "OpenKit.h"
 
 
 @interface OKProfileViewController ()

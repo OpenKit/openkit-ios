@@ -21,8 +21,6 @@ typedef enum {
     OKLeaderboardTimeRangeAllTime
 } OKLeaderboardTimeRange;
 
-@class OKScore;
-
 
 @interface OKLeaderboard : NSObject
 

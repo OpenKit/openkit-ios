@@ -8,18 +8,13 @@
 
 #import "OKManager.h"
 #import "OKUser.h"
-#import "OKFacebookUtilities.h"
 #import "OKDefines.h"
-#import "OKDBScore.h"
-#import "OKDBConnection.h"
-#import "OKDBSession.h"
 #import "OKMacros.h"
 #import "OKAuth.h"
 #import "OKPrivate.h"
-#import "OKCrypto.h"
-#import "OKNetworker.h"
 #import "OKFileUtil.h"
 #import "OKNotifications.h"
+#import "OKScore.h"
 #import "OKUtils.h"
 
 #define OK_LOCAL_SESSION @"openkit.session"
@@ -288,10 +283,6 @@
     if(user) {
         OKLogInfo(@"Logged in successfully: User id: %@", [user userID]);
         
-        // once we are logged in, we perform some tasks
-        // start local session (analytics)
-        [OKSession resolveUnsubmittedSession];
-        
         // update friends
         [self updateFriendsLazily:YES withCompletion:nil];
         
@@ -395,6 +386,7 @@
 
 - (void)registerToken:(NSData *)deviceToken
 {
+    // REVIEW token
     OKLog(@"OKManager registerToken, data: %@", deviceToken);
     
     const unsigned *tokenBytes = [deviceToken bytes];
@@ -405,9 +397,7 @@
                           ntohl(tokenBytes[6]), ntohl(tokenBytes[7])];
 
     OKLogInfo(@"cache queue is %s", dispatch_queue_get_label(OK_CACHE_QUEUE()));
-    dispatch_async(OK_CACHE_QUEUE(), ^{
-        [OKSession registerPush:hexToken];
-    });
+    OKLogInfo(@"Token is: %@", hexToken);
 }
 
 
@@ -487,18 +477,6 @@
 
 
 #pragma mark - Private
-
-// REVIEW
-- (void)startSession
-{
-    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (100.0f * NSEC_PER_MSEC));
-    dispatch_after(delay, OK_CACHE_QUEUE(), ^{
-        [OKSession activate];
-    });
-    
-    [self submitCachedScoresAfterDelay];
-}
-
 
 - (void)submitCachedScoresAfterDelay
 {

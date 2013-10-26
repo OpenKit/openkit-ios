@@ -9,10 +9,7 @@
 #import "FMDatabase.h"
 #import "OKDBScore.h"
 #import "OKMacros.h"
-#import "OKUser.h"
-#import "OKHelper.h"
 #import "OKFileUtil.h"
-#import "OKNetworker.h"
 
 #define SCORES_CACHE_KEY @"OKLeaderboardScoresCache"
 

@@ -6,6 +6,7 @@
 
 #define OK_UNSUBSCRIBED_USER_ERROR_CODE 410
 
+
 @interface OKNetworker : NSObject
 
 + (NSInteger)getStatusCodeFromAFNetworkingError:(NSError*)error;

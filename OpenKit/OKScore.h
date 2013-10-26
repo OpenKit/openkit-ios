@@ -8,9 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "OKDBConnection.h"
+#import "OKUser.h"
 
-
-@class OKUser;
 @interface OKScore : OKDBRow
 
 @property(nonatomic, readwrite) NSInteger scoreID;

@@ -10,14 +10,10 @@
 #import <FacebookSDK/FBErrorUtility.h>
 #import "OKFacebookUtilities.h"
 #import "OKManager.h"
-#import "OKNetworker.h"
 #import "OKMacros.h"
 #import "OKError.h"
-#import "OKUser.h"
-#import "OKDBScore.h"
 #import "OKHelper.h"
 #import "OKNotifications.h"
-#import "OKPrivate.h"
 
 
 #define OK_SERVICE_NAME @"facebook"

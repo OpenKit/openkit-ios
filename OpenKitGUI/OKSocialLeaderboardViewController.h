@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import "OKBaseViewController.h"
-#import "OKLeaderboard.h"
 #import "OKFBLoginCell.h"
 
-@interface OKSocialLeaderboardViewController : OKViewController<UITableViewDataSource, UITableViewDelegate, OKFBLoginCellDelegate,UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
+
+@interface OKSocialLeaderboardViewController : OKViewController<UITableViewDataSource, UITableViewDelegate, OKFBLoginCellDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
 - (id)initWithLeaderboardID:(int)aLeaderboardID;
 - (IBAction)loadMoreScoresPressed:(id)sender;

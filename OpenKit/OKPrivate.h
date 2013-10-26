@@ -18,6 +18,7 @@
 @end
 
 
+@class OKScore;
 @interface OKLeaderboard (Private)
 
 - (void)submitScore:(OKScore*)score withCompletion:(void (^)(NSError* error))handler;

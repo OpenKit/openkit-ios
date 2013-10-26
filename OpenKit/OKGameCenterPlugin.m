@@ -12,7 +12,6 @@
 #import "OKScore.h"
 #import "OKLeaderboard.h"
 #import "OKMacros.h"
-#import "OKChallenge.h"
 #import "OKError.h"
 #import "OKUtils.h"
 

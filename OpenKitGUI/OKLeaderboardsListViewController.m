@@ -7,12 +7,10 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "OKHelper.h"
-#import "OKLeaderboardListCell.h"
 #import "OKLeaderboardsListViewController.h"
+#import "OKLeaderboardListCell.h"
 #import "OKProfileViewController.h"
 #import "OKLoginView.h"
-#import "OKMacros.h"
 #import "OKSocialLeaderboardViewController.h"
 #import "OKGUI.h"
 

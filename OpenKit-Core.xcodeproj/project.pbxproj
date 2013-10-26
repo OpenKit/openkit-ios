@@ -10,7 +10,6 @@
 		326FD0CF16CB6209004248F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
 		327E9E1A17CEFABA00F33F24 /* OKFileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1517CEFABA00F33F24 /* OKFileUtil.m */; };
 		327E9E1B17CEFABA00F33F24 /* OKDBConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1717CEFABA00F33F24 /* OKDBConnection.m */; };
-		327E9E1C17CEFABA00F33F24 /* OKDBSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1917CEFABA00F33F24 /* OKDBSession.m */; };
 		32880CEE176DC784005F8D30 /* OKUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 32880CED176DC784005F8D30 /* OKUtils.m */; };
 		3295C17B1819E2150044783E /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = A9E43FF81811B0AE0057B663 /* UIImageView+AFNetworking.m */; };
 		32CACFDA16CB637C00E8F185 /* OKManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CACFA916CB637C00E8F185 /* OKManager.m */; };
@@ -39,10 +38,8 @@
 		A95655C5180777EF00B5C8DB /* OKScore.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFC216CB637C00E8F185 /* OKScore.h */; };
 		A95655C6180777EF00B5C8DB /* OKChallenge.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 446A551617E3A98900081C7B /* OKChallenge.h */; };
 		A95655C7180777EF00B5C8DB /* OKUser.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFCC16CB637C00E8F185 /* OKUser.h */; };
-		A95655C8180777EF00B5C8DB /* OKSession.h in Copy Files */ = {isa = PBXBuildFile; fileRef = A95FF90F17FB721D00611351 /* OKSession.h */; };
 		A95655C9180777EF00B5C8DB /* OKFileUtil.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 327E9E1417CEFABA00F33F24 /* OKFileUtil.h */; };
 		A95655CA180777EF00B5C8DB /* OKDBConnection.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 327E9E1617CEFABA00F33F24 /* OKDBConnection.h */; };
-		A95655CB180777EF00B5C8DB /* OKDBSession.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 327E9E1817CEFABA00F33F24 /* OKDBSession.h */; };
 		A95655CC180777EF00B5C8DB /* OKDBScore.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 4455BEBC17A396DD0079859A /* OKDBScore.h */; };
 		A95655CD180777EF00B5C8DB /* OKFacebookUtilities.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44E3058B178CD78E00611E0C /* OKFacebookUtilities.h */; };
 		A95655CE180777EF00B5C8DB /* OKNetworker.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFBC16CB637C00E8F185 /* OKNetworker.h */; };
@@ -79,7 +76,6 @@
 		A95656BD18077F8900B5C8DB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0D516CB732200E8F185 /* SystemConfiguration.framework */; };
 		A95656BE18077F8900B5C8DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05016CB698C00E8F185 /* UIKit.framework */; };
 		A95656BF18077F8900B5C8DB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05316CB698C00E8F185 /* CoreGraphics.framework */; };
-		A95FF91117FB721D00611351 /* OKSession.m in Sources */ = {isa = PBXBuildFile; fileRef = A95FF91017FB721D00611351 /* OKSession.m */; };
 		A9B8ECEB1814591E00636137 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B8ECE11814591E00636137 /* FMDatabase.m */; };
 		A9B8ECEC1814591E00636137 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B8ECE31814591E00636137 /* FMDatabaseAdditions.m */; };
 		A9B8ECED1814591E00636137 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = A9B8ECE51814591E00636137 /* FMDatabasePool.m */; };
@@ -125,10 +121,8 @@
 				A95655C5180777EF00B5C8DB /* OKScore.h in Copy Files */,
 				A95655C6180777EF00B5C8DB /* OKChallenge.h in Copy Files */,
 				A95655C7180777EF00B5C8DB /* OKUser.h in Copy Files */,
-				A95655C8180777EF00B5C8DB /* OKSession.h in Copy Files */,
 				A95655C9180777EF00B5C8DB /* OKFileUtil.h in Copy Files */,
 				A95655CA180777EF00B5C8DB /* OKDBConnection.h in Copy Files */,
-				A95655CB180777EF00B5C8DB /* OKDBSession.h in Copy Files */,
 				A95655CC180777EF00B5C8DB /* OKDBScore.h in Copy Files */,
 				A95655CD180777EF00B5C8DB /* OKFacebookUtilities.h in Copy Files */,
 				A95655CE180777EF00B5C8DB /* OKNetworker.h in Copy Files */,
@@ -152,8 +146,6 @@
 		327E9E1517CEFABA00F33F24 /* OKFileUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFileUtil.m; sourceTree = "<group>"; };
 		327E9E1617CEFABA00F33F24 /* OKDBConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDBConnection.h; sourceTree = "<group>"; };
 		327E9E1717CEFABA00F33F24 /* OKDBConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKDBConnection.m; sourceTree = "<group>"; };
-		327E9E1817CEFABA00F33F24 /* OKDBSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDBSession.h; sourceTree = "<group>"; };
-		327E9E1917CEFABA00F33F24 /* OKDBSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKDBSession.m; sourceTree = "<group>"; };
 		3284E16216CE4AC900624827 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		32880CEC176DC784005F8D30 /* OKUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUtils.h; sourceTree = "<group>"; };
 		32880CED176DC784005F8D30 /* OKUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUtils.m; sourceTree = "<group>"; };
@@ -204,8 +196,6 @@
 		44E3058C178CD78E00611E0C /* OKFacebookUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OKFacebookUtilities.m; path = OpenKit/OKFacebookUtilities.m; sourceTree = "<group>"; };
 		A956563D18077C5F00B5C8DB /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		A956565518077CE800B5C8DB /* coreTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = coreTest.app; path = CoreTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A95FF90F17FB721D00611351 /* OKSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSession.h; sourceTree = "<group>"; };
-		A95FF91017FB721D00611351 /* OKSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSession.m; sourceTree = "<group>"; };
 		A96BECEE18031E40004C90C3 /* OKNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKNotifications.h; sourceTree = "<group>"; };
 		A98654071804BB2F00E03BA6 /* OKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKPrivate.h; sourceTree = "<group>"; };
 		A9B8ECE01814591E00636137 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
@@ -361,8 +351,6 @@
 				A98654071804BB2F00E03BA6 /* OKPrivate.h */,
 				32CACFC216CB637C00E8F185 /* OKScore.h */,
 				32CACFC316CB637C00E8F185 /* OKScore.m */,
-				A95FF90F17FB721D00611351 /* OKSession.h */,
-				A95FF91017FB721D00611351 /* OKSession.m */,
 				32CACFCC16CB637C00E8F185 /* OKUser.h */,
 				32CACFCD16CB637C00E8F185 /* OKUser.m */,
 				446A551617E3A98900081C7B /* OKChallenge.h */,
@@ -423,8 +411,6 @@
 			children = (
 				327E9E1617CEFABA00F33F24 /* OKDBConnection.h */,
 				327E9E1717CEFABA00F33F24 /* OKDBConnection.m */,
-				327E9E1817CEFABA00F33F24 /* OKDBSession.h */,
-				327E9E1917CEFABA00F33F24 /* OKDBSession.m */,
 				4455BEBC17A396DD0079859A /* OKDBScore.h */,
 				4455BEBD17A396DE0079859A /* OKDBScore.m */,
 			);
@@ -606,7 +592,6 @@
 			files = (
 				A9F1D3F41806196A00E593E7 /* OKCrypto.m in Sources */,
 				32CACFDA16CB637C00E8F185 /* OKManager.m in Sources */,
-				A95FF91117FB721D00611351 /* OKSession.m in Sources */,
 				32CACFDC16CB637C00E8F185 /* OKHelper.m in Sources */,
 				A9E440021811B0AE0057B663 /* AFURLConnectionOperation.m in Sources */,
 				A9E440031811B0AE0057B663 /* AFXMLRequestOperation.m in Sources */,
@@ -627,7 +612,6 @@
 				A9E440011811B0AE0057B663 /* AFPropertyListRequestOperation.m in Sources */,
 				3295C17B1819E2150044783E /* UIImageView+AFNetworking.m in Sources */,
 				327E9E1B17CEFABA00F33F24 /* OKDBConnection.m in Sources */,
-				327E9E1C17CEFABA00F33F24 /* OKDBSession.m in Sources */,
 				A9F1D3EF1805EB4C00E593E7 /* OKAuth.m in Sources */,
 				A9B8ECEE1814591E00636137 /* FMDatabaseQueue.m in Sources */,
 				446A551817E3A98900081C7B /* OKChallenge.m in Sources */,
@@ -664,13 +648,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(srcroot)OpenKit/Vendor";
@@ -680,7 +666,13 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -693,17 +685,25 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(srcroot)OpenKit/Vendor";
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
