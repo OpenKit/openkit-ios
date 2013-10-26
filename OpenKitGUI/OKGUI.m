@@ -11,6 +11,7 @@
 #import "KGModal.h"
 #import "OKBaseViewController.h"
 #import "OKLeaderboardsListViewController.h"
+#import "OKSocialLeaderboardViewController.h"
 #import "OKLoginView.h"
 
 
@@ -92,7 +93,7 @@ static UIView *__currentModal = nil;
 
 + (void)showLeaderboardID:(NSInteger)lbID withClose:(OKBlock)handler
 {
-    OKLeaderboardsListViewController *controller = [[OKLeaderboardsListViewController alloc] init];
+    OKSocialLeaderboardViewController *controller = [[OKSocialLeaderboardViewController alloc] initWithLeaderboardID:lbID];
     [OKGUI pushViewController:controller withClose:handler];
 }
 

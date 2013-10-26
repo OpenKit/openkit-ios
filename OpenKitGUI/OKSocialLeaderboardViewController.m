@@ -24,6 +24,17 @@ static BOOL __hasShownFBLoginPrompt = NO;
 
 @interface OKSocialLeaderboardViewController ()
 
+@property(nonatomic, strong) OKLeaderboard *leaderboard;
+@property(nonatomic) int leaderboardID;
+@property(nonatomic, strong) IBOutlet UITableView *tableView;
+@property(nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
+@property(nonatomic, strong) MFMailComposeViewController *mail;
+
+@property(nonatomic, strong) IBOutlet UIView *containerViewForLoadMoreButton;
+@property(nonatomic, strong) IBOutlet UIButton *loadMoreScoresButton;
+
+@property(nonatomic, strong) NSMutableArray *globalScores, *socialScores;
+
 - (void)showActionSheet:(id)sender; //Declare method to show action sheet
 - (void)showEmailUI; //Declare method to show action sheet
 - (void)showMessageUI; //Declare method to show action sheet
@@ -76,11 +87,11 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
 - (void)load
 {
     //Register the nib file for OKFBLoginCell
-    [self._tableView registerNib:[UINib nibWithNibName:@"OKFBLoginCell" bundle:[NSBundle mainBundle]]
+    [_tableView registerNib:[UINib nibWithNibName:@"OKFBLoginCell" bundle:[NSBundle mainBundle]]
           forCellReuseIdentifier:fbCellIdentifier];
     
     //Register the nib file for InviteCEll
-    [self._tableView registerNib:[UINib nibWithNibName:@"OKFBLoginCell" bundle:[NSBundle mainBundle]]
+    [_tableView registerNib:[UINib nibWithNibName:@"OKFBLoginCell" bundle:[NSBundle mainBundle]]
           forCellReuseIdentifier:inviteCellIdentifier];
     
     // iPad specific adjustments
@@ -112,7 +123,7 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
         // Get leaderboard instance
         [[self navigationItem] setTitle:@"loading..."];
         [_spinner startAnimating];
-        [__tableView setHidden:YES];
+        [_tableView setHidden:YES];
     }
 }
 
@@ -132,7 +143,7 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
 - (void)getGlobalScores
 {
     [_spinner startAnimating];
-    [__tableView setHidden:YES];
+    [_tableView setHidden:YES];
     
     // Get global scores-- OKLeaderboard decides where to get them from
     BOOL sync = [_leaderboard getScoresForTimeRange:OKLeaderboardTimeRangeAllTime
@@ -140,11 +151,11 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
                                          completion:^(NSArray *scores, NSError *error)
     {
         [_spinner stopAnimating];
-        [__tableView setHidden:NO];
+        [_tableView setHidden:NO];
         
         if(!error) {
             _globalScores = [NSMutableArray arrayWithArray:scores];
-            [__tableView reloadData];
+            [_tableView reloadData];
             
         } else if(error) {
             OKLog(@"Error getting global scores: %@", error);
@@ -154,7 +165,7 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
     
     if(!sync) {
         [_spinner startAnimating];
-        [__tableView setHidden:YES];
+        [_tableView setHidden:YES];
     }
 }
 
@@ -162,17 +173,17 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
 - (void)getSocialScores
 {
     [_spinner startAnimating];
-    [__tableView setHidden:YES];
+    [_tableView setHidden:YES];
     
     BOOL sync = [_leaderboard getSocialScoresForTimeRange:OKLeaderboardTimeRangeAllTime
                                                completion:^(NSArray *scores, NSError *error)
     {
         [_spinner stopAnimating];
-        [__tableView setHidden:NO];
+        [_tableView setHidden:NO];
         
         if(!error) {
             _socialScores = [NSMutableArray arrayWithArray:scores];
-            [__tableView reloadData];
+            [_tableView reloadData];
             
         } else if(error) {
             OKLog(@"Error getting social scores: %@", error);
@@ -182,7 +193,7 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
     
     if(!sync) {
         [_spinner startAnimating];
-        [__tableView setHidden:YES];
+        [_tableView setHidden:YES];
     }
 }
 
@@ -297,7 +308,7 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
 		controller.body = @"";
 		//controller.recipients = [NSArray arrayWithObjects:@"12345678", @"87654321", nil];
 		controller.messageComposeDelegate = self;
-		[self presentModalViewController:controller animated:YES];
+		[self presentViewController:controller animated:YES completion:nil];
 	}
 }
 
@@ -415,7 +426,7 @@ typedef enum {
 
 
 - (UITableViewCell*)getFBLoginCell {
-    OKFBLoginCell *cell =  [__tableView dequeueReusableCellWithIdentifier:fbCellIdentifier];
+    OKFBLoginCell *cell =  [_tableView dequeueReusableCellWithIdentifier:fbCellIdentifier];
     if(!cell) {
         cell = [[OKFBLoginCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:fbCellIdentifier];
     }
@@ -425,7 +436,7 @@ typedef enum {
 
 
 - (UITableViewCell*)getInviteFriendsCell {
-    OKFBLoginCell *cell =  [__tableView dequeueReusableCellWithIdentifier:inviteCellIdentifier];
+    OKFBLoginCell *cell =  [_tableView dequeueReusableCellWithIdentifier:inviteCellIdentifier];
     if(!cell) {
         cell = [[OKFBLoginCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:inviteCellIdentifier];
     }
@@ -437,7 +448,7 @@ typedef enum {
 
 - (UITableViewCell*)getProgressBarCell
 {
-    OKSpinnerCell *cell = [__tableView dequeueReusableCellWithIdentifier:spinnerCellIdentifier];
+    OKSpinnerCell *cell = [_tableView dequeueReusableCellWithIdentifier:spinnerCellIdentifier];
     if(!cell) {
         cell = [[OKSpinnerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:spinnerCellIdentifier];
     }
@@ -451,7 +462,7 @@ typedef enum {
 
 - (UITableViewCell*)getScoreCellForPlayerTopScore:(OKScore*)score withTableView:(UITableView*)tableView
 {
-    OKScoreCell *cell = [self getScoreCellForScore:score withTableView:__tableView andShowSocialNetworkIcon:NO];
+    OKScoreCell *cell = [self getScoreCellForScore:score withTableView:_tableView andShowSocialNetworkIcon:NO];
     //[cell setBackgroundColor:[OKColors playerTopScoreBGColor]];
     
     return cell;
@@ -492,15 +503,7 @@ typedef enum {
 
 - (BOOL)shouldShowPlayerTopScore
 {
-    if(_playerTopScore != nil) {
-        if([_playerTopScore scoreRank] <= [_globalScores count]) {
-            return NO;
-        } else {
-            return YES;
-        }
-    } else {
-        return NO;
-    }
+    return NO;
 }
 
 
@@ -527,7 +530,7 @@ typedef enum {
      {        
         if(scores != nil) {
             [_globalScores addObjectsFromArray:scores];
-            [__tableView reloadSections:[NSIndexSet indexSetWithIndex:kGlobalSection] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [_tableView reloadSections:[NSIndexSet indexSetWithIndex:kGlobalSection] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
         
         [_loadMoreScoresButton setEnabled:YES];
@@ -547,7 +550,7 @@ typedef enum {
 
 - (void)reloadSocialScores
 {
-    [__tableView reloadSections:[NSIndexSet indexSetWithIndex:0]
+    [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0]
                withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
@@ -587,9 +590,10 @@ typedef enum {
     int section = [indexPath section];
     int row = [indexPath row];
     
+    // REVIEW
     if(section == kGlobalSection) {
         if(row >= [_globalScores count]) {
-            return [self getScoreCellForPlayerTopScore:_playerTopScore withTableView:tableView];
+            return [self getScoreCellForPlayerTopScore:nil withTableView:tableView];
         } else {
             return [self getScoreCellForScore:[_globalScores objectAtIndex:row] withTableView:tableView andShowSocialNetworkIcon:NO];
         }

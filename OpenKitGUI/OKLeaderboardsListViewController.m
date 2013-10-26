@@ -107,6 +107,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self load];
 }
 
 
@@ -146,7 +147,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [OKGUI showLeaderboardID:[indexPath row] withClose:nil];
+    NSInteger lb = [_leaderboards[indexPath.row] leaderboardID];
+    [OKGUI showLeaderboardID:lb withClose:nil];
 }
 
 

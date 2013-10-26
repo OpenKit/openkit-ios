@@ -6,16 +6,15 @@
 //  Copyright (c) 2013 Todd Hamilton. All rights reserved.
 //
 
-#import "OKProfileViewController.h"
-#import "OKUserProfileImageView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "OKProfileViewController.h"
 #import "OKFacebookUtilities.h"
 
 
 @interface OKProfileViewController ()
 
 @property(nonatomic, strong) IBOutlet NSMutableArray *buttons;
-@property(nonatomic, strong) IBOutlet OKUserProfileImageView *profilePic;
+@property(nonatomic, strong) IBOutlet UIViewController *profilePic;
 @property(nonatomic, strong) IBOutlet UILabel *nameLabel;
 
 - (IBAction)logoutButtonPressed:(id)sender;
@@ -30,6 +29,8 @@
 
 @end
 
+@implementation OKProfileButton
+@end
 
 @implementation OKProfileViewController
 

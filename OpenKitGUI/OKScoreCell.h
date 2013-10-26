@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "OKScore.h"
-#import "OKUserProfileImageView.h"
 
 #define kOKScoreCellIdentifier @"OKScoreCell"
 
