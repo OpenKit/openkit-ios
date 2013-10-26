@@ -99,7 +99,7 @@
 
 - (IBAction)finishedPressed:(id)sender
 {
-    [OKGUI popModal:self];
+    [[OKGUI sharedManager] popModal:self];
 }
 
 @end

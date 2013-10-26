@@ -7,88 +7,118 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OKGUI.h"
 #import "KGModal.h"
+#import "OKGUI.h"
 #import "OKBaseViewController.h"
 #import "OKLeaderboardsListViewController.h"
 #import "OKSocialLeaderboardViewController.h"
 #import "OKLoginView.h"
 
 
-static OKBaseViewController *__okController = nil;
-static UIWindow *__okWindow = nil;
-static UIWindow *__cachedWindow = nil;
-static OKBlock __okModalBlock = nil;
-static UIView *__currentModal = nil;
-
+@interface OKGUI ()
+{
+    OKBlock _modalBlock;
+    OKBaseViewController *_navController;
+    UIWindow *_window;
+    UIWindow *_cachedWindow;
+    UIView *_currentModal;
+}
+@end
 
 
 @implementation OKGUI
 
-+ (void)presentModal:(UIView*)view withClose:(OKBlock)handler
++ (id)sharedManager
 {
-    if(__okModalBlock)
-        __okModalBlock();
+    static dispatch_once_t pred;
+    static OKGUI *sharedInstance = nil;
+    dispatch_once(&pred, ^{
+        sharedInstance = [[OKGUI alloc] init];
+    });
+    return sharedInstance;
+}
+
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _navController = nil;
+        _window = nil;
+        _cachedWindow = nil;
+        _modalBlock = nil;
+        _currentModal = nil;
+    }
+    return self;
+}
+
+- (void)presentModal:(UIView*)view withClose:(OKBlock)handler
+{
+    if(_modalBlock)
+        _modalBlock();
     
     KGModal *modal = [KGModal sharedInstance];
     [modal setTapOutsideToDismiss:NO];
     [modal setShowCloseButton:NO];
     [modal showWithContentView:view andAnimated:YES];
-    __okModalBlock = handler;
-    __currentModal = view;
+    _modalBlock = handler;
+    _currentModal = view;
 }
 
 
-+ (void)pushViewController:(OKViewController*)controller withClose:(OKBlock)handler
+- (void)pushViewController:(OKViewController*)controller withClose:(OKBlock)handler
 {
-    if(!__okController) {
-        __cachedWindow = [[[UIApplication sharedApplication] delegate] window];
-        __okController = [[OKBaseViewController alloc] initWithRootViewController:controller];
-        __okWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        [__okWindow setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
-        [__okWindow setBackgroundColor:[UIColor clearColor]];
-        [__okWindow setRootViewController:__okController];
-        [__okWindow makeKeyAndVisible];
-        [controller setOkparent:__okController];
+    if(!_navController) {
+        _cachedWindow = [[[UIApplication sharedApplication] delegate] window];
+        _navController = [[OKBaseViewController alloc] initWithRootViewController:controller];
+        _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        [_window setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+        [_window setBackgroundColor:[UIColor clearColor]];
+        [_window setRootViewController:_navController];
+        [_window makeKeyAndVisible];
+        [controller setOkparent:_navController];
         
         
         // Fade in animation
-        [[__okController view] setOpaque:NO];
-        [[__okController view] setAlpha:0];
-        [[__okController view] setUserInteractionEnabled:NO];
+        [[_navController view] setOpaque:NO];
+        [[_navController view] setAlpha:0];
+        [[_navController view] setUserInteractionEnabled:NO];
         [UIView animateWithDuration:0.2f
                          animations:^
         { 
-            [[__okController view] setAlpha:1];
+            [[_navController view] setAlpha:1];
         }
                          completion:^(BOOL finished)
         {
-            [[__okController view] setOpaque:YES];
-            [[__okController view] setAlpha:1];
-            [[__okController view] setUserInteractionEnabled:YES];
+            [[_navController view] setOpaque:YES];
+            [[_navController view] setAlpha:1];
+            [[_navController view] setUserInteractionEnabled:YES];
         }];
+        
+        if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerWillShowDashboard:)])
+            [_delegate openkitManagerWillShowDashboard:self];
 
     }else{
-        [controller setOkparent:[__okController topViewController]];
-        [__okController pushViewController:controller animated:YES];
+        [controller setOkparent:[_navController topViewController]];
+        [_navController pushViewController:controller animated:YES];
     }
     [controller setOkBlock:handler];
 }
 
 
-+ (BOOL)canPop:(OKViewController*)controller
+- (BOOL)canPop:(OKViewController*)controller
 {
-    if(!__okController)
+    if(!_navController)
         return NO;
 
     if(controller)
-        return ([[__okController viewControllers] indexOfObject:controller] > 0);
+        return ([[_navController viewControllers] indexOfObject:controller] > 0);
     else
-        return ([[__okController viewControllers] count] > 1);
+        return ([[_navController viewControllers] count] > 1);
 }
 
 
-+ (void)callCloseBlocks:(NSArray*)controllers
+- (void)callCloseBlocks:(NSArray*)controllers
 {
     if(controllers && [controllers count] > 0) {
         for(OKViewController *controller in controllers) {
@@ -103,98 +133,102 @@ static UIView *__currentModal = nil;
 
 #pragma mark - Public API
 
+
+- (void)popModal:(UIView*)modal
+{
+    if(_currentModal == modal)
+        [self popModal];
+}
+
+
+- (void)popModal
+{
+    if(_modalBlock)
+        _modalBlock();
+    
+    [[KGModal sharedInstance] hide];
+    _modalBlock = nil;
+    _currentModal = nil;
+}
+
+
+- (void)popViewController
+{
+    if([self canPop:nil]) {
+        OKViewController *controller = (OKViewController*)[_navController popViewControllerAnimated:YES];
+        [self callCloseBlocks:@[controller]];
+    }else
+        [self close];
+}
+
+
+- (void)popViewController:(OKViewController*)controller
+{
+    if(controller) {
+        if([self canPop:controller]) {
+            NSArray *controllers = [_navController popToViewController:[controller okparent] animated:YES];
+            [self callCloseBlocks:controllers];
+        }else
+            [self close];
+    }
+}
+
+
+- (void)close
+{
+    if(_navController) {
+        [self callCloseBlocks:[_navController viewControllers]];
+        
+        
+        // Fade out animation
+        [[_navController view] setUserInteractionEnabled:NO];
+        [[_navController view] setOpaque:NO];
+        [UIView animateWithDuration:0.2f
+                         animations:^
+         { 
+             [[_navController view] setAlpha:0];
+         }
+                         completion:^(BOOL finished)
+         {
+             [_navController popToRootViewControllerAnimated:NO];
+             [_window setRootViewController:nil];
+             _navController = nil;
+             _window = nil;
+             
+             [_cachedWindow makeKeyAndVisible];
+         }];
+        
+        if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerWillHideDashboard:)])
+            [_delegate openkitManagerWillHideDashboard:self];
+    }
+}
+
+
 + (void)showLeaderboardsListWithClose:(OKBlock)handler
 {
     OKLeaderboardsListViewController *controller = [[OKLeaderboardsListViewController alloc] init];
-    [OKGUI pushViewController:controller withClose:handler];
+    [[OKGUI sharedManager] pushViewController:controller withClose:handler];
 }
 
 
 + (void)showLeaderboardID:(NSInteger)lbID withClose:(OKBlock)handler
 {
     OKSocialLeaderboardViewController *controller = [[OKSocialLeaderboardViewController alloc] initWithLeaderboardID:lbID];
-    [OKGUI pushViewController:controller withClose:handler];
+    [[OKGUI sharedManager] pushViewController:controller withClose:handler];
 }
 
 
 + (void)showProfileWithClose:(OKBlock)handler
 {
     OKLeaderboardsListViewController *controller = [[OKLeaderboardsListViewController alloc] init];
-    [OKGUI pushViewController:controller withClose:handler];
+    [[OKGUI sharedManager] pushViewController:controller withClose:handler];
 }
 
 
 + (void)showLoginModalWithClose:(OKBlock)handler
 {
     OKLoginView *modal = [OKLoginView new];
-    [OKGUI presentModal:modal withClose:handler];
-}
-
-
-+ (void)popModal:(UIView*)modal
-{
-    if(__currentModal == modal)
-        [OKGUI popModal];
-}
-
-
-+ (void)popModal
-{
-    if(__okModalBlock)
-        __okModalBlock();
-    
-    [[KGModal sharedInstance] hide];
-    __okModalBlock = nil;
-    __currentModal = nil;
-}
-
-
-+ (void)popViewController
-{
-    if([OKGUI canPop:nil]) {
-        OKViewController *controller = (OKViewController*)[__okController popViewControllerAnimated:YES];
-        [OKGUI callCloseBlocks:@[controller]];
-    }else
-        [OKGUI close];
-}
-
-
-+ (void)popViewController:(OKViewController*)controller
-{
-    if(controller) {
-        if([OKGUI canPop:controller]) {
-            NSArray *controllers = [__okController popToViewController:[controller okparent] animated:YES];
-            [OKGUI callCloseBlocks:controllers];
-        }else
-            [OKGUI close];
-    }
-}
-
-
-+ (void)close
-{
-    if(__okController) {
-        [OKGUI callCloseBlocks:[__okController viewControllers]];
-        
-        
-        // Fade out animation
-        [[__okController view] setUserInteractionEnabled:NO];
-        [[__okController view] setOpaque:NO];
-        [UIView animateWithDuration:0.2f
-                         animations:^
-         { 
-             [[__okController view] setAlpha:0];
-         }
-                         completion:^(BOOL finished)
-         {
-             [__okController popToRootViewControllerAnimated:NO];
-             [__okWindow setRootViewController:nil];
-             __okController = nil;
-             __okWindow = nil;
-             
-             [__cachedWindow makeKeyAndVisible];
-         }];
-    }
+    [[OKGUI sharedManager] presentModal:modal withClose:handler];
 }
 
 

@@ -90,7 +90,7 @@
 - (IBAction)goBack
 {
     // Have to call dismiss on presentingViewController otherwise the presenting view controller won't get the dismissViewController message, and we need the presenting view controller to get this message in OKBridgeBaseViewController
-    [OKGUI popViewController:self];
+    [[OKGUI sharedManager] popViewController:self];
 }
 
 
