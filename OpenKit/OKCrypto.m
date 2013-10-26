@@ -18,7 +18,6 @@
 
 @interface OKCrypto ()
 {
-    CCHmacContext _hmacContext;
     NSData *_cryptKey;
     NSData *_hmacKey;
 }
@@ -70,9 +69,6 @@
             OKLogErr(@"The key sizes are wrong.");
             return nil;
         }
-        
-        // Create HMAC context
-        CCHmacInit(&_hmacContext, kCCHmacAlgSHA256, [_hmacKey bytes], [_hmacKey length]);
     }
     return self;
 }
@@ -81,8 +77,7 @@
 - (NSData*)HMACSHA256:(NSData*)data
 {
     uint8_t digest[CC_SHA256_DIGEST_LENGTH];
-    CCHmacUpdate(&_hmacContext, [data bytes], [data length]);
-    CCHmacFinal(&_hmacContext, digest);
+    CCHmac(kCCHmacAlgSHA256, [_hmacKey bytes], [_hmacKey length], [data bytes], [data length], digest);
     return [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
 }
 
@@ -157,7 +152,7 @@
     NSData *digest = [self HMACSHA256:encrypted];
     
     // Build final
-    NSUInteger resultLength = CC_SHA256_DIGEST_LENGTH + [encrypted length];
+    NSUInteger resultLength = [digest length] + [encrypted length];
     NSMutableData *result = [NSMutableData dataWithCapacity:resultLength];
     [result appendData:digest];
     [result appendData:encrypted];
