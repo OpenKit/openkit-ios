@@ -108,6 +108,7 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
                 encrypted:(BOOL)encrypted
                completion:(void (^)(id responseObject, NSError * error))handler
 {
+    /*
     // ENCRYPT MESSAGE
     if(encrypted) {
         NSDictionary *encryptedParams = [OKNetworker encryptMessage:params withError:nil];
@@ -116,6 +117,7 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
         else
             params = encryptedParams;
     }
+     */
 
     
     // SUCCESS BLOCK
@@ -123,9 +125,9 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
     {
         NSError *err;
         id decodedObj = OKDecodeObj(response, &err);
-        if([OKNetworker isMessageEncrypted:decodedObj]) {
-            decodedObj = [OKNetworker decryptMessage:decodedObj withError:&err];
-        }
+        //if([OKNetworker isMessageEncrypted:decodedObj]) {
+        //    decodedObj = [OKNetworker decryptMessage:decodedObj withError:&err];
+        //}
         
         if(handler)
         handler(decodedObj, err);
