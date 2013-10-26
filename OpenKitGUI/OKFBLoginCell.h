@@ -18,12 +18,8 @@
 
 @interface OKFBLoginCell : UITableViewCell
 
-@property(nonatomic, strong) IBOutlet UILabel *textLabel;
-@property(nonatomic, strong) IBOutlet UIButton *connectFBButton;
-@property(nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
 @property(nonatomic, weak) id<OKFBLoginCellDelegate> delegate;
 
-- (IBAction)connectButtonPressed:(id)sender;
 - (void)makeCellInviteFriends;
 
 @end

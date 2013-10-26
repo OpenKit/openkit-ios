@@ -15,6 +15,16 @@
 #import "OKUser.h"
 
 
+@interface OKFBLoginCell ()
+
+@property(nonatomic, strong) IBOutlet UILabel *textLabel;
+@property(nonatomic, strong) IBOutlet UIButton *connectFBButton;
+@property(nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
+
+- (IBAction)connectButtonPressed:(id)sender;
+
+@end
+
 @implementation OKFBLoginCell
 
 -(id)initWithCoder:(NSCoder *)aDecoder {

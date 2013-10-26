@@ -130,7 +130,7 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
 
 - (void)setLeaderboard:(OKLeaderboard *)leaderboard
 {
-    if(_leaderboard) {
+    if(leaderboard) {
         _leaderboard = leaderboard;
         [[self navigationItem] setTitle:[_leaderboard name]];
         

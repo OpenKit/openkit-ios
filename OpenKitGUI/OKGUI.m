@@ -42,6 +42,7 @@ static UIView *__currentModal = nil;
 + (void)pushViewController:(OKViewController*)controller withClose:(OKBlock)handler
 {
     if(!__okController) {
+        __cachedWindow = [[[UIApplication sharedApplication] delegate] window];
         __okController = [[OKBaseViewController alloc] initWithRootViewController:controller];
         __okWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
         [__okWindow setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
@@ -49,6 +50,24 @@ static UIView *__currentModal = nil;
         [__okWindow setRootViewController:__okController];
         [__okWindow makeKeyAndVisible];
         [controller setOkparent:__okController];
+        
+        
+        // Fade in animation
+        [[__okController view] setOpaque:NO];
+        [[__okController view] setAlpha:0];
+        [[__okController view] setUserInteractionEnabled:NO];
+        [UIView animateWithDuration:0.2f
+                         animations:^
+        { 
+            [[__okController view] setAlpha:1];
+        }
+                         completion:^(BOOL finished)
+        {
+            [[__okController view] setOpaque:YES];
+            [[__okController view] setAlpha:1];
+            [[__okController view] setUserInteractionEnabled:YES];
+        }];
+
     }else{
         [controller setOkparent:[__okController topViewController]];
         [__okController pushViewController:controller animated:YES];
@@ -156,13 +175,25 @@ static UIView *__currentModal = nil;
 {
     if(__okController) {
         [OKGUI callCloseBlocks:[__okController viewControllers]];
-        [__okController popToRootViewControllerAnimated:NO];
-
-        [__okWindow setRootViewController:nil];
-        __okController = nil;
-        __okWindow = nil;
         
-        [__cachedWindow makeKeyAndVisible];
+        
+        // Fade out animation
+        [[__okController view] setUserInteractionEnabled:NO];
+        [[__okController view] setOpaque:NO];
+        [UIView animateWithDuration:0.2f
+                         animations:^
+         { 
+             [[__okController view] setAlpha:0];
+         }
+                         completion:^(BOOL finished)
+         {
+             [__okController popToRootViewControllerAnimated:NO];
+             [__okWindow setRootViewController:nil];
+             __okController = nil;
+             __okWindow = nil;
+             
+             [__cachedWindow makeKeyAndVisible];
+         }];
     }
 }
 
