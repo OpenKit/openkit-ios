@@ -8,12 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface OKCrypto : NSObject
 
-+ (uint64_t)randomInt64;
 - (id)initWithMasterKey:(NSString*)key;
 - (NSData*)encryptData:(NSData*)data;
 - (NSData*)decryptData:(NSData*)data;
 
-@end
 
++ (uint64_t)randomInt64;
++ (NSData*)derivateKey:(NSData*)key withString:(NSString*)string;
++ (NSData*)HMACSHA256:(NSData*)data key:(NSData*)key;
+
+@end

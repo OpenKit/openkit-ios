@@ -51,6 +51,14 @@
 }
 
 
++ (NSData*)HMACSHA256:(NSData*)data key:(NSData*)key
+{
+    uint8_t digest[CC_SHA256_DIGEST_LENGTH];
+    CCHmac(kCCHmacAlgSHA256, [key bytes], [key length], [data bytes], [data length], digest);
+    return [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
+}
+
+
 - (id)initWithMasterKey:(NSString*)masterKey
 {
     NSParameterAssert(masterKey);
@@ -75,9 +83,7 @@
 
 - (NSData*)HMACSHA256:(NSData*)data
 {
-    uint8_t digest[CC_SHA256_DIGEST_LENGTH];
-    CCHmac(kCCHmacAlgSHA256, [_hmacKey bytes], [_hmacKey length], [data bytes], [data length], digest);
-    return [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
+    return [OKCrypto HMACSHA256:data key:_hmacKey];
 }
 
 
