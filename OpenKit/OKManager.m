@@ -69,6 +69,7 @@
     NSParameterAssert(secretKey);
     
     OKManager *manager = [OKManager sharedManager];
+    manager->_initialized = NO;
     [manager setAppKey:appKey];
     [manager setSecretKey:secretKey];
     [manager setEndpoint:(endpoint) ? endpoint : OK_DEFAULT_ENDPOINT];
@@ -104,6 +105,7 @@
     if (self) {
         _endpoint = OK_DEFAULT_ENDPOINT;
         _initialized = NO;
+        _leaderboardListTag = @"v1";
     }
     return self;
 }
@@ -224,10 +226,14 @@
 - (void)getLocalUserWithProvider:(OKAuthProvider*)provider
                       completion:(void(^)(OKLocalUser *user, NSError *error))handler
 {
+    NSParameterAssert(provider);
+    NSParameterAssert(handler);
+    
     [provider getAuthRequestWithCompletion:^(OKAuthRequest *request, NSError *error) {
-        
-        [OKLocalUser loginWithAuthRequests:@[request] completion:handler];
-        
+        if(request)
+            [OKLocalUser loginWithAuthRequests:@[request] completion:handler];
+        else
+            handler(nil, error);
     }];
 }
 

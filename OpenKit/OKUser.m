@@ -263,6 +263,9 @@
              }
              handler(newUser, error);
          }];
+    }else{
+        // REVIEW
+        handler(nil, [OKError unknownError]);
     }
 }
 

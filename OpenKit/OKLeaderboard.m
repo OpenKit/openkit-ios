@@ -218,7 +218,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 + (BOOL)configWithDictionary:(NSDictionary*)dict
 {
-    if(!dict)
+    if(!dict || ![dict isKindOfClass:[NSDictionary class]])
         return NO;
     
     NSArray *leaderBoardsJSON = dict[@"leaderboards"];
