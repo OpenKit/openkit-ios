@@ -97,7 +97,7 @@ static NSString *const kOKDBScoreCreateSql =
 }
 
 
--(NSInteger)insertRow:(OKDBRow*)row
+-(int64_t)insertRow:(OKDBRow*)row
 {
     OKScore *score = (OKScore*)row;
     
@@ -133,9 +133,9 @@ static NSString *const kOKDBScoreCreateSql =
     NSString *sql;
     
     if(submittedOnly)
-        sql = [NSString stringWithFormat:@"SELECT * FROM scores WHERE leaderboard_id=%d AND submit_state=1", lbID];
+        sql = [NSString stringWithFormat:@"SELECT * FROM scores WHERE leaderboard_id=%ld AND submit_state=1", (long)lbID];
     else
-        sql = [NSString stringWithFormat:@"SELECT * FROM scores WHERE leaderboard_id=%d", lbID];
+        sql = [NSString stringWithFormat:@"SELECT * FROM scores WHERE leaderboard_id=%ld", (long)lbID];
     
     return [self getScoresWithSQL:sql];
 }

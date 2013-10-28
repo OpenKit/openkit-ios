@@ -87,20 +87,22 @@ dispatch_queue_t __OKCacheQueue = nil;
 }
 
 
-- (NSInteger)insert:(NSString*)sql, ...
+- (int64_t)insert:(NSString*)sql,...
 {
-    va_list args;
-    va_start(args, sql);
+    va_list *args = (va_list*)malloc(sizeof(va_list));
+    va_start(*args, sql);
     
-    __block NSInteger index = -1;
+    __block int64_t index = -1;
     [self access:^(FMDatabase *db) {
-        if([db executeQuery:sql withVAList:args]) {
+
+        if([db executeQuery:sql withVAList:*args]) {
             index = [db lastInsertRowId];
         }else{
             OKLogErr(@"FAIL performing: %@", sql);
         }
     }];
-    va_end(args);
+    va_end(*args);
+    free(args);
     
     return index;
 }
@@ -108,16 +110,17 @@ dispatch_queue_t __OKCacheQueue = nil;
 
 - (BOOL)update:(NSString *)sql, ...
 {
-    va_list args;
-    va_start(args, sql);
+    va_list *args = (va_list*)malloc(sizeof(va_list));
+    va_start(*args, sql);
 
     __block BOOL success = NO;
     [self access:^(FMDatabase *db) {
-        success = [db executeUpdate:sql withVAList:args];
+        success = [db executeUpdate:sql withVAList:*args];
         if(!success)
             OKLogErr(@"FAIL performing: %@", sql);
     }];
-    va_end(args);
+    va_end(*args);
+    free(args);
 
     return success;
 }

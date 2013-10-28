@@ -14,7 +14,7 @@
 @interface OKHelper : NSObject
 
 + (NSDate*)dateNDaysFromToday:(NSInteger)n;
-+ (int)getIntFrom:(NSDictionary*)dict key:(NSString *)key;
++ (NSInteger)getIntFrom:(NSDictionary*)dict key:(NSString *)key;
 + (int64_t)getInt64From:(NSDictionary*)dict key:(NSString *)key;
 + (BOOL)getBOOLFrom:(NSDictionary*)dict key:(NSString *)key;
 + (NSArray*)getNSArrayFrom:(NSDictionary*)dict key:(NSString *)key;

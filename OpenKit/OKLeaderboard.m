@@ -210,8 +210,8 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"OKLeaderboard name: %@ id: %d sortType: %u iconURL: %@ player_count: %d",
-            self.name, self.leaderboardID, self.sortType, self.iconUrl, self.playerCount];
+    return [NSString stringWithFormat:@"OKLeaderboard name: %@ id: %ld sortType: %u iconURL: %@ player_count: %lu",
+            self.name, (long)self.leaderboardID, self.sortType, self.iconUrl, (unsigned long)self.playerCount];
 }
 
 

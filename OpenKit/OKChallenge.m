@@ -115,7 +115,7 @@
 +(void)issuePushChallengeForListOfOKScores:(NSArray*)scores andLeaderboard:(OKLeaderboard*)leaderboard
 {
     OKLog(@"Doing the network call to issue push challenge");
-    OKLog(@"Sending challenge to %d users", [scores count]);
+    OKLog(@"Sending challenge to %lu users", (unsigned long)[scores count]);
     
     NSMutableArray *friends_receiver_ids = [[NSMutableArray alloc] init];
     
@@ -129,7 +129,7 @@
                             [OKUtils createUUID], @"challenge_uuid",
                             [OKUtils sqlStringFromDate:[NSDate date]], @"client_created_at",
                             nil];
-    NSString *path = [NSString stringWithFormat:@"/leaderboards/%i/challenges", leaderboard.leaderboardID];
+    NSString *path = [NSString stringWithFormat:@"/leaderboards/%li/challenges", (long)leaderboard.leaderboardID];
     
     [OKNetworker postToPath:path
                  parameters:params

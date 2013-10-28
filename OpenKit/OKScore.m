@@ -117,13 +117,13 @@
 
 -(NSString*)rankDisplayString
 {
-    return [NSString stringWithFormat:@"%d", [self scoreRank]];
+    return [NSString stringWithFormat:@"%ld", (long)[self scoreRank]];
 }
 
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"OKScore id: %d, submitted: %d, value: %lld, leaderboard id: %d, display string: %@, metadata: %d", [self scoreID], [self submitState], [self scoreValue], [self leaderboardID], [self displayString], [self metadata]];
+    return [NSString stringWithFormat:@"OKScore id: %ld, submitted: %d, value: %lld, leaderboard id: %ld, display string: %@, metadata: %ld", (long)[self scoreID], [self submitState], [self scoreValue], (long)[self leaderboardID], [self displayString], (long)[self metadata]];
 }
 
 

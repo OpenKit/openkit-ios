@@ -12,7 +12,7 @@
 
 @implementation OKHelper
 
-+ (NSDate *)dateNDaysFromToday:(int)n
++ (NSDate *)dateNDaysFromToday:(NSInteger)n
 {
     NSDate *now = [NSDate date];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier: NSGregorianCalendar];
@@ -70,7 +70,7 @@
 }
 
 
-+ (int)getIntFrom:(NSDictionary*)dict key:(NSString *)key;
++ (NSInteger)getIntFrom:(NSDictionary*)dict key:(NSString *)key;
 {
     NSNumber *numberValue = [OKHelper getNSNumberFrom:dict key:key];
     if(numberValue) {
