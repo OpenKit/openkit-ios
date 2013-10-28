@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "OKCrypto.h"
 
