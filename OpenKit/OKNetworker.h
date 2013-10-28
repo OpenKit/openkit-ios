@@ -7,6 +7,12 @@
 #define OK_UNSUBSCRIBED_USER_ERROR_CODE 410
 
 
+enum
+{
+    kOKNetworkerRequest_other = -1,
+    kOKNetworkerRequest_getLeaderboards = 1,    
+};
+
 @interface OKNetworker : NSObject
 
 + (NSInteger)getStatusCodeFromAFNetworkingError:(NSError*)error;
@@ -14,7 +20,7 @@
 + (void)requestWithMethod:(NSString *)method
                      path:(NSString *)path
                parameters:(NSDictionary *)params
-                encrypted:(BOOL)encrypted
+                      tag:(NSInteger)tag
                completion:(void (^)(id responseObject, NSError *error))handler;
 
 + (void)getFromPath:(NSString *)path
@@ -32,17 +38,17 @@
 
 + (void)getFromPath:(NSString *)path
          parameters:(NSDictionary *)params
-          encrypted:(BOOL)encrypted
+                tag:(NSInteger)tag
          completion:(void (^)(id responseObject, NSError *error))handler;
 
 + (void)postToPath:(NSString *)path
         parameters:(NSDictionary *)params
-         encrypted:(BOOL)encrypted
+               tag:(NSInteger)tag
         completion:(void (^)(id responseObject, NSError *error))handler;
 
 + (void)putToPath:(NSString *)path
        parameters:(NSDictionary *)params
-        encrypted:(BOOL)encrypted
+              tag:(NSInteger)tag
        completion:(void (^)(id responseObject, NSError *error))handler;
 
 @end

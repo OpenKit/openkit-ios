@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "OKDBConnection.h"
+#import "OKLeaderboard.h"
 #import "OKUser.h"
 
 @interface OKScore : OKDBRow
@@ -20,6 +21,8 @@
 @property(nonatomic, readwrite) NSInteger metadata;
 @property(nonatomic, strong) NSString *displayString;
 
++ (id)scoreWithLeaderboard:(OKLeaderboard*)leaderboard;
+- (id)initWithLeaderboard:(OKLeaderboard*)leaderboard;
 - (id)initWithDictionary:(NSDictionary*)dict;
 - (id)initWithLeaderboardID:(NSInteger)index;
 - (NSDictionary*)JSONDictionary;

@@ -18,6 +18,12 @@
 
 @implementation OKScore
 
++ (id)scoreWithLeaderboard:(OKLeaderboard*)leaderboard
+{
+    return [[OKScore alloc] initWithLeaderboard:leaderboard];
+}
+
+
 - (id)init
 {
     self = [super init];
@@ -36,6 +42,13 @@
         [self configWithDictionary:dict];
     }
     return self;
+}
+
+
+- (id)initWithLeaderboard:(OKLeaderboard*)leaderboard
+{
+    NSParameterAssert(leaderboard);
+    return [self initWithLeaderboardID:[leaderboard leaderboardID]];
 }
 
 

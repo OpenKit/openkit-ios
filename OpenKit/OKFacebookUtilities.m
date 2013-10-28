@@ -224,32 +224,6 @@
 }
 
 
-- (void)sendFacebookRequest
-{
-    NSDictionary* params = [NSDictionary dictionary];
-    [FBWebDialogs presentRequestsDialogModallyWithSession:nil
-                                                  message:@"Check out this game!"
-                                                    title:@"Invite Friends"
-                                               parameters:params
-                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error)
-    {
-        if (error) {
-            // Case A: Error launching the dialog or sending request.
-            NSLog(@"Error sending request.");
-        } else {
-            if (result == FBWebDialogResultDialogNotCompleted) {
-                // Case B: User clicked the "x" icon
-                NSLog(@"User canceled request.");
-            } else {
-                NSLog(@"Request Sent.");
-            }
-        }
-    }];
-}
-
-
-
-
 - (void)sessionStateChanged:(FBSessionState)status error:(NSError*)error
 {
     switch(status)
@@ -272,6 +246,37 @@
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:OKAuthProviderUpdatedNotification
                                                         object:self];
+}
+
+#pragma mark - Custom API
+
+- (void)sendFacebookRequest
+{
+    NSDictionary* params = [NSDictionary dictionary];
+    [FBWebDialogs presentRequestsDialogModallyWithSession:nil
+                                                  message:@"Check out this game!"
+                                                    title:@"Invite Friends"
+                                               parameters:params
+                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error)
+     {
+         if (error) {
+             // Case A: Error launching the dialog or sending request.
+             NSLog(@"Error sending request.");
+         } else {
+             if (result == FBWebDialogResultDialogNotCompleted) {
+                 // Case B: User clicked the "x" icon
+                 NSLog(@"User canceled request.");
+             } else {
+                 NSLog(@"Request Sent.");
+             }
+         }
+     }];
+}
+
+
++ (void)sendFacebookRequest
+{
+    [(OKFacebookPlugin*)[OKFacebookPlugin sharedInstance] sendFacebookRequest];
 }
 
 @end

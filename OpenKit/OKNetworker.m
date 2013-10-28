@@ -12,8 +12,12 @@
 #import "OKPrivate.h"
 
 
+typedef void (^OKNetworkerBlock)(id responseObject, NSError * error);
+
+
 static AFOAuth1Client *__httpClient = nil;
 static NSString *OK_SERVER_API_VERSION = @"v2";
+
 
 @implementation OKNetworker
 
@@ -39,100 +43,25 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
 
 + (NSInteger)getStatusCodeFromAFNetworkingError:(NSError*)error
 {
-    if([[error userInfo] objectForKey:AFNetworkingOperationFailingURLResponseErrorKey]) {
-        return [[[error userInfo] objectForKey:AFNetworkingOperationFailingURLResponseErrorKey] statusCode];
-    } else {
-        return 0;
-    }
+    return [[[error userInfo] objectForKey:AFNetworkingOperationFailingURLResponseErrorKey] statusCode];
 }
 
 
-+ (NSDictionary*)encryptMessage:(NSDictionary*)params withError:(NSError**)error
-{
-    if(!params)
-        return nil;
-    
-    // Generate JSON UTF-8 encoded
-    NSData *payload = [NSJSONSerialization dataWithJSONObject:params options:0 error:error];
-    if(!payload)
-        return nil;
-    
-    // Encrypt payload
-    payload = [[[OKManager sharedManager] cryptor] encryptData:payload];
-    if(!payload) {
-        if(error)
-        *error = [OKError unknownError];
-        return nil;
-    }
-    
-    // Generate dictionary
-    return @{@"encryption": @"SHA256_AES256",
-             @"encoding": @"UTF-8",
-             @"payload": [OKUtils base64Enconding:payload] };
-}
-
-
-+ (NSDictionary*)decryptMessage:(NSDictionary*)params withError:(NSError**)error
-{
-    if(!params)
-        return nil;
-    
-    // Convert base64 encoded string to NSData
-    NSData *payload = [OKUtils base64Decoding:params[@"payload"]];
-    
-    // Decrypt payload using algorithm
-    NSString *encryption = params[@"encryption"];
-    if([encryption isEqualToString:@"SHA256_AES256"])
-        payload = [[[OKManager sharedManager] cryptor] decryptData:payload];
-    
-    else {
-        OKLogErr(@"Not valid encryption: %@", encryption);
-        // REVIEW
-        if(error)
-            *error = [OKError unknownError];
-        return nil;
-    }
-    
-    // Generate NSDictionary from JSON data
-    return [NSJSONSerialization JSONObjectWithData:payload options:0 error:error];
-}
-
-
-+ (BOOL)isMessageEncrypted:(NSDictionary*)dict
-{
-    return (dict && dict[@"encryption"] && dict[@"encoding"] && dict[@"payload"]);
-}
 
 
 + (void)requestWithMethod:(NSString *)method
                      path:(NSString *)path
                parameters:(NSDictionary *)params
-                encrypted:(BOOL)encrypted
+                      tag:(NSInteger)tag
                completion:(void (^)(id responseObject, NSError * error))handler
-{
-    /*
-    // ENCRYPT MESSAGE
-    if(encrypted) {
-        NSDictionary *encryptedParams = [OKNetworker encryptMessage:params withError:nil];
-        if(!encryptedParams)
-            OKLogErr(@"Error while generating encrypted message.");
-        else
-            params = encryptedParams;
-    }
-     */
-
-    
+{    
     // SUCCESS BLOCK
     void (^successBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *op, id response)
     {
         NSError *err;
         id decodedObj = OKDecodeObj(response, &err);
-        //if([OKNetworker isMessageEncrypted:decodedObj]) {
-        //    decodedObj = [OKNetworker decryptMessage:decodedObj withError:&err];
-        //}
-        
         if(handler)
-        handler(decodedObj, err);
+            handler(decodedObj, err);
     };
 
     
@@ -148,7 +77,7 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
         }
         
         if(handler)
-        handler(nil, err);
+            handler(nil, err);
     };
 
     
@@ -163,6 +92,7 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
                                                                             success:successBlock
                                                                             failure:failureBlock];
     
+    [operation setUserInfo:@{@"tag": @(tag)}];
     [operation start];
 }
 
@@ -174,7 +104,7 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
     [self requestWithMethod:@"GET"
                        path:path
                  parameters:params
-                  encrypted:NO
+                        tag:kOKNetworkerRequest_other
                  completion:handler];
 }
 
@@ -186,7 +116,7 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
     [self requestWithMethod:@"POST"
                        path:path
                  parameters:params
-                  encrypted:NO
+                        tag:kOKNetworkerRequest_other
                  completion:handler];
 }
 
@@ -198,46 +128,46 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
     [self requestWithMethod:@"PUT"
                        path:path
                  parameters:params
-                  encrypted:NO
+                        tag:kOKNetworkerRequest_other
                  completion:handler];
 }
 
 
 + (void)getFromPath:(NSString *)path
          parameters:(NSDictionary *)params
-          encrypted:(BOOL)encrypted
+                tag:(NSInteger)tag
          completion:(void (^)(id responseObject, NSError *error))handler
 {
     [self requestWithMethod:@"GET"
                        path:path
                  parameters:params
-                  encrypted:encrypted
+                        tag:tag
                  completion:handler];
 }
 
 
 + (void)postToPath:(NSString *)path
         parameters:(NSDictionary *)params
-         encrypted:(BOOL)encrypted
+               tag:(NSInteger)tag
         completion:(void (^)(id responseObject, NSError *error))handler
 {
     [self requestWithMethod:@"POST"
                        path:path
                  parameters:params
-                  encrypted:encrypted
+                        tag:tag
                  completion:handler];
 }
 
 
 + (void)putToPath:(NSString *)path
        parameters:(NSDictionary *)params
-        encrypted:(BOOL)encrypted
+              tag:(NSInteger)tag
        completion:(void (^)(id responseObject, NSError *error))handler
 {
     [self requestWithMethod:@"PUT"
                        path:path
                  parameters:params
-                  encrypted:encrypted
+                        tag:(NSInteger)tag
                  completion:handler];
 }
 
