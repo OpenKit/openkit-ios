@@ -14,7 +14,7 @@
     #define OKLogInfo(s, ...) NSLog(@"OpenKit:Info: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
     #define OKLogErr(s, ...)  NSLog(@"OpenKit:Err: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
 #else
-    #define OKLogInfo(...)    {} while (0)
+    #define OKLogInfo(...)    {}
     #define OKLogErr(s, ...)  NSLog(@"OpenKit:Err: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
 #endif
 

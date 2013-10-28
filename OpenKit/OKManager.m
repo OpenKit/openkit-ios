@@ -209,10 +209,11 @@
     if(_delegate && [_delegate respondsToSelector:@selector(openkitDidLaunch:)])
         [_delegate openkitDidLaunch:self];
     
-    if(![self currentUser])
+    if(![self currentUser]) {
         OKLogInfo(@"Not login in openkit.");
-    else
+    }else {
         [self updatedStatus];
+    }
     
     
     // get list of leaderboards as soon as possible

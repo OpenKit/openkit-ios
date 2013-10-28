@@ -241,7 +241,6 @@
 {
     NSParameterAssert(handler);
     
-    
     if(requests && [requests count] > 0) {
         
         NSMutableArray *params = [NSMutableArray arrayWithCapacity:[requests count]];
@@ -256,11 +255,11 @@
          {
              OKLocalUser *newUser = nil;
              if(!error) {
-                 OKLog(@"Successfully created user ID");
+                 OKLogInfo(@"Successfully created user ID");
                  newUser = [OKLocalUser createUserWithDictionary:responseObject];
                  
              } else {
-                 OKLog(@"Failed to create user with error: %@", error);
+                 OKLogErr(@"Failed to create user with error: %@", error);
              }
              handler(newUser, error);
          }];

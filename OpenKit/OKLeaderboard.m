@@ -83,12 +83,11 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
                  completion:^(id responseObject, NSError *error)
      {
          if(!error) {
-             OKLog(@"Successfully posted score to OpenKit: %@", self);
+             OKLogInfo(@"Successfully posted score to OpenKit: %@", score);
              [score setSubmitState:kOKSubmitted];
              
          }else{
-             OKLog(@"Failed to post score to OpenKit: %@",self);
-             OKLog(@"Error: %@", error);
+             OKLogErr(@"Failed to post score to OpenKit. ERROR: %@", error);
              [score setSubmitState:kOKNotSubmitted];
              
              // REVIEW: check error code. maybe we have to remove it
@@ -186,7 +185,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
          {
              NSMutableArray *scores = nil;
              if(!error) {
-                 OKLog(@"Successfully got FB friends scores");
+                 OKLogInfo(@"Successfully got FB friends scores");
                  
                  NSArray *scoresJSON = (NSArray*)responseObject;
                  scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
@@ -197,7 +196,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
                  }
                  
              } else {
-                 NSLog(@"Failed to get scores, with error: %@", error);
+                 OKLogErr(@"Failed to get scores, with error: %@", error);
              }
              if(handler)
                  handler(scores, error);
@@ -334,7 +333,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
                   completion:^(id responseObject, NSError *error)
      {
          if(!error) {
-             OKLog(@"OpenKit: OKLeaderboard: Successfully got list of leaderboards.");
+             OKLogInfo(@"OpenKit: OKLeaderboard: Successfully got list of leaderboards.");
              [OKLeaderboard configWithDictionary:responseObject];
              [OKLeaderboard save];
              

@@ -152,7 +152,7 @@
             //NSArray *graphFriends = [result objectForKey:@"data"];
             NSArray *graphFriends = [OKHelper getNSArrayFrom:result key:@"data"];
             if(graphFriends) {
-                OKLog(@"Received %d friends", [graphFriends count]);
+                OKLogInfo(@"Received %d friends", [graphFriends count]);
                 NSArray *friendsList = [self makeListOfFacebookFriends:graphFriends];
                 handler(friendsList, err);
 

@@ -166,8 +166,8 @@ static NSString *const kOKDBScoreCreateSql =
 
 - (void)clearSubmittedScores
 {
-    OKLog(@"Clear cached submitted scores");
-    OKLog(@"Score cache before delete: %@", [self getAllScores]);
+    OKLogInfo(@"Clear cached submitted scores");
+    OKLogInfo(@"Score cache before delete: %@", [self getAllScores]);
     
     [self update:@"DELETE FROM scores WHERE submit_state=1"];
 }

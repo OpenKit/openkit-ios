@@ -12,7 +12,4 @@
 
 @interface OKGameCenterPlugin : OKAuthProvider
 
-//! Gets an array of GKPlayer (instances of gamecenter users) given a the list of IDs.
-+ (void)loadPlayersWithIDs:(NSArray*)playerIDs completion:(void(^)(NSArray *friends, NSError *error))handler;
-
 @end

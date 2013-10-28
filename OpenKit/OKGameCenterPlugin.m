@@ -69,7 +69,6 @@
             // local player is not authenticated
             if(controller && gcController) {
                 // show the auth dialog
-                OKLog(@"Need to show GameCenter dialog");
                 [controller presentViewController:gcController animated:YES completion:nil];
             }
         }
@@ -132,32 +131,16 @@
 
 - (void)sessionStateChanged:(BOOL)status error:(NSError*)error
 {
-    switch(status)
-    {
-        case YES:
-            NSLog(@"GameCenterStateOpen");
-            break;
-        case NO:
-            NSLog(@"GameCenterClosed");
-            //break;
-        default:
-            break;
+    if(status == YES) {
+        OKLogInfo(@"GameCenterStateOpen");
+    }else{
+        OKLogInfo(@"GameCenterClosed");
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:OKAuthProviderUpdatedNotification object:self];
 }
 
 
-+ (void)loadPlayersWithIDs:(NSArray*)playerIDs
-                completion:(void(^)(NSArray *friends, NSError *error))handler
-{
-    if(!handler)
-        return;
-    
-    [GKPlayer loadPlayersForIdentifiers:playerIDs withCompletionHandler:handler];
-}
-
-
-+ (void)loadFriendsWithCompletion:(void(^)(NSArray *friendIDs, NSError *error))handler
+- (void)loadFriendsWithCompletion:(void(^)(NSArray *friendIDs, NSError *error))handler
 {
     if(!handler)
         return;
@@ -190,13 +173,10 @@
         
         [scoreReporter reportScoreWithCompletionHandler:^(NSError *error) {
             if(error)
-                OKLog(@"Error submitting score to GameCenter: %@",error);
+                OKLogErr(@"Error submitting score to GameCenter: %@",error);
             else
-                OKLog(@"Gamecenter score submitted successfully");
+                OKLogInfo(@"Gamecenter score submitted successfully");
         }];
-        
-    } else {
-        OKLog(@"Not submitting score to GameCenter, GC not available");
     }
 }
 

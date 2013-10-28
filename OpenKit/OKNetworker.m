@@ -28,8 +28,10 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
         __httpClient = [[AFOAuth1Client alloc] initWithBaseURL:endpointUrl
                                                           key:[OKManager appKey]
                                                        secret:[OKManager secretKey]];
+        
         [__httpClient setParameterEncoding:AFJSONParameterEncoding];
         [__httpClient setDefaultHeader:@"Accept" value:@"application/json"];
+        [__httpClient setDefaultHeader:@"Accept-Encoding" value:@"gzip"];
     }
     return __httpClient;
 }
@@ -62,6 +64,7 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
         *error = [OKError unknownError];
         return nil;
     }
+    
     // Generate dictionary
     return @{@"encryption": @"SHA256_AES256",
              @"encoding": @"UTF-8",
@@ -140,8 +143,8 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
         
         // If the user is unsubscribed to the app, log out the user.
         if(errorCode == OK_UNSUBSCRIBED_USER_ERROR_CODE) {
+            OKLogErr(@"Logging out current user b/c user is unsubscribed to app");
             [[OKManager sharedManager] logoutCurrentUser];
-            OKLog(@"Logging out current user b/c user is unsubscribed to app");
         }
         
         if(handler)
