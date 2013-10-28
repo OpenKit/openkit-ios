@@ -302,6 +302,9 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     {
         if(handler) {
             OKLeaderboard *lb = [OKLeaderboard leaderboardForID:leaderboardID];
+            if(!lb && !error)
+                error = [OKError unknownError];
+            
             handler(lb, error);
         }
     }];
