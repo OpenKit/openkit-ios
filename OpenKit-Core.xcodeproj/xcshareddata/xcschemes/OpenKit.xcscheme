@@ -28,6 +28,16 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "321B5B6E181E24FA0065E808"
+               BuildableName = "OpenKitCore Tests.xctest"
+               BlueprintName = "OpenKitCore Tests"
+               ReferencedContainer = "container:OpenKit-Core.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -7,6 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		321B5B72181E24FA0065E808 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321B5B71181E24FA0065E808 /* XCTest.framework */; };
+		321B5B74181E24FA0065E808 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321B5B73181E24FA0065E808 /* Foundation.framework */; };
+		321B5B76181E24FA0065E808 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 321B5B75181E24FA0065E808 /* UIKit.framework */; };
+		321B5B8D181E25460065E808 /* OpenKitCore_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 321B5B8A181E25460065E808 /* OpenKitCore_Tests.m */; };
+		321B5B8E181E26230065E808 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0EA16CB74DF00E8F185 /* libsqlite3.dylib */; };
+		321B5B8F181E26230065E808 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
+		321B5B90181E26230065E808 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0E816CB74D300E8F185 /* Twitter.framework */; };
+		321B5B91181E26230065E808 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD025EC17A8A1A7001ECD84 /* MessageUI.framework */; };
+		321B5B92181E26230065E808 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0E616CB74CB00E8F185 /* Security.framework */; };
+		321B5B93181E26230065E808 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0E416CB74B000E8F185 /* QuartzCore.framework */; };
+		321B5B94181E26230065E808 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0E216CB74A200E8F185 /* AdSupport.framework */; };
+		321B5B95181E26230065E808 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0DD16CB743600E8F185 /* Accounts.framework */; };
+		321B5B96181E26230065E808 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0DB16CB742500E8F185 /* Social.framework */; };
+		321B5B97181E26230065E808 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0D716CB735F00E8F185 /* MobileCoreServices.framework */; };
+		321B5B98181E26230065E808 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0D516CB732200E8F185 /* SystemConfiguration.framework */; };
+		321B5B99181E26230065E808 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
+		321B5B9A181E26230065E808 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05016CB698C00E8F185 /* UIKit.framework */; };
+		321B5B9B181E26230065E808 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05316CB698C00E8F185 /* CoreGraphics.framework */; };
+		321B5B9F181E262B0065E808 /* libOpenKitCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CB16CB6209004248F9 /* libOpenKitCore.a */; };
 		326F414D181DDAC30008E886 /* libOpenKitCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CB16CB6209004248F9 /* libOpenKitCore.a */; };
 		326F4169181DE6D70008E886 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 326F4168181DE6D70008E886 /* Images.xcassets */; };
 		326FD0CF16CB6209004248F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
@@ -96,6 +115,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		321B5B80181E24FA0065E808 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 326FD0C316CB6209004248F9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 326FD0CA16CB6209004248F9;
+			remoteInfo = OpenKitCore;
+		};
 		A956567F18077D1700B5C8DB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 326FD0C316CB6209004248F9 /* Project object */;
@@ -141,6 +167,14 @@
 
 /* Begin PBXFileReference section */
 		2CD025EC17A8A1A7001ECD84 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		321B5B6F181E24FA0065E808 /* OpenKitCore Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "OpenKitCore Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		321B5B71181E24FA0065E808 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		321B5B73181E24FA0065E808 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		321B5B75181E24FA0065E808 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		321B5B88181E25460065E808 /* OpenKitCore Tests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "OpenKitCore Tests-Info.plist"; sourceTree = "<group>"; };
+		321B5B89181E25460065E808 /* OpenKitCore Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenKitCore Tests-Prefix.pch"; sourceTree = "<group>"; };
+		321B5B8A181E25460065E808 /* OpenKitCore_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenKitCore_Tests.m; sourceTree = "<group>"; };
+		321B5B9C181E26230065E808 /* OpenKit-Core.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "OpenKit-Core.xcodeproj"; sourceTree = "<group>"; };
 		326F4168181DE6D70008E886 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Samples/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		326FD0CB16CB6209004248F9 /* libOpenKitCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOpenKitCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		326FD0CE16CB6209004248F9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -235,6 +269,31 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		321B5B6C181E24FA0065E808 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				321B5B9F181E262B0065E808 /* libOpenKitCore.a in Frameworks */,
+				321B5B72181E24FA0065E808 /* XCTest.framework in Frameworks */,
+				321B5B8E181E26230065E808 /* libsqlite3.dylib in Frameworks */,
+				321B5B8F181E26230065E808 /* GameKit.framework in Frameworks */,
+				321B5B90181E26230065E808 /* Twitter.framework in Frameworks */,
+				321B5B91181E26230065E808 /* MessageUI.framework in Frameworks */,
+				321B5B92181E26230065E808 /* Security.framework in Frameworks */,
+				321B5B93181E26230065E808 /* QuartzCore.framework in Frameworks */,
+				321B5B94181E26230065E808 /* AdSupport.framework in Frameworks */,
+				321B5B95181E26230065E808 /* Accounts.framework in Frameworks */,
+				321B5B96181E26230065E808 /* Social.framework in Frameworks */,
+				321B5B97181E26230065E808 /* MobileCoreServices.framework in Frameworks */,
+				321B5B98181E26230065E808 /* SystemConfiguration.framework in Frameworks */,
+				321B5B99181E26230065E808 /* Foundation.framework in Frameworks */,
+				321B5B9A181E26230065E808 /* UIKit.framework in Frameworks */,
+				321B5B9B181E26230065E808 /* CoreGraphics.framework in Frameworks */,
+				321B5B76181E24FA0065E808 /* UIKit.framework in Frameworks */,
+				321B5B74181E24FA0065E808 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		326FD0C816CB6209004248F9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -283,11 +342,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		321B5B70181E24FA0065E808 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				321B5B9C181E26230065E808 /* OpenKit-Core.xcodeproj */,
+				321B5B71181E24FA0065E808 /* XCTest.framework */,
+				321B5B73181E24FA0065E808 /* Foundation.framework */,
+				321B5B75181E24FA0065E808 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		321B5B85181E25460065E808 /* OpenKitCore Tests */ = {
+			isa = PBXGroup;
+			children = (
+				321B5B88181E25460065E808 /* OpenKitCore Tests-Info.plist */,
+				321B5B89181E25460065E808 /* OpenKitCore Tests-Prefix.pch */,
+				321B5B8A181E25460065E808 /* OpenKitCore_Tests.m */,
+			);
+			name = "OpenKitCore Tests";
+			path = "Samples/OpenKitCore Tests";
+			sourceTree = "<group>";
+		};
+		321B5B9D181E26230065E808 /* Products */ = {
+			isa = PBXGroup;
+			name = Products;
+			sourceTree = "<group>";
+		};
 		326FD0C216CB6209004248F9 = {
 			isa = PBXGroup;
 			children = (
 				32CACF9C16CB637C00E8F185 /* OpenKit core */,
 				32CCB710181AF103000193D5 /* CoreTest */,
+				321B5B85181E25460065E808 /* OpenKitCore Tests */,
+				321B5B70181E24FA0065E808 /* Frameworks */,
 				326FD0CC16CB6209004248F9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -298,6 +386,7 @@
 				326FD0CB16CB6209004248F9 /* libOpenKitCore.a */,
 				32CAD04F16CB698C00E8F185 /* SampleApp.app */,
 				A956565518077CE800B5C8DB /* CoreTest.app */,
+				321B5B6F181E24FA0065E808 /* OpenKitCore Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -484,6 +573,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		321B5B6E181E24FA0065E808 /* OpenKitCore Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 321B5B84181E24FA0065E808 /* Build configuration list for PBXNativeTarget "OpenKitCore Tests" */;
+			buildPhases = (
+				321B5B6B181E24FA0065E808 /* Sources */,
+				321B5B6C181E24FA0065E808 /* Frameworks */,
+				321B5B6D181E24FA0065E808 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				321B5B81181E24FA0065E808 /* PBXTargetDependency */,
+			);
+			name = "OpenKitCore Tests";
+			productName = "OpenKitCore Tests";
+			productReference = 321B5B6F181E24FA0065E808 /* OpenKitCore Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		326FD0CA16CB6209004248F9 /* OpenKitCore */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 326FD0D916CB6209004248F9 /* Build configuration list for PBXNativeTarget "OpenKitCore" */;
@@ -528,6 +635,11 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = OpenKit;
+				TargetAttributes = {
+					321B5B6E181E24FA0065E808 = {
+						TestTargetID = 326FD0CA16CB6209004248F9;
+					};
+				};
 			};
 			buildConfigurationList = 326FD0C616CB6209004248F9 /* Build configuration list for PBXProject "OpenKit-Core" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -540,15 +652,29 @@
 			mainGroup = 326FD0C216CB6209004248F9;
 			productRefGroup = 326FD0CC16CB6209004248F9 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 321B5B9D181E26230065E808 /* Products */;
+					ProjectRef = 321B5B9C181E26230065E808 /* OpenKit-Core.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				326FD0CA16CB6209004248F9 /* OpenKitCore */,
 				A956565418077CE800B5C8DB /* CoreTest */,
+				321B5B6E181E24FA0065E808 /* OpenKitCore Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		321B5B6D181E24FA0065E808 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A956565318077CE800B5C8DB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -576,6 +702,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		321B5B6B181E24FA0065E808 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				321B5B8D181E25460065E808 /* OpenKitCore_Tests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		326FD0C716CB6209004248F9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -626,6 +760,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		321B5B81181E24FA0065E808 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 326FD0CA16CB6209004248F9 /* OpenKitCore */;
+			targetProxy = 321B5B80181E24FA0065E808 /* PBXContainerItemProxy */;
+		};
 		A956568018077D1700B5C8DB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 326FD0CA16CB6209004248F9 /* OpenKitCore */;
@@ -634,6 +773,70 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		321B5B82181E24FA0065E808 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Samples/OpenKitCore Tests/OpenKitCore Tests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				INFOPLIST_FILE = "Samples/OpenKitCore Tests/OpenKitCore Tests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		321B5B83181E24FA0065E808 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Samples/OpenKitCore Tests/OpenKitCore Tests-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				INFOPLIST_FILE = "Samples/OpenKitCore Tests/OpenKitCore Tests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
 		326FD0D716CB6209004248F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -749,6 +952,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		321B5B84181E24FA0065E808 /* Build configuration list for PBXNativeTarget "OpenKitCore Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				321B5B82181E24FA0065E808 /* Debug */,
+				321B5B83181E24FA0065E808 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		326FD0C616CB6209004248F9 /* Build configuration list for PBXProject "OpenKit-Core" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -110,7 +110,7 @@
 
 - (void)setup
 {
-    // Init crytor
+    // Init cryptor
     _cryptor = [[OKCrypto alloc] initWithMasterKey:_secretKey];
     
     // Preload leaderboards from cache
