@@ -39,6 +39,12 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut)
 }
 
 
++ (NSUInteger)timestamp
+{
+    return (NSUInteger)[[NSDate date] timeIntervalSince1970];
+}
+
+
 + (NSString*)sqlStringFromDate:(NSDate *)date
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

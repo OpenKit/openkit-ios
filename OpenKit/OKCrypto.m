@@ -51,6 +51,14 @@
 }
 
 
++ (NSData*)SHA256:(NSData*)data
+{
+    unsigned char digest[CC_SHA256_DIGEST_LENGTH];
+    CC_SHA256([data bytes], [data length], digest);
+    return [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
+}
+
+
 + (NSData*)HMACSHA256:(NSData*)data key:(NSData*)key
 {
     uint8_t digest[CC_SHA256_DIGEST_LENGTH];

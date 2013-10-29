@@ -19,5 +19,6 @@
 + (uint64_t)randomInt64;
 + (NSData*)derivateKey:(NSData*)key withString:(NSString*)string;
 + (NSData*)HMACSHA256:(NSData*)data key:(NSData*)key;
++ (NSData*)SHA256:(NSData*)data;
 
 @end
