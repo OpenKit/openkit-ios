@@ -51,7 +51,8 @@
 
 + (id)new
 {
-    return [[[NSBundle mainBundle] loadNibNamed:@"OKLoginView" owner:nil options:nil] objectAtIndex:0];
+    id s = [[[NSBundle mainBundle] loadNibNamed:@"OKLoginView" owner:nil options:nil] objectAtIndex:0];
+    return [s init];
 }
 
 
@@ -66,7 +67,7 @@
         _buttons = [NSMutableArray arrayWithCapacity:[providers count]];
         for(OKAuthProvider *provider in providers) {
             OKLoginButton *button = [[OKLoginButton alloc] initWithProvider:provider];
-            [button setCenter:CGPointMake(100, 50+50*i)];
+            [button setCenter:CGPointMake(70+100*i, 150)];
             [button addTarget:self action:@selector(loginPressed:) forControlEvents:UIControlEventTouchUpInside];
             [_buttons addObject:button];
             [self addSubview:button];
@@ -93,7 +94,7 @@
 - (void)loginPressed:(id)sender
 {
     OKAuthProvider *provider = [(OKLoginButton*)sender provider];
-    [provider openSessionWithViewController:nil completion:nil];
+    [provider openSessionWithViewController:(UIViewController*)self completion:nil];
 }
 
 

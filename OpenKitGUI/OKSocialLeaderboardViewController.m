@@ -16,6 +16,22 @@
 
 #define kOKScoreCellIdentifier @"OKScoreCell"
 
+// Used to keep track of tableView sections
+enum Sections {
+    kOKSectionSocial = 0,
+    kOKSectionGlobal,
+    NUM_SECTIONS
+};
+
+typedef enum {
+    kOKSectionRowGlobalScore = 0,
+    kOKSectionRowSocialScoreRow,
+    kOKSectionRowProgressBarRow,
+    kOKSectionRowFBLoginRow,
+    kOKSectionRowInviteFriends,
+    kOKSectionRowUnknown
+} OKSectionRow;
+
 static BOOL __hasShownFBLoginPrompt = NO;
 
 
@@ -90,6 +106,10 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
     //Register the nib file for InviteCEll
     [_tableView registerNib:[UINib nibWithNibName:@"OKFBLoginCell" bundle:[NSBundle mainBundle]]
           forCellReuseIdentifier:inviteCellIdentifier];
+    
+    [_tableView registerNib:[UINib nibWithNibName:@"OKScoreCell" bundle:[NSBundle mainBundle]]
+     forCellReuseIdentifier:scoreCellIdentifier];
+    
     
     // iPad specific adjustments
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -208,234 +228,57 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
 
 #pragma mark -
 
-- (void)showActionSheet:(id)sender
-{
-    NSString *actionSheetTitle = @"Invite a Friend"; //Action Sheet Title
-    NSString *email = @"Email";
-    NSString *message = @"Message";
-    NSString *facebook = @"Facebook";
-    NSString *cancelTitle = @"Cancel";
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:actionSheetTitle
-                                                             delegate:self
-                                                    cancelButtonTitle:cancelTitle
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:email, message, facebook, nil];
-    
-    [actionSheet showInView:self.view];
-}
-
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    //Get the name of the current pressed button
-    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
-    if ([buttonTitle isEqualToString:@"Email"]) {
-        [self showEmailUI];
-    }
-    if ([buttonTitle isEqualToString:@"Message"]) {
-        [self showMessageUI];
-    }
-    if ([buttonTitle isEqualToString:@"Facebook"]) {
-        [self showFacebookInviteUI];
-    }
-    if ([buttonTitle isEqualToString:@"Cancel Button"]) {
-        NSLog(@"Cancel pressed --> Cancel ActionSheet");
-    }
-}
-
-
-- (void)showFacebookInviteUI
-{
-    OKAuthProvider *provider = [OKAuthProvider providerByName:@"facebook"];
-    [provider openSessionWithViewController:self completion:^(BOOL login, NSError *error) {
-        if(login)
-            [provider performSelector:@selector(sendFacebookRequest)];
-    }];
-}
-
-
-- (void)showEmailUI
-{
-    
-    //Set up
-    self.mail = [[MFMailComposeViewController alloc]init];
-    
-    _mail.mailComposeDelegate = self;
-    
-    //Set the subject
-    [_mail setSubject:@"Check out this game"];
-    
-    //Set the message
-    NSString * sentFrom = @"<p>Check out this game:</p>";
-    [_mail setMessageBody:sentFrom isHTML:YES];
-    
-    [self presentViewController:_mail animated:YES completion:nil];
-    
-}
-
-- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
-{
-    switch (result)
-    {
-        case MFMailComposeResultCancelled:
-            NSLog(@"Mail cancelled");
-            break;
-        case MFMailComposeResultSaved:
-            NSLog(@"Mail saved");
-            break;
-        case MFMailComposeResultSent:
-            NSLog(@"Mail sent");
-            break;
-        case MFMailComposeResultFailed:
-            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
-            break;
-        default:
-            break;
-    }
-    
-    // Close the Mail Interface
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
-- (void)showMessageUI
-{
-	MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
-	if([MFMessageComposeViewController canSendText])
-	{
-		controller.body = @"";
-		//controller.recipients = [NSArray arrayWithObjects:@"12345678", @"87654321", nil];
-		controller.messageComposeDelegate = self;
-		[self presentViewController:controller animated:YES completion:nil];
-	}
-}
-
-- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
-{
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"MyApp" message:@"Unknown Error"
-                          
-                                                   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    
-    switch (result) {
-            
-        case MessageComposeResultCancelled:
-            NSLog(@"Cancelled");
-            break;
-            
-        case MessageComposeResultFailed:
-            [alert show];
-            break;
-            
-        case MessageComposeResultSent:
-            break;
-            
-        default:
-            break;
-    }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-
-// Used to keep track of tableView sections
-enum Sections {
-    kSocialLeaderboardSection = 0,
-    kGlobalSection,
-    NUM_SECTIONS
-};
-
-typedef enum {
-    SocialSectionRowSocialScoreRow = 0,
-    SocialSectionRowProgressBarRow,
-    SocialSectionRowFBLoginRow,
-    SocialSectionRowInviteFriends,
-    SocialSectionRowUnknownRow
-} SocialSectionRow;
-
 - (BOOL)isShowingSocialScoresProgressBar {
     return (numberOfSocialRequestsRunning > 0);
 }
 
 // This method captures a lot of the logic for what type of cell is drawn at what index path so it can be reused in
 // both cellForRowAtIndexPath and heightForRow
-- (SocialSectionRow)getTypeOfRow:(NSIndexPath*)indexPath {
+- (OKSectionRow)getTypeOfRow:(NSIndexPath*)indexPath {
     
     int section = [indexPath section];
     int row = [indexPath row];
-    
-    if(section != (int)kSocialLeaderboardSection)
-        return SocialSectionRowUnknownRow;
-    
-    if(row < [_socialScores count])
-        return SocialSectionRowSocialScoreRow;
-    
-    if(row == [_socialScores count] && [self isShowingSocialScoresProgressBar])
-        return SocialSectionRowProgressBarRow;
-    
-    if(row >= [_socialScores count] && isShowingFBLoginCell)
-        return SocialSectionRowFBLoginRow;
-    
-    if([_socialScores count] == 0 && isShowingInviteFriendsCell && !isShowingFBLoginCell)
-        return SocialSectionRowInviteFriends;
-    
-    return SocialSectionRowUnknownRow;
+
+    switch (section) {
+        case kOKSectionGlobal:
+            return kOKSectionRowGlobalScore;
+        case kOKSectionSocial:
+            
+            if(row < [_socialScores count])
+                return kOKSectionRowSocialScoreRow;
+            
+            if(row == [_socialScores count] && [self isShowingSocialScoresProgressBar])
+                return kOKSectionRowProgressBarRow;
+            
+            if(row >= [_socialScores count] && isShowingFBLoginCell)
+                return kOKSectionRowFBLoginRow;
+            
+            if([_socialScores count] == 0 && isShowingInviteFriendsCell && !isShowingFBLoginCell)
+                return kOKSectionRowInviteFriends;
+            
+            break;
+    }
+    return kOKSectionRowUnknown;
 }
 
 
-- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (UITableViewCell*)getFBLoginCell
 {
-    int numRows = 0;
-    
-    switch(section) {
-        case kSocialLeaderboardSection:
-            
-            numRows = [_socialScores count];
-            
-            if(![OKLocalUser currentUser]) {
-                numRows++;
-                isShowingFBLoginCell = YES;
-            }
-            
-            if([self isShowingSocialScoresProgressBar]) {
-                numRows++;
-            }
-            
-            if(isShowingInviteFriendsCell && !isShowingFBLoginCell && [_socialScores count] == 0)
-                numRows++;
-            
-        case kGlobalSection:
-            if(_globalScores) {
-                if([self shouldShowPlayerTopScore]) {
-                    return [_globalScores count] + 1;
-                } else {
-                    return [_globalScores count];
-                }
-            } else {
-                return 0;
-            }
-        default:
-            OKLog(@"Unknown section requested for rows");
-            return 0;
-    }
-    return numRows;
-}
-
-
-- (UITableViewCell*)getFBLoginCell {
     OKFBLoginCell *cell =  [_tableView dequeueReusableCellWithIdentifier:fbCellIdentifier];
-    if(!cell) {
+    if(!cell)
         cell = [[OKFBLoginCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:fbCellIdentifier];
-    }
+    
     [cell setDelegate:self];
     return cell;
 }
 
 
-- (UITableViewCell*)getInviteFriendsCell {
+- (UITableViewCell*)getInviteFriendsCell
+{
     OKFBLoginCell *cell =  [_tableView dequeueReusableCellWithIdentifier:inviteCellIdentifier];
-    if(!cell) {
+    if(!cell)
         cell = [[OKFBLoginCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:inviteCellIdentifier];
-    }
+    
     [cell setDelegate:self];
     [cell makeCellInviteFriends];
     return cell;
@@ -445,11 +288,9 @@ typedef enum {
 - (UITableViewCell*)getProgressBarCell
 {
     OKSpinnerCell *cell = [_tableView dequeueReusableCellWithIdentifier:spinnerCellIdentifier];
-    if(!cell) {
+    if(!cell)
         cell = [[OKSpinnerCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:spinnerCellIdentifier];
-    }
     
-    //[cell setBackgroundColor:[OKColors scoreCellBGColor]];
     [cell startAnimating];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
@@ -458,22 +299,16 @@ typedef enum {
 
 - (UITableViewCell*)getScoreCellForPlayerTopScore:(OKScore*)score withTableView:(UITableView*)tableView
 {
-    OKScoreCell *cell = [self getScoreCellForScore:score withTableView:_tableView andShowSocialNetworkIcon:NO];
-    //[cell setBackgroundColor:[OKColors playerTopScoreBGColor]];
-    
-    return cell;
+    return [self getScoreCellForScore:score withTableView:_tableView andShowSocialNetworkIcon:NO];
 }
 
 
 - (OKScoreCell*)getScoreCellForScore:(OKScore*)score withTableView:(UITableView*)tableView andShowSocialNetworkIcon:(BOOL)showSocialNetworkIcon
 {
     OKScoreCell *cell = [tableView dequeueReusableCellWithIdentifier:scoreCellIdentifier];
-    if(!cell) {
-        cell = [[OKScoreCell alloc] init];
-    }
-    
-    //[cell setBackgroundColor:[OKColors scoreCellBGColor]];
-    
+    if(!cell)
+        cell = [[OKScoreCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:scoreCellIdentifier];
+        
     [cell setScore:score];
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
@@ -526,18 +361,12 @@ typedef enum {
      {        
         if(scores != nil) {
             [_globalScores addObjectsFromArray:scores];
-            [_tableView reloadSections:[NSIndexSet indexSetWithIndex:kGlobalSection] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [_tableView reloadSections:[NSIndexSet indexSetWithIndex:kOKSectionGlobal] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
         
         [_loadMoreScoresButton setEnabled:YES];
     }];
 }
-
-
-- (IBAction)loadMoreScoresPressed:(id)sender {
-    [self getMoreGlobalScores];
-}
-
 
 
 
@@ -550,89 +379,232 @@ typedef enum {
                withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
+#pragma mark - Callbacks
 
-- (void)startedSocialScoreRequest
+- (IBAction)loadMoreScoresPressed:(id)sender
 {
-    numberOfSocialRequestsRunning++;
-    [self reloadSocialScores];
-    
+    [self getMoreGlobalScores];
 }
 
 
-- (void)finishedSocialScoreRequest
+- (void)showActionSheet:(id)sender
 {
-    numberOfSocialRequestsRunning--;
+    NSString *actionSheetTitle = @"Invite a Friend"; //Action Sheet Title
+    NSString *email = @"Email";
+    NSString *message = @"Message";
+    NSString *facebook = @"Facebook";
+    NSString *cancelTitle = @"Cancel";
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:actionSheetTitle
+                                                             delegate:self
+                                                    cancelButtonTitle:cancelTitle
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:email, message, facebook, nil];
     
-    if(numberOfSocialRequestsRunning <0)
-        numberOfSocialRequestsRunning = 0;
+    [actionSheet showInView:self.view];
+}
+
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //Get the name of the current pressed button
+    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+    if ([buttonTitle isEqualToString:@"Email"]) {
+        [self showEmailUI];
+    }
+    if ([buttonTitle isEqualToString:@"Message"]) {
+        [self showMessageUI];
+    }
+    if ([buttonTitle isEqualToString:@"Facebook"]) {
+        [self showFacebookInviteUI];
+    }
+    if ([buttonTitle isEqualToString:@"Cancel Button"]) {
+        NSLog(@"Cancel pressed --> Cancel ActionSheet");
+    }
+}
+
+
+- (void)showFacebookInviteUI
+{
+    OKAuthProvider *provider = [OKAuthProvider providerByName:@"facebook"];
+    [provider openSessionWithViewController:self completion:^(BOOL login, NSError *error) {
+        if(login)
+            [provider performSelector:@selector(sendFacebookRequest)];
+    }];
+}
+
+
+- (void)showEmailUI
+{
     
+    //Set up
+    self.mail = [[MFMailComposeViewController alloc]init];
+    _mail.mailComposeDelegate = self;
     
-    // If there are no social scores, and all social score requests are finished, then show
-    // an invite friends
-    if(numberOfSocialRequestsRunning == 0 && [_socialScores count] == 0) {
-        isShowingInviteFriendsCell = YES;
-    } else {
-        isShowingInviteFriendsCell = NO;
+    //Set the subject
+    [_mail setSubject:@"Check out this game"];
+    
+    //Set the message
+    NSString * sentFrom = @"<p>Check out this game:</p>";
+    [_mail setMessageBody:sentFrom isHTML:YES];
+    
+    [self presentViewController:_mail animated:YES completion:nil];
+    
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail cancelled");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Mail sent");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+            break;
+        default:
+            break;
     }
     
-    [self reloadSocialScores];
+    // Close the Mail Interface
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+
+- (void)showMessageUI
+{
+	MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
+	if([MFMessageComposeViewController canSendText])
+	{
+		controller.body = @"";
+		//controller.recipients = [NSArray arrayWithObjects:@"12345678", @"87654321", nil];
+		controller.messageComposeDelegate = self;
+		[self presentViewController:controller animated:YES completion:nil];
+	}
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"MyApp" message:@"Unknown Error"
+                          
+                                                   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    
+    switch (result) {
+            
+        case MessageComposeResultCancelled:
+            NSLog(@"Cancelled");
+            break;
+            
+        case MessageComposeResultFailed:
+            [alert show];
+            break;
+            
+        case MessageComposeResultSent:
+            break;
+            
+        default:
+            break;
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
 #pragma mark - TableView delegate methods
 
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    int section = [indexPath section];
-    int row = [indexPath row];
-    
-    // REVIEW
-    if(section == kGlobalSection) {
-        if(row >= [_globalScores count]) {
-            return [self getScoreCellForPlayerTopScore:nil withTableView:tableView];
-        } else {
-            return [self getScoreCellForScore:[_globalScores objectAtIndex:row] withTableView:tableView andShowSocialNetworkIcon:NO];
-        }
-    }
-    else if(section == kSocialLeaderboardSection) {
-        
-        SocialSectionRow rowType = [self getTypeOfRow:indexPath];
-        switch(rowType) {
-            case SocialSectionRowFBLoginRow:
-                return [self getFBLoginCell];
-                break;
-            case SocialSectionRowProgressBarRow:
-                return [self getProgressBarCell];
-                break;
-            case SocialSectionRowSocialScoreRow:
-                return [self getScoreCellForScore:[_socialScores objectAtIndex:row] withTableView:tableView andShowSocialNetworkIcon:YES];
-                break;
-            case SocialSectionRowInviteFriends:
-                return [self getInviteFriendsCell];
-                break;
-            case SocialSectionRowUnknownRow:
-                OKLog(@"Unknown row type returned in social scores!");
-                // Return empty cell to avoid crash
-                return [self getScoreCellForScore:nil withTableView:tableView andShowSocialNetworkIcon:NO];
-        }
-    } else {
-        OKLog(@"Uknown section type in leaderboard");
-        // Return empty cell to avoid crash
-        return [self getScoreCellForScore:nil withTableView:tableView andShowSocialNetworkIcon:NO];;
-    }
+    return NUM_SECTIONS;
 }
-
 
 
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     switch(section) {
-        case kSocialLeaderboardSection:
+        case kOKSectionSocial:
             return @"Friends";
-        case kGlobalSection:
+        case kOKSectionGlobal:
             return @"All Players";
         default:
             return @"";
+    }
+}
+
+
+- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    int numRows = 0;
+    switch(section) {
+        case kOKSectionSocial:
+            numRows = [_socialScores count];
+            
+            if(![OKLocalUser currentUser]) {
+                numRows++;
+                isShowingFBLoginCell = YES;
+            }
+            
+            if([self isShowingSocialScoresProgressBar])
+                numRows++;
+            
+            if(isShowingInviteFriendsCell && !isShowingFBLoginCell && [_socialScores count] == 0)
+                numRows++;
+            
+            break;
+        case kOKSectionGlobal:
+            if(_globalScores) {
+                numRows = [_globalScores count];
+                
+                if([self shouldShowPlayerTopScore])
+                    numRows++;
+            }
+            break;
+        default:
+            OKLog(@"Unknown section requested for rows");
+            return 0;
+    }
+    return numRows;
+}
+
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    int row = [indexPath row];
+    
+    // REVIEW
+    OKSectionRow rowType = [self getTypeOfRow:indexPath];
+    switch (rowType) {
+        case kOKSectionRowGlobalScore:
+            if(row < [_globalScores count])
+                return [self getScoreCellForScore:_globalScores[row]
+                                    withTableView:tableView
+                         andShowSocialNetworkIcon:NO];
+            
+            else
+                return [self getScoreCellForPlayerTopScore:nil withTableView:tableView];
+            
+        case kOKSectionRowSocialScoreRow:
+            return [self getScoreCellForScore:_socialScores[row] withTableView:tableView andShowSocialNetworkIcon:YES];
+            
+        case kOKSectionRowFBLoginRow:
+            return [self getFBLoginCell];
+            
+        case kOKSectionRowProgressBarRow:
+            return [self getProgressBarCell];
+            
+        case kOKSectionRowInviteFriends:
+            return [self getInviteFriendsCell];
+            
+        default:
+            OKLog(@"Uknown section type in leaderboard");
+            // Return empty cell to avoid crash
+            return [self getScoreCellForScore:nil withTableView:tableView andShowSocialNetworkIcon:NO];;
+            break;
     }
 }
 
@@ -642,33 +614,9 @@ typedef enum {
 //}
 
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return NUM_SECTIONS;
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SocialSectionRow rowType = [self getTypeOfRow:indexPath];
-    switch(rowType) {
-            
-        case SocialSectionRowFBLoginRow:
-            return 60;
-            break;
-        case SocialSectionRowProgressBarRow:
-            return 60;
-            break;
-        case SocialSectionRowInviteFriends:
-            return 60;
-            break;
-        case SocialSectionRowSocialScoreRow:
-            return 60;
-            break;
-        case SocialSectionRowUnknownRow:
-            // Return empty cell to avoid crash
-            return 60;
-    }
-    
+    return 60;
 }
 
 

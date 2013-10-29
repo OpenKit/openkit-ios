@@ -58,7 +58,12 @@
 
 -(void)openkitDidLaunch:(OKManager *)manager
 {
-    [[OKGameCenterPlugin sharedInstance] openSessionWithViewController:self.viewController completion:nil];
+
+}
+
+-(void)openkitDidChangeStatus:(OKManager *)manager
+{
+    NSLog(@"state change");
 }
 
 // We should handle the push differently if the app is already open, but for now will well forward it

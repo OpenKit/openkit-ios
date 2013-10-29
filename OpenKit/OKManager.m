@@ -263,8 +263,10 @@
             if(![[self currentUser] userIDForService:[provider serviceName]]) {
                 
                 [self getLocalUserWithProvider:provider completion:^(OKLocalUser *user, NSError *error) {
-                    [self updateCachedUser];
-                    [self setCurrentUser:user];
+                    if(user && !error) {
+                        [self updateCachedUser];
+                        [self setCurrentUser:user];
+                    }
                     
                     if(handler)
                         handler(user, error);
@@ -393,6 +395,7 @@
 
 - (void)registerToken:(NSData *)deviceToken
 {
+    /*
     // REVIEW token
     OKLog(@"OKManager registerToken, data: %@", deviceToken);
     
@@ -405,6 +408,7 @@
 
     OKLogInfo(@"cache queue is %s", dispatch_queue_get_label(OK_CACHE_QUEUE()));
     OKLogInfo(@"Token is: %@", hexToken);
+     */
 }
 
 

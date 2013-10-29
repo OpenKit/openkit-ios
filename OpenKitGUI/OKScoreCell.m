@@ -14,8 +14,11 @@
 
 @interface OKScoreCell ()
 
-@property(nonatomic, strong) UILabel *label1, *label2, *label3, *label4;
-@property(nonatomic, strong) UIImageView *cellImage;
+@property (weak, nonatomic) IBOutlet UILabel *name;
+@property (weak, nonatomic) IBOutlet UILabel *scoreValue;
+@property (weak, nonatomic) IBOutlet UILabel *scoreRank;
+//@property(nonatomic, strong) UIImageView *cellImage;
+@property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property(nonatomic, strong) UIImageView *socialNetworkIconImageView;
 @property(nonatomic) BOOL showSocialNetworkIcon;
 
@@ -24,34 +27,17 @@
 
 @implementation OKScoreCell
 
-- (id)init
-{
-    static NSString *reuseID = kOKScoreCellIdentifier;
+-(id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
     
-    self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseID];
-    if (self)
-    {
+    if(self) {
+        //Score cell is not selectable
         //Score cell is not selectable
         self.selectionStyle = UITableViewCellSelectionStyleNone;
 
-        CGRect userProfileImageFrame = CGRectMake(47,10, 39, 39);
-        float socialNetworkIconSize = 16.0;
-        
-        CGRect socialNetworkIconFrame = CGRectMake(userProfileImageFrame.origin.x+userProfileImageFrame.size.width - socialNetworkIconSize/2 - 3, userProfileImageFrame.origin.y + userProfileImageFrame.size.height - socialNetworkIconSize/2 - 3, socialNetworkIconSize, socialNetworkIconSize);
-        
-        
         // Initialize user icon
-        _cellImage = [[UIImageView alloc]initWithFrame:userProfileImageFrame];
-        [_cellImage setImage:[UIImage imageNamed:@"user_icon.png"]];
-        [_cellImage.layer setMasksToBounds:YES];
-        [_cellImage.layer setCornerRadius:3];
-        [self.contentView addSubview:_cellImage];
-        
-        //Initialize social network icon
-        _socialNetworkIconImageView = [[UIImageView alloc] initWithFrame:socialNetworkIconFrame];
-        [_socialNetworkIconImageView setHidden:YES];
-        [self.contentView addSubview:_socialNetworkIconImageView];
     }
+    
     return self;
 }
 
@@ -59,17 +45,26 @@
 - (void)setScore:(OKScore *)aScore
 {    
     // Update the text fields
-    _label1.text = [aScore userDisplayString];
-    _label2.text = [aScore scoreDisplayString];
-    _label3.text = [aScore rankDisplayString];
+    NSString *name = [aScore userDisplayString];
+    if(!name)
+        name = @"Anonymous";
+    
+    _name.text = name;
+    _scoreValue.text = [aScore scoreDisplayString];
+    _scoreRank.text = [aScore rankDisplayString];
     
     // Show the player image
     OKUser *user = [aScore user];
+
     if([user userImageUrl]) {
-        [_cellImage setImageWithURL:[NSURL URLWithString:[user userImageUrl]]
-                   placeholderImage:[UIImage imageNamed:@"user_icon.png"]];
+        [_profileImage setImageWithURL:[NSURL URLWithString:[user userImageUrl]]
+                      placeholderImage:[UIImage imageNamed:@"user_icon.png"]];
+    }else{
+        [_profileImage setImage:[UIImage imageNamed:@"gear.png"]];
     }
-    
+    [_profileImage.layer setMasksToBounds:YES];
+    [_profileImage setBackgroundColor:[UIColor blackColor]];
+    [_profileImage.layer setCornerRadius:3];
     
     NSArray *connections = [user resolveConnections];
     if([connections count] > 0){

@@ -11,6 +11,7 @@
 #import "ScoreSubmitterVC.h"
 #import "OKFacebookUtilities.h"
 #import "OKFacebookUtilities.h"
+#import "OKGameCenterPlugin.h"
 
 
 @implementation ViewController
@@ -40,6 +41,14 @@
         [self.userNickLabel setHidden:YES];
         
     }
+}
+
+
+-(IBAction)launchGameCenter:(id)sender
+{
+    [[OKGameCenterPlugin sharedInstance] openSessionWithViewController:self completion:^(BOOL login, NSError *error) {
+        NSLog(@"Open Game Center");
+    }];
 }
 
 -(IBAction)logoutOfOpenKit:(id)sender

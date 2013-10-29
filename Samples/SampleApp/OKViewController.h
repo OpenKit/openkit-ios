@@ -16,6 +16,7 @@
 - (IBAction)logoutOfOpenKit:(id)sender;
 - (IBAction)loginToOpenKit:(id)sender;
 - (IBAction)submitScore:(id)sender;
+-(IBAction)launchGameCenter:(id)sender;
 
 @property (nonatomic, strong) IBOutlet UIImageView *profileImageView;
 @property (nonatomic, strong) IBOutlet UIButton *logoutButton;
