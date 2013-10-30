@@ -54,7 +54,7 @@ For example: *"facebook"*, *"gamecenter"*, *"twitter"*...
 
 
 5. **((user_id in service))**  
-For example: ```10001302592140``` ( user-id in *facebook* )
+For example: `10001302592140` ( user-id in *facebook* )
 
 
 6. **((app's key))**  
@@ -80,15 +80,10 @@ The authorization tokens are included in the HTTP header (not in the http body o
 3. ***oauth* signature**  
 The HTTP body is not included in the signature base string.
 
+5. **Path & method**: `localuser/` (POST)
 
-4. **Client's request, based in x-auth (idea from *twitter*'s *oauth* fork)**  
-*Oauth* was designed to provide authorized access to "untrusted" third party consumers ( 3-legged authorization ). Obviously in this case ( *openkit* ), both, server(provider) and app(consumer) are managed by the same developer so we shouldn't redirect the user to an external login through the browser. The request_token step is omitted.
-[https://dev.twitter.com/docs/oauth/xauth](https://dev.twitter.com/docs/oauth/xauth)
+4. **Login/sign in**  
 
-	4.1. **Login credentials**  
-	Credentials are used to get an valid *openkit*'s access_token. Similarly, the openkit server use the  ```*((access_token provided by the service))``` provided by the service ( *facebook*, *twitter*, etc. ) to valide the credentials.  
-	The path and method are defined in *oauth*. For example ```users/``` (POST)
-	
 	```
 {
     "requests" : 
@@ -96,8 +91,10 @@ The HTTP body is not included in the signature base string.
         {
             "service" : *((service's name)),
             "user_id" : ((user's id in service)),
+            "user_name" : ((user's name in service)),
+            "user_image_url" : ((user's image url in service)), #optional
             "key" : (( )),
-            "data" : (( )),
+            "data" : (( )), #optional
             "public_key_url" : (( )) #optional
         },...
     ]
@@ -112,14 +109,18 @@ The HTTP body is not included in the signature base string.
     [
         {
             "service" : "facebook",
-            "data" : "1451173071",  #facebook user ID
-            "key" : "CAAGZAk4ZABCjwBAFN6qUw0kMSZBkfXFVIZBLB2UiZBFLsQY6lWDoyV8dta6dmLZBEFYLcgq9e5MqOGSR45VceO2o4ATg2G7kPfXOnPRoGWh2cgLwp8twCoX2NWzkVzMBoLykpx274ZBWPAIO4OA4abfvcm77uhrF4JK8wdDWeQ8zGj4RzqjC5bryRCm2sBZB8Xnpl4yXY0ObzX1oBM0yZAorJ",
+            "user_id" : "1451173071",  #facebook user ID
+            "user_name" : "Manuel Mtz.",
+            "user_image_url" : "https://graph.facebook.com/234324/picture",
+            "key" : "px274ZBWPAIO4OA4abfvcm77uhrF4JK8wdDWeQ8J",
         },
         {
             "service" : "gamecenter",
+            "user_id" : "6456367", #gamecenter user ID
+            "user_name" : "Manu",
             "data" : "io.openkit.game1103403020498345hib6hj245b614j2j54",
             "public_key_url" : "https://signature.gc.apple.com/public352g4tte324m"
-            "key" : "CAAGZAk4ZABCjwBAFN6qUw0kMSZBkfXFVIZBLB2UiZBFLsQY6lWDoyV8dta6dmLZBEFYLcgq9e5MqOGSR45VceO2o4ATg2G7kPfXOnPRoGWh2cgLwp8twCoX2NWzkVzMBoLykpx274ZBWPAIO4OA4abfvcm77uhrF4JK8wdDWeQ8zGj4RzqjC5bryRCm2sBZB8Xnpl4yXY0ObzX1oBM0yZAorJ",
+            "key" : "zMBoLykpx274ZBWPAIO4OA4abfvcm77uhrF4JRzqjC5bryRCm2sBZB8",
 		}
 	]
 }
@@ -132,10 +133,10 @@ Full OKLocalUser representation.
 			
 	```
 {
-    "id" : *((user's id))",
-    "nick" : *((user's nick))",
-    "oauth_token" : "((user's access token))"",
-    "oauth_token_secret" : "((user's token secret))"",
+    "access_token" : "((user's access token))",
+    "access_secret" : "((user's access token))",
+    "name" : *((user's nick))",
+    "image_url" : ((user's image url)), #optional
     "services" : {	
         # dictionary of services: facebook, twitter, etc. #
         "*((service's name))" : *((user_id in service)),...
@@ -151,10 +152,10 @@ Full OKLocalUser representation.
 
 	```
 {
-    "id" : "245",
-    "nick" : "Manu",
-    "oauth_token" : "vhj5k6c23fx3l6k3ad89jHuihhIHh",
-    "oauth_token_secret" : "hbhjkjbhHJjhbjhkHGv7v7568gbvgfGHCG456v5465V65$5465VBvhgfJgh76567BJGFhftreuhkoojiHiuoHu",
+    "access_token" : "vhj5k6c23fx3l6k3ad89jHuihhIHh",
+    "access_secret" : "hbhjkjbhHJjhbjhkHGv7v7568gbvgfGHCG456v5465V65$5465VBvhgfJgh76567BJGFhftreuhkoojiHiuoHu",
+    "name" : "Manuel Mtz.",
+    "image_url" : "https://graph.facebook.com/234324/picture",
     "services" : {
         "facebook" : "1451173071",
         "gamecenter" : "110340"
@@ -174,25 +175,6 @@ See:
 A valid access_token is needed to do these kind of tasks.
 
 ---
-###0. Encrypted messages
-
-```
-{
-    "encryption" : "SHA256+AES256",
-    "encoding" : "UTF-8",
-    "compression" : "gzip",
-    "payload" : "hjkHJGlhkkjhñILHChiu=="
-}
-```
-
-- **encryption:** Defines the algorithm used for the encryiption. The followin methods are explained in the appendixes.
-	- SHA256_AES256
-- **encoding:** It defines how the json string was encoded into data, by default it should be UTF-8.
-- **compression**: If used it, the compression algorithm should be specified here.
-- **payload**: ThThe payload must be encoded with base64.
-"encryption": should be the cryptographic algorithm used to protect it, openkit uses SHA256+AES256 by default
-
-
 ###1. Updating OKUSER
 Updating OKUser:
 
@@ -200,15 +182,16 @@ Updating OKUser:
 - Update list of friends.
 ***
 
-1. **Path & method:** `/localuser` (POST)
+1. **Path & method:** `localuser/` (PUT)
 
 2. **Client's request:**  
-Json with the values you want to change. All optional.
+The values you want to change. All optional.
 
 	```
 {
-    "nick" : ((user's nick)), #optional
-    "friends_((service's name))" : ((serialized array of friend IDs))
+    "name" : ((user's nick)), #optional
+    "image_url" : ((user's image)), #optional
+    "friends_((service's name))" : ((serialized array of friend IDs)) #optional
 }
 ```
 
@@ -216,7 +199,7 @@ Json with the values you want to change. All optional.
 		
     ```
 {
-    "nick" : "Manuel",
+    "name" : "Manuel",
     "friends_facebook" : "1400034324,1002302434,10000023232",
     "friends_gamecenter" : "1400034324,1002302434,10000023232"
 }
@@ -227,62 +210,13 @@ Json with the values you want to change. All optional.
 4. **Server's response:**
 
     ```
-{ } 
-```
-Nothing, a error code if something was wrong.
-
-
-###2. OKCLOUD
-Synchronizing data entries between client and server. This protocol implements a simple toolkit to resolve conflicts if several devices modify the same values.
-***
-
-1. **Path & method:** ```/cloud``` (POST)
-
-
-2. **((priority))**  
-It is an arbitrary real number managed by the client and used by the server to resolve conflicts.
-If the "priority" in the client-side is equal or greater than the "priority" in the server-side, the values are overwritten in the server, otherwise the values are overwritten in the client.
-
-
-3. **((timestamp))**  
-It's a timestamp managed by the server that indicates the date of the last sync with the client.
-
-
-4. **A void request can be used to get the whole stored data.**  
-
-	```
-{ }
-```
-
-
-5. **Client's request:**  
-
-	```
 {
-    "priority" : *((priority)), #optional
-    "last_update" : *((timestamp)), #optional
-    "entries" : { #optional
-        # dictionary of the entries that changed since the last update #
-        "((key))" :  ((object)),
-        ...
-    }
-}
+    "name" : ((user's nick)), #optional
+    "image_url" : ((user's image)), #optional
+    "friends_((service's name))" : ((serialized array of friend IDs)) #optional
+} 
 ```
-
-
-6. **Server's response:**  
-
-	```
-{
-	"priority" : *((priority)),
-	"last_update" : *((timestamp)),
-	"entries" : {
-		# dictionary of the entries that should change in the client #
-		"((key))" : ((object)),
-		...
-	}
-}
-```
+A error code if something was wrong.
 
 
 
@@ -290,17 +224,19 @@ It's a timestamp managed by the server that indicates the date of the last sync 
 Posting scores to server.
 ***
 
-1. **Path & method:** ```/scores``` (POST)
+1. **Path & method:** ```scores/``` (POST)
 
 
 2. **Client's request:**
+We do not need to send the token in the body because it's in the deader.
 
 	```
 {
     "leaderboard_id" : ((score's leaderboard ID)),
     "value" : ((score's value)),
     "metadata" : ((score's metadata)),
-    "created_date" : *((date))
+    "created_date" : *((date)),
+    "display_string" : ((score's display string)) #optional
 }
 ```
 
@@ -333,7 +269,6 @@ Posting scores to server.
     "id" : 83457823,
     "leaderboard_id" : 23,
     "value" : 295826,
-    "rank" : 87
 }
 ```
 
@@ -341,7 +276,7 @@ Posting scores to server.
 Posting achievements.
 ***
 
-1. **Path & method:** ```/achievements``` (POST)
+1. **Path & method:** ```achievements/``` (POST)
 
 
 2. **Client's request:**
@@ -358,7 +293,7 @@ Unauthorized services use the GET method.
 Getting the list of leaderboards for the specified app.
 ***
 
-1. **Path & method:** ```/leaderboards``` (GET)
+1. **Path & method:** ```leaderboards/``` (GET)
 
 
 2. **((timestamp))**  
@@ -369,85 +304,83 @@ Used internally by the SDK to optimize the internet usage. Inspired by ```HTTP 3
 
 	```
 {
-    "app_key" : *((app's key)),
     "leaderboard_version" : ((leaderboard's version)),
-    "last_update" : *((timestamp))   #optional
 }
 ```
-Example: getting leaderboards of the app "frf3352s2". ```/leaderboards?app_key=frf3352s2```
+Example:
+
+	```
+{
+    "leaderboard_version" : "v1",
+    "last_update" : 42564442
+}
+```
 
 
 4. **Server's response:**  
 
 	```
-{
-    "last_update" : *((timestamp)),
-    "leaderboards" :
-    [
-        # array of dictionaries updated after specified in the "last_update" request param #
-        {
-            "id" : ((leaderboard's backend id)),
-            "name" : ((leaderboard's name)),
-            "sort_type" : *((leaderboard's sort type)),
-            "icon_url" : ((leaderboard's icon url)),
-            "player_count : ((leaderboard's player count)),
-            "services" : {
-                "gamecenter_id" : (()), # leaderboard id in gamecenter
-                "custom_id" : (()),
-                ...
-            }
-        },
-        ...
-    ]
-}
+[
+	# array of leaderboards
+	{
+		"id" : ((leaderboard's backend id)),
+   	    "name" : ((leaderboard's name)),
+   	    "sort_type" : *((leaderboard's sort type)),
+   	    "icon_url" : ((leaderboard's icon url)),
+        "player_count : ((leaderboard's player count)),
+        "services" : {
+        	"((service's name))" : ((leaderboard_id in gamecenter)),
+            ...
+      	}
+	}, ...
+]
 ```
 
 	Example:
 	
 	```
-{
-    "last_update" : 14309234930,
-    "leaderboards" :
-    [
-        {
-            "id" : 2,
-            "name" : "Level 1",
-            "sort_type" : 0,
-            "icon_url" : "http://storage.openkit.io/image_23234234.png",
-            "player_count : 18334,
-            "services" : {
-                "gamecenter_id" : 7342414,
-            }
-        },
-        {
-            "id" : 5,
-            "name" : "Level 2",
-            "sort_type" : 0,
-            "icon_url" : "http://storage.openkit.io/image_5325444.png",
-            "player_count : 876,
-            "services" : {
-                "gamecenter_id" : 3367006,
-            }
-        },
-        {
-            "id" : 12,
-            "name" : "Level 3",
-            "sort_type" : 0,
-            "icon_url" : "http://storage.openkit.io/image_45624644.png",
-            "player_count : 13330,
-            "services" : {
-                "gamecenter_id" : 1246512,
-            }
-        },
-        ...
-    ]
-}
+[
+    {
+        "id" : 2,
+        "name" : "Level 1",
+        "sort_type" : "HighValue",
+        "icon_url" : "http://storage.openkit.io/image_23234234.png",
+        "player_count : 18334,
+        "services" : {
+            "gamecenter" : "Level 1",
+            "disney" : "23124"
+        }
+    },
+    {
+        "id" : 5,
+        "name" : "Level 2",
+        "sort_type" : "HighValue",
+        "icon_url" : "http://storage.openkit.io/image_5325444.png",
+        "player_count : 876,
+        "services" : {
+            "gamecenter_id" : "Level 3",
+            "disney" : "342505"
+        }
+    },
+    {
+        "id" : 12,
+        "name" : "Level 3",
+        "sort_type" : "HighValue",
+        "icon_url" : "http://storage.openkit.io/image_45624644.png",
+        "player_count : 13330,
+        "services" : {
+            "gamecenter" : "Level 3",
+            "disney" : "64345"
+        }
+    },
+    ...
+]
 ```
 	
 	
 	**((leaderboard's sort type))**  
-	- 0: descending (higher is better)
-	- 1: ascending (lower is better)
+	- "HighValue": descending (higher is better)
+	- "LowValue": ascending (lower is better)
 
 
 
@@ -455,7 +388,7 @@ Example: getting leaderboards of the app "frf3352s2". ```/leaderboards?app_key=f
 Getting a list of scores for the specified leaderboard.
 ***
  
-1. **Path & method:** ```/best_scores/(*)``` (GET)  
+1. **Path & method:** ```best_scores/(*)``` (GET)  
 To make it consistent and reusable, all these paths should use the same request/respond protocol explained later.
 	- ```/best_scores``` best worldwide scores (no filter)
 	- ```/best_scores/social``` best scores from friends
@@ -465,11 +398,10 @@ To make it consistent and reusable, all these paths should use the same request/
 
 	```
 {
-    "app_key" : *((app's key)),
     "leaderboard_id" : ((leaderboard's id)),
-    "leaderboard_range" : *((range)), #optional
-    "num_per_page" : *((size)), #optional
-    "page_num" : *((offset)), #optional
+    "leaderboard_range" : *((leaderboard_range)), #optional
+    "num_per_page" : *((num_per_page)), #optional
+    "page_num" : *((page_num)), #optional
 }
 ```
 
@@ -477,21 +409,20 @@ To make it consistent and reusable, all these paths should use the same request/
 	
 	```
 {
-    "app_key" : "heuX3r98sjJJ",
     "leaderboard_id" : 23,
     "leaderboard_range" : "all_time", #optional
     "num_per_page" : 50, #optional
     "page_num" : 2, #optional
 }
 ```
-	**((range))**  
+	**((leaderboard_range))**  
 	Three values. All-time, week, month.
 
-	**((size))** (a limit would be a good idea)
+	**((num_per_page))** (a limit would be a good idea)  
 	Number of scores to respond.
 
-	**((offset))** from 0 to 2^32-1  
-	Example: getting the best scores from rank 30 to 45. ```/best_scores?offset=30&size=15...```
+	**((page_num))**  
+	Number of page.
 
 
 3. **Server's respond:**
@@ -505,8 +436,12 @@ To make it consistent and reusable, all these paths should use the same request/
         "value" : ((score's value)),
         "rank" : ((score's rank)),
         "user" : {
-            "id" : ((user's id)),
-            "nick" : ((user's nick))
+            "name" : ((user's nick)),
+            "image_url" : ((user's image url)),
+    		"services" : {
+    			# dictionary of services: facebook, twitter, etc. #
+        		"*((service's name))" : *((user_id in service)),...
+        	}
         }
     },
     ...
