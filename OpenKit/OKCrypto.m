@@ -59,6 +59,14 @@
 }
 
 
++ (NSData*)HMACSHA1:(NSData*)data key:(NSData*)key
+{
+    unsigned char digest[CC_SHA1_DIGEST_LENGTH];
+    CCHmac(kCCHmacAlgSHA1, [key bytes], [key length], [data bytes], [data length], digest);
+    return [NSData dataWithBytes:digest length:CC_SHA1_DIGEST_LENGTH];
+}
+
+
 + (NSData*)HMACSHA256:(NSData*)data key:(NSData*)key
 {
     uint8_t digest[CC_SHA256_DIGEST_LENGTH];

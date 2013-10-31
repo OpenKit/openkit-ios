@@ -11,15 +11,28 @@
 #import "OKPrivate.h"
 
 
+NSString *
+Escape(NSString *unescaped) {
+    NSString *s = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                      NULL,
+                                                                      (CFStringRef)unescaped,
+                                                                      NULL,
+                                                                      (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                      kCFStringEncodingUTF8 ));
+    
+    return s;
+}
+
 typedef void (^OKNetworkerBlock)(id responseObject, NSError * error);
 
 
 static AFHTTPRequestOperationManager *__httpManager = nil;
-static NSString *OK_SERVER_API_VERSION = @"v2";
+static NSString *OK_SERVER_API_VERSION = @"v1";
 
 
 @implementation OKNetworker
 
+/*
 + (void)haveFunManu
 {
     NSString *oauthHeaderParams = [NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@", @"oauth_consumer_key", appKey, @"oauth_nonce", nonce, @"oauth_signature_method", @"HMAC-SHA1", @"oauth_timestamp", timestamp, @"oauth_version", @"1.0"];
@@ -46,7 +59,9 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
     [_connections addObject:connection];
 }
+*/
 
+/*
 + (void)haveMoreFun
 {
     // This stuff goes in the following implementation of NSURLConnection's delegate:
@@ -71,6 +86,7 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
         [challenge.sender cancelAuthenticationChallenge:challenge];
     // }
 }
+ */
 
 + (AFHTTPRequestOperationManager*)httpManager
 {
@@ -84,7 +100,7 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
         AFJSONRequestSerializer *serializer = [AFJSONRequestSerializer serializer];
         
         __httpManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:endpointUrl];
-        [(AFJSONResponseSerializer*)[__httpManager responseSerializer] setReadingOptions:NSJSONReadingAllowFragments];
+        [(AFJSONResponseSerializer*)[__httpManager responseSerializer] setReadingOptions:NSJSONReadingAllowFragments | NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves];
         [__httpManager setSecurityPolicy:policy];
         [__httpManager setRequestSerializer:serializer];
     }
@@ -106,7 +122,38 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
     NSString *absolutePath = [[NSURL URLWithString:path relativeToURL:[httpManager baseURL]] absoluteString];
     NSMutableURLRequest *request = [[[self httpManager] requestSerializer] requestWithMethod:method
                                                                                    URLString:absolutePath
-                                                                                  parameters:params];    
+                                                                                  parameters:params];
+
+
+    NSString *appKey = [OKManager appKey];
+    NSString *secretKey = [OKManager secretKey];
+    NSString *nonce = [OKUtils createUUID];
+    NSString *timestamp = [NSString stringWithFormat:@"%d", (NSUInteger)[OKUtils timestamp]];
+
+
+    NSString *oauthHeaderParams = [NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@",
+                                   @"oauth_consumer_key", appKey, @"oauth_nonce", nonce, @"oauth_signature_method", @"HMAC-SHA1",
+                                   @"oauth_timestamp", timestamp, @"oauth_version", @"1.0"];
+
+
+    
+    NSString *signatureBaseString = [NSString stringWithFormat:@"%@&%@&%@", method, Escape(absolutePath), Escape(oauthHeaderParams)];
+    NSString *signatureKeyString = [NSString stringWithFormat:@"%@&", secretKey];
+    NSData *signatureBaseData = [signatureBaseString dataUsingEncoding:NSASCIIStringEncoding];
+    NSData *signatureKeyData = [signatureKeyString dataUsingEncoding:NSASCIIStringEncoding];
+    NSData *HMAC = [OKCrypto HMACSHA1:signatureBaseData key:signatureKeyData];
+    NSString *signature = [HMAC base64EncodedStringWithOptions:0];
+
+
+    NSMutableString *auth = [NSMutableString string];
+    [auth appendFormat:@"OAuth oauth_consumer_key=\"%@\", ", appKey];
+    [auth appendFormat:@"oauth_nonce=\"%@\", ", nonce];
+    [auth appendFormat:@"oauth_signature=\"%@\", ", Escape(signature)];
+    [auth appendFormat:@"oauth_signature_method=\"HMAC-SHA1\", "];
+    [auth appendFormat:@"oauth_timestamp=\"%@\", ", timestamp];
+    [auth appendFormat:@"oauth_version=\"1.0\""];
+    [request addValue:auth forHTTPHeaderField:@"Authorization"];
+
     return request;
 }
 
@@ -119,10 +166,8 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
     // SUCCESS BLOCK
     void (^successBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *op, id response)
     {
-        NSError *err;
-        id decodedObj = OKDecodeObj(response, &err);
         if(handler)
-            handler(decodedObj, err);
+            handler(response, nil);
     };
 
     
@@ -130,7 +175,8 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
     void (^failureBlock)(AFHTTPRequestOperation*, NSError*) = ^(AFHTTPRequestOperation *op, NSError *err)
     {
         NSInteger errorCode = [OKNetworker getStatusCodeFromAFNetworkingError:err];
-        
+
+        OKLogErr(@"OKNetworking: Error code: %d. %@ ERROR: %@.", errorCode, [op responseObject], err);
         // If the user is unsubscribed to the app, log out the user.
         if(errorCode == OK_UNSUBSCRIBED_USER_ERROR_CODE) {
             OKLogErr(@"Logging out current user b/c user is unsubscribed to app");
