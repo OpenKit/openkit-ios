@@ -20,6 +20,58 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
 
 @implementation OKNetworker
 
++ (void)haveFunManu
+{
+    NSString *oauthHeaderParams = [NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@&%@=%@&%@=%@", @"oauth_consumer_key", appKey, @"oauth_nonce", nonce, @"oauth_signature_method", @"HMAC-SHA1", @"oauth_timestamp", timestamp, @"oauth_version", @"1.0"];
+    NSString *signatureBaseString = [NSString stringWithFormat:@"%@&%@%@%@&%@", verb, Escape(scheme), Escape(host), Escape(path), Escape(oauthHeaderParams)];
+    const char *cKey  = [[secretKey stringByAppendingString:@"&"] cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *cData = [signatureBaseString cStringUsingEncoding:NSASCIIStringEncoding];
+
+    unsigned char cHMAC[CC_SHA1_DIGEST_LENGTH];
+    CCHmac(kCCHmacAlgSHA1, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
+    NSData *HMAC = [[NSData alloc] initWithBytes:cHMAC length:sizeof(cHMAC)];
+    NSString *signature = [HMAC base64EncodedStringWithOptions:NULL];
+
+    NSLog(@"Signature is: %@", signature);
+
+    _handler = handler;
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", scheme, host, path]];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30];
+
+    NSString *auth = [NSString stringWithFormat:@"OAuth oauth_consumer_key=\"%@\", oauth_nonce=\"%@\", oauth_signature=\"%@\", oauth_signature_method=\"%@\", oauth_timestamp=\"%@\", oauth_version=\"%@\"", appKey, nonce, Escape(signature), @"HMAC-SHA1", timestamp, @"1.0"];
+    [request addValue:auth forHTTPHeaderField:@"Authorization"];
+    [request setHTTPMethod:@"GET"];
+
+
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+    [_connections addObject:connection];
+}
+
++ (void)haveMoreFun
+{
+    // This stuff goes in the following implementation of NSURLConnection's delegate:
+    // - (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+    // {
+        if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"ok_wildcard" ofType:@"der"];
+            NSData *certificateData = [NSData dataWithContentsOfFile:path];
+            NSArray *okCerts = @[ CFBridgingRelease(SecCertificateCreateWithData(kCFAllocatorDefault, CFBridgingRetain(certificateData))) ];
+            SecTrustRef trust = challenge.protectionSpace.serverTrust;
+
+            if (noErr == SecTrustSetAnchorCertificates(trust, CFBridgingRetain(okCerts))) {
+                SecTrustResultType trustResult;
+                if (noErr == SecTrustEvaluate(trust, &trustResult)) {
+                    if (trustResult == kSecTrustResultProceed || trustResult == kSecTrustResultUnspecified) {
+                        [challenge.sender useCredential:[NSURLCredential credentialForTrust:trust] forAuthenticationChallenge:challenge];
+                        return;
+                    }
+                }
+            }
+        }
+        [challenge.sender cancelAuthenticationChallenge:challenge];
+    // }
+}
+
 + (AFHTTPRequestOperationManager*)httpManager
 {
     if(!__httpManager) {
