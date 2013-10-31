@@ -39,7 +39,8 @@
 {
     self = [super init];
     if (self) {
-        [self configWithDictionary:dict];
+        if(![self configWithDictionary:dict])
+            return NO;
     }
     return self;
 }
@@ -66,6 +67,8 @@
 
 - (BOOL)configWithDictionary:(NSDictionary*)dict
 {
+    if(![dict isKindOfClass:[NSDictionary class]])
+        return NO;
     NSParameterAssert(dict);
 
     self.rowIndex       = [OKHelper getIntFrom:dict key:@"row_id"];
@@ -87,9 +90,8 @@
 {
     return @{@"leaderboard_id": @(_leaderboardID),
              @"value": @(_scoreValue),
-             @"user_id": [_user userID],
              @"metadata": @(_metadata),
-             @"display_string": [self scoreDisplayString] };
+             @"display_string": OK_NO_NIL([self scoreDisplayString])};
 }
 
 
@@ -113,7 +115,7 @@
 }
 
 
--(NSString*)scoreDisplayString
+- (NSString*)scoreDisplayString
 {
     if([self displayString])
         return _displayString;
@@ -122,13 +124,13 @@
 }
 
 
--(NSString*)userDisplayString
+- (NSString*)userDisplayString
 {
-    return [[self user] userNick];
+    return [[self user] name];
 }
 
 
--(NSString*)rankDisplayString
+- (NSString*)rankDisplayString
 {
     return [NSString stringWithFormat:@"%ld", (long)[self scoreRank]];
 }

@@ -33,7 +33,7 @@
         
         [self.profileImageView setUser:user];
         [self.userNickLabel setHidden:NO];
-        [self.userNickLabel setText:[user userNick]];
+        [self.userNickLabel setText:[user name]];
     } else {
         [self.loginButton setHidden:NO];
         [self.logoutButton setHidden:YES];

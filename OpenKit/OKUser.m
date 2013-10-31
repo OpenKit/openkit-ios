@@ -21,7 +21,8 @@
 {
     self = [super init];
     if (self) {
-        [self configWithDictionary:dict];
+        if(![self configWithDictionary:dict])
+            return nil;
     }
     return self;
 }
@@ -29,14 +30,14 @@
 
 - (BOOL)configWithDictionary:(NSDictionary*)dict
 {
-    NSParameterAssert(dict && [dict isKindOfClass:[NSDictionary class]]);
+    if(![dict isKindOfClass:[NSDictionary class]])
+        return NO;
 
-    _userID = [OKHelper getNSStringFrom:dict key:@"id"];
-    _userNick = [OKHelper getNSStringFrom:dict key:@"name"];
-    _userImageUrl = [OKHelper getNSStringFrom:dict key:@"image_url"];
-    _services = [OKHelper getNSDictionaryFrom:dict key:@"services"];
-    
-    return (_userID && _userNick);
+    _name = OK_CHECK(dict[@"name"], NSString);
+    _imageUrl = OK_CHECK(dict[@"image_url"], NSString);
+    _services = OK_CHECK(dict[@"services"], NSDictionary);
+
+    return !!(_name);
 }
 
 
@@ -48,22 +49,23 @@
 
 - (NSDictionary*)dictionary
 {
-    return @{@"id": _userID,
-             @"nick": _userNick,
-             @"image_url": _userImageUrl,
-             @"services": _services };
+    NSAssert(_name, @"Name can not be nil");
+
+    return @{@"name": _name,
+             @"image_url": OK_NO_NIL(_imageUrl),
+             @"services": OK_NO_NIL(_services) };
 }
 
 
-- (void)setUserNick:(NSString*)userNick
+- (void)setName:(NSString*)userName
 {
-    _userNick = userNick;
+    _name = userName;
 }
 
 
-- (void)setUserImageUrl:(NSString*)userImageUrl
+- (void)setImageUrl:(NSString*)userImageUrl
 {
-    _userImageUrl = userImageUrl;
+    _imageUrl = userImageUrl;
 }
 
 
@@ -74,8 +76,9 @@
     if(user) {
         [_services enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
             NSString *friends = [user friendsForService:key];
-            if(friends && [friends rangeOfString:[self userID]].location != NSNotFound)
-                [results addObject:key];
+            // REVIEW
+            //if(friends && [friends rangeOfString:[self userID]].location != NSNotFound)
+            //    [results addObject:key];
         }];
     }
     
@@ -87,7 +90,7 @@
 + (OKUser*)guestUser
 {
     OKUser *guestUser = [[OKUser alloc] init];
-    [guestUser setUserNick:@"Me"];
+    [guestUser setName:@"Me"];
     return guestUser;
 }
 
@@ -108,35 +111,38 @@
 - (BOOL)isAccessAllowed
 {
     // REVIEW THIS
-    return self.userID != nil;
+    return self.accessToken && self.accessTokenSecret;
     //return (self.userID && self.accessToken && self.accessTokenSecret);
 }
 
 - (BOOL)configWithDictionary:(NSDictionary*)dict
 {
-    _accessToken = [OKHelper getNSStringFrom:dict key:@"token"];
-    _accessTokenSecret = [OKHelper getNSStringFrom:dict key:@"token_secret"];
+    if(![super configWithDictionary:dict])
+        return NO;
+
+    _accessToken = OK_CHECK(dict[@"access_token"], NSString);
+    _accessToken = OK_CHECK(dict[@"access_secret"], NSString);
     _dirty = [NSMutableDictionary dictionaryWithDictionary:dict[@"dirty"]];
     _friends = [NSMutableDictionary dictionaryWithDictionary:dict[@"friends"]];
     
-    return ([super configWithDictionary:dict] && _accessToken && _accessTokenSecret);
+    return (_accessToken && _accessTokenSecret);
 }
 
 
-- (void)setUserNick:(NSString*)userNick
+- (void)setName:(NSString*)userName
 {
-    if(![self.userNick isEqualToString:userNick]) {
-        [super setUserNick:userNick];
-        [self changeValue:self.userNick forKey:@"nick"];
+    if(![self.name isEqualToString:userName]) {
+        [super setName:userName];
+        [self changeValue:userName forKey:@"name"];
     }
 }
 
 
-- (void)setUserImageUrl:(NSString*)imageUrl
+- (void)setImageUrl:(NSString*)imageUrl
 {
-    if(![self.userImageUrl isEqualToString:imageUrl]) {
-        [super setUserImageUrl:imageUrl];
-        [self changeValue:self.userImageUrl forKey:@"image_url"];
+    if(![self.imageUrl isEqualToString:imageUrl]) {
+        [super setImageUrl:imageUrl];
+        [self changeValue:imageUrl forKey:@"image_url"];
     }
 }
 
@@ -187,7 +193,7 @@
         return;
     }
     
-    [OKNetworker postToPath:@"localuser/"
+    [OKNetworker postToPath:@"/localuser"
                  parameters:_dirty
                  completion:^(id responseObject, NSError *error)
      {
@@ -205,17 +211,10 @@
     NSAssert(_accessToken, @"Access token is invalid.");
     NSAssert(_dirty, @"Access token is invalid.");
 
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[super dictionary]];
-    dict[@"token"] = _accessToken;
-    dict[@"token_secret"] = _accessTokenSecret;
-    
-    if(_dirty)
-    dict[@"dirty"] = _dirty;
-    
-    if(_friends)
-    dict[@"_friends"] = _friends;
-    
-    return dict;
+    return @{@"access_token": _accessToken,
+             @"access_secret": _accessTokenSecret,
+             @"dirty": OK_NO_NIL(_dirty),
+             @"friends": OK_NO_NIL(_friends) };
 }
 
 
@@ -255,12 +254,16 @@
          {
              OKLocalUser *newUser = nil;
              if(!error) {
-                 OKLogInfo(@"Successfully created user ID");
                  newUser = [OKLocalUser createUserWithDictionary:responseObject];
-                 
-             } else {
-                 OKLogErr(@"Failed to create user with error: %@", error);
+                 if(!newUser) // REVIEW
+                     error = [OKError unknownError];
              }
+
+             if(!error)
+                 OKLogInfo(@"Successfully created user ID.");
+             else
+                 OKLogErr(@"Failed to create user with error.");
+
              handler(newUser, error);
          }];
     }else{

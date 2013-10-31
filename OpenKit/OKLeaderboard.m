@@ -87,7 +87,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
              [score setSubmitState:kOKSubmitted];
              
          }else{
-             OKLogErr(@"Failed to post score to OpenKit. ERROR: %@", error);
+             OKLogErr(@"Failed to post score to OpenKit");
              [score setSubmitState:kOKNotSubmitted];
              
              // REVIEW: check error code. maybe we have to remove it
@@ -325,7 +325,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     // OK NETWORK REQUEST
     NSDictionary *params = @{@"tag": [[OKManager sharedManager] leaderboardListTag] };
     [OKNetworker getFromPath:@"/leaderboards"
-                  parameters:params
+                  parameters:nil
                   completion:^(id responseObject, NSError *error)
      {
          if(!error) {
@@ -334,7 +334,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
                  [self save];
              
          }else{
-             OKLogErr(@"OpenKit: OKLeaderboard: Failed to get list of leaderboards: %@", error);
+             OKLogErr(@"OpenKit: OKLeaderboard: Failed to get list of leaderboards.");
          }
          
          if(handler)

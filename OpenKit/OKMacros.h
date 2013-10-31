@@ -35,6 +35,7 @@
 
 
 #define OK_NO_NIL(__OBJ__) ((__OBJ__)==nil ? [NSNull null] : (__OBJ__))
+#define OK_CHECK(__OBJ__, __CLASS__) ([__OBJ__ isKindOfClass:[__CLASS__ class]] ? __OBJ__ : nil)
 
 // System Versioning
 #define OK_SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)

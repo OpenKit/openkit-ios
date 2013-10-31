@@ -12,8 +12,8 @@
 @interface OKUser : NSObject
 
 @property(nonatomic, readonly) NSString *userID;
-@property(nonatomic, readonly) NSString *userNick;
-@property(nonatomic, readonly) NSString *userImageUrl;
+@property(nonatomic, readonly) NSString *name;
+@property(nonatomic, readonly) NSString *imageUrl;
 @property(nonatomic, readonly) NSDictionary *services;
 
 - (NSString*)userIDForService:(NSString*)service;
@@ -36,8 +36,8 @@
 @property(nonatomic, readonly) NSString *accessTokenSecret;
 
 - (BOOL)isAccessAllowed;
-- (void)setUserNick:(NSString *)userNick;
-- (void)setUserImageUrl:(NSString *)imageUrl;
+- (void)setName:(NSString *)userNick;
+- (void)setImageUrl:(NSString *)imageUrl;
 
 - (void)syncWithCompletion:(void(^)(NSError *error))handler;
 - (NSString*)friendsForService:(NSString*)service;

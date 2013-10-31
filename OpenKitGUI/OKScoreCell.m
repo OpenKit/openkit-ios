@@ -56,12 +56,8 @@
     // Show the player image
     OKUser *user = [aScore user];
 
-    if([user userImageUrl]) {
-        [_profileImage setImageWithURL:[NSURL URLWithString:[user userImageUrl]]
-                      placeholderImage:[UIImage imageNamed:@"user_icon.png"]];
-    }else{
-        [_profileImage setImage:[UIImage imageNamed:@"gear.png"]];
-    }
+    [_profileImage setUser:user];
+
     [_profileImage.layer setMasksToBounds:YES];
     [_profileImage setBackgroundColor:[UIColor blackColor]];
     [_profileImage.layer setCornerRadius:3];
