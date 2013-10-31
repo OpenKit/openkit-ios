@@ -28,12 +28,13 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
         
         
         AFSecurityPolicy *policy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
-        AFJSONRequestSerializer *serializer = [AFJSONRequestSerializer serializer];
-        __httpManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:endpointUrl];
         
+        AFJSONRequestSerializer *serializer = [AFJSONRequestSerializer serializer];
+        
+        __httpManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:endpointUrl];
+        [(AFJSONResponseSerializer*)[__httpManager responseSerializer] setReadingOptions:NSJSONReadingAllowFragments];
         [__httpManager setSecurityPolicy:policy];
         [__httpManager setRequestSerializer:serializer];
-        
     }
     return __httpManager;
 }
@@ -45,13 +46,13 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
 }
 
 
-+ (NSMutableURLRequest*)requestWithMethod:(NSString *)method
-                                     path:(NSString *)path
-                               parameters:(NSDictionary *)params
++ (NSMutableURLRequest*)requestWithMethod:(NSString*)method
+                                     path:(NSString*)path
+                               parameters:(NSDictionary*)params
 {
     AFHTTPRequestOperationManager *httpManager = [self httpManager];
     NSString *absolutePath = [[NSURL URLWithString:path relativeToURL:[httpManager baseURL]] absoluteString];
-    NSMutableURLRequest *request = [[[self httpManager] requestSerializer] requestWithMethod:@"GET"
+    NSMutableURLRequest *request = [[[self httpManager] requestSerializer] requestWithMethod:method
                                                                                    URLString:absolutePath
                                                                                   parameters:params];    
     return request;

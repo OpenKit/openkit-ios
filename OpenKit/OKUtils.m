@@ -39,9 +39,9 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut)
 }
 
 
-+ (NSUInteger)timestamp
++ (double)timestamp
 {
-    return (NSUInteger)[[NSDate date] timeIntervalSince1970];
+    return [[NSDate date] timeIntervalSince1970];
 }
 
 

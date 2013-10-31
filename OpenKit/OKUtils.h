@@ -14,7 +14,7 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut);
 @interface OKUtils : NSObject
 
 + (NSString*)createUUID;
-+ (NSUInteger)timestamp;
++ (double)timestamp;
 + (NSString*)sqlStringFromDate:(NSDate *)date;
 + (NSDate*)dateFromSqlString:(NSString *)string;
 + (NSString*)base64Enconding:(NSData*)data;

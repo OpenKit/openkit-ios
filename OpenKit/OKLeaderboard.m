@@ -216,15 +216,14 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 #pragma mark - Class methods
 
-+ (BOOL)configWithDictionary:(NSDictionary*)dict
++ (BOOL)configWithArray:(NSArray*)leaderboards
 {
-    if(!dict || ![dict isKindOfClass:[NSDictionary class]])
+    if(![leaderboards isKindOfClass:[NSArray class]])
         return NO;
     
-    NSArray *leaderBoardsJSON = dict[@"leaderboards"];
-    NSMutableArray *tmp = [NSMutableArray arrayWithCapacity:[leaderBoardsJSON count]];
+    NSMutableArray *tmp = [NSMutableArray arrayWithCapacity:[leaderboards count]];
     
-    for(id obj in leaderBoardsJSON) {
+    for(id obj in leaderboards) {
         // if the leaderboard already exist in memory, we update it
         OKLeaderboard *leaderboard = nil;
         if(__leaderboards) {
@@ -235,10 +234,10 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
         if(!leaderboard)
             leaderboard = [[OKLeaderboard alloc] initWithDictionary:obj];
 
-        [tmp addObject:leaderboard];
+        if(leaderboard)
+            [tmp addObject:leaderboard];
     }
     __leaderboards = [NSArray arrayWithArray:tmp];
-    __lastUpdate = [dict[@"last_update"] unsignedIntegerValue];
     
     return YES;
 }
@@ -247,8 +246,8 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 + (void)loadFromCache
 {
     NSString *path = [OKFileUtil localOnlyCachePath:OK_LEADERBOARDS];
-    NSDictionary *dict = [OKFileUtil readSecureFile:path];
-    [OKLeaderboard configWithDictionary:dict];
+    NSArray *archive = [OKFileUtil readSecureFile:path];
+    [self configWithArray:archive];
 }
 
 
@@ -281,14 +280,14 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 {
     if(__leaderboards) {
         if(handler)
-            handler([self leaderboards], nil);
+            handler(__leaderboards, nil);
         
         return YES;
         
     }else{
         [self syncWithCompletion:^(NSError* error) {
             if(handler)
-                handler([self leaderboards], error);
+                handler(__leaderboards, error);
         }];
         return NO;
     }
@@ -321,24 +320,18 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
-+ (NSDictionary*)JSONDictionary
-{
-  return @{@"last_update": @(__lastUpdate),
-           @"tag": [[OKManager sharedManager] leaderboardListTag] };
-}
-
-
 + (void)syncWithCompletion:(void (^)(NSError* error))handler
 {
     // OK NETWORK REQUEST
+    NSDictionary *params = @{@"tag": [[OKManager sharedManager] leaderboardListTag] };
     [OKNetworker getFromPath:@"/leaderboards"
-                  parameters:[OKLeaderboard JSONDictionary]
+                  parameters:params
                   completion:^(id responseObject, NSError *error)
      {
          if(!error) {
              OKLogInfo(@"OpenKit: OKLeaderboard: Successfully got list of leaderboards.");
-             [OKLeaderboard configWithDictionary:responseObject];
-             [OKLeaderboard save];
+             if([self configWithArray:responseObject])
+                 [self save];
              
          }else{
              OKLogErr(@"OpenKit: OKLeaderboard: Failed to get list of leaderboards: %@", error);
