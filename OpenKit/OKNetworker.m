@@ -3,7 +3,6 @@
 //
 
 #import "AFNetworking.h"
-#import "AFOAuth1Client.h"
 #import "OKNetworker.h"
 #import "OKManager.h"
 #import "OKUtils.h"
@@ -15,29 +14,28 @@
 typedef void (^OKNetworkerBlock)(id responseObject, NSError * error);
 
 
-static AFOAuth1Client *__httpClient = nil;
+static AFHTTPRequestOperationManager *__httpManager = nil;
 static NSString *OK_SERVER_API_VERSION = @"v2";
 
 
 @implementation OKNetworker
 
-+ (AFOAuth1Client*)httpClient
++ (AFHTTPRequestOperationManager*)httpManager
 {
-    if(!__httpClient) {
+    if(!__httpManager) {
         NSURL *baseEndpointURL = [NSURL URLWithString:[OKManager endpoint]];
-        NSURL *endpointUrl = [NSURL URLWithString:OK_SERVER_API_VERSION relativeToURL:baseEndpointURL];
-        NSString *endpointString = [endpointUrl absoluteString];
+        NSURL *endpointUrl = [NSURL URLWithString:OK_SERVER_API_VERSION relativeToURL:baseEndpointURL];  
         
-        OKLog(@"Initializing AFOauth1Client with endpoint: %@", endpointString);
-        __httpClient = [[AFOAuth1Client alloc] initWithBaseURL:endpointUrl
-                                                          key:[OKManager appKey]
-                                                       secret:[OKManager secretKey]];
         
-        [__httpClient setParameterEncoding:AFJSONParameterEncoding];
-        [__httpClient setDefaultHeader:@"Accept" value:@"application/json"];
-        [__httpClient setDefaultHeader:@"Accept-Encoding" value:@"gzip"];
+        AFSecurityPolicy *policy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
+        AFJSONRequestSerializer *serializer = [AFJSONRequestSerializer serializer];
+        __httpManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:endpointUrl];
+        
+        [__httpManager setSecurityPolicy:policy];
+        [__httpManager setRequestSerializer:serializer];
+        
     }
-    return __httpClient;
+    return __httpManager;
 }
 
 
@@ -47,10 +45,22 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
 }
 
 
-+ (void)requestWithMethod:(NSString *)method
++ (NSMutableURLRequest*)requestWithMethod:(NSString *)method
+                                     path:(NSString *)path
+                               parameters:(NSDictionary *)params
+{
+    AFHTTPRequestOperationManager *httpManager = [self httpManager];
+    NSString *absolutePath = [[NSURL URLWithString:path relativeToURL:[httpManager baseURL]] absoluteString];
+    NSMutableURLRequest *request = [[[self httpManager] requestSerializer] requestWithMethod:@"GET"
+                                                                                   URLString:absolutePath
+                                                                                  parameters:params];    
+    return request;
+}
+
+
++ (void)performWithMethod:(NSString *)method
                      path:(NSString *)path
                parameters:(NSDictionary *)params
-                      tag:(NSInteger)tag
                completion:(void (^)(id responseObject, NSError * error))handler
 {    
     // SUCCESS BLOCK
@@ -80,18 +90,17 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
 
     
     // Perform HTTP request
-    AFOAuth1Client *httpclient = [self httpClient];
+    AFHTTPRequestOperationManager *httpManager = [self httpManager];
     
-    NSMutableURLRequest *request = [httpclient requestWithMethod:method
-                                                            path:path
-                                                      parameters:params];
+    NSMutableURLRequest *request = [self requestWithMethod:method
+                                                      path:path
+                                                parameters:params];
     
-    AFHTTPRequestOperation *operation = [httpclient HTTPRequestOperationWithRequest:request
-                                                                            success:successBlock
-                                                                            failure:failureBlock];
+    AFHTTPRequestOperation *operation = [httpManager HTTPRequestOperationWithRequest:request
+                                                                             success:successBlock
+                                                                             failure:failureBlock];
     
-    [operation setUserInfo:@{@"tag": @(tag)}];
-    [operation start];
+    [[httpManager operationQueue] addOperation:operation];
 }
 
 
@@ -99,10 +108,9 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
          parameters:(NSDictionary *)params
          completion:(void (^)(id responseObject, NSError *error))handler
 {
-    [self requestWithMethod:@"GET"
+    [self performWithMethod:@"GET"
                        path:path
                  parameters:params
-                        tag:kOKNetworkerRequest_other
                  completion:handler];
 }
 
@@ -111,10 +119,9 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
         parameters:(NSDictionary *)params
         completion:(void (^)(id responseObject, NSError *error))handler
 {
-    [self requestWithMethod:@"POST"
+    [self performWithMethod:@"POST"
                        path:path
                  parameters:params
-                        tag:kOKNetworkerRequest_other
                  completion:handler];
 }
 
@@ -123,10 +130,9 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
        parameters:(NSDictionary *)params
        completion:(void (^)(id responseObject, NSError *error))handler
 {
-    [self requestWithMethod:@"PUT"
+    [self performWithMethod:@"PUT"
                        path:path
                  parameters:params
-                        tag:kOKNetworkerRequest_other
                  completion:handler];
 }
 
@@ -136,10 +142,9 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
                 tag:(NSInteger)tag
          completion:(void (^)(id responseObject, NSError *error))handler
 {
-    [self requestWithMethod:@"GET"
+    [self performWithMethod:@"GET"
                        path:path
                  parameters:params
-                        tag:tag
                  completion:handler];
 }
 
@@ -149,10 +154,9 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
                tag:(NSInteger)tag
         completion:(void (^)(id responseObject, NSError *error))handler
 {
-    [self requestWithMethod:@"POST"
+    [self performWithMethod:@"POST"
                        path:path
                  parameters:params
-                        tag:tag
                  completion:handler];
 }
 
@@ -162,12 +166,10 @@ static NSString *OK_SERVER_API_VERSION = @"v2";
               tag:(NSInteger)tag
        completion:(void (^)(id responseObject, NSError *error))handler
 {
-    [self requestWithMethod:@"PUT"
+    [self performWithMethod:@"PUT"
                        path:path
                  parameters:params
-                        tag:(NSInteger)tag
                  completion:handler];
 }
-
 
 @end

@@ -17,10 +17,9 @@ enum
 
 + (NSInteger)getStatusCodeFromAFNetworkingError:(NSError*)error;
 
-+ (void)requestWithMethod:(NSString *)method
++ (void)performWithMethod:(NSString *)method
                      path:(NSString *)path
                parameters:(NSDictionary *)params
-                      tag:(NSInteger)tag
                completion:(void (^)(id responseObject, NSError *error))handler;
 
 + (void)getFromPath:(NSString *)path
