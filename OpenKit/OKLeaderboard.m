@@ -28,7 +28,8 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 - (id)initWithDictionary:(NSDictionary*)dict
 {
     if ((self = [super init])) {
-        [self configWithDictionary:dict];
+        if(![self configWithDictionary:dict])
+            return NO;
     }
     return self;
 }
@@ -36,20 +37,23 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 - (BOOL)configWithDictionary:(NSDictionary*)dict
 {
-    self.name           = [OKHelper getNSStringFrom:dict key:@"name"];
+    if(![dict isKindOfClass:[NSDictionary class]])
+        return NO;
+
+    self.name           = OK_CHECK(dict[@"name"], NSString);
+    self.iconUrl        = OK_CHECK(dict[@"icon_url"], NSString);
+    self.services       = OK_CHECK(dict[@"services"], NSDictionary);
     self.leaderboardID  = [OKHelper getIntFrom:dict key:@"id"];
-    self.iconUrl        = [OKHelper getNSStringFrom:dict key:@"icon_url"];
     self.playerCount    = [OKHelper getIntFrom:dict key:@"player_count"];
-    self.services       = [OKHelper getNSDictionaryFrom:dict key:@"services"];
-    
-    NSString *sortTypeString    = [OKHelper getNSStringFrom:dict key:@"sort_type"];
+
+    NSString *sortTypeString = OK_CHECK(dict[@"sort_type"], NSString);
     if([sortTypeString isEqualToString:@"HighValue"]) {
         self.sortType = OKLeaderboardSortTypeHighValue;
     }else{
         self.sortType = OKLeaderboardSortTypeLowValue;
     }
     
-    return (self.name && self.leaderboardID);
+    return (self.leaderboardID && self.name);
 }
 
 
@@ -149,7 +153,8 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
                  [scores addObject:score];
              }
          } else {
-             OKLogErr(@"Failed to get scores, with error: %@", error);
+
+             OKLogErr(@"Error getting global scores.");
          }
          
          if(handler)

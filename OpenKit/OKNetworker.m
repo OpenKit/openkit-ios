@@ -97,12 +97,12 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
         
         AFSecurityPolicy *policy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
         
-        AFJSONRequestSerializer *serializer = [AFJSONRequestSerializer serializer];
-        
+        AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
+        AFHTTPResponseSerializer *respondSerializer = [AFHTTPResponseSerializer serializer];
         __httpManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:endpointUrl];
-        [(AFJSONResponseSerializer*)[__httpManager responseSerializer] setReadingOptions:NSJSONReadingAllowFragments | NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves];
         [__httpManager setSecurityPolicy:policy];
-        [__httpManager setRequestSerializer:serializer];
+        [__httpManager setRequestSerializer:requestSerializer];
+        [__httpManager setResponseSerializer:respondSerializer];
     }
     return __httpManager;
 }
@@ -136,7 +136,6 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
                                    @"oauth_timestamp", timestamp, @"oauth_version", @"1.0"];
 
 
-    
     NSString *signatureBaseString = [NSString stringWithFormat:@"%@&%@&%@", method, Escape(absolutePath), Escape(oauthHeaderParams)];
     NSString *signatureKeyString = [NSString stringWithFormat:@"%@&", secretKey];
     NSData *signatureBaseData = [signatureBaseString dataUsingEncoding:NSASCIIStringEncoding];
@@ -166,8 +165,10 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
     // SUCCESS BLOCK
     void (^successBlock)(AFHTTPRequestOperation*, id) = ^(AFHTTPRequestOperation *op, id response)
     {
-        if(handler)
-            handler(response, nil);
+        if(handler) {
+            id obj = OKDecodeObj(response, nil);
+            handler(obj, nil);
+        }
     };
 
     
@@ -176,7 +177,7 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
     {
         NSInteger errorCode = [OKNetworker getStatusCodeFromAFNetworkingError:err];
 
-        OKLogErr(@"OKNetworking: Error code: %d. %@ ERROR: %@.", errorCode, [op responseObject], err);
+        OKLogErr(@"OKNetworking: %@\n%@\n\n", [op responseString], err);
         // If the user is unsubscribed to the app, log out the user.
         if(errorCode == OK_UNSUBSCRIBED_USER_ERROR_CODE) {
             OKLogErr(@"Logging out current user b/c user is unsubscribed to app");

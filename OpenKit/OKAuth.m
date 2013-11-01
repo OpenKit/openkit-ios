@@ -284,7 +284,7 @@ NSMutableArray *__providers = nil;
 
 - (NSDictionary*)JSONDictionary
 {
-    NSAssert(_provider, @"The service's name can not be nil.");
+    NSAssert([_provider serviceName], @"The service's name can not be nil.");
 
     return @{@"service": [_provider serviceName],
              @"user_name": OK_NO_NIL(_userName),

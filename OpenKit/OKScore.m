@@ -69,7 +69,6 @@
 {
     if(![dict isKindOfClass:[NSDictionary class]])
         return NO;
-    NSParameterAssert(dict);
 
     self.rowIndex       = [OKHelper getIntFrom:dict key:@"row_id"];
     self.modifyDate     = [OKHelper getNSDateFrom:dict key:@"modify_date"];
