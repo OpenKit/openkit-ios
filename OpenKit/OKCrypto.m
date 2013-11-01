@@ -59,6 +59,14 @@
 }
 
 
++ (NSData*)MD5:(NSData*)data
+{
+    unsigned char digest[CC_MD5_DIGEST_LENGTH];
+    CC_MD5([data bytes], [data length], digest);
+    return [NSData dataWithBytes:digest length:CC_MD5_DIGEST_LENGTH];
+}
+
+
 + (NSData*)HMACSHA1:(NSData*)data key:(NSData*)key
 {
     unsigned char digest[CC_SHA1_DIGEST_LENGTH];
@@ -74,6 +82,8 @@
     return [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
 }
 
+
+#pragma mark -
 
 - (id)initWithMasterKey:(NSString*)masterKey
 {

@@ -21,5 +21,6 @@
 + (NSData*)HMACSHA256:(NSData*)data key:(NSData*)key;
 + (NSData*)HMACSHA1:(NSData*)data key:(NSData*)key;
 + (NSData*)SHA256:(NSData*)data;
++ (NSData*)MD5:(NSData*)data;
 
 @end
