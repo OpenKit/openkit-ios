@@ -41,6 +41,7 @@
 
 - (void)syncWithCompletion:(void(^)(NSError *error))handler;
 - (NSString*)friendsForService:(NSString*)service;
+- (NSDictionary*)friends;
 - (void)setFriendIDs:(NSArray*)friends forService:(NSString*)service;
 
 + (OKLocalUser*)currentUser;

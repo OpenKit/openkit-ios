@@ -72,13 +72,13 @@
 - (NSArray*)resolveConnections
 {
     NSMutableArray *results = [NSMutableArray array];
-    OKLocalUser *user = [OKLocalUser currentUser];
-    if(user) {
-        [_services enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            NSString *friends = [user friendsForService:key];
-            // REVIEW
-            //if(friends && [friends rangeOfString:[self userID]].location != NSNotFound)
-            //    [results addObject:key];
+    OKLocalUser *localUser = [OKLocalUser currentUser];
+    if(localUser) {
+        [[localUser friends] enumerateKeysAndObjectsUsingBlock:^(id service, id friends, BOOL *stop) {
+
+            NSString *userId = [self userIDForService:service];
+            if([friends rangeOfString:userId].location != NSNotFound)
+                [results addObject:service];
         }];
     }
     
@@ -153,10 +153,9 @@
         OKLogErr(@"OKUser: You can not add friends from %@ because you are not logged in.", service);
         return;
     }
-    
-    if(!_friends)
-        _friends = [NSMutableDictionary dictionary];
-    
+
+    [self friends];
+
     // Serialize array
     NSString *oldFriendsString = _friends[service];
     NSString *newFriendsString = [OKHelper serializeArray:friends withSorting:YES];
@@ -170,9 +169,18 @@
 }
 
 
+- (NSDictionary*)friends
+{
+    if(!_friends)
+        _friends = [NSMutableDictionary dictionary];
+
+    return _friends;
+}
+
+
 - (NSString*)friendsForService:(NSString*)service
 {
-    return _friends[service];
+    return [_friends objectForKey:service];
 }
 
 
