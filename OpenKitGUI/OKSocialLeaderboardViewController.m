@@ -202,7 +202,6 @@ static NSString *inviteCellIdentifier = @"OKInviteCell";
             [_tableView reloadData];
             
         } else if(error) {
-            OKLog(@"Error getting social scores");
             //[self showErrorLoadingGlobalScores];
         }
     }];

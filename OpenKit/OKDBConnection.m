@@ -82,7 +82,7 @@ dispatch_queue_t __OKCacheQueue = nil;
         block(db);
         [db close];
     } else {
-        OKLogErr(@"Could not open db in local cache.");
+        OKLogErr(@"OKDBConnection: Could not open db in local cache.");
     }
 }
 
@@ -98,7 +98,7 @@ dispatch_queue_t __OKCacheQueue = nil;
         if([db executeQuery:sql withVAList:*args]) {
             index = [db lastInsertRowId];
         }else{
-            OKLogErr(@"FAIL performing: %@", sql);
+            OKLogErr(@"OKDBConnection: FAIL performing: %@", sql);
         }
     }];
     va_end(*args);
@@ -117,7 +117,7 @@ dispatch_queue_t __OKCacheQueue = nil;
     [self access:^(FMDatabase *db) {
         success = [db executeUpdate:sql withVAList:*args];
         if(!success)
-            OKLogErr(@"FAIL performing: %@", sql);
+            OKLogErr(@"OKDBConnection: FAIL performing: %@", sql);
     }];
     va_end(*args);
     free(args);
@@ -131,7 +131,7 @@ dispatch_queue_t __OKCacheQueue = nil;
     [self access:^(FMDatabase *db) {
         FMResultSet *rs = [db executeQuery:sql];
         if(!rs)
-            OKLogErr(@"FAIL performing: %@", sql);
+            OKLogErr(@"OKDBConnection: FAIL performing: %@", sql);
         
         block(rs);
     }];
@@ -208,7 +208,7 @@ dispatch_queue_t __OKCacheQueue = nil;
 - (BOOL)executeCreateSql
 {
     if (![[self database] open]) {
-        OKLogErr(@"Could not open database in OKLocalCache.");
+        OKLogErr(@"OKDBConnection: Could not open database in OKLocalCache.");
         return NO;
     }
 
@@ -249,9 +249,9 @@ dispatch_queue_t __OKCacheQueue = nil;
 -(void)sanity
 {
     if (![self dbExists]) {
-        OKLogInfo(@"Executing create sql for db at %@", [self dbPath]);
+        OKLogInfo(@"OKDBConnection: Executing create sql for db at %@", [self dbPath]);
         if (![self executeCreateSql]) {
-            OKLogErr(@"Could not execute create sql.");
+            OKLogErr(@"OKDBConnection: Could not execute create sql.");
         }
     }
 }

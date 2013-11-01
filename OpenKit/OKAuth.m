@@ -44,7 +44,7 @@ NSMutableArray *__providers = nil;
         __providers = [[NSMutableArray alloc] init];
     
     if(![provider isKindOfClass:[OKAuthProvider class]]) {
-        OKLogErr(@"Invalid auth provider.");
+        OKLogErr(@"OKAuthProvider: Invalid auth provider.");
         return;
     }
 
@@ -83,12 +83,12 @@ NSMutableArray *__providers = nil;
     BOOL anyOpen = NO;
     for(OKAuthProvider *provider in __providers) {
         if([provider start]) {
-            OKLogInfo(@"Opened cached session in %@", [provider serviceName]);
+            OKLogInfo(@"OKAuthProvider: Opened cached session in %@", [provider serviceName]);
             anyOpen = YES;
         }
     }
     if(!anyOpen)
-        OKLogInfo(@"No cached session was opened");
+        OKLogInfo(@"OKAuthProvider: No cached session was opened");
     
     return anyOpen;
 }
@@ -97,7 +97,7 @@ NSMutableArray *__providers = nil;
 + (void)logoutAndClear
 {
     for(OKAuthProvider *provider in __providers) {
-        OKLogInfo(@"Logging out %@", [provider serviceName]);
+        OKLogInfo(@"OKAuthProvider: Logging out %@", [provider serviceName]);
         [provider logoutAndClear];
     }
 }
@@ -198,7 +198,7 @@ NSMutableArray *__providers = nil;
 
 - (void)loadFriendsWithCompletion:(void(^)(NSArray *friends, NSError *error))handler
 {
-    OKLogInfo(@"loadFriendsWithCompletion is not implemented in %@", [self serviceName]);
+    OKLogInfo(@"OKAuthProvider: loadFriendsWithCompletion is not implemented in %@", [self serviceName]);
     handler(nil, nil);
 }
 

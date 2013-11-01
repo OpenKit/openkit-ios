@@ -150,7 +150,7 @@
 - (void)setFriendIDs:(NSArray*)friends forService:(NSString*)service
 {
     if([self userIDForService:service] == nil) {
-        OKLogErr(@"You can not add friends from %@ because you are not logged in.", service);
+        OKLogErr(@"OKUser: You can not add friends from %@ because you are not logged in.", service);
         return;
     }
     
@@ -260,9 +260,9 @@
              }
 
              if(!error)
-                 OKLogInfo(@"Successfully created user ID.");
+                 OKLogInfo(@"OKLocalUser: Successfully created user.");
              else
-                 OKLogErr(@"Failed to create user with error.");
+                 OKLogErr(@"OKLocalUser: Failed to create user.");
 
              handler(newUser, error);
          }];

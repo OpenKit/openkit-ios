@@ -9,14 +9,30 @@
 #ifndef OKClient_OKMacros_h
 #define OKClient_OKMacros_h
 
+#define OK_VERBOSE_LOGGING 0
+
+#if OK_VERBOSE_LOGGING
+
 #define OKLog(s, ...)     NSLog(@"OpenKit: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
+#define OKLogErr(s, ...)  NSLog(@"OpenKit:ERROR: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
 #if defined(DEBUG)
     #define OKLogInfo(s, ...) NSLog(@"OpenKit:Info: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
-    #define OKLogErr(s, ...)  NSLog(@"OpenKit:Err: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
 #else
     #define OKLogInfo(...)    {}
-    #define OKLogErr(s, ...)  NSLog(@"OpenKit:Err: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
 #endif
+
+#else
+
+#define OKLog(s, ...)     fprintf(stdout, "OpenKit: %s\n", [[NSString stringWithFormat:s, ##__VA_ARGS__] UTF8String] )
+#define OKLogErr(s, ...)  fprintf(stderr, "OpenKit:ERROR: %s\n", [[NSString stringWithFormat:s, ##__VA_ARGS__] UTF8String] )
+#if defined(DEBUG)
+    #define OKLogInfo(s, ...) fprintf(stdout, "OpenKit:Info: %s\n", [[NSString stringWithFormat:s, ##__VA_ARGS__] UTF8String] )
+#else
+    #define OKLogInfo(...)    {}
+#endif
+
+#endif
+
 
 
 #define OK_CURRENT_APP_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]

@@ -126,7 +126,7 @@
 
 - (void)startLogin
 {
-    OKLogInfo(@"Initializing Openkit...");
+    OKLogInfo(@"OKManager: Initializing Openkit...");
     
     // Starting authorization providers (opening sessions from cache...)
     [OKAuthProvider start];
@@ -134,7 +134,7 @@
     // Try to open OK session from cache
     OKLocalUser *user = [self getCachedUser];
     if(user) {
-        OKLogInfo(@"Opened Openkit session from cache.");
+        OKLogInfo(@"OKManager: Opened Openkit session from cache.");
         [self setCurrentUser:user];
         [self endLogin];
         return;
@@ -144,7 +144,7 @@
     // At this point we are not logged in Openkit, we try to get access using cached sessions.
     NSArray *providers = [OKAuthProvider getAllProviders];
     if(!providers || [providers count] == 0) {
-        OKLogErr(@"You should add at less one authorization provider.");
+        OKLogErr(@"OKManager: You should add at less one authorization provider.");
         [self endLogin];
         return;
     }
@@ -194,7 +194,7 @@
     NSAssert([NSThread mainThread], @"Callback must be in main thread");
     NSAssert(_initialized == NO, @"Bad state, this method just can be called once.");
     
-    OKLogInfo(@"End initialization");
+    OKLogInfo(@"OKManager: End initialization.");
     _initialized = YES;
     
     
@@ -212,7 +212,7 @@
         [_delegate openkitDidLaunch:self];
     
     if(![self currentUser]) {
-        OKLogInfo(@"Not login in openkit.");
+        OKLogInfo(@"OKManager: Not login in openkit.");
     }else {
         [self updatedStatus];
     }
@@ -290,7 +290,7 @@
     OKLocalUser *user = [self currentUser];
     
     if(user) {
-        OKLogInfo(@"Logged in successfully: User id: %@", [user userID]);
+        OKLogInfo(@"OKManager: Logged in successfully: User id: %@", [user userID]);
         
         // update friends
         [self updateFriendsLazily:YES withCompletion:nil];
@@ -334,7 +334,7 @@
 {
     OKLocalUser *user = [self currentUser];
     if(!user) {
-        OKLogErr(@"We can't upload friends because we are not logged in.");
+        OKLogErr(@"OKManager: We can't upload friends because we are not logged in.");
         return;
     }
     
@@ -367,7 +367,7 @@
 {
     OKLocalUser *user = [self currentUser];
     if([user isAccessAllowed]) {
-        OKLogInfo(@"Updating local user in cache.");
+        OKLogInfo(@"OKManager: Updating local user in cache.");
         NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_SESSION];
         [OKFileUtil writeOnFileSecurely:[user dictionary] path:path];
     }
@@ -384,7 +384,7 @@
 
 - (void)logoutCurrentUser
 {
-    OKLogInfo(@"Logging out of openkit");
+    OKLogInfo(@"OKManager: Logging out of openkit");
     [self removeCachedUser];
     [self setCurrentUser:nil];
     
@@ -417,7 +417,7 @@
 - (void)providerUpdated:(NSNotification*)not
 {
     if(![self initialized])
-        OKLogErr(@"The system is not initialized yet.");
+        OKLogErr(@"OKManager: The system was not initialized yet.");
     
     OKAuthProvider *provider = [not object];
     if([provider isSessionOpen])

@@ -89,7 +89,7 @@
     NSString *labelT = nil;
     UIColor *color = nil;
     if(error) {
-        NSLog(@"ERROR: %@: %@", message, error);
+        //NSLog(@"ERROR: %@: %@", message, error);
         labelT = [NSString stringWithFormat:@"ERROR: %@. Place a breakpoint.", message];
         color = [UIColor redColor];
     }else{

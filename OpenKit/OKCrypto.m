@@ -99,7 +99,7 @@
         _hmacKey = [OKCrypto derivateKey:masterKeyData withString:@"hmac"];
         
         if([_cryptKey length] != kCCKeySizeAES256 || [_hmacKey length] != kCCKeySizeAES256) {
-            OKLogErr(@"The key sizes are wrong.");
+            OKLogErr(@"OKCrypto: The key sizes are wrong.");
             return nil;
         }
     }
@@ -206,6 +206,7 @@
 
     if([storedHash isEqualToData:hash]) {
         return [self AES128DecryptData:encrypted];
+        
     }else{
         NSLog(@"ERROR: The data was modified!");
         return nil;

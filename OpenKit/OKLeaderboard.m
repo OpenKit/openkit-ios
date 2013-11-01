@@ -19,7 +19,6 @@
 
 
 #define OK_LEADERBOARDS @"leaderboards.json"
-static NSUInteger __lastUpdate = 0;
 static NSArray *__leaderboards = nil;
 static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
@@ -87,11 +86,11 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
                  completion:^(id responseObject, NSError *error)
      {
          if(!error) {
-             OKLogInfo(@"Successfully posted score to OpenKit: %@", score);
+             OKLogInfo(@"OKLeaderboard: Successfully posted score to OpenKit: %@", score);
              [score setSubmitState:kOKSubmitted];
              
          }else{
-             OKLogErr(@"Failed to post score to OpenKit");
+             OKLogErr(@"OKLeaderboard: Failed to post score to OpenKit");
              [score setSubmitState:kOKNotSubmitted];
              
              // REVIEW: check error code. maybe we have to remove it
@@ -154,7 +153,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
              }
          } else {
 
-             OKLogErr(@"Error getting global scores.");
+             OKLogErr(@"OKLeaderboard: Error getting global scores.");
          }
          
          if(handler)
@@ -190,18 +189,21 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
          {
              NSMutableArray *scores = nil;
              if(!error) {
-                 OKLogInfo(@"Successfully got FB friends scores");
+                 OKLogInfo(@"OKLeaderboard: Successfully got FB friends scores");
                  
                  NSArray *scoresJSON = (NSArray*)responseObject;
                  scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
                  for(id obj in scoresJSON) {
                      
                      OKScore *score = [[OKScore alloc] initWithDictionary:obj];
-                     [scores addObject:score];
+                     if(!score)
+                         [scores addObject:score];
+                     else
+                         OKLogErr(@"OKLeaderboard: Error creating OKScore from: %@", obj);
                  }
                  
              } else {
-                 OKLogErr(@"Failed to get scores, with error: %@", error);
+                 OKLogErr(@"OKLeaderboard: Failed to get scores.");
              }
              if(handler)
                  handler(scores, error);
@@ -241,6 +243,8 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
         if(leaderboard)
             [tmp addObject:leaderboard];
+        else
+            OKLogErr(@"OKLeaderboard: Error creating leaderboard from: %@", obj);
     }
     __leaderboards = [NSArray arrayWithArray:tmp];
     
@@ -262,12 +266,9 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
         NSMutableArray *leaderboards = [NSMutableArray arrayWithCapacity:[__leaderboards count]];
         for(OKLeaderboard *lb in __leaderboards)
             [leaderboards addObject:[lb dictionary]];
-        
-        NSDictionary *dict = @{@"last_update": @(__lastUpdate),
-                               @"leaderboards": leaderboards };
-        
+
         NSString *path = [OKFileUtil localOnlyCachePath:OK_LEADERBOARDS];
-        [OKFileUtil writeOnFileSecurely:dict path:path];
+        [OKFileUtil writeOnFileSecurely:leaderboards path:path];
     }
 }
 
@@ -275,7 +276,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 + (NSArray*)leaderboards
 {
     if(__leaderboards == nil) {
-        OKLogErr(@"You should call [OKLeaderboard getLeaderboardsWithCompletion:] first.");
+        OKLogErr(@"OKLeaderboard: You should call [OKLeaderboard getLeaderboardsWithCompletion:] first.");
     }
     return __leaderboards;
 }
@@ -334,12 +335,15 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
                   completion:^(id responseObject, NSError *error)
      {
          if(!error) {
-             OKLogInfo(@"OpenKit: OKLeaderboard: Successfully got list of leaderboards.");
-             if([self configWithArray:responseObject])
+             if([self configWithArray:responseObject]) {
+                 OKLogInfo(@"OKLeaderboard: Successfully got list of leaderboards.");
                  [self save];
+             }else{
+                 OKLogErr(@"OKLeaderboard: Error creating leaderboards from %@", responseObject);
+             }
              
          }else{
-             OKLogErr(@"OpenKit: OKLeaderboard: Failed to get list of leaderboards.");
+             OKLogErr(@"OKLeaderboard: Failed to get list of leaderboards.");
          }
          
          if(handler)

@@ -177,10 +177,10 @@ static NSString *OK_SERVER_API_VERSION = @"v1";
     {
         NSInteger errorCode = [OKNetworker getStatusCodeFromAFNetworkingError:err];
 
-        OKLogErr(@"OKNetworking: %@\n%@\n\n", [op responseString], err);
+        OKLogErr(@"OKNetworker: %@\n%@\n\n", [op responseString], err);
         // If the user is unsubscribed to the app, log out the user.
         if(errorCode == OK_UNSUBSCRIBED_USER_ERROR_CODE) {
-            OKLogErr(@"Logging out current user b/c user is unsubscribed to app");
+            OKLogErr(@"OKNetworker: Logging out current user b/c user is unsubscribed to app");
             [[OKManager sharedManager] logoutCurrentUser];
         }
         
