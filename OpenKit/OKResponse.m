@@ -33,11 +33,14 @@
 
     NSError *error = [self error];
     if(error)
-        OKLogErr(@"OKResponse: %@", error);
+        OKLogErr(@"OKResponse: %@\n", error);
 }
 
 - (NSError*)error
 {
+    if(_SSLError)
+        return _SSLError;
+
     if(_networkError)
         return _networkError;
 

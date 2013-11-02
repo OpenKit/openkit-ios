@@ -27,7 +27,6 @@
 
 @interface OKRequest : NSObject
 
-
 - (id)initWithClient:(OKClient*)client user:(OKLocalUser*)user;
 
 - (void)get:(NSString *)path queryParams:(NSDictionary *)queryParams complete:(void(^)(OKResponse *))handler;
@@ -39,12 +38,5 @@
 - (void)multiPost:(NSString *)path reqParams:(NSDictionary *)reqParams upload:(OKUpload *)upload complete:(void(^)(OKResponse *))handler;
 
 - (void)del:(NSString *)path complete:(void(^)(OKResponse *))handler;
-
-- (void)request:(NSString *)verb
-           path:(NSString *)path
-    queryParams:(NSDictionary *)queryParams
-      reqParams:(NSDictionary *)reqParams
-         upload:(OKUpload *)upload
-       complete:(void(^)(OKResponse *))handler;
 
 @end

@@ -12,6 +12,7 @@
 
 @property(nonatomic, readonly) id jsonObject;
 @property(nonatomic, strong) NSData *body;
+@property(nonatomic, strong) NSError *SSLError;
 @property(nonatomic, strong) NSError *networkError;
 @property(nonatomic, strong) NSError *backendError;
 @property(nonatomic, strong) NSError *jsonError;

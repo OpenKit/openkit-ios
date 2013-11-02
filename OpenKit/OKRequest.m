@@ -34,6 +34,8 @@
     NSURL *_url;
     NSMutableData *_receivedData;
     NSMutableArray *_connections;
+
+    NSError *_sslError;
 }
 
 @property (nonatomic, strong) void(^handler)(OKResponse *response);
@@ -244,7 +246,9 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
+    _response.SSLError = _sslError;
     _response.networkError = error;
+    [_response process];
     if (_handler)
         _handler(_response);
 }
@@ -259,20 +263,39 @@
     if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"ok_wildcard" ofType:@"der"];
         NSData *certificateData = [NSData dataWithContentsOfFile:path];
-        NSArray *okCerts = @[ CFBridgingRelease(SecCertificateCreateWithData(kCFAllocatorDefault, CFBridgingRetain(certificateData))) ];
-        SecTrustRef trust = challenge.protectionSpace.serverTrust;
-
-        if (noErr == SecTrustSetAnchorCertificates(trust, CFBridgingRetain(okCerts))) {
-            SecTrustResultType trustResult;
-            if (noErr == SecTrustEvaluate(trust, &trustResult)) {
-                if (trustResult == kSecTrustResultProceed || trustResult == kSecTrustResultUnspecified) {
-                    [challenge.sender useCredential:[NSURLCredential credentialForTrust:trust] forAuthenticationChallenge:challenge];
-                    return;
-                }
-            }
+        if(!path) {
+            _sslError = [NSError errorWithDomain:@"OKRequestDomain" code:0 userInfo:@{NSLocalizedFailureReasonErrorKey:@"ok_wildcard.cer not included"}];
+            goto cancel;
         }
+
+        id cer = CFBridgingRelease(SecCertificateCreateWithData(kCFAllocatorDefault, CFBridgingRetain(certificateData)));
+        if(!cer) {
+            _sslError = [NSError errorWithDomain:@"OKRequestDomain" code:0 userInfo:@{NSLocalizedFailureReasonErrorKey:@"Invalid certificate."}];
+            goto cancel;
+        }
+
+        SecTrustRef trust = challenge.protectionSpace.serverTrust;
+        if (SecTrustSetAnchorCertificates(trust, CFBridgingRetain(@[cer])) != noErr) {
+            _sslError = [NSError errorWithDomain:@"OKRequestDomain" code:0 userInfo:@{NSLocalizedFailureReasonErrorKey:@"Fail SecTrustSetAnchorCertificates()."}];
+            goto cancel;
+        }
+
+        SecTrustResultType trustResult;
+        if (SecTrustEvaluate(trust, &trustResult) != noErr) {
+            _sslError = [NSError errorWithDomain:@"OKRequestDomain" code:0 userInfo:@{NSLocalizedFailureReasonErrorKey:@"Fail SecTrustEvaluate()."}];
+            goto cancel;
+        }
+
+        if (trustResult != kSecTrustResultProceed && trustResult != kSecTrustResultUnspecified) {
+            _sslError = [NSError errorWithDomain:@"OKRequestDomain" code:0 userInfo:@{NSLocalizedFailureReasonErrorKey:@"Certiface doesn't match."}];
+            goto cancel;
+        }
+
+        [challenge.sender useCredential:[NSURLCredential credentialForTrust:trust] forAuthenticationChallenge:challenge];
+        return;
     }
 
+cancel:
     [challenge.sender cancelAuthenticationChallenge:challenge];
 }
 
