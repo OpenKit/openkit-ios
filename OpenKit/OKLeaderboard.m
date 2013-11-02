@@ -18,6 +18,7 @@
 #import "OKFileUtil.h"
 
 
+
 #define OK_LEADERBOARDS @"leaderboards.json"
 static NSArray *__leaderboards = nil;
 static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
@@ -83,8 +84,9 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     
     [OKNetworker postToPath:@"/scores"
                  parameters:params
-                 completion:^(id responseObject, NSError *error)
+                 completion:^(OKResponse *response)
      {
+         NSError *error = [response error];
          if(!error) {
              OKLogInfo(@"OKLeaderboard: Successfully posted score to OpenKit: %@", score);
              [score setSubmitState:kOKSubmitted];
@@ -136,20 +138,29 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
                              @"page_num": @(pageNum),
                              @"num_per_page": @(NUM_SCORES_PER_PAGE),
                              @"leaderboard_range": [self getParamForTimeRange:timeRange] };
+
     
     // OK NETWORK REQUEST
     [OKNetworker getFromPath:@"/best_scores"
                   parameters:params
-                  completion:^(id responseObject, NSError *error)
+                  completion:^(OKResponse *response)
      {
+         NSError *error = [response error];
          NSMutableArray *scores = nil;
          if(!error) {
-             NSArray *scoresJSON = (NSArray*)responseObject;
-             scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
-             
-             for(id obj in scoresJSON) {
-                 OKScore *score = [[OKScore alloc] initWithDictionary:obj];
-                 [scores addObject:score];
+
+             id json = [response jsonObject];
+             if([json isKindOfClass:[NSArray class]]) {
+                 NSArray *scoresJSON = (NSArray*)json;
+                 scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
+
+                 for(id obj in scoresJSON) {
+                     OKScore *score = [[OKScore alloc] initWithDictionary:obj];
+                     [scores addObject:score];
+                 }
+             }else{
+                 // REVIEW
+                 error = [OKError unknownError];
              }
          } else {
 
@@ -185,21 +196,28 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
         // OK NETWORK REQUEST
         [OKNetworker postToPath:@"/best_scores/social"
                      parameters:params
-                     completion:^(id responseObject, NSError *error)
+                     completion:^(OKResponse *response)
          {
+             NSError *error = [response error];
              NSMutableArray *scores = nil;
              if(!error) {
                  OKLogInfo(@"OKLeaderboard: Successfully got FB friends scores");
-                 
-                 NSArray *scoresJSON = (NSArray*)responseObject;
-                 scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
-                 for(id obj in scoresJSON) {
-                     
-                     OKScore *score = [[OKScore alloc] initWithDictionary:obj];
-                     if(!score)
-                         [scores addObject:score];
-                     else
-                         OKLogErr(@"OKLeaderboard: Error creating OKScore from: %@", obj);
+
+                 id json = [response jsonObject];
+                 if([json isKindOfClass:[NSArray class]]) {
+                     NSArray *scoresJSON = (NSArray*)json;
+                     scores = [NSMutableArray arrayWithCapacity:[scoresJSON count]];
+                     for(id obj in scoresJSON) {
+
+                         OKScore *score = [[OKScore alloc] initWithDictionary:obj];
+                         if(!score)
+                             [scores addObject:score];
+                         else
+                             OKLogErr(@"OKLeaderboard: Error creating OKScore from: %@", obj);
+                     }
+                 }else{
+                     // REVIEW
+                     error = [OKError unknownError];
                  }
                  
              } else {
@@ -331,15 +349,16 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     // OK NETWORK REQUEST
     NSDictionary *params = @{@"tag": [[OKManager sharedManager] leaderboardListTag] };
     [OKNetworker getFromPath:@"/leaderboards"
-                  parameters:nil
-                  completion:^(id responseObject, NSError *error)
+                  parameters:params
+                  completion:^(OKResponse *response)
      {
+         NSError *error = [response error];
          if(!error) {
-             if([self configWithArray:responseObject]) {
+             if([self configWithArray:[response jsonObject]]) {
                  OKLogInfo(@"OKLeaderboard: Successfully got list of leaderboards.");
                  [self save];
              }else{
-                 OKLogErr(@"OKLeaderboard: Error creating leaderboards from %@", responseObject);
+                 OKLogErr(@"OKLeaderboard: Error creating leaderboards from %@", [response jsonObject]);
              }
              
          }else{

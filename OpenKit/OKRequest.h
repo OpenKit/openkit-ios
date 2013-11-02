@@ -19,11 +19,16 @@
 */
 
 #import <Foundation/Foundation.h>
+#import "OKManager.h"
+#import "OKUser.h"
 
 @class OKResponse;
 @class OKUpload;
 
 @interface OKRequest : NSObject
+
+
+- (id)initWithClient:(OKClient*)client user:(OKLocalUser*)user;
 
 - (void)get:(NSString *)path queryParams:(NSDictionary *)queryParams complete:(void(^)(OKResponse *))handler;
 

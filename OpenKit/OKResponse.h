@@ -10,8 +10,14 @@
 
 @interface OKResponse : NSObject
 
-@property (nonatomic, copy) NSData *body;
-@property (nonatomic, retain) NSError *error;
-@property (nonatomic, assign) int statusCode;
+@property(nonatomic, readonly) id jsonObject;
+@property(nonatomic, strong) NSData *body;
+@property(nonatomic, strong) NSError *networkError;
+@property(nonatomic, strong) NSError *backendError;
+@property(nonatomic, strong) NSError *jsonError;
+@property(nonatomic, readwrite) int statusCode;
+
+- (void)process;
+- (NSError*)error;
 
 @end

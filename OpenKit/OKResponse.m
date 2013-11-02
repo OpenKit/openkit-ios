@@ -7,8 +7,47 @@
 //
 
 #import "OKResponse.h"
+#import "OKMacros.h"
 
 @implementation OKResponse
 
+- (void)process
+{
+    _backendError = nil;
+    _jsonObject = nil;
+    _jsonObject = nil;
+
+    if(!_networkError) {
+        if(_statusCode >= 400) {
+            // BACKEND ERROR
+            NSString *body = [[NSString alloc] initWithData:_body encoding:NSUTF8StringEncoding];
+            _backendError = [NSError errorWithDomain:@"OKResponseDomain" code:_statusCode userInfo:@{@"NSLocalizedFailureReasonErrorKey":body }];
+        }else{
+
+            NSJSONReadingOptions opts = NSJSONReadingAllowFragments | NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves;
+            NSError *error;
+            _jsonObject = [NSJSONSerialization JSONObjectWithData:_body options:opts error:&error];
+            _jsonError = [error copy];
+        }
+    }
+
+    NSError *error = [self error];
+    if(error)
+        OKLogErr(@"OKResponse: %@", error);
+}
+
+- (NSError*)error
+{
+    if(_networkError)
+        return _networkError;
+
+    if(_backendError)
+        return _backendError;
+
+    if(_jsonError)
+        return _jsonError;
+
+    return nil;
+}
 
 @end

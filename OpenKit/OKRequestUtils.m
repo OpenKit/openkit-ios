@@ -11,14 +11,15 @@
 
 NSString *
 OKEscape(NSString *unescaped) {
-    NSString *s = (NSString *)CFURLCreateStringByAddingPercentEscapes(
-                                                                      NULL,
-                                                                      (CFStringRef)unescaped,
-                                                                      NULL,
-                                                                      (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                      kCFStringEncodingUTF8 );
 
-    return [s autorelease];
+    NSString *s = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                        NULL,
+                                                                                        (__bridge CFStringRef)unescaped,
+                                                                                        NULL,
+                                                                                        CFSTR("!*'();:@&=+$,/?%#[]"),
+                                                                                        kCFStringEncodingUTF8 ));
+    
+    return s;
 }
 
 
@@ -63,7 +64,7 @@ OKParamsToQuery(NSDictionary *dict)
         [parts addObject:[NSString stringWithFormat:@"%@=%@",key,obj]];
     }];
 
-    return [parts componentsJoinedByString:@"&"];
+    return [@"?" stringByAppendingString:[parts componentsJoinedByString:@"&"]];
 }
 
 

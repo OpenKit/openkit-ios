@@ -203,8 +203,9 @@
     
     [OKNetworker postToPath:@"/localuser"
                  parameters:_dirty
-                 completion:^(id responseObject, NSError *error)
+                 completion:^(OKResponse *response)
      {
+         NSError *error = [response error];
          if(!error) {
              [self->_dirty removeAllObjects];
          }
@@ -258,11 +259,12 @@
         NSDictionary *paramsDict = @{@"requests": params};
         [OKNetworker postToPath:@"/users"
                      parameters:paramsDict
-                     completion:^(id responseObject, NSError *error)
+                     completion:^(OKResponse *response)
          {
+             NSError *error = [response error];
              OKLocalUser *newUser = nil;
              if(!error) {
-                 newUser = [OKLocalUser createUserWithDictionary:responseObject];
+                 newUser = [OKLocalUser createUserWithDictionary:[response jsonObject]];
                  if(!newUser) // REVIEW
                      error = [OKError unknownError];
              }

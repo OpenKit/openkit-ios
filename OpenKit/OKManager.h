@@ -16,6 +16,17 @@
 @class OKLocalUser;
 @class OKAuthProvider;
 
+@interface OKClient : NSObject
+
+@property(nonatomic, strong) NSString *host;
+@property(nonatomic, strong) NSString *consumerKey;
+@property(nonatomic, strong) NSString *consumerSecret;
+
+- (BOOL)isValid;
+
+@end
+
+
 @interface OKManager : NSObject
 
 + (id)sharedManager;
@@ -24,6 +35,7 @@
 - (void)logoutCurrentUser;
 - (void)registerToken:(NSData*)deviceToken;
 
+@property(nonatomic, readonly) OKClient *client;
 @property(nonatomic, readonly) OKCrypto *cryptor;
 @property(nonatomic, readonly) BOOL initialized;
 @property(nonatomic, strong) NSString *leaderboardListTag;
@@ -41,9 +53,6 @@
 //    manager.appKey     = "foo";
 //    manager.secretKey  = "bar";
 //
-
-+ (NSString*)appKey;
-+ (NSString*)endpoint;
 
 + (BOOL)handleOpenURL:(NSURL*)url;
 

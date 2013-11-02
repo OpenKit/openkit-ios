@@ -10,18 +10,18 @@
 #import "OKRequestUtils.h"
 #import "OKResponse.h"
 #import "OKUpload.h"
-#include <CommonCrypto/CommonDigest.h>
-#include <CommonCrypto/CommonHMAC.h>
+#import "OKUtils.h"
 
 
 @interface OKRequest ()
 {
-    NSString *_appKey;
-    NSString *_secretKey;
     NSNumber *_timestamp;
     NSString *_nonce;
-    NSString *_scheme;
-    NSString *_host;
+    NSURL *_baseURI;
+
+    OKClient *_client;
+    OKLocalUser *_user;
+    NSMutableDictionary *_paramsInHeader;
 
     OKResponse *_response;
     OKUpload *_upload;
@@ -43,25 +43,35 @@
 
 @implementation OKRequest
 
-
-- (id)init
+- (id)initWithClient:(OKClient*)client user:(OKLocalUser*)user;
 {
     if ((self = [super init])) {
-        _appKey    = @"end_to_end_test";
-        _secretKey = @"TL5GGqzfItqZErcibsoYrNAuj7K33KpeWUEAYyyU";
-        _timestamp = @((int)[[NSDate date] timeIntervalSince1970]);
-        _nonce     = [[NSUUID UUID] UUIDString];
-        _scheme    = @"https";
-        _host      = @"local.openkit.io";
-        _paramsInSignature = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-             _appKey,         @"oauth_consumer_key",
-             _nonce,          @"oauth_nonce",
-             @"HMAC-SHA1",    @"oauth_signature_method",
-             _timestamp,      @"oauth_timestamp",
-             @"1.0",          @"oauth_version",
-         nil
-        ];
+
+        _client = client;
+        //_appKey = [client consumerKey];
+        //_secretKey = [client consumerSecret];
+        //_host = [client host];
+        _baseURI = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@", [_client host]]];
+        _timestamp = @((NSUInteger)[OKUtils timestamp]);
+        _nonce     = [OKUtils createUUID];
+        _user = user; _user = nil;
+
+        NSDictionary *defaultParams = @{@"oauth_consumer_key": [_client consumerKey],
+                                        @"oauth_nonce": _nonce,
+                                        @"oauth_signature_method": @"HMAC-SHA1",
+                                        @"oauth_timestamp": _timestamp,
+                                        @"oauth_version": @"1.0" };
+
+
+
         _response = [[OKResponse alloc] init];
+        _paramsInHeader = [NSMutableDictionary dictionaryWithDictionary:defaultParams];
+        _paramsInSignature = [NSMutableDictionary dictionaryWithDictionary:defaultParams];
+
+        if (_user) {
+            [_paramsInHeader setObject:[_user accessToken] forKey:@"oauth_token"];
+            [_paramsInSignature setObject:[_user accessToken] forKey:@"oauth_token"];
+        }
     }
     return self;
 }
@@ -115,7 +125,7 @@
     if ([self isPut] || [self isPost]) {
         NSError *jsonErr;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:reqParams
-                                                           options:NULL
+                                                           options:0
                                                              error:&jsonErr];
         if (!jsonData) {
             NSLog(@"Got an error: %@", jsonErr);
@@ -167,29 +177,31 @@
     return (([_verb isEqualToString:@"POST"]) && _upload);
 }
 
+- (NSURL *)finalPath
+{
+    return [NSURL URLWithString:_path relativeToURL:_baseURI];
+}
+
 - (NSURL *)url
 {
     if (_url == nil) {
         if ([self isGet] && _queryParams) {
-            _url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@?%@", [self baseUri], _path, OKParamsToQuery(_queryParams)]];
+            _url = [NSURL URLWithString:OKParamsToQuery(_queryParams) relativeToURL:[self finalPath]];
         } else {
-            _url = [NSURL URLWithString:[[self baseUri] stringByAppendingString:_path]];
+            _url = [self finalPath];
         }
     }
     return _url;
 }
 
-- (NSString *)baseUri
-{
-    return [NSString stringWithFormat:@"%@://%@", _scheme, _host];
-}
-
 
 #pragma mark - Signature API (private)
-- (NSString *)paramsStringForSignature
+
+- (NSString*)paramsStringForSignature
 {
     NSArray *sortedKeys = [[_paramsInSignature allKeys] sortedArrayUsingSelector: @selector(compare:)];
     NSMutableArray *parts = [NSMutableArray array];
+
     [sortedKeys enumerateObjectsUsingBlock:^(id key, NSUInteger idx, BOOL *stop) {
         [parts addObject:[NSString stringWithFormat:@"%@=%@", key, [_paramsInSignature objectForKey:key]]];
     }];
@@ -197,37 +209,42 @@
     return [parts componentsJoinedByString:@"&"];
 }
 
+
 - (NSString *)signature
 {
-    NSString *signatureBaseString = [NSString stringWithFormat:@"%@&%@&%@", _verb, OKEscape([[self baseUri] stringByAppendingString:_path]), OKEscape([self paramsStringForSignature])];
+    NSString *accessTokenSecret = _user ? [_user accessTokenSecret] : @"";
+    NSString *finalPath = [[self finalPath] absoluteString];
 
-    NSString *k = [_secretKey stringByAppendingString:@"&"];
+    NSString *signatureBaseString = [NSString stringWithFormat:@"%@&%@&%@", _verb, OKEscape(finalPath), OKEscape([self paramsStringForSignature])];
+    NSString *signatureKeyString = [NSString stringWithFormat:@"%@&%@", [_client consumerSecret], accessTokenSecret];
 
-    const char *cKey  = [k cStringUsingEncoding:NSASCIIStringEncoding];
-    const char *cData = [signatureBaseString cStringUsingEncoding:NSASCIIStringEncoding];
+    NSData *signatureBaseData = [signatureBaseString dataUsingEncoding:NSASCIIStringEncoding];
+    NSData *signatureKeyData = [signatureKeyString dataUsingEncoding:NSASCIIStringEncoding];
 
-    unsigned char cHMAC[CC_SHA1_DIGEST_LENGTH];
-    CCHmac(kCCHmacAlgSHA1, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
-    NSData *HMAC = [[NSData alloc] initWithBytes:cHMAC length:sizeof(cHMAC)];
-    NSString *signature = [HMAC base64EncodedStringWithOptions:NULL];
-    return signature;
+    NSData *HMAC = [OKCrypto HMACSHA1:signatureBaseData key:signatureKeyData];
+    return [OKUtils base64Enconding:HMAC];
 }
+
 
 - (NSString *)authorizationHeader
 {
-    return [NSString stringWithFormat:@"OAuth oauth_consumer_key=\"%@\", oauth_nonce=\"%@\", oauth_signature=\"%@\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"%@\", oauth_version=\"1.0\"",
-            _appKey,
-            _nonce,
-            OKEscape([self signature]),
-            _timestamp
-           ];
+    [_paramsInHeader setObject:OKEscape([self signature]) forKey:@"oauth_signature"];
+
+    NSMutableArray *parts = [NSMutableArray arrayWithCapacity:[_paramsInHeader count]];
+    [_paramsInHeader enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
+        [parts addObject:[NSString stringWithFormat:@"%@=\"%@\"", key, value]];
+    }];
+
+    return [@"OAuth " stringByAppendingString:[parts componentsJoinedByString:@", "]];
 }
 
 
+
 #pragma mark - NSURLConnection Delegate Implementation
+
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    _response.error = error;
+    _response.networkError = error;
     if (_handler)
         _handler(_response);
 }
@@ -280,6 +297,7 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     _response.body = _receivedData;
+    [_response process];
     if (_handler)
         _handler(_response);
 }

@@ -133,7 +133,9 @@
     
     [OKNetworker postToPath:path
                  parameters:params
-                 completion:^(id responseObject, NSError *error) {
+                 completion:^(OKResponse *response)
+    {
+        NSError *error = [response error];
         if(error) {
             OKLog(@"Error from server is: %@", error);
         }

@@ -28,8 +28,8 @@
 //    NSString *mySecretKey = @"n75ZgmPTS0CB3EVwRT73iSPLXMeU42f2WOpXKaTd";
 //    [OKManager configureWithAppKey:myAppKey secretKey:mySecretKey endpoint:@"http://api.openkit.lan:3000"];
 
-    NSString *myAppKey = @"BspfxiqMuYxNEotLeGLm";
-    NSString *mySecretKey = @"2sHQOuqgwzocUdiTsTWzyQlOy1paswYLGjrdRWWf";
+    NSString *myAppKey = @"RZ8ZgjhDx1KgZCFjNDzi";
+    NSString *mySecretKey = @"xmXUCjvg6G8AqC68FYHtXnRnRFoIlVTdsypvG0jJ";
     
     [OKManager configureWithAppKey:myAppKey secretKey:mySecretKey];
 
@@ -152,11 +152,13 @@
 - (void)testPostScore
 {
     [OKLeaderboard getLeaderboardsWithCompletion:^(NSArray *leaderboards, NSError *error) {
-        OKScore *score = [OKScore scoreWithLeaderboard:leaderboards[0]];
-        [score setScoreValue:rand()%1000000];
-        [score submitWithCompletion:^(NSError *error) {
-            [self postMessage:@"posting score." error:error];
-        }];
+        if([leaderboards count] > 0) {
+            OKScore *score = [OKScore scoreWithLeaderboard:leaderboards[0]];
+            [score setScoreValue:rand()%1000000];
+            [score submitWithCompletion:^(NSError *error) {
+                [self postMessage:@"posting score." error:error];
+            }];
+        }
     }];
 }
 

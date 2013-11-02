@@ -12,8 +12,8 @@
 
 - (void)setUser:(OKUser*)user
 {
-    NSURL *url = [NSURL URLWithString:[user imageUrl]];
-    [self setImageWithURL:url placeholderImage:[UIImage imageNamed:@"gear.png"]];
+    //NSURL *url = [NSURL URLWithString:[user imageUrl]];
+    //[self setImageWithURL:url placeholderImage:[UIImage imageNamed:@"gear.png"]];
 }
 
 @end

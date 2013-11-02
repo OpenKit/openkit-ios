@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIImageView+AFNetworking.h"
 #import "OKUser.h"
 
 @interface UIImageView (OpenKit)

@@ -57,7 +57,7 @@
     _label1.text = [_leaderboard name];
     //label2.text = [leaderboard playerCountString];
     
-    [leaderboardIcon setImageWithURL:[NSURL URLWithString:[_leaderboard iconUrl]]];
+    //[leaderboardIcon setImageWithURL:[NSURL URLWithString:[_leaderboard iconUrl]]];
 }
 
 @end

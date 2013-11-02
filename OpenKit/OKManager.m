@@ -18,22 +18,31 @@
 #import "OKUtils.h"
 
 #define OK_LOCAL_SESSION @"openkit.session"
-#define OK_DEFAULT_ENDPOINT @"http://api.openkit.io"
+#define OK_DEFAULT_ENDPOINT @"beta-api.openkit.io/v1"
 #define OK_OPENKIT_SDK_VERSION = @"2.0";
 
+@implementation OKClient
+
+- (BOOL)isValid
+{
+    BOOL validKey = [_consumerKey length] > 5;
+    BOOL validSecret = [_consumerKey length] > 10;
+    BOOL validHost = [_host length] > 10;
+
+    return (validKey && validSecret && validHost);
+}
+
+@end
 
 
 @interface OKManager ()
 {
     OKLocalUser *_currentUser;
 }
-
-@property(nonatomic, strong) NSString *appKey;
-@property(nonatomic, strong) NSString *secretKey;
-@property(nonatomic, strong) NSString *endpoint;
-
 @end
 
+
+static OKManager *__sharedInstance = nil;
 
 @implementation OKManager
 
@@ -43,40 +52,25 @@
 }
 
 
-+ (NSString*)appKey
-{
-    return [[OKManager sharedManager] appKey];
-}
-
-
-+ (NSString*)endpoint
-{
-    return [[OKManager sharedManager] endpoint];
-}
-
-
-+ (NSString*)secretKey
-{
-    return [[OKManager sharedManager] secretKey];
-}
-
-
 + (void)configureWithAppKey:(NSString *)appKey
                   secretKey:(NSString *)secretKey
                    endpoint:(NSString *)endpoint
 {
-    NSParameterAssert(appKey);
-    NSParameterAssert(secretKey);
-    
-    OKManager *manager = [OKManager sharedManager];
-    manager->_initialized = NO;
-    [manager setAppKey:appKey];
-    [manager setSecretKey:secretKey];
-    [manager setEndpoint:(endpoint) ? endpoint : OK_DEFAULT_ENDPOINT];
-    
-    OKLog(@"OpenKit configured with endpoint: %@", [[OKManager sharedManager] endpoint]);
-    
-    [manager setup];
+    static dispatch_once_t pred;
+
+    OKClient *client = [[OKClient alloc] init];
+    client.consumerKey = appKey;
+    client.consumerSecret = secretKey;
+    client.host = (endpoint) ? endpoint : OK_DEFAULT_ENDPOINT;
+
+    if([client isValid]) {
+        dispatch_once(&pred, ^{
+            __sharedInstance = [[OKManager alloc] initWithClient:client];
+            OKLog(@"OpenKit configured with host: %@", client.host);
+        });
+        
+        [__sharedInstance setup];
+    }
 }
 
 
@@ -88,32 +82,32 @@
 
 + (id)sharedManager
 {
-    static dispatch_once_t pred;
-    static OKManager *sharedInstance = nil;
-    dispatch_once(&pred, ^{
-        sharedInstance = [[OKManager alloc] init];
-    });
-    return sharedInstance;
+    if(!__sharedInstance)
+        OKLogErr(@"OKManager: Manager was not configured.");
+
+    return __sharedInstance;
 }
 
 
 #pragma mark -
 
-- (id)init
+- (id)initWithClient:(OKClient*)client
 {
+    NSAssert([client isValid], @"Invalid client credentials");
     self = [super init];
     if (self) {
-        _endpoint = OK_DEFAULT_ENDPOINT;
         _initialized = NO;
+        _client = client;
         _leaderboardListTag = @"v1";
+
+        // Init cryptor
+        _cryptor = [[OKCrypto alloc] initWithMasterKey:[_client consumerSecret]];
     }
     return self;
 }
 
 - (void)setup
 {
-    // Init cryptor
-    _cryptor = [[OKCrypto alloc] initWithMasterKey:_secretKey];
     
     // Preload leaderboards from cache
     [OKLeaderboard loadFromCache];

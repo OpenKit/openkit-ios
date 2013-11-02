@@ -11,4 +11,7 @@
 
 #define OKErrorDomain @"OKError"
 
+typedef void (^OKBlock)(void);
+
+
 #endif  // end if OKClient_OKDefines_h
