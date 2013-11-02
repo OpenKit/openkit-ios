@@ -25,9 +25,10 @@
     [OKFacebookPlugin sharedInstance];
     
     
-    NSString *myAppKey = @"BspfxiqMuYxNEotLeGLm";
-    NSString *mySecretKey = @"2sHQOuqgwzocUdiTsTWzyQlOy1paswYLGjrdRWWf";
-    
+    //NSString *myAppKey = @"BspfxiqMuYxNEotLeGLm";
+    //NSString *mySecretKey = @"2sHQOuqgwzocUdiTsTWzyQlOy1paswYLGjrdRWWf";
+    NSString *myAppKey = @"RZ8ZgjhDx1KgZCFjNDzi";
+    NSString *mySecretKey = @"xmXUCjvg6G8AqC68FYHtXnRnRFoIlVTdsypvG0jJ";
     [OKManager configureWithAppKey:myAppKey secretKey:mySecretKey];
     
     // Set the leaderboard list tag. By default, client asks
