@@ -8,18 +8,17 @@
 
 #import "OKManager.h"
 #import "OKUser.h"
-#import "OKDefines.h"
 #import "OKMacros.h"
 #import "OKAuth.h"
+#import "OKDefines.h"
 #import "OKPrivate.h"
 #import "OKFileUtil.h"
 #import "OKNotifications.h"
 #import "OKScore.h"
 #import "OKUtils.h"
 
-#define OK_LOCAL_SESSION @"openkit.session"
-#define OK_DEFAULT_ENDPOINT @"beta-api.openkit.io/v1"
-#define OK_OPENKIT_SDK_VERSION = @"2.0";
+
+#define OK_LOCAL_USER @"user.ok"
 
 @implementation OKClient
 
@@ -54,14 +53,14 @@ static OKManager *__sharedInstance = nil;
 
 + (void)configureWithAppKey:(NSString *)appKey
                   secretKey:(NSString *)secretKey
-                   endpoint:(NSString *)endpoint
+                       host:(NSString *)host
 {
     static dispatch_once_t pred;
 
     OKClient *client = [[OKClient alloc] init];
     client.consumerKey = appKey;
     client.consumerSecret = secretKey;
-    client.host = (endpoint) ? endpoint : OK_DEFAULT_ENDPOINT;
+    client.host = (host) ? host : OK_DEFAULT_SERVER_HOST;
 
     if([client isValid]) {
         dispatch_once(&pred, ^{
@@ -76,7 +75,7 @@ static OKManager *__sharedInstance = nil;
 
 + (void)configureWithAppKey:(NSString*)appKey secretKey:(NSString*)secretKey
 {
-    [OKManager configureWithAppKey:appKey secretKey:secretKey endpoint:nil];
+    [OKManager configureWithAppKey:appKey secretKey:secretKey host:nil];
 }
 
 
@@ -93,12 +92,12 @@ static OKManager *__sharedInstance = nil;
 
 - (id)initWithClient:(OKClient*)client
 {
-    NSAssert([client isValid], @"Invalid client credentials");
+    NSAssert([client isValid], @"Invalid client credentials.");
     self = [super init];
     if (self) {
         _initialized = NO;
         _client = client;
-        _leaderboardListTag = @"v1";
+        _leaderboardListTag = OK_DEFAULT_LEADERBOARD_LIST_TAG;
 
         // Init cryptor
         _cryptor = [[OKCrypto alloc] initWithMasterKey:[_client consumerSecret]];
@@ -106,12 +105,11 @@ static OKManager *__sharedInstance = nil;
     return self;
 }
 
+
 - (void)setup
 {
-    
     // Preload leaderboards from cache
     [OKLeaderboard loadFromCache];
-
     [self startLogin];
 }
 
@@ -250,7 +248,6 @@ static OKManager *__sharedInstance = nil;
     if(!provider)
         return;
     
-    
     void (^connection)(BOOL, NSError*) = ^(BOOL login, NSError *err) {
 
         if(login) {
@@ -351,7 +348,7 @@ static OKManager *__sharedInstance = nil;
 
 - (OKLocalUser*)getCachedUser
 {
-    NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_SESSION];
+    NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_USER];
     NSDictionary *dict = [OKFileUtil readSecureFile:path];
     return [OKLocalUser createUserWithDictionary:dict];
 }
@@ -362,7 +359,7 @@ static OKManager *__sharedInstance = nil;
     OKLocalUser *user = [self currentUser];
     if([user isAccessAllowed]) {
         OKLogInfo(@"OKManager: Updating local user in cache.");
-        NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_SESSION];
+        NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_USER];
         [OKFileUtil writeOnFileSecurely:[user archive] path:path];
     }
     return NO;
@@ -371,7 +368,7 @@ static OKManager *__sharedInstance = nil;
 
 - (void)removeCachedUser
 {
-    NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_SESSION];
+    NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_USER];
     [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
 }
 

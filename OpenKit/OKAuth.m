@@ -142,7 +142,7 @@ NSMutableArray *__providers = nil;
 }
 
 
-#pragma mark - Methods to override
+#pragma mark Methods to override
 
 
 + (OKAuthProvider*)sharedInstance

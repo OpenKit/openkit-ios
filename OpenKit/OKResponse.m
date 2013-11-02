@@ -9,21 +9,22 @@
 #import "OKResponse.h"
 #import "OKMacros.h"
 
+
 @implementation OKResponse
 
 - (void)process
 {
     _backendError = nil;
     _jsonObject = nil;
-    _jsonObject = nil;
+    _jsonError = nil;
 
     if(!_networkError) {
         if(_statusCode >= 400) {
             // BACKEND ERROR
             NSString *body = [[NSString alloc] initWithData:_body encoding:NSUTF8StringEncoding];
             _backendError = [NSError errorWithDomain:@"OKResponseDomain" code:_statusCode userInfo:@{@"NSLocalizedFailureReasonErrorKey":body }];
-        }else{
 
+        }else{
             NSJSONReadingOptions opts = NSJSONReadingAllowFragments | NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves;
             NSError *error;
             _jsonObject = [NSJSONSerialization JSONObjectWithData:_body options:opts error:&error];
@@ -35,6 +36,7 @@
     if(error)
         OKLogErr(@"OKResponse: %@\n", error);
 }
+
 
 - (NSError*)error
 {

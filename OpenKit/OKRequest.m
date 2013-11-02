@@ -212,6 +212,19 @@
 }
 
 
+- (NSString *)authorizationHeader
+{
+    [_paramsInHeader setObject:OKEscape([self signature]) forKey:@"oauth_signature"];
+
+    NSMutableArray *parts = [NSMutableArray arrayWithCapacity:[_paramsInHeader count]];
+    [_paramsInHeader enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
+        [parts addObject:[NSString stringWithFormat:@"%@=\"%@\"", key, value]];
+    }];
+
+    return [@"OAuth " stringByAppendingString:[parts componentsJoinedByString:@", "]];
+}
+
+
 - (NSString *)signature
 {
     NSString *accessTokenSecret = _user ? [_user accessTokenSecret] : @"";
@@ -228,27 +241,16 @@
 }
 
 
-- (NSString *)authorizationHeader
-{
-    [_paramsInHeader setObject:OKEscape([self signature]) forKey:@"oauth_signature"];
-
-    NSMutableArray *parts = [NSMutableArray arrayWithCapacity:[_paramsInHeader count]];
-    [_paramsInHeader enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
-        [parts addObject:[NSString stringWithFormat:@"%@=\"%@\"", key, value]];
-    }];
-
-    return [@"OAuth " stringByAppendingString:[parts componentsJoinedByString:@", "]];
-}
-
-
-
 #pragma mark - NSURLConnection Delegate Implementation
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    _response.SSLError = _sslError;
-    _response.networkError = error;
+    NSAssert(_response, @"Response can not be nil");
+
+    [_response setSSLError:_sslError];
+    [_response setNetworkError:error];
     [_response process];
+
     if (_handler)
         _handler(_response);
 }
@@ -287,7 +289,7 @@
         }
 
         if (trustResult != kSecTrustResultProceed && trustResult != kSecTrustResultUnspecified) {
-            _sslError = [NSError errorWithDomain:@"OKRequestDomain" code:0 userInfo:@{NSLocalizedFailureReasonErrorKey:@"Certiface doesn't match."}];
+            _sslError = [NSError errorWithDomain:@"OKRequestDomain" code:0 userInfo:@{NSLocalizedFailureReasonErrorKey:@"Certificate doesn't match."}];
             goto cancel;
         }
 
@@ -301,7 +303,7 @@ cancel:
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    _response.statusCode = [(NSHTTPURLResponse*)response statusCode];
+    [_response setStatusCode:[(NSHTTPURLResponse*)response statusCode]];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
@@ -319,7 +321,7 @@ cancel:
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    _response.body = _receivedData;
+    [_response setBody:_receivedData];
     [_response process];
     if (_handler)
         _handler(_response);

@@ -9,12 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "OKCrypto.h"
+#import "OKUser.h"
+#import "OKAuth.h"
 
-// Predefinitions
-@protocol OKManagerDelegate;
-@class OKUser;
-@class OKLocalUser;
-@class OKAuthProvider;
 
 @interface OKClient : NSObject
 
@@ -27,34 +24,37 @@
 @end
 
 
-@interface OKManager : NSObject
+#pragma mark - OKManagerDelegate Protocol
 
-+ (id)sharedManager;
-+ (void)configureWithAppKey:(NSString*)appKey secretKey:(NSString*)secretKey;
-+ (void)configureWithAppKey:(NSString*)appKey secretKey:(NSString*)secretKey endpoint:(NSString*)endpoint;
-- (void)logoutCurrentUser;
-- (void)registerToken:(NSData*)deviceToken;
+@class OKManager;
+@protocol OKManagerDelegate <NSObject>
+@optional
+
+- (void)openkitDidLaunch:(OKManager*)manager;
+- (void)openkitDidChangeStatus:(OKManager*)manager;
+- (void)openkitHandledError:(NSError*)error source:(id)source;
+
+@end
+
+
+#pragma mark - OKManager
+
+@interface OKManager : NSObject
 
 @property(nonatomic, readonly) OKClient *client;
 @property(nonatomic, readonly) OKCrypto *cryptor;
 @property(nonatomic, readonly) BOOL initialized;
 @property(nonatomic, strong) NSString *leaderboardListTag;
+@property(nonatomic, assign) id<OKManagerDelegate> delegate;
 
 
-// See OKManagerDelegate protocol, below.
-@property (nonatomic, assign) id<OKManagerDelegate> delegate;
-
-// Let's stop creating class helpers for getting / setting.  Instead, grab the sharedManager
-// and set properties on that.  E.g.
-//
-//    OKManager *manager = [OKManager sharedManager];
-//    manager.delegate   = anObject;
-//    manager.endpoint   = "whatever";
-//    manager.appKey     = "foo";
-//    manager.secretKey  = "bar";
-//
-
++ (id)sharedManager;
++ (void)configureWithAppKey:(NSString*)appKey secretKey:(NSString*)secretKey;
++ (void)configureWithAppKey:(NSString*)appKey secretKey:(NSString*)secretKey host:(NSString*)endpoint;
 + (BOOL)handleOpenURL:(NSURL*)url;
+
+- (void)logoutCurrentUser;
+- (void)registerToken:(NSData*)deviceToken;
 
 - (void)loginWithProviderName:(NSString*)serviceName
                viewController:(UIViewController*)controller
@@ -65,16 +65,3 @@
                completion:(void(^)(OKLocalUser *user, NSError *error))handler;
 
 @end
-
-
-#pragma mark - OKManagerDelegate Protocol
-
-@protocol OKManagerDelegate <NSObject>
-@optional
-
-- (void)openkitDidLaunch:(OKManager*)manager;
-- (void)openkitDidChangeStatus:(OKManager*)manager;
-- (void)openkitHandledError:(NSError*)error source:(id)source;
-
-@end
-

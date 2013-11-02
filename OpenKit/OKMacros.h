@@ -9,8 +9,10 @@
 #ifndef OKClient_OKMacros_h
 #define OKClient_OKMacros_h
 
-#define OK_VERBOSE_LOGGING 0
 
+#pragma mark - Logging
+
+#define OK_VERBOSE_LOGGING 0
 #if OK_VERBOSE_LOGGING
 
 #define OKLog(s, ...)     NSLog(@"OpenKit: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
@@ -34,15 +36,6 @@
 #endif
 
 
-
-#define OK_CURRENT_APP_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
-
-#define OK_RAISE(name, ...) {\
-    NSString *str = [NSString stringWithFormat:__VA_ARGS__]; \
-    NSLog(@"Raising %@: %@", name, str); \
-    [NSException raise:name format:str]; \
-}
-
 #ifdef  DEBUG
 #define OKBridgeLog( s, ... ) NSLog(@"OKBridgeIOS: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
 #else
@@ -50,10 +43,23 @@
 #endif
 
 
+#pragma mark - Exceptions
+
+#define OK_RAISE(name, ...) {\
+    NSString *str = [NSString stringWithFormat:__VA_ARGS__]; \
+    NSLog(@"Raising %@: %@", name, str); \
+    [NSException raise:name format:str]; \
+}
+
+
+#pragma mark - Objetive-C Safety
+
 #define OK_NO_NIL(__OBJ__) ((__OBJ__)==nil ? [NSNull null] : (__OBJ__))
 #define OK_CHECK(__OBJ__, __CLASS__) ([__OBJ__ isKindOfClass:[__CLASS__ class]] ? __OBJ__ : nil)
 
-// System Versioning
+
+#pragma mark - System Versioning
+
 #define OK_SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
 #define OK_SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
 #define OK_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)

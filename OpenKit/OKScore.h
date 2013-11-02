@@ -11,6 +11,7 @@
 #import "OKLeaderboard.h"
 #import "OKUser.h"
 
+
 @interface OKScore : OKDBRow
 
 @property(nonatomic, readwrite) NSInteger scoreID;

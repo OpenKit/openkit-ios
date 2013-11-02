@@ -18,10 +18,9 @@
 #import "OKFileUtil.h"
 
 
+#define OK_LOCAL_LEADERBOARDS @"leaderboards.ok"
 
-#define OK_LEADERBOARDS @"leaderboards.json"
 static NSArray *__leaderboards = nil;
-static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 @implementation OKLeaderboard
 
@@ -43,15 +42,14 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     self.name           = OK_CHECK(dict[@"name"], NSString);
     self.iconUrl        = OK_CHECK(dict[@"icon_url"], NSString);
     self.services       = OK_CHECK(dict[@"services"], NSDictionary);
-    self.leaderboardID  = [OKHelper getIntFrom:dict key:@"id"];
-    self.playerCount    = [OKHelper getIntFrom:dict key:@"player_count"];
-
+    self.leaderboardID  = [OK_CHECK(dict[@"id"], NSNumber) integerValue];
+    self.playerCount    = [OK_CHECK(dict[@"player_count"], NSNumber) unsignedIntegerValue];
+    
     NSString *sortTypeString = OK_CHECK(dict[@"sort_type"], NSString);
-    if([sortTypeString isEqualToString:@"HighValue"]) {
+    if([sortTypeString isEqualToString:@"HighValue"])
         self.sortType = OKLeaderboardSortTypeHighValue;
-    }else{
+    else
         self.sortType = OKLeaderboardSortTypeLowValue;
-    }
     
     return (self.leaderboardID && self.name);
 }
@@ -80,10 +78,8 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     
     
     //Create a request and send it to OpenKit
-    NSDictionary *params = @{@"score": [score JSONDictionary]};
-    
     [OKNetworker postToPath:@"/scores"
-                 parameters:params
+                 parameters:[score JSONDictionary]
                  completion:^(OKResponse *response)
      {
          NSError *error = [response error];
@@ -272,7 +268,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 + (void)loadFromCache
 {
-    NSString *path = [OKFileUtil localOnlyCachePath:OK_LEADERBOARDS];
+    NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_LEADERBOARDS];
     NSArray *archive = [OKFileUtil readSecureFile:path];
     [self configWithArray:archive];
 }
@@ -285,7 +281,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
         for(OKLeaderboard *lb in __leaderboards)
             [leaderboards addObject:[lb archive]];
 
-        NSString *path = [OKFileUtil localOnlyCachePath:OK_LEADERBOARDS];
+        NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_LEADERBOARDS];
         [OKFileUtil writeOnFileSecurely:leaderboards path:path];
     }
 }
@@ -300,6 +296,16 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
++ (OKLeaderboard*)leaderboardForID:(NSInteger)leaderboardID
+{
+    for(OKLeaderboard* leaderboard in [OKLeaderboard leaderboards]) {
+        if(leaderboard.leaderboardID == leaderboardID)
+            return leaderboard;
+    }
+    return nil;
+}
+
+
 + (BOOL)getLeaderboardsWithCompletion:(void (^)(NSArray* leaderboards, NSError* error))handler
 {
     if(__leaderboards) {
@@ -307,14 +313,13 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
             handler(__leaderboards, nil);
         
         return YES;
-        
-    }else{
-        [self syncWithCompletion:^(NSError* error) {
-            if(handler)
-                handler(__leaderboards, error);
-        }];
-        return NO;
     }
+
+    [self syncWithCompletion:^(NSError* error) {
+        if(handler)
+            handler(__leaderboards, error);
+    }];
+    return NO;
 }
 
 
@@ -325,22 +330,12 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     {
         if(handler) {
             OKLeaderboard *lb = [OKLeaderboard leaderboardForID:leaderboardID];
-            if(!lb && !error)
+            if(!lb && !error) // REVIEW
                 error = [OKError unknownError];
             
             handler(lb, error);
         }
     }];
-}
-
-
-+ (OKLeaderboard*)leaderboardForID:(NSInteger)leaderboardID
-{
-    for(OKLeaderboard* leaderboard in [OKLeaderboard leaderboards]) {
-        if(leaderboard.leaderboardID == leaderboardID)
-            return leaderboard;
-    }
-    return nil;
 }
 
 
