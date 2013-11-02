@@ -47,7 +47,7 @@
 }
 
 
-- (NSDictionary*)dictionary
+- (NSDictionary*)archive
 {
     NSAssert(_name, @"Name can not be nil");
 
@@ -215,7 +215,7 @@
 }
 
 
-- (NSDictionary*)dictionary
+- (NSDictionary*)archive
 {
     NSAssert(_accessToken, @"Access token is invalid.");
     NSAssert(_dirty, @"Access token is invalid.");

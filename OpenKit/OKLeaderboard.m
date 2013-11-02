@@ -57,7 +57,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 }
 
 
-- (NSDictionary*)dictionary
+- (NSDictionary*)archive
 {
     NSAssert(self.name, @"Name can not be nil.");
     
@@ -283,7 +283,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     if([__leaderboards count] > 0) {
         NSMutableArray *leaderboards = [NSMutableArray arrayWithCapacity:[__leaderboards count]];
         for(OKLeaderboard *lb in __leaderboards)
-            [leaderboards addObject:[lb dictionary]];
+            [leaderboards addObject:[lb archive]];
 
         NSString *path = [OKFileUtil localOnlyCachePath:OK_LEADERBOARDS];
         [OKFileUtil writeOnFileSecurely:leaderboards path:path];

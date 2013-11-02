@@ -17,7 +17,7 @@
 @property(nonatomic, readonly) NSDictionary *services;
 
 - (NSString*)userIDForService:(NSString*)service;
-- (NSDictionary*)dictionary;
+- (NSDictionary*)archive;
 - (NSArray*)resolveConnections;
 
 + (OKUser*)guestUser;

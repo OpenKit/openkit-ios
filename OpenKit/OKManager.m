@@ -363,7 +363,7 @@ static OKManager *__sharedInstance = nil;
     if([user isAccessAllowed]) {
         OKLogInfo(@"OKManager: Updating local user in cache.");
         NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_SESSION];
-        [OKFileUtil writeOnFileSecurely:[user dictionary] path:path];
+        [OKFileUtil writeOnFileSecurely:[user archive] path:path];
     }
     return NO;
 }
