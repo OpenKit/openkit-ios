@@ -90,7 +90,7 @@ static NSString *const kOKDBScoreCreateSql =
             @(score.submitState),
             score.modifyDate,
             @(score.leaderboardID),
-            @(score.scoreValue),
+            @(score.value),
             @(score.metadata),
             score.displayString,
             @(score.rowIndex)];
@@ -109,7 +109,7 @@ static NSString *const kOKDBScoreCreateSql =
             score.modifyDate,
             score.createDate,
             @(score.leaderboardID),
-            @(score.scoreValue),
+            @(score.value),
             @(score.metadata),
             score.displayString];
 }

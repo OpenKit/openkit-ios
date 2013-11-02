@@ -168,7 +168,7 @@
     if(gcLeaderboardID && [self isSessionOpen])
     {
         GKScore *scoreReporter = [[GKScore alloc] initWithCategory:gcLeaderboardID];
-        scoreReporter.value = [score scoreValue];
+        scoreReporter.value = [score value];
         scoreReporter.context = [score metadata];
         
         [scoreReporter reportScoreWithCompletionHandler:^(NSError *error) {

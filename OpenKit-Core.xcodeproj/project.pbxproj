@@ -36,6 +36,8 @@
 		326FD0CF16CB6209004248F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
 		327E9E1A17CEFABA00F33F24 /* OKFileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1517CEFABA00F33F24 /* OKFileUtil.m */; };
 		327E9E1B17CEFABA00F33F24 /* OKDBConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 327E9E1717CEFABA00F33F24 /* OKDBConnection.m */; };
+		327F56651824DC410090E75E /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 327F56641824DC410090E75E /* ViewController.xib */; };
+		327F56681824DC480090E75E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 327F56671824DC480090E75E /* ViewController.m */; };
 		32880CEE176DC784005F8D30 /* OKUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 32880CED176DC784005F8D30 /* OKUtils.m */; };
 		32A371291823054900BCED68 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32A371091823054900BCED68 /* FacebookSDK.framework */; };
 		32A3712A1823054900BCED68 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32A371091823054900BCED68 /* FacebookSDK.framework */; };
@@ -191,6 +193,9 @@
 		327E9E1517CEFABA00F33F24 /* OKFileUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFileUtil.m; sourceTree = "<group>"; };
 		327E9E1617CEFABA00F33F24 /* OKDBConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKDBConnection.h; sourceTree = "<group>"; };
 		327E9E1717CEFABA00F33F24 /* OKDBConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKDBConnection.m; sourceTree = "<group>"; };
+		327F56641824DC410090E75E /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
+		327F56661824DC480090E75E /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		327F56671824DC480090E75E /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		32880CEC176DC784005F8D30 /* OKUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUtils.h; sourceTree = "<group>"; };
 		32880CED176DC784005F8D30 /* OKUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUtils.m; sourceTree = "<group>"; };
 		32A371091823054900BCED68 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
@@ -477,6 +482,8 @@
 		32CCB710181AF103000193D5 /* CoreTest */ = {
 			isa = PBXGroup;
 			children = (
+				327F56661824DC480090E75E /* ViewController.h */,
+				327F56671824DC480090E75E /* ViewController.m */,
 				32CCB711181AF103000193D5 /* AppDelegate.h */,
 				32CCB712181AF103000193D5 /* AppDelegate.m */,
 				32CCB713181AF103000193D5 /* CoreTest-Prefix.pch */,
@@ -490,6 +497,7 @@
 		32CCB715181AF103000193D5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				327F56641824DC410090E75E /* ViewController.xib */,
 				326F4168181DE6D70008E886 /* Images.xcassets */,
 				32CCB71A181AF13F000193D5 /* CoreTest-Info.plist */,
 			);
@@ -648,6 +656,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				326F4169181DE6D70008E886 /* Images.xcassets in Resources */,
+				327F56651824DC410090E75E /* ViewController.xib in Resources */,
 				322EA98418245D9900DB1039 /* ok_wildcard.der in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -717,6 +726,7 @@
 			files = (
 				32A3712C1823054900BCED68 /* FMDatabase.m in Sources */,
 				32A3712E1823054900BCED68 /* FMDatabaseAdditions.m in Sources */,
+				327F56681824DC480090E75E /* ViewController.m in Sources */,
 				32A371301823054900BCED68 /* FMDatabasePool.m in Sources */,
 				32A371321823054900BCED68 /* FMDatabaseQueue.m in Sources */,
 				32CCB718181AF103000193D5 /* main.m in Sources */,

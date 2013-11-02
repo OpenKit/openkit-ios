@@ -15,10 +15,10 @@
 @interface OKScore : OKDBRow
 
 @property(nonatomic, readwrite) NSInteger scoreID;
-@property(nonatomic, readwrite) int64_t scoreValue;
+@property(nonatomic, readwrite) int64_t value;
 @property(nonatomic, readwrite) NSInteger leaderboardID;
-@property(nonatomic, strong) OKUser *user;
-@property(nonatomic, readwrite) NSInteger scoreRank;
+@property(nonatomic, readonly) OKUser *user;
+@property(nonatomic, readwrite) NSInteger rank;
 @property(nonatomic, readwrite) NSInteger metadata;
 @property(nonatomic, strong) NSString *displayString;
 

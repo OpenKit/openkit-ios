@@ -73,13 +73,13 @@
     self.rowIndex       = [OKHelper getIntFrom:dict key:@"row_id"];
     self.modifyDate     = [OKHelper getNSDateFrom:dict key:@"modify_date"];
     
-    self.scoreID        = [OKHelper getIntFrom:dict key:@"id"];
-    self.scoreValue     = [OKHelper getInt64From:dict key:@"value"];
-    self.scoreRank      = [OKHelper getIntFrom:dict key:@"rank"];
-    self.leaderboardID  = [OKHelper getIntFrom:dict key:@"leaderboard_id"];
-    self.user           = [OKUser createUserWithDictionary:dict[@"user"]];
-    self.displayString  = [OKHelper getNSStringFrom:dict key:@"display_string"];
-    self.metadata       = [OKHelper getIntFrom:dict key:@"metadata"];
+    _scoreID        = [OKHelper getIntFrom:dict key:@"id"];
+    _value     = [OKHelper getInt64From:dict key:@"value"];
+    _rank      = [OKHelper getIntFrom:dict key:@"rank"];
+    _leaderboardID  = [OKHelper getIntFrom:dict key:@"leaderboard_id"];
+    _user           = [OKUser createUserWithDictionary:dict[@"user"]];
+    _displayString  = [OKHelper getNSStringFrom:dict key:@"display_string"];
+    _metadata       = [OKHelper getIntFrom:dict key:@"metadata"];
     
     return YES;
 }
@@ -88,7 +88,7 @@
 - (NSDictionary*)JSONDictionary
 {
     return @{@"leaderboard_id": @(_leaderboardID),
-             @"value": @(_scoreValue),
+             @"value": @(_value),
              @"metadata": @(_metadata),
              @"display_string": OK_NO_NIL([self scoreDisplayString])};
 }
@@ -104,7 +104,7 @@
 {
     return
         self.leaderboardID != -1 &&
-        self.scoreValue != 0;
+        self.value != 0;
 }
 
 
@@ -119,7 +119,7 @@
     if([self displayString])
         return _displayString;
     
-    return [NSString stringWithFormat:@"%lld", [self scoreValue]];
+    return [NSString stringWithFormat:@"%lld", _value];
 }
 
 
@@ -131,13 +131,13 @@
 
 - (NSString*)rankDisplayString
 {
-    return [NSString stringWithFormat:@"%ld", (long)[self scoreRank]];
+    return [NSString stringWithFormat:@"%ld", (long)_rank];
 }
 
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"OKScore id: %ld, submitted: %d, value: %lld, leaderboard id: %ld, display string: %@, metadata: %ld", (long)[self scoreID], [self submitState], [self scoreValue], (long)[self leaderboardID], [self displayString], (long)[self metadata]];
+    return [NSString stringWithFormat:@"OKScore id: %ld, submitted: %d, value: %lld, leaderboard id: %ld, display string: %@, metadata: %ld", (long)_scoreID, [self submitState], _value, (long)_leaderboardID, [self displayString], (long)[self metadata]];
 }
 
 
@@ -165,8 +165,7 @@
 
 + (void)resolveScore:(OKScore*)score withCompletion:(void (^)(NSError *error))handler
 {
-    [score setUser:[OKLocalUser currentUser]];
-    if([score user] == nil) {
+    if(![OKLocalUser currentUser]) {
         if(handler)
             handler([OKError noOKUserErrorScoreCached]); // ERROR
         

@@ -75,14 +75,14 @@
         previousScore = [[OKScore alloc] init];
         
         if([leaderboard sortType] == OKLeaderboardSortTypeHighValue) {
-            previousScore.scoreValue = 0;
+            previousScore.value = 0;
         } else {
-            previousScore.scoreValue = INT64_MAX;
+            previousScore.value = INT64_MAX;
         }
     }
     
     OKLog(@"Sorting social scores to figure out which will get a challenge");
-    OKLog(@"Player's previous top score is: %lld, and new top score is: %lldd", [previousScore scoreValue], [topScore scoreValue]);
+    OKLog(@"Player's previous top score is: %lld, and new top score is: %lldd", [previousScore value], [topScore value]);
     
     
     // Go through the list of friends' scores, and find scores which are < playerTopScore && > previousScore
@@ -93,11 +93,11 @@
     for(OKScore *score in friendsScores) {
         
         if([leaderboard sortType] == OKLeaderboardSortTypeHighValue) {
-            if([score scoreValue] < [topScore scoreValue] && [score scoreValue] > [previousScore scoreValue]) {
+            if([score value] < [topScore value] && [score value] > [previousScore value]) {
                 [scoresToSendPushTo addObject:score];
             }
         } else {
-            if([score scoreValue] > [topScore scoreValue] && [score scoreValue] < [previousScore scoreValue]) {
+            if([score value] > [topScore value] && [score value] < [previousScore value]) {
                 [scoresToSendPushTo addObject:score];
             }
         }
