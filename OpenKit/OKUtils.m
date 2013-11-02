@@ -32,10 +32,7 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut)
 
 + (NSString*)createUUID
 {
-    CFUUIDRef theUUID = CFUUIDCreate(NULL);
-    CFStringRef string = CFUUIDCreateString(NULL, theUUID);
-    CFRelease(theUUID);
-    return (__bridge_transfer NSString *)string;
+    return [[NSUUID UUID] UUIDString];
 }
 
 
