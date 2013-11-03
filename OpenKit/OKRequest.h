@@ -39,4 +39,8 @@
 
 - (void)del:(NSString *)path complete:(void(^)(OKResponse *))handler;
 
++ (void)setSSLCertificate:(NSData*)data;
+
++ (void)setSSLCertificateName:(NSString*)name;
+
 @end

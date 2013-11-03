@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
+#include <sys/sysctl.h>
 #import "OKManager.h"
 #import "OKUser.h"
 #import "OKMacros.h"
@@ -21,6 +22,20 @@
 #define OK_LOCAL_USER @"user.ok"
 
 @implementation OKClient
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        size_t size;
+        sysctlbyname("hw.machine", NULL, &size, NULL, 0);
+        char *model = malloc(size);
+        sysctlbyname("hw.machine", model, &size, NULL, 0);
+        _deviceModel = [NSString stringWithCString:model encoding:NSUTF8StringEncoding];
+        free(model);
+    }
+    return self;
+}
 
 - (BOOL)isValid
 {
@@ -98,8 +113,6 @@ static OKManager *__sharedInstance = nil;
         _initialized = NO;
         _client = client;
         _leaderboardListTag = OK_DEFAULT_LEADERBOARD_LIST_TAG;
-
-        // Init cryptor
         _cryptor = [[OKCrypto alloc] initWithMasterKey:[_client consumerSecret]];
     }
     return self;
@@ -118,7 +131,7 @@ static OKManager *__sharedInstance = nil;
 
 - (void)startLogin
 {
-    OKLogInfo(@"OKManager: Initializing Openkit...");
+    OKLogInfo(@"OKManager: Initializing Openkit.");
     
     // Starting authorization providers (opening sessions from cache...)
     [OKAuthProvider start];
@@ -441,41 +454,6 @@ static OKManager *__sharedInstance = nil;
     [OKAuthProvider handleWillTerminate];
 
 }
-
-/* REVIEW
-#pragma mark - Dashboard Display State Callbacks
-
-- (void)willShowDashboard:(NSNotification *)note
-{
-    if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerWillShowDashboard:)]) {
-        [_delegate openkitManagerWillShowDashboard:self];
-    }
-}
-
-
-- (void)didShowDashboard:(NSNotification *)note
-{
-    if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerDidShowDashboard:)]) {
-        [_delegate openkitManagerDidShowDashboard:self];
-    }
-}
-
-
-- (void)willHideDashboard:(NSNotification *)note
-{
-    if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerWillHideDashboard:)]) {
-        [_delegate openkitManagerWillHideDashboard:self];
-    }
-}
-
-
-- (void)didHideDashboard:(NSNotification *)note
-{
-    if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerDidHideDashboard:)]) {
-        [_delegate openkitManagerDidHideDashboard:self];
-    }
-}
- */
 
 
 #pragma mark - Private

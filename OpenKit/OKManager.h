@@ -15,6 +15,7 @@
 
 @interface OKClient : NSObject
 
+@property(nonatomic, strong) NSString *deviceModel;
 @property(nonatomic, strong) NSString *host;
 @property(nonatomic, strong) NSString *consumerKey;
 @property(nonatomic, strong) NSString *consumerSecret;
@@ -50,7 +51,7 @@
 
 + (id)sharedManager;
 + (void)configureWithAppKey:(NSString*)appKey secretKey:(NSString*)secretKey;
-+ (void)configureWithAppKey:(NSString*)appKey secretKey:(NSString*)secretKey host:(NSString*)endpoint;
++ (void)configureWithAppKey:(NSString*)appKey secretKey:(NSString*)secretKey host:(NSString*)host;
 + (BOOL)handleOpenURL:(NSURL*)url;
 
 - (void)logoutCurrentUser;
