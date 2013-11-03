@@ -13,6 +13,7 @@
 #import <Security/Security.h>
 #import "OKCrypto.h"
 #import "OKMacros.h"
+#import "OKUtils.h"
 
 
 @interface OKCrypto ()
@@ -72,6 +73,23 @@
     unsigned char digest[CC_SHA1_DIGEST_LENGTH];
     CCHmac(kCCHmacAlgSHA1, [key bytes], [key length], [data bytes], [data length], digest);
     return [NSData dataWithBytes:digest length:CC_SHA1_DIGEST_LENGTH];
+}
+
+
++ (NSString*)B64_HMACSHA1:(NSData*)data key:(NSData*)key
+{
+    return [OKUtils base64Enconding:[self HMACSHA1:data key:key]];
+}
+
++ (NSString*)B64_SHA256:(NSData*)data
+{
+    return [OKUtils base64Enconding:[self SHA256:data]];
+}
+
+
++ (NSString*)B64_MD5:(NSData*)data
+{
+    return [OKUtils base64Enconding:[self MD5:data]];
 }
 
 

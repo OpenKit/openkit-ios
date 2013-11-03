@@ -243,22 +243,9 @@ static id __SSLCertificate = nil;
 
 #pragma mark - Signature API (private)
 
-- (NSString*)paramsStringForSignature
-{
-    NSArray *sortedKeys = [[_paramsInSignature allKeys] sortedArrayUsingSelector: @selector(compare:)];
-    NSMutableArray *parts = [NSMutableArray array];
-
-    [sortedKeys enumerateObjectsUsingBlock:^(id key, NSUInteger idx, BOOL *stop) {
-        [parts addObject:[NSString stringWithFormat:@"%@=%@", key, [_paramsInSignature objectForKey:key]]];
-    }];
-
-    return [parts componentsJoinedByString:@"&"];
-}
-
-
 - (NSString *)authorizationHeader
 {
-    [_paramsInHeader setObject:OKEscape([self signature]) forKey:@"oauth_signature"];
+    [_paramsInHeader setObject:[self signature] forKey:@"oauth_signature"];
 
     NSMutableArray *parts = [NSMutableArray arrayWithCapacity:[_paramsInHeader count]];
     [_paramsInHeader enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
@@ -269,19 +256,36 @@ static id __SSLCertificate = nil;
 }
 
 
-- (NSString *)signature
+- (NSString*)signatureBaseString
 {
-    NSString *accessTokenSecret = _user ? [_user accessTokenSecret] : @"";
+    // Request path
     NSString *finalPath = [[self finalPath] absoluteString];
 
-    NSString *signatureBaseString = [NSString stringWithFormat:@"%@&%@&%@", _verb, OKEscape(finalPath), OKEscape([self paramsStringForSignature])];
-    NSString *signatureKeyString = [NSString stringWithFormat:@"%@&%@", [_client consumerSecret], accessTokenSecret];
+    // Generate params string
+    NSArray *sortedKeys = [[_paramsInSignature allKeys] sortedArrayUsingSelector: @selector(compare:)];
+    NSMutableString *paramsString = [NSMutableString string];
+    [sortedKeys enumerateObjectsUsingBlock:^(id key, NSUInteger idx, BOOL *stop) {
+        [paramsString appendFormat:@"%@=%@&", key, _paramsInSignature[key]];
+    }];
+    [paramsString deleteCharactersInRange:NSMakeRange([paramsString length]-1, 1)];
 
-    NSData *signatureBaseData = [signatureBaseString dataUsingEncoding:NSASCIIStringEncoding];
-    NSData *signatureKeyData = [signatureKeyString dataUsingEncoding:NSASCIIStringEncoding];
+    return [NSString stringWithFormat:@"%@&%@&%@", _verb, OKEscape(finalPath), OKEscape(paramsString)];
+}
 
-    NSData *HMAC = [OKCrypto HMACSHA1:signatureBaseData key:signatureKeyData];
-    return [OKUtils base64Enconding:HMAC];
+
+- (NSString*)signatureKey
+{
+    NSString *accessTokenSecret = _user ? [_user accessTokenSecret] : @"";
+    return [NSString stringWithFormat:@"%@&%@", [_client consumerSecret], accessTokenSecret];
+}
+
+
+- (NSString*)signature
+{
+    NSData *signatureBaseData = [[self signatureBaseString] dataUsingEncoding:NSASCIIStringEncoding];
+    NSData *signatureKeyData = [[self signatureKey] dataUsingEncoding:NSASCIIStringEncoding];
+
+    return OKEscape([OKCrypto B64_HMACSHA1:signatureBaseData key:signatureKeyData]);
 }
 
 

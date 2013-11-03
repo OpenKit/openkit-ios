@@ -23,4 +23,9 @@
 + (NSData*)SHA256:(NSData*)data;
 + (NSData*)MD5:(NSData*)data;
 
+#pragma mark - Base64 encoded results.
++ (NSString*)B64_HMACSHA1:(NSData*)data key:(NSData*)key;
++ (NSString*)B64_SHA256:(NSData*)data;
++ (NSString*)B64_MD5:(NSData*)data;
+
 @end
