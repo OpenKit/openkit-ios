@@ -110,9 +110,7 @@
 
 - (BOOL)isAccessAllowed
 {
-    // REVIEW THIS
-    return self.accessToken && self.accessTokenSecret;
-    //return (self.userID && self.accessToken && self.accessTokenSecret);
+    return _accessToken && _accessTokenSecret;
 }
 
 - (BOOL)configWithDictionary:(NSDictionary*)dict
@@ -125,7 +123,7 @@
     _dirty = [NSMutableDictionary dictionaryWithDictionary:dict[@"dirty"]];
     _friends = [NSMutableDictionary dictionaryWithDictionary:dict[@"friends"]];
     
-    return (_accessToken && _accessTokenSecret);
+    return [self isAccessAllowed];
 }
 
 

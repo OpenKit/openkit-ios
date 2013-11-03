@@ -16,24 +16,23 @@
 - (id)init
 {
     self = [super initWithNibName:@"ViewController" bundle:nil];
-    self.navigationItem.title = @"OpenKit Core Tester";
     return self;
 }
 
 - (void)startTest
 {
-    float waitTime = 2;
+    float waitTime = 0.2f;
 
     [[[self messagesView] subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 
     _count = 0;
     // TESTING
     [self performSelector:@selector(testUpdateUser) withObject:nil afterDelay:0];
-    [self performSelector:@selector(testGetLeaderboard) withObject:nil afterDelay:waitTime*2];
-    [self performSelector:@selector(testGetScores) withObject:nil afterDelay:waitTime*3];
-    [self performSelector:@selector(testPostScore) withObject:nil afterDelay:waitTime*4];
-    [self performSelector:@selector(testPostAchievement) withObject:nil afterDelay:waitTime*5];
-    [self performSelector:@selector(testReconnect) withObject:nil afterDelay:waitTime*6+2];
+    [self performSelector:@selector(testGetLeaderboard) withObject:nil afterDelay:waitTime];
+    [self performSelector:@selector(testGetScores) withObject:nil afterDelay:waitTime*2];
+    [self performSelector:@selector(testPostScore) withObject:nil afterDelay:waitTime*3];
+    [self performSelector:@selector(testPostAchievement) withObject:nil afterDelay:waitTime*4];
+    [self performSelector:@selector(testReconnect) withObject:nil afterDelay:waitTime*5];
     
 }
 - (IBAction)restart:(id)sender {

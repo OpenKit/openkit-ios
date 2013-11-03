@@ -352,8 +352,10 @@ static NSArray *__leaderboards = nil;
              if([self configWithArray:[response jsonObject]]) {
                  OKLogInfo(@"OKLeaderboard: Successfully got list of leaderboards.");
                  [self save];
+
              }else{
                  OKLogErr(@"OKLeaderboard: Error creating leaderboards from %@", [response jsonObject]);
+                 error = [OKError unknownError]; // REVIEW
              }
              
          }else{

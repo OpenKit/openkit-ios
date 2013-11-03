@@ -175,8 +175,13 @@
     [OKLeaderboard getLeaderboardWithID:[score leaderboardID]
                              completion:^(OKLeaderboard *leaderboard, NSError *error)
     {
-        // private method, never call it manually
-        [leaderboard submitScore:score withCompletion:handler];
+        if(leaderboard) {
+            [leaderboard submitScore:score withCompletion:handler];
+
+        }else if(!error) {
+            // if leaderboard doesn't exist and no error occurred, we should remove the score.
+            // and show an error: Leaderboard doesn't exist.
+        }
     }];
 }
 
