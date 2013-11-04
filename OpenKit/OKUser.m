@@ -33,11 +33,11 @@
     if(![dict isKindOfClass:[NSDictionary class]])
         return NO;
 
-    _name = OK_CHECK(dict[@"name"], NSString);
-    _imageUrl = OK_CHECK(dict[@"image_url"], NSString);
-    _services = OK_CHECK(dict[@"services"], NSDictionary);
+    _name       = DYNAMIC_CAST(NSString, dict[@"name"]);
+    _imageUrl   = DYNAMIC_CAST(NSString, dict[@"image_url"]);
+    _services   = DYNAMIC_CAST(NSDictionary, dict[@"services"]);
 
-    return !!(_name);
+    return (_name != nil);
 }
 
 
@@ -118,10 +118,10 @@
     if(![super configWithDictionary:dict])
         return NO;
 
-    _accessToken = OK_CHECK(dict[@"access_token"], NSString);
-    _accessToken = OK_CHECK(dict[@"access_secret"], NSString);
-    _dirty = [NSMutableDictionary dictionaryWithDictionary:dict[@"dirty"]];
-    _friends = [NSMutableDictionary dictionaryWithDictionary:dict[@"friends"]];
+    _accessToken = DYNAMIC_CAST(NSString, dict[@"access_token"]);
+    _accessTokenSecret = DYNAMIC_CAST(NSString, dict[@"access_secret"]);
+    _dirty = [NSMutableDictionary dictionaryWithDictionary:DYNAMIC_CAST(NSDictionary, dict[@"dirty"])];
+    _friends = [NSMutableDictionary dictionaryWithDictionary:DYNAMIC_CAST(NSDictionary, dict[@"friends"])];
     
     return [self isAccessAllowed];
 }

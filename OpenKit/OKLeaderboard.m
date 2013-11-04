@@ -39,13 +39,13 @@ static NSArray *__leaderboards = nil;
     if(![dict isKindOfClass:[NSDictionary class]])
         return NO;
 
-    self.name           = OK_CHECK(dict[@"name"], NSString);
-    self.iconUrl        = OK_CHECK(dict[@"icon_url"], NSString);
-    self.services       = OK_CHECK(dict[@"services"], NSDictionary);
-    self.leaderboardID  = [OK_CHECK(dict[@"id"], NSNumber) integerValue];
-    self.playerCount    = [OK_CHECK(dict[@"player_count"], NSNumber) unsignedIntegerValue];
+    self.name           = DYNAMIC_CAST(NSString, dict[@"name"]);
+    self.iconUrl        = DYNAMIC_CAST(NSString, dict[@"icon_url"]);
+    self.services       = DYNAMIC_CAST(NSDictionary, dict[@"services"]);
+    self.leaderboardID  = [DYNAMIC_CAST(NSNumber, dict[@"id"]) integerValue];
+    self.playerCount    = [DYNAMIC_CAST(NSNumber, dict[@"player_count"]) unsignedIntegerValue];
     
-    NSString *sortTypeString = OK_CHECK(dict[@"sort_type"], NSString);
+    NSString *sortTypeString = DYNAMIC_CAST(NSString, dict[@"sort_type"]);
     if([sortTypeString isEqualToString:@"HighValue"])
         self.sortType = OKLeaderboardSortTypeHighValue;
     else
@@ -270,7 +270,8 @@ static NSArray *__leaderboards = nil;
 {
     NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_LEADERBOARDS];
     NSArray *archive = [OKFileUtil readSecureFile:path];
-    [self configWithArray:archive];
+    if(archive)
+        [self configWithArray:archive];
 }
 
 

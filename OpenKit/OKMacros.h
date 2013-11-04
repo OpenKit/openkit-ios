@@ -55,7 +55,7 @@
 #pragma mark - Objetive-C Safety
 
 #define OK_NO_NIL(__OBJ__) ((__OBJ__)==nil ? [NSNull null] : (__OBJ__))
-#define OK_CHECK(__OBJ__, __CLASS__) ([__OBJ__ isKindOfClass:[__CLASS__ class]] ? __OBJ__ : nil)
+#define DYNAMIC_CAST(__CLASS__, __OBJ__) ((__CLASS__*)([__OBJ__ isKindOfClass:[__CLASS__ class]] ? __OBJ__ : nil))
 
 
 #pragma mark - System Versioning
