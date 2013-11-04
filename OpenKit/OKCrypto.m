@@ -222,13 +222,12 @@
     NSData *storedHash = [NSData dataWithBytes:[data bytes] length:CC_SHA256_DIGEST_LENGTH];
     NSData *hash = [self HMACSHA256:encrypted];
 
-    if([storedHash isEqualToData:hash]) {
-        return [self AES128DecryptData:encrypted];
-        
-    }else{
-        NSLog(@"ERROR: The data was modified!");
+    if(![storedHash isEqualToData:hash]) {
+        OKLogErr(@"OKCrypto: HMACSHA256 signature doesn't match.");
         return nil;
     }
+
+    return [self AES128DecryptData:encrypted];
 }
 
 @end

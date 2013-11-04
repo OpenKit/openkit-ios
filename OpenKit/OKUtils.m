@@ -30,11 +30,20 @@ id OKDecodeObj(NSData *dataIn, NSError **errOut)
 
 @implementation OKUtils
 
++ (NSString*)vendorUUID
+{
+    return [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+}
+
 + (NSString*)createUUID
 {
     return [[NSUUID UUID] UUIDString];
 }
 
++ (NSString*)bundleID
+{
+    return [[NSBundle mainBundle] bundleIdentifier];
+}
 
 + (double)timestamp
 {

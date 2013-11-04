@@ -113,7 +113,13 @@ static OKManager *__sharedInstance = nil;
         _initialized = NO;
         _client = client;
         _leaderboardListTag = OK_DEFAULT_LEADERBOARD_LIST_TAG;
-        _cryptor = [[OKCrypto alloc] initWithMasterKey:[_client consumerSecret]];
+
+        // For the crypto we generate a master key
+        NSString *masterKey = [NSString stringWithFormat:@"%@%@%@",
+                               [client consumerSecret],
+                               [OKUtils vendorUUID],
+                               [OKUtils bundleID]];
+        _cryptor = [[OKCrypto alloc] initWithMasterKey:masterKey];
     }
     return self;
 }

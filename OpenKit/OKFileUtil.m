@@ -7,6 +7,7 @@
 //
 
 #import "OKFileUtil.h"
+#import "OKUtils.h"
 #import "OKMacros.h"
 #import "OKManager.h"
 
@@ -79,18 +80,37 @@
 + (id)readSecureFile:(NSString*)path
 {
     NSParameterAssert(path);
-    
+
+    NSDictionary *packet;
     NSData *archive = [NSData dataWithContentsOfFile:path];
     if(!archive)
         return nil;
     
     NSData *decrypt = [[[OKManager sharedManager] cryptor] decryptData:archive];
     if(!decrypt) {
-        [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
-        return nil;
+        OKLogErr(@"OKFileUtils: Error in secure file. Bad encryption.");
+        goto error;
+    }
+
+    packet = [NSKeyedUnarchiver unarchiveObjectWithData:decrypt];
+    if(![packet isKindOfClass:[NSDictionary class]]) {
+        OKLogErr(@"OKFileUtils: Fail secure file. Bad format.");
+        goto error;
+    }
+
+    // validate path
+    if(![packet[@"path"] isEqualToString:[path lastPathComponent]]) {
+        OKLogErr(@"OKFileUtils: Fail secure file. Path doesn't match.");
+        goto error;
     }
     
-    return [NSKeyedUnarchiver unarchiveObjectWithData:decrypt];
+    return packet[@"data"];
+
+
+error:
+    // If security fails, we remove the file. It was modified.
+    [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+    return nil;
 }
 
 
@@ -99,7 +119,10 @@
     NSParameterAssert(path);
     NSParameterAssert(object);
 
-    NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:object];
+    NSDictionary *packet = @{@"path": [path lastPathComponent],
+                             @"data": object };
+
+    NSData *archive = [NSKeyedArchiver archivedDataWithRootObject:packet];
     NSData *encrypt = [[[OKManager sharedManager] cryptor] encryptData:archive];
     return [encrypt writeToFile:path atomically:YES];
 }

@@ -93,7 +93,7 @@
         
         OKScore *score = [[OKScore alloc] initWithLeaderboardID:[leaderboard leaderboardID]];
         NSInteger v = [[textField text] integerValue];
-        [score setScoreValue:v];
+        [score setValue:v];
 
         /*
         // Hundredths:
