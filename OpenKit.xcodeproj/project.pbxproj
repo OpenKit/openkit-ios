@@ -97,8 +97,8 @@
 		324C847D18281B10008B59B6 /* UIImageView+Openkit.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C844B18281B10008B59B6 /* UIImageView+Openkit.m */; };
 		324C848418281B1E008B59B6 /* ok_wildcard.der in Resources */ = {isa = PBXBuildFile; fileRef = 324C847E18281B1E008B59B6 /* ok_wildcard.der */; };
 		324C848518281B1E008B59B6 /* ok_wildcard.der in Resources */ = {isa = PBXBuildFile; fileRef = 324C847E18281B1E008B59B6 /* ok_wildcard.der */; };
-		324C848618281B1E008B59B6 /* OKFacebookUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C848118281B1E008B59B6 /* OKFacebookUtilities.m */; };
-		324C848718281B1E008B59B6 /* OKFacebookUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C848118281B1E008B59B6 /* OKFacebookUtilities.m */; };
+		324C848618281B1E008B59B6 /* OKFacebookPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C848118281B1E008B59B6 /* OKFacebookPlugin.m */; };
+		324C848718281B1E008B59B6 /* OKFacebookPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C848118281B1E008B59B6 /* OKFacebookPlugin.m */; };
 		324C848818281B1E008B59B6 /* OKGameCenterPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C848318281B1E008B59B6 /* OKGameCenterPlugin.m */; };
 		324C848918281B1E008B59B6 /* OKGameCenterPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C848318281B1E008B59B6 /* OKGameCenterPlugin.m */; };
 		324C84AD18281B95008B59B6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 324C849518281B8C008B59B6 /* Images.xcassets */; };
@@ -301,8 +301,8 @@
 		324C844A18281B10008B59B6 /* UIImageView+Openkit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Openkit.h"; sourceTree = "<group>"; };
 		324C844B18281B10008B59B6 /* UIImageView+Openkit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Openkit.m"; sourceTree = "<group>"; };
 		324C847E18281B1E008B59B6 /* ok_wildcard.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = ok_wildcard.der; sourceTree = "<group>"; };
-		324C848018281B1E008B59B6 /* OKFacebookUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFacebookUtilities.h; sourceTree = "<group>"; };
-		324C848118281B1E008B59B6 /* OKFacebookUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFacebookUtilities.m; sourceTree = "<group>"; };
+		324C848018281B1E008B59B6 /* OKFacebookPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFacebookPlugin.h; sourceTree = "<group>"; };
+		324C848118281B1E008B59B6 /* OKFacebookPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFacebookPlugin.m; sourceTree = "<group>"; };
 		324C848218281B1E008B59B6 /* OKGameCenterPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGameCenterPlugin.h; sourceTree = "<group>"; };
 		324C848318281B1E008B59B6 /* OKGameCenterPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKGameCenterPlugin.m; sourceTree = "<group>"; };
 		324C848C18281B8C008B59B6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -616,8 +616,8 @@
 			isa = PBXGroup;
 			children = (
 				32ACE390182826AB00A40568 /* FacebookSDK.framework */,
-				324C848018281B1E008B59B6 /* OKFacebookUtilities.h */,
-				324C848118281B1E008B59B6 /* OKFacebookUtilities.m */,
+				324C848018281B1E008B59B6 /* OKFacebookPlugin.h */,
+				324C848118281B1E008B59B6 /* OKFacebookPlugin.m */,
 				324C848218281B1E008B59B6 /* OKGameCenterPlugin.h */,
 				324C848318281B1E008B59B6 /* OKGameCenterPlugin.m */,
 			);
@@ -995,7 +995,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				324C848718281B1E008B59B6 /* OKFacebookUtilities.m in Sources */,
+				324C848718281B1E008B59B6 /* OKFacebookPlugin.m in Sources */,
 				324C848918281B1E008B59B6 /* OKGameCenterPlugin.m in Sources */,
 				324C84B018281BA2008B59B6 /* main.m in Sources */,
 				324C84AF18281B9C008B59B6 /* AppDelegate.m in Sources */,
@@ -1060,7 +1060,7 @@
 				324C84BD18281C2F008B59B6 /* main.m in Sources */,
 				324C845318281B10008B59B6 /* OKLeaderboardsListViewController.m in Sources */,
 				324C845518281B10008B59B6 /* OKProfileViewController.m in Sources */,
-				324C848618281B1E008B59B6 /* OKFacebookUtilities.m in Sources */,
+				324C848618281B1E008B59B6 /* OKFacebookPlugin.m in Sources */,
 				324C844E18281B10008B59B6 /* KGModal.m in Sources */,
 				324C845718281B10008B59B6 /* OKSocialLeaderboardViewController.m in Sources */,
 				324C844F18281B10008B59B6 /* OKBaseViewController.m in Sources */,

@@ -7,9 +7,9 @@
 //
 
 #import "AppDelegate.h"
-#import "OKFacebookUtilities.h"
-#import "OKGameCenterPlugin.h"
 #import "ViewController.h"
+//#import "OKFacebookUtilities.h"
+//#import "OKGameCenterPlugin.h"
 
 @implementation AppDelegate
 

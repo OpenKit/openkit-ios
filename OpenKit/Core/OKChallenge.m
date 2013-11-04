@@ -10,7 +10,6 @@
 #import "OKUser.h"
 #import "OKScore.h"
 #import "OKLeaderboard.h"
-#import "OKFacebookUtilities.h"
 #import "OKHelper.h"
 #import "OKUtils.h"
 #import "OKMacros.h"

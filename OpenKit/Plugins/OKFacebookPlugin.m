@@ -8,7 +8,7 @@
 
 #import <FacebookSDK/FacebookSDK.h>
 #import <FacebookSDK/FBErrorUtility.h>
-#import "OKFacebookUtilities.h"
+#import "OKFacebookPlugin.h"
 #import "OKManager.h"
 #import "OKMacros.h"
 #import "OKError.h"
