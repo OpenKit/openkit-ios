@@ -7,6 +7,7 @@
 //
 
 #include <sys/sysctl.h>
+#include <objc/message.h>
 #import "OKManager.h"
 #import "OKUser.h"
 #import "OKMacros.h"
@@ -66,25 +67,41 @@ static OKManager *__sharedInstance = nil;
 }
 
 
++ (void)injectDefaultPlugins
+{
+    // Inject facebook's plugin.
+    Class fbPlugin = NSClassFromString(@"OKFacebookPlugin");
+    if(fbPlugin)
+        objc_msgSend(fbPlugin, @selector(sharedInstance));
+
+    Class gcPlugin = NSClassFromString(@"OKFacebookPlugin");
+    gcPlugin = NSClassFromString(@"OKGameCenterPlugin");
+    if(gcPlugin)
+        objc_msgSend(gcPlugin, @selector(sharedInstance));
+
+}
+
+
 + (void)configureWithAppKey:(NSString *)appKey
                   secretKey:(NSString *)secretKey
                        host:(NSString *)host
 {
     static dispatch_once_t pred;
 
-    OKClient *client = [[OKClient alloc] init];
-    client.consumerKey = appKey;
-    client.consumerSecret = secretKey;
-    client.host = (host) ? host : OK_DEFAULT_SERVER_HOST;
+    dispatch_once(&pred, ^{
 
-    if([client isValid]) {
-        dispatch_once(&pred, ^{
-            __sharedInstance = [[OKManager alloc] initWithClient:client];
-            OKLog(@"OpenKit configured with host: %@", client.host);
-        });
-        
-        [__sharedInstance setup];
-    }
+        [self injectDefaultPlugins];
+
+        OKClient *client = [[OKClient alloc] init];
+        client.consumerKey = appKey;
+        client.consumerSecret = secretKey;
+        client.host = (host) ? host : OK_DEFAULT_SERVER_HOST;
+
+        __sharedInstance = [[OKManager alloc] initWithClient:client];
+        OKLogInfo(@"OpenKit configured with host: %@", client.host);
+    });
+
+    [__sharedInstance setup];
 }
 
 
