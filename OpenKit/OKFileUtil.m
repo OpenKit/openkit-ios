@@ -88,7 +88,7 @@
     
     NSData *decrypt = [[[OKManager sharedManager] cryptor] decryptData:archive];
     if(!decrypt) {
-        OKLogErr(@"OKFileUtils: Error in secure file. Bad encryption.");
+        OKLogErr(@"OKFileUtils: Error in secure file. Bad decryption.");
         goto error;
     }
 

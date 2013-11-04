@@ -51,6 +51,7 @@ static NSMutableArray *__providers = nil;
     OKAuthProvider *p = [OKAuthProvider providerByName:[provider serviceName]];
     if(p == nil) {
         // adding new one
+        OKLogInfo(@"OKAuthProvider: Adding provider: %@", [provider serviceName]);
         NSUInteger index = [OKAuthProvider indexForPriority:[provider priority]];
         [__providers insertObject:provider atIndex:index];
     }

@@ -132,9 +132,9 @@
 - (void)sessionStateChanged:(BOOL)status error:(NSError*)error
 {
     if(status == YES) {
-        OKLogInfo(@"GameCenterStateOpen");
+        OKLogInfo(@"GameCenterPlugin: Session is open.");
     }else{
-        OKLogInfo(@"GameCenterClosed");
+        OKLogInfo(@"GameCenterPlugin: Session is closed.");
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:OKAuthProviderUpdatedNotification object:self];
 }

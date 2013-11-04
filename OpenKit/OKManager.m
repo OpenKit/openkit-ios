@@ -114,7 +114,7 @@ static OKManager *__sharedInstance = nil;
         _client = client;
         _leaderboardListTag = OK_DEFAULT_LEADERBOARD_LIST_TAG;
 
-        // For the crypto we generate a master key
+        // We generate a master key (consumerKey+vendorUUID+bundleID)
         NSString *masterKey = [NSString stringWithFormat:@"%@%@%@",
                                [client consumerSecret],
                                [OKUtils vendorUUID],
@@ -127,7 +127,11 @@ static OKManager *__sharedInstance = nil;
 
 - (void)setup
 {
-    // Preload leaderboards from cache
+    if(_initialized) {
+        NSAssert(NO, @"Setup can no be called once the system is already initialized.");
+        return;
+    }
+
     [OKLeaderboard loadFromCache];
     [self startLogin];
 }

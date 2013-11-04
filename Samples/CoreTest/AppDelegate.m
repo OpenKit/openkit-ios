@@ -15,28 +15,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [OKFacebookPlugin sharedInstance];
-    [OKGameCenterPlugin sharedInstance];
-
-
-    
-    
-//    NSString *myAppKey = @"ySlVXskKAhallX4cUuvD";
-//    NSString *mySecretKey = @"n75ZgmPTS0CB3EVwRT73iSPLXMeU42f2WOpXKaTd";
-//    [OKManager configureWithAppKey:myAppKey secretKey:mySecretKey endpoint:@"http://api.openkit.lan:3000"];
-
     NSString *myAppKey = @"RZ8ZgjhDx1KgZCFjNDzi";
-    NSString *mySecretKey = @"xmXUCjvg6G8AqC68FYHtXnRnRFoIlVTdsypvG0jJ";
-    
+    NSString *mySecretKey = @"xmXUCjvg6G8AqC68FYHtXnRnRFoIlVTdsypvG0jJ";    
     [OKManager configureWithAppKey:myAppKey secretKey:mySecretKey];
-
-    // Set the leaderboard list tag. By default, client asks
-    // for tag = "v1". In the OpenKit dashboard, new leaderboards
-    // have a default tag of "v1" as well. You can use this
-    // tag feature to display different leaderboards in different
-    // versions of your game. Each leaderboard can have multiple tags, but the client
-    // will only display one tag.
-    [[OKManager sharedManager] setLeaderboardListTag:@"v1"];
     [[OKManager sharedManager] setDelegate:self];
     
     

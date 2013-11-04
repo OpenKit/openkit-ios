@@ -10,7 +10,6 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <CommonCrypto/CommonHMAC.h>
 #import <CommonCrypto/CommonKeyDerivation.h>
-#import <Security/Security.h>
 #import "OKCrypto.h"
 #import "OKMacros.h"
 #import "OKUtils.h"
@@ -76,6 +75,14 @@
 }
 
 
++ (NSData*)HMACSHA256:(NSData*)data key:(NSData*)key
+{
+    uint8_t digest[CC_SHA256_DIGEST_LENGTH];
+    CCHmac(kCCHmacAlgSHA256, [key bytes], [key length], [data bytes], [data length], digest);
+    return [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
+}
+
+
 + (NSString*)B64_HMACSHA1:(NSData*)data key:(NSData*)key
 {
     return [OKUtils base64Enconding:[self HMACSHA1:data key:key]];
@@ -90,14 +97,6 @@
 + (NSString*)B64_MD5:(NSData*)data
 {
     return [OKUtils base64Enconding:[self MD5:data]];
-}
-
-
-+ (NSData*)HMACSHA256:(NSData*)data key:(NSData*)key
-{
-    uint8_t digest[CC_SHA256_DIGEST_LENGTH];
-    CCHmac(kCCHmacAlgSHA256, [key bytes], [key length], [data bytes], [data length], digest);
-    return [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
 }
 
 

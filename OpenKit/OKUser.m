@@ -216,7 +216,7 @@
 - (NSDictionary*)archive
 {
     NSAssert(_accessToken, @"Access token is invalid.");
-    NSAssert(_dirty, @"Access token is invalid.");
+    NSAssert(_accessTokenSecret, @"Access token is invalid.");
 
     return @{@"access_token": _accessToken,
              @"access_secret": _accessTokenSecret,
@@ -254,9 +254,8 @@
             [params addObject:[request JSONDictionary]];
         
         // REVIEW THIS
-        NSDictionary *paramsDict = @{@"requests": params};
         [OKNetworker postToPath:@"/users"
-                     parameters:paramsDict
+                     parameters:@{@"requests": params}
                      completion:^(OKResponse *response)
          {
              NSError *error = [response error];
