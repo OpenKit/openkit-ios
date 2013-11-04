@@ -10,6 +10,7 @@
 #import "OKScore.h"
 #import "OKDBConnection.h"
 
+
 @interface OKDBScore : OKDBConnection
 
 @property(nonatomic, strong) OKScore *previousSubmittedScore;

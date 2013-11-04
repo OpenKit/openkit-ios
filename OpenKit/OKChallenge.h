@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "OKScore.h"
 
+
 @interface OKChallenge : NSObject
 
 + (void)sendPushChallengewithScorePostResponseJSON:(id)responseObject withPreviousScore:(OKScore*)previousScore;

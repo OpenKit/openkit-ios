@@ -13,7 +13,7 @@
 
 @interface OKManager (Private)
 
-+ (NSString*)secretKey;
++ (OKLocalUser*)currentUser;
 
 @end
 

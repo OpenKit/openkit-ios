@@ -10,12 +10,8 @@
 #import "OKPrivate.h"
 #import "OKRequest.h"
 
+
 #define OK_UNSUBSCRIBED_USER_ERROR_CODE 410
-
-
-typedef void (^OKNetworkerBlock)(id responseObject, NSError * error);
-static NSString *OK_SERVER_API_VERSION = @"v1";
-
 
 @implementation OKNetworker
 

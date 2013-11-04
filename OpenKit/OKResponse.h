@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface OKResponse : NSObject
 
 @property(nonatomic, readonly) id jsonObject;

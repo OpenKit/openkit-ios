@@ -46,7 +46,7 @@
 @property(nonatomic, readonly) OKCrypto *cryptor;
 @property(nonatomic, readonly) BOOL initialized;
 @property(nonatomic, strong) NSString *leaderboardListTag;
-@property(nonatomic, assign) id<OKManagerDelegate> delegate;
+@property(nonatomic, readwrite) id<OKManagerDelegate> delegate;
 
 
 + (id)sharedManager;

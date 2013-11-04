@@ -11,7 +11,7 @@
 #import "OKError.h"
 
 
-NSMutableArray *__providers = nil;
+static NSMutableArray *__providers = nil;
 
 @implementation OKAuthProvider
 

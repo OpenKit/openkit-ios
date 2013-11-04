@@ -11,8 +11,6 @@
 #import "OKMacros.h"
 #import "OKFileUtil.h"
 
-#define SCORES_CACHE_KEY @"OKLeaderboardScoresCache"
-
 
 static NSString *const kOKDBScoreName = @"Scores";
 static NSString *const kOKDBScoreVersion = @"1.0.4";
