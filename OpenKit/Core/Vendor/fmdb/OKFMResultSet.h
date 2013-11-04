@@ -14,7 +14,7 @@
 #endif
 
 @class OKFMDatabase;
-@class FMStatement;
+@class OKFMStatement;
 
 /** Represents the results of executing a query on an `<OKFMDatabase>`.
  
@@ -25,7 +25,7 @@
 
 @interface OKFMResultSet : NSObject {
     OKFMDatabase          *_parentDB;
-    FMStatement         *_statement;
+    OKFMStatement         *_statement;
     
     NSString            *_query;
     NSMutableDictionary *_columnNameToIndexMap;
@@ -43,24 +43,24 @@
 
 @property (readonly) NSMutableDictionary *columnNameToIndexMap;
 
-/** `FMStatement` used by result set. */
+/** `OKFMStatement` used by result set. */
 
-@property (atomic, retain) FMStatement *statement;
+@property (atomic, retain) OKFMStatement *statement;
 
 ///------------------------------------
 /// @name Creating and closing database
 ///------------------------------------
 
-/** Create result set from `<FMStatement>`
+/** Create result set from `<OKFMStatement>`
  
- @param statement A `<FMStatement>` to be performed
+ @param statement A `<OKFMStatement>` to be performed
  
  @param aDB A `<OKFMDatabase>` to be used
  
  @return A `OKFMResultSet` on success; `nil` on failure
  */
 
-+ (instancetype)resultSetWithStatement:(FMStatement *)statement usingParentDatabase:(OKFMDatabase*)aDB;
++ (instancetype)resultSetWithStatement:(OKFMStatement *)statement usingParentDatabase:(OKFMDatabase*)aDB;
 
 /** Close result set */
 

@@ -17,7 +17,7 @@
 @synthesize traceExecution=_traceExecution;
 
 + (instancetype)databaseWithPath:(NSString*)aPath {
-    return FMDBReturnAutoreleased([[self alloc] initWithPath:aPath]);
+    return OKFMDBReturnAutoreleased([[self alloc] initWithPath:aPath]);
 }
 
 + (NSString*)sqliteLibVersion {
@@ -54,11 +54,11 @@
 
 - (void)dealloc {
     [self close];
-    FMDBRelease(_openResultSets);
-    FMDBRelease(_cachedStatements);
-    FMDBRelease(_dateFormat);
-    FMDBRelease(_databasePath);
-    FMDBRelease(_openFunctions);
+    OKFMDBRelease(_openResultSets);
+    OKFMDBRelease(_cachedStatements);
+    OKFMDBRelease(_dateFormat);
+    OKFMDBRelease(_databasePath);
+    OKFMDBRelease(_openFunctions);
     
 #if ! __has_feature(objc_arc)
     [super dealloc];
@@ -163,7 +163,7 @@
 
 - (void)clearCachedStatements {
     
-    for (FMStatement *cachedStmt in [_cachedStatements objectEnumerator]) {
+    for (OKFMStatement *cachedStmt in [_cachedStatements objectEnumerator]) {
         [cachedStmt close];
     }
     
@@ -177,7 +177,7 @@
 - (void)closeOpenResultSets {
     
     //Copy the set so we don't get mutation errors
-    NSSet *openSetCopy = FMDBReturnAutoreleased([_openResultSets copy]);
+    NSSet *openSetCopy = OKFMDBReturnAutoreleased([_openResultSets copy]);
     for (NSValue *rsInWrappedInATastyValueMeal in openSetCopy) {
         OKFMResultSet *rs = (OKFMResultSet *)[rsInWrappedInATastyValueMeal pointerValue];
         
@@ -194,11 +194,11 @@
     [_openResultSets removeObject:setValue];
 }
 
-- (FMStatement*)cachedStatementForQuery:(NSString*)query {
+- (OKFMStatement*)cachedStatementForQuery:(NSString*)query {
     return [_cachedStatements objectForKey:query];
 }
 
-- (void)setCachedStatement:(FMStatement*)statement forQuery:(NSString*)query {
+- (void)setCachedStatement:(OKFMStatement*)statement forQuery:(NSString*)query {
     
     query = [query copy]; // in case we got handed in a mutable string...
     
@@ -206,7 +206,7 @@
     
     [_cachedStatements setObject:statement forKey:query];
     
-    FMDBRelease(query);
+    OKFMDBRelease(query);
 }
 
 
@@ -257,10 +257,10 @@
 
 + (NSDateFormatter *)storeableDateFormat:(NSString *)format {
     
-    NSDateFormatter *result = FMDBReturnAutoreleased([[NSDateFormatter alloc] init]);
+    NSDateFormatter *result = OKFMDBReturnAutoreleased([[NSDateFormatter alloc] init]);
     result.dateFormat = format;
     result.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-    result.locale = FMDBReturnAutoreleased([[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]);
+    result.locale = OKFMDBReturnAutoreleased([[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]);
     return result;
 }
 
@@ -270,8 +270,8 @@
 }
 
 - (void)setDateFormat:(NSDateFormatter *)format {
-    FMDBAutorelease(_dateFormat);
-    _dateFormat = FMDBReturnRetained(format);
+    OKFMDBAutorelease(_dateFormat);
+    _dateFormat = OKFMDBReturnRetained(format);
 }
 
 - (NSDate *)dateFromString:(NSString *)s {
@@ -578,7 +578,7 @@
     
     int rc                  = 0x00;
     sqlite3_stmt *pStmt     = 0x00;
-    FMStatement *statement  = 0x00;
+    OKFMStatement *statement  = 0x00;
     OKFMResultSet *rs         = 0x00;
     
     if (_traceExecution && sql) {
@@ -648,7 +648,7 @@
             // Get the index for the parameter name.
             int namedIdx = sqlite3_bind_parameter_index(pStmt, [parameterName UTF8String]);
             
-            FMDBRelease(parameterName);
+            OKFMDBRelease(parameterName);
             
             if (namedIdx > 0) {
                 // Standard binding from here.
@@ -698,10 +698,10 @@
         return nil;
     }
     
-    FMDBRetain(statement); // to balance the release below
+    OKFMDBRetain(statement); // to balance the release below
     
     if (!statement) {
-        statement = [[FMStatement alloc] init];
+        statement = [[OKFMStatement alloc] init];
         [statement setStatement:pStmt];
         
         if (_shouldCacheStatements && sql) {
@@ -718,7 +718,7 @@
     
     [statement setUseCount:[statement useCount] + 1];
     
-    FMDBRelease(statement); 
+    OKFMDBRelease(statement); 
     
     _isExecutingStatement = NO;
     
@@ -771,7 +771,7 @@
     
     int rc                   = 0x00;
     sqlite3_stmt *pStmt      = 0x00;
-    FMStatement *cachedStmt  = 0x00;
+    OKFMStatement *cachedStmt  = 0x00;
     
     if (_traceExecution && sql) {
         NSLog(@"%@ executeUpdate: %@", self, sql);
@@ -845,7 +845,7 @@
             // Get the index for the parameter name.
             int namedIdx = sqlite3_bind_parameter_index(pStmt, [parameterName UTF8String]);
             
-            FMDBRelease(parameterName);
+            OKFMDBRelease(parameterName);
             
             if (namedIdx > 0) {
                 // Standard binding from here.
@@ -955,13 +955,13 @@
     }
     
     if (_shouldCacheStatements && !cachedStmt) {
-        cachedStmt = [[FMStatement alloc] init];
+        cachedStmt = [[OKFMStatement alloc] init];
         
         [cachedStmt setStatement:pStmt];
         
         [self setCachedStatement:cachedStmt forQuery:sql];
         
-        FMDBRelease(cachedStmt);
+        OKFMDBRelease(cachedStmt);
     }
     
     int closeErrorCode;
@@ -1168,8 +1168,8 @@
     }
 }
 
-void FMDBBlockSQLiteCallBackFunction(sqlite3_context *context, int argc, sqlite3_value **argv);
-void FMDBBlockSQLiteCallBackFunction(sqlite3_context *context, int argc, sqlite3_value **argv) {
+void OKFMDBBlockSQLiteCallBackFunction(sqlite3_context *context, int argc, sqlite3_value **argv);
+void OKFMDBBlockSQLiteCallBackFunction(sqlite3_context *context, int argc, sqlite3_value **argv) {
 #if ! __has_feature(objc_arc)
     void (^block)(sqlite3_context *context, int argc, sqlite3_value **argv) = (id)sqlite3_user_data(context);
 #else
@@ -1185,15 +1185,15 @@ void FMDBBlockSQLiteCallBackFunction(sqlite3_context *context, int argc, sqlite3
         _openFunctions = [NSMutableSet new];
     }
     
-    id b = FMDBReturnAutoreleased([block copy]);
+    id b = OKFMDBReturnAutoreleased([block copy]);
     
     [_openFunctions addObject:b];
     
     /* I tried adding custom functions to release the block when the connection is destroyed- but they seemed to never be called, so we use _openFunctions to store the values instead. */
 #if ! __has_feature(objc_arc)
-    sqlite3_create_function([self sqliteHandle], [name UTF8String], count, SQLITE_UTF8, (void*)b, &FMDBBlockSQLiteCallBackFunction, 0x00, 0x00);
+    sqlite3_create_function([self sqliteHandle], [name UTF8String], count, SQLITE_UTF8, (void*)b, &OKFMDBBlockSQLiteCallBackFunction, 0x00, 0x00);
 #else
-    sqlite3_create_function([self sqliteHandle], [name UTF8String], count, SQLITE_UTF8, (__bridge void*)b, &FMDBBlockSQLiteCallBackFunction, 0x00, 0x00);
+    sqlite3_create_function([self sqliteHandle], [name UTF8String], count, SQLITE_UTF8, (__bridge void*)b, &OKFMDBBlockSQLiteCallBackFunction, 0x00, 0x00);
 #endif
 }
 
@@ -1201,7 +1201,7 @@ void FMDBBlockSQLiteCallBackFunction(sqlite3_context *context, int argc, sqlite3
 
 
 
-@implementation FMStatement
+@implementation OKFMStatement
 @synthesize statement=_statement;
 @synthesize query=_query;
 @synthesize useCount=_useCount;
@@ -1213,7 +1213,7 @@ void FMDBBlockSQLiteCallBackFunction(sqlite3_context *context, int argc, sqlite3
 
 - (void)dealloc {
     [self close];
-    FMDBRelease(_query);
+    OKFMDBRelease(_query);
 #if ! __has_feature(objc_arc)
     [super dealloc];
 #endif

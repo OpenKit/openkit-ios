@@ -7,7 +7,7 @@
 //
 // --------------------------------------------------------------------
 //
-// This is a very light wrapper over FMDB.  It creates sqlite databases in the
+// This is a very light wrapper over OKFMDB.  It creates sqlite databases in the
 // ApplicationSupport directory. Note, this class is configured to _not_ backup
 // contents in iCloud.  If a user changes device, contents of this cache will
 // not be found.

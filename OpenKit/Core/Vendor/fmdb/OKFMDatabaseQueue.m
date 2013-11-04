@@ -25,7 +25,7 @@
     
     OKFMDatabaseQueue *q = [[self alloc] initWithPath:aPath];
     
-    FMDBAutorelease(q);
+    OKFMDBAutorelease(q);
     
     return q;
 }
@@ -37,15 +37,15 @@
     if (self != nil) {
         
         _db = [OKFMDatabase databaseWithPath:aPath];
-        FMDBRetain(_db);
+        OKFMDBRetain(_db);
         
         if (![_db open]) {
             NSLog(@"Could not create database queue for path %@", aPath);
-            FMDBRelease(self);
+            OKFMDBRelease(self);
             return 0x00;
         }
         
-        _path = FMDBReturnRetained(aPath);
+        _path = OKFMDBReturnRetained(aPath);
         
         _queue = dispatch_queue_create([[NSString stringWithFormat:@"fmdb.%@", self] UTF8String], NULL);
     }
@@ -55,11 +55,11 @@
 
 - (void)dealloc {
     
-    FMDBRelease(_db);
-    FMDBRelease(_path);
+    OKFMDBRelease(_db);
+    OKFMDBRelease(_path);
     
     if (_queue) {
-        FMDBDispatchQueueRelease(_queue);
+        OKFMDBDispatchQueueRelease(_queue);
         _queue = 0x00;
     }
 #if ! __has_feature(objc_arc)
@@ -68,22 +68,22 @@
 }
 
 - (void)close {
-    FMDBRetain(self);
+    OKFMDBRetain(self);
     dispatch_sync(_queue, ^() { 
         [_db close];
-        FMDBRelease(_db);
+        OKFMDBRelease(_db);
         _db = 0x00;
     });
-    FMDBRelease(self);
+    OKFMDBRelease(self);
 }
 
 - (OKFMDatabase*)database {
     if (!_db) {
-        _db = FMDBReturnRetained([OKFMDatabase databaseWithPath:_path]);
+        _db = OKFMDBReturnRetained([OKFMDatabase databaseWithPath:_path]);
         
         if (![_db open]) {
             NSLog(@"OKFMDatabaseQueue could not reopen database for path %@", _path);
-            FMDBRelease(_db);
+            OKFMDBRelease(_db);
             _db  = 0x00;
             return 0x00;
         }
@@ -93,7 +93,7 @@
 }
 
 - (void)inDatabase:(void (^)(OKFMDatabase *db))block {
-    FMDBRetain(self);
+    OKFMDBRetain(self);
     
     dispatch_sync(_queue, ^() {
         
@@ -105,12 +105,12 @@
         }
     });
     
-    FMDBRelease(self);
+    OKFMDBRelease(self);
 }
 
 
 - (void)beginTransaction:(BOOL)useDeferred withBlock:(void (^)(OKFMDatabase *db, BOOL *rollback))block {
-    FMDBRetain(self);
+    OKFMDBRetain(self);
     dispatch_sync(_queue, ^() { 
         
         BOOL shouldRollback = NO;
@@ -132,7 +132,7 @@
         }
     });
     
-    FMDBRelease(self);
+    OKFMDBRelease(self);
 }
 
 - (void)inDeferredTransaction:(void (^)(OKFMDatabase *db, BOOL *rollback))block {
@@ -148,7 +148,7 @@
     
     static unsigned long savePointIdx = 0;
     __block NSError *err = 0x00;
-    FMDBRetain(self);
+    OKFMDBRetain(self);
     dispatch_sync(_queue, ^() { 
         
         NSString *name = [NSString stringWithFormat:@"savePoint%ld", savePointIdx++];
@@ -168,7 +168,7 @@
             
         }
     });
-    FMDBRelease(self);
+    OKFMDBRelease(self);
     return err;
 }
 #endif

@@ -24,7 +24,7 @@
 
 
 + (instancetype)databasePoolWithPath:(NSString*)aPath {
-    return FMDBReturnAutoreleased([[self alloc] initWithPath:aPath]);
+    return OKFMDBReturnAutoreleased([[self alloc] initWithPath:aPath]);
 }
 
 - (instancetype)initWithPath:(NSString*)aPath {
@@ -34,8 +34,8 @@
     if (self != nil) {
         _path               = [aPath copy];
         _lockQueue          = dispatch_queue_create([[NSString stringWithFormat:@"fmdb.%@", self] UTF8String], NULL);
-        _databaseInPool     = FMDBReturnRetained([NSMutableArray array]);
-        _databaseOutPool    = FMDBReturnRetained([NSMutableArray array]);
+        _databaseInPool     = OKFMDBReturnRetained([NSMutableArray array]);
+        _databaseOutPool    = OKFMDBReturnRetained([NSMutableArray array]);
     }
     
     return self;
@@ -44,12 +44,12 @@
 - (void)dealloc {
     
     _delegate = 0x00;
-    FMDBRelease(_path);
-    FMDBRelease(_databaseInPool);
-    FMDBRelease(_databaseOutPool);
+    OKFMDBRelease(_path);
+    OKFMDBRelease(_databaseInPool);
+    OKFMDBRelease(_databaseOutPool);
     
     if (_lockQueue) {
-        FMDBDispatchQueueRelease(_lockQueue);
+        OKFMDBDispatchQueueRelease(_lockQueue);
         _lockQueue = 0x00;
     }
 #if ! __has_feature(objc_arc)

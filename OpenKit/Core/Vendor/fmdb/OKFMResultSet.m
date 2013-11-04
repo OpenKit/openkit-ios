@@ -11,14 +11,14 @@
 @synthesize query=_query;
 @synthesize statement=_statement;
 
-+ (instancetype)resultSetWithStatement:(FMStatement *)statement usingParentDatabase:(OKFMDatabase*)aDB {
++ (instancetype)resultSetWithStatement:(OKFMStatement *)statement usingParentDatabase:(OKFMDatabase*)aDB {
     
     OKFMResultSet *rs = [[OKFMResultSet alloc] init];
     
     [rs setStatement:statement];
     [rs setParentDB:aDB];
     
-    return FMDBReturnAutoreleased(rs);
+    return OKFMDBReturnAutoreleased(rs);
 }
 
 - (void)finalize {
@@ -29,10 +29,10 @@
 - (void)dealloc {
     [self close];
     
-    FMDBRelease(_query);
+    OKFMDBRelease(_query);
     _query = nil;
     
-    FMDBRelease(_columnNameToIndexMap);
+    OKFMDBRelease(_columnNameToIndexMap);
     _columnNameToIndexMap = nil;
     
 #if ! __has_feature(objc_arc)
@@ -42,7 +42,7 @@
 
 - (void)close {
     [_statement reset];
-    FMDBRelease(_statement);
+    OKFMDBRelease(_statement);
     _statement = nil;
     
     // we don't need this anymore... (i think)
@@ -103,7 +103,7 @@
             [dict setObject:objectValue forKey:columnName];
         }
         
-        return FMDBReturnAutoreleased([dict copy]);
+        return OKFMDBReturnAutoreleased([dict copy]);
     }
     else {
         NSLog(@"Warning: There seem to be no columns in this set.");
