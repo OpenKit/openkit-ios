@@ -14,14 +14,11 @@
 		324C830818281A9D008B59B6 /* libOpenKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CB16CB6209004248F9 /* libOpenKit.a */; };
 		324C830918281A9D008B59B6 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0EA16CB74DF00E8F185 /* libsqlite3.dylib */; };
 		324C830A18281A9D008B59B6 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
-		324C830B18281A9D008B59B6 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0E816CB74D300E8F185 /* Twitter.framework */; };
 		324C830C18281A9D008B59B6 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD025EC17A8A1A7001ECD84 /* MessageUI.framework */; };
 		324C830D18281A9D008B59B6 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0E616CB74CB00E8F185 /* Security.framework */; };
 		324C830E18281A9D008B59B6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0E416CB74B000E8F185 /* QuartzCore.framework */; };
-		324C830F18281A9D008B59B6 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0E216CB74A200E8F185 /* AdSupport.framework */; };
 		324C831018281A9D008B59B6 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0DD16CB743600E8F185 /* Accounts.framework */; };
 		324C831118281A9D008B59B6 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0DB16CB742500E8F185 /* Social.framework */; };
-		324C831218281A9D008B59B6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0D716CB735F00E8F185 /* MobileCoreServices.framework */; };
 		324C831318281A9D008B59B6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0D516CB732200E8F185 /* SystemConfiguration.framework */; };
 		324C831418281A9D008B59B6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
 		324C831518281A9D008B59B6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05016CB698C00E8F185 /* UIKit.framework */; };
@@ -117,14 +114,11 @@
 		3284E16416CE4AFC00624827 /* OKUnityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */; };
 		3284E16516CE4AFE00624827 /* OKBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243AFE16CDE3C80077EDC8 /* OKBridge.m */; };
 		3284E16616CE4B0400624827 /* libmono.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32243B0416CDE3EF0077EDC8 /* libmono.0.dylib */; };
-		3295C14A1819D76F0044783E /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0E816CB74D300E8F185 /* Twitter.framework */; };
 		3295C14B1819D76F0044783E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD025EC17A8A1A7001ECD84 /* MessageUI.framework */; };
 		3295C14C1819D76F0044783E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0E616CB74CB00E8F185 /* Security.framework */; };
 		3295C14D1819D76F0044783E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0E416CB74B000E8F185 /* QuartzCore.framework */; };
-		3295C14E1819D76F0044783E /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0E216CB74A200E8F185 /* AdSupport.framework */; };
 		3295C14F1819D76F0044783E /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0DD16CB743600E8F185 /* Accounts.framework */; };
 		3295C1501819D76F0044783E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0DB16CB742500E8F185 /* Social.framework */; };
-		3295C1511819D76F0044783E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0D716CB735F00E8F185 /* MobileCoreServices.framework */; };
 		3295C1521819D76F0044783E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0D516CB732200E8F185 /* SystemConfiguration.framework */; };
 		3295C1531819D76F0044783E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05016CB698C00E8F185 /* UIKit.framework */; };
 		3295C1541819D76F0044783E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05316CB698C00E8F185 /* CoreGraphics.framework */; };
@@ -140,14 +134,11 @@
 		32CCB723181B1A34000193D5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05016CB698C00E8F185 /* UIKit.framework */; };
 		32CCB77A181B1ACC000193D5 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0EA16CB74DF00E8F185 /* libsqlite3.dylib */; };
 		32CCB77B181B1ACC000193D5 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
-		32CCB77C181B1ACC000193D5 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0E816CB74D300E8F185 /* Twitter.framework */; };
 		32CCB77D181B1ACC000193D5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CD025EC17A8A1A7001ECD84 /* MessageUI.framework */; };
 		32CCB77E181B1ACC000193D5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0E616CB74CB00E8F185 /* Security.framework */; };
 		32CCB77F181B1ACC000193D5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0E416CB74B000E8F185 /* QuartzCore.framework */; };
-		32CCB780181B1ACC000193D5 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0E216CB74A200E8F185 /* AdSupport.framework */; };
 		32CCB781181B1ACC000193D5 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0DD16CB743600E8F185 /* Accounts.framework */; };
 		32CCB782181B1ACC000193D5 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0DB16CB742500E8F185 /* Social.framework */; };
-		32CCB783181B1ACC000193D5 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0D716CB735F00E8F185 /* MobileCoreServices.framework */; };
 		32CCB784181B1ACC000193D5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0D516CB732200E8F185 /* SystemConfiguration.framework */; };
 		32CCB78B181B23F8000193D5 /* libOpenKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CB16CB6209004248F9 /* libOpenKit.a */; };
 		445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
@@ -345,13 +336,10 @@
 		32CAD05016CB698C00E8F185 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		32CAD05316CB698C00E8F185 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CAD0D516CB732200E8F185 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		32CAD0D716CB735F00E8F185 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		32CAD0DB16CB742500E8F185 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		32CAD0DD16CB743600E8F185 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
-		32CAD0E216CB74A200E8F185 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		32CAD0E416CB74B000E8F185 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		32CAD0E616CB74CB00E8F185 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		32CAD0E816CB74D300E8F185 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		32CAD0EA16CB74DF00E8F185 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		32CCB720181B1A34000193D5 /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		445B3BFB1767F5D300952456 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -374,15 +362,12 @@
 				324C830818281A9D008B59B6 /* libOpenKit.a in Frameworks */,
 				324C830918281A9D008B59B6 /* libsqlite3.dylib in Frameworks */,
 				324C830A18281A9D008B59B6 /* GameKit.framework in Frameworks */,
-				324C830B18281A9D008B59B6 /* Twitter.framework in Frameworks */,
 				324C830C18281A9D008B59B6 /* MessageUI.framework in Frameworks */,
 				324C830D18281A9D008B59B6 /* Security.framework in Frameworks */,
 				324C830E18281A9D008B59B6 /* QuartzCore.framework in Frameworks */,
-				324C830F18281A9D008B59B6 /* AdSupport.framework in Frameworks */,
 				32ACE392182826AC00A40568 /* FacebookSDK.framework in Frameworks */,
 				324C831018281A9D008B59B6 /* Accounts.framework in Frameworks */,
 				324C831118281A9D008B59B6 /* Social.framework in Frameworks */,
-				324C831218281A9D008B59B6 /* MobileCoreServices.framework in Frameworks */,
 				324C831318281A9D008B59B6 /* SystemConfiguration.framework in Frameworks */,
 				324C831418281A9D008B59B6 /* Foundation.framework in Frameworks */,
 				324C831518281A9D008B59B6 /* UIKit.framework in Frameworks */,
@@ -395,14 +380,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */,
-				3295C14A1819D76F0044783E /* Twitter.framework in Frameworks */,
 				3295C14B1819D76F0044783E /* MessageUI.framework in Frameworks */,
 				3295C14C1819D76F0044783E /* Security.framework in Frameworks */,
 				3295C14D1819D76F0044783E /* QuartzCore.framework in Frameworks */,
-				3295C14E1819D76F0044783E /* AdSupport.framework in Frameworks */,
 				3295C14F1819D76F0044783E /* Accounts.framework in Frameworks */,
 				3295C1501819D76F0044783E /* Social.framework in Frameworks */,
-				3295C1511819D76F0044783E /* MobileCoreServices.framework in Frameworks */,
 				3295C1521819D76F0044783E /* SystemConfiguration.framework in Frameworks */,
 				326FD0CF16CB6209004248F9 /* Foundation.framework in Frameworks */,
 				3295C1531819D76F0044783E /* UIKit.framework in Frameworks */,
@@ -425,15 +407,12 @@
 				32CCB78B181B23F8000193D5 /* libOpenKit.a in Frameworks */,
 				32CCB77A181B1ACC000193D5 /* libsqlite3.dylib in Frameworks */,
 				32CCB77B181B1ACC000193D5 /* GameKit.framework in Frameworks */,
-				32CCB77C181B1ACC000193D5 /* Twitter.framework in Frameworks */,
 				32CCB77D181B1ACC000193D5 /* MessageUI.framework in Frameworks */,
 				32CCB77E181B1ACC000193D5 /* Security.framework in Frameworks */,
 				32CCB77F181B1ACC000193D5 /* QuartzCore.framework in Frameworks */,
-				32CCB780181B1ACC000193D5 /* AdSupport.framework in Frameworks */,
 				32ACE391182826AC00A40568 /* FacebookSDK.framework in Frameworks */,
 				32CCB781181B1ACC000193D5 /* Accounts.framework in Frameworks */,
 				32CCB782181B1ACC000193D5 /* Social.framework in Frameworks */,
-				32CCB783181B1ACC000193D5 /* MobileCoreServices.framework in Frameworks */,
 				32CCB784181B1ACC000193D5 /* SystemConfiguration.framework in Frameworks */,
 				32CCB721181B1A34000193D5 /* Foundation.framework in Frameworks */,
 				32CCB723181B1A34000193D5 /* UIKit.framework in Frameworks */,
@@ -712,14 +691,11 @@
 			children = (
 				32CAD0EA16CB74DF00E8F185 /* libsqlite3.dylib */,
 				445B3BFB1767F5D300952456 /* GameKit.framework */,
-				32CAD0E816CB74D300E8F185 /* Twitter.framework */,
 				2CD025EC17A8A1A7001ECD84 /* MessageUI.framework */,
 				32CAD0E616CB74CB00E8F185 /* Security.framework */,
 				32CAD0E416CB74B000E8F185 /* QuartzCore.framework */,
-				32CAD0E216CB74A200E8F185 /* AdSupport.framework */,
 				32CAD0DD16CB743600E8F185 /* Accounts.framework */,
 				32CAD0DB16CB742500E8F185 /* Social.framework */,
-				32CAD0D716CB735F00E8F185 /* MobileCoreServices.framework */,
 				32CAD0D516CB732200E8F185 /* SystemConfiguration.framework */,
 				326FD0CE16CB6209004248F9 /* Foundation.framework */,
 				32CAD05016CB698C00E8F185 /* UIKit.framework */,
