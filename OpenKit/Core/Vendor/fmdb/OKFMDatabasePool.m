@@ -1,23 +1,23 @@
 //
-//  FMDatabasePool.m
+//  OKFMDatabasePool.m
 //  fmdb
 //
 //  Created by August Mueller on 6/22/11.
 //  Copyright 2011 Flying Meat Inc. All rights reserved.
 //
 
-#import "FMDatabasePool.h"
-#import "FMDatabase.h"
+#import "OKFMDatabasePool.h"
+#import "OKFMDatabase.h"
 
-@interface FMDatabasePool()
+@interface OKFMDatabasePool()
 
-- (void)pushDatabaseBackInPool:(FMDatabase*)db;
-- (FMDatabase*)db;
+- (void)pushDatabaseBackInPool:(OKFMDatabase*)db;
+- (OKFMDatabase*)db;
 
 @end
 
 
-@implementation FMDatabasePool
+@implementation OKFMDatabasePool
 @synthesize path=_path;
 @synthesize delegate=_delegate;
 @synthesize maximumNumberOfDatabasesToCreate=_maximumNumberOfDatabasesToCreate;
@@ -62,7 +62,7 @@
     dispatch_sync(_lockQueue, aBlock);
 }
 
-- (void)pushDatabaseBackInPool:(FMDatabase*)db {
+- (void)pushDatabaseBackInPool:(OKFMDatabase*)db {
     
     if (!db) { // db can be null if we set an upper bound on the # of databases to create.
         return;
@@ -71,7 +71,7 @@
     [self executeLocked:^() {
         
         if ([_databaseInPool containsObject:db]) {
-            [[NSException exceptionWithName:@"Database already in pool" reason:@"The FMDatabase being put back into the pool is already present in the pool" userInfo:nil] raise];
+            [[NSException exceptionWithName:@"Database already in pool" reason:@"The OKFMDatabase being put back into the pool is already present in the pool" userInfo:nil] raise];
         }
         
         [_databaseInPool addObject:db];
@@ -80,9 +80,9 @@
     }];
 }
 
-- (FMDatabase*)db {
+- (OKFMDatabase*)db {
     
-    __block FMDatabase *db;
+    __block OKFMDatabase *db;
     
     [self executeLocked:^() {
         db = [_databaseInPool lastObject];
@@ -102,7 +102,7 @@
                 }
             }
             
-            db = [FMDatabase databaseWithPath:_path];
+            db = [OKFMDatabase databaseWithPath:_path];
         }
         
         //This ensures that the db is opened before returning
@@ -166,20 +166,20 @@
     }];
 }
 
-- (void)inDatabase:(void (^)(FMDatabase *db))block {
+- (void)inDatabase:(void (^)(OKFMDatabase *db))block {
     
-    FMDatabase *db = [self db];
+    OKFMDatabase *db = [self db];
     
     block(db);
     
     [self pushDatabaseBackInPool:db];
 }
 
-- (void)beginTransaction:(BOOL)useDeferred withBlock:(void (^)(FMDatabase *db, BOOL *rollback))block {
+- (void)beginTransaction:(BOOL)useDeferred withBlock:(void (^)(OKFMDatabase *db, BOOL *rollback))block {
     
     BOOL shouldRollback = NO;
     
-    FMDatabase *db = [self db];
+    OKFMDatabase *db = [self db];
     
     if (useDeferred) {
         [db beginDeferredTransaction];
@@ -201,15 +201,15 @@
     [self pushDatabaseBackInPool:db];
 }
 
-- (void)inDeferredTransaction:(void (^)(FMDatabase *db, BOOL *rollback))block {
+- (void)inDeferredTransaction:(void (^)(OKFMDatabase *db, BOOL *rollback))block {
     [self beginTransaction:YES withBlock:block];
 }
 
-- (void)inTransaction:(void (^)(FMDatabase *db, BOOL *rollback))block {
+- (void)inTransaction:(void (^)(OKFMDatabase *db, BOOL *rollback))block {
     [self beginTransaction:NO withBlock:block];
 }
 #if SQLITE_VERSION_NUMBER >= 3007000
-- (NSError*)inSavePoint:(void (^)(FMDatabase *db, BOOL *rollback))block {
+- (NSError*)inSavePoint:(void (^)(OKFMDatabase *db, BOOL *rollback))block {
     
     static unsigned long savePointIdx = 0;
     
@@ -217,7 +217,7 @@
     
     BOOL shouldRollback = NO;
     
-    FMDatabase *db = [self db];
+    OKFMDatabase *db = [self db];
     
     NSError *err = 0x00;
     

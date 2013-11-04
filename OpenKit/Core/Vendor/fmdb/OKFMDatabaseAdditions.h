@@ -1,5 +1,5 @@
 //
-//  FMDatabaseAdditions.h
+//  OKFMDatabaseAdditions.h
 //  fmdb
 //
 //  Created by August Mueller on 10/30/05.
@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-/** Category of additions for `<FMDatabase>` class.
+/** Category of additions for `<OKFMDatabase>` class.
  
  ### See also
 
- - `<FMDatabase>`
+ - `<OKFMDatabase>`
  */
 
-@interface FMDatabase (FMDatabaseAdditions)
+@interface OKFMDatabase (OKFMDatabaseAdditions)
 
 ///----------------------------------------
 /// @name Return results of SQL to variable
@@ -120,12 +120,12 @@
  - `rootpage` - The page number of the root b-tree page for tables and indices
  - `sql` - The SQL that created the entity
 
- @return `FMResultSet` of schema; `nil` on error.
+ @return `OKFMResultSet` of schema; `nil` on error.
  
  @see [SQLite File Format](http://www.sqlite.org/fileformat.html)
  */
 
-- (FMResultSet*)getSchema;
+- (OKFMResultSet*)getSchema;
 
 /** The schema of the database.
 
@@ -144,12 +144,12 @@
 
  @param tableName The name of the table for whom the schema will be returned.
  
- @return `FMResultSet` of schema; `nil` on error.
+ @return `OKFMResultSet` of schema; `nil` on error.
  
  @see [table_info](http://www.sqlite.org/pragma.html#pragma_table_info)
  */
 
-- (FMResultSet*)getTableSchema:(NSString*)tableName;
+- (OKFMResultSet*)getTableSchema:(NSString*)tableName;
 
 /** Test to see if particular column exists for particular table in database
  

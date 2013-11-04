@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "sqlite3.h"
-#import "FMResultSet.h"
-#import "FMDatabasePool.h"
+#import "OKFMResultSet.h"
+#import "OKFMDatabasePool.h"
 
 
 #if ! __has_feature(objc_arc)
@@ -54,13 +54,13 @@
  ### Usage
  The three main classes in FMDB are:
 
- - `FMDatabase` - Represents a single SQLite database.  Used for executing SQL statements.
- - `<FMResultSet>` - Represents the results of executing a query on an `FMDatabase`.
- - `<FMDatabaseQueue>` - If you want to perform queries and updates on multiple threads, you'll want to use this class.
+ - `OKFMDatabase` - Represents a single SQLite database.  Used for executing SQL statements.
+ - `<OKFMResultSet>` - Represents the results of executing a query on an `OKFMDatabase`.
+ - `<OKFMDatabaseQueue>` - If you want to perform queries and updates on multiple threads, you'll want to use this class.
 
  ### See also
  
- - `<FMDatabasePool>` - A pool of `FMDatabase` objects.
+ - `<OKFMDatabasePool>` - A pool of `OKFMDatabase` objects.
  - `<FMStatement>` - A wrapper for `sqlite_stmt`.
  
  ### External links
@@ -70,11 +70,11 @@
  - [FMDB mailing list](http://groups.google.com/group/fmdb)
  - [SQLite FAQ](http://www.sqlite.org/faq.html)
  
- @warning Do not instantiate a single `FMDatabase` object and use it across multiple threads. Instead, use `<FMDatabaseQueue>`.
+ @warning Do not instantiate a single `OKFMDatabase` object and use it across multiple threads. Instead, use `<OKFMDatabaseQueue>`.
 
  */
 
-@interface FMDatabase : NSObject  {
+@interface OKFMDatabase : NSObject  {
     
     sqlite3*            _db;
     NSString*           _databasePath;
@@ -126,57 +126,57 @@
 /// @name Initialization
 ///---------------------
 
-/** Create a `FMDatabase` object.
+/** Create a `OKFMDatabase` object.
  
- An `FMDatabase` is created with a path to a SQLite database file.  This path can be one of these three:
+ An `OKFMDatabase` is created with a path to a SQLite database file.  This path can be one of these three:
 
  1. A file system path.  The file does not have to exist on disk.  If it does not exist, it is created for you.
- 2. An empty string (`@""`).  An empty database is created at a temporary location.  This database is deleted with the `FMDatabase` connection is closed.
- 3. `nil`.  An in-memory database is created.  This database will be destroyed with the `FMDatabase` connection is closed.
+ 2. An empty string (`@""`).  An empty database is created at a temporary location.  This database is deleted with the `OKFMDatabase` connection is closed.
+ 3. `nil`.  An in-memory database is created.  This database will be destroyed with the `OKFMDatabase` connection is closed.
 
  For example, to create/open a database in your Mac OS X `tmp` folder:
 
-    FMDatabase *db = [FMDatabase databaseWithPath:@"/tmp/tmp.db"];
+    OKFMDatabase *db = [OKFMDatabase databaseWithPath:@"/tmp/tmp.db"];
 
  Or, in iOS, you might open a database in the app's `Documents` directory:
 
     NSString *docsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString *dbPath   = [docsPath stringByAppendingPathComponent:@"test.db"];
-    FMDatabase *db     = [FMDatabase databaseWithPath:dbPath];
+    OKFMDatabase *db     = [OKFMDatabase databaseWithPath:dbPath];
 
  (For more information on temporary and in-memory databases, read the sqlite documentation on the subject: [http://www.sqlite.org/inmemorydb.html](http://www.sqlite.org/inmemorydb.html))
 
  @param inPath Path of database file
 
- @return `FMDatabase` object if successful; `nil` if failure.
+ @return `OKFMDatabase` object if successful; `nil` if failure.
 
  */
 
 + (instancetype)databaseWithPath:(NSString*)inPath;
 
-/** Initialize a `FMDatabase` object.
+/** Initialize a `OKFMDatabase` object.
  
- An `FMDatabase` is created with a path to a SQLite database file.  This path can be one of these three:
+ An `OKFMDatabase` is created with a path to a SQLite database file.  This path can be one of these three:
 
  1. A file system path.  The file does not have to exist on disk.  If it does not exist, it is created for you.
- 2. An empty string (`@""`).  An empty database is created at a temporary location.  This database is deleted with the `FMDatabase` connection is closed.
- 3. `nil`.  An in-memory database is created.  This database will be destroyed with the `FMDatabase` connection is closed.
+ 2. An empty string (`@""`).  An empty database is created at a temporary location.  This database is deleted with the `OKFMDatabase` connection is closed.
+ 3. `nil`.  An in-memory database is created.  This database will be destroyed with the `OKFMDatabase` connection is closed.
 
  For example, to create/open a database in your Mac OS X `tmp` folder:
 
-    FMDatabase *db = [FMDatabase databaseWithPath:@"/tmp/tmp.db"];
+    OKFMDatabase *db = [OKFMDatabase databaseWithPath:@"/tmp/tmp.db"];
 
  Or, in iOS, you might open a database in the app's `Documents` directory:
 
     NSString *docsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString *dbPath   = [docsPath stringByAppendingPathComponent:@"test.db"];
-    FMDatabase *db     = [FMDatabase databaseWithPath:dbPath];
+    OKFMDatabase *db     = [OKFMDatabase databaseWithPath:dbPath];
 
  (For more information on temporary and in-memory databases, read the sqlite documentation on the subject: [http://www.sqlite.org/inmemorydb.html](http://www.sqlite.org/inmemorydb.html))
 
  @param inPath Path of database file
  
- @return `FMDatabase` object if successful; `nil` if failure.
+ @return `OKFMDatabase` object if successful; `nil` if failure.
 
  */
 
@@ -382,9 +382,9 @@
 
 /** Execute select statement
 
- Executing queries returns an `<FMResultSet>` object if successful, and `nil` upon failure.  Like executing updates, there is a variant that accepts an `NSError **` parameter.  Otherwise you should use the `<lastErrorMessage>` and `<lastErrorMessage>` methods to determine why a query failed.
+ Executing queries returns an `<OKFMResultSet>` object if successful, and `nil` upon failure.  Like executing updates, there is a variant that accepts an `NSError **` parameter.  Otherwise you should use the `<lastErrorMessage>` and `<lastErrorMessage>` methods to determine why a query failed.
  
- In order to iterate through the results of your query, you use a `while()` loop.  You also need to "step" (via `<[FMResultSet next]>`) from one record to the other.
+ In order to iterate through the results of your query, you use a `while()` loop.  You also need to "step" (via `<[OKFMResultSet next]>`) from one record to the other.
  
  This method employs [`sqlite3_bind`](http://sqlite.org/c3ref/bind_blob.html) for any optional value parameters. This  properly escapes any characters that need escape sequences (e.g. quotation marks), which eliminates simple SQL errors as well as protects against SQL injection attacks. This method natively handles `NSString`, `NSNumber`, `NSNull`, `NSDate`, and `NSData` objects. All other object types will be interpreted as text values using the object's `description` method.
 
@@ -392,76 +392,76 @@
 
  @param ... Optional parameters to bind to `?` placeholders in the SQL statement. These should be Objective-C objects (e.g. `NSString`, `NSNumber`, etc.), not fundamental C data types (e.g. `int`, `char *`, etc.).
 
- @return A `<FMResultSet>` for the result set upon success; `nil` upon failure. If failed, you can call `<lastError>`, `<lastErrorCode>`, or `<lastErrorMessage>` for diagnostic information regarding the failure.
+ @return A `<OKFMResultSet>` for the result set upon success; `nil` upon failure. If failed, you can call `<lastError>`, `<lastErrorCode>`, or `<lastErrorMessage>` for diagnostic information regarding the failure.
  
- @see FMResultSet
- @see [`FMResultSet next`](<[FMResultSet next]>)
+ @see OKFMResultSet
+ @see [`OKFMResultSet next`](<[OKFMResultSet next]>)
  @see [`sqlite3_bind`](http://sqlite.org/c3ref/bind_blob.html)
  */
 
-- (FMResultSet *)executeQuery:(NSString*)sql, ...;
+- (OKFMResultSet *)executeQuery:(NSString*)sql, ...;
 
 /** Execute select statement
 
- Executing queries returns an `<FMResultSet>` object if successful, and `nil` upon failure.  Like executing updates, there is a variant that accepts an `NSError **` parameter.  Otherwise you should use the `<lastErrorMessage>` and `<lastErrorMessage>` methods to determine why a query failed.
+ Executing queries returns an `<OKFMResultSet>` object if successful, and `nil` upon failure.  Like executing updates, there is a variant that accepts an `NSError **` parameter.  Otherwise you should use the `<lastErrorMessage>` and `<lastErrorMessage>` methods to determine why a query failed.
  
- In order to iterate through the results of your query, you use a `while()` loop.  You also need to "step" (via `<[FMResultSet next]>`) from one record to the other.
+ In order to iterate through the results of your query, you use a `while()` loop.  You also need to "step" (via `<[OKFMResultSet next]>`) from one record to the other.
  
  @param format The SQL to be performed, with `printf`-style escape sequences.
 
  @param ... Optional parameters to bind to use in conjunction with the `printf`-style escape sequences in the SQL statement.
 
- @return A `<FMResultSet>` for the result set upon success; `nil` upon failure. If failed, you can call `<lastError>`, `<lastErrorCode>`, or `<lastErrorMessage>` for diagnostic information regarding the failure.
+ @return A `<OKFMResultSet>` for the result set upon success; `nil` upon failure. If failed, you can call `<lastError>`, `<lastErrorCode>`, or `<lastErrorMessage>` for diagnostic information regarding the failure.
 
  @see executeQuery:
- @see FMResultSet
- @see [`FMResultSet next`](<[FMResultSet next]>)
+ @see OKFMResultSet
+ @see [`OKFMResultSet next`](<[OKFMResultSet next]>)
 
  @warning This should be used with great care. Generally, instead of this method, you should use `<executeQuery:>` (with `?` placeholders in the SQL), which properly escapes quotation marks encountered inside the values (minimizing errors and protecting against SQL injection attack) and handles a wider variety of data types. See `<executeQuery:>` for more information.
 
  */
 
-- (FMResultSet *)executeQueryWithFormat:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
+- (OKFMResultSet *)executeQueryWithFormat:(NSString*)format, ... NS_FORMAT_FUNCTION(1,2);
 
 /** Execute select statement
 
- Executing queries returns an `<FMResultSet>` object if successful, and `nil` upon failure.  Like executing updates, there is a variant that accepts an `NSError **` parameter.  Otherwise you should use the `<lastErrorMessage>` and `<lastErrorMessage>` methods to determine why a query failed.
+ Executing queries returns an `<OKFMResultSet>` object if successful, and `nil` upon failure.  Like executing updates, there is a variant that accepts an `NSError **` parameter.  Otherwise you should use the `<lastErrorMessage>` and `<lastErrorMessage>` methods to determine why a query failed.
  
- In order to iterate through the results of your query, you use a `while()` loop.  You also need to "step" (via `<[FMResultSet next]>`) from one record to the other.
+ In order to iterate through the results of your query, you use a `while()` loop.  You also need to "step" (via `<[OKFMResultSet next]>`) from one record to the other.
  
  @param sql The SELECT statement to be performed, with optional `?` placeholders.
 
  @param arguments A `NSArray` of objects to be used when binding values to the `?` placeholders in the SQL statement.
 
- @return A `<FMResultSet>` for the result set upon success; `nil` upon failure. If failed, you can call `<lastError>`, `<lastErrorCode>`, or `<lastErrorMessage>` for diagnostic information regarding the failure.
+ @return A `<OKFMResultSet>` for the result set upon success; `nil` upon failure. If failed, you can call `<lastError>`, `<lastErrorCode>`, or `<lastErrorMessage>` for diagnostic information regarding the failure.
 
- @see FMResultSet
- @see [`FMResultSet next`](<[FMResultSet next]>)
+ @see OKFMResultSet
+ @see [`OKFMResultSet next`](<[OKFMResultSet next]>)
  */
 
-- (FMResultSet *)executeQuery:(NSString *)sql withArgumentsInArray:(NSArray *)arguments;
+- (OKFMResultSet *)executeQuery:(NSString *)sql withArgumentsInArray:(NSArray *)arguments;
 
 /** Execute select statement
 
- Executing queries returns an `<FMResultSet>` object if successful, and `nil` upon failure.  Like executing updates, there is a variant that accepts an `NSError **` parameter.  Otherwise you should use the `<lastErrorMessage>` and `<lastErrorMessage>` methods to determine why a query failed.
+ Executing queries returns an `<OKFMResultSet>` object if successful, and `nil` upon failure.  Like executing updates, there is a variant that accepts an `NSError **` parameter.  Otherwise you should use the `<lastErrorMessage>` and `<lastErrorMessage>` methods to determine why a query failed.
  
- In order to iterate through the results of your query, you use a `while()` loop.  You also need to "step" (via `<[FMResultSet next]>`) from one record to the other.
+ In order to iterate through the results of your query, you use a `while()` loop.  You also need to "step" (via `<[OKFMResultSet next]>`) from one record to the other.
  
  @param sql The SELECT statement to be performed, with optional `?` placeholders.
 
  @param arguments A `NSDictionary` of objects keyed by column names that will be used when binding values to the `?` placeholders in the SQL statement.
 
- @return A `<FMResultSet>` for the result set upon success; `nil` upon failure. If failed, you can call `<lastError>`, `<lastErrorCode>`, or `<lastErrorMessage>` for diagnostic information regarding the failure.
+ @return A `<OKFMResultSet>` for the result set upon success; `nil` upon failure. If failed, you can call `<lastError>`, `<lastErrorCode>`, or `<lastErrorMessage>` for diagnostic information regarding the failure.
 
- @see FMResultSet
- @see [`FMResultSet next`](<[FMResultSet next]>)
+ @see OKFMResultSet
+ @see [`OKFMResultSet next`](<[OKFMResultSet next]>)
  */
 
-- (FMResultSet *)executeQuery:(NSString *)sql withParameterDictionary:(NSDictionary *)arguments;
+- (OKFMResultSet *)executeQuery:(NSString *)sql withParameterDictionary:(NSDictionary *)arguments;
 
 
 // Documentation forthcoming.
-- (FMResultSet *)executeQuery:(NSString*)sql withVAList: (va_list)args;
+- (OKFMResultSet *)executeQuery:(NSString*)sql withVAList: (va_list)args;
 
 
 
@@ -796,7 +796,7 @@
  
  For example:
  
-    [queue inDatabase:^(FMDatabase *adb) {
+    [queue inDatabase:^(OKFMDatabase *adb) {
 
         [adb executeUpdate:@"create table ftest (foo text)"];
         [adb executeUpdate:@"insert into ftest values ('hello')"];
@@ -819,7 +819,7 @@
         }];
 
         int rowCount = 0;
-        FMResultSet *ars = [adb executeQuery:@"select * from ftest where StringStartsWithH(foo)"];
+        OKFMResultSet *ars = [adb executeQuery:@"select * from ftest where StringStartsWithH(foo)"];
         while ([ars next]) {
             rowCount++;
             NSLog(@"Does %@ start with 'h'?", [rs stringForColumnIndex:0]);
@@ -849,7 +849,7 @@
  
  Example:
 
-    myDB.dateFormat = [FMDatabase storeableDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    myDB.dateFormat = [OKFMDatabase storeableDateFormat:@"yyyy-MM-dd HH:mm:ss"];
 
  @param format A valid NSDateFormatter format string.
  
@@ -882,7 +882,7 @@
 
 /** Set to a date formatter to use string dates with sqlite instead of the default UNIX timestamps.
  
- @param format Set to nil to use UNIX timestamps. Defaults to nil. Should be set using a formatter generated using FMDatabase::storeableDateFormat.
+ @param format Set to nil to use UNIX timestamps. Defaults to nil. Should be set using a formatter generated using OKFMDatabase::storeableDateFormat.
  
  @see hasDateFormatter
  @see setDateFormat:
@@ -930,12 +930,12 @@
 
 /** Objective-C wrapper for `sqlite3_stmt`
  
- This is a wrapper for a SQLite `sqlite3_stmt`. Generally when using FMDB you will not need to interact directly with `FMStatement`, but rather with `<FMDatabase>` and `<FMResultSet>` only.
+ This is a wrapper for a SQLite `sqlite3_stmt`. Generally when using FMDB you will not need to interact directly with `FMStatement`, but rather with `<OKFMDatabase>` and `<OKFMResultSet>` only.
  
  ### See also
  
- - `<FMDatabase>`
- - `<FMResultSet>`
+ - `<OKFMDatabase>`
+ - `<OKFMResultSet>`
  - [`sqlite3_stmt`](http://www.sqlite.org/c3ref/stmt.html)
  */
 

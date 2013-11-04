@@ -27,8 +27,8 @@ extern dispatch_queue_t __OKCacheQueue;
 
 
 @class OKDBConnection;
-@class FMDatabase;
-@class FMResultSet;
+@class OKFMDatabase;
+@class OKFMResultSet;
 
 
 typedef enum
@@ -61,7 +61,7 @@ static const NSInteger OKNoIndex = -1;
 {
     NSString *_dbPath;
     NSString *_createSql;
-    FMDatabase *_database;
+    OKFMDatabase *_database;
 }
 @property(nonatomic, readonly) NSString *version;
 @property(nonatomic, readonly) NSString *name;
@@ -70,15 +70,15 @@ static const NSInteger OKNoIndex = -1;
 - (id)initWithName:(NSString *)name createSql:(NSString *)sql version:(NSString *)version;
 
 //! Low level method to establish a connection with the DB.
-- (void)access:(void(^)(FMDatabase *))block;
+- (void)access:(void(^)(OKFMDatabase *))block;
 
 //! You can use this for insert/update/delete without access block.  Selects should
-//! go through access block so FMResultSet access is contained.
+//! go through access block so OKFMResultSet access is contained.
 - (BOOL)update:(NSString *)sql, ...;
 - (int64_t)insert:(NSString*)sql, ...;
 
 //! You can use this to select data from the DB connection.
-- (void)executeQuery:(NSString*)query access:(void(^)(FMResultSet *))block;
+- (void)executeQuery:(NSString*)query access:(void(^)(OKFMResultSet *))block;
 - (BOOL)syncRow:(OKDBRow*)row;
 - (BOOL)deleteRow:(OKDBRow *)row;
 

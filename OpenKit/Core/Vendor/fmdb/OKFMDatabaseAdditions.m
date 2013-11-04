@@ -1,24 +1,24 @@
 //
-//  FMDatabaseAdditions.m
+//  OKFMDatabaseAdditions.m
 //  fmdb
 //
 //  Created by August Mueller on 10/30/05.
 //  Copyright 2005 Flying Meat Inc.. All rights reserved.
 //
 
-#import "FMDatabase.h"
-#import "FMDatabaseAdditions.h"
+#import "OKFMDatabase.h"
+#import "OKFMDatabaseAdditions.h"
 
-@interface FMDatabase (PrivateStuff)
-- (FMResultSet *)executeQuery:(NSString *)sql withArgumentsInArray:(NSArray*)arrayArgs orDictionary:(NSDictionary *)dictionaryArgs orVAList:(va_list)args;
+@interface OKFMDatabase (PrivateStuff)
+- (OKFMResultSet *)executeQuery:(NSString *)sql withArgumentsInArray:(NSArray*)arrayArgs orDictionary:(NSDictionary *)dictionaryArgs orVAList:(va_list)args;
 @end
 
-@implementation FMDatabase (FMDatabaseAdditions)
+@implementation OKFMDatabase (OKFMDatabaseAdditions)
 
 #define RETURN_RESULT_FOR_QUERY_WITH_SELECTOR(type, sel)             \
 va_list args;                                                        \
 va_start(args, query);                                               \
-FMResultSet *resultSet = [self executeQuery:query withArgumentsInArray:0x00 orDictionary:0x00 orVAList:args];   \
+OKFMResultSet *resultSet = [self executeQuery:query withArgumentsInArray:0x00 orDictionary:0x00 orVAList:args];   \
 va_end(args);                                                        \
 if (![resultSet next]) { return (type)0; }                           \
 type ret = [resultSet sel:0];                                        \
@@ -60,7 +60,7 @@ return ret;
     
     tableName = [tableName lowercaseString];
     
-    FMResultSet *rs = [self executeQuery:@"select [sql] from sqlite_master where [type] = 'table' and lower(name) = ?", tableName];
+    OKFMResultSet *rs = [self executeQuery:@"select [sql] from sqlite_master where [type] = 'table' and lower(name) = ?", tableName];
     
     //if at least one next exists, table exists
     BOOL returnBool = [rs next];
@@ -75,10 +75,10 @@ return ret;
  get table with list of tables: result colums: type[STRING], name[STRING],tbl_name[STRING],rootpage[INTEGER],sql[STRING]
  check if table exist in database  (patch from OZLB)
 */
-- (FMResultSet*)getSchema {
+- (OKFMResultSet*)getSchema {
     
     //result colums: type[STRING], name[STRING],tbl_name[STRING],rootpage[INTEGER],sql[STRING]
-    FMResultSet *rs = [self executeQuery:@"SELECT type, name, tbl_name, rootpage, sql FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master) WHERE type != 'meta' AND name NOT LIKE 'sqlite_%' ORDER BY tbl_name, type DESC, name"];
+    OKFMResultSet *rs = [self executeQuery:@"SELECT type, name, tbl_name, rootpage, sql FROM (SELECT * FROM sqlite_master UNION ALL SELECT * FROM sqlite_temp_master) WHERE type != 'meta' AND name NOT LIKE 'sqlite_%' ORDER BY tbl_name, type DESC, name"];
     
     return rs;
 }
@@ -86,10 +86,10 @@ return ret;
 /* 
  get table schema: result colums: cid[INTEGER], name,type [STRING], notnull[INTEGER], dflt_value[],pk[INTEGER]
 */
-- (FMResultSet*)getTableSchema:(NSString*)tableName {
+- (OKFMResultSet*)getTableSchema:(NSString*)tableName {
     
     //result colums: cid[INTEGER], name,type [STRING], notnull[INTEGER], dflt_value[],pk[INTEGER]
-    FMResultSet *rs = [self executeQuery:[NSString stringWithFormat: @"PRAGMA table_info('%@')", tableName]];
+    OKFMResultSet *rs = [self executeQuery:[NSString stringWithFormat: @"PRAGMA table_info('%@')", tableName]];
     
     return rs;
 }
@@ -101,7 +101,7 @@ return ret;
     tableName  = [tableName lowercaseString];
     columnName = [columnName lowercaseString];
     
-    FMResultSet *rs = [self getTableSchema:tableName];
+    OKFMResultSet *rs = [self getTableSchema:tableName];
     
     //check if column is present in table schema
     while ([rs next]) {
@@ -111,7 +111,7 @@ return ret;
         }
     }
     
-    //If this is not done FMDatabase instance stays out of pool
+    //If this is not done OKFMDatabase instance stays out of pool
     [rs close];
     
     return returnBool;
@@ -122,7 +122,7 @@ return ret;
     
     uint32_t r = 0;
     
-    FMResultSet *rs = [self executeQuery:@"pragma application_id"];
+    OKFMResultSet *rs = [self executeQuery:@"pragma application_id"];
     
     if ([rs next]) {
         r = (uint32_t)[rs longLongIntForColumnIndex:0];
@@ -147,7 +147,7 @@ return ret;
 
 - (void)setApplicationID:(uint32_t)appID {
     NSString *query = [NSString stringWithFormat:@"PRAGMA application_id=%d", appID];
-    FMResultSet *rs = [self executeQuery:query];
+    OKFMResultSet *rs = [self executeQuery:query];
     [rs next];
     [rs close];
 }

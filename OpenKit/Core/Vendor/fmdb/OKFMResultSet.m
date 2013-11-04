@@ -1,19 +1,19 @@
-#import "FMResultSet.h"
-#import "FMDatabase.h"
+#import "OKFMResultSet.h"
+#import "OKFMDatabase.h"
 #import "unistd.h"
 
-@interface FMDatabase ()
-- (void)resultSetDidClose:(FMResultSet *)resultSet;
+@interface OKFMDatabase ()
+- (void)resultSetDidClose:(OKFMResultSet *)resultSet;
 @end
 
 
-@implementation FMResultSet
+@implementation OKFMResultSet
 @synthesize query=_query;
 @synthesize statement=_statement;
 
-+ (instancetype)resultSetWithStatement:(FMStatement *)statement usingParentDatabase:(FMDatabase*)aDB {
++ (instancetype)resultSetWithStatement:(FMStatement *)statement usingParentDatabase:(OKFMDatabase*)aDB {
     
-    FMResultSet *rs = [[FMResultSet alloc] init];
+    OKFMResultSet *rs = [[OKFMResultSet alloc] init];
     
     [rs setStatement:statement];
     [rs setParentDB:aDB];
@@ -397,7 +397,7 @@
     return [NSString stringWithUTF8String: sqlite3_column_name([_statement statement], columnIdx)];
 }
 
-- (void)setParentDB:(FMDatabase *)newDb {
+- (void)setParentDB:(OKFMDatabase *)newDb {
     _parentDB = newDb;
 }
 

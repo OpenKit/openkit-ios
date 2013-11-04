@@ -45,12 +45,6 @@
 		324C83FE18281AF5008B59B6 /* OKUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C83D618281AF5008B59B6 /* OKUpload.m */; };
 		324C83FF18281AF5008B59B6 /* OKUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C83D818281AF5008B59B6 /* OKUser.m */; };
 		324C840018281AF5008B59B6 /* OKUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C83DA18281AF5008B59B6 /* OKUtils.m */; };
-		324C840218281AF5008B59B6 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 324C83DF18281AF5008B59B6 /* FacebookSDK.framework */; };
-		324C840318281AF5008B59B6 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C83E218281AF5008B59B6 /* FMDatabase.m */; };
-		324C840418281AF5008B59B6 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C83E418281AF5008B59B6 /* FMDatabaseAdditions.m */; };
-		324C840518281AF5008B59B6 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C83E618281AF5008B59B6 /* FMDatabasePool.m */; };
-		324C840618281AF5008B59B6 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C83E818281AF5008B59B6 /* FMDatabaseQueue.m */; };
-		324C840718281AF5008B59B6 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C83EA18281AF5008B59B6 /* FMResultSet.m */; };
 		324C844C18281B10008B59B6 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C840A18281B10008B59B6 /* AbstractActionSheetPicker.m */; };
 		324C844D18281B10008B59B6 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C840C18281B10008B59B6 /* ActionSheetStringPicker.m */; };
 		324C844E18281B10008B59B6 /* KGModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C840E18281B10008B59B6 /* KGModal.m */; };
@@ -118,8 +112,6 @@
 		324C84B718281BD8008B59B6 /* OKAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C84A118281B8C008B59B6 /* OKAppDelegate.m */; };
 		324C84B918281BEA008B59B6 /* ScoreSubmitterVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 324C84A818281B8C008B59B6 /* ScoreSubmitterVC.xib */; };
 		324C84BA18281BED008B59B6 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 324C84A918281B8C008B59B6 /* ViewController.xib */; };
-		324C84BB18281C0F008B59B6 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 324C83DF18281AF5008B59B6 /* FacebookSDK.framework */; };
-		324C84BC18281C10008B59B6 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 324C83DF18281AF5008B59B6 /* FacebookSDK.framework */; };
 		324C84BD18281C2F008B59B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C849F18281B8C008B59B6 /* main.m */; };
 		326FD0CF16CB6209004248F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
 		3284E16416CE4AFC00624827 /* OKUnityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */; };
@@ -136,6 +128,13 @@
 		3295C1521819D76F0044783E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0D516CB732200E8F185 /* SystemConfiguration.framework */; };
 		3295C1531819D76F0044783E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05016CB698C00E8F185 /* UIKit.framework */; };
 		3295C1541819D76F0044783E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05316CB698C00E8F185 /* CoreGraphics.framework */; };
+		32ACE391182826AC00A40568 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32ACE390182826AB00A40568 /* FacebookSDK.framework */; };
+		32ACE392182826AC00A40568 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32ACE390182826AB00A40568 /* FacebookSDK.framework */; };
+		32ACE39E182826BA00A40568 /* OKFMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 32ACE395182826BA00A40568 /* OKFMDatabase.m */; };
+		32ACE39F182826BA00A40568 /* OKFMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 32ACE397182826BA00A40568 /* OKFMDatabaseAdditions.m */; };
+		32ACE3A0182826BA00A40568 /* OKFMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 32ACE399182826BA00A40568 /* OKFMDatabasePool.m */; };
+		32ACE3A1182826BA00A40568 /* OKFMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 32ACE39B182826BA00A40568 /* OKFMDatabaseQueue.m */; };
+		32ACE3A2182826BA00A40568 /* OKFMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 32ACE39D182826BA00A40568 /* OKFMResultSet.m */; };
 		32CCB721181B1A34000193D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
 		32CCB722181B1A34000193D5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05316CB698C00E8F185 /* CoreGraphics.framework */; };
 		32CCB723181B1A34000193D5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05016CB698C00E8F185 /* UIKit.framework */; };
@@ -238,17 +237,6 @@
 		324C83D918281AF5008B59B6 /* OKUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUtils.h; sourceTree = "<group>"; };
 		324C83DA18281AF5008B59B6 /* OKUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUtils.m; sourceTree = "<group>"; };
 		324C83DD18281AF5008B59B6 /* OpenKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenKit.h; sourceTree = "<group>"; };
-		324C83DF18281AF5008B59B6 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
-		324C83E118281AF5008B59B6 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
-		324C83E218281AF5008B59B6 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
-		324C83E318281AF5008B59B6 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
-		324C83E418281AF5008B59B6 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
-		324C83E518281AF5008B59B6 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
-		324C83E618281AF5008B59B6 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
-		324C83E718281AF5008B59B6 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
-		324C83E818281AF5008B59B6 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
-		324C83E918281AF5008B59B6 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
-		324C83EA18281AF5008B59B6 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		324C840918281B10008B59B6 /* AbstractActionSheetPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractActionSheetPicker.h; sourceTree = "<group>"; };
 		324C840A18281B10008B59B6 /* AbstractActionSheetPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractActionSheetPicker.m; sourceTree = "<group>"; };
 		324C840B18281B10008B59B6 /* ActionSheetStringPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetStringPicker.h; sourceTree = "<group>"; };
@@ -343,6 +331,17 @@
 		3284E14916CE49AB00624827 /* UnityPluginMac.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnityPluginMac.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		3284E15A16CE4A6F00624827 /* UnityPluginMac-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "UnityPluginMac-Info.plist"; sourceTree = "<group>"; };
 		3284E15B16CE4A6F00624827 /* UnityPluginMac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UnityPluginMac-Prefix.pch"; sourceTree = "<group>"; };
+		32ACE390182826AB00A40568 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		32ACE394182826BA00A40568 /* OKFMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFMDatabase.h; sourceTree = "<group>"; };
+		32ACE395182826BA00A40568 /* OKFMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFMDatabase.m; sourceTree = "<group>"; };
+		32ACE396182826BA00A40568 /* OKFMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFMDatabaseAdditions.h; sourceTree = "<group>"; };
+		32ACE397182826BA00A40568 /* OKFMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFMDatabaseAdditions.m; sourceTree = "<group>"; };
+		32ACE398182826BA00A40568 /* OKFMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFMDatabasePool.h; sourceTree = "<group>"; };
+		32ACE399182826BA00A40568 /* OKFMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFMDatabasePool.m; sourceTree = "<group>"; };
+		32ACE39A182826BA00A40568 /* OKFMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFMDatabaseQueue.h; sourceTree = "<group>"; };
+		32ACE39B182826BA00A40568 /* OKFMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFMDatabaseQueue.m; sourceTree = "<group>"; };
+		32ACE39C182826BA00A40568 /* OKFMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFMResultSet.h; sourceTree = "<group>"; };
+		32ACE39D182826BA00A40568 /* OKFMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFMResultSet.m; sourceTree = "<group>"; };
 		32CAD04F16CB698C00E8F185 /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32CAD05016CB698C00E8F185 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		32CAD05316CB698C00E8F185 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -381,12 +380,12 @@
 				324C830D18281A9D008B59B6 /* Security.framework in Frameworks */,
 				324C830E18281A9D008B59B6 /* QuartzCore.framework in Frameworks */,
 				324C830F18281A9D008B59B6 /* AdSupport.framework in Frameworks */,
+				32ACE392182826AC00A40568 /* FacebookSDK.framework in Frameworks */,
 				324C831018281A9D008B59B6 /* Accounts.framework in Frameworks */,
 				324C831118281A9D008B59B6 /* Social.framework in Frameworks */,
 				324C831218281A9D008B59B6 /* MobileCoreServices.framework in Frameworks */,
 				324C831318281A9D008B59B6 /* SystemConfiguration.framework in Frameworks */,
 				324C831418281A9D008B59B6 /* Foundation.framework in Frameworks */,
-				324C84BC18281C10008B59B6 /* FacebookSDK.framework in Frameworks */,
 				324C831518281A9D008B59B6 /* UIKit.framework in Frameworks */,
 				324C831618281A9D008B59B6 /* CoreGraphics.framework in Frameworks */,
 			);
@@ -409,7 +408,6 @@
 				326FD0CF16CB6209004248F9 /* Foundation.framework in Frameworks */,
 				3295C1531819D76F0044783E /* UIKit.framework in Frameworks */,
 				3295C1541819D76F0044783E /* CoreGraphics.framework in Frameworks */,
-				324C840218281AF5008B59B6 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,12 +431,12 @@
 				32CCB77E181B1ACC000193D5 /* Security.framework in Frameworks */,
 				32CCB77F181B1ACC000193D5 /* QuartzCore.framework in Frameworks */,
 				32CCB780181B1ACC000193D5 /* AdSupport.framework in Frameworks */,
+				32ACE391182826AC00A40568 /* FacebookSDK.framework in Frameworks */,
 				32CCB781181B1ACC000193D5 /* Accounts.framework in Frameworks */,
 				32CCB782181B1ACC000193D5 /* Social.framework in Frameworks */,
 				32CCB783181B1ACC000193D5 /* MobileCoreServices.framework in Frameworks */,
 				32CCB784181B1ACC000193D5 /* SystemConfiguration.framework in Frameworks */,
 				32CCB721181B1A34000193D5 /* Foundation.framework in Frameworks */,
-				324C84BB18281C0F008B59B6 /* FacebookSDK.framework in Frameworks */,
 				32CCB723181B1A34000193D5 /* UIKit.framework in Frameworks */,
 				32CCB722181B1A34000193D5 /* CoreGraphics.framework in Frameworks */,
 			);
@@ -536,27 +534,9 @@
 		324C83DE18281AF5008B59B6 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				324C83DF18281AF5008B59B6 /* FacebookSDK.framework */,
-				324C83E018281AF5008B59B6 /* fmdb-f62b8d7 */,
+				32ACE393182826BA00A40568 /* fmdb */,
 			);
 			path = Vendor;
-			sourceTree = "<group>";
-		};
-		324C83E018281AF5008B59B6 /* fmdb-f62b8d7 */ = {
-			isa = PBXGroup;
-			children = (
-				324C83E118281AF5008B59B6 /* FMDatabase.h */,
-				324C83E218281AF5008B59B6 /* FMDatabase.m */,
-				324C83E318281AF5008B59B6 /* FMDatabaseAdditions.h */,
-				324C83E418281AF5008B59B6 /* FMDatabaseAdditions.m */,
-				324C83E518281AF5008B59B6 /* FMDatabasePool.h */,
-				324C83E618281AF5008B59B6 /* FMDatabasePool.m */,
-				324C83E718281AF5008B59B6 /* FMDatabaseQueue.h */,
-				324C83E818281AF5008B59B6 /* FMDatabaseQueue.m */,
-				324C83E918281AF5008B59B6 /* FMResultSet.h */,
-				324C83EA18281AF5008B59B6 /* FMResultSet.m */,
-			);
-			path = "fmdb-f62b8d7";
 			sourceTree = "<group>";
 		};
 		324C840818281B10008B59B6 /* GUI */ = {
@@ -657,6 +637,7 @@
 		324C847F18281B1E008B59B6 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				32ACE390182826AB00A40568 /* FacebookSDK.framework */,
 				324C848018281B1E008B59B6 /* OKFacebookUtilities.h */,
 				324C848118281B1E008B59B6 /* OKFacebookUtilities.m */,
 				324C848218281B1E008B59B6 /* OKGameCenterPlugin.h */,
@@ -768,6 +749,23 @@
 				32CAD05316CB698C00E8F185 /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		32ACE393182826BA00A40568 /* fmdb */ = {
+			isa = PBXGroup;
+			children = (
+				32ACE394182826BA00A40568 /* OKFMDatabase.h */,
+				32ACE395182826BA00A40568 /* OKFMDatabase.m */,
+				32ACE396182826BA00A40568 /* OKFMDatabaseAdditions.h */,
+				32ACE397182826BA00A40568 /* OKFMDatabaseAdditions.m */,
+				32ACE398182826BA00A40568 /* OKFMDatabasePool.h */,
+				32ACE399182826BA00A40568 /* OKFMDatabasePool.m */,
+				32ACE39A182826BA00A40568 /* OKFMDatabaseQueue.h */,
+				32ACE39B182826BA00A40568 /* OKFMDatabaseQueue.m */,
+				32ACE39C182826BA00A40568 /* OKFMResultSet.h */,
+				32ACE39D182826BA00A40568 /* OKFMResultSet.m */,
+			);
+			path = fmdb;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -988,21 +986,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				324C83FE18281AF5008B59B6 /* OKUpload.m in Sources */,
-				324C840718281AF5008B59B6 /* FMResultSet.m in Sources */,
+				32ACE3A1182826BA00A40568 /* OKFMDatabaseQueue.m in Sources */,
 				324C83FF18281AF5008B59B6 /* OKUser.m in Sources */,
 				324C83FA18281AF5008B59B6 /* OKResponse.m in Sources */,
-				324C840418281AF5008B59B6 /* FMDatabaseAdditions.m in Sources */,
+				32ACE39E182826BA00A40568 /* OKFMDatabase.m in Sources */,
 				324C83F118281AF5008B59B6 /* OKError.m in Sources */,
 				324C83F418281AF5008B59B6 /* OKHelper.m in Sources */,
+				32ACE39F182826BA00A40568 /* OKFMDatabaseAdditions.m in Sources */,
 				324C83ED18281AF5008B59B6 /* OKCrypto.m in Sources */,
 				324C83EB18281AF5008B59B6 /* OKAuth.m in Sources */,
+				32ACE3A2182826BA00A40568 /* OKFMResultSet.m in Sources */,
 				324C83EF18281AF5008B59B6 /* OKDBScore.m in Sources */,
 				324C83EC18281AF5008B59B6 /* OKChallenge.m in Sources */,
 				324C840018281AF5008B59B6 /* OKUtils.m in Sources */,
 				324C83F718281AF5008B59B6 /* OKNetworker.m in Sources */,
-				324C840518281AF5008B59B6 /* FMDatabasePool.m in Sources */,
+				32ACE3A0182826BA00A40568 /* OKFMDatabasePool.m in Sources */,
 				324C83FB18281AF5008B59B6 /* OKScore.m in Sources */,
-				324C840318281AF5008B59B6 /* FMDatabase.m in Sources */,
 				324C83F518281AF5008B59B6 /* OKLeaderboard.m in Sources */,
 				324C83EE18281AF5008B59B6 /* OKDBConnection.m in Sources */,
 				324C83F318281AF5008B59B6 /* OKGame.m in Sources */,
@@ -1010,7 +1009,6 @@
 				324C83F618281AF5008B59B6 /* OKManager.m in Sources */,
 				324C83F918281AF5008B59B6 /* OKRequestUtils.m in Sources */,
 				324C83F818281AF5008B59B6 /* OKRequest.m in Sources */,
-				324C840618281AF5008B59B6 /* FMDatabaseQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1115,11 +1113,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/manu/repos/openkit-ios/OpenKit/Vendor",
-					"/Users/manu/repos/openkit-ios/OpenKit/Core/Vendor",
+					OpenKit/Plugins,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Samples/SampleApp/SampleApp-Prefix.pch";
+				GCC_PREFIX_HEADER = "Samples/CoreTest/CoreTest-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Samples/CoreTest/Resources/CoreTest-Info.plist";
 				PRODUCT_NAME = CoreTest;
 				PROVISIONING_PROFILE = "";
@@ -1134,11 +1131,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/manu/repos/openkit-ios/OpenKit/Vendor",
-					"/Users/manu/repos/openkit-ios/OpenKit/Core/Vendor",
+					OpenKit/Plugins,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Samples/SampleApp/SampleApp-Prefix.pch";
+				GCC_PREFIX_HEADER = "Samples/CoreTest/CoreTest-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Samples/CoreTest/Resources/CoreTest-Info.plist";
 				PRODUCT_NAME = CoreTest;
 				PROVISIONING_PROFILE = "";
@@ -1157,7 +1153,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(srcroot)OpenKit/Vendor";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1187,7 +1182,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(srcroot)OpenKit/Vendor";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -1287,8 +1281,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/manu/repos/openkit-ios/OpenKit/Vendor",
-					"/Users/manu/repos/openkit-ios/OpenKit/Core/Vendor",
+					OpenKit/Plugins,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Samples/SampleApp/SampleApp-Prefix.pch";
@@ -1308,8 +1301,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/manu/repos/openkit-ios/OpenKit/Vendor",
-					"/Users/manu/repos/openkit-ios/OpenKit/Core/Vendor",
+					OpenKit/Plugins,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Samples/SampleApp/SampleApp-Prefix.pch";

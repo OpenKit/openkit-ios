@@ -1,5 +1,5 @@
 //
-//  FMDatabasePool.h
+//  OKFMDatabasePool.h
 //  fmdb
 //
 //  Created by August Mueller on 6/22/11.
@@ -9,18 +9,18 @@
 #import <Foundation/Foundation.h>
 #import "sqlite3.h"
 
-@class FMDatabase;
+@class OKFMDatabase;
 
-/** Pool of `<FMDatabase>` objects.
+/** Pool of `<OKFMDatabase>` objects.
 
  ### See also
  
- - `<FMDatabaseQueue>`
- - `<FMDatabase>`
+ - `<OKFMDatabaseQueue>`
+ - `<OKFMDatabase>`
 
- @warning Before using `FMDatabasePool`, please consider using `<FMDatabaseQueue>` instead.
+ @warning Before using `OKFMDatabasePool`, please consider using `<OKFMDatabaseQueue>` instead.
 
- If you really really really know what you're doing and `FMDatabasePool` is what
+ If you really really really know what you're doing and `OKFMDatabasePool` is what
  you really really need (ie, you're using a read only database), OK you can use
  it.  But just be careful not to deadlock!
 
@@ -29,7 +29,7 @@
  in the main.m file.
  */
 
-@interface FMDatabasePool : NSObject {
+@interface OKFMDatabasePool : NSObject {
     NSString            *_path;
     
     dispatch_queue_t    _lockQueue;
@@ -54,7 +54,7 @@
 
  @param aPath The file path of the database.
 
- @return The `FMDatabasePool` object. `nil` on error.
+ @return The `OKFMDatabasePool` object. `nil` on error.
  */
 
 + (instancetype)databasePoolWithPath:(NSString*)aPath;
@@ -63,7 +63,7 @@
 
  @param aPath The file path of the database.
 
- @return The `FMDatabasePool` object. `nil` on error.
+ @return The `OKFMDatabasePool` object. `nil` on error.
  */
 
 - (instancetype)initWithPath:(NSString*)aPath;
@@ -103,43 +103,43 @@
 
 /** Synchronously perform database operations in pool.
 
- @param block The code to be run on the `FMDatabasePool` pool.
+ @param block The code to be run on the `OKFMDatabasePool` pool.
  */
 
-- (void)inDatabase:(void (^)(FMDatabase *db))block;
+- (void)inDatabase:(void (^)(OKFMDatabase *db))block;
 
 /** Synchronously perform database operations in pool using transaction.
 
- @param block The code to be run on the `FMDatabasePool` pool.
+ @param block The code to be run on the `OKFMDatabasePool` pool.
  */
 
-- (void)inTransaction:(void (^)(FMDatabase *db, BOOL *rollback))block;
+- (void)inTransaction:(void (^)(OKFMDatabase *db, BOOL *rollback))block;
 
 /** Synchronously perform database operations in pool using deferred transaction.
 
- @param block The code to be run on the `FMDatabasePool` pool.
+ @param block The code to be run on the `OKFMDatabasePool` pool.
  */
 
-- (void)inDeferredTransaction:(void (^)(FMDatabase *db, BOOL *rollback))block;
+- (void)inDeferredTransaction:(void (^)(OKFMDatabase *db, BOOL *rollback))block;
 
 #if SQLITE_VERSION_NUMBER >= 3007000
 
 /** Synchronously perform database operations in pool using save point.
 
- @param block The code to be run on the `FMDatabasePool` pool.
+ @param block The code to be run on the `OKFMDatabasePool` pool.
 
- @warning You can not nest these, since calling it will pull another database out of the pool and you'll get a deadlock. If you need to nest, use `<[FMDatabase startSavePointWithName:error:]>` instead.
+ @warning You can not nest these, since calling it will pull another database out of the pool and you'll get a deadlock. If you need to nest, use `<[OKFMDatabase startSavePointWithName:error:]>` instead.
 */
 
-- (NSError*)inSavePoint:(void (^)(FMDatabase *db, BOOL *rollback))block;
+- (NSError*)inSavePoint:(void (^)(OKFMDatabase *db, BOOL *rollback))block;
 #endif
 
 @end
 
 
-@interface NSObject (FMDatabasePoolDelegate)
+@interface NSObject (OKFMDatabasePoolDelegate)
 
-- (BOOL)databasePool:(FMDatabasePool*)pool shouldAddDatabaseToPool:(FMDatabase*)database;
+- (BOOL)databasePool:(OKFMDatabasePool*)pool shouldAddDatabaseToPool:(OKFMDatabase*)database;
 
 @end
 

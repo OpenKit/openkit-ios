@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
-#import "FMDatabase.h"
+#import "OKFMDatabase.h"
 #import "OKDBConnection.h"
 #import "OKMacros.h"
 #import "OKFileUtil.h"
@@ -72,12 +72,12 @@ dispatch_queue_t __OKCacheQueue = nil;
 }
 
 
--(void)access:(void(^)(FMDatabase *))block
+-(void)access:(void(^)(OKFMDatabase *))block
 {
     NSParameterAssert(block);
 
     [self sanity];
-    FMDatabase *db = [self database];
+    OKFMDatabase *db = [self database];
     if ([db open]){
         block(db);
         [db close];
@@ -93,7 +93,7 @@ dispatch_queue_t __OKCacheQueue = nil;
     va_start(*args, sql);
     
     __block int64_t index = -1;
-    [self access:^(FMDatabase *db) {
+    [self access:^(OKFMDatabase *db) {
 
         if([db executeQuery:sql withVAList:*args]) {
             index = [db lastInsertRowId];
@@ -114,7 +114,7 @@ dispatch_queue_t __OKCacheQueue = nil;
     va_start(*args, sql);
 
     __block BOOL success = NO;
-    [self access:^(FMDatabase *db) {
+    [self access:^(OKFMDatabase *db) {
         success = [db executeUpdate:sql withVAList:*args];
         if(!success)
             OKLogErr(@"OKDBConnection: FAIL performing: %@", sql);
@@ -126,10 +126,10 @@ dispatch_queue_t __OKCacheQueue = nil;
 }
 
 
-- (void)executeQuery:(NSString*)sql access:(void(^)(FMResultSet *))block
+- (void)executeQuery:(NSString*)sql access:(void(^)(OKFMResultSet *))block
 {
-    [self access:^(FMDatabase *db) {
-        FMResultSet *rs = [db executeQuery:sql];
+    [self access:^(OKFMDatabase *db) {
+        OKFMResultSet *rs = [db executeQuery:sql];
         if(!rs)
             OKLogErr(@"OKDBConnection: FAIL performing: %@", sql);
         
@@ -190,10 +190,10 @@ dispatch_queue_t __OKCacheQueue = nil;
 
 #pragma mark - Private
 
--(FMDatabase *)database
+-(OKFMDatabase *)database
 {
     if (_database == nil) {
-        _database = [FMDatabase databaseWithPath:[self dbPath]];
+        _database = [OKFMDatabase databaseWithPath:[self dbPath]];
      
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];

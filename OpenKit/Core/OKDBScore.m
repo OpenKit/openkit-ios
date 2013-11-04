@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
-#import "FMDatabase.h"
+#import "OKFMDatabase.h"
 #import "OKDBScore.h"
 #import "OKMacros.h"
 #import "OKFileUtil.h"
@@ -50,7 +50,7 @@ static NSString *const kOKDBScoreCreateSql =
 {
     __block OKScore *score = nil;
     [self executeQuery:@"SELECT * FROM scores ORDER BY modify_date DESC LIMIT 1"
-                access:^(FMResultSet *rs)
+                access:^(OKFMResultSet *rs)
      {
          if([rs next]) {
              NSDictionary *dict = [rs resultDictionary];
@@ -67,7 +67,7 @@ static NSString *const kOKDBScoreCreateSql =
 {
     __block NSInteger index = -1;
     [self executeQuery:@"SELECT * FROM scores ORDER BY modify_date DESC LIMIT 1"
-                access:^(FMResultSet *rs)
+                access:^(OKFMResultSet *rs)
      {
          if([rs next])
              index = [rs intForColumn:@"row_id"];
@@ -148,7 +148,7 @@ static NSString *const kOKDBScoreCreateSql =
 - (NSArray*)getScoresWithSQL:(NSString*)sql
 {
     __block NSMutableArray *scoresArray = [[NSMutableArray alloc] init];
-    [self executeQuery:sql access:^(FMResultSet *rs)
+    [self executeQuery:sql access:^(OKFMResultSet *rs)
      {
          while([rs next]){
              NSDictionary *dict = [rs resultDictionary];
