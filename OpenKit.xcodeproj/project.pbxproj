@@ -72,6 +72,7 @@
 		44B0E50C17DFC69F00A80DC9 /* OKFileUtil.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 327E9E1417CEFABA00F33F24 /* OKFileUtil.h */; };
 		44B0E50D17DFC69F00A80DC9 /* OKLocalCache.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 327E9E1617CEFABA00F33F24 /* OKLocalCache.h */; };
 		44B0E50E17DFC69F00A80DC9 /* OKSessionDb.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 327E9E1817CEFABA00F33F24 /* OKSessionDb.h */; };
+		44B1D03E18160AFE00101B70 /* OKSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B1D03D18160AFE00101B70 /* OKSettings.m */; };
 		44B3127C17CC9A1600802B00 /* OKFacebookUtilities.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44E3058B178CD78E00611E0C /* OKFacebookUtilities.h */; };
 		44B50D0B176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B50D09176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m */; };
 		44B50D14176ED5C200B5D8AD /* OKSocialLeaderboardVC.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44B50D13176ED4B100B5D8AD /* OKSocialLeaderboardVC.xib */; };
@@ -410,6 +411,8 @@
 		446A551717E3A98900081C7B /* OKChallenge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKChallenge.m; sourceTree = "<group>"; };
 		446BAB4D177A8F880092BD58 /* OKColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKColors.h; sourceTree = "<group>"; };
 		4474BCD317815C46000AEAD1 /* OKColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKColors.m; sourceTree = "<group>"; };
+		44B1D03C18160AFE00101B70 /* OKSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSettings.h; sourceTree = "<group>"; };
+		44B1D03D18160AFE00101B70 /* OKSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSettings.m; sourceTree = "<group>"; };
 		44B50D09176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKSocialLeaderboardViewController.m; sourceTree = "<group>"; };
 		44B50D0A176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKSocialLeaderboardViewController.h; sourceTree = "<group>"; };
 		44B50D13176ED4B100B5D8AD /* OKSocialLeaderboardVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OKSocialLeaderboardVC.xib; sourceTree = "<group>"; };
@@ -594,6 +597,8 @@
 				32CACFD216CB637C00E8F185 /* OpenKit.h */,
 				32CACFA816CB637C00E8F185 /* OKManager.h */,
 				32CACFA916CB637C00E8F185 /* OKManager.m */,
+				44B1D03C18160AFE00101B70 /* OKSettings.h */,
+				44B1D03D18160AFE00101B70 /* OKSettings.m */,
 				32CACFAC16CB637C00E8F185 /* OKGUI.h */,
 				446BAB4C177A85050092BD58 /* Social Leaderboard */,
 				446BAB4B177A84C80092BD58 /* Login */,
@@ -1028,6 +1033,7 @@
 				44C31A3617F273C8004EE2EC /* FMDatabaseQueue.m in Sources */,
 				32CACFEE16CB637C00E8F185 /* SimpleKeychain.m in Sources */,
 				321E99CB16D2FB6C005F1506 /* AbstractActionSheetPicker.m in Sources */,
+				44B1D03E18160AFE00101B70 /* OKSettings.m in Sources */,
 				321E99CF16D2FBA1005F1506 /* ActionSheetStringPicker.m in Sources */,
 				44E3F3C816EAED4500509219 /* AFImageView.m in Sources */,
 				44C31A3517F273C8004EE2EC /* FMDatabasePool.m in Sources */,

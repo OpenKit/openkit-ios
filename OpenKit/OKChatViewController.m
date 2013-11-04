@@ -78,7 +78,7 @@
 - (IBAction)submit:(id)sender
 {
     // Set the user ID with a hash of the username to enable 10 different colors
-    self.OKuserID = [NSNumber numberWithInt:([self hashUserName:self.userName] %10)];
+    self.OKuserID = [NSNumber numberWithInt:([self hashUserName:self.userName] %10 + 1)];
     
     
     NSString *text = [self.texBar text];

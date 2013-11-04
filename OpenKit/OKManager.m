@@ -20,6 +20,7 @@
 #import "OKSessionDb.h"
 #import "OKMacros.h"
 #import "OKAnalytics.h"
+#import "OKSettings.h"
 
 #define OK_DEFAULT_ENDPOINT    @"http://api.openkit.io"
 #define OK_OPENKIT_SDK_VERSION = @"1.0.3";
@@ -39,6 +40,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
 @property (nonatomic, strong) NSString *appKey;
 @property (nonatomic, strong) NSString *secretKey;
 @property (nonatomic, strong) NSString *endpoint;
+@property (nonatomic, strong) OKSettings *settings;
 
 - (void)startSession;
 @end
@@ -63,6 +65,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     [manager startSession];
     
     OKLog(@"OpenKit configured with endpoint: %@", [[OKManager sharedManager] endpoint]);
+    
 }
 
 + (void)configureWithAppKey:(NSString *)appKey secretKey:(NSString *)secretKey
@@ -314,6 +317,9 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     });
     
     [self submitCachedScoresAfterDelay];
+    
+    // Get remote settings
+    self.settings = [[OKSettings alloc] init];
 }
 
 -(void)submitCachedScoresAfterDelay
