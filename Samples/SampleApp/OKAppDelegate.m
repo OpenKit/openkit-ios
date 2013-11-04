@@ -9,8 +9,6 @@
 #import "OKAppDelegate.h"
 #import "OpenKit.h"
 #import "OKViewController.h"
-#import "OKGameCenterPlugin.h"
-#import "OKFacebookUtilities.h"
 
 
 @interface OKAppDelegate ()
@@ -21,14 +19,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [OKGameCenterPlugin sharedInstance];
-    [OKFacebookPlugin sharedInstance];
-    
-    
     //NSString *myAppKey = @"BspfxiqMuYxNEotLeGLm";
     //NSString *mySecretKey = @"2sHQOuqgwzocUdiTsTWzyQlOy1paswYLGjrdRWWf";
-    NSString *myAppKey = @"RZ8ZgjhDx1KgZCFjNDzi";
-    NSString *mySecretKey = @"xmXUCjvg6G8AqC68FYHtXnRnRFoIlVTdsypvG0jJ";
+    NSString *myAppKey = @"QveFxzg5uyV17tamwW2p";
+    NSString *mySecretKey = @"PpQEr3xYmFLdVFzPHM5pAizFVNEmbrbd0aCus5os";
     [OKManager configureWithAppKey:myAppKey secretKey:mySecretKey];
     
     // Set the leaderboard list tag. By default, client asks

@@ -229,10 +229,10 @@
     switch(status)
     {
         case FBSessionStateOpen:
-            OKLogInfo(@"FBSessionStateOpen");
+            OKLogInfo(@"OKFacebookPlugin: Session is open.");
             break;
         case FBSessionStateClosed:
-            OKLogInfo(@"FBSessionStateClosed");
+            OKLogInfo(@"OKFacebookPlugin: Session is closed.");
             //break;
         case FBSessionStateClosedLoginFailed:
             OKLogInfo(@"FBSessionStateClosedLoginFailed");
