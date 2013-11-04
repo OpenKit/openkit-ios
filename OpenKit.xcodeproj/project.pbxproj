@@ -193,7 +193,6 @@
 		32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUnityHelper.m; sourceTree = "<group>"; };
 		32243B0416CDE3EF0077EDC8 /* libmono.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libmono.0.dylib; sourceTree = "<group>"; };
 		324C831B18281A9D008B59B6 /* CoreTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		324C831C18281A9E008B59B6 /* SampleApp copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "SampleApp copy-Info.plist"; path = "/Users/manu/repos/openkit-ios/SampleApp copy-Info.plist"; sourceTree = "<absolute>"; };
 		324C83AB18281AF5008B59B6 /* OKAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKAuth.h; sourceTree = "<group>"; };
 		324C83AC18281AF5008B59B6 /* OKAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKAuth.m; sourceTree = "<group>"; };
 		324C83AD18281AF5008B59B6 /* OKChallenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKChallenge.h; sourceTree = "<group>"; };
@@ -487,45 +486,24 @@
 				324C83AC18281AF5008B59B6 /* OKAuth.m */,
 				324C83AD18281AF5008B59B6 /* OKChallenge.h */,
 				324C83AE18281AF5008B59B6 /* OKChallenge.m */,
-				324C83AF18281AF5008B59B6 /* OKCrypto.h */,
-				324C83B018281AF5008B59B6 /* OKCrypto.m */,
-				324C83B118281AF5008B59B6 /* OKDBConnection.h */,
-				324C83B218281AF5008B59B6 /* OKDBConnection.m */,
-				324C83B318281AF5008B59B6 /* OKDBScore.h */,
-				324C83B418281AF5008B59B6 /* OKDBScore.m */,
 				324C83B718281AF5008B59B6 /* OKDefines.h */,
-				324C83B818281AF5008B59B6 /* OKError.h */,
-				324C83B918281AF5008B59B6 /* OKError.m */,
-				324C83BA18281AF5008B59B6 /* OKFileUtil.h */,
-				324C83BB18281AF5008B59B6 /* OKFileUtil.m */,
 				324C83BC18281AF5008B59B6 /* OKGame.h */,
 				324C83BD18281AF5008B59B6 /* OKGame.m */,
-				324C83BE18281AF5008B59B6 /* OKHelper.h */,
-				324C83BF18281AF5008B59B6 /* OKHelper.m */,
 				324C83C018281AF5008B59B6 /* OKLeaderboard.h */,
 				324C83C118281AF5008B59B6 /* OKLeaderboard.m */,
 				324C83C218281AF5008B59B6 /* OKMacros.h */,
 				324C83C318281AF5008B59B6 /* OKManager.h */,
 				324C83C418281AF5008B59B6 /* OKManager.m */,
-				324C83C518281AF5008B59B6 /* OKNetworker.h */,
-				324C83C618281AF5008B59B6 /* OKNetworker.m */,
 				324C83C718281AF5008B59B6 /* OKNotifications.h */,
 				324C83C818281AF5008B59B6 /* OKPrivate.h */,
-				324C83C918281AF5008B59B6 /* OKRequest.h */,
-				324C83CA18281AF5008B59B6 /* OKRequest.m */,
-				324C83CB18281AF5008B59B6 /* OKRequestUtils.h */,
-				324C83CC18281AF5008B59B6 /* OKRequestUtils.m */,
-				324C83CD18281AF5008B59B6 /* OKResponse.h */,
-				324C83CE18281AF5008B59B6 /* OKResponse.m */,
 				324C83CF18281AF5008B59B6 /* OKScore.h */,
 				324C83D018281AF5008B59B6 /* OKScore.m */,
-				324C83D518281AF5008B59B6 /* OKUpload.h */,
-				324C83D618281AF5008B59B6 /* OKUpload.m */,
 				324C83D718281AF5008B59B6 /* OKUser.h */,
 				324C83D818281AF5008B59B6 /* OKUser.m */,
-				324C83D918281AF5008B59B6 /* OKUtils.h */,
-				324C83DA18281AF5008B59B6 /* OKUtils.m */,
 				324C83DD18281AF5008B59B6 /* OpenKit.h */,
+				32ACE3A51828298F00A40568 /* Cache */,
+				32ACE3A41828295400A40568 /* Networking */,
+				32ACE3A3182827DE00A40568 /* Support */,
 				324C83DE18281AF5008B59B6 /* Vendor */,
 			);
 			path = Core;
@@ -708,12 +686,11 @@
 		326FD0C216CB6209004248F9 = {
 			isa = PBXGroup;
 			children = (
-				324C848A18281B8C008B59B6 /* Samples */,
 				324C831E18281AD4008B59B6 /* OpenKit */,
 				32243AF216CDD4460077EDC8 /* UnityPlugin */,
+				324C848A18281B8C008B59B6 /* Samples */,
 				326FD0CD16CB6209004248F9 /* Frameworks */,
 				326FD0CC16CB6209004248F9 /* Products */,
-				324C831C18281A9E008B59B6 /* SampleApp copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -766,6 +743,51 @@
 				32ACE39D182826BA00A40568 /* OKFMResultSet.m */,
 			);
 			path = fmdb;
+			sourceTree = "<group>";
+		};
+		32ACE3A3182827DE00A40568 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				324C83AF18281AF5008B59B6 /* OKCrypto.h */,
+				324C83B018281AF5008B59B6 /* OKCrypto.m */,
+				324C83B818281AF5008B59B6 /* OKError.h */,
+				324C83B918281AF5008B59B6 /* OKError.m */,
+				324C83BA18281AF5008B59B6 /* OKFileUtil.h */,
+				324C83BB18281AF5008B59B6 /* OKFileUtil.m */,
+				324C83BE18281AF5008B59B6 /* OKHelper.h */,
+				324C83BF18281AF5008B59B6 /* OKHelper.m */,
+				324C83CB18281AF5008B59B6 /* OKRequestUtils.h */,
+				324C83CC18281AF5008B59B6 /* OKRequestUtils.m */,
+				324C83D918281AF5008B59B6 /* OKUtils.h */,
+				324C83DA18281AF5008B59B6 /* OKUtils.m */,
+			);
+			name = Support;
+			sourceTree = "<group>";
+		};
+		32ACE3A41828295400A40568 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				324C83C518281AF5008B59B6 /* OKNetworker.h */,
+				324C83C618281AF5008B59B6 /* OKNetworker.m */,
+				324C83C918281AF5008B59B6 /* OKRequest.h */,
+				324C83CA18281AF5008B59B6 /* OKRequest.m */,
+				324C83CD18281AF5008B59B6 /* OKResponse.h */,
+				324C83CE18281AF5008B59B6 /* OKResponse.m */,
+				324C83D518281AF5008B59B6 /* OKUpload.h */,
+				324C83D618281AF5008B59B6 /* OKUpload.m */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
+		32ACE3A51828298F00A40568 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				324C83B118281AF5008B59B6 /* OKDBConnection.h */,
+				324C83B218281AF5008B59B6 /* OKDBConnection.m */,
+				324C83B318281AF5008B59B6 /* OKDBScore.h */,
+				324C83B418281AF5008B59B6 /* OKDBScore.m */,
+			);
+			name = Cache;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
