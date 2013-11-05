@@ -15,7 +15,6 @@
 @property(nonatomic, strong) NSMutableArray *instants;
 @end
 
-#define OK_GAME_FORMAT @"1.0"
 
 
 @interface OKInstant : NSObject<NSCoding>

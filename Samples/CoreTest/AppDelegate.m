@@ -26,15 +26,9 @@
     [self.window setRootViewController:self.viewController];
     [self.window makeKeyAndVisible];
     
-    [self performSelector:@selector(dologin) withObject:nil afterDelay:4];
     return YES;
 }
 
-- (void)dologin
-{
-    //OKAuthProvider *provider = [OKAuthProvider providerByName:@"facebook"];
-    //[provider openSessionWithViewController:self.viewController completion:nil];
-}
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {

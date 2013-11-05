@@ -863,11 +863,6 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = OpenKit;
-				TargetAttributes = {
-					32CCB71F181B1A34000193D5 = {
-						DevelopmentTeam = C62WS9L4K8;
-					};
-				};
 			};
 			buildConfigurationList = 326FD0C616CB6209004248F9 /* Build configuration list for PBXProject "OpenKit" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1109,6 +1104,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					OpenKit/Plugins,
@@ -1117,7 +1113,6 @@
 				GCC_PREFIX_HEADER = "Samples/CoreTest/CoreTest-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Samples/CoreTest/Resources/CoreTest-Info.plist";
 				PRODUCT_NAME = CoreTest;
-				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1127,6 +1122,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					OpenKit/Plugins,
@@ -1135,7 +1131,6 @@
 				GCC_PREFIX_HEADER = "Samples/CoreTest/CoreTest-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Samples/CoreTest/Resources/CoreTest-Info.plist";
 				PRODUCT_NAME = CoreTest;
-				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
