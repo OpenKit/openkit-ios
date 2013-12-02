@@ -85,6 +85,7 @@
     return results;
 }
 
+
 #pragma mark -
 
 + (OKUser*)guestUser
@@ -254,7 +255,7 @@
             [params addObject:[request JSONDictionary]];
         
         // REVIEW THIS
-        [OKNetworker postToPath:@"/users"
+        [OKNetworker postToPath:@"/user_sessions"
                      parameters:@{@"requests": params}
                      completion:^(OKResponse *response)
          {

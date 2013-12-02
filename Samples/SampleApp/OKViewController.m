@@ -10,6 +10,7 @@
 #import "OKViewController.h"
 #import "ScoreSubmitterVC.h"
 #import "OKGameCenterPlugin.h"
+#import "GameView.h"
 
 
 @implementation ViewController
@@ -41,6 +42,12 @@
     }
 }
 
+- (IBAction)launchReply:(id)sender
+{
+    GameViewController *controller = [[GameViewController alloc] init];
+
+    [self presentViewController:controller animated:YES completion:nil];
+}
 
 -(IBAction)launchGameCenter:(id)sender
 {

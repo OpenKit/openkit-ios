@@ -111,6 +111,9 @@
 		324C84BA18281BED008B59B6 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 324C84A918281B8C008B59B6 /* ViewController.xib */; };
 		324C84BD18281C2F008B59B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C849F18281B8C008B59B6 /* main.m */; };
 		326FD0CF16CB6209004248F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
+		3279F43D18459C8F00B58A1C /* OKUUIDPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 3279F43C18459C8F00B58A1C /* OKUUIDPlugin.m */; };
+		3279F43E18459CB000B58A1C /* OKUUIDPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 3279F43C18459C8F00B58A1C /* OKUUIDPlugin.m */; };
+		3279F43F18459CB100B58A1C /* OKUUIDPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 3279F43C18459C8F00B58A1C /* OKUUIDPlugin.m */; };
 		3284E16416CE4AFC00624827 /* OKUnityHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */; };
 		3284E16516CE4AFE00624827 /* OKBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 32243AFE16CDE3C80077EDC8 /* OKBridge.m */; };
 		3284E16616CE4B0400624827 /* libmono.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 32243B0416CDE3EF0077EDC8 /* libmono.0.dylib */; };
@@ -122,6 +125,9 @@
 		3295C1521819D76F0044783E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0D516CB732200E8F185 /* SystemConfiguration.framework */; };
 		3295C1531819D76F0044783E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05016CB698C00E8F185 /* UIKit.framework */; };
 		3295C1541819D76F0044783E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD05316CB698C00E8F185 /* CoreGraphics.framework */; };
+		3295F163184D441800E99585 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3295F161184D440700E99585 /* libz.dylib */; };
+		3295F164184D441D00E99585 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3295F161184D440700E99585 /* libz.dylib */; };
+		3295F165184D441F00E99585 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3295F161184D440700E99585 /* libz.dylib */; };
 		32ACE391182826AC00A40568 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32ACE390182826AB00A40568 /* FacebookSDK.framework */; };
 		32ACE392182826AC00A40568 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32ACE390182826AB00A40568 /* FacebookSDK.framework */; };
 		32ACE39E182826BA00A40568 /* OKFMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 32ACE395182826BA00A40568 /* OKFMDatabase.m */; };
@@ -141,6 +147,10 @@
 		32CCB782181B1ACC000193D5 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0DB16CB742500E8F185 /* Social.framework */; };
 		32CCB784181B1ACC000193D5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CAD0D516CB732200E8F185 /* SystemConfiguration.framework */; };
 		32CCB78B181B23F8000193D5 /* libOpenKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CB16CB6209004248F9 /* libOpenKit.a */; };
+		32CE7C12184D1F9500F2193E /* GameReplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE7C0F184D1F9500F2193E /* GameReplay.m */; };
+		32CE7C13184D1F9500F2193E /* GameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE7C11184D1F9500F2193E /* GameView.m */; };
+		32CE7C16184D1F9F00F2193E /* GameReplayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE7C14184D1F9F00F2193E /* GameReplayView.xib */; };
+		32CE7C17184D1F9F00F2193E /* GameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE7C15184D1F9F00F2193E /* GameView.xib */; };
 		445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -318,9 +328,12 @@
 		324C84AC18281B8C008B59B6 /* ScoreSubmitterVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScoreSubmitterVC.m; sourceTree = "<group>"; };
 		326FD0CB16CB6209004248F9 /* libOpenKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOpenKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		326FD0CE16CB6209004248F9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3279F43B18459C8F00B58A1C /* OKUUIDPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKUUIDPlugin.h; sourceTree = "<group>"; };
+		3279F43C18459C8F00B58A1C /* OKUUIDPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKUUIDPlugin.m; sourceTree = "<group>"; };
 		3284E14916CE49AB00624827 /* UnityPluginMac.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnityPluginMac.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		3284E15A16CE4A6F00624827 /* UnityPluginMac-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "UnityPluginMac-Info.plist"; sourceTree = "<group>"; };
 		3284E15B16CE4A6F00624827 /* UnityPluginMac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UnityPluginMac-Prefix.pch"; sourceTree = "<group>"; };
+		3295F161184D440700E99585 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		32ACE390182826AB00A40568 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		32ACE394182826BA00A40568 /* OKFMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKFMDatabase.h; sourceTree = "<group>"; };
 		32ACE395182826BA00A40568 /* OKFMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKFMDatabase.m; sourceTree = "<group>"; };
@@ -342,6 +355,12 @@
 		32CAD0E616CB74CB00E8F185 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		32CAD0EA16CB74DF00E8F185 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		32CCB720181B1A34000193D5 /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		32CE7C0E184D1F9500F2193E /* GameReplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameReplay.h; sourceTree = "<group>"; };
+		32CE7C0F184D1F9500F2193E /* GameReplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameReplay.m; sourceTree = "<group>"; };
+		32CE7C10184D1F9500F2193E /* GameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameView.h; sourceTree = "<group>"; };
+		32CE7C11184D1F9500F2193E /* GameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameView.m; sourceTree = "<group>"; };
+		32CE7C14184D1F9F00F2193E /* GameReplayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameReplayView.xib; sourceTree = "<group>"; };
+		32CE7C15184D1F9F00F2193E /* GameView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameView.xib; sourceTree = "<group>"; };
 		445B3BFB1767F5D300952456 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -368,6 +387,7 @@
 				32ACE392182826AC00A40568 /* FacebookSDK.framework in Frameworks */,
 				324C831018281A9D008B59B6 /* Accounts.framework in Frameworks */,
 				324C831118281A9D008B59B6 /* Social.framework in Frameworks */,
+				3295F165184D441F00E99585 /* libz.dylib in Frameworks */,
 				324C831318281A9D008B59B6 /* SystemConfiguration.framework in Frameworks */,
 				324C831418281A9D008B59B6 /* Foundation.framework in Frameworks */,
 				324C831518281A9D008B59B6 /* UIKit.framework in Frameworks */,
@@ -379,6 +399,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3295F163184D441800E99585 /* libz.dylib in Frameworks */,
 				445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */,
 				3295C14B1819D76F0044783E /* MessageUI.framework in Frameworks */,
 				3295C14C1819D76F0044783E /* Security.framework in Frameworks */,
@@ -413,6 +434,7 @@
 				32ACE391182826AC00A40568 /* FacebookSDK.framework in Frameworks */,
 				32CCB781181B1ACC000193D5 /* Accounts.framework in Frameworks */,
 				32CCB782181B1ACC000193D5 /* Social.framework in Frameworks */,
+				3295F164184D441D00E99585 /* libz.dylib in Frameworks */,
 				32CCB784181B1ACC000193D5 /* SystemConfiguration.framework in Frameworks */,
 				32CCB721181B1A34000193D5 /* Foundation.framework in Frameworks */,
 				32CCB723181B1A34000193D5 /* UIKit.framework in Frameworks */,
@@ -595,6 +617,8 @@
 			isa = PBXGroup;
 			children = (
 				32ACE390182826AB00A40568 /* FacebookSDK.framework */,
+				3279F43B18459C8F00B58A1C /* OKUUIDPlugin.h */,
+				3279F43C18459C8F00B58A1C /* OKUUIDPlugin.m */,
 				324C848018281B1E008B59B6 /* OKFacebookPlugin.h */,
 				324C848118281B1E008B59B6 /* OKFacebookPlugin.m */,
 				324C848218281B1E008B59B6 /* OKGameCenterPlugin.h */,
@@ -639,6 +663,10 @@
 		324C849A18281B8C008B59B6 /* SampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				32CE7C0E184D1F9500F2193E /* GameReplay.h */,
+				32CE7C0F184D1F9500F2193E /* GameReplay.m */,
+				32CE7C10184D1F9500F2193E /* GameView.h */,
+				32CE7C11184D1F9500F2193E /* GameView.m */,
 				324C849F18281B8C008B59B6 /* main.m */,
 				324C84A018281B8C008B59B6 /* OKAppDelegate.h */,
 				324C84A118281B8C008B59B6 /* OKAppDelegate.m */,
@@ -655,6 +683,8 @@
 		324C84A418281B8C008B59B6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				32CE7C14184D1F9F00F2193E /* GameReplayView.xib */,
+				32CE7C15184D1F9F00F2193E /* GameView.xib */,
 				324C84A718281B8C008B59B6 /* SampleApp-Info.plist */,
 				324C84A818281B8C008B59B6 /* ScoreSubmitterVC.xib */,
 				324C84A918281B8C008B59B6 /* ViewController.xib */,
@@ -689,6 +719,7 @@
 		326FD0CD16CB6209004248F9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3295F161184D440700E99585 /* libz.dylib */,
 				32CAD0EA16CB74DF00E8F185 /* libsqlite3.dylib */,
 				445B3BFB1767F5D300952456 /* GameKit.framework */,
 				2CD025EC17A8A1A7001ECD84 /* MessageUI.framework */,
@@ -911,6 +942,7 @@
 				324C847018281B10008B59B6 /* ok_facebook_on@2x.png in Resources */,
 				324C846D18281B10008B59B6 /* ok_facebook_off.png in Resources */,
 				324C846C18281B10008B59B6 /* invite@2x.png in Resources */,
+				32CE7C16184D1F9F00F2193E /* GameReplayView.xib in Resources */,
 				324C847118281B10008B59B6 /* ok_gamecenter_off.png in Resources */,
 				324C845B18281B10008B59B6 /* close.png in Resources */,
 				324C845D18281B10008B59B6 /* facebook_icon.png in Resources */,
@@ -930,6 +962,7 @@
 				324C846E18281B10008B59B6 /* ok_facebook_off@2x.png in Resources */,
 				324C845A18281B10008B59B6 /* back_button@2x.png in Resources */,
 				324C847818281B10008B59B6 /* OKLeaderboardsListViewController.xib in Resources */,
+				32CE7C17184D1F9F00F2193E /* GameView.xib in Resources */,
 				324C846918281B10008B59B6 /* include_gc_on.png in Resources */,
 				324C847318281B10008B59B6 /* ok_gamecenter_on.png in Resources */,
 				324C846418281B10008B59B6 /* include_fb_off@2x.png in Resources */,
@@ -969,6 +1002,7 @@
 				324C848718281B1E008B59B6 /* OKFacebookPlugin.m in Sources */,
 				324C848918281B1E008B59B6 /* OKGameCenterPlugin.m in Sources */,
 				324C84B018281BA2008B59B6 /* main.m in Sources */,
+				3279F43F18459CB100B58A1C /* OKUUIDPlugin.m in Sources */,
 				324C84AF18281B9C008B59B6 /* AppDelegate.m in Sources */,
 				324C84B118281BA5008B59B6 /* ViewController.m in Sources */,
 			);
@@ -978,6 +1012,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3279F43D18459C8F00B58A1C /* OKUUIDPlugin.m in Sources */,
 				324C83FE18281AF5008B59B6 /* OKUpload.m in Sources */,
 				32ACE3A1182826BA00A40568 /* OKFMDatabaseQueue.m in Sources */,
 				324C83FF18281AF5008B59B6 /* OKUser.m in Sources */,
@@ -1023,12 +1058,15 @@
 				324C84B718281BD8008B59B6 /* OKAppDelegate.m in Sources */,
 				324C845818281B10008B59B6 /* OKSpinnerCell.m in Sources */,
 				324C84B618281BD5008B59B6 /* ScoreSubmitterVC.m in Sources */,
+				32CE7C13184D1F9500F2193E /* GameView.m in Sources */,
 				324C848818281B1E008B59B6 /* OKGameCenterPlugin.m in Sources */,
+				3279F43E18459CB000B58A1C /* OKUUIDPlugin.m in Sources */,
 				324C84B518281BD2008B59B6 /* OKViewController.m in Sources */,
 				324C845218281B10008B59B6 /* OKLeaderboardListCell.m in Sources */,
 				324C845018281B10008B59B6 /* OKFBLoginCell.m in Sources */,
 				324C845618281B10008B59B6 /* OKScoreCell.m in Sources */,
 				324C84BD18281C2F008B59B6 /* main.m in Sources */,
+				32CE7C12184D1F9500F2193E /* GameReplay.m in Sources */,
 				324C845318281B10008B59B6 /* OKLeaderboardsListViewController.m in Sources */,
 				324C845518281B10008B59B6 /* OKProfileViewController.m in Sources */,
 				324C848618281B1E008B59B6 /* OKFacebookPlugin.m in Sources */,

@@ -18,7 +18,7 @@
     _jsonObject = nil;
     _jsonError = nil;
 
-    if(!_networkError) {
+    if(!_networkError && !_SSLError) {
         if(_statusCode >= 400) {
             // BACKEND ERROR
             NSString *body = [[NSString alloc] initWithData:_body encoding:NSUTF8StringEncoding];

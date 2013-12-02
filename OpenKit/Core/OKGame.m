@@ -9,6 +9,7 @@
 #import "OKGame.h"
 #import "OKUtils.h"
 #import "OKMacros.h"
+#import "OKUpload.h"
 
 
 @interface OKGame () 
@@ -122,6 +123,19 @@
 
     return @{@"context": OK_NO_NIL(_contextData),
              @"instants": _instants };
+}
+
+
+- (OKUpload*)upload
+{
+    NSDictionary *archive = [self archive];
+    NSData *data = [NSJSONSerialization dataWithJSONObject:archive options:0 error:nil];
+
+    OKUpload *upload = [[OKUpload alloc] initWithData:data
+                                                 type:@"json"
+                                             compress:YES];
+
+    return upload;
 }
 
 @end

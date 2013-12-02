@@ -10,7 +10,10 @@
 
 @interface OKUpload : NSObject
 
-@property (nonatomic, assign) NSData *buffer;
-@property (nonatomic, retain) NSString *paramName;
+@property(nonatomic, assign) NSData *buffer;
+@property(nonatomic) NSString *compression;
+@property(nonatomic, readwrite) NSString *type;
+@property(nonatomic, retain) NSString *paramName;
 
+- (id)initWithData:(NSData*)data type:(NSString*)type compress:(BOOL)compress;
 @end

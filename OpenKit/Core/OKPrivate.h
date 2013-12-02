@@ -39,6 +39,13 @@
 @end
 
 
+@interface OKLeaderboard (Private)
+
++ (NSArray*)leaderboards;
+
+@end
+
+
 @interface OKLocalUser (Private)
 
 + (OKLocalUser*)createUserWithDictionary:(NSDictionary*)dict;

@@ -110,7 +110,6 @@ static id __SSLCertificate = nil;
                                         @"oauth_version": @"1.0" };
 
 
-
         _response = [[OKResponse alloc] init];
         _paramsInHeader = [NSMutableDictionary dictionaryWithDictionary:defaultParams];
         _paramsInSignature = [NSMutableDictionary dictionaryWithDictionary:defaultParams];
@@ -123,7 +122,9 @@ static id __SSLCertificate = nil;
     return self;
 }
 
+
 #pragma mark - Public API
+
 - (void)get:(NSString *)path queryParams:(NSDictionary *)queryParams complete:(void(^)(OKResponse *))handler
 {
     [self request:@"GET" path:path queryParams:queryParams reqParams:nil upload:nil complete:handler];
@@ -260,16 +261,14 @@ static id __SSLCertificate = nil;
 - (NSString*)signatureBaseString
 {
     // Request path
-    NSString *finalPath = [[self finalPath] absoluteString];
-
-    // Generate params string
     NSArray *sortedKeys = [[_paramsInSignature allKeys] sortedArrayUsingSelector: @selector(compare:)];
-    NSMutableString *paramsString = [NSMutableString string];
+    NSMutableArray *parts = [NSMutableArray array];
     [sortedKeys enumerateObjectsUsingBlock:^(id key, NSUInteger idx, BOOL *stop) {
-        [paramsString appendFormat:@"%@=%@&", key, _paramsInSignature[key]];
+        [parts addObject:[NSString stringWithFormat:@"%@=%@", key, [_paramsInSignature objectForKey:key]]];
     }];
-    [paramsString deleteCharactersInRange:NSMakeRange([paramsString length]-1, 1)];
 
+    NSString *finalPath = [[self finalPath] absoluteString];
+    NSString *paramsString = [parts componentsJoinedByString:@"&"];
     return [NSString stringWithFormat:@"%@&%@&%@", _verb, OKEscape(finalPath), OKEscape(paramsString)];
 }
 

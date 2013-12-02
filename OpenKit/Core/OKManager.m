@@ -38,11 +38,12 @@
     return self;
 }
 
+
 - (BOOL)isValid
 {
-    BOOL validKey = [_consumerKey length] > 5;
-    BOOL validSecret = [_consumerKey length] > 10;
-    BOOL validHost = [_host length] > 10;
+    BOOL validKey = [_consumerKey length] == 20;
+    BOOL validSecret = [_consumerSecret length] == 40;
+    BOOL validHost = [_host length] > 0;
 
     return (validKey && validSecret && validHost);
 }
@@ -74,11 +75,13 @@ static OKManager *__sharedInstance = nil;
     if(fbPlugin)
         objc_msgSend(fbPlugin, @selector(sharedInstance));
 
-    Class gcPlugin = NSClassFromString(@"OKFacebookPlugin");
-    gcPlugin = NSClassFromString(@"OKGameCenterPlugin");
+    Class gcPlugin = NSClassFromString(@"OKGameCenterPlugin");
     if(gcPlugin)
         objc_msgSend(gcPlugin, @selector(sharedInstance));
 
+    Class uuidPlugin = NSClassFromString(@"OKUUIDPlugin");
+    if(uuidPlugin)
+        objc_msgSend(uuidPlugin, @selector(sharedInstance));
 }
 
 
@@ -124,7 +127,7 @@ static OKManager *__sharedInstance = nil;
 
 - (id)initWithClient:(OKClient*)client
 {
-    NSAssert([client isValid], @"Invalid client credentials.");
+    NSAssert([client isValid], @"Invalid configuracion settings. Check the host, appkey and appSecret.");
     self = [super init];
     if (self) {
         _initialized = NO;

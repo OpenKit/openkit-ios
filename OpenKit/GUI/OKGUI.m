@@ -133,7 +133,6 @@
 
 #pragma mark - Public API
 
-
 - (void)popModal:(UIView*)modal
 {
     if(_currentModal == modal)
@@ -230,6 +229,5 @@
     OKLoginView *modal = [OKLoginView new];
     [[OKGUI sharedManager] presentModal:modal withClose:handler];
 }
-
 
 @end

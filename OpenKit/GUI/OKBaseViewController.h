@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OKDefines.h"
 
 // Do not use these directly, as the implementation may change.  Instead,
 // Set a delegate on OKManager and follow the OKManagerDelegate protocol.
@@ -17,7 +18,6 @@
 #define OKLeaderboardsViewDidDisappear  @"OKLeaderboardsViewDidDisappear"
 
 
-typedef void (^OKBlock)(); // an function which takes an int and return an int
 
 @interface OKViewController : UIViewController
 @property(nonatomic, strong) OKBlock okBlock;

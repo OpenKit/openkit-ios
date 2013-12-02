@@ -74,8 +74,8 @@
     self.modifyDate     = [OKHelper getNSDateFrom:dict key:@"modify_date"];
     
     _scoreID        = [OKHelper getIntFrom:dict key:@"id"];
-    _value     = [OKHelper getInt64From:dict key:@"value"];
-    _rank      = [OKHelper getIntFrom:dict key:@"rank"];
+    _value          = [OKHelper getInt64From:dict key:@"value"];
+    _rank           = [OKHelper getIntFrom:dict key:@"rank"];
     _leaderboardID  = [OKHelper getIntFrom:dict key:@"leaderboard_id"];
     _user           = [OKUser createUserWithDictionary:dict[@"user"]];
     _displayString  = [OKHelper getNSStringFrom:dict key:@"display_string"];
