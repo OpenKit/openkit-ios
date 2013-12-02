@@ -149,7 +149,8 @@ static OKManager *__sharedInstance = nil;
         return;
     }
 
-    [OKLeaderboard loadFromCache];
+    // REVIEW
+    //[OKLeaderboard loadFromCache];
     [self startLogin];
 }
 
@@ -249,9 +250,10 @@ static OKManager *__sharedInstance = nil;
         [self updatedStatus];
     }
     
-    
+
+    // REVIEW
     // get list of leaderboards as soon as possible
-    [OKLeaderboard syncWithCompletion:nil];
+//        [OKLeaderboard syncWithCompletion:nil];
 }
 
 

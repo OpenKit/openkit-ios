@@ -266,28 +266,6 @@ static NSArray *__leaderboards = nil;
 }
 
 
-+ (void)loadFromCache
-{
-    NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_LEADERBOARDS];
-    NSArray *archive = [OKFileUtil readSecureFile:path];
-    if(archive)
-        [self configWithArray:archive];
-}
-
-
-+ (void)save
-{
-    if([__leaderboards count] > 0) {
-        NSMutableArray *leaderboards = [NSMutableArray arrayWithCapacity:[__leaderboards count]];
-        for(OKLeaderboard *lb in __leaderboards)
-            [leaderboards addObject:[lb archive]];
-
-        NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_LEADERBOARDS];
-        [OKFileUtil writeOnFileSecurely:leaderboards path:path];
-    }
-}
-
-
 + (NSArray*)leaderboards
 {
     if(__leaderboards == nil) {
@@ -352,7 +330,8 @@ static NSArray *__leaderboards = nil;
          if(!error) {
              if([self configWithArray:[response jsonObject]]) {
                  OKLogInfo(@"OKLeaderboard: Successfully got list of leaderboards.");
-                 [self save];
+                 // REVIEW
+                 //[self save];
 
              }else{
                  OKLogErr(@"OKLeaderboard: Error creating leaderboards from %@", [response jsonObject]);
@@ -367,5 +346,32 @@ static NSArray *__leaderboards = nil;
              handler(error);
      }];
 }
+
+
+#pragma mark Local caching
+
+// REVIEW
+#if 0
++ (void)loadFromCache
+{
+    NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_LEADERBOARDS];
+    NSArray *archive = [OKFileUtil readSecureFile:path];
+    if(archive)
+        [self configWithArray:archive];
+}
+
+
++ (void)save
+{
+    if([__leaderboards count] > 0) {
+        NSMutableArray *leaderboards = [NSMutableArray arrayWithCapacity:[__leaderboards count]];
+        for(OKLeaderboard *lb in __leaderboards)
+            [leaderboards addObject:[lb archive]];
+
+        NSString *path = [OKFileUtil localOnlyCachePath:OK_LOCAL_LEADERBOARDS];
+        [OKFileUtil writeOnFileSecurely:leaderboards path:path];
+    }
+}
+#endif
 
 @end
