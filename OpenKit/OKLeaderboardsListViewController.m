@@ -92,8 +92,10 @@
         
         if (error) {
             OKLog(@"Error getting list of leaderboards, error: %@", error);
+            if(!defaultLeaderboardID) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Sorry, but leaderboards are not available right now. Please try again later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [alert show];
+            }
             
         } else {
             playerCount = maxPlayerCount;

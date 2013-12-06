@@ -33,22 +33,51 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 @interface BaseBridgeViewController : UIViewController
 {
     BOOL _didDisplay;
+    BOOL _didCapturePreviousWindow;
 }
 
 @property (nonatomic, retain) UIWindow *window;
+@property (nonatomic, retain) UIWindow *previousWindow;
 @end
 
 
 @implementation BaseBridgeViewController
 
 @synthesize window = _window;
+@synthesize previousWindow;
 
 - (id)init
 {
     if(self = [super init]) {
         _didDisplay = NO;
+        _didCapturePreviousWindow = NO;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getLostWindow:) name:UIWindowDidResignKeyNotification object:nil];
     }
     return self;
+}
+         
+-(void)getLostWindow:(NSNotification*)note
+{
+    // Only allow previousWindow to be set once!
+    if(_didCapturePreviousWindow)
+        return;
+    
+    
+    // Only set the previous window if the Window is normal level, it has a root viewController, and the viewcontroller isKindOfClass BaseBridgeViewController
+    if([[note object] isKindOfClass:[UIWindow class]]) {
+        UIWindow *noteWindow = [note object];
+        
+        if([noteWindow windowLevel] == UIWindowLevelNormal &&
+           noteWindow.rootViewController != nil &&
+           ![noteWindow.rootViewController isKindOfClass:[BaseBridgeViewController class]])
+        {
+            [self setPreviousWindow:noteWindow];
+            _didCapturePreviousWindow = YES;
+            OKBridgeLog(@"****Setting previous window: %@", noteWindow);
+        } else {
+            OKBridgeLog(@"****Other window shown: %@", noteWindow);
+        }
+    }
 }
 
 - (void)customLaunch
@@ -85,7 +114,16 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 - (void)dealloc
 {
     OKBridgeLog(@"Dealloc BaseBridgeViewController");
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    OKBridgeLog(@"Make previous window key, previous window is: %@",previousWindow);
+    [previousWindow makeKeyAndVisible];
+    
     [_window release];
+    OKBridgeLog(@"Release OK window, retain count after release: %d", [_window retainCount]);
+    
+    
     [super dealloc];
 }
 
@@ -115,6 +153,13 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 {
     OKBridgeLog(@"Showing OKLeaderboardsViewController with default id: %d", _defaultLeaderboardID);
     self.leaderboardsVC = [[[OKLeaderboardsViewController alloc] initWithDefaultLeaderboardID:_defaultLeaderboardID] autorelease];
+    
+    if(self.leaderboardsVC == nil) {
+        OKLog(@"OKDashBridgeVC: couldn't alloc OKleaderboardsViewController");
+        [self dismissViewControllerAnimated:NO completion:nil];
+        return;
+    }
+    
     [self.leaderboardsVC setShowLandscapeOnly:_shouldShowLandscapeOnly];
     [self presentModalViewController:self.leaderboardsVC animated:YES];
 }
@@ -210,6 +255,15 @@ void OKBridgeShowLeaderboardsBase(BOOL showLandscapeOnly, int defaultLeaderboard
 
     // Set shouldShowLandscapeOnly & defaultLeaderboardID
     OKDashBridgeViewController *vc = [[OKDashBridgeViewController alloc] init];
+    
+    if(vc == nil) {
+        if(win) {
+            [win release];
+        }
+        OKLog(@"OKBridge: could not show leaderboard because OKDashBridgeViewController came back as nil");
+        return;
+    }
+    
     [vc setShouldShowLandscapeOnly:showLandscapeOnly];
     [vc setDefaultLeaderboardID:defaultLeaderboardID];
     

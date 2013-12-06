@@ -12,6 +12,9 @@
 #import "OKColors.h"
 
 @interface OKLeaderboardsViewController ()
+{
+    int defaultLeaderboardID;
+}
 
 @end
 
@@ -19,27 +22,24 @@
 
 @synthesize showLandscapeOnly;
 
+// Had to use a weird initializer paradigm for the initializers to fix a bug on iOS5
+
 - (id)init {
-    return [self initWithDefaultLeaderboardID:0];
+    self = [super init];
+    if (self) {
+        self.modalPresentationStyle = UIModalPresentationFormSheet;
+        OKLeaderboardsListViewController *list = [[OKLeaderboardsListViewController alloc]initWithDefaultLeaderboardID:defaultLeaderboardID];
+        NSArray *viewControllers = [NSArray arrayWithObject:list];
+        [self setViewControllers:viewControllers animated:NO];
+    }
+    return self;
 }
+
 
 -(id)initWithDefaultLeaderboardID:(int)leaderboardID
 {
-    OKLeaderboardsListViewController *list = [[OKLeaderboardsListViewController alloc] initWithDefaultLeaderboardID:leaderboardID];
-    
-    self = [super initWithRootViewController:list];
-    if (self) {
-        self.modalPresentationStyle = UIModalPresentationFormSheet;
-//        [[self navigationBar] setBarStyle:UIBarStyleBlack];
-//        [[self navigationBar] setTintColor:[OKColors navbarTintColor]];
-//        [[self navigationBar] setTitleTextAttributes:
-//         [NSDictionary dictionaryWithObjectsAndKeys:
-//          [OKColors navbarTextColor], UITextAttributeTextColor,
-//          [UIColor whiteColor], UITextAttributeTextShadowColor,
-//          [NSValue valueWithUIOffset:UIOffsetMake(0, 1)], UITextAttributeTextShadowOffset,
-//          nil]];
-    }
-    return self;
+    defaultLeaderboardID = leaderboardID;
+    return [self init];
 }
 
 - (void)viewDidLoad

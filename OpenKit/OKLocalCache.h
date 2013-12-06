@@ -23,9 +23,8 @@ extern dispatch_queue_t __OKCacheQueue;
 #endif
 
 
-#import "FMDatabase.h"
-#import "FMResultSet.h"
 
+@class FMDatabase;
 #import <Foundation/Foundation.h>
 
 @interface OKLocalCache : NSObject
@@ -33,6 +32,7 @@ extern dispatch_queue_t __OKCacheQueue;
     NSString *_createSql;
     NSString *_version;
     FMDatabase *_database;
+    int lastInsertRowID;
 }
 @property (nonatomic, readonly) NSString *name;
 
@@ -44,6 +44,12 @@ extern dispatch_queue_t __OKCacheQueue;
 // You can use this for insert/update/delete without access block.  Selects should
 // go through access block so FMResultSet access is contained.
 - (BOOL)update:(NSString *)sql, ...;
+
+// Get the autoincrement primary key int ID of the last inserted row
+-(int)lastInsertRowID;
+
+// Get the last error message from FMDB
+-(NSString*)lastErrorMessage;
 
 #pragma mark - OK Specific
 - (BOOL)insertToken:(NSString *)tokenStr;

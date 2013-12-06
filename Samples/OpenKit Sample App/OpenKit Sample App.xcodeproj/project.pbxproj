@@ -23,7 +23,7 @@
 		4487EFE117E84086004CFB57 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4487EFE017E84086004CFB57 /* MessageUI.framework */; };
 		4487EFE317E8408A004CFB57 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4487EFE217E8408A004CFB57 /* Security.framework */; };
 		4487EFE517E84090004CFB57 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4487EFE417E84090004CFB57 /* QuartzCore.framework */; };
-		4487EFE717E8409F004CFB57 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4487EFE617E8409F004CFB57 /* AdSupport.framework */; };
+		4487EFE717E8409F004CFB57 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4487EFE617E8409F004CFB57 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4487EFE917E840A8004CFB57 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4487EFE817E840A8004CFB57 /* Accounts.framework */; };
 		4487EFEB17E840AD004CFB57 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4487EFEA17E840AD004CFB57 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4487EFED17E840B6004CFB57 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4487EFEC17E840B6004CFB57 /* MobileCoreServices.framework */; };

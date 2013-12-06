@@ -1,19 +1,21 @@
 //
-//  OKScoreCache.h
+//  OKScoreDB.h
 //  OpenKit
 //
-//  Created by Suneet Shah on 7/26/13.
+//  Created by Suneet Shah on 10/3/13.
 //  Copyright (c) 2013 OpenKit. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "OKScore.h"
+#import "OKLocalCache.h"
 
-@interface OKScoreCache : NSObject
+@class OKScore;
+
+@interface OKScoreDB : OKLocalCache
 
 @property (nonatomic, strong) OKScore *previousSubmittedScore;
 
-+ (OKScoreCache*)sharedCache;
++ (OKScoreDB*)sharedCache;
 
 -(NSArray*)getAllCachedScores;
 -(NSArray*)getCachedScoresForLeaderboardID:(int)leaderboardID andOnlyGetSubmittedScores:(BOOL)submittedOnly;
@@ -26,6 +28,5 @@
 -(BOOL)isScoreBetterThanLocalCachedScores:(OKScore *)score;
 -(void)storeScoreIfBetter:(OKScore*)score;
 -(BOOL)isScoreBetterThanLocalCachedScores:(OKScore*)scoreToStore storeScore:(BOOL)shouldStoreScore;
-
 
 @end

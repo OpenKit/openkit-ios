@@ -15,13 +15,13 @@
 #import "OKDefines.h"
 #import "OKUserProfileImageView.h"
 #import "OKLeaderboardsViewController.h"
-#import "OKScoreCache.h"
+#import "OKScoreDB.h"
 #import "OKLocalCache.h"
 #import "OKSessionDb.h"
 #import "OKMacros.h"
 
 #define OK_DEFAULT_ENDPOINT    @"http://api.openkit.io"
-#define OK_OPENKIT_SDK_VERSION = @"1.0.2";
+#define OK_OPENKIT_SDK_VERSION = @"1.0.4";
 
 static NSString *OK_USER_KEY = @"OKUserInfo";
 
@@ -127,13 +127,13 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
 
 - (void)logoutCurrentUser
 {
-    NSLog(@"Logged out of openkit");
+    OKLogInfo(@"Logged out of openkit");
     _currentUser = nil;
     [self removeCachedUserFromNSUserDefaults];
     //Log out and clear Facebook
     [FBSession.activeSession closeAndClearTokenInformation];
     
-    [[OKScoreCache sharedCache] clearCachedSubmittedScores];
+    [[OKScoreDB sharedCache] clearCachedSubmittedScores];
 }
 
 - (void)saveCurrentUser:(OKUser *)aCurrentUser
@@ -141,7 +141,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     self->_currentUser = aCurrentUser;
     [self removeCachedUserFromNSUserDefaults];
     [self saveCurrentUserToNSUserDefaults];
-    [[OKScoreCache sharedCache] submitAllCachedScores];
+    [[OKScoreDB sharedCache] submitAllCachedScores];
 }
 
 -(void)getSavedUserFromNSUserDefaults
@@ -157,7 +157,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
             NSDictionary *userDictionary = [NSKeyedUnarchiver unarchiveObjectWithData:archivedUserDict];
             OKUser *cachedUser = [OKUserUtilities createOKUserWithJSONData:userDictionary];
             _currentUser = cachedUser;
-            OKLog(@"Found  cached OKUser id: %@ from defaults", [cachedUser OKUserID]);
+            OKLogInfo(@"Found  cached OKUser id: %@ from defaults", [cachedUser OKUserID]);
             
             if(_currentUser == nil) {
                 OKLog(@"OKUser cache is busted, clearing cache");
@@ -166,7 +166,6 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
         }
     } else {
         OKLog(@"Did not find cached OKUser");
-        [self getSavedUserFromKeychainAndMoveToNSUserDefaults];
     }
 }
 
@@ -248,35 +247,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     }
 }
 
-// This method is used to migrate the OKUser cache from keychain
-// to NSUserDefaults
-// It clears out any saved data in Keychain and moves the cached OKUserID
-// to NSUserDefaults
-//
 
-- (void)getSavedUserFromKeychainAndMoveToNSUserDefaults
-{
-    NSDictionary *userDict;
-    NSData *keychainData = [SimpleKeychain retrieve];
-    if(keychainData != nil) {
-        userDict = [[NSKeyedUnarchiver unarchiveObjectWithData:keychainData] copy];
-        OKLog(@"Found  cached OKUser from keychain, moving to NSUserDefaults");
-        OKUser *old_cached_User = [OKUserUtilities createOKUserWithJSONData:userDict];
-        
-        // Clear the old cache
-        [SimpleKeychain clear];
-        OKLog(@"Cleared old OKUser cache");
-        
-        // getSavedUserFromKeychainAndMoveToNSUserDefaults gets called during app launch
-        // and saveCurrentUserToNSUserDefaults makes a  call to [NSUserDefaults synchronize] which
-        // can cause a lock during app launch, so we need to perform it on a bg thread
-        if(old_cached_User != nil) {
-            _currentUser = old_cached_User;
-            OKLog(@"Saving user to new cache in background");
-            [self performSelectorInBackground:@selector(saveCurrentUserToNSUserDefaults) withObject:nil];
-        }
-    }
-}
 
 #pragma mark - Private
 - (void)startSession
@@ -294,7 +265,7 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [[OKScoreCache sharedCache] submitAllCachedScores];
+        [[OKScoreDB sharedCache] submitAllCachedScores];
     });
 }
 
