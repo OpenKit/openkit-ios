@@ -65,6 +65,7 @@
 		44469D9217FE640500BEBF41 /* OKScoreDB.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44469D8B17FE4F1800BEBF41 /* OKScoreDB.h */; };
 		445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
 		445B3C001769258C00952456 /* OKGameCenterUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 445B3BFF1769258C00952456 /* OKGameCenterUtilities.m */; };
+		44650CCD185686B500A5FC3B /* OKBridgeUIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 44650CCC185686B500A5FC3B /* OKBridgeUIHelper.m */; };
 		446A551817E3A98900081C7B /* OKChallenge.m in Sources */ = {isa = PBXBuildFile; fileRef = 446A551717E3A98900081C7B /* OKChallenge.m */; };
 		4474BCD417815C46000AEAD1 /* OKColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4474BCD317815C46000AEAD1 /* OKColors.m */; };
 		4474BCD517815CAB000AEAD1 /* OKColors.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 446BAB4D177A8F880092BD58 /* OKColors.h */; };
@@ -379,6 +380,8 @@
 		445B3BFB1767F5D300952456 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		445B3BFE1769258C00952456 /* OKGameCenterUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKGameCenterUtilities.h; sourceTree = "<group>"; };
 		445B3BFF1769258C00952456 /* OKGameCenterUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKGameCenterUtilities.m; sourceTree = "<group>"; };
+		44650CCB185686B500A5FC3B /* OKBridgeUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKBridgeUIHelper.h; sourceTree = "<group>"; };
+		44650CCC185686B500A5FC3B /* OKBridgeUIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKBridgeUIHelper.m; sourceTree = "<group>"; };
 		446A551617E3A98900081C7B /* OKChallenge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKChallenge.h; sourceTree = "<group>"; };
 		446A551717E3A98900081C7B /* OKChallenge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKChallenge.m; sourceTree = "<group>"; };
 		446BAB4D177A8F880092BD58 /* OKColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKColors.h; sourceTree = "<group>"; };
@@ -463,6 +466,8 @@
 				32243AFC16CDE3C80077EDC8 /* OK_SynthesizeSingleton.h */,
 				32243AFD16CDE3C80077EDC8 /* OKBridge.h */,
 				32243AFE16CDE3C80077EDC8 /* OKBridge.m */,
+				44650CCB185686B500A5FC3B /* OKBridgeUIHelper.h */,
+				44650CCC185686B500A5FC3B /* OKBridgeUIHelper.m */,
 				32243AFF16CDE3C80077EDC8 /* OKUnityHelper.h */,
 				32243B0016CDE3C80077EDC8 /* OKUnityHelper.m */,
 				32243AF316CDD4460077EDC8 /* Supporting Files */,
@@ -931,6 +936,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44650CCD185686B500A5FC3B /* OKBridgeUIHelper.m in Sources */,
 				32243B0216CDE3C80077EDC8 /* OKBridge.m in Sources */,
 				32243B0316CDE3C80077EDC8 /* OKUnityHelper.m in Sources */,
 			);
