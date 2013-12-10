@@ -248,6 +248,11 @@ void OKBridgeSubmitScoreWithGameCenter(int64_t scoreValue, int leaderboardID, in
     OKBridgeSubmitScoreBase(score, gameObjectName);
 }
 
+bool OKBridgeIsFBSessionOpen()
+{
+    return [OKFacebookUtilities isFBSessionOpen];
+}
+
 
 int OKBridgeGetCurrentUserOKID()
 {
