@@ -12,10 +12,13 @@
 #import "OKNetworker.h"
 #import "OKMacros.h"
 #import "OKUserUtilities.h"
+#import <GameKit/GameKit.h>
+#import "OKGameCenterUtilities.h"
+#import "OKHelper.h"
 
 @implementation OKAchievementScore
 
-@synthesize progress, GKAchievementID, OKAchievementID;
+@synthesize progress, GKAchievementID, OKAchievementID, GKPercentComplete;
 
 -(NSDictionary*)getAchievementScoreAsJSON
 {
@@ -49,6 +52,26 @@
             OKLog(@"Error submitting achievement score: %@",error);
         }
     }];
+    
+    if([OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter] && ![OKHelper isEmpty:GKAchievementID]) {
+        [self reportAchievementForIdentifier:GKAchievementID percentComplete:GKPercentComplete];
+    }
+}
+
+-(void)reportAchievementForIdentifier:(NSString*)identifier percentComplete:(float)percent
+{
+    GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier:identifier];
+    if(achievement) {
+        achievement.percentComplete = percent;
+        
+        OKLogInfo(@"Reporting achievement identifier %@ to GameCenter",GKAchievementID);
+        
+        [achievement reportAchievementWithCompletionHandler:^(NSError *error) {
+            if(error!=nil) {
+                OKLog(@"Error reporting GameCenter achievement for identifier: %@ %@", identifier, error);
+            }
+        }];
+    }
 }
 
 @end

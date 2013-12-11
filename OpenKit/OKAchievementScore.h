@@ -11,5 +11,6 @@
 @interface OKAchievementScore : NSObject
 @property (nonatomic) int progress, OKAchievementID;
 @property (nonatomic, strong) NSString *GKAchievementID;
+@property (nonatomic) float GKPercentComplete;
 
 @end
