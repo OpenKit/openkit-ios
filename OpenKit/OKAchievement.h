@@ -13,6 +13,7 @@
 @property (nonatomic) int achievementID, points, goal, progress;
 @property (nonatomic, strong) NSString *name, *description, *lockedIconURL, *unlockedIconURL;
 
--(id)initFromJSON:(NSDictionary*)jsonDict;
++(void)getAchievementsWithCompletionHandler:(void (^)(NSArray *achievements, NSError *error))completionHandler;
+
 
 @end

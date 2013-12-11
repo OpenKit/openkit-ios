@@ -61,6 +61,8 @@
 		32CAD00C16CB65B900E8F185 /* SimpleKeychain.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFD316CB637C00E8F185 /* SimpleKeychain.h */; };
 		32CAD04616CB65F700E8F185 /* OKLeaderboardsListViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CAD02916CB65E800E8F185 /* OKLeaderboardsListViewController.xib */; };
 		32CAD04916CB65F700E8F185 /* OKProfileViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CAD02C16CB65E800E8F185 /* OKProfileViewController.xib */; };
+		4434A2A71857E95F00E2B5A7 /* OKAchievementScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4434A2A61857E95F00E2B5A7 /* OKAchievementScore.m */; };
+		4434A2AA1857EFDB00E2B5A7 /* OKAchievementScore.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 4434A2A51857E95F00E2B5A7 /* OKAchievementScore.h */; };
 		44469D8D17FE4F1800BEBF41 /* OKScoreDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 44469D8C17FE4F1800BEBF41 /* OKScoreDB.m */; };
 		44469D9217FE640500BEBF41 /* OKScoreDB.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44469D8B17FE4F1800BEBF41 /* OKScoreDB.h */; };
 		445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
@@ -97,6 +99,7 @@
 		44C31A3717F273C8004EE2EC /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C31A3217F273C8004EE2EC /* FMResultSet.m */; };
 		44C31A3B17F27C02004EE2EC /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44C31A3A17F27C02004EE2EC /* FacebookSDK.framework */; };
 		44DE8A651857C78700BE7873 /* OKAchievement.m in Sources */ = {isa = PBXBuildFile; fileRef = 44DE8A641857C78700BE7873 /* OKAchievement.m */; };
+		44DE8A661857E65000BE7873 /* OKAchievement.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44DE8A631857C78700BE7873 /* OKAchievement.h */; };
 		44E1182B1728A7CF003C2603 /* OKError.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E1182A1728A7CF003C2603 /* OKError.m */; };
 		44E30577178CCCCB00611E0C /* facebook_icon.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44E30573178CCC6D00611E0C /* facebook_icon.png */; };
 		44E30578178CCCCB00611E0C /* facebook_icon@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44E30574178CCC6D00611E0C /* facebook_icon@2x.png */; };
@@ -167,6 +170,8 @@
 			dstPath = include;
 			dstSubfolderSpec = 16;
 			files = (
+				4434A2AA1857EFDB00E2B5A7 /* OKAchievementScore.h in Copy Files */,
+				44DE8A661857E65000BE7873 /* OKAchievement.h in Copy Files */,
 				44469D9217FE640500BEBF41 /* OKScoreDB.h in Copy Files */,
 				44F3004E17E2F2D800108D05 /* OKUserUtilities.h in Copy Files */,
 				44B0E50C17DFC69F00A80DC9 /* OKFileUtil.h in Copy Files */,
@@ -376,6 +381,8 @@
 		32CAD0FE16CB7A9B00E8F185 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		32CAD0FF16CB7A9B00E8F185 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		32CAD10016CB7A9B00E8F185 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		4434A2A51857E95F00E2B5A7 /* OKAchievementScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKAchievementScore.h; sourceTree = "<group>"; };
+		4434A2A61857E95F00E2B5A7 /* OKAchievementScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKAchievementScore.m; sourceTree = "<group>"; };
 		44469D8B17FE4F1800BEBF41 /* OKScoreDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScoreDB.h; sourceTree = "<group>"; };
 		44469D8C17FE4F1800BEBF41 /* OKScoreDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKScoreDB.m; sourceTree = "<group>"; };
 		445B3BFB1767F5D300952456 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -807,6 +814,8 @@
 			children = (
 				44DE8A631857C78700BE7873 /* OKAchievement.h */,
 				44DE8A641857C78700BE7873 /* OKAchievement.m */,
+				4434A2A51857E95F00E2B5A7 /* OKAchievementScore.h */,
+				4434A2A61857E95F00E2B5A7 /* OKAchievementScore.m */,
 			);
 			name = Achievements;
 			sourceTree = "<group>";
@@ -979,6 +988,7 @@
 				32CACFEC16CB637C00E8F185 /* OKUserProfileImageView.m in Sources */,
 				44C31A3617F273C8004EE2EC /* FMDatabaseQueue.m in Sources */,
 				32CACFEE16CB637C00E8F185 /* SimpleKeychain.m in Sources */,
+				4434A2A71857E95F00E2B5A7 /* OKAchievementScore.m in Sources */,
 				321E99CB16D2FB6C005F1506 /* AbstractActionSheetPicker.m in Sources */,
 				321E99CF16D2FBA1005F1506 /* ActionSheetStringPicker.m in Sources */,
 				44E3F3C816EAED4500509219 /* AFImageView.m in Sources */,
