@@ -96,6 +96,7 @@
 		44C31A3617F273C8004EE2EC /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C31A3017F273C8004EE2EC /* FMDatabaseQueue.m */; };
 		44C31A3717F273C8004EE2EC /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 44C31A3217F273C8004EE2EC /* FMResultSet.m */; };
 		44C31A3B17F27C02004EE2EC /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44C31A3A17F27C02004EE2EC /* FacebookSDK.framework */; };
+		44DE8A651857C78700BE7873 /* OKAchievement.m in Sources */ = {isa = PBXBuildFile; fileRef = 44DE8A641857C78700BE7873 /* OKAchievement.m */; };
 		44E1182B1728A7CF003C2603 /* OKError.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E1182A1728A7CF003C2603 /* OKError.m */; };
 		44E30577178CCCCB00611E0C /* facebook_icon.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44E30573178CCC6D00611E0C /* facebook_icon.png */; };
 		44E30578178CCCCB00611E0C /* facebook_icon@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44E30574178CCC6D00611E0C /* facebook_icon@2x.png */; };
@@ -409,6 +410,8 @@
 		44C31A3117F273C8004EE2EC /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		44C31A3217F273C8004EE2EC /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		44C31A3A17F27C02004EE2EC /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		44DE8A631857C78700BE7873 /* OKAchievement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKAchievement.h; sourceTree = "<group>"; };
+		44DE8A641857C78700BE7873 /* OKAchievement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKAchievement.m; sourceTree = "<group>"; };
 		44E118291728A7CF003C2603 /* OKError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKError.h; sourceTree = "<group>"; };
 		44E1182A1728A7CF003C2603 /* OKError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKError.m; sourceTree = "<group>"; };
 		44E30573178CCC6D00611E0C /* facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_icon.png; sourceTree = "<group>"; };
@@ -558,6 +561,7 @@
 				32CACFAC16CB637C00E8F185 /* OKGUI.h */,
 				446BAB4C177A85050092BD58 /* Social Leaderboard */,
 				446BAB4B177A84C80092BD58 /* Login */,
+				44DE8A601857C73800BE7873 /* Achievements */,
 				446BAB4A177A84850092BD58 /* TableCells */,
 				44DD160817DFEA0900D914FA /* Cache */,
 				44BC533217692DE20038043A /* Utilities */,
@@ -798,6 +802,15 @@
 			name = Cache;
 			sourceTree = "<group>";
 		};
+		44DE8A601857C73800BE7873 /* Achievements */ = {
+			isa = PBXGroup;
+			children = (
+				44DE8A631857C78700BE7873 /* OKAchievement.h */,
+				44DE8A641857C78700BE7873 /* OKAchievement.m */,
+			);
+			name = Achievements;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -974,6 +987,7 @@
 				32880CE6176D2991005F8D30 /* AFOAuth1Client.m in Sources */,
 				32880CEE176DC784005F8D30 /* OKUtils.m in Sources */,
 				445B3C001769258C00952456 /* OKGameCenterUtilities.m in Sources */,
+				44DE8A651857C78700BE7873 /* OKAchievement.m in Sources */,
 				44BC5338176A96810038043A /* OKGKScoreWrapper.m in Sources */,
 				44B50D0B176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m in Sources */,
 				44B50D1D1771227D00B5D8AD /* OKFBLoginCell.m in Sources */,
