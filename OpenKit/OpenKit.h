@@ -15,3 +15,4 @@
 #import "OKLeaderboard.h"
 #import "OKGUI.h"
 #import "OKAchievement.h"
+#import "OKAchievementScore.h"

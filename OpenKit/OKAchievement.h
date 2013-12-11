@@ -14,6 +14,6 @@
 @property (nonatomic, strong) NSString *name, *description, *lockedIconURL, *unlockedIconURL;
 
 +(void)getAchievementsWithCompletionHandler:(void (^)(NSArray *achievements, NSError *error))completionHandler;
-
+-(BOOL)unlocked;
 
 @end

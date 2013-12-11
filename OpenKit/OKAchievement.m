@@ -69,5 +69,10 @@
 
 }
 
+-(BOOL)unlocked
+{
+    return (progress >= goal);
+}
+
 
 @end

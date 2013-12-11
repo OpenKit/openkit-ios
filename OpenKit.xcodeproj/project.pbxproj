@@ -63,6 +63,11 @@
 		32CAD04916CB65F700E8F185 /* OKProfileViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CAD02C16CB65E800E8F185 /* OKProfileViewController.xib */; };
 		4434A2A71857E95F00E2B5A7 /* OKAchievementScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4434A2A61857E95F00E2B5A7 /* OKAchievementScore.m */; };
 		4434A2AA1857EFDB00E2B5A7 /* OKAchievementScore.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 4434A2A51857E95F00E2B5A7 /* OKAchievementScore.h */; };
+		4434A2AD1859042000E2B5A7 /* OKAchievementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4434A2AC1859042000E2B5A7 /* OKAchievementCell.m */; };
+		4434A2B018590A2500E2B5A7 /* OKAchievementsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4434A2AF18590A2500E2B5A7 /* OKAchievementsViewController.m */; };
+		4434A2B318590B7400E2B5A7 /* OKAchievementsListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4434A2B218590B7400E2B5A7 /* OKAchievementsListVC.m */; };
+		4434A2B41859106B00E2B5A7 /* OKAchievementsViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 4434A2AE18590A2500E2B5A7 /* OKAchievementsViewController.h */; };
+		4434A2B51859106B00E2B5A7 /* OKAchievementsListVC.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 4434A2B118590B7400E2B5A7 /* OKAchievementsListVC.h */; };
 		44469D8D17FE4F1800BEBF41 /* OKScoreDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 44469D8C17FE4F1800BEBF41 /* OKScoreDB.m */; };
 		44469D9217FE640500BEBF41 /* OKScoreDB.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 44469D8B17FE4F1800BEBF41 /* OKScoreDB.h */; };
 		445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
@@ -170,6 +175,8 @@
 			dstPath = include;
 			dstSubfolderSpec = 16;
 			files = (
+				4434A2B41859106B00E2B5A7 /* OKAchievementsViewController.h in Copy Files */,
+				4434A2B51859106B00E2B5A7 /* OKAchievementsListVC.h in Copy Files */,
 				4434A2AA1857EFDB00E2B5A7 /* OKAchievementScore.h in Copy Files */,
 				44DE8A661857E65000BE7873 /* OKAchievement.h in Copy Files */,
 				44469D9217FE640500BEBF41 /* OKScoreDB.h in Copy Files */,
@@ -383,6 +390,12 @@
 		32CAD10016CB7A9B00E8F185 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		4434A2A51857E95F00E2B5A7 /* OKAchievementScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKAchievementScore.h; sourceTree = "<group>"; };
 		4434A2A61857E95F00E2B5A7 /* OKAchievementScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKAchievementScore.m; sourceTree = "<group>"; };
+		4434A2AB1859042000E2B5A7 /* OKAchievementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKAchievementCell.h; sourceTree = "<group>"; };
+		4434A2AC1859042000E2B5A7 /* OKAchievementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKAchievementCell.m; sourceTree = "<group>"; };
+		4434A2AE18590A2500E2B5A7 /* OKAchievementsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKAchievementsViewController.h; sourceTree = "<group>"; };
+		4434A2AF18590A2500E2B5A7 /* OKAchievementsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKAchievementsViewController.m; sourceTree = "<group>"; };
+		4434A2B118590B7400E2B5A7 /* OKAchievementsListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKAchievementsListVC.h; sourceTree = "<group>"; };
+		4434A2B218590B7400E2B5A7 /* OKAchievementsListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKAchievementsListVC.m; sourceTree = "<group>"; };
 		44469D8B17FE4F1800BEBF41 /* OKScoreDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKScoreDB.h; sourceTree = "<group>"; };
 		44469D8C17FE4F1800BEBF41 /* OKScoreDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKScoreDB.m; sourceTree = "<group>"; };
 		445B3BFB1767F5D300952456 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -816,6 +829,12 @@
 				44DE8A641857C78700BE7873 /* OKAchievement.m */,
 				4434A2A51857E95F00E2B5A7 /* OKAchievementScore.h */,
 				4434A2A61857E95F00E2B5A7 /* OKAchievementScore.m */,
+				4434A2AB1859042000E2B5A7 /* OKAchievementCell.h */,
+				4434A2AC1859042000E2B5A7 /* OKAchievementCell.m */,
+				4434A2AE18590A2500E2B5A7 /* OKAchievementsViewController.h */,
+				4434A2AF18590A2500E2B5A7 /* OKAchievementsViewController.m */,
+				4434A2B118590B7400E2B5A7 /* OKAchievementsListVC.h */,
+				4434A2B218590B7400E2B5A7 /* OKAchievementsListVC.m */,
 			);
 			name = Achievements;
 			sourceTree = "<group>";
@@ -987,6 +1006,7 @@
 				32CACFEB16CB637C00E8F185 /* OKUser.m in Sources */,
 				32CACFEC16CB637C00E8F185 /* OKUserProfileImageView.m in Sources */,
 				44C31A3617F273C8004EE2EC /* FMDatabaseQueue.m in Sources */,
+				4434A2B318590B7400E2B5A7 /* OKAchievementsListVC.m in Sources */,
 				32CACFEE16CB637C00E8F185 /* SimpleKeychain.m in Sources */,
 				4434A2A71857E95F00E2B5A7 /* OKAchievementScore.m in Sources */,
 				321E99CB16D2FB6C005F1506 /* AbstractActionSheetPicker.m in Sources */,
@@ -1000,6 +1020,7 @@
 				44DE8A651857C78700BE7873 /* OKAchievement.m in Sources */,
 				44BC5338176A96810038043A /* OKGKScoreWrapper.m in Sources */,
 				44B50D0B176C3D5F00B5D8AD /* OKSocialLeaderboardViewController.m in Sources */,
+				4434A2AD1859042000E2B5A7 /* OKAchievementCell.m in Sources */,
 				44B50D1D1771227D00B5D8AD /* OKFBLoginCell.m in Sources */,
 				44B50D2417728E0300B5D8AD /* OKSpinnerCell.m in Sources */,
 				4474BCD417815C46000AEAD1 /* OKColors.m in Sources */,
@@ -1009,6 +1030,7 @@
 				327E9E1C17CEFABA00F33F24 /* OKSessionDb.m in Sources */,
 				44F3004D17E2F1CD00108D05 /* OKUserUtilities.m in Sources */,
 				44469D8D17FE4F1800BEBF41 /* OKScoreDB.m in Sources */,
+				4434A2B018590A2500E2B5A7 /* OKAchievementsViewController.m in Sources */,
 				446A551817E3A98900081C7B /* OKChallenge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

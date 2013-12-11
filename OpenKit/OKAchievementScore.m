@@ -45,6 +45,7 @@
     [OKNetworker postToPath:@"/achievement_scores" parameters:requestParams handler:^(id responseObject, NSError *error) {
         
         if(!error) {
+            OKLogInfo(@"Submitted achievement score to OpenKit successfully");
             completionHandler(nil);
         } else {
             [OKUserUtilities checkIfErrorIsUnsubscribedUserError:error];
@@ -54,11 +55,11 @@
     }];
     
     if([OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter] && ![OKHelper isEmpty:GKAchievementID]) {
-        [self reportAchievementForIdentifier:GKAchievementID percentComplete:GKPercentComplete];
+        [self reportGKAchievementForIdentifier:GKAchievementID percentComplete:GKPercentComplete];
     }
 }
 
--(void)reportAchievementForIdentifier:(NSString*)identifier percentComplete:(float)percent
+-(void)reportGKAchievementForIdentifier:(NSString*)identifier percentComplete:(float)percent
 {
     GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier:identifier];
     if(achievement) {

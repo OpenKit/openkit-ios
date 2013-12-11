@@ -13,4 +13,6 @@
 @property (nonatomic, strong) NSString *GKAchievementID;
 @property (nonatomic) float GKPercentComplete;
 
+-(void)submitAchievementScoreWithCompletionHandler:(void (^)(NSError *error))completionHandler;
+
 @end
