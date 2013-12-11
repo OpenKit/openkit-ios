@@ -54,14 +54,17 @@
     
     
     [[self navigationItem] setTitle:@"Achievements"];
-    _tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
-    _tableView.backgroundColor = [UIColor clearColor];
+    _tableView = [[UITableView alloc] initWithFrame:self.view.frame style:UITableViewStyleGrouped];
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
     _tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     [self.view addSubview:_tableView];
     [self.view addSubview:spinner];
+    
+    [_tableView setBackgroundColor:[OKColors defaultBGColor]];
+    [[self view] setBackgroundColor:[OKColors defaultBGColor]];
+    
     
     [self getListOfAchievements];
 }
@@ -125,7 +128,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return [NSString stringWithFormat:@"%d Achievements",[achievementsList count]];
+    return [NSString stringWithFormat:@"%d ACHIEVEMENTS",[achievementsList count]];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section

@@ -25,7 +25,7 @@
 
 +(UIColor*)defaultBGColor
 {
-    return UIColorFromRGB(0xffffffff);
+    return UIColorFromRGB(0xf7f7f7ff);
 }
 
 @end
