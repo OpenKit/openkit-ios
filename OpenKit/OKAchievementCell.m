@@ -46,14 +46,17 @@
         nameLabel.lineBreakMode = UILineBreakModeTailTruncation;
         nameLabel.font = [UIFont boldSystemFontOfSize:15];
         nameLabel.backgroundColor = [UIColor clearColor];
+        nameLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.contentView addSubview:nameLabel];
         
         descriptionLabel = [[UILabel alloc] initWithFrame:descriptionFrame];
         descriptionLabel.font = [UIFont systemFontOfSize:12];
         descriptionLabel.textColor = UIColorFromRGB(0x828282);
         descriptionLabel.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:descriptionLabel];
+        descriptionLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 
+        [self.contentView addSubview:descriptionLabel];
+        
         imageView = [[AFImageView alloc] initWithFrame:achievementImageFrame];
         imageView.layer.masksToBounds = YES;
         imageView.layer.cornerRadius = 3;
