@@ -176,7 +176,7 @@ extern void UnitySendMessage(const char *, const char *, const char *);
     }
     
     [self.achievementsVC setShowLandscapeOnly:shouldShowLandscapeOnly];
-    [self presentModalViewController:self.leaderboardsVC animated:YES];
+    [self presentModalViewController:self.achievementsVC animated:YES];
 }
 
 @end

@@ -234,7 +234,7 @@ void OKBridgeSubmitScoreBase(OKScore *score, const char *gameObjectName)
 }
 
 
-void OKBridgeSubmitAchievementScoreBase(int achievementID, int progress, const char *GKAchievementID, float GKpercentComplete, const char *gameObjectName)
+void OKBridgeSubmitAchievementScore(int achievementID, int progress, const char *GKAchievementID, float GKpercentComplete, const char *gameObjectName)
 {
     __block NSString *objName = [[NSString alloc] initWithUTF8String:gameObjectName];
     

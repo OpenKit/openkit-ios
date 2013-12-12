@@ -28,7 +28,7 @@ void OKBridgeShowAchievementsLandscapeOnly();
 
 /* Score and achievement submission*/
 void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, const char *displayString, const char *gameObjectName);
-void OKBridgeSubmitAchievementScoreBase(int achievementID, int progress, const char *GKAchievementID, float GKpercentComplete, const char *gameObjectName);
+void OKBridgeSubmitAchievementScore(int achievementID, int progress, const char *GKAchievementID, float GKpercentComplete, const char *gameObjectName);
 
 
 
