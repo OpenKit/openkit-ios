@@ -16,6 +16,7 @@
 #import "OKFacebookUtilities.h"
 #import "OKMacros.h"
 #import "OKBridgeUIHelper.h"
+#import "OKHelper.h"
 
 #import <UIKit/UIKit.h>
 
@@ -76,6 +77,43 @@ void OKBridgeShowLeaderboardsBase(BOOL showLandscapeOnly, int defaultLeaderboard
     // to it.
     [vc.window setRootViewController:vc];
     [vc.window makeKeyAndVisible];
+}
+
+
+void OKBridgeShowAchievementsBase(BOOL showLandscapeOnly)
+{
+    UIWindow *win = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    win.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    win.backgroundColor = [UIColor clearColor];
+    
+    // Set shouldShowLandscapeOnly & defaultLeaderboardID
+    OKBridgeAchievementsViewController *vc = [[OKBridgeAchievementsViewController alloc] init];
+    
+    if(vc == nil) {
+        if(win) {
+            [win release];
+        }
+        OKLog(@"OKBridge: could not show leaderboard because OKDashBridgeViewController came back as nil");
+        return;
+    }
+    
+    [vc setShouldShowLandscapeOnly:showLandscapeOnly];
+    vc.window = win;
+    [win release];
+    // Bridge VC is now responsible for releasing win.  It holds the only reference
+    // to it.
+    [vc.window setRootViewController:vc];
+    [vc.window makeKeyAndVisible];
+}
+
+void OKBridgeShowAchievements()
+{
+    OKBridgeShowAchievementsBase(NO);
+}
+
+void OKBridgeShowAchievementsLandscapeOnly()
+{
+    OKBridgeShowAchievementsBase(YES);
 }
 
 void OKBridgeShowLeaderboardIDWithLandscapeOnly(int leaderboardID, BOOL landscapeOnly)
@@ -195,6 +233,38 @@ void OKBridgeSubmitScoreBase(OKScore *score, const char *gameObjectName)
     }];
 }
 
+
+void OKBridgeSubmitAchievementScoreBase(int achievementID, int progress, const char *GKAchievementID, float GKpercentComplete, const char *gameObjectName)
+{
+    __block NSString *objName = [[NSString alloc] initWithUTF8String:gameObjectName];
+    
+    OKBridgeLog(@"submitting achievement score, game object name is: %@", objName);
+    
+    NSString *GKachievementIDNSString = nil;
+    
+    if( GKAchievementID != NULL) {
+        GKachievementIDNSString = [[NSString alloc] initWithUTF8String:GKAchievementID];
+    }
+    
+    OKAchievementScore *score = [[OKAchievementScore alloc] init];
+    [score setOKAchievementID:achievementID];
+    [score setProgress:progress];
+    
+    if(![OKHelper isEmpty:GKachievementIDNSString]) {
+        [score setGKAchievementID:GKachievementIDNSString];
+        [score setGKPercentComplete:GKpercentComplete];
+    }
+    
+    [score submitAchievementScoreWithCompletionHandler:^(NSError *error) {
+        if(!error) {
+            UnitySendMessage([objName UTF8String], "scoreSubmissionSucceeded", "");
+        } else {
+            UnitySendMessage([objName UTF8String], "scoreSubmissionFailed", [[error localizedDescription] UTF8String]);
+        }
+    }];
+    
+}
+
 void OKBridgeShowLoginUIWithBlock(const char *gameObjectName)
 {
      __block NSString *objName = [[NSString alloc] initWithUTF8String:gameObjectName];
@@ -247,6 +317,7 @@ void OKBridgeSubmitScoreWithGameCenter(int64_t scoreValue, int leaderboardID, in
     OKBridgeLog(@"Gamecenter leaderboard ID is: %@, submitting score to GameCenter", score.gamecenterLeaderboardID);
     OKBridgeSubmitScoreBase(score, gameObjectName);
 }
+
 
 bool OKBridgeIsFBSessionOpen()
 {

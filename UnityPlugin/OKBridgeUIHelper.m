@@ -161,6 +161,26 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 
 @end
 
+@implementation OKBridgeAchievementsViewController
+@synthesize achievementsVC, shouldShowLandscapeOnly;
+
+-(void)customLaunch
+{
+    OKBridgeLog(@"Showing OKAchievements view controller");
+    self.achievementsVC = [[[OKAchievementsViewController alloc] init] autorelease];
+    
+    if(self.achievementsVC == nil) {
+        OKLog(@"OKDashBridgeVC: couldn't alloc OKAchievementsViewController");
+        [self dismissViewControllerAnimated:NO completion:nil];
+        return;
+    }
+    
+    [self.achievementsVC setShowLandscapeOnly:shouldShowLandscapeOnly];
+    [self presentModalViewController:self.leaderboardsVC animated:YES];
+}
+
+@end
+
 
 
 @implementation OKGameCenterBridgeViewController

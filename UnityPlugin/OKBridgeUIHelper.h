@@ -9,13 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "OKManager.h"
-#import "OKLeaderboardsViewController.h"
+#import "OKGUI.h"
+
 
 @interface BaseBridgeViewController : UIViewController
 {
     BOOL _didDisplay;
     BOOL _didCapturePreviousWindow;
 }
+
 
 @property (nonatomic, retain) UIWindow *window;
 @property (nonatomic, retain) UIWindow *previousWindow;
@@ -29,4 +31,8 @@
 
 @interface OKGameCenterBridgeViewController : BaseBridgeViewController
 @property (nonatomic, retain) UIViewController* gcViewControllerToLaunch;
+@end
+
+@interface OKBridgeAchievementsViewController : OKDashBridgeViewController
+@property (nonatomic, retain) OKAchievementsViewController *achievementsVC;
 @end
