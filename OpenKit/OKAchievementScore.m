@@ -54,7 +54,7 @@
         }
     }];
     
-    if([OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter] && ![OKHelper isEmpty:GKAchievementID]) {
+    if(![OKHelper isEmpty:GKAchievementID]) {
         [self reportGKAchievementForIdentifier:GKAchievementID percentComplete:GKPercentComplete];
     }
 }
@@ -64,12 +64,15 @@
     GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier:identifier];
     if(achievement) {
         achievement.percentComplete = percent;
+        achievement.showsCompletionBanner = YES;
         
         OKLogInfo(@"Reporting achievement identifier %@ to GameCenter",GKAchievementID);
         
         [achievement reportAchievementWithCompletionHandler:^(NSError *error) {
             if(error!=nil) {
                 OKLog(@"Error reporting GameCenter achievement for identifier: %@ %@", identifier, error);
+            } else {
+                OKLog(@"Reported GameCenter achievement successfully for identifier: %@",identifier);
             }
         }];
     }

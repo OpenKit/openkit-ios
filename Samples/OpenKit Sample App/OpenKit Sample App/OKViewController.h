@@ -16,8 +16,9 @@
 - (IBAction)logoutOfOpenKit:(id)sender;
 - (IBAction)loginToOpenKit:(id)sender;
 - (IBAction)submitScore:(id)sender;
-- (IBAction)launchGameCenter:(id)sender;
 - (IBAction)viewAchievements:(id)sender;
+- (IBAction)launchGameCenter:(id)sender;
+-(IBAction)unlockAchievement:(id)sender;
 
 @property (nonatomic, strong) IBOutlet OKUserProfileImageView *profileImageView;
 @property (nonatomic, strong) IBOutlet UIButton *logoutButton;

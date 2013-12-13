@@ -119,6 +119,22 @@
     }];
 }
 
+-(IBAction)unlockAchievement:(id)sender
+{
+    OKAchievementScore *score = [[OKAchievementScore alloc] init];
+    [score setOKAchievementID:190];
+    [score setProgress:10];
+    [score setGKAchievementID:@"achievement3"];
+    [score setGKPercentComplete:100.0];
+    [score submitAchievementScoreWithCompletionHandler:^(NSError *error) {
+        if(error) {
+            NSLog(@"Failed to submit achievement with error: %@", error);
+        } else {
+            NSLog(@"Submitted achievement score");
+        }
+    }];
+}
+
 -(IBAction)submitScore:(id)sender
 {
     ScoreSubmitterVC *scoreSubmitter = [[ScoreSubmitterVC alloc] initWithNibName:@"ScoreSubmitterVC" bundle:nil];
