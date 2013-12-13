@@ -34,6 +34,11 @@
 
 -(void)submitAchievementScoreWithCompletionHandler:(void (^)(NSError *error))completionHandler
 {
+    // Always submit the gamecenter achievement even if no OKUser
+    if(![OKHelper isEmpty:GKAchievementID]) {
+        [self reportGKAchievementForIdentifier:GKAchievementID percentComplete:GKPercentComplete];
+    }
+    
     if(![OKUser currentUser]) {
         //TODO cache local achievement scores
         completionHandler([OKError noOKUserError]);
@@ -51,12 +56,8 @@
             [OKUserUtilities checkIfErrorIsUnsubscribedUserError:error];
             completionHandler(error);
             OKLog(@"Error submitting achievement score: %@",error);
-        }  
+        }
     }];
-    
-    if(![OKHelper isEmpty:GKAchievementID]) {
-        [self reportGKAchievementForIdentifier:GKAchievementID percentComplete:GKPercentComplete];
-    }
 }
 
 -(void)reportGKAchievementForIdentifier:(NSString*)identifier percentComplete:(float)percent
