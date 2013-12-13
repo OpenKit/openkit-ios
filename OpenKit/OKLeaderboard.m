@@ -88,7 +88,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
                      maxPlayerCount = [leaderBoard playerCount];
              }
          }else{
-             NSLog(@"Failed to get list of leaderboards: %@", error);
+             OKLog(@"Failed to get list of leaderboards: %@", error);
          }
          completionHandler(leaderboards, maxPlayerCount, error);
      }];

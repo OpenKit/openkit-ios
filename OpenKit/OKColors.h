@@ -18,5 +18,7 @@
 //+(UIColor*)playerTopScoreBGColor;
 //+(UIColor*)scoreCellBGColor;
 
++(UIColor*)defaultBGColor;
+
 @end
 

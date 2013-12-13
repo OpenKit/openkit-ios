@@ -22,7 +22,15 @@ void OKBridgeShowLeaderboardID(int leaderboardID);
 void OKBridgeShowLoginUI();
 void OKBridgeShowLoginUIWithBlock(const char *gameObjectName);
 
+void OKBridgeShowAchievements();
+void OKBridgeShowAchievementsLandscapeOnly();
+
+
+/* Score and achievement submission*/
 void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, const char *displayString, const char *gameObjectName);
+void OKBridgeSubmitAchievementScore(int achievementID, int progress, const char *GKAchievementID, float GKpercentComplete, const char *gameObjectName);
+
+
 
 /* GameCenter Methods */
 void OKBridgeAuthenticateLocalPlayerWithGameCenter();
@@ -34,6 +42,7 @@ bool OKBridgeIsCurrentUserAuthenticated();
 int OKBridgeGetCurrentUserOKID();
 const char* OKBridgeGetCurrentUserNick();
 const char* OKBridgeGetCurrentUserFBID();
+bool OKBridgeIsFBSessionOpen();
 
 void OKBridgeLogoutCurrentUserFromOpenKit();
 void OKBridgeGetFacebookFriends(const char *gameObjectName);

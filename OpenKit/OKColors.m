@@ -23,4 +23,9 @@
 //    return [UIColor whiteColor];
 //}
 
++(UIColor*)defaultBGColor
+{
+    return UIColorFromRGB(0xf7f7f7ff);
+}
+
 @end

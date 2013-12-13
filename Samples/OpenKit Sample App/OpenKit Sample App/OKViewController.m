@@ -13,6 +13,7 @@
 #import "OKFacebookUtilities.h"
 
 
+
 @implementation OKViewController
 
 @synthesize profileImageView;
@@ -61,8 +62,25 @@
 
 -(IBAction)logoutOfOpenKit:(id)sender
 {
-    [OKUser logoutCurrentUserFromOpenKit];
-    [self updateUIforOKUser];
+    //[OKUser logoutCurrentUserFromOpenKit];
+    //[self updateUIforOKUser];
+    
+    OKAchievementScore *score = [[OKAchievementScore alloc] init];
+    score.OKAchievementID = 188;
+    score.progress = 12;
+    
+    // This is the GameCenter achievement identifier
+    score.GKAchievementID = @"achievement1";
+    score.progress = 1;
+    
+    [score submitAchievementScoreWithCompletionHandler:^(NSError *error) {
+        if(!error) {
+            NSLog(@"Submitted achievement successfully");
+        } else {
+            NSLog(@"Error submitting achievement, %@", error);
+        }
+    }];
+    
 }
 
 -(IBAction)loginToOpenKit:(id)sender
@@ -90,6 +108,31 @@
     //OKLeaderboardsViewController *leaderBoards = [[OKLeaderboardsViewController alloc] initWithDefaultLeaderboardID:385];
     
     [self presentViewController:leaderBoards animated:YES completion:nil];
+}
+
+- (IBAction)viewAchievements:(id)sender
+{
+    OKAchievementsViewController *achievements = [[OKAchievementsViewController alloc] init];
+    
+    [self presentViewController:achievements animated:YES completion:^{
+        
+    }];
+}
+
+-(IBAction)unlockAchievement:(id)sender
+{
+    OKAchievementScore *score = [[OKAchievementScore alloc] init];
+    [score setOKAchievementID:190];
+    [score setProgress:10];
+    [score setGKAchievementID:@"achievement3"];
+    [score setGKPercentComplete:100.0];
+    [score submitAchievementScoreWithCompletionHandler:^(NSError *error) {
+        if(error) {
+            NSLog(@"Failed to submit achievement with error: %@", error);
+        } else {
+            NSLog(@"Submitted achievement score");
+        }
+    }];
 }
 
 -(IBAction)submitScore:(id)sender

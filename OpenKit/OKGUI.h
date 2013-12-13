@@ -11,3 +11,4 @@
 #import "OKLeaderboardsViewController.h"
 #import "OKUserProfileImageView.h"
 #import "OKLoginView.h"
+#import "OKAchievementsViewController.h"

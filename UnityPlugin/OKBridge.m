@@ -15,6 +15,8 @@
 #import "OKGameCenterUtilities.h"
 #import "OKFacebookUtilities.h"
 #import "OKMacros.h"
+#import "OKBridgeUIHelper.h"
+#import "OKHelper.h"
 
 #import <UIKit/UIKit.h>
 
@@ -26,204 +28,6 @@ extern void UnitySendMessage(const char *, const char *, const char *);
 #import "OKGUI.h"
 #endif
 */
-
-
-
-
-@interface BaseBridgeViewController : UIViewController
-{
-    BOOL _didDisplay;
-    BOOL _didCapturePreviousWindow;
-}
-
-@property (nonatomic, retain) UIWindow *window;
-@property (nonatomic, retain) UIWindow *previousWindow;
-@end
-
-
-@implementation BaseBridgeViewController
-
-@synthesize window = _window;
-@synthesize previousWindow;
-
-- (id)init
-{
-    if(self = [super init]) {
-        _didDisplay = NO;
-        _didCapturePreviousWindow = NO;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getLostWindow:) name:UIWindowDidResignKeyNotification object:nil];
-    }
-    return self;
-}
-         
--(void)getLostWindow:(NSNotification*)note
-{
-    // Only allow previousWindow to be set once!
-    if(_didCapturePreviousWindow)
-        return;
-    
-    
-    // Only set the previous window if the Window is normal level, it has a root viewController, and the viewcontroller isKindOfClass BaseBridgeViewController
-    if([[note object] isKindOfClass:[UIWindow class]]) {
-        UIWindow *noteWindow = [note object];
-        
-        if([noteWindow windowLevel] == UIWindowLevelNormal &&
-           noteWindow.rootViewController != nil &&
-           ![noteWindow.rootViewController isKindOfClass:[BaseBridgeViewController class]])
-        {
-            [self setPreviousWindow:noteWindow];
-            _didCapturePreviousWindow = YES;
-            OKBridgeLog(@"****Setting previous window: %@", noteWindow);
-        } else {
-            OKBridgeLog(@"****Other window shown: %@", noteWindow);
-        }
-    }
-}
-
-- (void)customLaunch
-{
-    // Override me.
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    if (!_didDisplay) {
-        _didDisplay = YES;
-        [self customLaunch];
-    }
-}
-
--(void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion
-{
-    [super dismissViewControllerAnimated:flag completion:^(void){
-        if(completion != nil) {
-            completion();
-        }
-        
-        if(_didDisplay) {
-            _didDisplay = NO;
-            [self.window setRootViewController:nil];
-            [self release];
-        } else {
-            OKBridgeLog(@"dismissViewController called but didDisplayIsFalse");
-        }
-    }];
-}
-
-- (void)dealloc
-{
-    OKBridgeLog(@"Dealloc BaseBridgeViewController");
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    OKBridgeLog(@"Make previous window key, previous window is: %@",previousWindow);
-    [previousWindow makeKeyAndVisible];
-    
-    [_window release];
-    OKBridgeLog(@"Release OK window, retain count after release: %d", [_window retainCount]);
-    
-    
-    [super dealloc];
-}
-
-
-@end
-
-@interface OKDashBridgeViewController : BaseBridgeViewController <OKManagerDelegate>
-@property (nonatomic, retain) OKLeaderboardsViewController *leaderboardsVC;
-@property (nonatomic) BOOL shouldShowLandscapeOnly;
-@property (nonatomic) int defaultLeaderboardID;
-@end
-
-
-@implementation OKDashBridgeViewController
-@synthesize leaderboardsVC = _leaderboardsVC;
-@synthesize shouldShowLandscapeOnly = _shouldShowLandscapeOnly;
-@synthesize defaultLeaderboardID = _defaultLeaderboardID;
-- (id)init
-{
-    if ((self = [super init])) {
-        [[OKManager sharedManager] setDelegate:self];
-    }
-    return self;
-}
-
-- (void)customLaunch
-{
-    OKBridgeLog(@"Showing OKLeaderboardsViewController with default id: %d", _defaultLeaderboardID);
-    self.leaderboardsVC = [[[OKLeaderboardsViewController alloc] initWithDefaultLeaderboardID:_defaultLeaderboardID] autorelease];
-    
-    if(self.leaderboardsVC == nil) {
-        OKLog(@"OKDashBridgeVC: couldn't alloc OKleaderboardsViewController");
-        [self dismissViewControllerAnimated:NO completion:nil];
-        return;
-    }
-    
-    [self.leaderboardsVC setShowLandscapeOnly:_shouldShowLandscapeOnly];
-    [self presentModalViewController:self.leaderboardsVC animated:YES];
-}
-
-- (void)openkitManagerWillShowDashboard:(OKManager *)manager
-{
-    UnitySendMessage("OpenKitPrefab", "NativeViewWillAppear", "");
-}
-
-- (void)openkitManagerDidShowDashboard:(OKManager *)manager
-{
-    UnitySendMessage("OpenKitPrefab", "NativeViewDidAppear", "");
-}
-
-- (void)openkitManagerWillHideDashboard:(OKManager *)manager
-{
-    UnitySendMessage("OpenKitPrefab", "NativeViewWillDisappear", "");
-}
-
-- (void)openkitManagerDidHideDashboard:(OKManager *)manager
-{
-    UnitySendMessage("OpenKitPrefab", "NativeViewDidDisappear", "");
-}
-
-
-- (void)dealloc
-{
-    OKBridgeLog(@"Deallocing OKDashboardViewController");
-    [[OKManager sharedManager] setDelegate:nil];
-    [_leaderboardsVC release];
-    [super dealloc];
-}
-
-@end
-
-
-@interface OKGameCenterBridgeViewController : BaseBridgeViewController
-@property (nonatomic, retain) UIViewController* gcViewControllerToLaunch;
-@end
-
-@implementation OKGameCenterBridgeViewController
-#import "OKGameCenterUtilities.h"
-
-@synthesize gcViewControllerToLaunch = _gcViewControllerToLaunch;
-
-
-- (void)customLaunch
-{
-    if(_gcViewControllerToLaunch)
-        [self presentModalViewController:_gcViewControllerToLaunch animated:YES];
-    else
-        OKBridgeLog(@"OKGameCenterBridgeViewController VC to launch was null");
-}
-
-- (void)dealloc
-{
-    
-    OKBridgeLog(@"Deallocing OKGameCenterBridgeViewController");
-    [_gcViewControllerToLaunch release];
-    // Release gc stuff if there is any.
-    [super dealloc];
-}
-
-@end
 
 
 void OKBridgeConfigureOpenKit(const char *appKey, const char *secretKey, const char *endpoint)
@@ -273,6 +77,43 @@ void OKBridgeShowLeaderboardsBase(BOOL showLandscapeOnly, int defaultLeaderboard
     // to it.
     [vc.window setRootViewController:vc];
     [vc.window makeKeyAndVisible];
+}
+
+
+void OKBridgeShowAchievementsBase(BOOL showLandscapeOnly)
+{
+    UIWindow *win = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    win.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    win.backgroundColor = [UIColor clearColor];
+    
+    // Set shouldShowLandscapeOnly & defaultLeaderboardID
+    OKBridgeAchievementsViewController *vc = [[OKBridgeAchievementsViewController alloc] init];
+    
+    if(vc == nil) {
+        if(win) {
+            [win release];
+        }
+        OKLog(@"OKBridge: could not show leaderboard because OKDashBridgeViewController came back as nil");
+        return;
+    }
+    
+    [vc setShouldShowLandscapeOnly:showLandscapeOnly];
+    vc.window = win;
+    [win release];
+    // Bridge VC is now responsible for releasing win.  It holds the only reference
+    // to it.
+    [vc.window setRootViewController:vc];
+    [vc.window makeKeyAndVisible];
+}
+
+void OKBridgeShowAchievements()
+{
+    OKBridgeShowAchievementsBase(NO);
+}
+
+void OKBridgeShowAchievementsLandscapeOnly()
+{
+    OKBridgeShowAchievementsBase(YES);
 }
 
 void OKBridgeShowLeaderboardIDWithLandscapeOnly(int leaderboardID, BOOL landscapeOnly)
@@ -392,6 +233,38 @@ void OKBridgeSubmitScoreBase(OKScore *score, const char *gameObjectName)
     }];
 }
 
+
+void OKBridgeSubmitAchievementScore(int achievementID, int progress, const char *GKAchievementID, float GKpercentComplete, const char *gameObjectName)
+{
+    __block NSString *objName = [[NSString alloc] initWithUTF8String:gameObjectName];
+    
+    OKBridgeLog(@"submitting achievement score, game object name is: %@", objName);
+    
+    NSString *GKachievementIDNSString = nil;
+    
+    if(GKAchievementID != NULL) {
+        GKachievementIDNSString = [[NSString alloc] initWithUTF8String:GKAchievementID];
+    }
+    
+    OKAchievementScore *score = [[OKAchievementScore alloc] init];
+    [score setOKAchievementID:achievementID];
+    [score setProgress:progress];
+    
+    if(![OKHelper isEmpty:GKachievementIDNSString]) {
+        [score setGKAchievementID:GKachievementIDNSString];
+        [score setGKPercentComplete:GKpercentComplete];
+    }
+    
+    [score submitAchievementScoreWithCompletionHandler:^(NSError *error) {
+        if(!error) {
+            UnitySendMessage([objName UTF8String], "scoreSubmissionSucceeded", "");
+        } else {
+            UnitySendMessage([objName UTF8String], "scoreSubmissionFailed", [[error localizedDescription] UTF8String]);
+        }
+    }];
+    
+}
+
 void OKBridgeShowLoginUIWithBlock(const char *gameObjectName)
 {
      __block NSString *objName = [[NSString alloc] initWithUTF8String:gameObjectName];
@@ -443,6 +316,12 @@ void OKBridgeSubmitScoreWithGameCenter(int64_t scoreValue, int leaderboardID, in
     
     OKBridgeLog(@"Gamecenter leaderboard ID is: %@, submitting score to GameCenter", score.gamecenterLeaderboardID);
     OKBridgeSubmitScoreBase(score, gameObjectName);
+}
+
+
+bool OKBridgeIsFBSessionOpen()
+{
+    return [OKFacebookUtilities isFBSessionOpen];
 }
 
 
