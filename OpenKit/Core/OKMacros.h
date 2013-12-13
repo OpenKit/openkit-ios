@@ -20,7 +20,7 @@
 #if defined(DEBUG)
     #define OKLogInfo(s, ...) NSLog(@"OpenKit:Info: %@", [NSString stringWithFormat:(s), ##__VA_ARGS__])
 #else
-    #define OKLogInfo(...)    {}
+    #define OKLogInfo(...)    do{}while(0)
 #endif
 
 #else
@@ -30,10 +30,11 @@
 #if defined(DEBUG)
     #define OKLogInfo(s, ...) fprintf(stdout, "OpenKit:Info: %s\n", [[NSString stringWithFormat:s, ##__VA_ARGS__] UTF8String] )
 #else
-    #define OKLogInfo(...)    {}
+    #define OKLogInfo(...)    do{}while(0)
 #endif
 
 #endif
+
 
 
 #ifdef  DEBUG
