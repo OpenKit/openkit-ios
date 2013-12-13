@@ -51,7 +51,7 @@
             [OKUserUtilities checkIfErrorIsUnsubscribedUserError:error];
             completionHandler(error);
             OKLog(@"Error submitting achievement score: %@",error);
-        }
+        }  
     }];
     
     if(![OKHelper isEmpty:GKAchievementID]) {
@@ -61,6 +61,10 @@
 
 -(void)reportGKAchievementForIdentifier:(NSString*)identifier percentComplete:(float)percent
 {
+    if(![OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
+        OKLog(@"Cant report GameCenter achievement, player is not signed in with GC");
+    }
+    
     GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier:identifier];
     if(achievement) {
         achievement.percentComplete = percent;
@@ -75,6 +79,8 @@
                 OKLog(@"Reported GameCenter achievement successfully for identifier: %@",identifier);
             }
         }];
+    } else {
+        
     }
 }
 
