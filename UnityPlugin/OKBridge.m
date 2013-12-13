@@ -242,7 +242,7 @@ void OKBridgeSubmitAchievementScore(int achievementID, int progress, const char 
     
     NSString *GKachievementIDNSString = nil;
     
-    if( GKAchievementID != NULL) {
+    if(GKAchievementID != NULL) {
         GKachievementIDNSString = [[NSString alloc] initWithUTF8String:GKAchievementID];
     }
     

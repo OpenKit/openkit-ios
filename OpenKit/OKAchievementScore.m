@@ -63,7 +63,7 @@
 -(void)reportGKAchievementForIdentifier:(NSString*)identifier percentComplete:(float)percent
 {
     if(![OKGameCenterUtilities isPlayerAuthenticatedWithGameCenter]) {
-        OKLog(@"Cant report GameCenter achievement, player is not signed in with GC");
+        OKLog(@"Reporting GameCenter achievement but GKPlayer is not signed in with GC");
     }
     
     GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier:identifier];
@@ -74,7 +74,7 @@
         OKLogInfo(@"Reporting achievement identifier %@ to GameCenter",GKAchievementID);
         
         [achievement reportAchievementWithCompletionHandler:^(NSError *error) {
-            if(error!=nil) {
+            if(error != nil) {
                 OKLog(@"Error reporting GameCenter achievement for identifier: %@ %@", identifier, error);
             } else {
                 OKLog(@"Reported GameCenter achievement successfully for identifier: %@",identifier);
