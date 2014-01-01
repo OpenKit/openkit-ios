@@ -38,7 +38,7 @@ typedef void (^OKReplayBlock)(double progress, double step, id data);
 - (void)catchInstant:(id)obj;
 - (double)playingTime;
 - (OKReplay*)replay;
-- (NSData*)archive;
+- (NSDictionary*)archive;
 - (void)replayWithBlock:(OKReplayBlock)block;
 
 
