@@ -10,31 +10,36 @@
 
 #import <Foundation/Foundation.h>
 
-/* Settings methods*/
-void OKBridgeConfigureOpenKit(const char *appKey, const char *secretKey, const char *endpoint);
+#pragma mark - Configuration
+
+void OKBridgeConfigureOpenKit(const char *appKey, const char *secretKey);
+void OKBridgeConfigureOpenKitWithHost(const char *appKey, const char *secretKey, const char *endpoint);
 void OKBridgeSetLeaderboardListTag(const char *tag);
 
-/* Show leaderboards and UI methods */
-void OKBridgeShowLeaderboards();
-void OKBridgeShowLeaderboardsLandscapeOnly();
-void OKBridgeShowLeaderboardIDWithLandscapeOnly(int leaderboardID, BOOL landscapeOnly);
+
+#pragma mark - Session management
+
+bool OKBridgeIsUserAuthenticated();
+int OKBridgeGetUserID();
+const char* OKBridgeGetUserNick();
+const char* OKBridgeGetUserFBID();
+bool OKBridgeIsUserAuthenticatedWithService(const char *serviceName);
+bool OKBridgeIsUserAuthenticatedWithGameCenter();
+void OKBridgeLogoutUser();
+void OKBridgeAuthenticateUserWithService(const char *serviceName);
+void OKBridgeAuthenticateUserWithGamecenter();
+void OKBridgeAuthenticateUserWithFacebook();
+
+
+#pragma mark - Scores
+
+void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, const char *displayString, const char *gameObjectName );
+
+
+#pragma mark - UI
+
+void OKBridgeShowLeaderboardsList();
 void OKBridgeShowLeaderboardID(int leaderboardID);
+void OKBridgeGetFacebookFriends(const char *gameObject);
 void OKBridgeShowLoginUI();
-void OKBridgeShowLoginUIWithBlock(const char *gameObjectName);
-
-void OKBridgeSubmitScore(int64_t scoreValue, int leaderboardID, int metadata, const char *displayString, const char *gameObjectName);
-
-/* GameCenter Methods */
-void OKBridgeAuthenticateLocalPlayerWithGameCenter();
-bool OKBridgeIsPlayerAuthenticatedWithGameCenter();
-void OKBridgeAuthenticateLocalPlayerWithGameCenterAndShowUIIfNecessary();
-
-/*OKUser methods*/
-bool OKBridgeIsCurrentUserAuthenticated();
-int OKBridgeGetCurrentUserOKID();
-const char* OKBridgeGetCurrentUserNick();
-const char* OKBridgeGetCurrentUserFBID();
-
-void OKBridgeLogoutCurrentUserFromOpenKit();
-void OKBridgeGetFacebookFriends(const char *gameObjectName);
-
+void OKBridgeShowLoginUIWithBlock(const char *gameObject);
