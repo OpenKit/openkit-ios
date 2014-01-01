@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OKAuth.h"
+#import "OKAuthPlugin.h"
 
 
-@interface OKUUIDPlugin : OKAuthProvider
+@interface OKUUIDPlugin : OKAuthPluginBase
 @end

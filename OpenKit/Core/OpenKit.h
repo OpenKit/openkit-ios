@@ -11,7 +11,7 @@
 #import "OKLeaderboard.h"
 #import "OKScore.h"
 #import "OKUser.h"
-#import "OKAuth.h"
+#import "OKAuthPlugin.h"
 #import "OKNotifications.h"
 #import "OKMacros.h"
 #import "OKUtils.h"

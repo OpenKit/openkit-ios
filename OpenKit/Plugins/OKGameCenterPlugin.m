@@ -16,41 +16,27 @@
 #import "OKUtils.h"
 
 
-#define OK_SERVICE_NAME @"gamecenter"
-
 @implementation OKGameCenterPlugin
 
-+ (OKAuthProvider*)sharedInstance
++ (NSString*)serviceName
 {
-    OKAuthProvider *p = [OKAuthProvider providerByName:OK_SERVICE_NAME];
-    if(p == nil) {
-        p = [[OKGameCenterPlugin alloc] init];
-        [OKAuthProvider addProvider:p];
-    }
-    return p;
+    return @"gamecenter";
 }
 
 
-- (id)init
-{
-    self = [super initWithName:OK_SERVICE_NAME];
-    return self;
-}
-
-
-- (BOOL)isSessionOpen
++ (BOOL)isSessionOpen
 {
     return [[GKLocalPlayer localPlayer] isAuthenticated];
 }
 
 
-- (BOOL)isUIVisible
++ (BOOL)isUIVisible
 {
     return OK_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0");
 }
 
 
-- (BOOL)start
++ (BOOL)start
 {
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(submitScore:) name:OKScoreSubmittedNotification object:self];
@@ -60,7 +46,7 @@
 }
 
 
-- (BOOL)openSessionWithViewController:(UIViewController*)controller
++ (BOOL)openSessionWithViewController:(UIViewController*)controller
                            completion:(void(^)(BOOL login, NSError *error))handler
 {
     [GKLocalPlayer localPlayer].authenticateHandler = ^(UIViewController *gcController, NSError *error)
@@ -83,7 +69,7 @@
 }
 
 
-- (void)getAuthRequestWithCompletion:(void(^)(OKAuthRequest *request, NSError *error))handler
++ (void)getAuthRequestWithCompletion:(void(^)(OKAuthRequest *request, NSError *error))handler
 {
     NSParameterAssert(handler);
  
@@ -109,7 +95,7 @@
          
          OKAuthRequest *request = nil;
          if(!error) {
-             request = [[OKAuthRequest alloc] initWithProvider:self
+             request = [[OKAuthRequest alloc] initWithProvider:[self sharedInstance]
                                                         userID:[player playerID]
                                                       userName:[player displayName]
                                                   userImageURL:nil
@@ -123,13 +109,13 @@
 }
 
 
-- (void)logoutAndClear
++ (void)logoutAndClear
 {
     // IMPOSSIBLE
 }
 
 
-- (void)sessionStateChanged:(BOOL)status error:(NSError*)error
++ (void)sessionStateChanged:(BOOL)status error:(NSError*)error
 {
     if(status == YES) {
         OKLogInfo(@"OKGameCenterPlugin: Session is open.");
@@ -140,7 +126,7 @@
 }
 
 
-- (void)loadFriendsWithCompletion:(void(^)(NSArray *friendIDs, NSError *error))handler
++ (void)loadFriendsWithCompletion:(void(^)(NSArray *friendIDs, NSError *error))handler
 {
     if(!handler)
         return;
@@ -159,7 +145,7 @@
 
 #pragma mark - Private API
 
-- (void)submitScore:(NSNotification*)not
++ (void)submitScore:(NSNotification*)not
 {
     OKLeaderboard *leaderboard = (OKLeaderboard*)[not object];
     OKScore *score = (OKScore*)[[not userInfo] objectForKey:@"score"];

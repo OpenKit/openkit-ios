@@ -110,6 +110,9 @@
 		324C84B918281BEA008B59B6 /* ScoreSubmitterVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 324C84A818281B8C008B59B6 /* ScoreSubmitterVC.xib */; };
 		324C84BA18281BED008B59B6 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 324C84A918281B8C008B59B6 /* ViewController.xib */; };
 		324C84BD18281C2F008B59B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C849F18281B8C008B59B6 /* main.m */; };
+		326DA8B3185F83BA00AA8A84 /* OKUUIDPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 3279F43C18459C8F00B58A1C /* OKUUIDPlugin.m */; };
+		326DA8B4185F83BF00AA8A84 /* OKFacebookPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C848118281B1E008B59B6 /* OKFacebookPlugin.m */; };
+		326DA8B5185F83C100AA8A84 /* OKGameCenterPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 324C848318281B1E008B59B6 /* OKGameCenterPlugin.m */; };
 		326FD0CF16CB6209004248F9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 326FD0CE16CB6209004248F9 /* Foundation.framework */; };
 		3279F43D18459C8F00B58A1C /* OKUUIDPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 3279F43C18459C8F00B58A1C /* OKUUIDPlugin.m */; };
 		3279F43E18459CB000B58A1C /* OKUUIDPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 3279F43C18459C8F00B58A1C /* OKUUIDPlugin.m */; };
@@ -151,6 +154,7 @@
 		32CE7C13184D1F9500F2193E /* GameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CE7C11184D1F9500F2193E /* GameView.m */; };
 		32CE7C16184D1F9F00F2193E /* GameReplayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE7C14184D1F9F00F2193E /* GameReplayView.xib */; };
 		32CE7C17184D1F9F00F2193E /* GameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 32CE7C15184D1F9F00F2193E /* GameView.xib */; };
+		32DB0EFD18730BF500964AA3 /* OKAuthPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DB0EFC18730BF500964AA3 /* OKAuthPlugin.m */; };
 		445B3BFC1767F5D300952456 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 445B3BFB1767F5D300952456 /* GameKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -361,6 +365,8 @@
 		32CE7C11184D1F9500F2193E /* GameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameView.m; sourceTree = "<group>"; };
 		32CE7C14184D1F9F00F2193E /* GameReplayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameReplayView.xib; sourceTree = "<group>"; };
 		32CE7C15184D1F9F00F2193E /* GameView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameView.xib; sourceTree = "<group>"; };
+		32DB0EFB18730BF500964AA3 /* OKAuthPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKAuthPlugin.h; sourceTree = "<group>"; };
+		32DB0EFC18730BF500964AA3 /* OKAuthPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKAuthPlugin.m; sourceTree = "<group>"; };
 		445B3BFB1767F5D300952456 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -485,6 +491,8 @@
 			children = (
 				324C83AB18281AF5008B59B6 /* OKAuth.h */,
 				324C83AC18281AF5008B59B6 /* OKAuth.m */,
+				32DB0EFB18730BF500964AA3 /* OKAuthPlugin.h */,
+				32DB0EFC18730BF500964AA3 /* OKAuthPlugin.m */,
 				324C83AD18281AF5008B59B6 /* OKChallenge.h */,
 				324C83AE18281AF5008B59B6 /* OKChallenge.m */,
 				324C83B718281AF5008B59B6 /* OKDefines.h */,
@@ -1025,6 +1033,7 @@
 				324C83EB18281AF5008B59B6 /* OKAuth.m in Sources */,
 				32ACE3A2182826BA00A40568 /* OKFMResultSet.m in Sources */,
 				324C83EF18281AF5008B59B6 /* OKDBScore.m in Sources */,
+				32DB0EFD18730BF500964AA3 /* OKAuthPlugin.m in Sources */,
 				324C83EC18281AF5008B59B6 /* OKChallenge.m in Sources */,
 				324C840018281AF5008B59B6 /* OKUtils.m in Sources */,
 				324C83F718281AF5008B59B6 /* OKNetworker.m in Sources */,
@@ -1044,8 +1053,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				326DA8B4185F83BF00AA8A84 /* OKFacebookPlugin.m in Sources */,
+				326DA8B3185F83BA00AA8A84 /* OKUUIDPlugin.m in Sources */,
 				3284E16416CE4AFC00624827 /* OKUnityHelper.m in Sources */,
 				3284E16516CE4AFE00624827 /* OKBridge.m in Sources */,
+				326DA8B5185F83C100AA8A84 /* OKGameCenterPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

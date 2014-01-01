@@ -11,7 +11,7 @@
 #import "OKManager.h"
 #import "OKUser.h"
 #import "OKMacros.h"
-#import "OKAuth.h"
+#import "OKAuthPlugin.h"
 #import "OKDefines.h"
 #import "OKPrivate.h"
 #import "OKFileUtil.h"
@@ -73,15 +73,15 @@ static OKManager *__sharedInstance = nil;
     // Inject facebook's plugin.
     Class fbPlugin = NSClassFromString(@"OKFacebookPlugin");
     if(fbPlugin)
-        objc_msgSend(fbPlugin, @selector(sharedInstance));
+        objc_msgSend(fbPlugin, @selector(inject));
 
     Class gcPlugin = NSClassFromString(@"OKGameCenterPlugin");
     if(gcPlugin)
-        objc_msgSend(gcPlugin, @selector(sharedInstance));
+        objc_msgSend(gcPlugin, @selector(inject));
 
     Class uuidPlugin = NSClassFromString(@"OKUUIDPlugin");
     if(uuidPlugin)
-        objc_msgSend(uuidPlugin, @selector(sharedInstance));
+        objc_msgSend(uuidPlugin, @selector(inject));
 }
 
 

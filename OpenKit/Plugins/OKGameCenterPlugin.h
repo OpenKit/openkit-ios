@@ -7,9 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OKAuth.h"
+#import "OKAuthPlugin.h"
 
 
-@interface OKGameCenterPlugin : OKAuthProvider
-
+@interface OKGameCenterPlugin : OKAuthPluginBase
 @end

@@ -7,13 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OKAuth.h"
+#import "OKAuthPlugin.h"
 
 
-@interface OKFacebookPlugin : OKAuthProvider
+@interface OKFacebookPlugin : OKAuthPluginBase
 
 // CUSTOM API
-- (void)sendFacebookRequest;
 + (void)sendFacebookRequest;
 
 @end

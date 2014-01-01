@@ -7,6 +7,7 @@
 //
 
 #import "OKAuth.h"
+#import "OKAuthPlugin.h"
 #import "OKMacros.h"
 #import "OKError.h"
 
@@ -128,97 +129,6 @@ static NSMutableArray *__providers = nil;
     [__providers makeObjectsPerformSelector:@selector(handleWillTerminate)];
 }
 
-
-#pragma mark - Instance methods
-
-- (id)initWithName:(NSString*)name
-{
-    NSParameterAssert(name);
-
-    self = [super init];
-    if (self) {
-        _serviceName = name;
-    }
-    return self;
-}
-
-
-#pragma mark Methods to override
-
-
-+ (OKAuthProvider*)sharedInstance
-{
-    NSAssert(NO, @"Override this method");
-    return nil;
-}
-
-- (id)init
-{
-    NSAssert(NO, @"OKAuthProvider must be initialized with -initWithName:");
-    return nil;
-}
-
-- (BOOL)isUIVisible
-{
-    return NO;
-}
-
-- (BOOL)isSessionOpen
-{
-    NSAssert(NO, @"Override this method");
-    return NO;
-}
-
-- (BOOL)start
-{
-    NSAssert(NO, @"Override this method");
-    return NO;
-}
-
-- (BOOL)openSessionWithViewController:(UIViewController*)controller
-                           completion:(void(^)(BOOL login, NSError *error))handler
-{
-    NSAssert(NO, @"Override this method");
-    return NO;
-}
-
-- (void)getProfileWithCompletion:(void(^)(OKAuthProfile *request, NSError *error))handler
-{
-    NSAssert(NO, @"Override this method");
-}
-
-- (void)getAuthRequestWithCompletion:(void(^)(OKAuthRequest *request, NSError *error))handler
-{
-    NSAssert(NO, @"Override this method");
-}
-
-- (void)logoutAndClear
-{
-    NSAssert(NO, @"Override this method");
-}
-
-- (void)loadFriendsWithCompletion:(void(^)(NSArray *friends, NSError *error))handler
-{
-    OKLogInfo(@"OKAuthProvider: loadFriendsWithCompletion is not implemented in %@", [self serviceName]);
-    handler(nil, nil);
-}
-
-- (BOOL)handleOpenURL:(NSURL *)url
-{
-    // Override this method if you need it
-    return NO;
-}
-
-- (void)handleDidBecomeActive
-{
-    // Override this method if you need it
-}
-
-- (void)handleWillTerminate
-{
-    // Override this method if you need it
-}
-
 @end
 
 
@@ -266,9 +176,10 @@ static NSMutableArray *__providers = nil;
                   data:(NSString*)data
           publicKeyUrl:(NSString*)url;
 {
-    NSParameterAssert(provider);
     NSParameterAssert(userid);
-    
+    if(!provider)
+        return nil;
+
     self = [super init];
     if (self) {
         _provider = provider;

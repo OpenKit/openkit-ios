@@ -16,71 +16,49 @@
 #import "OKNotifications.h"
 
 
-#define OK_SERVICE_NAME @"facebook"
-
-
 @implementation OKFacebookPlugin
 
-- (BOOL)handleOpenURL:(NSURL *)url
++ (BOOL)handleOpenURL:(NSURL *)url
 {
     return [[FBSession activeSession] handleOpenURL:url];
 }
 
-
-- (void)handleDidBecomeActive
++ (void)handleDidBecomeActive
 {
     [[FBSession activeSession] handleDidBecomeActive];
 }
 
-
-- (void)handleWillTerminate
++ (void)handleWillTerminate
 {
     [[FBSession activeSession] close];
 }
 
 
-+ (OKAuthProvider*)sharedInstance
++ (NSString*)serviceName
 {
-    OKAuthProvider *p = [OKAuthProvider providerByName:OK_SERVICE_NAME];
-    if(p == nil) {
-        if([[[NSBundle mainBundle] infoDictionary] objectForKey:@"FacebookAppID"]) {
-            p = [[OKFacebookPlugin alloc] init];
-            [OKAuthProvider addProvider:p];
-        }else{
-            OKLogErr(@"Facebook plugin was not injected because, it was not configured in the Info.plist.");
-        }
-    }
-    
-    return p;
+    return @"facebook";
 }
 
 
-- (id)init
-{
-    self = [super initWithName:OK_SERVICE_NAME];
-    return self;
-}
-
-
-- (BOOL)isUIVisible
++ (BOOL)isUIVisible
 {
     return YES;
 }
 
 
-- (BOOL)isSessionOpen
++ (BOOL)isSessionOpen
 {
     return [[FBSession activeSession] state] == FBSessionStateOpen;
 }
 
 
-- (BOOL)start
++ (BOOL)start
 {
     return [self openSessionWithViewController:nil completion:nil];
 }
 
 
-- (BOOL)openSessionWithViewController:(UIViewController*)controller
++ (BOOL)openSessionWithViewController:(UIViewController*)controller
                            completion:(void(^)(BOOL login, NSError *error))handler
 {
     if([self isSessionOpen]) {
@@ -101,7 +79,7 @@
 }
 
 
-- (void)getAuthRequestWithCompletion:(void(^)(OKAuthRequest *request, NSError *error))handler
++ (void)getAuthRequestWithCompletion:(void(^)(OKAuthRequest *request, NSError *error))handler
 {
     NSParameterAssert(handler);
 
@@ -119,8 +97,7 @@
              NSString *token = [[[FBSession activeSession] accessTokenData] accessToken];
              if(token) {
                  NSString *imageUrl = [NSString stringWithFormat:@"http://graph.facebook.com/%@/picture", result[@"id"]];
-
-                 request = [[OKAuthRequest alloc] initWithProvider:self
+                 request = [[OKAuthRequest alloc] initWithProvider:[self sharedInstance]
                                                             userID:result[@"id"]
                                                           userName:result[@"name"]
                                                       userImageURL:imageUrl
@@ -132,17 +109,17 @@
 }
 
 
-- (void)logoutAndClear
++ (void)logoutAndClear
 {
     [[FBSession activeSession] closeAndClearTokenInformation];
 }
 
 
-- (void)loadFriendsWithCompletion:(void(^)(NSArray *friends, NSError *error))handler
++ (void)loadFriendsWithCompletion:(void(^)(NSArray *friends, NSError *error))handler
 {
     NSParameterAssert(handler);
 
-    FBRequest *fbrequest = [FBRequest requestForMe];
+    FBRequest *fbrequest = [FBRequest requestForMyFriends];
     [fbrequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *err)
     {
         if(err) {
@@ -164,7 +141,7 @@
 }
 
 
-- (void)handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:(NSError *)error
++ (void)handleErrorLoggingIntoFacebookAndShowAlertIfNecessary:(NSError *)error
 {
     NSString *alertMessage, *alertTitle;
     if (!error) {
@@ -210,7 +187,7 @@
 }
 
 
-- (NSArray*)makeListOfFacebookFriends:(NSArray*)friendsJSON
++ (NSArray*)makeListOfFacebookFriends:(NSArray*)friendsJSON
 {
     NSMutableArray *list = [[NSMutableArray alloc] initWithCapacity:[friendsJSON count]];
     
@@ -224,7 +201,7 @@
 }
 
 
-- (void)sessionStateChanged:(FBSessionState)status error:(NSError*)error
++ (void)sessionStateChanged:(FBSessionState)status error:(NSError*)error
 {
     switch(status)
     {
@@ -248,9 +225,10 @@
                                                         object:self];
 }
 
+
 #pragma mark - Custom API
 
-- (void)sendFacebookRequest
++ (void)sendFacebookRequest
 {
     NSDictionary* params = [NSDictionary dictionary];
     [FBWebDialogs presentRequestsDialogModallyWithSession:nil
@@ -271,12 +249,6 @@
              }
          }
      }];
-}
-
-
-+ (void)sendFacebookRequest
-{
-    [(OKFacebookPlugin*)[OKFacebookPlugin sharedInstance] sendFacebookRequest];
 }
 
 @end

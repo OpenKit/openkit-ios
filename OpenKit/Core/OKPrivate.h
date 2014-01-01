@@ -23,6 +23,7 @@
 
 - (void)submitScore:(OKScore*)score withCompletion:(void (^)(NSError* error))handler;
 + (void)loadFromCache;
++ (NSArray*)leaderboards;
 
 @end
 
@@ -35,13 +36,6 @@
 + (void)handleDidBecomeActive;
 + (void)handleWillTerminate;
 + (void)logoutAndClear;
-
-@end
-
-
-@interface OKLeaderboard (Private)
-
-+ (NSArray*)leaderboards;
 
 @end
 

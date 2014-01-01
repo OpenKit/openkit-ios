@@ -10,50 +10,33 @@
 #import "OKUUIDPlugin.h"
 #import "OKUtils.h"
 
-#define OK_SERVICE_NAME @"open_uuid"
-
 
 @implementation OKUUIDPlugin
 
-+ (OKAuthProvider*)sharedInstance
++ (NSString*)serviceName
 {
-    OKAuthProvider *p = [OKAuthProvider providerByName:OK_SERVICE_NAME];
-    if(p == nil) {
-        p = [[OKUUIDPlugin alloc] init];
-        [OKAuthProvider addProvider:p];
-    }
-    
-    return p;
+    return @"open_uuid";
 }
 
-
-- (id)init
-{
-    self = [super initWithName:OK_SERVICE_NAME];
-    self.priority = 1000;
-    return self;
-}
-
-
-- (BOOL)isVisible
++ (BOOL)isVisible
 {
     return NO;
 }
 
 
-- (BOOL)isSessionOpen
++ (BOOL)isSessionOpen
 {
     return YES;
 }
 
 
-- (BOOL)start
++ (BOOL)start
 {
     return [self openSessionWithViewController:nil completion:nil];
 }
 
 
-- (BOOL)openSessionWithViewController:(UIViewController*)controller
++ (BOOL)openSessionWithViewController:(UIViewController*)controller
                            completion:(void(^)(BOOL login, NSError *error))handler
 {
     if(handler)
@@ -63,7 +46,7 @@
 }
 
 
-- (void)getAuthRequestWithCompletion:(void(^)(OKAuthRequest *request, NSError *error))handler
++ (void)getAuthRequestWithCompletion:(void(^)(OKAuthRequest *request, NSError *error))handler
 {
     NSParameterAssert(handler);
 
@@ -75,15 +58,21 @@
     NSString *deviceModel = [NSString stringWithCString:model encoding:NSUTF8StringEncoding];
     free(model);
     
-    OKAuthRequest *request = [[OKAuthRequest alloc] initWithProvider:self
+    OKAuthRequest *request = [[OKAuthRequest alloc] initWithProvider:[self sharedInstance]
                                                               userID:[OKUtils vendorUUID]
                                                             userName:[[UIDevice currentDevice] name]
                                                         userImageURL:nil
                                                                  key:deviceModel
                                                                 data:nil
                                                         publicKeyUrl:nil];
-    
-    handler(request, nil);
+
+    NSError *error = nil;
+    if(!request) {
+        // REVIEW
+        error = nil;
+    }
+
+    handler(request, error);
 }
 
 @end
