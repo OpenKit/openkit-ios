@@ -96,7 +96,7 @@
         }];
         
         if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerWillShowDashboard:)])
-            [_delegate openkitManagerWillShowDashboard:self];
+            [_delegate openkitWillShowDashboard:self];
 
     }else{
         [controller setOkparent:[_navController topViewController]];
@@ -198,7 +198,7 @@
          }];
         
         if(_delegate && [_delegate respondsToSelector:@selector(openkitManagerWillHideDashboard:)])
-            [_delegate openkitManagerWillHideDashboard:self];
+            [_delegate openkitWillHideDashboard:self];
     }
 }
 

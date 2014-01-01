@@ -15,15 +15,15 @@
 @protocol OKGUIDelegate <NSObject>
 @optional
 
-- (void)openkitManagerWillShowDashboard:(OKGUI*)mgr;
-- (void)openkitManagerWillHideDashboard:(OKGUI*)mgr;
+- (void)openkitWillShowDashboard:(OKGUI*)mgr;
+- (void)openkitWillHideDashboard:(OKGUI*)mgr;
 
 @end
 
 
 @interface OKGUI : NSObject
 
-@property(nonatomic, strong) id<OKGUIDelegate> delegate;
+@property(nonatomic, weak) id<OKGUIDelegate> delegate;
 
 + (id)sharedManager;
 
