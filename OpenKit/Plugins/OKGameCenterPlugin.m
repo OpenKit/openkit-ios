@@ -16,6 +16,59 @@
 #import "OKUtils.h"
 
 
+@interface OKGameCenterObserver : NSObject
+@end
+
+@implementation OKGameCenterObserver
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(submitScore:) name:OKScoreSubmittedNotification object:nil];
+        [center addObserver:self selector:@selector(submitAchievement:) name:OKAchievementSubmittedNotification object:nil];
+    }
+    return self;
+}
+
+- (void)submitScore:(NSNotification*)not
+{
+    OKLeaderboard *leaderboard = DYNAMIC_CAST(OKLeaderboard, [not object]);
+    OKScore *score = DYNAMIC_CAST(OKScore, [[not userInfo] objectForKey:@"score"]);
+    NSString *gcLeaderboardID = [[leaderboard services] objectForKey:@"gamecenter"];
+
+    if(gcLeaderboardID && [OKGameCenterPlugin isSessionOpen])
+    {
+        GKScore *scoreReporter = [[GKScore alloc] initWithCategory:gcLeaderboardID];
+        scoreReporter.value = [score value];
+        scoreReporter.context = [score metadata];
+
+        [scoreReporter reportScoreWithCompletionHandler:^(NSError *error) {
+            if(error)
+                OKLogErr(@"Error submitting score to GameCenter: %@",error);
+            else
+                OKLogInfo(@"Gamecenter score submitted successfully");
+        }];
+    }
+}
+
+- (void)submitAchievement:(NSNotification*)not
+{
+
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+@end
+
+
+
+static OKGameCenterObserver *__gcObserver = nil;
+
 @implementation OKGameCenterPlugin
 
 + (NSString*)serviceName
@@ -38,10 +91,10 @@
 
 + (BOOL)start
 {
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(submitScore:) name:OKScoreSubmittedNotification object:self];
-    [center addObserver:self selector:@selector(submitAchievement:) name:OKAchievementSubmittedNotification object:nil];
-    
+    if(!__gcObserver) {
+        __gcObserver = [[OKGameCenterObserver alloc] init];
+    }
+
     return [self openSessionWithViewController:nil completion:nil];
 }
 
@@ -140,36 +193,6 @@
             handler(friends, error);
         }];
     }
-}
-
-
-#pragma mark - Private API
-
-+ (void)submitScore:(NSNotification*)not
-{
-    OKLeaderboard *leaderboard = (OKLeaderboard*)[not object];
-    OKScore *score = (OKScore*)[[not userInfo] objectForKey:@"score"];
-    NSString *gcLeaderboardID = [[leaderboard services] objectForKey:@"gamecenter"];
-    
-    if(gcLeaderboardID && [self isSessionOpen])
-    {
-        GKScore *scoreReporter = [[GKScore alloc] initWithCategory:gcLeaderboardID];
-        scoreReporter.value = [score value];
-        scoreReporter.context = [score metadata];
-        
-        [scoreReporter reportScoreWithCompletionHandler:^(NSError *error) {
-            if(error)
-                OKLogErr(@"Error submitting score to GameCenter: %@",error);
-            else
-                OKLogInfo(@"Gamecenter score submitted successfully");
-        }];
-    }
-}
-
-
-+ (void)submitAchievement:(NSNotification*)not
-{
-    
 }
 
 @end
