@@ -30,12 +30,6 @@
 }
 
 
-+ (BOOL)start
-{
-    return [self openSessionWithViewController:nil completion:nil];
-}
-
-
 + (BOOL)openSessionWithViewController:(UIViewController*)controller
                            completion:(void(^)(BOOL login, NSError *error))handler
 {

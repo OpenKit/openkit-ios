@@ -69,8 +69,7 @@
 
 + (BOOL)start
 {
-    NSAssert(NO, @"Override this method");
-    return NO;
+    return [self openSessionWithViewController:nil completion:nil];
 }
 
 + (BOOL)openSessionWithViewController:(UIViewController*)controller
@@ -87,7 +86,7 @@
 
 + (void)logoutAndClear
 {
-    NSAssert(NO, @"Override this method");
+    // Override this method if you need it
 }
 
 + (void)loadFriendsWithCompletion:(void(^)(NSArray *friends, NSError *error))handler

@@ -18,31 +18,17 @@
 
 @implementation OKFacebookPlugin
 
-+ (BOOL)handleOpenURL:(NSURL *)url
-{
-    return [[FBSession activeSession] handleOpenURL:url];
-}
-
-+ (void)handleDidBecomeActive
-{
-    [[FBSession activeSession] handleDidBecomeActive];
-}
-
-+ (void)handleWillTerminate
-{
-    [[FBSession activeSession] close];
-}
-
-
 + (NSString*)serviceName
 {
     return @"facebook";
 }
 
+
 + (BOOL)shouldInject
 {
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"FacebookAppID"] != nil;
 }
+
 
 + (BOOL)isUIVisible
 {
@@ -53,12 +39,6 @@
 + (BOOL)isSessionOpen
 {
     return [[FBSession activeSession] state] == FBSessionStateOpen;
-}
-
-
-+ (BOOL)start
-{
-    return [self openSessionWithViewController:nil completion:nil];
 }
 
 
@@ -116,6 +96,22 @@
 + (void)logoutAndClear
 {
     [[FBSession activeSession] closeAndClearTokenInformation];
+}
+
+
++ (BOOL)handleOpenURL:(NSURL *)url
+{
+    return [[FBSession activeSession] handleOpenURL:url];
+}
+
++ (void)handleDidBecomeActive
+{
+    [[FBSession activeSession] handleDidBecomeActive];
+}
+
++ (void)handleWillTerminate
+{
+    [[FBSession activeSession] close];
 }
 
 
