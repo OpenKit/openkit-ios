@@ -21,7 +21,8 @@
 + (OKAuthProvider*)inject
 {
     OKAuthProvider *provider = [self sharedInstance];
-    if(!provider) {
+    if(!provider && [self shouldInject]) {
+
         provider = [[OKAuthProvider alloc] initWithClass:[self class]];
         [OKAuthProvider addProvider:provider];
     }
@@ -42,6 +43,11 @@
 + (void)handleWillTerminate
 {
     // Override this method if you need it
+}
+
++ (BOOL)shouldInject
+{
+    return YES;
 }
 
 + (BOOL)isUIVisible

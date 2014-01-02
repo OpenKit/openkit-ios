@@ -39,6 +39,10 @@
     return @"facebook";
 }
 
++ (BOOL)shouldInject
+{
+    return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"FacebookAppID"] != nil;
+}
 
 + (BOOL)isUIVisible
 {

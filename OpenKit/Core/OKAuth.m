@@ -151,8 +151,9 @@ static NSMutableArray *__providers = nil;
           userImageURL:(NSString*)imageUrl
                  token:(NSString*)token
 {
-    NSParameterAssert(provider);
     NSParameterAssert(userid);
+    if(!provider)
+        return nil;
     
     self = [super init];
     if (self) {

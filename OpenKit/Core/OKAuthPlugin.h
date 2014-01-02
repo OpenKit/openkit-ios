@@ -23,6 +23,8 @@
 
 + (NSString*)serviceName;
 
++ (BOOL)shouldInject;
+
 //! Returns if the authentication services are available.
 //! e.g. GameCenter can't provide authentication until iOS7.0
 + (BOOL)isUIVisible;
