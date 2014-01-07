@@ -170,7 +170,7 @@ extern void UnitySendMessage(const char *, const char *, const char *);
     self.achievementsVC = [[[OKAchievementsViewController alloc] init] autorelease];
     
     if(self.achievementsVC == nil) {
-        OKLog(@"OKDashBridgeVC: couldn't alloc OKAchievementsViewController");
+        OKBridgeLog(@"OKDashBridgeVC: couldn't alloc OKAchievementsViewController");
         [self dismissViewControllerAnimated:NO completion:nil];
         return;
     }
@@ -179,9 +179,41 @@ extern void UnitySendMessage(const char *, const char *, const char *);
     [self presentModalViewController:self.achievementsVC animated:YES];
 }
 
+-(void)dealloc
+{
+    OKBridgeLog(@"Deallocing OKBridgeAchievementsViewController");
+    [achievementsVC release];
+    [super dealloc];
+}
+
 @end
 
+@implementation OKBridgeLeaderboardsAndAchievmentsViewController
+@synthesize tabBar;
+-(void)customLaunch
+{
+    tabBar = [[UITabBarController alloc] init];
+    OKLeaderboardsViewController *leaderboards = [[[OKLeaderboardsViewController alloc] init] autorelease];
+    OKAchievementsViewController *achievements = [[[OKAchievementsViewController alloc] init] autorelease];
+    
+    if(achievements == nil || leaderboards == nil || tabBar == nil) {
+        OKBridgeLog(@"OKBridgeLeaderboardsAndAchievmentsViewController couldn't alloc child view controllers");
+        [self dismissModalViewControllerAnimated:NO];
+        return;
+    }
+    
+    [tabBar setViewControllers:[NSArray arrayWithObjects:leaderboards,achievements, nil]];
+    [self presentModalViewController:tabBar animated:YES];
+}
 
+-(void)dealloc
+{
+    OKBridgeLog(@"Deallocing OKBridgeLeaderboardsAndAchievmentsViewController");
+    [tabBar release];
+    [super dealloc];
+}
+
+@end
 
 @implementation OKGameCenterBridgeViewController
 
