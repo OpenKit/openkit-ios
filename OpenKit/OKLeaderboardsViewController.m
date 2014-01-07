@@ -31,6 +31,9 @@
         OKLeaderboardsListViewController *list = [[OKLeaderboardsListViewController alloc]initWithDefaultLeaderboardID:defaultLeaderboardID];
         NSArray *viewControllers = [NSArray arrayWithObject:list];
         [self setViewControllers:viewControllers animated:NO];
+        
+        UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Leaderboards" image:nil tag:1];
+        [self setTabBarItem:tabBarItem];
     }
     return self;
 }

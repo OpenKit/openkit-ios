@@ -106,6 +106,33 @@ void OKBridgeShowAchievementsBase(BOOL showLandscapeOnly)
     [vc.window makeKeyAndVisible];
 }
 
+void OKBridgeShowLeaderboardsAndAchievements()
+{
+    UIWindow *win = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    win.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    win.backgroundColor = [UIColor clearColor];
+    
+    // Set shouldShowLandscapeOnly & defaultLeaderboardID
+    OKBridgeLeaderboardsAndAchievmentsViewController *vc = [[OKBridgeLeaderboardsAndAchievmentsViewController alloc] init];
+    
+    if(vc == nil) {
+        if(win) {
+            [win release];
+        }
+        OKLog(@"OKBridge: could not show leaderboard because OKDashBridgeViewController came back as nil");
+        return;
+    }
+    
+    vc.window = win;
+    [win release];
+    // Bridge VC is now responsible for releasing win.  It holds the only reference
+    // to it.
+    [vc.window setRootViewController:vc];
+    [vc.window makeKeyAndVisible];
+
+    
+}
+
 void OKBridgeShowAchievements()
 {
     OKBridgeShowAchievementsBase(NO);

@@ -36,3 +36,7 @@
 @interface OKBridgeAchievementsViewController : OKDashBridgeViewController
 @property (nonatomic, retain) OKAchievementsViewController *achievementsVC;
 @end
+
+@interface OKBridgeLeaderboardsAndAchievmentsViewController : OKDashBridgeViewController
+@property (nonatomic, retain) UITabBarController *tabBar;
+@end

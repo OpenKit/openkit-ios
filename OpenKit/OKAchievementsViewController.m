@@ -23,6 +23,9 @@
         OKAchievementsListVC *achievementsVC = [[OKAchievementsListVC alloc] init];
         NSArray *viewControllers = [NSArray arrayWithObject:achievementsVC];
         [self setViewControllers:viewControllers animated:NO];
+        
+        UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Achievements" image:nil tag:2];
+        [self setTabBarItem:tabBarItem];
     }
     return self;
 }
