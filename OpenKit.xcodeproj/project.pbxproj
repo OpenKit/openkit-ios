@@ -61,6 +61,10 @@
 		32CAD00C16CB65B900E8F185 /* SimpleKeychain.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 32CACFD316CB637C00E8F185 /* SimpleKeychain.h */; };
 		32CAD04616CB65F700E8F185 /* OKLeaderboardsListViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CAD02916CB65E800E8F185 /* OKLeaderboardsListViewController.xib */; };
 		32CAD04916CB65F700E8F185 /* OKProfileViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 32CAD02C16CB65E800E8F185 /* OKProfileViewController.xib */; };
+		440FB848187BA33000374C66 /* achievements.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 440FB844187BA30700374C66 /* achievements.png */; };
+		440FB849187BA33100374C66 /* achievements@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 440FB845187BA30700374C66 /* achievements@2x.png */; };
+		440FB84A187BA33100374C66 /* leaderboards.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 440FB846187BA30700374C66 /* leaderboards.png */; };
+		440FB84B187BA33100374C66 /* leaderboards@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 440FB847187BA30700374C66 /* leaderboards@2x.png */; };
 		4434A2A71857E95F00E2B5A7 /* OKAchievementScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4434A2A61857E95F00E2B5A7 /* OKAchievementScore.m */; };
 		4434A2AA1857EFDB00E2B5A7 /* OKAchievementScore.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 4434A2A51857E95F00E2B5A7 /* OKAchievementScore.h */; };
 		4434A2AD1859042000E2B5A7 /* OKAchievementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4434A2AC1859042000E2B5A7 /* OKAchievementCell.m */; };
@@ -227,6 +231,10 @@
 			dstPath = Resources;
 			dstSubfolderSpec = 7;
 			files = (
+				440FB848187BA33000374C66 /* achievements.png in CopyFiles */,
+				440FB849187BA33100374C66 /* achievements@2x.png in CopyFiles */,
+				440FB84A187BA33100374C66 /* leaderboards.png in CopyFiles */,
+				440FB84B187BA33100374C66 /* leaderboards@2x.png in CopyFiles */,
 				44F3CD4517CC1A5700D054CF /* settings.png in CopyFiles */,
 				44F3CD4617CC1A5700D054CF /* settings@2x.png in CopyFiles */,
 				44F3CD4717CC1A5700D054CF /* close.png in CopyFiles */,
@@ -388,6 +396,10 @@
 		32CAD0FE16CB7A9B00E8F185 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		32CAD0FF16CB7A9B00E8F185 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		32CAD10016CB7A9B00E8F185 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		440FB844187BA30700374C66 /* achievements.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = achievements.png; sourceTree = "<group>"; };
+		440FB845187BA30700374C66 /* achievements@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "achievements@2x.png"; sourceTree = "<group>"; };
+		440FB846187BA30700374C66 /* leaderboards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leaderboards.png; sourceTree = "<group>"; };
+		440FB847187BA30700374C66 /* leaderboards@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leaderboards@2x.png"; sourceTree = "<group>"; };
 		4434A2A51857E95F00E2B5A7 /* OKAchievementScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKAchievementScore.h; sourceTree = "<group>"; };
 		4434A2A61857E95F00E2B5A7 /* OKAchievementScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OKAchievementScore.m; sourceTree = "<group>"; };
 		4434A2AB1859042000E2B5A7 /* OKAchievementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OKAchievementCell.h; sourceTree = "<group>"; };
@@ -601,6 +613,10 @@
 		32CAD00F16CB65E800E8F185 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				440FB844187BA30700374C66 /* achievements.png */,
+				440FB845187BA30700374C66 /* achievements@2x.png */,
+				440FB846187BA30700374C66 /* leaderboards.png */,
+				440FB847187BA30700374C66 /* leaderboards@2x.png */,
 				2C31DE2F17C6DED0005D5918 /* settings.png */,
 				2C31DE3017C6DED0005D5918 /* settings@2x.png */,
 				2C31DE2B17C6D9B2005D5918 /* close.png */,

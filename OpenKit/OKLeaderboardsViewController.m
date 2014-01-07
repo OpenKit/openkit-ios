@@ -32,7 +32,7 @@
         NSArray *viewControllers = [NSArray arrayWithObject:list];
         [self setViewControllers:viewControllers animated:NO];
         
-        UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Leaderboards" image:nil tag:1];
+        UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Leaderboards" image:[UIImage imageNamed:@"leaderboards.png"] tag:1];
         [self setTabBarItem:tabBarItem];
     }
     return self;
