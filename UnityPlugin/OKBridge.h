@@ -13,6 +13,7 @@
 /* Settings methods*/
 void OKBridgeConfigureOpenKit(const char *appKey, const char *secretKey, const char *endpoint);
 void OKBridgeSetLeaderboardListTag(const char *tag);
+void OKBridgeInitRemoteNotifications();
 
 /* Show leaderboards and UI methods */
 void OKBridgeShowLeaderboards();

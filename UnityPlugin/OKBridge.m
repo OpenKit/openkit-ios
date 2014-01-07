@@ -45,6 +45,11 @@ void OKBridgeConfigureOpenKit(const char *appKey, const char *secretKey, const c
     [OKManager configureWithAppKey:ns_appKey secretKey:ns_secretKey endpoint:ns_endpoint];
 }
 
+void OKBridgeInitRemoteNotifications()
+{
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
+}
+
 void OKBridgeSetLeaderboardListTag(const char *tag)
 {
     OKBridgeLog(@"SetLeaderboardListTag");
