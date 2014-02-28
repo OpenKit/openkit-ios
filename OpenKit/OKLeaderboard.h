@@ -54,6 +54,8 @@ typedef enum {
 //Wrapper methods
 -(void)getGlobalScoresWithPageNum:(int)pageNum withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler;
 -(void)getPlayerTopScoreWithCompletionHandler:(void (^)(id<OKScoreProtocol> score, NSError *error))completionHandler;
+-(void)getPlayerGlobalTopScoreWithCompletionHandler:(void (^)(id<OKScoreProtocol> score))completionHandler;
+-(void) getAllPlayerScoresWithCompletionHandler:(void (^)(NSArray *scores))completionHandler;
 
 //GameCenter methods
 -(void)getGameCenterFriendsScoreswithCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler;
