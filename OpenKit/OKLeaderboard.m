@@ -382,7 +382,10 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
             }
             
             OKScore *topCachedScore = [self getPlayerTopScoreFromLocalCache]; // CACHED //
-            [scores addObject:topCachedScore];
+            if (topCachedScore)
+            {
+                [scores addObject:topCachedScore];
+            }
             
             // sort the scores and call the completion handler //
             id<OKScoreProtocol> bestScore = nil;
@@ -412,7 +415,10 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
             }
             
             OKScore *topCachedScore = [self getPlayerTopScoreFromLocalCache]; // CACHED //
-            [scores addObject:topCachedScore];
+            if (topCachedScore)
+            {
+                [scores addObject:topCachedScore];
+            }
             
             completionHandler(scores);
         }];
