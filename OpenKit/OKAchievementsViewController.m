@@ -22,7 +22,11 @@
     if(self) {
         OKAchievementsListVC *achievementsVC = [[OKAchievementsListVC alloc] init];
         NSArray *viewControllers = [NSArray arrayWithObject:achievementsVC];
+#if defined(ANDROID)
+        [self setViewControllers:viewControllers];
+#else
         [self setViewControllers:viewControllers animated:NO];
+#endif
         
         UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Achievements" image:[UIImage imageNamed:@"achievements.png"] tag:2];
         [self setTabBarItem:tabBarItem];

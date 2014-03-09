@@ -19,8 +19,12 @@
 
 @interface OKBaseLoginViewController : UIViewController
 
-
+#if defined(ANDROID)
+-(void) setWindow:(UIWindow *)window;
+-(UIWindow*) window;
+#else
 @property (nonatomic, strong) UIWindow *window;
+#endif
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 @property (nonatomic, strong) UIView *loginView;
 @property (nonatomic, strong) id<OKLoginViewDelegate> delegate;

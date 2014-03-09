@@ -205,12 +205,24 @@ static NSString *OK_USER_KEY = @"OKUserInfo";
 - (void)registerToken:(NSData *)deviceToken
 {
     OKLog(@"OKManager registerToken, data: %@", deviceToken);
-    
+#if defined(ANDROID)
+    #if _BYTE_ORDER == _BIG_ENDIAN
+        #define ntohl(n) (n)
+    #else
+        #define ntohl(n)    (((((unsigned long)(n) & 0xFF)) << 24) | \
+                            ((((unsigned long)(n) & 0xFF00)) << 8) | \
+                            ((((unsigned long)(n) & 0xFF0000)) >> 8) | \
+                            ((((unsigned long)(n) & 0xFF000000)) >> 24))
+    #endif
+#endif
     const unsigned *tokenBytes = [deviceToken bytes];
     NSString *hexToken = [NSString stringWithFormat:@"%08x%08x%08x%08x%08x%08x%08x%08x",
                           ntohl(tokenBytes[0]), ntohl(tokenBytes[1]), ntohl(tokenBytes[2]),
                           ntohl(tokenBytes[3]), ntohl(tokenBytes[4]), ntohl(tokenBytes[5]),
                           ntohl(tokenBytes[6]), ntohl(tokenBytes[7])];
+#if defined(ANDROID)
+    #undef ntohl
+#endif
 
     OKLogInfo(@"cache queue is %s", dispatch_queue_get_label(OK_CACHE_QUEUE()));
     dispatch_async(OK_CACHE_QUEUE(), ^{
