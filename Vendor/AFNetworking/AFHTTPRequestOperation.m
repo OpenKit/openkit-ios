@@ -120,8 +120,23 @@ static void AFSwizzleClassMethodWithClassAndSelectorUsingBlock(Class klass, SEL 
 @synthesize failureCallbackQueue = _failureCallbackQueue;
 @synthesize totalContentLength = _totalContentLength;
 @synthesize offsetContentLength = _offsetContentLength;
-@dynamic request;
+
+#if defined(ANDROID)
+@synthesize response = _response;
+-(void) setResponse:(NSHTTPURLResponse *)response
+{
+    _response = response;
+}
+
+@synthesize request = _request;
+-(void) setRequest:(NSURLRequest *)request
+{
+    _request = request;
+}
+#else
 @dynamic response;
+@dynamic request;
+#endif
 
 - (void)dealloc {
     if (_successCallbackQueue) {

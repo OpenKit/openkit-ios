@@ -18,8 +18,11 @@
 
 
 @interface OKBaseLoginViewController : UIViewController
-
 #if defined(ANDROID)
+{
+    UIWindow *_window;
+}
+
 -(void) setWindow:(UIWindow *)window;
 -(UIWindow*) window;
 #else
