@@ -166,7 +166,7 @@ static NSString *const kSessionTableVersion = @"0.0.38";
 - (OKSessionRow *)insertRow:(OKSessionTemplate *)t
 {
     NSDate *now = [NSDate date];
-    if (![self update:@"insert into sessions (uuid, fb_id, google_id, custom_id, ok_id, push_token, client_created_at) values (?, ?, ?, ?, ?, ?, ?) ", t.uuid, t.fbId, t.googleId, t.customId, t.okId, t.pushToken, now]) {
+    if (![self update:@"insert into sessions (uuid, fb_id, google_id, custom_id, ok_id, push_token, client_created_at) values (?, ?, ?, ?, ?, ?, ?) ", t.uuid, t.fbId, t.googleId, t.customId, t.okId, t.pushToken, now, nil]) {
         OKLogErr(@"Could not create new session.");
         return nil;
     }
