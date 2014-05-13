@@ -46,5 +46,6 @@ const char* OKBridgeGetCurrentUserFBID();
 bool OKBridgeIsFBSessionOpen();
 
 void OKBridgeLogoutCurrentUserFromOpenKit();
+void OKBridgeLogoutFacebook();
 void OKBridgeGetFacebookFriends(const char *gameObjectName);
 

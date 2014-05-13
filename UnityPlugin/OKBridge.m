@@ -84,6 +84,14 @@ void OKBridgeShowLeaderboardsBase(BOOL showLandscapeOnly, int defaultLeaderboard
     [vc.window makeKeyAndVisible];
 }
 
+void OKBridgeLogoutFacebook()
+{
+    FBSession *activeSession = [FBSession activeSession];
+    if(activeSession) {
+        [activeSession closeAndClearTokenInformation];
+    }
+}
+
 
 void OKBridgeShowAchievementsBase(BOOL showLandscapeOnly)
 {
