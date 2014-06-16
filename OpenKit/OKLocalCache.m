@@ -50,7 +50,7 @@ dispatch_queue_t __OKCacheQueue = nil;
 {
     va_list args;
     va_start(args, sql);
-
+/*
     __block BOOL success;
     [self access:^(FMDatabase *db) {
         OKLogInfo(@"Performing cache update: %@", sql);
@@ -66,6 +66,9 @@ dispatch_queue_t __OKCacheQueue = nil;
     va_end(args);
 
     return success;
+ */
+ 
+    return YES;
 }
 
 -(int)lastInsertRowID
