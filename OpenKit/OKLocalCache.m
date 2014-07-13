@@ -50,11 +50,15 @@ dispatch_queue_t __OKCacheQueue = nil;
 {
     va_list args;
     va_start(args, sql);
-/*
+    
+    __block va_list *argsPointer;
+    
+    // HACK HACK HACK
+    argsPointer = &args;
     __block BOOL success;
     [self access:^(FMDatabase *db) {
         OKLogInfo(@"Performing cache update: %@", sql);
-        success = [db executeUpdate:sql error:nil withArgumentsInArray:nil orDictionary:nil orVAList:args];
+        success = [db executeUpdate:sql error:nil withArgumentsInArray:nil orDictionary:nil orVAList:*argsPointer];
         OKLogInfo(@"...%@", (success ? @"success" : @"FAIL"));
         
         // We have to cache the last inserted row ID because
@@ -66,9 +70,7 @@ dispatch_queue_t __OKCacheQueue = nil;
     va_end(args);
 
     return success;
- */
  
-    return YES;
 }
 
 -(int)lastInsertRowID
