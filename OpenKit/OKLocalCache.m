@@ -46,15 +46,23 @@ dispatch_queue_t __OKCacheQueue = nil;
     }
 }
 
-- (BOOL)update:(NSString *)sql, ...
+- (BOOL)update:(NSString *)sql, ... NS_REQUIRES_NIL_TERMINATION
 {
     va_list args;
     va_start(args, sql);
+    
+    NSMutableArray *argArray = [NSMutableArray array];
+    id obj = nil;
+    while((obj = va_arg(args, id)))
+    {
+        [argArray addObject:obj];
+    }
+    va_end(args);
 
     __block BOOL success;
     [self access:^(FMDatabase *db) {
         OKLogInfo(@"Performing cache update: %@", sql);
-        success = [db executeUpdate:sql error:nil withArgumentsInArray:nil orDictionary:nil orVAList:args];
+        success = [db executeUpdate:sql error:nil withArgumentsInArray:argArray orDictionary:nil orVAList:nil];
         OKLogInfo(@"...%@", (success ? @"success" : @"FAIL"));
         
         // We have to cache the last inserted row ID because
@@ -63,7 +71,6 @@ dispatch_queue_t __OKCacheQueue = nil;
             lastInsertRowID = [db lastInsertRowId];
         }
     }];
-    va_end(args);
 
     return success;
 }
@@ -139,7 +146,7 @@ dispatch_queue_t __OKCacheQueue = nil;
 - (BOOL)insertToken:(NSString *)tokenStr
 {
     NSDate *now = [NSDate date];
-    return [self update:@"insert into tokens (token, submitted, created_at) values (?, ?, ?) ", tokenStr, [NSNumber numberWithInt:0], now];
+    return [self update:@"insert into tokens (token, submitted, created_at) values (?, ?, ?) ", tokenStr, [NSNumber numberWithInt:0], now, nil];
 }
 
 

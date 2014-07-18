@@ -26,6 +26,17 @@
 @implementation OKBaseLoginViewController
 
 @synthesize  loginView,spinner, fbLoginButton, gcLoginButton, delegate, loginString;
+#if defined(ANDROID)
+-(void) setWindow:(UIWindow *)window
+{
+    _window = window;
+}
+
+-(UIWindow*) window
+{
+    return _window;
+}
+#endif
 
 -(id)initWithLoginString:(NSString*)aLoginString
 {

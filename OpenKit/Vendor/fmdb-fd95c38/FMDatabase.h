@@ -26,7 +26,7 @@
 
 	#if TARGET_OS_IPHONE
 		// Compiling for iOS
-		#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000
+		#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000 || defined(ANDROID)
 			// iOS 6.0 or later
 			#define FMDBDispatchQueueRelease(__v)
 		#else

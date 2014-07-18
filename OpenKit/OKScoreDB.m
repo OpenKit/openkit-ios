@@ -60,7 +60,8 @@ static NSString* const kScoreTableCreateSQL = @"CREATE TABLE IF NOT EXISTS OKCAC
                      [NSNumber numberWithLongLong:score.scoreValue],
                      [NSNumber numberWithInt:score.metadata],
                      score.displayString,
-                     [NSNumber numberWithBool:score.submitted]];
+                     [NSNumber numberWithBool:score.submitted],
+                     nil];
     
     if(inserted) {
         int scoreID = [self lastInsertRowID];
@@ -83,7 +84,7 @@ static NSString* const kScoreTableCreateSQL = @"CREATE TABLE IF NOT EXISTS OKCAC
     
     NSString *deleteSQL = @"DELETE FROM OKCACHE WHERE id=?";
     
-    BOOL deleted = [self update:deleteSQL,[NSNumber numberWithInt:[score OKScoreID]]];
+    BOOL deleted = [self update:deleteSQL,[NSNumber numberWithInt:[score OKScoreID]], nil];
     
     if(deleted) {
         OKLogInfo(@"Removed score: %@", score);
@@ -101,7 +102,7 @@ static NSString* const kScoreTableCreateSQL = @"CREATE TABLE IF NOT EXISTS OKCAC
     
     NSString *updateString = @"UPDATE OKCACHE SET Submitted=1 WHERE id=?";
     
-    BOOL updated = [self update:updateString, [NSNumber numberWithInt:[score OKScoreID]]];
+    BOOL updated = [self update:updateString, [NSNumber numberWithInt:[score OKScoreID]], nil];
     
     if(!updated) {
         OKLog(@"Failed to update score row with error message %@", [self lastErrorMessage]);
@@ -210,7 +211,7 @@ static NSString* const kScoreTableCreateSQL = @"CREATE TABLE IF NOT EXISTS OKCAC
     
     NSString *deleteSQL = @"DELETE FROM OKCACHE WHERE submitted=1";
     
-    BOOL success = [self update:deleteSQL];
+    BOOL success = [self update:deleteSQL, nil];
     
     if(success) {
         OKLogInfo(@"Cleared all cached submitted scores");

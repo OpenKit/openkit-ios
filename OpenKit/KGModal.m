@@ -91,7 +91,9 @@ NSString *const KGModalGradientViewTapped = @"KGModalGradientViewTapped";
     containerView.modalBackgroundColor = self.modalBackgroundColor;
     containerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|
     UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin;
+#if !defined(ANDROID)
     containerView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+#endif
     contentView.frame = (CGRect){padding, padding, contentView.bounds.size};
     [containerView addSubview:contentView];
     [viewController.view addSubview:containerView];
@@ -118,7 +120,9 @@ NSString *const KGModalGradientViewTapped = @"KGModalGradientViewTapped";
             }];
 
             containerView.alpha = 0;
+#if !defined(ANDROID)
             containerView.layer.shouldRasterize = YES;
+#endif
             containerView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.4, 0.4);
             [UIView animateWithDuration:kTransformPart1AnimationDuration animations:^{
                 containerView.alpha = 1;
@@ -128,7 +132,9 @@ NSString *const KGModalGradientViewTapped = @"KGModalGradientViewTapped";
                     containerView.alpha = 1;
                     containerView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1, 1);
                 } completion:^(BOOL finished2) {
+#if !defined(ANDROID)
                     containerView.layer.shouldRasterize = NO;
+#endif
                 }];
             }];
         }
@@ -167,8 +173,9 @@ NSString *const KGModalGradientViewTapped = @"KGModalGradientViewTapped";
         [UIView animateWithDuration:kFadeInAnimationDuration animations:^{
             self.viewController.styleView.alpha = 0;
         }];
-
+#if !defined(ANDROID)
         self.containerView.layer.shouldRasterize = YES;
+#endif
         [UIView animateWithDuration:kTransformPart2AnimationDuration animations:^{
             self.containerView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
         } completion:^(BOOL finished){

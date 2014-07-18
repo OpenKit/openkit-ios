@@ -43,7 +43,7 @@ extern dispatch_queue_t __OKCacheQueue;
 
 // You can use this for insert/update/delete without access block.  Selects should
 // go through access block so FMResultSet access is contained.
-- (BOOL)update:(NSString *)sql, ...;
+- (BOOL)update:(NSString *)sql, ... NS_REQUIRES_NIL_TERMINATION;
 
 // Get the autoincrement primary key int ID of the last inserted row
 -(int)lastInsertRowID;

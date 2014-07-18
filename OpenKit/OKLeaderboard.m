@@ -363,6 +363,68 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
     }
 }
 
+-(void)getPlayerGlobalTopScoreWithCompletionHandler:(void (^)(id<OKScoreProtocol> score))completionHandler
+{
+    // This function returns the global best score, preferring facebook -> game center -> cached //
+    
+    NSMutableArray *scores = [NSMutableArray arrayWithCapacity:3];
+    
+    // the order in which you add the scores affects the priority of the result when they have equal values //
+    [self getPlayerTopScoreForLeaderboardForTimeRange:OKLeaderboardTimeRangeAllTime withCompletionHandler:^(OKScore *okScore, NSError *okError) { // OK SCORE //
+        if (!okError && okScore)
+        {
+            [scores addObject:okScore];
+        }
+        [self getPlayerTopScoreFromGameCenterWithCompletionHandler:^(OKGKScoreWrapper *gcScore, NSError *gamecenterError) { // GAME CENTER //
+            if (!gamecenterError && gcScore)
+            {
+                [scores addObject:gcScore];
+            }
+            
+            OKScore *topCachedScore = [self getPlayerTopScoreFromLocalCache]; // CACHED //
+            if (topCachedScore)
+            {
+                [scores addObject:topCachedScore];
+            }
+            
+            // sort the scores and call the completion handler //
+            id<OKScoreProtocol> bestScore = nil;
+            NSArray *sorted = [self sortScoresBasedOnLeaderboardType:scores];
+            bestScore = [sorted firstObject];
+            completionHandler(bestScore);
+        }];
+    }];
+}
+
+-(void) getAllPlayerScoresWithCompletionHandler:(void (^)(NSArray *scores))completionHandler
+{
+    // This function returns all the player scores so devs can check for discrepancies //
+    
+    NSMutableArray *scores = [NSMutableArray arrayWithCapacity:3];
+    
+    // the order in which you add the scores affects the priority of the result when they have equal values //
+    [self getPlayerTopScoreForLeaderboardForTimeRange:OKLeaderboardTimeRangeAllTime withCompletionHandler:^(OKScore *okScore, NSError *okError) { // OK SCORE //
+        if (!okError && okScore)
+        {
+            [scores addObject:okScore];
+        }
+        [self getPlayerTopScoreFromGameCenterWithCompletionHandler:^(OKGKScoreWrapper *gcScore, NSError *gamecenterError) { // GAME CENTER //
+            if (!gamecenterError && gcScore)
+            {
+                [scores addObject:gcScore];
+            }
+            
+            OKScore *topCachedScore = [self getPlayerTopScoreFromLocalCache]; // CACHED //
+            if (topCachedScore)
+            {
+                [scores addObject:topCachedScore];
+            }
+            
+            completionHandler(scores);
+        }];
+    }];
+}
+
 -(OKScore*)getPlayerTopScoreFromLocalCache
 {
     NSArray *cachedScores = [[OKScoreDB sharedCache] getCachedScoresForLeaderboardID:[self OKLeaderboard_id] andOnlyGetSubmittedScores:NO];

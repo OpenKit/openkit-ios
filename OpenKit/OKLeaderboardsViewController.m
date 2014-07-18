@@ -30,7 +30,11 @@
         self.modalPresentationStyle = UIModalPresentationFormSheet;
         OKLeaderboardsListViewController *list = [[OKLeaderboardsListViewController alloc]initWithDefaultLeaderboardID:defaultLeaderboardID];
         NSArray *viewControllers = [NSArray arrayWithObject:list];
+#if defined(ANDROID)
+        [self setViewControllers:viewControllers];
+#else
         [self setViewControllers:viewControllers animated:NO];
+#endif
         
         UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Leaderboards" image:[UIImage imageNamed:@"leaderboards.png"] tag:1];
         [self setTabBarItem:tabBarItem];

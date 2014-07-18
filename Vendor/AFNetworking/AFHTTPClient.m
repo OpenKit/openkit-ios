@@ -205,6 +205,13 @@ NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value) {
 @synthesize networkReachabilityStatusBlock = _networkReachabilityStatusBlock;
 #endif
 
+#if defined(ANDROID)
+-(void) setBaseURL:(NSURL *)baseURL
+{
+    _baseURL = baseURL;
+}
+#endif
+
 + (instancetype)clientWithBaseURL:(NSURL *)url {
     return [[self alloc] initWithBaseURL:url];
 }
@@ -217,10 +224,18 @@ NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value) {
         return nil;
     }
     
+#if defined(ANDROID)
+    NSString *urlAbsoluteString = [url absoluteString];
+    if (urlAbsoluteString.length && ![urlAbsoluteString hasSuffix:@"/"])
+    {
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/", urlAbsoluteString]];
+    }
+#else
     // Ensure terminal slash for baseURL path, so that NSURL +URLWithString:relativeToURL: works as expected
     if ([[url path] length] > 0 && ![[url absoluteString] hasSuffix:@"/"]) {
         url = [url URLByAppendingPathComponent:@""];
     }
+#endif
     
     self.baseURL = url;
     
@@ -237,7 +252,7 @@ NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value) {
     
 #if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
     // User-Agent Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.43
-    [self setDefaultHeader:@"User-Agent" value:[NSString stringWithFormat:@"%@/%@ (%@; iOS %@; Scale/%0.2f)", [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleExecutableKey] ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleIdentifierKey], (__bridge id)CFBundleGetValueForInfoDictionaryKey(CFBundleGetMainBundle(), kCFBundleVersionKey) ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey], [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion], ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] ? [[UIScreen mainScreen] scale] : 1.0f)]];
+    [self setDefaultHeader:@"User-Agent" value:[NSString stringWithFormat:@"%@/%@ (%@; iOS %@; Scale/%0.2f)", [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleExecutableKey] ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleIdentifierKey], (__bridge id)CFBundleGetValueForInfoDictionaryKey(CFBundleGetMainBundle(), kCFBundleVersionKey) ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(__bridge NSString *)kCFBundleVersionKey], [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion], ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] ? [[UIScreen mainScreen] scale] : 1.0f)]];
 #elif defined(__MAC_OS_X_VERSION_MIN_REQUIRED)
     [self setDefaultHeader:@"User-Agent" value:[NSString stringWithFormat:@"%@/%@ (Mac OS X %@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleExecutableKey] ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleIdentifierKey], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey], [[NSProcessInfo processInfo] operatingSystemVersionString]]];
 #endif
@@ -344,7 +359,7 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
     
     SCNetworkReachabilityContext context = {0, (__bridge void *)callback, AFNetworkReachabilityRetainCallback, AFNetworkReachabilityReleaseCallback, NULL};
     SCNetworkReachabilitySetCallback(self.networkReachability, AFNetworkReachabilityCallback, &context);
-    SCNetworkReachabilityScheduleWithRunLoop(self.networkReachability, CFRunLoopGetMain(), (CFStringRef)NSRunLoopCommonModes);
+    SCNetworkReachabilityScheduleWithRunLoop(self.networkReachability, CFRunLoopGetMain(), (__bridge CFStringRef)NSRunLoopCommonModes);
     
     /* Network reachability monitoring does not establish a baseline for IP addresses as it does for hostnames, so if the base URL host is an IP address, the initial reachability callback is manually triggered.
      */
@@ -360,7 +375,7 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
 
 - (void)stopMonitoringNetworkReachability {
     if (_networkReachability) {
-        SCNetworkReachabilityUnscheduleFromRunLoop(_networkReachability, CFRunLoopGetMain(), (CFStringRef)NSRunLoopCommonModes);
+        SCNetworkReachabilityUnscheduleFromRunLoop(_networkReachability, CFRunLoopGetMain(), (__bridge CFStringRef)NSRunLoopCommonModes);
         CFRelease(_networkReachability);
         _networkReachability = NULL;
     }
@@ -1127,6 +1142,8 @@ typedef enum {
         case NSStreamStatusError:
             return NO;
     }
+    
+    return NO;
 }
 
 - (NSInteger)read:(uint8_t *)buffer maxLength:(NSUInteger)length {
