@@ -30,14 +30,17 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 {
     if ((self = [super init])) {
         NSString *sortTypeString    = [OKHelper getNSStringSafeForKey:@"sort_type" fromJSONDictionary:jsonDict];
-        
         self.name                   = [OKHelper getNSStringSafeForKey:@"name" fromJSONDictionary:jsonDict];
         self.OKLeaderboard_id       = [[OKHelper getNSNumberSafeForKey:@"id" fromJSONDictionary:jsonDict] integerValue];
         self.OKApp_id               = [[OKHelper getNSNumberSafeForKey:@"app_id" fromJSONDictionary:jsonDict] integerValue];
         self.sortType               = ([sortTypeString isEqualToString:@"HighValue"]) ? OKLeaderboardSortTypeHighValue : OKLeaderboardSortTypeLowValue;
         self.icon_url               = [OKHelper getNSStringSafeForKey:@"icon_url" fromJSONDictionary:jsonDict];
         self.playerCount            = [[OKHelper getNSNumberSafeForKey:@"player_count" fromJSONDictionary:jsonDict] integerValue];
+#if defined(ANDROID)
+        self.gamecenter_id          = [OKHelper getNSStringSafeForKey:@"gpg_id" fromJSONDictionary:jsonDict];
+#else
         self.gamecenter_id          = [OKHelper getNSStringSafeForKey:@"gamecenter_id" fromJSONDictionary:jsonDict];
+#endif
     }
 
     return self;
@@ -65,6 +68,7 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 
 + (void)getLeaderboardsWithTag:(NSString*)leaderbaordListTag WithCompletionHandler:(void (^)(NSArray* leaderboards, int playerCount, NSError* error))completionHandler
 {
+    
     NSDictionary *requestParams = [NSDictionary dictionaryWithObject:leaderbaordListTag forKey:@"tag"];
     
     // OK NETWORK REQUEST
@@ -168,7 +172,6 @@ static NSString *DEFAULT_LEADERBOARD_LIST_TAG = @"v1";
 -(void)getScoresFromGameCenterWithRange:(NSRange)scoreRange withPlayerScope:(GKLeaderboardPlayerScope)playerScope withCompletionHandler:(void (^)(NSArray *scores, NSError *error))completionHandler
 {
     GKLeaderboard *leaderboardRequest = [[GKLeaderboard alloc] init];
-    
     if(![self gamecenter_id]) {
         completionHandler(nil, [OKError noGameCenterIDError]);
         return;
