@@ -20,7 +20,7 @@
 #import "OKSessionDb.h"
 #import "OKMacros.h"
 
-#define OK_DEFAULT_ENDPOINT    @"http://api.openkit.io"
+#define OK_DEFAULT_ENDPOINT    @"http://api.gameeso.com"
 #define OK_OPENKIT_SDK_VERSION = @"1.1";
 
 static NSString *OK_USER_KEY = @"OKUserInfo";
